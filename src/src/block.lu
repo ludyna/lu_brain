@@ -1,0 +1,35 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Block block_create(Story story)
+	{
+		Block self 			= (Block) malloc(sizeof(struct block));
+
+		// Initialize
+		self->story 		= story;
+
+		return self;
+	}
+
+	void block_destroy(Block* self)
+	{
+		lu_free((void**) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// API
+
+	Block block_begin(Story story)
+	{
+
+	}
+
+	void block_end(Story story)
+	{
+
+	}

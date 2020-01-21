@@ -1,0 +1,18 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad
+*/
+
+#include "util.h"
+
+void lu_free(void **pp)
+{
+	lu_assert(pp != NULL);
+	if (!pp) return;
+
+	void *p = *pp;
+	lu_assert(p != NULL);
+	if (!p) return;
+
+	free(p);
+	*pp = NULL;
+}

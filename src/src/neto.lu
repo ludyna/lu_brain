@@ -1,0 +1,49 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Neto neto_create()
+	{
+		Neto self 			= (Neto) malloc(sizeof(struct neto));
+
+		// Initialize
+
+		return self;
+	}
+
+	void neto_destroy(Neto* self)
+	{
+		lu_free((void**) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// API
+
+	enum lu_neto_type lu_neto_type(Lu_Neto self)
+	{
+
+	}
+
+	lu_value lu_neto_p(Lu_Neto self)
+	{
+
+	}
+
+	Lu_Neto*	lu_neto_netos(Lu_Neto self)
+	{
+
+	}
+
+	Lu_Neto* lu_neto_parents(Lu_Neto self)
+	{
+
+	}
+
+	Lu_Neto* lu_neto_children(Lu_Neto self)
+	{
+
+	}

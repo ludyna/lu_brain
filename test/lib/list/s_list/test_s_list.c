@@ -1,0 +1,296 @@
+#include "unity.h"
+#include "src/brain.h"
+
+struct neu 
+{
+    float p;
+};
+
+typedef struct neu* Neu;
+
+void neu_p_set(Neu neu, float v)
+{
+    neu->p = v;
+}
+
+void setUp(void)
+{
+}
+
+void tearDown(void)
+{
+}
+
+static lu_value neu_compare(lu_p_void p1, lu_p_void p2)
+{
+    Neu x   = (Neu) p1;
+    Neu y   = (Neu) p2;
+
+    return  x->p - y->p;
+}
+
+static lu_value neu_compare_reverse(lu_p_void p1, lu_p_void p2)
+{
+    Neu x   = (Neu) p1;
+    Neu y   = (Neu) p2;
+
+    return y->p - x->p; 
+}
+
+void test_s_list1(void)
+{
+    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+
+    Neu n1  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n35 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n45 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
+
+    neu_p_set(n1, 1.0);
+    neu_p_set(n2, 2.0);
+    neu_p_set(n3, 3.0);
+    neu_p_set(n35, 3.5);
+    neu_p_set(n4, 4.0);
+    neu_p_set(n45, 4.5);
+    neu_p_set(n5, 5.0);
+
+    srand(time(NULL));
+    S_List list = s_list_create(10, neu_compare, S_LIST_FIRST);
+
+    s_list_add(list, n4);
+    TEST_ASSERT(((Neu)(list->first->value))->p == 4);
+    TEST_ASSERT(list->last != NULL);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 4);
+
+    s_list_add(list, n3);
+    TEST_ASSERT(((Neu)(list->first->value))->p == 3);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 4);
+
+    s_list_add(list, n1);
+    s_list_add(list, n5);
+    s_list_add(list, n35);
+    s_list_add(list, n2);
+    s_list_add(list, n45);
+    TEST_ASSERT(((Neu)(list->first->value))->p == 1);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+    TEST_ASSERT(list->count == 7);
+    TEST_ASSERT(list->limit_size == 10);
+
+    TEST_ASSERT(((Neu)(list->last->prev->value))->p == 4.5);
+    TEST_ASSERT(((Neu)(list->last->prev->prev->value))->p == 4.0);
+    TEST_ASSERT(((Neu)(list->last->prev->prev->prev->value))->p == 3.5);
+
+    s_list_debug(list);
+
+    TEST_ASSERT(list->level_size == 3);
+
+    s_list_destroy(&list);
+    sis_alloc_destroy(&sis_alloc);
+}
+
+void test_s_list_limited(void)
+{
+    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+
+    Neu n1  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n35 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n45 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n6  = (Neu) sis_alloc_item_alloc(sis_alloc);
+
+    neu_p_set(n1, 1.0);
+    neu_p_set(n2, 2.0);
+    neu_p_set(n3, 3.0);
+    neu_p_set(n35, 3.5);
+    neu_p_set(n4, 4.0);
+    neu_p_set(n45, 4.5);
+    neu_p_set(n5, 5.0);
+    neu_p_set(n6, 6);
+
+    srand(time(NULL));
+    S_List list = s_list_create(2, neu_compare, S_LIST_FIRST);
+
+    s_list_add(list, n5);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+
+    s_list_add(list, n2);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 2);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+
+    s_list_add(list, n3);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 3);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+
+    s_list_add(list, n4);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 4);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+
+    s_list_add(list, n35);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 4);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+
+    s_list_add(list, n45);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 4.5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+
+    s_list_add(list, n6);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 6);
+    TEST_ASSERT(list->count == 2);
+    TEST_ASSERT(list->limit_size == 2);
+
+    s_list_debug(list);
+
+    s_list_destroy(&list);
+    sis_alloc_destroy(&sis_alloc);
+}
+
+void test_s_list_limited_reverse(void)
+{
+    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+
+    Neu n1  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n35 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n45 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n6  = (Neu) sis_alloc_item_alloc(sis_alloc);
+
+    neu_p_set(n1, 1.0);
+    neu_p_set(n2, 2.0);
+    neu_p_set(n3, 3.0);
+    neu_p_set(n35, 3.5);
+    neu_p_set(n4, 4.0);
+    neu_p_set(n45, 4.5);
+    neu_p_set(n5, 5.0);
+    neu_p_set(n6, 6);
+
+    srand(time(NULL));
+    S_List list = s_list_create(2, neu_compare_reverse, S_LIST_LAST);
+
+    s_list_add(list, n5);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+
+    s_list_add(list, n2);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 2);
+
+    s_list_add(list, n3);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->first->next->value))->p == 3);
+
+    s_list_add(list, n4);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 4);
+
+    s_list_add(list, n35);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 4);
+
+    s_list_add(list, n45);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 4.5);
+
+    s_list_add(list, n6);
+
+    TEST_ASSERT(((Neu)(list->first->value))->p == 6);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 5);
+    TEST_ASSERT(list->count == 2);
+    TEST_ASSERT(list->limit_size == 2);
+
+    s_list_debug(list);
+
+    s_list_destroy(&list);
+    sis_alloc_destroy(&sis_alloc);
+}
+
+void test_s_list_eq(void)
+{
+    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+
+    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n22 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n33 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n44 = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n6  = (Neu) sis_alloc_item_alloc(sis_alloc);
+
+    neu_p_set(n2, 2.0);
+    neu_p_set(n22, 2.0);
+    neu_p_set(n3, 3.0);
+    neu_p_set(n33, 3.0);
+    neu_p_set(n4, 4.0);
+    neu_p_set(n44, 4.0);
+    neu_p_set(n5, 5.0);
+    neu_p_set(n6, 6);
+
+    srand(time(NULL));
+    S_List list = s_list_create(3, neu_compare_reverse, S_LIST_LAST);
+
+    s_list_add(list, n5);
+    s_list_add(list, n2);
+    S_Node s1 = s_list_add(list, n22);
+
+    TEST_ASSERT(list->count == 3);
+    TEST_ASSERT(list->limit_size == 3);
+    TEST_ASSERT(s1->values.count == 1);
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 2);
+
+    s_list_add(list, n3);
+
+    TEST_ASSERT(list->count == 3);
+    TEST_ASSERT(list->limit_size == 3);
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->first->next->value))->p == 3);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 2);
+
+    s1 = s_list_add(list, n33);
+
+    TEST_ASSERT(s1->values.count == 1);
+    TEST_ASSERT(list->count == 3);
+    TEST_ASSERT(list->limit_size == 3);
+    TEST_ASSERT(((Neu)(list->first->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->first->next->value))->p == 3);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 3);
+
+    s_list_add(list, n4);
+    s_list_add(list, n6);
+    s_list_add(list, n44);
+
+    TEST_ASSERT(list->count == 3);
+    TEST_ASSERT(list->limit_size == 3);
+    TEST_ASSERT(((Neu)(list->first->value))->p == 6);
+    TEST_ASSERT(((Neu)(list->first->next->value))->p == 5);
+    TEST_ASSERT(((Neu)(list->last->value))->p == 4);
+
+    s_list_debug(list);
+
+    s_list_destroy(&list);
+    sis_alloc_destroy(&sis_alloc);
+}

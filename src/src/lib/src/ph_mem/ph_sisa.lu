@@ -1,0 +1,98 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Inits, create and destroy
+
+	Ph_Sisa ph_sisa_create (
+		Ph_Mem 			ph_mem, 
+		lu_size 		item_size, 
+		lu_size 		size, 
+		lu_value 		percent,
+		lu_flags 		flags
+	)
+	{
+		if (item_size == 0) return NULL;
+
+		if (size == 0 && percent == 0) return NULL;
+
+		if (percent > 100.0) return NULL;
+
+		if (size == 0 && percent > 0)
+		{
+			// x * ps + x * is + sisa = a
+			// x * (ps + is) = a - sisa
+			// x = (a - sisa)/(ps + is)
+
+			lu_size a = ph_mem_avail(ph_mem) * percent  / 100.0;
+
+			lu_size fis = item_size;
+			if (flags & PH_S_ITEM_FREEABLE) 
+				fis += sizeof(lu_p_byte);
+
+			size = (a - sizeof(struct ph_sisa)) / fis;
+		}
+
+		lu_size f_size = sizeof(struct ph_sisa) + item_size * size;
+		
+		if (flags & PH_S_ITEM_FREEABLE) 
+			f_size += sizeof(lu_p_byte) * size;
+
+
+		lu_p_byte start = ph_mem_alloc(ph_mem, f_size);
+
+		if (start == NULL) return NULL;
+
+		Ph_Sisa self 			= (Ph_Sisa) start;
+		self->item_size 		= item_size;
+		self->size 				= size;
+		self->flags 			= flags;
+		self->items_start 		= start + sizeof(struct ph_sisa);
+		self->items_pos			= self->items_start;
+		self->items_end			= self->items_start + self->size * self->item_size;
+		self->free_start 		= (lu_p_byte*) self->items_end;
+		self->items_count 		= 0;
+		self->free_count		= 0;
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main methods
+
+	lu_p_byte ph_sisa_item_alloc(Ph_Sisa self)
+	{
+		lu_p_byte res;
+		if (self->items_pos < self->items_end)
+		{
+			res = self->items_pos;
+			self->items_pos += self->item_size;
+		}
+		else 
+		{
+			if (self->free_count <= 0)
+				return NULL; // out of available memory
+
+			res = self->free_start[--self->free_count];
+		}
+
+		++self->items_count;
+
+		return res;
+	}
+
+	void ph_sisa_item_free(Ph_Sisa self, lu_p_byte item)
+	{
+		if (!(self->flags & PH_S_ITEM_FREEABLE)) return;
+
+		lu_assert(self->items_count > 0);
+		lu_assert(self->free_count < self->size); 
+
+		self->free_start[self->free_count++] = item;
+
+		--self->items_count;
+	}
+
+

@@ -1,0 +1,331 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad (Novossaad)
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// S_Node
+
+S_Node s_node_create(Ph_Sisa s_alloc, LnAlloc ln_alloc)
+{
+	S_Node node = (S_Node) ph_sisa_item_alloc(s_alloc);
+
+	s_node_init(node, ln_alloc);
+
+	return node;
+}
+
+void s_node_destroy(Ph_Sisa s_alloc, S_Node* s_node)
+{
+	list_destroy_all(&(*s_node)->values);
+	ph_sisa_item_free(s_alloc, (lu_p_void) *s_node);
+	*s_node = NULL;
+}
+
+ 
+///////////////////////////////////////////////////////////////////////////////
+// S_List
+
+static void build_header(S_List self)
+{
+	S_Node above;  
+	
+	S_Node below 	= s_node_create(self->s_alloc, (LnAlloc) self->ln_alloc); 
+	below->value 	= NULL; 
+
+	for (lu_size i = 1; i < self->level_size; i++)
+	{
+		above			= s_node_create(self->s_alloc, (LnAlloc) self->ln_alloc);
+
+		above->below	= below;
+		above->value 	= NULL;
+
+		below->above 	= above;
+
+	 	below 			= above;
+	}
+
+	self->header = below;
+}
+
+S_List s_list_create(lu_size limit_size, lu_fp_compare compare, s_list_side over_limit_remove_side)
+{
+	lu_assert(limit_size > 0);
+	S_List self = (S_List) malloc(sizeof(struct s_list));
+	lu_assert(self != NULL);
+
+	// Initialize
+
+	self->limit_size 				= limit_size;
+	self->over_limit_remove_side 	= over_limit_remove_side;
+
+	lu_size level_size 	= (lu_size) round(log10(self->limit_size) / log10(2));
+	self->level_size 	= level_size <= 0 ? 1 : level_size;
+	self->count 		= 0;
+	self->compare 		= compare;
+	self->s_alloc 		= ph_sisa_create(self->limit_size * 3 + self->level_size, sizeof(struct s_node));
+	self->ln_alloc		= ln_alloc_fast_create(self->limit_size);
+
+	self->first			= NULL;
+	self->last			= NULL;
+
+	build_header(self);
+
+	return self;
+}
+
+void s_list_destroy(S_List* self)
+{
+	ln_alloc_fast_destroy(&(*self)->ln_alloc, NULL);
+	ph_sisa_destroy(&(*self)->s_alloc);
+	lu_free((void**) self);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main public methods
+
+static void s_list_path_debug(S_List self, S_Node* path)
+{
+	// S_Node node;
+	// lu_debug("\n\n~~~~~~~~~~ PATH count: %ld ~~~~~~~~~~", self->level_size);
+	// int i = (int) self->level_size - 1;
+
+	// do
+	// {
+	// 	node = path[i];
+	// 	if (node == NULL)
+	// 	{
+	// 		lu_debug("\n%d: ERROR", i);
+	// 	}
+	// 	else if (node->value == NULL)
+	// 	{
+	// 		lu_debug("\n%d: NULL", i);
+	// 	}
+	// 	else
+	// 	{
+	// 		lu_debug("\n%d: %.1f", i, ((Neu)(node->value))->p);
+	// 	}
+	// 	--i;
+	// } while (i > 0);
+
+	// lu_debug("\n");
+}
+
+static S_Node build_column(S_List self, S_Node* path, lu_p_void value)
+{ 
+	S_Node above;
+
+	S_Node below 		= s_node_create(self->s_alloc, (LnAlloc) self->ln_alloc); 
+	S_Node bottom		= below;
+	S_Node prev, next;
+
+	prev 			= path[0];
+	next 			= path[0]->next;
+
+	below->value 		= value; 
+	below->next 		= next;
+	below->prev			= prev;
+
+	if (next)	
+		next->prev		= below;
+
+	if (prev)
+		prev->next 		= below; 
+
+	for (lu_size i = 1; i < self->level_size && toss_coin(); i++)
+	{
+		above 			= s_node_create(self->s_alloc, (LnAlloc) self->ln_alloc);
+
+		above->below 	= below;
+		below->above 	= above;
+
+		above->value 	= value;
+
+		prev 			= path[i];
+		next 			= path[i]->next;
+
+		above->next 	= next;
+		above->prev 	= prev;
+		
+		if (next) 
+			next->prev 	= above;
+
+		if (prev) 
+			prev->next	= above;
+
+		below 			= above;
+	}
+
+	return bottom;
+}
+
+static void s_list_remove(S_List self, S_Node bottom)
+{
+	if (bottom == NULL) return;
+
+	List values = &bottom->values;
+	if (values->count > 0)
+	{
+		list_remove(values, values->last);
+		goto end;
+	}
+
+	S_Node curr = bottom;
+	S_Node prev = bottom->prev, next = bottom->next, above;
+
+	if (prev->value == NULL) 	self->first = next;
+	if (next == NULL) 			self->last = prev;
+	
+	while (curr)
+	{
+		prev = curr->prev;
+		next = curr->next;
+
+		if (prev)
+			prev->next = next;
+
+		if (next)
+			next->prev = prev;
+
+		curr->prev = NULL;
+		curr->next = NULL;
+		
+		above = curr->above;
+
+		curr->below = NULL;
+		curr->above = NULL;
+
+		if (above)
+			above->below = NULL;
+
+		s_node_destroy(self->s_alloc, &curr);
+
+		curr = above;
+	}
+
+end:
+	--self->count;
+}
+
+void s_list_debug(S_List self)
+{
+	S_Node head = self->header;
+	S_Node curr;
+
+	lu_size i = self->level_size - 1;
+	lu_debug("\n ======= SLIST ======");
+	while (head)
+	{
+		lu_debug("\n%ld:  ", i);
+		curr = head->next;
+		while (curr)
+		{
+			if (curr->value == NULL) lu_debug("NULL, ");
+			else 
+			{
+				//lu_debug("%.1f", ((Neu)(curr->value))->p);	
+				if(curr->values.count > 0) lu_debug("(%ld)", curr->values.count + 1);
+				lu_debug(", ");
+			}
+
+			curr = curr->next;
+		}
+
+		head = head->below;
+		--i;
+	}
+	
+}
+
+static S_Node s_list_insert(S_List self, lu_p_void value)
+{
+	S_Node path[self->level_size];
+
+	bool eq		= false;
+ 	lu_size i 	= self->level_size - 1;
+ 	path[i] 	= self->header;
+
+ 	S_Node curr, tmp;
+	while (1)
+	{
+		if (path[i] == NULL) break;
+
+		curr = path[i]->next;
+
+		if (curr == NULL)
+		{
+			tmp = path[i]->below;
+			if (tmp) path[--i] = tmp;
+			else break;
+
+			continue;
+		}
+
+		lu_value cmp = self->compare(value, curr->value);
+
+		if (cmp == 0)
+		{
+			path[i] = curr;
+	 		while (curr->below) 
+	 		{
+	 			path[--i] = curr->below;
+	 			curr = curr->below;
+	 		}
+	 		eq = true;
+	 		break;
+		}
+
+	 	if (cmp < 0)
+	 	{
+			tmp = path[i]->below;
+			if (tmp) path[--i] = tmp;
+			else break;
+
+	 		continue;
+	 	}
+
+	 	path[i] = curr;
+	}
+
+	if (eq)
+	{
+		list_append(&path[0]->values, value);
+	}	
+	else 
+	{
+		//s_list_path_debug(self, path);
+		curr = build_column(self, path, value);
+			
+		if (path[0]->value == NULL) self->first = curr;
+		if (curr->next == NULL) 	self->last = curr;
+	}
+
+	++self->count;
+
+	return curr;
+}
+
+S_Node s_list_add(S_List self, lu_p_void value)
+{
+	if (self->first == NULL) return s_list_insert(self, value);
+
+	if (self->count >= self->limit_size)  
+	{
+		if (self->over_limit_remove_side == S_LIST_FIRST)
+		{
+			if (self->compare(self->first->value, value) >= 0) return NULL;
+
+			s_list_remove(self, self->first);
+		} 
+		else 
+		{
+			if (self->compare(self->last->value, value) <= 0) return NULL;
+
+			s_list_remove(self, self->last);
+		}		
+	}
+
+	return s_list_insert(self, value);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Other public methods

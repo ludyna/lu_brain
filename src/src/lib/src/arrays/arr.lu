@@ -1,0 +1,125 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Structs and types
+
+///////////////////////////////////////////////////////////////////////////////
+// Prototypes
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Create and destroy
+
+Arr arr_create(lu_size size)
+{
+	lu_assert(size > 0);
+
+	Arr self = (Arr) malloc(sizeof(struct arr));
+	
+	// Initialize
+	self->size 			= size;
+	self->count 		= 0;
+	self->items 		= (lu_p_void*) calloc(self->size, sizeof(lu_p_void));
+
+	return self;
+}
+
+void arr_destroy(Arr* self)
+{
+	lu_free((void **) &(*self)->items);
+	lu_free((void **) self);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main public methods
+
+lu_size arr_append(Arr self, lu_p_void item)
+{
+	lu_assert(self != NULL);
+ 
+	if (self->count >= self->size) 
+		arr_realloc(self, self->size * 2);
+	
+	lu_size index = self->count;
+
+	self->items[self->count] = item;
+	++self->count;
+
+	return index;
+}
+
+void arr_each(Arr self, void (*block)(lu_p_void item))
+{
+	for (lu_size i = 0; i < self->count; i++)
+	{
+		block((void *) self->items[i]);
+	}
+}
+
+void arr_each1(Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+{
+	for (lu_size i = 0; i < self->count; i++)
+	{
+		block((lu_p_void) self->items[i], p1);
+	}
+}
+
+void arr_each_1p(Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+{
+	for (lu_size i = 0; i < self->count; i++)
+	{
+		block((lu_p_void) self->items[i], p1);
+	}
+}
+
+void arr_each_2p(Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), lu_p_void p1, lu_p_void p2)
+{
+	for (lu_size i = 0; i < self->count; i++)
+	{
+		block((lu_p_void) self->items[i], p1, p2);
+	}
+}
+
+void arr_set(Arr self, lu_size index, lu_p_void value)
+{
+	if (index >= self->size)
+		return;
+
+	if (index >= self->count)
+		self->count = index + 1;
+
+	self->items[index] = value;
+}
+
+void arr_nullify(Arr self)
+{ 
+	for (lu_size i = 0; i < self->size; i++)
+	{
+		self->items[i] = NULL;
+	}
+}
+
+void arr_realloc(Arr self, lu_size new_size)
+{
+	lu_assert(new_size > self->size);
+
+	self->size = new_size;
+
+	self->items = (lu_p_void*) realloc(self->items, sizeof(lu_p_void) * self->size);
+	lu_assert(self->items != NULL);
+}
+
+Arr arr_merge(Arr self, Arr src)
+{
+	if (self->count + src->count > self->size)
+		arr_realloc(self, self->count + src->count);
+
+	for(lu_size i = 0; i < src->count; i++)
+		self->items[self->count++] = src->items[i];
+
+	return self;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Other public methods

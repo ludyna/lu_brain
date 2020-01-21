@@ -1,0 +1,35 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Name name_create(Brain brain)
+	{
+		Name self 			= (Name) malloc(sizeof(struct name));
+
+		// Initialize 
+		self->brain 		= brain;
+
+		return self;
+	}
+
+	void name_destroy(Name* self)
+	{
+		lu_free((void**) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// API
+
+	void lu_name_link(Lu_Name self, Lu_Neto dst)
+	{
+
+	}
+
+	void lu_name_unlink(Lu_Name self, Lu_Neto dst)
+	{
+
+	}

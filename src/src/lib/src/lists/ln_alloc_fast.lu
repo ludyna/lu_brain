@@ -1,0 +1,64 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad (Novossaad)
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+static L_Node _node_create(LnAlloc alloc, lu_p_void value)
+{
+	L_Node node;
+	Ln_Alloc_Fast self = (Ln_Alloc_Fast) alloc;
+
+	node = (L_Node) sis_alloc_item_alloc(self->sis_alloc);
+
+	l_node_init(node, value);
+
+	return node;
+}
+
+static void _node_destroy(LnAlloc alloc, L_Node* node)
+{
+	Ln_Alloc_Fast self = (Ln_Alloc_Fast) alloc;
+
+	sis_alloc_item_free(self->sis_alloc, (lu_p_byte)*node);
+}
+
+static void _destroy(LnAlloc* self, L_Node first)
+{
+	ln_alloc_fast_destroy((Ln_Alloc_Fast*) self, first);
+}
+
+Ln_Alloc_Fast ln_alloc_fast_create(Ph_Sisa sisa, lu_size size)
+{
+	Ln_Alloc_Fast self = (Ln_Alloc_Fast) malloc(sizeof(struct ln_alloc_fast));
+	lu_assert(self != NULL);
+
+	// Initialize
+	self->super.node_create 	= _node_create;
+	self->super.node_destroy 	= _node_destroy;
+	self->super.destroy 		= _destroy;
+
+	self->sis_alloc 			= sis_alloc_create(size, sizeof(struct l_node));
+
+	return self;
+}
+
+void ln_alloc_fast_destroy(Ln_Alloc_Fast* self, L_Node first)
+{ 
+	sis_alloc_destroy(&(*self)->sis_alloc);
+	lu_free((void**) self);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main public methods
+
+void ln_alloc_fast_resize(Ln_Alloc_Fast self, lu_size new_size)
+{
+	lu_assert(self->sis_alloc->size < new_size);
+	
+	sis_alloc_resize(self->sis_alloc, new_size);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Other public methods

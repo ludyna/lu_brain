@@ -1,0 +1,16 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+void lu_throw(enum lu_e e, lu_cstring fmt, ...)
+{
+	if (fmt != NULL)
+	{
+	    va_list ap;
+	    va_start(ap, fmt);
+	    vfprintf(stderr, fmt, ap);
+	    va_end(ap);
+	}
+
+	Throw(e);
+}

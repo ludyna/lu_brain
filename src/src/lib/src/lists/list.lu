@@ -1,0 +1,203 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad (Novossaad)
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Structs and types
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+List list_init(List self, LnAlloc alloc)
+{
+	self->first 	= NULL;
+	self->last 		= NULL;
+	self->count		= 0; 
+	self->alloc 	= alloc;
+
+	return self;
+}
+
+List list_create(LnAlloc alloc)
+{
+	List self = (List) malloc(sizeof(struct list));
+ 
+	if (alloc == NULL) 
+	{
+		alloc = ln_alloc_create();
+		self->delete_alloc = true;
+	}
+	else
+	{
+		self->delete_alloc = false;
+	}
+
+	// Initialize
+	list_init(self, alloc);
+
+	return self;
+}
+
+void list_destroy(List* self)
+{
+	LnAlloc alloc = (*self)->alloc;
+
+	if ((*self)->delete_alloc) alloc->destroy(&alloc, (*self)->first);
+	lu_free((void**) self);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main public methods
+
+L_Node list_attach(List self, L_Node node)
+{
+	L_Node last = self->last;
+	
+	if (last) 
+	{
+		last->next = node;
+		node->prev = last;
+	}
+
+	self->last = node;
+	if (self->first == NULL) self->first = self->last;
+
+	++self->count;
+
+	return node;
+}
+
+L_Node list_append(List self, lu_p_void value)
+{
+	L_Node node = self->alloc->node_create(self->alloc, value);
+	
+	list_attach(self, node);
+
+	return node;
+}
+
+L_Node list_prepend(List self, lu_p_void value)
+{
+	L_Node node 	= self->alloc->node_create(self->alloc, value);
+	L_Node first = self->first;
+	
+	if (first) 
+	{
+		first->prev = node;
+		node->next 	= first;
+	}
+
+	self->first = node;
+	if (self->last == NULL) self->last = self->first;
+
+	++self->count;
+
+	return node;
+}
+
+L_Node list_detach(List self, L_Node node)
+{
+	lu_assert(node != NULL);
+
+ 	L_Node prev = node->prev;
+ 	L_Node next = node->next;
+
+ 	if (node == self->first) self->first = next;
+ 	if (node == self->last) self->last = prev;
+
+ 	if (next) next->prev = prev;
+ 	if (prev) prev->next = next;
+
+ 	--self->count;
+
+ 	return node;
+}
+
+void list_remove(List self, L_Node node)
+{ 
+	list_detach(self, node);
+
+ 	self->alloc->node_destroy(self->alloc, &node);
+}
+
+L_Node list_insert_after(List self, lu_p_void value, L_Node node)
+{
+	return NULL;	
+}
+ 
+L_Node list_insert_before(List self, lu_p_void value, L_Node node)
+{ 
+	return NULL;
+}
+
+L_Node list_replace(List self, lu_p_void value, L_Node node)
+{ 
+	return NULL;
+}
+
+L_Node list_find_forward(List self, lu_fp_is_value block)
+{ 
+	L_Node current = self->first;
+
+	while (current)
+	{
+		if (block(current->value)) return current;
+
+		current = current->next;
+	}
+
+	return NULL;
+}
+
+L_Node list_find_backward(List self, lu_fp_is_value block)
+{
+	L_Node current = self->last;
+
+	while (current)
+	{
+		if (block(current->value)) return current;
+
+		current = current->prev;
+	}
+
+	return NULL;
+}
+
+void list_batch_append(List self, lu_p_void value, lu_size count)
+{
+	for (lu_size i = 0; i < count; i++)
+	{
+		list_append(self, value);
+	}
+}
+
+void list_destroy_all(List self)
+{
+	L_Node curr = self->first;
+	L_Node to_dest;
+	while (curr)
+	{
+		to_dest = curr;
+		curr 	= curr->next;
+
+		self->alloc->node_destroy(self->alloc, &to_dest);
+	}			
+}
+
+void list_each(List self, void (*block)(List, L_Node, lu_p_void p1), lu_p_void p1)
+{
+	L_Node curr = self->first;
+	L_Node to_dest;
+	while (curr)
+	{
+		to_dest = curr;
+		curr 	= curr->next;
+
+		block(self, to_dest, p1);
+	}	
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Other public methods
+

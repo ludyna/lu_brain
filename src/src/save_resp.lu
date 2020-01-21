@@ -1,0 +1,29 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Save_Resp save_resp_create()
+	{
+		Save_Resp self 			= (Save_Resp) malloc(sizeof(struct save_resp));
+
+		// Initialize
+
+		return self;
+	}
+
+	void save_resp_destroy(Save_Resp* self)
+	{
+		lu_free((void**) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// API
+
+	Neto save_resp_neto(Save_Resp self)
+	{
+		return NULL;
+	}

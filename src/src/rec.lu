@@ -1,0 +1,24 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Rec rec_create(Brain brain, Rec_Opts opts)
+	{
+		Rec self 			= (Rec) malloc(sizeof(struct rec));
+
+		// Initialize
+		self->brain 			= brain;
+
+		return self;
+	}
+
+	void rec_destroy(Rec* self)
+	{
+		lu_free((void**) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 

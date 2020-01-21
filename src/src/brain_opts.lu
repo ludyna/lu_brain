@@ -1,0 +1,28 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Brain_Opts brain_opts_create(lu_size id, lu_size size_in_bytes)
+	{
+		Brain_Opts self 		= (Brain_Opts) malloc(sizeof(struct brain_opts));
+
+		// Initialize
+		self->id				= id;
+		self->size_in_bytes		= size_in_bytes;
+
+		return self;
+	}
+
+	void brain_opts_destroy(Brain_Opts* self)
+	{
+		lu_free((void**) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	

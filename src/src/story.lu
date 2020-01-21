@@ -1,0 +1,59 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Create and destroy
+
+	Story story_create(Brain brain)
+	{
+		Story self 		= (Story) malloc(sizeof(struct story));
+
+		// Initialize
+		self->brain 	= brain;
+
+		return self;
+	}
+
+	void story_destroy(Story* self)
+	{
+		lu_free((void**) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// API
+
+	void story_push(Story self, Rec rec, lu_value* data)
+	{
+
+	}
+
+	Save_Resp story_save(Story sef, Save_Opts opts)
+	{
+
+	}
+
+	Wave story_save_async(Story self, Save_Opts opts)
+	{
+
+	}
+
+	Find_Resp story_find(Story self, Find_Opts opts)
+	{
+
+	}
+
+	Wave story_find_async(Story self, Find_Opts opts)
+	{
+
+	}
+
+	Restore_Resp story_restore(Neto neto, Restore_Opts opts)
+	{
+
+	}
+
+	Wave story_restore_async(Neto neto, Restore_Opts opts)
+	{ 
+
+	}

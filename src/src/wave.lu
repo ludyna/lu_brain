@@ -1,0 +1,60 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Wave wave_create(Story story)
+	{
+		Wave self 			= (Wave) malloc(sizeof(struct wave));
+
+		// Initialize 
+		self->story 		= story;
+
+		return self;
+	}
+
+	void wave_destroy(Wave* self)
+	{
+		lu_free((void**) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// API
+
+	bool wave_is_working(Lu_Wave self)
+	{
+		return false;
+	}
+
+	bool wave_cancel(Lu_Wave self)
+	{
+
+	}
+
+	lu_size wave_time(Lu_Wave self)
+	{
+
+	}
+
+	enum wave_status wave_status(Lu_Wave self)
+	{
+
+	}
+
+	lu_size wave_touched_count(Lu_Wave self)
+	{
+
+	}
+
+	lu_size wave_excited_count(Lu_Wave self)
+	{
+
+	}
+
+	Lu_Wave_Resp wave_response(Lu_Wave self)
+	{
+
+	}

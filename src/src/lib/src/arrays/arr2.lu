@@ -1,0 +1,44 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Create and destroy
+
+Arr2 arr2_create(lu_size width, lu_size height)
+{
+	Arr2 self = (Arr2) malloc(sizeof(struct arr2));
+	
+	self->width 	= width;
+	self->height 	= height;
+	self->items 	= arr_create(width * height);
+
+	return self;
+}	
+
+void arr2_destroy(Arr2* self)
+{
+	arr_destroy(&(*self)->items);
+	lu_free((void **) self);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main public methods
+
+
+void arr2_each(Arr2 self, void (*block)(lu_p_void item))
+{
+	arr_each(self->items, block);
+}
+
+void arr2_each_2p(Arr2 self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), lu_p_void p1, lu_p_void p2)
+{
+	arr_each_2p(self->items, block, p1, p2);
+}
+
+void arr2_set(Arr2 self, lu_size x, lu_size y, lu_p_void value)
+{
+	lu_size index = (y * self->width) + x;
+
+	arr_set(self->items, (y * self->width) + x, value);
+}

@@ -1,0 +1,1411 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Ph_",
+				"Ph_Sisa"
+			],
+			[
+				"bu",
+				"buff_end"
+			],
+			[
+				"b",
+				"buff_pos"
+			],
+			[
+				"alloc",
+				"allocator"
+			],
+			[
+				"size",
+				"size_in_bytes"
+			],
+			[
+				"rec_opt",
+				"rec_opts_1"
+			],
+			[
+				"block",
+				"block_size"
+			],
+			[
+				"Ph",
+				"Ph_Block_Def"
+			],
+			[
+				"P",
+				"Ph_Mem_Block"
+			],
+			[
+				"ph_mem_b",
+				"ph_mem_block_init"
+			],
+			[
+				"mem",
+				"ph_mem_block"
+			],
+			[
+				"si",
+				"size_in_bytes"
+			],
+			[
+				"lu_p",
+				"lu_p_byte"
+			],
+			[
+				"item_t",
+				"item_type_size"
+			],
+			[
+				"PH_",
+				"PH_PH_MEM"
+			],
+			[
+				"lu_p_",
+				"lu_p_byte"
+			],
+			[
+				"en",
+				"entity"
+			],
+			[
+				"come",
+				"components"
+			],
+			[
+				"compo",
+				"components"
+			],
+			[
+				"save",
+				"save_response"
+			],
+			[
+				"fins_",
+				"find_opts"
+			],
+			[
+				"rece",
+				"receiver_1"
+			],
+			[
+				"rec",
+				"rec_opts_1"
+			],
+			[
+				"reec",
+				"receiver_2"
+			],
+			[
+				"LuBrain",
+				"LuBrainOpts"
+			],
+			[
+				"LuReceiver",
+				"LuReceiverLayer"
+			],
+			[
+				"LuWaveR",
+				"LuWaveResponse"
+			],
+			[
+				"LuBn",
+				"LuBrainApi"
+			],
+			[
+				"story",
+				"story_id"
+			],
+			[
+				"LuS",
+				"LuStoryResponse"
+			],
+			[
+				"sis_alloc_",
+				"sis_alloc_destroy"
+			],
+			[
+				"brain_save",
+				"brain_save_res_delete_all"
+			],
+			[
+				"lu_",
+				"lu_p_void"
+			],
+			[
+				"rev",
+				"receiver_id"
+			],
+			[
+				"lu_fp_",
+				"lu_fp_wave_consume"
+			],
+			[
+				"net_",
+				"net_obj_consume"
+			],
+			[
+				"ec",
+				"excite"
+			],
+			[
+				"proc",
+				"processor_buff_size"
+			],
+			[
+				"f",
+				"f_wave"
+			],
+			[
+				"neu_",
+				"neu_compare_reverse"
+			],
+			[
+				"sele",
+				"selected"
+			],
+			[
+				"selec",
+				"selected_limit"
+			],
+			[
+				"apex",
+				"apex_not_reached"
+			],
+			[
+				"ape",
+				"apex_not_reached"
+			],
+			[
+				"sis_",
+				"sis_alloc_item_alloc"
+			],
+			[
+				"item",
+				"item_size"
+			],
+			[
+				"l",
+				"l_alloc"
+			],
+			[
+				"siez",
+				"sizeof"
+			],
+			[
+				"lu",
+				"lu_p_void"
+			],
+			[
+				"ite",
+				"item_size"
+			],
+			[
+				"ln_",
+				"ln_alloc_fast_resize"
+			],
+			[
+				"ln_all",
+				"ln_alloc"
+			],
+			[
+				"pat",
+				"path_next"
+			],
+			[
+				"a",
+				"above"
+			],
+			[
+				"s_list_",
+				"s_list_path_debug"
+			],
+			[
+				"leve",
+				"level_size"
+			],
+			[
+				"build_",
+				"build_load_bearing_column"
+			],
+			[
+				"li",
+				"limit_size"
+			],
+			[
+				"lim",
+				"limit_count"
+			],
+			[
+				"ran",
+				"rand_bits_indx"
+			],
+			[
+				"st",
+				"stdlib.h\tstandard header"
+			],
+			[
+				"G",
+				"GGCore"
+			],
+			[
+				"_",
+				"_group_create"
+			],
+			[
+				"ln_alloc_fas",
+				"ln_alloc_fast_destroy"
+			],
+			[
+				"ln_allo",
+				"ln_alloc_arr"
+			],
+			[
+				"Ln",
+				"LnAllocArr"
+			],
+			[
+				"l_nod",
+				"l_node_create"
+			],
+			[
+				"mem_",
+				"mem_alloc_t_inc"
+			],
+			[
+				"end",
+				"endif"
+			],
+			[
+				"LU",
+				"LU_ASCII_UPCASE_START"
+			],
+			[
+				"la",
+				"label_gen_init"
+			],
+			[
+				"w",
+				"width"
+			],
+			[
+				"py",
+				"pyra_layer_save"
+			],
+			[
+				"pyra_",
+				"pyra_layer_destroy"
+			],
+			[
+				"in",
+				"index"
+			],
+			[
+				"Py",
+				"PyraLayer"
+			],
+			[
+				"Pyr",
+				"PyraLayerArgs"
+			],
+			[
+				"ma",
+				"max_val"
+			],
+			[
+				"va",
+				"val_step"
+			],
+			[
+				"Rece",
+				"Receiver"
+			],
+			[
+				"Re",
+				"Receiver"
+			],
+			[
+				"save_re",
+				"save_request"
+			],
+			[
+				"save_",
+				"save_request"
+			],
+			[
+				"h",
+				"height"
+			],
+			[
+				"val",
+				"val_layer"
+			],
+			[
+				"receiv",
+				"receiver_validate"
+			],
+			[
+				"val_la",
+				"val_layer_indx"
+			],
+			[
+				"Val",
+				"ValLayer"
+			],
+			[
+				"neus",
+				"neus_size"
+			],
+			[
+				"LuSave",
+				"LuSaveResponse"
+			],
+			[
+				"re",
+				"request"
+			],
+			[
+				"lu_recever_coll",
+				"lu_receiver_collection_save"
+			],
+			[
+				"sto",
+				"storage_query"
+			],
+			[
+				"neur",
+				"neurons"
+			],
+			[
+				"ne",
+				"neurons"
+			],
+			[
+				"Lu",
+				"LuNeuron"
+			],
+			[
+				"neuro",
+				"neurons_size"
+			],
+			[
+				"neu",
+				"neurons_size"
+			],
+			[
+				"LuN",
+				"LuNeuronCollection"
+			],
+			[
+				"lu_neu",
+				"lu_neuron_collection_destroy"
+			],
+			[
+				"co",
+				"collections"
+			],
+			[
+				"recei",
+				"receivers"
+			],
+			[
+				"LuRe",
+				"LuReceiverCollection"
+			],
+			[
+				"lu_receive",
+				"lu_receiver_collection"
+			],
+			[
+				"r",
+				"receivers"
+			],
+			[
+				"LuR",
+				"LuReceiverCollection"
+			],
+			[
+				"LuRece",
+				"LuReceiverCollection"
+			],
+			[
+				"lu_va",
+				"lu_value_layer"
+			],
+			[
+				"LuReceive",
+				"LuReceiverInput"
+			],
+			[
+				"lu_rece",
+				"lu_receiver_input_free"
+			],
+			[
+				"recv",
+				"receiver_inputs_size"
+			],
+			[
+				"LuI",
+				"LuReceiverInput"
+			],
+			[
+				"rice",
+				"receiver_inputs_size"
+			],
+			[
+				"LuRec",
+				"LuReceiverComponent"
+			],
+			[
+				"lall",
+				"lalloc_size"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/src/basic/basic.h",
+			"settings":
+			{
+				"buffer_size": 386,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/basic/src/basic.lu",
+			"settings":
+			{
+				"buffer_size": 112,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/basic/src/debug.lu",
+			"settings":
+			{
+				"buffer_size": 528,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/basic/src/exception.lu",
+			"settings":
+			{
+				"buffer_size": 227,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/basic/exception.h",
+			"settings":
+			{
+				"buffer_size": 475,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/templates/name.c",
+			"settings":
+			{
+				"buffer_size": 209,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/basic/types.h",
+			"settings":
+			{
+				"buffer_size": 626,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 178.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/F/ludyna/lu_brain",
+		"/F/ludyna/lu_brain/__backup",
+		"/F/ludyna/lu_brain/__backup_test",
+		"/F/ludyna/lu_brain/src",
+		"/F/ludyna/lu_brain/src/src",
+		"/F/ludyna/lu_brain/src/src/basic",
+		"/F/ludyna/lu_brain/src/src/basic/src",
+		"/F/ludyna/lu_brain/src/src/core",
+		"/F/ludyna/lu_brain/src/src/lib",
+		"/F/ludyna/lu_brain/src/src/lib/src",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists",
+		"/F/ludyna/lu_brain/src/src/lib/src/ph_mem",
+		"/F/ludyna/lu_brain/src/src/n_mem",
+		"/F/ludyna/lu_brain/src/src/n_mem/src",
+		"/F/ludyna/lu_brain/src/src/templates",
+		"/F/ludyna/lu_brain/test",
+		"/F/ludyna/lu_brain/test/lib",
+		"/F/ludyna/lu_brain/test/support"
+	],
+	"file_history":
+	[
+		"/F/ludyna/lu_brain/src/src/brain.c",
+		"/F/ludyna/lu_brain/src/src/brain.h",
+		"/F/ludyna/lu_brain/src/lu_types.h",
+		"/F/ludyna/lu_brain/test/lib/test_sisa.c",
+		"/F/ludyna/lu_brain/src/src/basic/src/exception.h",
+		"/F/ludyna/lu_brain/src/src/basic/basic.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/ph_mem/ph_sisa.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/ln_alloc_fast.lu",
+		"/F/ludyna/lu_brain/src/src/basic/src/exception.lu",
+		"/F/ludyna/lu_brain/src/src/basic/src/basic.lu",
+		"/F/ludyna/lu_brain/src/src/lib/ph_mem.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/ph_mem/ph_mem.lu",
+		"/F/ludyna/lu_brain/src/src/lib/exception.h",
+		"/F/ludyna/lu_brain/src/src/lib/lists.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/s_list.lu",
+		"/F/ludyna/lu_brain/src/src/lib/ecs.h",
+		"/F/ludyna/lu_brain/src/src/n_mem/n_mem.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists.lu",
+		"/F/ludyna/lu_brain/src/src/lib/lib.h",
+		"/F/ludyna/lu_brain/src/src/ph_mem/src/sis_alloc.lu",
+		"/F/ludyna/lu_brain/src/lu_brain.h",
+		"/F/ludyna/lu_brain/src/src/public_to_private.h",
+		"/F/ludyna/lu_brain/src/src/rec_opts.lu",
+		"/F/ludyna/lu_brain/src/lu_examples.h",
+		"/F/ludyna/lu_brain/test/test_lu_brain.c",
+		"/F/ludyna/lu_brain/src/src/ph_mem/ph_mem.h",
+		"/F/ludyna/lu_brain/src/src/ph_mem/src/ph_mem.lu",
+		"/F/ludyna/lu_brain/src/src/ph_mem/ph_block_defs.h",
+		"/F/ludyna/lu_brain/src/src/lib/allocator.h",
+		"/F/ludyna/lu_brain/src/src/ph_mem/ph_type.h",
+		"/F/ludyna/lu_brain/src/src/basic/src/util.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/ph_mem.lu",
+		"/F/ludyna/lu_brain/src/src/basic/src/types.h",
+		"/F/ludyna/lu_brain/src/src/n_mem/src/n_mem.lu",
+		"/F/ludyna/lu_brain/src/src/brain_opts.lu",
+		"/F/ludyna/lu_brain/src/src/ph_mem/src/ph_block.lu",
+		"/F/ludyna/lu_brain/src/src/lib/rand.h",
+		"/F/ludyna/lu_brain/src/src/templates/name.c",
+		"/F/ludyna/lu_brain/src/src/templates/name.h",
+		"/F/ludyna/lu_brain/src/__read.md",
+		"/F/ludyna/lu_brain/src/src/rec.lu",
+		"/F/ludyna/lu_brain/src/src/story.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/lib.lu",
+		"/F/ludyna/lu_brain/src/src/ph_mem/sis_alloc.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/rand.lu",
+		"/F/ludyna/lu_brain/src/src/memory/memory.h",
+		"/F/ludyna/lu_brain/test/lib/test_ecs.c",
+		"/F/ludyna/lu_brain/src/src/lib/src/ecs.lu",
+		"/F/ludyna/lu_brain/src/src/lib/arrays.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr2.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr.lu",
+		"/F/ludyna/lu_brain/src/src/name.lu",
+		"/F/ludyna/lu_brain/src/src/neto.lu",
+		"/F/ludyna/lu_brain/src/src/basic/src/constants.h",
+		"/F/ludyna/lu_brain/src/src/basic/src/debug.h",
+		"/F/ludyna/lu_brain/src/src/lib/sis_alloc.h",
+		"/F/ludyna/lu_brain/test/lib/list/s_list/test_s_list.c",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/list.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/ln_alloc.lu",
+		"/F/ludyna/lu_brain/test/lib/list/test_list.c",
+		"/F/ludyna/lu_brain/test/lib/list/test_ln_alloc_fast.c",
+		"/F/ludyna/lu_brain/test/lib/test_sis_alloc.c",
+		"/F/ludyna/lu_brain/src/src/receiver.lu",
+		"/F/ludyna/lu_brain/src/src/receiver_opts.lu",
+		"/F/ludyna/lu_brain/src/src/save_resp.lu",
+		"/F/ludyna/lu_brain/src/src/wave.lu",
+		"/F/ludyna/lu_brain/__backup/@brain/brain.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/sis_alloc.lu",
+		"/F/ludyna/lu_brain/__backup/@brain/net/lin.c",
+		"/F/ludyna/lu_brain/__backup/@brain/net/lin.h",
+		"/F/ludyna/lu_brain/__backup/@brain/net/lino.h",
+		"/F/ludyna/lu_brain/src/src/block.lu",
+		"/F/ludyna/lu_brain/src/src/memory/src/memory.lu",
+		"/F/ludyna/lu_brain/src/src/reception.lu",
+		"/F/ludyna/lu_brain/src/src/find_resp.lu",
+		"/F/ludyna/lu_brain/src/src/restore_resp.lu",
+		"/F/ludyna/lu_brain/src/src/find_opts.lu",
+		"/F/ludyna/lu_brain/src/src/restore_opts.lu",
+		"/F/ludyna/lu_brain/src/src/wave_resp.lu",
+		"/F/ludyna/lu_brain/src/src/save_opts.lu",
+		"/F/ludyna/lu_brain/test/lib/test_rand.c",
+		"/F/ludyna/lu_brain/test/lib/test_arr.c",
+		"/F/ludyna/lu_brain/src/src/memory/src/m_neto.lu",
+		"/F/ludyna/lu_brain/src/public_to_private.h",
+		"/F/ludyna/lu_brain/src/name/name.h",
+		"/F/ludyna/lu_brain/src/brain/src/brain.c",
+		"/F/ludyna/lu_brain/src/brain/brain.h",
+		"/F/ludyna/lu_brain/src/src/memory/src/m_block.lu",
+		"/F/ludyna/lu_brain/sub.sublime-project",
+		"/F/ludyna/lu_brain/project.yml",
+		"/F/ludyna/lu_brain/src/brain_opts/brain_opts.h",
+		"/F/ludyna/lu_brain/src/neto/neto.h",
+		"/F/ludyna/lu_brain/src/brain/src/memory/memory.h",
+		"/F/ludyna/lu_brain/src/save_resp/save_resp.h",
+		"/F/ludyna/lu_brain/src/save_resp/src/save_resp.c",
+		"/F/ludyna/lu_brain/src/brain/public_to_private.h",
+		"/F/ludyna/lu_brain/src/name/src/name.c",
+		"/F/ludyna/lu_brain/src/pub/pub.h",
+		"/F/ludyna/lu_brain/src/block/block.h",
+		"/F/ludyna/lu_brain/README.md",
+		"/F/ludyna/lu_brain/src/templates/name.h",
+		"/F/ludyna/lu_brain/src/neto/src/neto.c",
+		"/F/ludyna/lu_brain/src/templates/name.c",
+		"/F/ludyna/lu_brain/src/receiver_opts/receiver_opts.h",
+		"/F/ludyna/lu_brain/src/wave/wave.h",
+		"/F/ludyna/lu_brain/src/wave/src/wave.c",
+		"/F/ludyna/lu_brain/src/block/src/block.c",
+		"/F/ludyna/lu_brain/src/story/story.h",
+		"/F/ludyna/lu_brain/src/story/src/story.c",
+		"/F/ludyna/lu_brain/src/receiver_opts/src/receiver_opts.c",
+		"/F/ludyna/lu_brain/src/receiver/receiver.h",
+		"/F/ludyna/lu_brain/src/receiver/src/receiver.c",
+		"/F/ludyna/lu_brain/src/restore_opts/receiver_opts.h",
+		"/F/ludyna/lu_brain/src/restore_opts/src/receiver_opts.c",
+		"/F/ludyna/lu_brain/src/brain_opts/src/brain_opts.c",
+		"/F/ludyna/lu_brain/src/brain/src/memory/src/memory.c",
+		"/F/ludyna/lu_brain/src/basic/basic.h",
+		"/F/ludyna/lu_brain/src/brain/brain.c",
+		"/F/ludyna/lu_brain/src/brain/memory/memory.h",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_neu.lu",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_val_neu.lu",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_time.lu",
+		"/F/ludyna/lu_brain/src/brain/memory/src/memory.c",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_story.lu",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_block.lu",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_perception.lu",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_receiver.lu",
+		"/F/ludyna/lu_brain/src/brain/memory/src/m_neto.lu"
+	],
+	"find":
+	{
+		"height": 39.0
+	},
+	"find_in_files":
+	{
+		"height": 104.0,
+		"where_history":
+		[
+			"F:\\ludyna\\lu_brain\\src, F:\\ludyna\\lu_brain\\test\t\t",
+			"F:\\ludyna\\lu_brain\\src, F:\\ludyna\\lu_brain\\test\t",
+			"F:\\ludyna\\lu_brain\\src, F:\\ludyna\\lu_brain\\test",
+			"F:\\ludyna\\lu_brain\\src",
+			"F:\\ludyna\\lu_brain\\test,F:\\ludyna\\lu_brain\\src",
+			"F:\\ludyna\\lu_brain\\src",
+			"F:\\ludyna\\lu_brain\\test,F:\\ludyna\\lu_brain\\src",
+			"F:\\ludyna\\lu_brain\\test,F:\\ludyna\\lu_brain\\src=",
+			"F:\\ludyna\\lu_brain\\test,F:\\ludyna\\lu_brain\\src",
+			"F:\\ludyna\\lu_brain\\test",
+			"F:\\ludyna\\lu_brain\\src",
+			"F:\\ludyna\\lu_brain\\test",
+			"F:\\ludyna\\lu_brain\\src",
+			"F:\\ludyna\\lu_brain\\test",
+			"F:\\ludyna\\lu_brain\\src",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"free",
+			"items",
+			"item_count",
+			"count",
+			"Sis_Alloc",
+			"sis_alloc",
+			"Sis_Alloc",
+			"sis_alloc",
+			"Sis_Alloc",
+			"count",
+			"free",
+			"tail",
+			"items",
+			"Ph_Sis_Alloc",
+			"ph_sis_alloc",
+			"name",
+			"Name",
+			"_LU_NAME_H",
+			"Receiver",
+			"receiver",
+			"Lu_Receiver",
+			"lu_receiver",
+			"Receiver_Opts",
+			"receiver_opts",
+			"Lu_Receiver_Opts",
+			"lu_receiver_opts",
+			")\n",
+			"PH_BF_FREE",
+			"pos",
+			"end",
+			"start",
+			"freed",
+			"free_end",
+			"free_count",
+			"free",
+			"free_end",
+			"free_count",
+			"free",
+			"PH_BF_FREE",
+			"usage",
+			"PH_MU_FREE_AVAILABLE",
+			"Ph_Mem_Block",
+			"Ph_Mem_Usage",
+			"ph_mu_flags",
+			"ph_mem_usage",
+			"ph_mem_block",
+			"items_end",
+			"tail",
+			"rand_bits",
+			"ph_mem_usages",
+			"_LU_PH_TYPE_H",
+			"_LU_PH_MEM_H",
+			";\n",
+			"ph_usage_desc",
+			"Ph_Usage_Desc",
+			"Ph_Type",
+			"ph_type_usage",
+			"memory",
+			"Memory",
+			"memory",
+			"name",
+			"Name",
+			"_LU_NAME_H",
+			"sis_alloc_item_alloc",
+			"Sis_Alloc",
+			"Name",
+			"name",
+			"_LU_NAME_H",
+			"SisAlloc",
+			"SList",
+			"SNode",
+			"LnAllocFast",
+			"LNode",
+			"RestoreOpts",
+			"FindOpts",
+			"SaveOpts",
+			"ReceiverOpts",
+			"BrainOpts",
+			"RestoreResp",
+			"FindResp",
+			"SaveResp",
+			"WaveResp",
+			"LuRestoreOpts",
+			"LuFindOpts",
+			"Lu_ReceiverOpts",
+			"LuSaveOpts",
+			"Lu_BrainOpts",
+			"LuRestoreResp",
+			"LuReception",
+			"LuFindResp",
+			"LuSaveResp",
+			"Lu_WaveResp",
+			"LuWave",
+			"LuBlock",
+			"LuStory",
+			"LuReceiver",
+			"LuName",
+			"LuNeto",
+			"LuBrain",
+			"_LU_NAME_H",
+			"_LU_SRC_BRAIN_H",
+			"_LU_NAME_H",
+			"Name",
+			"name",
+			"_LU_NAME_H",
+			"Name",
+			"name",
+			"_LU_NAME_H",
+			"lu_peak",
+			"LuPeak",
+			"Neto",
+			"lu_find_resp_peaks",
+			"lu_save_resp_peaks",
+			"Peak",
+			"peak",
+			"lu_wave_neto_excited",
+			"wave_neto_excited",
+			"wave_neto_touched",
+			"lu_wave_neto_touched",
+			"Name",
+			"name",
+			"_LU_NAME_H",
+			"Name",
+			"name",
+			"_LU_NAME_H",
+			"LuNeto",
+			"LuRestoreOpts",
+			"LuFindOpts"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"free_start",
+			"items_start",
+			"items_count",
+			"item_count",
+			"Ph_Sisa",
+			"ph_sisa",
+			"Ph_Sisa",
+			"ph_sisa",
+			"Ph_Sisa",
+			"items_count",
+			"free_start",
+			"items_pos",
+			"items_start",
+			"Ph_Sisa",
+			"ph_sisa",
+			"ph_mem",
+			"Ph_Mem",
+			"_LU_PH_MEM_H",
+			"_LU_ALLOCATOR_H",
+			"Rec",
+			"rec",
+			"Lu_Rec",
+			"lu_rec",
+			"Rec_Opts",
+			"rec_opts",
+			"Lu_Rec_Opts",
+			"lu_rec_opts",
+			"PH_B_FREE",
+			"item_pos",
+			"item_end",
+			"item_start",
+			"freed_start",
+			"freed_end",
+			"freed_count",
+			"freed",
+			"freed_end",
+			"freed_count",
+			"freed",
+			"PH_B_FREE",
+			"def",
+			"PH_BF_FREE",
+			"Ph_Block",
+			"Ph_Block_Def",
+			"ph_block_flags",
+			"ph_block_def",
+			"ph_block",
+			"end",
+			"pos",
+			"g_rand_bits",
+			"g_ph_mem_usages",
+			"_LU_PH_MEM_USAGES_H",
+			"_LU_PH_TYPE_H",
+			"ph_mem_usage",
+			"Ph_Mem_Usage",
+			"Ph_Usage_Desc",
+			"ph_usage_desc",
+			"n_mem",
+			"N_Mem",
+			"n_mem",
+			"ph_mem",
+			"Ph_Mem",
+			"_LU_PH_MEM_H",
+			"Ecs",
+			"ecs",
+			"_LU_ECS_H",
+			"Sis_Alloc",
+			"S_List",
+			"S_Node",
+			"Ln_Alloc_Fast",
+			"L_Node",
+			"Restore_Opts",
+			"Find_Opts",
+			"Save_Opts",
+			"Receiver_Opts",
+			"Brain_Opts",
+			"Restore_Resp",
+			"Find_Resp",
+			"Save_Resp",
+			"Wave_Resp",
+			"Lu_Restore_Opts",
+			"Lu_Find_Opts",
+			"Lu_Receiver_Opts",
+			"Lu_Save_Opts",
+			"Lu_Brain_Opts",
+			"Lu_Restore_Resp",
+			"Lu_Reception",
+			"Lu_Find_Resp",
+			"Lu_Save_Resp",
+			"Lu_Wave_Resp",
+			"Lu_Wave",
+			"Lu_Block",
+			"Lu_Story",
+			"Lu_Receiver",
+			"Lu_Name",
+			"Lu_Neto",
+			"Lu_Brain",
+			"_LU_SRC_BRAIN_H",
+			"_LU_PUBLIC_TO_PRIVATE_H",
+			"_LU_SRC_BRAIN_H",
+			"SaveResp",
+			"save_resp",
+			"_LU_SAVE_RESP_H",
+			"Neto",
+			"neto",
+			"_LU_NETO_H",
+			"lu_neto",
+			"LuNeto",
+			"lu_find_resp_netos",
+			"lu_save_resp_neto",
+			"Neto",
+			"neto",
+			"lu_wave_excited_count",
+			"wave_excited_count",
+			"wave_touched_count",
+			"lu_wave_touched_count",
+			"Wave",
+			"wave",
+			"_LU_WAVE_H",
+			"Block",
+			"block",
+			"_LU_BLOCK_H",
+			"Neto",
+			"RestoreOpts",
+			"FindOpts",
+			"SaveOpts",
+			"Story",
+			"Receiver",
+			"receiver"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": true,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		},
+		{
+			"sheets":
+			[
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/src/basic/basic.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 386,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								386,
+								386
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/src/basic/src/basic.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 112,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								49,
+								49
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/src/basic/src/debug.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 528,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								49,
+								49
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "src/src/basic/src/exception.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 227,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								227,
+								227
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "src/src/basic/exception.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 475,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								417,
+								417
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/src/templates/name.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 209,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/src/basic/types.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 626,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								89,
+								89
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 40.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			],
+			[
+				2,
+				0,
+				3,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.355940620283,
+			0.715830706889,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": false,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "sub.sublime-project",
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"src\\src\\basic\\src\\exception.h"
+			],
+			[
+				"ecs",
+				"src\\src\\lib\\ecs.h"
+			],
+			[
+				"brai",
+				"src\\@brain\\brain.c"
+			],
+			[
+				"lu_",
+				"src\\global\\lu_types.h"
+			],
+			[
+				"s_list",
+				"src\\lib\\lists\\s_list\\s_list.c"
+			],
+			[
+				"ran",
+				"src\\lib\\rand.c"
+			],
+			[
+				"s_node",
+				"src\\lib\\lists\\s_list\\s_node.c"
+			],
+			[
+				"ne",
+				"src\\@brain\\elements\\neu.c"
+			],
+			[
+				"types",
+				"src\\globals\\lu_types.h"
+			],
+			[
+				"test_val_",
+				"test\\brain\\@receiver\\layers\\test_val_layer.c"
+			],
+			[
+				"test_val",
+				"build\\test\\cache\\test_val_layer.c"
+			],
+			[
+				"test_lu_inp",
+				"test\\brain\\requests\\test_lu_input.c"
+			],
+			[
+				"lu_save_",
+				"src\\brain\\requests\\lu_save_request.c"
+			],
+			[
+				"lu_brai",
+				"src\\lu_brain.h"
+			],
+			[
+				"lu_se",
+				"src\\sequence\\lu_sequence.h"
+			],
+			[
+				"lu_receiver_sae",
+				"src\\receiver\\requests\\lu_receiver_save_request.h"
+			],
+			[
+				"save_ne",
+				"src\\brain\\responses\\lu_save_response.h"
+			],
+			[
+				"lu_neuro",
+				"src\\elements\\lu_neuron.h"
+			],
+			[
+				"lu_save",
+				"src\\brain\\responses\\lu_save_response.h"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 700.0
+	},
+	"selected_group": 2,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 264.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

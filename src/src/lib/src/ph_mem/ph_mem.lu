@@ -1,0 +1,50 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Inits, create and destroy
+
+
+	Ph_Mem ph_mem_create(lu_size size_in_bytes)
+	{
+		lu_p_void start			= malloc(size_in_bytes);
+
+		if (start == NULL) return NULL;
+
+		Ph_Mem self 			= (Ph_Mem) start;
+		self->buff_start 		= (lu_p_byte) start;
+		self->buff_end			= self->buff_start + size_in_bytes;
+		self->buff_pos 			= self->buff_start + sizeof(struct ph_mem);
+
+		if (self->buff_pos >= self->buff_end)
+		{
+			ph_mem_destroy(self);
+			return NULL;
+		}
+
+		return self;
+	}
+
+	void ph_mem_destroy(Ph_Mem self)
+	{
+		free((lu_p_void) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main methods
+
+	// 
+	// All allocations should be at the beginning of app existance executed 
+	// in single thread. No multi-threading support is needed.
+	//
+	lu_p_byte ph_mem_alloc(Ph_Mem self, lu_size size_in_bytes)
+	{
+		if (self->buff_pos + size_in_bytes > self->buff_end) 
+			return NULL;
+
+		lu_p_byte tmp 	= self->buff_pos;
+		self->buff_pos 	+= size_in_bytes;
+		return tmp;
+	}

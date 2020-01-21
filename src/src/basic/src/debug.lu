@@ -1,0 +1,34 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+
+#include <stdio.h>
+#include <string.h>
+
+#include "debug.h"
+
+struct label_gen g_label_gen = {
+	.l_char = LU_ASCII_UPCASE_START,
+	.l_num = 0
+};
+
+void label_gen_set(char* lbl)
+{
+	if (g_label_gen.l_num > 0)
+	{ 
+		sprintf(lbl, "%c%u", g_label_gen.l_char, g_label_gen.l_num);
+	}
+	else 
+	{
+		sprintf(lbl, "%c", g_label_gen.l_char);
+	}
+
+	++g_label_gen.l_char; 
+
+	if (g_label_gen.l_char > LU_ASCII_UPCASE_END)
+	{
+		g_label_gen.l_char = LU_ASCII_UPCASE_START;
+		++g_label_gen.l_num;
+	}
+}
