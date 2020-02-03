@@ -5,6 +5,7 @@
 #define _LU_SRC_BRAIN_H
 
 #include "basic/basic.h"
+#include "system/system.h"
 #include "lib/lib.h"
 
 #include "src/public_to_private.h"
@@ -64,7 +65,9 @@
 		lu_size			id;  		// useful for logs and debugging 
 									// in multi-brain env
 
-		Ph_Mem 			ph_mem;
+		System			system;		// global state/devices/memory possibly
+									// shared between objects of the brain 
+
 		N_Mem 			n_mem;
 	};	
 

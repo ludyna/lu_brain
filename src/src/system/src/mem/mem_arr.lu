@@ -6,8 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	Ph_Sisa ph_sisa_create (
-		Ph_Mem 			ph_mem, 
+	Mem_Arr mem_arr_create (
+		Mem 			mem, 
 		lu_size 		item_size, 
 		lu_size 		size, 
 		lu_value 		percent,
@@ -26,30 +26,30 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = ph_mem_avail(ph_mem) * percent  / 100.0;
+			lu_size a = mem_avail(mem) * percent  / 100.0;
 
 			lu_size fis = item_size;
-			if (flags & PH_S_ITEM_FREEABLE) 
+			if (flags & MEM_ARR_ITEM_FREEABLE) 
 				fis += sizeof(lu_p_byte);
 
-			size = (a - sizeof(struct ph_sisa)) / fis;
+			size = (a - sizeof(struct mem_arr)) / fis;
 		}
 
-		lu_size f_size = sizeof(struct ph_sisa) + item_size * size;
+		lu_size full_size = sizeof(struct mem_arr) + item_size * size;
 		
-		if (flags & PH_S_ITEM_FREEABLE) 
-			f_size += sizeof(lu_p_byte) * size;
+		if (flags & MEM_ARR_ITEM_FREEABLE) 
+			full_size += sizeof(lu_p_byte) * size;
 
 
-		lu_p_byte start = ph_mem_alloc(ph_mem, f_size);
+		lu_p_byte start = mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
 
-		Ph_Sisa self 			= (Ph_Sisa) start;
+		Mem_Arr self 			= (Mem_Arr) start;
 		self->item_size 		= item_size;
 		self->size 				= size;
 		self->flags 			= flags;
-		self->items_start 		= start + sizeof(struct ph_sisa);
+		self->items_start 		= start + sizeof(struct mem_arr);
 		self->items_pos			= self->items_start;
 		self->items_end			= self->items_start + self->size * self->item_size;
 		self->free_start 		= (lu_p_byte*) self->items_end;
@@ -62,7 +62,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
 
-	lu_p_byte ph_sisa_item_alloc(Ph_Sisa self)
+	lu_p_byte mem_arr_item_alloc(Mem_Arr self)
 	{
 		lu_p_byte res;
 		if (self->items_pos < self->items_end)
@@ -83,9 +83,11 @@
 		return res;
 	}
 
-	void ph_sisa_item_free(Ph_Sisa self, lu_p_byte item)
+	void mem_arr_item_free(Mem_Arr self, lu_p_byte item)
 	{
-		if (!(self->flags & PH_S_ITEM_FREEABLE)) return;
+		if (item == NULL) return;  // should prob debug this
+
+		if (!(self->flags & MEM_ARR_ITEM_FREEABLE)) return;
 
 		lu_assert(self->items_count > 0);
 		lu_assert(self->free_count < self->size); 

@@ -11,6 +11,6 @@
 // 
 
 	Name name_create();
-	void name_destroy(Name* self);
+	void name_destroy(Name self);
 
 #endif // _LU_NAME_H

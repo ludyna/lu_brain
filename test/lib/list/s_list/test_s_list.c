@@ -39,15 +39,15 @@ static lu_value neu_compare_reverse(lu_p_void p1, lu_p_void p2)
 
 void test_s_list1(void)
 {
-    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+    Mem mem = mem_create(4024);
 
-    Neu n1  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n35 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n45 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n35 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n45 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
 
     neu_p_set(n1, 1.0);
     neu_p_set(n2, 2.0);
@@ -58,7 +58,7 @@ void test_s_list1(void)
     neu_p_set(n5, 5.0);
 
     srand(time(NULL));
-    S_List list = s_list_create(10, neu_compare, S_LIST_FIRST);
+    S_List list = s_list_create(mem, 10, neu_compare, S_LIST_FIRST);
 
     s_list_add(list, n4);
     TEST_ASSERT(((Neu)(list->first->value))->p == 4);
@@ -87,22 +87,21 @@ void test_s_list1(void)
 
     TEST_ASSERT(list->level_size == 3);
 
-    s_list_destroy(&list);
-    sis_alloc_destroy(&sis_alloc);
+    mem_destroy(mem);
 }
 
 void test_s_list_limited(void)
 {
-    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+    Mem mem = mem_create(4024);
 
-    Neu n1  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n35 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n45 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n6  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n35 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n45 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n6  = (Neu) mem_alloc(mem, sizeof(struct neu));
 
     neu_p_set(n1, 1.0);
     neu_p_set(n2, 2.0);
@@ -114,7 +113,7 @@ void test_s_list_limited(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    S_List list = s_list_create(2, neu_compare, S_LIST_FIRST);
+    S_List list = s_list_create(mem, 2, neu_compare, S_LIST_FIRST);
 
     s_list_add(list, n5);
 
@@ -155,22 +154,21 @@ void test_s_list_limited(void)
 
     s_list_debug(list);
 
-    s_list_destroy(&list);
-    sis_alloc_destroy(&sis_alloc);
+    mem_destroy(mem);
 }
 
 void test_s_list_limited_reverse(void)
 {
-    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+    Mem mem = mem_create(8192);
 
-    Neu n1  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n35 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n45 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n6  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n35 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n45 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n6  = (Neu) mem_alloc(mem, sizeof(struct neu));
 
     neu_p_set(n1, 1.0);
     neu_p_set(n2, 2.0);
@@ -182,7 +180,7 @@ void test_s_list_limited_reverse(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    S_List list = s_list_create(2, neu_compare_reverse, S_LIST_LAST);
+    S_List list = s_list_create(mem, 2, neu_compare_reverse, S_LIST_LAST);
 
     s_list_add(list, n5);
 
@@ -223,22 +221,21 @@ void test_s_list_limited_reverse(void)
 
     s_list_debug(list);
 
-    s_list_destroy(&list);
-    sis_alloc_destroy(&sis_alloc);
+    mem_destroy(mem);
 }
 
 void test_s_list_eq(void)
 {
-    Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));
+    Mem mem = mem_create(8192);
 
-    Neu n2  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n22 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n3  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n33 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n4  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n44 = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n5  = (Neu) sis_alloc_item_alloc(sis_alloc);
-    Neu n6  = (Neu) sis_alloc_item_alloc(sis_alloc);
+    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n22 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n33 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n44 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n6  = (Neu) mem_alloc(mem, sizeof(struct neu));
 
     neu_p_set(n2, 2.0);
     neu_p_set(n22, 2.0);
@@ -250,7 +247,7 @@ void test_s_list_eq(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    S_List list = s_list_create(3, neu_compare_reverse, S_LIST_LAST);
+    S_List list = s_list_create(mem, 3, neu_compare_reverse, S_LIST_LAST);
 
     s_list_add(list, n5);
     s_list_add(list, n2);
@@ -291,6 +288,5 @@ void test_s_list_eq(void)
 
     s_list_debug(list);
 
-    s_list_destroy(&list);
-    sis_alloc_destroy(&sis_alloc);
+    mem_destroy(mem);
 }

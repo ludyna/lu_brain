@@ -15,7 +15,7 @@
 enum lu_e {
 	LU_E_FIRST = 6000, 
 	
-	// Ph_Mem 
+	// Mem 
 	LU_E_PH_MEM_ALLOC_FAILED,
 	LU_E_PH_MEM_OUT_OF_MEMORY, 
 	LU_E_PH_MEM_OUT_OF_BLOCK_MEMORY,

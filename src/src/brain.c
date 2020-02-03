@@ -8,6 +8,7 @@
 // Fundamental modules
 
 	#include "basic/src/basic.lu"
+	#include "system/src/system.lu"
 	#include "lib/src/lib.lu"
  
 ///////////////////////////////////////////////////////////////////////////////
@@ -45,12 +46,12 @@
 
 	Brain brain_create(Brain_Opts opts)
 	{
-		Ph_Mem ph_mem 	= ph_mem_create(opts);
+		//Mem mem 	= mem_create(opts);
 
-		//Brain self 		= (Brain) ph_mem_alloc(ph_mem, PH_BRAIN);
+		//Brain self 		= (Brain) mem_alloc(mem, PH_BRAIN);
 
 		// Initialize
-		// self->ph_mem 	= ph_mem;
+		// self->mem 	= mem;
 		// self->n_mem		= n_mem_create(self);
 
 		//return self;
@@ -60,7 +61,7 @@
 
 	void brain_destroy(Brain* self)
 	{
-		ph_mem_destroy(&(*self)->ph_mem);
+		//mem_destroy(&(*self)->mem);
 		*self = NULL;
 	}
 

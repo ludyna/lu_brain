@@ -11,7 +11,7 @@
 	typedef struct m_val_neu* 		M_Val_Neu;
 	typedef struct m_neu*			M_Neu;
 	typedef struct m_perception* 	M_Perception;
-	typedef struct m_rec* 		M_Rec;
+	typedef struct m_rec* 			M_Rec;
 	typedef struct m_block* 		M_Block;
 	typedef struct m_story* 		M_Story;
 	typedef struct m_time* 			M_Time;
@@ -145,11 +145,11 @@
 		Brain 			brain;
 		//M_Time 		time;
 
-		Ph_Sisa 		m_neulable;
+		Mem_Arr 		m_neulable;
 		
-		Ph_Sisa 		s_waves;
-		Ph_Sisa 		f_waves;
-		Ph_Sisa 		r_waves;
+		Mem_Arr 		s_waves;
+		Mem_Arr 		f_waves;
+		Mem_Arr 		r_waves;
 	};
 	
 	N_Mem n_mem_create(Brain brain);

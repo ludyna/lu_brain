@@ -1,0 +1,6 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+#include "mem/mem.lu"
+#include "mem/mem_arr.lu"

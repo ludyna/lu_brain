@@ -4,7 +4,6 @@
 #ifndef _LU_LIB_H
 #define _LU_LIB_H
 
-#include "ph_mem.h"
 #include "rand.h"
 #include "arrays.h"
 #include "lists.h" 
