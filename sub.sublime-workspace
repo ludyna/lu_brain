@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"max_si",
+				"max_size_in_items"
+			],
+			[
 				"ma",
 				"max_size"
 			],
@@ -471,7 +475,25 @@
 			"file": "test/lib/list/s_list/test_s_list.c",
 			"settings":
 			{
-				"buffer_size": 8305,
+				"buffer_size": 7954,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/lu_brain.h",
+			"settings":
+			{
+				"buffer_size": 5271,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/lib/list/test_list.c",
+			"settings":
+			{
+				"buffer_size": 3057,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -480,7 +502,7 @@
 			"file": "src/src/lib/src/lists/s_list.lu",
 			"settings":
 			{
-				"buffer_size": 5968,
+				"buffer_size": 6107,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -489,7 +511,16 @@
 			"file": "src/src/lib/lists.h",
 			"settings":
 			{
-				"buffer_size": 3310,
+				"buffer_size": 3577,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/lib/src/lists/list.lu",
+			"settings":
+			{
+				"buffer_size": 3394,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -687,7 +718,7 @@
 	],
 	"find":
 	{
-		"height": 41.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
@@ -717,6 +748,8 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"1024",
+			"s_node_create",
 			"Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));",
 			"(Neu) sis_alloc_item_alloc(sis_alloc);",
 			"f_size",
@@ -842,9 +875,7 @@
 			"SaveResp",
 			"WaveResp",
 			"LuRestoreOpts",
-			"LuFindOpts",
-			"Lu_ReceiverOpts",
-			"LuSaveOpts"
+			"LuFindOpts"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -852,6 +883,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"8192",
 			"Mem mem = mem_create(1024);",
 			"(Neu) mem_alloc(mem, sizeof(struct neu));",
 			"full_size",
@@ -978,8 +1010,7 @@
 			"Lu_Receiver_Opts",
 			"Lu_Save_Opts",
 			"Lu_Brain_Opts",
-			"Lu_Restore_Resp",
-			"Lu_Reception"
+			"Lu_Restore_Resp"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -990,7 +1021,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -999,15 +1030,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 8305,
+						"buffer_size": 7954,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4048,
-								4048
+								817,
+								817
 							]
 						],
 						"settings":
@@ -1017,33 +1048,92 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1900.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/lu_brain.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5271,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1151,
+								1151
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 171.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "test/lib/list/test_list.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3057,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1576,
+								1576
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 1,
+			"selected": 2,
 			"sheets":
 			[
 				{
-					"buffer": 1,
+					"buffer": 3,
 					"file": "src/src/lib/src/lists/s_list.lu",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5968,
+						"buffer_size": 6107,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1681,
-								1681
+								324,
+								324
 							]
 						],
 						"settings":
@@ -1052,27 +1142,27 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 493.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 4,
 					"file": "src/src/lib/lists.h",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3310,
+						"buffer_size": 3577,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2849,
-								2849
+								2478,
+								2478
 							]
 						],
 						"settings":
@@ -1081,10 +1171,39 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1710.0,
+						"translation.y": 1471.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/src/lib/src/lists/list.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3394,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								650,
+								650
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
