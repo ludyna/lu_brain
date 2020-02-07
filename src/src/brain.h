@@ -65,7 +65,7 @@
 		lu_size			id;  		// useful for logs and debugging 
 									// in multi-brain env
 
-		System			system;		// global state/devices/memory possibly
+		System			sys;		// global state/devices/memory possibly
 									// shared between objects of the brain 
 
 		N_Mem 			n_mem;

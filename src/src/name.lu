@@ -15,7 +15,7 @@
 		return self;
 	}
 
-	void name_destroy(Name* self)
+	void name_destroy(Name self)
 	{
 		lu_free((void**) self);
 	}

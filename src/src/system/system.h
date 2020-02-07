@@ -18,7 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	System system_create();
+	System system_create(lu_size mem_size_in_bytes);
 	void system_destroy(System self);
 
 	//

@@ -16,9 +16,9 @@
 		return self;
 	}
 
-	void brain_opts_destroy(Brain_Opts* self)
+	void brain_opts_destroy(Brain_Opts self)
 	{
-		lu_free((void**) self);
+		free(self);
 	}
 
 

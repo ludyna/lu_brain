@@ -1,3 +1,11 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+
+	test_lu_brain tests public interfaces (from library user point of view) and includes 
+	integration tests in general. It uses nouns with Lu_ prefix only and methods with lu_ prefixes 
+	only.
+*/
+
 #include "unity.h"
 #include "src/brain.h"
 
@@ -21,20 +29,20 @@ lu_value* 			data_5 			= NULL;
 
 void setUp(void)
 { 
-	brain_opts 		= brain_opts_create(1, 2048);
-	rec_opts_1 		= rec_opts_create(brain_opts, 2, 2, 0.0, 10.0);
-	rec_opts_2		= rec_opts_create(brain_opts, 2, 2, 0.0, 10.0);
+	brain_opts 			= lu_brain_opts_create(1, 2048);
+	rec_opts_1 			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0);
+	rec_opts_2			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0);
 
-	brain 			= lu_brain_create(brain_opts);
+	brain 				= lu_brain_create(brain_opts);
 
-	rec_1 			= lu_brain_rec_get(brain, 0);
-	rec_2 			= lu_brain_rec_get(brain, 1);
+	rec_1 				= lu_brain_rec_get(brain, 0);
+	rec_2 				= lu_brain_rec_get(brain, 1);
 }
 
 void tearDown(void)
 {	
-	brain_opts_destroy(&brain_opts);
-	lu_brain_destroy(&brain);
+	lu_brain_opts_destroy(brain_opts);
+	lu_brain_destroy(brain);
 }
 
 void sleep(lu_size t)
@@ -111,7 +119,4 @@ void test_lu_brain_basics(void)
 	// Restore
 
 	Lu_Restore_Resp restore_resp = lu_story_restore(save_neto, restore_opts);
-
-	
-
 }

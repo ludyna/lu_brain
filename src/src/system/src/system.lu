@@ -4,3 +4,21 @@
  
 #include "mem/mem.lu"
 #include "mem/mem_arr.lu"
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Inits, create and destroy
+
+	System system_create(lu_size mem_size_in_bytes)
+	{
+		Mem mem 		= mem_create(mem_size_in_bytes);
+		System self 	= (System) mem_alloc(mem, sizeof(struct system));
+		self->mem 		= mem;
+
+		return self;
+	}
+
+	void system_destroy(System self)
+	{
+		mem_destroy(self->mem);
+	}

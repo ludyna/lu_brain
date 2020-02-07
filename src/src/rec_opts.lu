@@ -14,7 +14,7 @@
 		// return self;
 	}
 
-	void rec_opts_destroy(Rec_Opts* self)
+	void rec_opts_destroy(Rec_Opts self)
 	{
 		// lu_free((void**) self);
 	}

@@ -48,19 +48,19 @@
 // Brain_Opts API
 
 	Lu_Brain_Opts lu_brain_opts_create(lu_size id, lu_size size_in_bytes);
-	void lu_brain_opts_destroy(Lu_Brain_Opts*);
+	void lu_brain_opts_destroy(Lu_Brain_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Rec_Opts API
 
 	Lu_Rec_Opts lu_rec_opts_create(Lu_Brain_Opts brain_opts, lu_size w, lu_size h, lu_value min, lu_value max);
-	void lu_rec_opts_destroy(Lu_Rec_Opts*);
+	void lu_rec_opts_destroy(Lu_Rec_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Save_Opts API
 
 	Lu_Save_Opts lu_save_opts_create();
-	void lu_save_opts_destroy(Lu_Save_Opts*);
+	void lu_save_opts_destroy(Lu_Save_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Find_Opts API
@@ -75,13 +75,13 @@
 // Restore_Opts API
 
 	Lu_Restore_Opts lu_restore_opts_create();
-	void lu_restore_opts_destroy(Lu_Restore_Opts*);
+	void lu_restore_opts_destroy(Lu_Restore_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
 	Lu_Brain lu_brain_create(Lu_Brain_Opts);
-	void lu_brain_destroy(Lu_Brain*);
+	void lu_brain_destroy(Lu_Brain);
 
 	///////////////////////////////////////////////////////////////////////
 	// Getters / Setters
@@ -131,7 +131,7 @@
 // Name API
 	
 	Lu_Name lu_name_create(Lu_Brain);
-	void lu_name_destroy(Lu_Name*);
+	void lu_name_destroy(Lu_Name);
 
 	void lu_name_link(Lu_Name, Lu_Neto dst);
 	void lu_name_unlink(Lu_Name, Lu_Neto dst);

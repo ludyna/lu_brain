@@ -46,23 +46,18 @@
 
 	Brain brain_create(Brain_Opts opts)
 	{
-		//Mem mem 	= mem_create(opts);
+		System sys 		= system_create(opts->size_in_bytes);
+		Brain self 		= (Brain) mem_alloc(sys->mem, sizeof(struct brain));
+		
+		self->id 		= opts->id;
+		self->sys 		= sys;
 
-		//Brain self 		= (Brain) mem_alloc(mem, PH_BRAIN);
-
-		// Initialize
-		// self->mem 	= mem;
-		// self->n_mem		= n_mem_create(self);
-
-		//return self;
-
-		return NULL;
+		return self;
 	}
 
-	void brain_destroy(Brain* self)
+	void brain_destroy(Brain self)
 	{
-		//mem_destroy(&(*self)->mem);
-		*self = NULL;
+		system_destroy(self->sys);
 	}
 
 	Rec lu_brain_rec_get(Brain self, lu_size index)
