@@ -20,13 +20,16 @@
 
 		if (percent > 100.0) return NULL;
 
+		// if its not preallocated mem, size should be provided
+		if (size == 0 && !(mem->flags & MEM_PREALLOCATED)) return NULL;
+
 		if (size == 0 && percent > 0)
 		{
 			// x * ps + x * is + sisa = a
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = mem_avail(mem) * percent  / 100.0;
+			lu_size a = preallocated_mem_avail((Preallocated_Mem)mem) * percent  / 100.0;
 
 			lu_size fis = item_size;
 			if (flags & MEM_ARR_ITEM_FREEABLE) 

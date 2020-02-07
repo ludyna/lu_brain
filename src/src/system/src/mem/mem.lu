@@ -6,45 +6,49 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-
-	Mem mem_create(lu_size size_in_bytes)
+	static lu_p_byte mem_alloc_dynamic(Mem self, lu_size size)
 	{
-		lu_p_void start			= malloc(size_in_bytes);
+		return (lu_p_byte) malloc(size);
+	}
 
-		if (start == NULL) return NULL;
+	static void mem_free_dynamic(Mem self, lu_p_byte p)
+	{
+		free((lu_p_void) p);
+	}
 
-		Mem self 				= (Mem) start;
-		self->buff_start 		= (lu_p_byte) start;
-		self->buff_end			= self->buff_start + size_in_bytes;
-		self->buff_pos 			= self->buff_start + sizeof(struct mem);
+	static void mem_destroy_dynamic(Mem self)
+	{
+		free((lu_p_void) self);
+	}
 
-		if (self->buff_pos >= self->buff_end)
-		{
-			mem_destroy(self);
-			return NULL;
-		}
+	Mem mem_create()
+	{
+		Mem self 		= malloc(sizeof(struct mem));
+
+		self->flags 	= 0;
+		self->flags     |= MEM_DYNAMIC;
+		self->alloc 	= mem_alloc_dynamic;
+		self->free 		= mem_free_dynamic;
+		self->destroy 	= mem_destroy_dynamic;
 
 		return self;
 	}
 
 	void mem_destroy(Mem self)
 	{
-		free((lu_p_void) self);
+		self->destroy(self);
 	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
 
-	// 
-	// All allocations should be at the beginning of app existance executed 
-	// in single thread. No multi-threading support is needed.
-	//
 	lu_p_byte mem_alloc(Mem self, lu_size size_in_bytes)
 	{
-		if (self->buff_pos + size_in_bytes > self->buff_end) 
-			return NULL;
+		return self->alloc(self, size_in_bytes);
+	}
 
-		lu_p_byte tmp 	= self->buff_pos;
-		self->buff_pos 	+= size_in_bytes;
-		return tmp;
+	lu_p_byte mem_free(Mem self, lu_p_byte p)
+	{
+		self->free(self, p);
 	}

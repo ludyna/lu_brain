@@ -1,0 +1,69 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+	lu_p_byte preallocated_mem_alloc(Mem self, lu_size size_in_bytes);
+	void preallocated_mem_free(Mem, lu_p_byte);
+	void preallocated_mem_destroy(Mem self);
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Inits, create and destroy
+
+
+	Preallocated_Mem preallocated_mem_create(lu_size size_in_bytes)
+	{
+		lu_p_void start			= malloc(size_in_bytes);
+
+		if (start == NULL) return NULL;
+
+		Preallocated_Mem self 	= (Preallocated_Mem) start;
+
+		// super
+		self->super.flags 		= 0;
+		self->super.flags     	|= MEM_PREALLOCATED;
+		self->super.alloc 		= preallocated_mem_alloc;
+		self->super.free 		= preallocated_mem_free;
+		self->super.destroy 	= preallocated_mem_destroy;
+
+		// other
+		self->buff_start 		= (lu_p_byte) start;
+		self->buff_end			= self->buff_start + size_in_bytes;
+		self->buff_pos 			= self->buff_start + sizeof(struct preallocated_mem);
+
+		if (self->buff_pos >= self->buff_end)
+		{
+			preallocated_mem_destroy((Mem) self);
+			return NULL;
+		}
+
+		return self;
+	}
+
+	void preallocated_mem_destroy(Mem self)
+	{
+		free((lu_p_void) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main methods
+
+	// 
+	// All allocations should be at the beginning of app existance executed 
+	// in single thread. No multi-threading support is needed.
+	//
+	lu_p_byte preallocated_mem_alloc(Mem mem, lu_size size_in_bytes)
+	{
+		Preallocated_Mem self = (Preallocated_Mem) mem;
+
+		if (self->buff_pos + size_in_bytes > self->buff_end) 
+			return NULL;
+
+		lu_p_byte tmp 	= self->buff_pos;
+		self->buff_pos 	+= size_in_bytes;
+		return tmp;
+	} 
+
+	void preallocated_mem_free(Mem self, lu_p_byte p)
+	{
+		lu_debug("WHAT??");
+	}

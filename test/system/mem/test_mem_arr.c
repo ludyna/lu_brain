@@ -17,7 +17,7 @@ typedef struct test1* Test1;
 
 void test_mem_arr1(void)
 {
-    Mem mem     = mem_create(512);
+    Mem mem     = (Mem) preallocated_mem_create(512);
     Mem_Arr ma  = mem_arr_create(
         /*Mem*/         mem, 
         /*item_size*/   sizeof(struct test1), 
@@ -88,6 +88,6 @@ void test_mem_arr1(void)
     // TEST_ASSERT(ma->free_count == 8);
     // TEST_ASSERT(ma->items_count == 0);
 
-    mem_destroy(mem);
+    preallocated_mem_destroy(mem);
     mem = NULL;
 }

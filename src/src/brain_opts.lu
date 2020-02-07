@@ -10,8 +10,13 @@
 		Brain_Opts self 		= (Brain_Opts) malloc(sizeof(struct brain_opts));
 
 		// Initialize
-		self->id				= id;
-		self->size_in_bytes		= size_in_bytes;
+		self->id					= id;
+		self->size_in_bytes			= size_in_bytes;
+		self->save_waves_size 		= 1;
+		self->find_waves_size		= 1;
+		self->restore_waves_size	= 1;
+
+		self->rec_opts				= arr_create(10);
 
 		return self;
 	}

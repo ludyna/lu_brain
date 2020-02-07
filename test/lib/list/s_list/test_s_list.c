@@ -39,7 +39,7 @@ static lu_value neu_compare_reverse(lu_p_void p1, lu_p_void p2)
 
 void test_s_list1(void)
 {
-    Mem mem = mem_create(4096);
+    Mem mem = (Mem) preallocated_mem_create(4096);
 
     Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -87,12 +87,12 @@ void test_s_list1(void)
 
     TEST_ASSERT(list->level_size == 3);
 
-    mem_destroy(mem);
+    preallocated_mem_destroy(mem);
 }
 
 void test_s_list_limited(void)
 {
-    Mem mem = mem_create(4096);
+    Mem mem = (Mem) preallocated_mem_create(4096);
 
     Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -154,12 +154,12 @@ void test_s_list_limited(void)
 
     s_list_debug(list);
 
-    mem_destroy(mem);
+    preallocated_mem_destroy(mem);
 }
 
 void test_s_list_limited_reverse(void)
 {
-    Mem mem = mem_create(4096);
+    Mem mem = (Mem) preallocated_mem_create(4096);
 
     Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -221,12 +221,12 @@ void test_s_list_limited_reverse(void)
 
     s_list_debug(list);
 
-    mem_destroy(mem);
+    preallocated_mem_destroy(mem);
 }
 
 void test_s_list_eq(void)
 {
-    Mem mem = mem_create(4096);
+    Mem mem = (Mem) preallocated_mem_create(4096);
 
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n22 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -288,5 +288,5 @@ void test_s_list_eq(void)
 
     s_list_debug(list);
 
-    mem_destroy(mem);
+    preallocated_mem_destroy(mem);
 }
