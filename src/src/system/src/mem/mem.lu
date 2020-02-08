@@ -43,12 +43,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
 
-	lu_p_byte mem_alloc(Mem self, lu_size size_in_bytes)
+	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line)
 	{
 		return self->alloc(self, size_in_bytes);
 	}
 
-	lu_p_byte mem_free(Mem self, lu_p_byte p)
+	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line)
 	{
 		self->free(self, p);
 	}

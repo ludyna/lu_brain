@@ -21,13 +21,14 @@
 		lu_size 		size_in_bytes;			// brain size in bytes including 
 												// everything related
 
-
 		lu_size 		save_waves_size;		// max number of save waves that could 
 												// run in parallel
 		lu_size			find_waves_size;		
 		lu_size			restore_waves_size;
 
 		Arr				rec_opts;				// receivers options
+
+		Mem 			mem;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

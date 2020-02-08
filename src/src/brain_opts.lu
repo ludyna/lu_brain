@@ -7,7 +7,8 @@
 
 	Brain_Opts brain_opts_create(lu_size id, lu_size size_in_bytes)
 	{
-		Brain_Opts self 		= (Brain_Opts) malloc(sizeof(struct brain_opts));
+		Mem mem 					= mem_create();
+		Brain_Opts self 			= (Brain_Opts) mem_alloc(mem, sizeof(struct brain_opts));
 
 		// Initialize
 		self->id					= id;
@@ -17,13 +18,14 @@
 		self->restore_waves_size	= 1;
 
 		self->rec_opts				= arr_create(10);
+		self->mem 					= mem;
 
 		return self;
 	}
 
 	void brain_opts_destroy(Brain_Opts self)
 	{
-		free(self);
+		mem_free(self->mem, (lu_p_byte) self);
 	}
 
 

@@ -31,8 +31,11 @@
 	Mem mem_create();
 	void mem_destroy(Mem self);
 
-	lu_p_byte mem_alloc(Mem self, lu_size size_in_bytes);
-	lu_p_byte mem_free(Mem self, lu_p_byte p);
+	#define mem_alloc(mem, size) mem_alloc_internal(mem, size, __FILE__, __LINE__)
+	#define mem_free(mem, p) mem_free_internal(mem, p, __FILE__, __LINE__)
+
+	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line);
+	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Preallocated_Mem
