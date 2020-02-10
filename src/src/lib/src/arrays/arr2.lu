@@ -5,21 +5,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-Arr2 arr2_create(lu_size width, lu_size height)
+Arr2 arr2_create(Mem mem, lu_size width, lu_size height)
 {
-	Arr2 self = (Arr2) malloc(sizeof(struct arr2));
+	Arr2 self = (Arr2) mem_alloc(mem, sizeof(struct arr2));
 	
 	self->width 	= width;
 	self->height 	= height;
-	self->items 	= arr_create(width * height);
+	self->items 	= arr_create(mem, width * height);
 
 	return self;
 }	
 
-void arr2_destroy(Arr2* self)
+void arr2_destroy(Arr2 self, Mem mem)
 {
-	arr_destroy(&(*self)->items);
-	lu_free((void **) self);
+	arr_destroy(self->items, mem);
+	mem_free(mem, (lu_p_byte) self);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

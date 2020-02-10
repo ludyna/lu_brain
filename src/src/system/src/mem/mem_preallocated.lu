@@ -1,0 +1,76 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+	lu_p_byte mem_preallocated_alloc(Mem self, lu_size size_in_bytes);
+	lu_p_byte mem_preallocated_realloc(Mem self, lu_p_byte p, lu_size size_in_bytes);
+	void mem_preallocated_free(Mem, lu_p_byte);
+	void mem_preallocated_destroy(Mem self);
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Inits, create and destroy
+
+
+	Mem_Preallocated mem_preallocated_create(lu_size size_in_bytes)
+	{
+		lu_p_void start			= malloc(size_in_bytes);
+
+		if (start == NULL) return NULL;
+
+		Mem_Preallocated self 	= (Mem_Preallocated) start;
+
+		// super
+		self->super.flags 		= 0;
+		self->super.flags     	|= MEM_PREALLOCATED;
+		self->super.alloc 		= mem_preallocated_alloc;
+		self->super.realloc 	= mem_preallocated_realloc;
+		self->super.free 		= mem_preallocated_free;
+		self->super.destroy 	= mem_preallocated_destroy;
+
+		// other
+		self->buff_start 		= (lu_p_byte) start;
+		self->buff_end			= self->buff_start + size_in_bytes;
+		self->buff_pos 			= self->buff_start + sizeof(struct mem_preallocated);
+
+		if (self->buff_pos >= self->buff_end)
+		{
+			mem_preallocated_destroy((Mem) self);
+			return NULL;
+		}
+
+		return self;
+	}
+
+	void mem_preallocated_destroy(Mem self)
+	{
+		free((lu_p_void) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main methods
+
+	// 
+	// All allocations should be at the beginning of app existance executed 
+	// in single thread. No multi-threading support is needed.
+	//
+	lu_p_byte mem_preallocated_alloc(Mem mem, lu_size size_in_bytes)
+	{
+		Mem_Preallocated self = (Mem_Preallocated) mem;
+
+		if (self->buff_pos + size_in_bytes > self->buff_end) 
+			return NULL;
+
+		lu_p_byte tmp 	= self->buff_pos;
+		self->buff_pos 	+= size_in_bytes;
+		return tmp;
+	} 
+
+	lu_p_byte mem_preallocated_realloc(Mem self, lu_p_byte p, lu_size size_in_bytes)
+	{
+		lu_debug("PREALLOCATED REALLOC??");
+	}
+
+	void mem_preallocated_free(Mem self, lu_p_byte p)
+	{
+		lu_debug("PREALLOCATED FREE??");
+	}

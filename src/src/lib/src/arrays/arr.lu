@@ -11,11 +11,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-Arr arr_create(lu_size size)
+Arr arr_create(Mem mem, lu_size size)
 {
 	lu_assert(size > 0);
 
-	Arr self = (Arr) malloc(sizeof(struct arr));
+	Arr self = (Arr) mem_alloc(mem, sizeof(struct arr));
 	
 	// Initialize
 	self->size 			= size;
@@ -25,10 +25,10 @@ Arr arr_create(lu_size size)
 	return self;
 }
 
-void arr_destroy(Arr* self)
+void arr_destroy(Arr self, Mem mem)
 {
-	lu_free((void **) &(*self)->items);
-	lu_free((void **) self);
+	mem_free(mem, (lu_p_byte) self->items);
+	mem_free(mem, (lu_p_byte) self);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

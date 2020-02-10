@@ -11,8 +11,9 @@ void tearDown(void)
 
 void test_list1(void)
 {
-    Arr arr1 = arr_create(2);
-    Arr arr2 = arr_create(3);
+    Mem mem  = mem_create();
+    Arr arr1 = arr_create(mem, 2);
+    Arr arr2 = arr_create(mem, 3);
 
     int v1 = 1;
     int v2 = 2;
@@ -30,6 +31,6 @@ void test_list1(void)
     TEST_ASSERT( *((int*)(arr1->items[1])) == v2);
     TEST_ASSERT( *((int*)(arr1->items[2])) == v3);
 
-    arr_destroy(&arr1);
-    arr_destroy(&arr2);
+    arr_destroy(arr1, mem);
+    arr_destroy(arr2, mem);
 }

@@ -3,7 +3,7 @@
 */
  
 #include "mem/mem.lu"
-#include "mem/preallocated_mem.lu"
+#include "mem/mem_preallocated.lu"
 #include "mem/mem_arr.lu"
 
 
@@ -12,7 +12,7 @@
 
 	System system_create(lu_size mem_size_in_bytes)
 	{
-		Mem mem 		= (Mem) preallocated_mem_create(mem_size_in_bytes);
+		Mem mem 		= (Mem) mem_preallocated_create(mem_size_in_bytes);
 		System self 	= (System) mem_alloc(mem, sizeof(struct system));
 		self->mem 		= mem;
 
@@ -21,5 +21,5 @@
 
 	void system_destroy(System self)
 	{
-		preallocated_mem_destroy(self->mem);
+		mem_preallocated_destroy(self->mem);
 	}

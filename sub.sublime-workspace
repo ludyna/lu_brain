@@ -4,6 +4,30 @@
 		"selected_items":
 		[
 			[
+				"prea",
+				"preallocated_mem_destroy"
+			],
+			[
+				"pr",
+				"preallocated_mem_free"
+			],
+			[
+				"lu",
+				"lu_p_void"
+			],
+			[
+				"lu_p",
+				"lu_p_void"
+			],
+			[
+				"mem_det",
+				"mem_destroy_dynamic"
+			],
+			[
+				"mem",
+				"mem_alloc_dynamic"
+			],
+			[
 				"max_si",
 				"max_size_in_items"
 			],
@@ -52,16 +76,8 @@
 				"ph_mem_block_init"
 			],
 			[
-				"mem",
-				"ph_mem_block"
-			],
-			[
 				"si",
 				"size_in_bytes"
-			],
-			[
-				"lu_p",
-				"lu_p_byte"
 			],
 			[
 				"item_t",
@@ -202,10 +218,6 @@
 			[
 				"siez",
 				"sizeof"
-			],
-			[
-				"lu",
-				"lu_p_void"
 			],
 			[
 				"ite",
@@ -472,63 +484,55 @@
 	"buffers":
 	[
 		{
-			"file": "test/lib/list/s_list/test_s_list.c",
+			"file": "src/src/brain_opts.lu",
 			"settings":
 			{
-				"buffer_size": 7954,
+				"buffer_size": 770,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/lu_brain.h",
+			"file": "src/src/system/mem.h",
 			"settings":
 			{
-				"buffer_size": 5271,
+				"buffer_size": 2299,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "test/test_lu_brain.c",
+			"file": "src/src/lib/arrays.h",
 			"settings":
 			{
-				"buffer_size": 2739,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/lib/list/test_list.c",
-			"settings":
-			{
-				"buffer_size": 3057,
+				"buffer_size": 2006,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/src/lib/src/lists/s_list.lu",
+			"file": "src/src/lib/src/arrays/arr.lu",
 			"settings":
 			{
-				"buffer_size": 6107,
+				"buffer_size": 2619,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/src/lib/lists.h",
+			"file": "src/src/system/src/mem/mem.lu",
 			"settings":
 			{
-				"buffer_size": 3577,
+				"buffer_size": 1078,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/src/lib/src/lists/list.lu",
+			"file": "src/src/brain.h",
 			"settings":
 			{
-				"buffer_size": 3394,
+				"buffer_size": 2977,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -578,6 +582,7 @@
 		"/F/ludyna/lu_brain/src/src/basic/src",
 		"/F/ludyna/lu_brain/src/src/lib",
 		"/F/ludyna/lu_brain/src/src/lib/src",
+		"/F/ludyna/lu_brain/src/src/lib/src/arrays",
 		"/F/ludyna/lu_brain/src/src/lib/src/lists",
 		"/F/ludyna/lu_brain/src/src/n_mem",
 		"/F/ludyna/lu_brain/src/src/n_mem/src",
@@ -589,34 +594,49 @@
 		"/F/ludyna/lu_brain/test/lib",
 		"/F/ludyna/lu_brain/test/lib/list",
 		"/F/ludyna/lu_brain/test/lib/list/s_list",
-		"/F/ludyna/lu_brain/test/support"
+		"/F/ludyna/lu_brain/test/support",
+		"/F/ludyna/lu_brain/test/system",
+		"/F/ludyna/lu_brain/test/system/mem"
 	],
 	"file_history":
 	[
-		"/F/ludyna/lu_brain/test/lib/list/test_list.c",
-		"/F/ludyna/lu_brain/src/src/system/system.h",
-		"/F/ludyna/lu_brain/src/src/lib/lists.h",
-		"/F/ludyna/lu_brain/src/src/lib/src/lists/s_list.lu",
-		"/F/ludyna/lu_brain/src/src/system/src/mem/mem_arr.lu",
-		"/F/ludyna/lu_brain/src/src/lib/src/lists/list.lu",
 		"/F/ludyna/lu_brain/src/src/brain.c",
+		"/F/ludyna/lu_brain/src/src/system/mem.h",
+		"/F/ludyna/lu_brain/src/src/system/src/mem/mem_arr.lu",
+		"/F/ludyna/lu_brain/src/src/system/src/mem/preallocated_mem.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/s_list.lu",
+		"/F/ludyna/lu_brain/src/src/brain.h",
+		"/F/ludyna/lu_brain/src/lu_brain.h",
+		"/F/ludyna/lu_brain/src/src/brain_opts.lu",
 		"/F/ludyna/lu_brain/src/src/system/src/mem/mem.lu",
+		"/F/ludyna/lu_brain/src/src/system/src/system.lu",
+		"/F/ludyna/lu_brain/test/lib/list/s_list/test_s_list.c",
+		"/F/ludyna/lu_brain/test/lib/list/test_list.c",
+		"/F/ludyna/lu_brain/test/system/mem/test_mem_arr.c",
+		"/F/ludyna/lu_brain/src/src/n_mem/n_mem.h",
+		"/F/ludyna/lu_brain/src/src/n_mem/src/n_mem.lu",
+		"/F/ludyna/lu_brain/test/test_lu_brain.c",
+		"/F/ludyna/lu_brain/test/test_brain.c",
+		"/F/ludyna/lu_brain/test/system/test_system.c",
+		"/F/ludyna/lu_brain/src/src/system/system.h",
+		"/F/ludyna/lu_brain/src/src/public_to_private.h",
+		"/F/ludyna/lu_brain/src/src/templates/name.h",
+		"/F/ludyna/lu_brain/src/src/templates/name.c",
+		"/F/ludyna/lu_brain/src/src/name.lu",
+		"/F/ludyna/lu_brain/src/src/rec_opts.lu",
+		"/F/ludyna/lu_brain/src/src/lib/lists.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/list.lu",
 		"/F/ludyna/lu_brain/src/src/lib/lib.h",
 		"/F/ludyna/lu_brain/test/core/mem/test_mem_arr.c",
 		"/F/ludyna/lu_brain/src/src/lib/src/lists.lu",
 		"/F/ludyna/lu_brain/src/src/lib/src/lib.lu",
-		"/F/ludyna/lu_brain/src/src/system/mem.h",
-		"/F/ludyna/lu_brain/src/src/templates/name.h",
-		"/F/ludyna/lu_brain/src/src/brain.h",
 		"/F/ludyna/lu_brain/src/src/core/mem.h",
 		"/F/ludyna/lu_brain/src/src/lib/src/arrays.lu",
 		"/F/ludyna/lu_brain/src/src/lib/src/ecs.lu",
 		"/F/ludyna/lu_brain/src/src/core/core.h",
 		"/F/ludyna/lu_brain/src/src/core/src/core.lu",
-		"/F/ludyna/lu_brain/src/src/templates/name.c",
 		"/F/ludyna/lu_brain/test/lib/a_mem/test_a_sisa.c",
 		"/F/ludyna/lu_brain/src/src/lib/src/p_mem.lu",
-		"/F/ludyna/lu_brain/src/src/n_mem/n_mem.h",
 		"/F/ludyna/lu_brain/src/src/core/mem/mem.lu",
 		"/F/ludyna/lu_brain/src/src/core/mem/mem_arr.lu",
 		"/F/ludyna/lu_brain/src/src/basic/exception.h",
@@ -646,11 +666,7 @@
 		"/F/ludyna/lu_brain/src/src/lib/exception.h",
 		"/F/ludyna/lu_brain/src/src/lib/ecs.h",
 		"/F/ludyna/lu_brain/src/src/ph_mem/src/sis_alloc.lu",
-		"/F/ludyna/lu_brain/src/lu_brain.h",
-		"/F/ludyna/lu_brain/src/src/public_to_private.h",
-		"/F/ludyna/lu_brain/src/src/rec_opts.lu",
 		"/F/ludyna/lu_brain/src/lu_examples.h",
-		"/F/ludyna/lu_brain/test/test_lu_brain.c",
 		"/F/ludyna/lu_brain/src/src/ph_mem/ph_mem.h",
 		"/F/ludyna/lu_brain/src/src/ph_mem/src/ph_mem.lu",
 		"/F/ludyna/lu_brain/src/src/ph_mem/ph_block_defs.h",
@@ -659,8 +675,6 @@
 		"/F/ludyna/lu_brain/src/src/basic/src/util.lu",
 		"/F/ludyna/lu_brain/src/src/lib/src/ph_mem.lu",
 		"/F/ludyna/lu_brain/src/src/basic/src/types.h",
-		"/F/ludyna/lu_brain/src/src/n_mem/src/n_mem.lu",
-		"/F/ludyna/lu_brain/src/src/brain_opts.lu",
 		"/F/ludyna/lu_brain/src/src/ph_mem/src/ph_block.lu",
 		"/F/ludyna/lu_brain/src/src/lib/rand.h",
 		"/F/ludyna/lu_brain/src/__read.md",
@@ -673,12 +687,10 @@
 		"/F/ludyna/lu_brain/src/src/lib/arrays.h",
 		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr2.lu",
 		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr.lu",
-		"/F/ludyna/lu_brain/src/src/name.lu",
 		"/F/ludyna/lu_brain/src/src/neto.lu",
 		"/F/ludyna/lu_brain/src/src/basic/src/constants.h",
 		"/F/ludyna/lu_brain/src/src/basic/src/debug.h",
 		"/F/ludyna/lu_brain/src/src/lib/sis_alloc.h",
-		"/F/ludyna/lu_brain/test/lib/list/s_list/test_s_list.c",
 		"/F/ludyna/lu_brain/src/src/lib/src/lists/ln_alloc.lu",
 		"/F/ludyna/lu_brain/test/lib/list/test_ln_alloc_fast.c",
 		"/F/ludyna/lu_brain/test/lib/test_sis_alloc.c",
@@ -715,12 +727,7 @@
 		"/F/ludyna/lu_brain/src/brain/src/memory/memory.h",
 		"/F/ludyna/lu_brain/src/save_resp/save_resp.h",
 		"/F/ludyna/lu_brain/src/save_resp/src/save_resp.c",
-		"/F/ludyna/lu_brain/src/brain/public_to_private.h",
-		"/F/ludyna/lu_brain/src/name/src/name.c",
-		"/F/ludyna/lu_brain/src/pub/pub.h",
-		"/F/ludyna/lu_brain/src/block/block.h",
-		"/F/ludyna/lu_brain/README.md",
-		"/F/ludyna/lu_brain/src/templates/name.h"
+		"/F/ludyna/lu_brain/src/brain/public_to_private.h"
 	],
 	"find":
 	{
@@ -731,6 +738,7 @@
 		"height": 104.0,
 		"where_history":
 		[
+			"F:\\ludyna\\lu_brain\\src, F:\\ludyna\\lu_brain\\test\t",
 			"F:\\ludyna\\lu_brain\\src, F:\\ludyna\\lu_brain\\test\t\t",
 			"F:\\ludyna\\lu_brain\\src, F:\\ludyna\\lu_brain\\test\t",
 			"F:\\ludyna\\lu_brain\\src, F:\\ludyna\\lu_brain\\test",
@@ -754,6 +762,17 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"struct mem",
+			"_LU_A_MEM_H",
+			"mem_create",
+			"mem_destroy",
+			"mem_avail",
+			"brain_opts_destroy",
+			"brain_opts_create",
+			"rec_opts_create",
+			"lu_rec_opts_create",
+			"Brain_Opts",
+			"_LU_MEMORY_H",
 			"1024",
 			"s_node_create",
 			"Sis_Alloc sis_alloc = sis_alloc_create(10, sizeof(struct neu));",
@@ -870,18 +889,7 @@
 			"SList",
 			"SNode",
 			"LnAllocFast",
-			"LNode",
-			"RestoreOpts",
-			"FindOpts",
-			"SaveOpts",
-			"ReceiverOpts",
-			"BrainOpts",
-			"RestoreResp",
-			"FindResp",
-			"SaveResp",
-			"WaveResp",
-			"LuRestoreOpts",
-			"LuFindOpts"
+			"LNode"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -889,6 +897,14 @@
 		"regex": false,
 		"replace_history":
 		[
+			"_LU_MEM_H",
+			"preallocated_mem_create",
+			"preallocated_mem_destroy",
+			"preallocated_mem_avail",
+			"lu_brain_opts_destroy",
+			"lu_brain_opts_create",
+			"lu_rec_opts_create",
+			"_LU_N_MEM_H",
 			"8192",
 			"Mem mem = mem_create(1024);",
 			"(Neu) mem_alloc(mem, sizeof(struct neu));",
@@ -1008,20 +1024,12 @@
 			"Receiver_Opts",
 			"Brain_Opts",
 			"Restore_Resp",
-			"Find_Resp",
-			"Save_Resp",
-			"Wave_Resp",
-			"Lu_Restore_Opts",
-			"Lu_Find_Opts",
-			"Lu_Receiver_Opts",
-			"Lu_Save_Opts",
-			"Lu_Brain_Opts",
-			"Lu_Restore_Resp"
+			"Find_Resp"
 		],
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": false,
+		"whole_word": true,
 		"wrap": true
 	},
 	"groups":
@@ -1032,26 +1040,54 @@
 			[
 				{
 					"buffer": 0,
-					"file": "test/lib/list/s_list/test_s_list.c",
+					"file": "src/src/brain_opts.lu",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7954,
+						"buffer_size": 770,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								817,
-								817
+								447,
+								447
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/src/system/mem.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2299,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1529,
+								1529
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1061,20 +1097,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 1,
-					"file": "src/lu_brain.h",
+					"buffer": 2,
+					"file": "src/src/lib/arrays.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5271,
+						"buffer_size": 2006,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								974,
-								974
+								1540,
+								1540
 							]
 						],
 						"settings":
@@ -1083,36 +1119,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 171.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "test/test_lu_brain.c",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 2739,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2739,
-								2739
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 912.0,
+						"translation.y": 627.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -1120,113 +1127,48 @@
 				},
 				{
 					"buffer": 3,
-					"file": "test/lib/list/test_list.c",
+					"file": "src/src/lib/src/arrays/arr.lu",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3057,
+						"buffer_size": 2619,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1576,
-								1576
+								375,
+								375
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
-				}
-			]
-		},
-		{
-			"selected": 2,
-			"sheets":
-			[
+				},
 				{
 					"buffer": 4,
-					"file": "src/src/lib/src/lists/s_list.lu",
+					"file": "src/src/system/src/mem/mem.lu",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6107,
+						"buffer_size": 1078,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								324,
-								324
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/src/lib/lists.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3577,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2478,
-								2478
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1471.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/src/lib/src/lists/list.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3394,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								642,
-								642
+								1078,
+								1078
 							]
 						],
 						"settings":
@@ -1239,6 +1181,41 @@
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "src/src/brain.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2977,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1294,
+								1294
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -1301,7 +1278,7 @@
 		[
 			[
 				"",
-				"src\\src\\lib\\src\\lists\\list.lu"
+				"test\\lib\\list\\s_list\\test_s_list.c"
 			],
 			[
 				"ecs",
@@ -1396,7 +1373,7 @@
 		],
 		"width": 700.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},

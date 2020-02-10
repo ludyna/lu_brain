@@ -21,8 +21,8 @@
 
 	// Create and destroy 
 
-	Arr arr_create(lu_size size);
-	void arr_destroy(Arr*);
+	Arr arr_create(Mem mem, lu_size size);
+	void arr_destroy(Arr, Mem);
 
 	// Setters / getters
 
@@ -67,8 +67,8 @@
 
 	// Create and destroy
 
-	Arr2 arr2_create(lu_size width, lu_size height);
-	void arr2_destroy(Arr2*);
+	Arr2 arr2_create(Mem, lu_size width, lu_size height);
+	void arr2_destroy(Arr2, Mem);
 
 	// Main public methods
 

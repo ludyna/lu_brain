@@ -29,7 +29,7 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = preallocated_mem_avail((Preallocated_Mem)mem) * percent  / 100.0;
+			lu_size a = mem_preallocated_avail((Mem_Preallocated)mem) * percent  / 100.0;
 
 			lu_size fis = item_size;
 			if (flags & MEM_ARR_ITEM_FREEABLE) 

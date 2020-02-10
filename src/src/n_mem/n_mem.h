@@ -153,6 +153,6 @@
 	};
 	
 	N_Mem n_mem_create(Brain brain);
-	void n_preallocated_mem_destroy(N_Mem* self);
+	void n_mem_preallocated_destroy(N_Mem* self);
 
 #endif // _LU_N_MEM_H

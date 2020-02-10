@@ -6,12 +6,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	static lu_p_byte mem_alloc_dynamic(Mem self, lu_size size)
+	lu_p_byte mem_alloc_dynamic(Mem self, lu_size size)
 	{
 		return (lu_p_byte) malloc(size);
 	}
 
-	static void mem_free_dynamic(Mem self, lu_p_byte p)
+	lu_p_byte mem_realloc_dynamic(Mem self, lu_p_byte p, lu_size size_in_bytes)
+	{
+		return (lu_p_byte) realloc(p, size_in_bytes);
+	}
+
+	void mem_free_dynamic(Mem self, lu_p_byte p)
 	{
 		free((lu_p_void) p);
 	}
@@ -28,6 +33,7 @@
 		self->flags 	= 0;
 		self->flags     |= MEM_DYNAMIC;
 		self->alloc 	= mem_alloc_dynamic;
+		self->realloc 	= mem_realloc_dynamic;
 		self->free 		= mem_free_dynamic;
 		self->destroy 	= mem_destroy_dynamic;
 
@@ -46,6 +52,11 @@
 	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line)
 	{
 		return self->alloc(self, size_in_bytes);
+	}
+
+	lu_p_byte mem_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
+	{
+		return self->realloc(self, p, size_in_bytes);
 	}
 
 	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line)
