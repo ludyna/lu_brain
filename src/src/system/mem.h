@@ -33,13 +33,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem
 
-	enum mem_flags {
+	enum mem_type {
 		MEM_DYNAMIC = 1,
 		MEM_PREALLOCATED = 2
 	};
 
 	struct mem {
-		lu_flags 	flags;
+		lu_flags 	(*type)(Mem);
 		lu_p_byte 	(*alloc)(Mem, lu_size size);
 		lu_p_byte 	(*realloc)(Mem, lu_p_byte, lu_size);
 		void 		(*free)(Mem, lu_p_byte);
@@ -49,6 +49,7 @@
 	Mem mem_create();
 	void mem_destroy(Mem self);
 
+	#define mem_type(mem) mem_type_internal(mem)
 	#define mem_alloc(mem, size) mem_alloc_internal(mem, size, __FILE__, __LINE__)
 	#define mem_realloc(mem, p, size) mem_realloc_internal(mem, p, size, __FILE__, __LINE__)
 	#define mem_free(mem, p) mem_free_internal(mem, p, __FILE__, __LINE__)

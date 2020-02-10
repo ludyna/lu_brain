@@ -2,6 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+	lu_flags mem_preallocated_type(Mem self);
 	lu_p_byte mem_preallocated_alloc(Mem self, lu_size size_in_bytes);
 	lu_p_byte mem_preallocated_realloc(Mem self, lu_p_byte p, lu_size size_in_bytes);
 	void mem_preallocated_free(Mem, lu_p_byte);
@@ -20,8 +21,7 @@
 		Mem_Preallocated self 	= (Mem_Preallocated) start;
 
 		// super
-		self->super.flags 		= 0;
-		self->super.flags     	|= MEM_PREALLOCATED;
+		self->super.type 		= mem_preallocated_type;
 		self->super.alloc 		= mem_preallocated_alloc;
 		self->super.realloc 	= mem_preallocated_realloc;
 		self->super.free 		= mem_preallocated_free;
@@ -48,6 +48,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
+
+	lu_flags mem_preallocated_type(Mem self)
+	{
+		return MEM_PREALLOCATED;
+	}	
 
 	// 
 	// All allocations should be at the beginning of app existance executed 

@@ -21,7 +21,7 @@
 		if (percent > 100.0) return NULL;
 
 		// if its not preallocated mem, size should be provided
-		if (size == 0 && !(mem->flags & MEM_PREALLOCATED)) return NULL;
+		if (size == 0 && !(mem_type(mem) & MEM_PREALLOCATED)) return NULL;
 
 		if (size == 0 && percent > 0)
 		{

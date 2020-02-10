@@ -6,6 +6,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
+	lu_flags mem_type_dynamic(Mem self)
+	{
+		return MEM_DYNAMIC;
+	}
+
 	lu_p_byte mem_alloc_dynamic(Mem self, lu_size size)
 	{
 		return (lu_p_byte) malloc(size);
@@ -30,8 +35,7 @@
 	{
 		Mem self 		= malloc(sizeof(struct mem));
 
-		self->flags 	= 0;
-		self->flags     |= MEM_DYNAMIC;
+		self->type 		= mem_type_dynamic;
 		self->alloc 	= mem_alloc_dynamic;
 		self->realloc 	= mem_realloc_dynamic;
 		self->free 		= mem_free_dynamic;
@@ -48,6 +52,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
+
+	lu_flags mem_type_internal(Mem self)
+	{
+		return self->type(self);
+	}
 
 	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line)
 	{

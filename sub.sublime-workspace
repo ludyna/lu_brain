@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"lu_p",
+				"lu_p_byte"
+			],
+			[
 				"prea",
 				"preallocated_mem_destroy"
 			],
@@ -13,10 +17,6 @@
 			],
 			[
 				"lu",
-				"lu_p_void"
-			],
-			[
-				"lu_p",
 				"lu_p_void"
 			],
 			[
@@ -487,16 +487,25 @@
 			"file": "src/src/brain_opts.lu",
 			"settings":
 			{
-				"buffer_size": 770,
+				"buffer_size": 775,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/src/system/mem.h",
+			"file": "test/lib/test_arr.c",
 			"settings":
 			{
-				"buffer_size": 2299,
+				"buffer_size": 690,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/system/src/mem/mem_arr.lu",
+			"settings":
+			{
+				"buffer_size": 2331,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -505,7 +514,7 @@
 			"file": "src/src/lib/arrays.h",
 			"settings":
 			{
-				"buffer_size": 2006,
+				"buffer_size": 2016,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -514,7 +523,16 @@
 			"file": "src/src/lib/src/arrays/arr.lu",
 			"settings":
 			{
-				"buffer_size": 2619,
+				"buffer_size": 2647,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/lib/src/arrays/arr2.lu",
+			"settings":
+			{
+				"buffer_size": 1018,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -523,7 +541,89 @@
 			"file": "src/src/system/src/mem/mem.lu",
 			"settings":
 			{
-				"buffer_size": 1078,
+				"buffer_size": 1397,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/system/src/mem/mem_preallocated.lu",
+			"settings":
+			{
+				"buffer_size": 2008,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/system/src/system.lu",
+			"settings":
+			{
+				"buffer_size": 546,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/lib/list/s_list/test_s_list.c",
+			"settings":
+			{
+				"buffer_size": 8082,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/lib/list/test_list.c",
+			"settings":
+			{
+				"buffer_size": 3121,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "test/system/mem/test_mem_arr.c",
+			"settings":
+			{
+				"buffer_size": 2525,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/system/mem.h",
+			"settings":
+			{
+				"buffer_size": 3065,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "Searching 83 files for \"MEM_PREALLOCATED\" (case sensitive)\n\nF:\\ludyna\\lu_brain\\src\\src\\system\\mem.h:\n   36  \tenum mem_flags {\n   37  \t\tMEM_DYNAMIC = 1,\n   38: \t\tMEM_PREALLOCATED = 2\n   39  \t};\n   40  \n\nF:\\ludyna\\lu_brain\\src\\src\\system\\src\\mem\\mem_arr.lu:\n   22  \n   23  \t\t// if its not preallocated mem, size should be provided\n   24: \t\tif (size == 0 && !(mem->flags & MEM_PREALLOCATED)) return NULL;\n   25  \n   26  \t\tif (size == 0 && percent > 0)\n\nF:\\ludyna\\lu_brain\\src\\src\\system\\src\\mem\\mem_preallocated.lu:\n   22  \t\t// super\n   23  \t\tself->super.flags \t\t= 0;\n   24: \t\tself->super.flags     \t|= MEM_PREALLOCATED;\n   25  \t\tself->super.alloc \t\t= mem_preallocated_alloc;\n   26  \t\tself->super.realloc \t= mem_preallocated_realloc;\n\n3 matches across 3 files\n",
+			"settings":
+			{
+				"buffer_size": 757,
+				"line_ending": "Windows",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "src/src/n_mem/n_mem.h",
+			"settings":
+			{
+				"buffer_size": 2894,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/src/n_mem/src/n_mem.lu",
+			"settings":
+			{
+				"buffer_size": 306,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -762,6 +862,10 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"MEM_PREALLOCATED",
+			"MEM_DYNAMIC",
+			"Preallocated_Mem",
+			"preallocated_mem",
 			"struct mem",
 			"_LU_A_MEM_H",
 			"mem_create",
@@ -885,11 +989,7 @@
 			"Name",
 			"name",
 			"_LU_NAME_H",
-			"SisAlloc",
-			"SList",
-			"SNode",
-			"LnAllocFast",
-			"LNode"
+			"SisAlloc"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -897,6 +997,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Mem_Preallocated",
+			"mem_preallocated",
 			"_LU_MEM_H",
 			"preallocated_mem_create",
 			"preallocated_mem_destroy",
@@ -1022,20 +1124,18 @@
 			"Find_Opts",
 			"Save_Opts",
 			"Receiver_Opts",
-			"Brain_Opts",
-			"Restore_Resp",
-			"Find_Resp"
+			"Brain_Opts"
 		],
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 7,
 			"sheets":
 			[
 				{
@@ -1044,15 +1144,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 770,
+						"buffer_size": 775,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								447,
-								447
+								775,
+								775
 							]
 						],
 						"settings":
@@ -1064,24 +1164,54 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "src/src/system/mem.h",
+					"file": "test/lib/test_arr.c",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2299,
+						"buffer_size": 690,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1529,
-								1529
+								393,
+								393
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "src/src/system/src/mem/mem_arr.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2331,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								471,
+								471
 							]
 						],
 						"settings":
@@ -1097,20 +1227,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
+					"buffer": 3,
 					"file": "src/src/lib/arrays.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2006,
+						"buffer_size": 2016,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1540,
-								1540
+								1308,
+								1308
 							]
 						],
 						"settings":
@@ -1119,27 +1249,114 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 627.0,
+						"translation.y": 438.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 14,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 4,
 					"file": "src/src/lib/src/arrays/arr.lu",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2619,
+						"buffer_size": 2647,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								375,
-								375
+								2315,
+								2315
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1502.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "src/src/lib/src/arrays/arr2.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1018,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1018,
+								1018
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "src/src/system/src/mem/mem.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1397,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								985,
+								985
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 171.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "src/src/system/src/mem/mem_preallocated.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2008,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1173,
+								1173
 							]
 						],
 						"settings":
@@ -1155,20 +1372,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "src/src/system/src/mem/mem.lu",
+					"buffer": 8,
+					"file": "src/src/system/src/system.lu",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1078,
+						"buffer_size": 546,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1078,
-								1078
+								0,
+								0
 							]
 						],
 						"settings":
@@ -1180,7 +1397,97 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "test/lib/list/s_list/test_s_list.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8082,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "test/lib/list/test_list.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3121,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "test/system/mem/test_mem_arr.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2525,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -1190,7 +1497,148 @@
 			"sheets":
 			[
 				{
-					"buffer": 5,
+					"buffer": 12,
+					"file": "src/src/system/mem.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3065,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1023,
+								1039
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 228.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 757,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										161,
+										177
+									],
+									[
+										370,
+										386
+									],
+									[
+										600,
+										616
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								376,
+								376
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 1,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
+					"file": "src/src/n_mem/n_mem.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2894,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 15,
+					"file": "src/src/n_mem/src/n_mem.lu",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 306,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 16,
 					"file": "src/src/brain.h",
 					"semi_transient": false,
 					"settings":
@@ -1202,8 +1650,8 @@
 						"selection":
 						[
 							[
-								1294,
-								1294
+								206,
+								206
 							]
 						],
 						"settings":
@@ -1215,7 +1663,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 11,
 					"type": "text"
 				}
 			]
@@ -1249,7 +1697,7 @@
 		"cols":
 		[
 			0.0,
-			0.543314120556,
+			0.49391364094,
 			1.0
 		],
 		"rows":
@@ -1373,7 +1821,7 @@
 		],
 		"width": 700.0
 	},
-	"selected_group": 0,
+	"selected_group": 1,
 	"settings":
 	{
 	},
