@@ -12,14 +12,15 @@
 
 	System system_create(lu_size mem_size_in_bytes)
 	{
-		Mem mem 		= (Mem) mem_preallocated_create(mem_size_in_bytes);
-		System self 	= (System) mem_alloc(mem, sizeof(struct system));
-		self->mem 		= mem;
+		Mem mem_preallocated 	= (Mem) 	mem_preallocated_create(g_mem_default, mem_size_in_bytes);
+		System self 			= (System) 	mem_alloc(mem_preallocated, sizeof(struct system));
+		self->mem 				= g_mem_default;
+		self->mem_preallocated 	= mem_preallocated;
 
 		return self;
 	}
 
 	void system_destroy(System self)
 	{
-		mem_preallocated_destroy(self->mem);
+		mem_destroy(self->mem_preallocated, g_mem_default);
 	}

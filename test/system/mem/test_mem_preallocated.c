@@ -17,9 +17,9 @@ typedef struct test1* Test1;
 
 void test_sys_1(void)
 {
-   System sys = system_create(512);
+   Mem mem = (Mem) mem_preallocated_create(g_mem_default, 512);
 
-   TEST_ASSERT(sys != NULL);
+   TEST_ASSERT(mem != NULL);
 
-   system_destroy(sys);
+   mem_destroy(mem, g_mem_default);
 }

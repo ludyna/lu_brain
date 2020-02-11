@@ -1,14 +1,13 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
-
  
 ///////////////////////////////////////////////////////////////////////////////
-// Inits, create and destroy
+// 
 
 	lu_flags mem_type_dynamic(Mem self)
 	{
-		return MEM_DYNAMIC;
+		return MEM_TYPE_DYNAMIC;
 	}
 
 	lu_p_byte mem_alloc_dynamic(Mem self, lu_size size)
@@ -26,29 +25,44 @@
 		free((lu_p_void) p);
 	}
 
-	static void mem_destroy_dynamic(Mem self)
+	static void mem_destroy_dynamic(Mem self, Mem parent_mem)
 	{
 		free((lu_p_void) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Globals
+
+	struct mem g_default_mem_instance = {
+		.type 		= mem_type_dynamic,
+		.alloc 		= mem_alloc_dynamic,
+		.realloc 	= mem_realloc_dynamic,
+		.free 		= mem_free_dynamic,
+		.destroy 	= mem_destroy_dynamic
+	};
+
+	Mem g_mem_default = &g_default_mem_instance;
+
+///////////////////////////////////////////////////////////////////////////////
+// Inits, create and destroy
+
+	void mem_init(Mem self)
+	{
+		self->type 		= g_default_mem_instance.type;
+		self->alloc 	= g_default_mem_instance.alloc;
+		self->realloc 	= g_default_mem_instance.realloc;
+		self->free 		= g_default_mem_instance.free;
+		self->destroy 	= g_default_mem_instance.destroy;
 	}
 
 	Mem mem_create()
 	{
 		Mem self 		= malloc(sizeof(struct mem));
 
-		self->type 		= mem_type_dynamic;
-		self->alloc 	= mem_alloc_dynamic;
-		self->realloc 	= mem_realloc_dynamic;
-		self->free 		= mem_free_dynamic;
-		self->destroy 	= mem_destroy_dynamic;
+		mem_init(self);
 
 		return self;
 	}
-
-	void mem_destroy(Mem self)
-	{
-		self->destroy(self);
-	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
@@ -71,4 +85,9 @@
 	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line)
 	{
 		self->free(self, p);
+	}
+
+	void mem_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
+	{
+		self->destroy(self, parent_mem);
 	}

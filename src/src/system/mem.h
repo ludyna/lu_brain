@@ -2,16 +2,22 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 
 	Memory Abstractors
+
 		help with managing memory, debuging memory, memory preallocation, etc.
 	
 	Usage: 
+
 		1. Always assign created memory type to Mem pointer
 
-			Mem mem2 = mem_preallocated_create(mem1, 512);
+			Mem mem2 = (Mem) mem_preallocated_create(mem1, 512);
 
-		2. Always use only mem_alloc(), mem_realloc() and mem_free() macroses.
+		2. Always use only mem_alloc(), mem_realloc(), mem_free(), mem_realloc()
+		   and mem_destroy() macroses.
 
 			Arr a = (Arr) mem_alloc(mem2, sizeof(struct arr));
+
+			Use mem_preallocated_create() but don't use mem_preallocated_destroy(), 
+			intead use mem_destroy().
 
 		3. Memories could be compositional. Every memory could be based on another memory. 
 
@@ -29,13 +35,17 @@
 	typedef struct mem_preallocated*	Mem_Preallocated;
 	typedef struct mem_arr* 			Mem_Arr;
 
+///////////////////////////////////////////////////////////////////////////////
+// Globals
+
+	extern Mem g_mem_default;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem
 
 	enum mem_type {
-		MEM_DYNAMIC = 1,
-		MEM_PREALLOCATED = 2
+		MEM_TYPE_DYNAMIC 		= 1,
+		MEM_TYPE_PREALLOCATED 	= 2
 	};
 
 	struct mem {
@@ -43,20 +53,29 @@
 		lu_p_byte 	(*alloc)(Mem, lu_size size);
 		lu_p_byte 	(*realloc)(Mem, lu_p_byte, lu_size);
 		void 		(*free)(Mem, lu_p_byte);
-		void 		(*destroy)(Mem);
+		void 		(*destroy)(Mem, Mem);
 	};
 
+	//
+	// mem_init() useful when we dont want to allocate memory for mem instance from heap.
+	// For example:
+	// 		struct mem mem;
+	//		mem_init(&mem);
+	//		My_Struct ms = mem_alloc(&mem, sizeof(struct mystruct));
+	//
+	void mem_init(Mem self);
 	Mem mem_create();
-	void mem_destroy(Mem self);
+
+	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line);
+	lu_p_byte mem_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line);
+	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line);
+	void mem_destroy_internal(Mem self, Mem parent_mem, const char* file, int line);
 
 	#define mem_type(mem) mem_type_internal(mem)
 	#define mem_alloc(mem, size) mem_alloc_internal(mem, size, __FILE__, __LINE__)
 	#define mem_realloc(mem, p, size) mem_realloc_internal(mem, p, size, __FILE__, __LINE__)
 	#define mem_free(mem, p) mem_free_internal(mem, p, __FILE__, __LINE__)
-
-	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line);
-	lu_p_byte mem_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line);
-	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line);
+	#define mem_destroy(mem, parent_mem) mem_destroy_internal(mem, parent_mem, __FILE__, __LINE__)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Preallocated
@@ -65,14 +84,14 @@
 
 		struct mem 		super;
 
+		Mem 			parent_mem;
 		lu_size 		size_in_bytes;
 		lu_p_byte 		buff_start;
 		lu_p_byte 		buff_end;
 		lu_p_byte 		buff_pos;
 	};
 
-	Mem_Preallocated mem_preallocated_create(lu_size size_in_bytes);
-	void mem_preallocated_destroy(Mem self);
+	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes);
 
 	static inline lu_size mem_preallocated_avail(Mem_Preallocated self)
 	{
