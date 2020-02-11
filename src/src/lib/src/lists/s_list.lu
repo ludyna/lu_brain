@@ -7,7 +7,7 @@
 
 S_Node s_node_create(Mem_Arr mem_arr, lu_size limit_size)
 {
-	S_Node node = (S_Node) mem_arr_item_alloc(mem_arr);
+	S_Node node = (S_Node) mem_alloc((Mem) mem_arr, 0);
 
 	s_node_init(node, mem_arr, limit_size);
 
@@ -17,7 +17,7 @@ S_Node s_node_create(Mem_Arr mem_arr, lu_size limit_size)
 void s_node_destroy(Mem_Arr mem_arr, S_Node* s_node)
 {
 	//list_destroy_all(&(*s_node)->values);
-	mem_arr_item_free(mem_arr, (lu_p_void) *s_node);
+	mem_free((Mem) mem_arr, (lu_p_byte) *s_node);
 	*s_node = NULL;
 }
 

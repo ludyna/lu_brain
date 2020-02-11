@@ -50,10 +50,10 @@
 
 	struct mem {
 		lu_flags 	(*type)(Mem);
-		lu_p_byte 	(*alloc)(Mem, lu_size size);
-		lu_p_byte 	(*realloc)(Mem, lu_p_byte, lu_size);
-		void 		(*free)(Mem, lu_p_byte);
-		void 		(*destroy)(Mem, Mem);
+		lu_p_byte 	(*alloc)(Mem, lu_size size, const char* file, int line);
+		lu_p_byte 	(*realloc)(Mem, lu_p_byte, lu_size, const char* file, int line);
+		void 		(*free)(Mem, lu_p_byte, const char* file, int line);
+		void 		(*destroy)(Mem, Mem, const char* file, int line);
 	};
 
 	//
@@ -106,6 +106,9 @@
 	};
 
 	struct mem_arr {
+
+		struct mem 		super;
+
 		lu_size 		item_size;
 		lu_size			size;
 		lu_flags		flags;
@@ -130,8 +133,5 @@
 		lu_value 		percent,
 		lu_flags 		flags
 	);
-
-	lu_p_byte mem_arr_item_alloc(Mem_Arr self);
-	void mem_arr_item_free(Mem_Arr, lu_p_byte item);
 
 #endif // _LU_MEM_H

@@ -3,10 +3,10 @@
 */
 
 	lu_flags mem_preallocated_type_internal(Mem self);
-	lu_p_byte mem_preallocated_alloc_internal(Mem self, lu_size size_in_bytes);
-	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes);
-	void mem_preallocated_free_internal(Mem, lu_p_byte);
-	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem);
+	lu_p_byte mem_preallocated_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line);
+	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line);
+	void mem_preallocated_free_internal(Mem, lu_p_byte, const char* file, int line);
+	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem, const char* file, int line);
  
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
@@ -42,11 +42,6 @@
 		return self;
 	}
 
-	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem)
-	{
-		mem_free(parent_mem, (lu_p_byte) self);
-	}
-
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
 
@@ -59,7 +54,7 @@
 	// All allocations should be at the beginning of app existance executed 
 	// in single thread. No multi-threading support is needed.
 	//
-	lu_p_byte mem_preallocated_alloc_internal(Mem mem, lu_size size_in_bytes)
+	lu_p_byte mem_preallocated_alloc_internal(Mem mem, lu_size size_in_bytes, const char* file, int line)
 	{
 		Mem_Preallocated self = (Mem_Preallocated) mem;
 
@@ -71,12 +66,17 @@
 		return tmp;
 	} 
 
-	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes)
+	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
 	{
 		lu_debug("PREALLOCATED REALLOC??");
 	}
 
-	void mem_preallocated_free_internal(Mem self, lu_p_byte p)
+	void mem_preallocated_free_internal(Mem self, lu_p_byte p, const char* file, int line)
 	{
 		lu_debug("PREALLOCATED FREE??");
+	}
+
+	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
+	{
+		mem_free(parent_mem, (lu_p_byte) self);
 	}

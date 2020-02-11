@@ -3,6 +3,12 @@
 */
 
  
+ 	lu_flags mem_arr_type_internal(Mem self);
+	lu_p_byte mem_arr_alloc_internal(Mem mem, lu_size size, const char* file, int line);
+	lu_p_byte mem_arr_realloc_internal(Mem mem, lu_p_byte p, lu_size size_in_bytes, const char* file, int line);
+	void mem_arr_free_internal(Mem mem, lu_p_byte item, const char* file, int line);
+	void mem_arr_destroy_internal(Mem mem, Mem parent_mem, const char* file, int line);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
@@ -49,6 +55,15 @@
 		if (start == NULL) return NULL;
 
 		Mem_Arr self 			= (Mem_Arr) start;
+
+		// super
+		self->super.type 		= mem_arr_type_internal;
+		self->super.alloc 		= mem_arr_alloc_internal;
+		self->super.realloc 	= mem_arr_realloc_internal;
+		self->super.free 		= mem_arr_free_internal;
+		self->super.destroy 	= mem_arr_destroy_internal;
+
+		// other
 		self->item_size 		= item_size;
 		self->size 				= size;
 		self->flags 			= flags;
@@ -65,8 +80,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Main methods
 
-	lu_p_byte mem_arr_item_alloc(Mem_Arr self)
+	lu_flags mem_arr_type_internal(Mem self)
 	{
+		return MEM_TYPE_PREALLOCATED;
+	}
+
+	lu_p_byte mem_arr_alloc_internal(Mem mem, lu_size size, const char* file, int line)
+	{
+		// for Mem_Arr size of allocated items is the same each time, 
+		// so we don't need to pass size other than 0. If you passed non-zero
+		// value - probably you are doing something wrong.
+		lu_assert(size == 0);
+
+		Mem_Arr self = (Mem_Arr) mem;
+
 		lu_p_byte res;
 		if (self->items_pos < self->items_end)
 		{
@@ -86,8 +113,15 @@
 		return res;
 	}
 
-	void mem_arr_item_free(Mem_Arr self, lu_p_byte item)
+	lu_p_byte mem_arr_realloc_internal(Mem mem, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
 	{
+		lu_debug("MEM_ARR REALLOC?");
+	}
+
+	void mem_arr_free_internal(Mem mem, lu_p_byte item, const char* file, int line)
+	{
+		Mem_Arr self = (Mem_Arr) mem;
+
 		if (item == NULL) return;  // should prob debug this
 
 		if (!(self->flags & MEM_ARR_ITEM_FREEABLE)) return;
@@ -100,4 +134,8 @@
 		--self->items_count;
 	}
 
+	void mem_arr_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
+	{
+		mem_free(parent_mem, (lu_p_byte) self);
+	}
 
