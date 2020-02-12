@@ -6,7 +6,7 @@
 */
 
 #include "unity.h"
-#include "src/brain.h"
+#include "brain/brain.h"
 
 
 

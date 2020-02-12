@@ -7,7 +7,7 @@
 */
 
 #include "unity.h"
-#include "src/brain.h"
+#include "brain/brain.h"
 
 Lu_Brain 			brain;
 Lu_Rec 				rec_1;

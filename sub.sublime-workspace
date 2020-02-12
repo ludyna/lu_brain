@@ -496,201 +496,45 @@
 	"buffers":
 	[
 		{
-			"file": "src/src/brain_opts.lu",
+			"file": "README.md",
 			"settings":
 			{
-				"buffer_size": 775,
+				"buffer_size": 12,
 				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "project.yml",
+			"settings":
+			{
+				"buffer_size": 2113,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "src/__readme.md",
+			"settings":
+			{
+				"buffer_size": 55,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "test/lib/test_arr.c",
+			"contents": "",
+			"file": "src/src/src/__readme.md",
+			"file_size": 0,
+			"file_write_time": 132259552328808081,
 			"settings":
 			{
-				"buffer_size": 690,
-				"encoding": "UTF-8",
+				"buffer_size": 0,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "src/src/system/src/mem/mem_arr.lu",
 			"settings":
 			{
-				"buffer_size": 2340,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/lib/arrays.h",
-			"settings":
-			{
-				"buffer_size": 2016,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/lib/src/arrays/arr.lu",
-			"settings":
-			{
-				"buffer_size": 2647,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/lib/src/arrays/arr2.lu",
-			"settings":
-			{
-				"buffer_size": 1018,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/system/src/mem/mem.lu",
-			"settings":
-			{
-				"buffer_size": 2134,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/system/src/mem/mem_preallocated.lu",
-			"settings":
-			{
-				"buffer_size": 2354,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/system/src/system.lu",
-			"settings":
-			{
-				"buffer_size": 663,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/lib/list/s_list/test_s_list.c",
-			"settings":
-			{
-				"buffer_size": 8150,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/lib/list/test_list.c",
-			"settings":
-			{
-				"buffer_size": 3155,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/system/mem/test_mem_arr.c",
-			"settings":
-			{
-				"buffer_size": 2526,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/test_brain.c",
-			"settings":
-			{
-				"buffer_size": 504,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/system/test_system.c",
-			"settings":
-			{
-				"buffer_size": 274,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "test/system/mem/test_mem_preallocated.c",
-			"settings":
-			{
-				"buffer_size": 314,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/system/system.h",
-			"settings":
-			{
-				"buffer_size": 587,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/system/mem.h",
-			"settings":
-			{
-				"buffer_size": 3790,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/lib/rand.h",
-			"settings":
-			{
-				"buffer_size": 413,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "Searching 83 files for \"MEM_PREALLOCATED\" (case sensitive)\n\nF:\\ludyna\\lu_brain\\src\\src\\system\\mem.h:\n   36  \tenum mem_flags {\n   37  \t\tMEM_DYNAMIC = 1,\n   38: \t\tMEM_PREALLOCATED = 2\n   39  \t};\n   40  \n\nF:\\ludyna\\lu_brain\\src\\src\\system\\src\\mem\\mem_arr.lu:\n   22  \n   23  \t\t// if its not preallocated mem, size should be provided\n   24: \t\tif (size == 0 && !(mem->flags & MEM_PREALLOCATED)) return NULL;\n   25  \n   26  \t\tif (size == 0 && percent > 0)\n\nF:\\ludyna\\lu_brain\\src\\src\\system\\src\\mem\\mem_preallocated.lu:\n   22  \t\t// super\n   23  \t\tself->super.flags \t\t= 0;\n   24: \t\tself->super.flags     \t|= MEM_PREALLOCATED;\n   25  \t\tself->super.alloc \t\t= mem_preallocated_alloc;\n   26  \t\tself->super.realloc \t= mem_preallocated_realloc;\n\n3 matches across 3 files\n",
-			"settings":
-			{
-				"buffer_size": 757,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
-			}
-		},
-		{
-			"file": "src/src/n_mem/n_mem.h",
-			"settings":
-			{
-				"buffer_size": 2894,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/n_mem/src/n_mem.lu",
-			"settings":
-			{
-				"buffer_size": 306,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "src/src/brain.h",
-			"settings":
-			{
-				"buffer_size": 2977,
-				"encoding": "UTF-8",
+				"buffer_size": 0,
 				"line_ending": "Windows"
 			}
 		}
@@ -734,19 +578,6 @@
 	[
 		"/F/ludyna/lu_brain",
 		"/F/ludyna/lu_brain/src",
-		"/F/ludyna/lu_brain/src/src",
-		"/F/ludyna/lu_brain/src/src/basic",
-		"/F/ludyna/lu_brain/src/src/basic/src",
-		"/F/ludyna/lu_brain/src/src/lib",
-		"/F/ludyna/lu_brain/src/src/lib/src",
-		"/F/ludyna/lu_brain/src/src/lib/src/arrays",
-		"/F/ludyna/lu_brain/src/src/lib/src/lists",
-		"/F/ludyna/lu_brain/src/src/n_mem",
-		"/F/ludyna/lu_brain/src/src/n_mem/src",
-		"/F/ludyna/lu_brain/src/src/system",
-		"/F/ludyna/lu_brain/src/src/system/src",
-		"/F/ludyna/lu_brain/src/src/system/src/mem",
-		"/F/ludyna/lu_brain/src/src/templates",
 		"/F/ludyna/lu_brain/test",
 		"/F/ludyna/lu_brain/test/lib",
 		"/F/ludyna/lu_brain/test/lib/list",
@@ -757,32 +588,43 @@
 	],
 	"file_history":
 	[
-		"/F/ludyna/lu_brain/src/src/brain.c",
-		"/F/ludyna/lu_brain/src/src/system/mem.h",
-		"/F/ludyna/lu_brain/src/src/system/src/mem/mem_arr.lu",
-		"/F/ludyna/lu_brain/src/src/system/src/mem/preallocated_mem.lu",
-		"/F/ludyna/lu_brain/src/src/lib/src/lists/s_list.lu",
 		"/F/ludyna/lu_brain/src/src/brain.h",
-		"/F/ludyna/lu_brain/src/lu_brain.h",
-		"/F/ludyna/lu_brain/src/src/brain_opts.lu",
-		"/F/ludyna/lu_brain/src/src/system/src/mem/mem.lu",
-		"/F/ludyna/lu_brain/src/src/system/src/system.lu",
+		"/F/ludyna/lu_brain/test/lib/test_arr.c",
+		"/F/ludyna/lu_brain/src/__read.md",
+		"/F/ludyna/lu_brain/CONTRIBUTOR.md",
 		"/F/ludyna/lu_brain/test/lib/list/s_list/test_s_list.c",
 		"/F/ludyna/lu_brain/test/lib/list/test_list.c",
 		"/F/ludyna/lu_brain/test/system/mem/test_mem_arr.c",
-		"/F/ludyna/lu_brain/src/src/n_mem/n_mem.h",
-		"/F/ludyna/lu_brain/src/src/n_mem/src/n_mem.lu",
-		"/F/ludyna/lu_brain/test/test_lu_brain.c",
 		"/F/ludyna/lu_brain/test/test_brain.c",
 		"/F/ludyna/lu_brain/test/system/test_system.c",
+		"/F/ludyna/lu_brain/test/system/mem/test_mem_preallocated.c",
+		"/F/ludyna/lu_brain/src/src/n_mem/src/n_mem.lu",
+		"/F/ludyna/lu_brain/src/src/n_mem/n_mem.h",
 		"/F/ludyna/lu_brain/src/src/system/system.h",
+		"/F/ludyna/lu_brain/src/src/public/brain_opts.lu",
+		"/F/ludyna/lu_brain/src/src/public/public.lu",
+		"/F/ludyna/lu_brain/src/src/system/src/system.lu",
+		"/F/ludyna/lu_brain/src/src/system/src/mem/mem_preallocated.lu",
+		"/F/ludyna/lu_brain/src/src/system/src/mem/mem.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr2.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr.lu",
+		"/F/ludyna/lu_brain/src/src/lib/arrays.h",
+		"/F/ludyna/lu_brain/src/src/system/mem.h",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/s_list.lu",
+		"/F/ludyna/lu_brain/src/src/lib/src/lists/list.lu",
+		"/F/ludyna/lu_brain/src/src/system/src/mem/mem_arr.lu",
+		"/F/ludyna/lu_brain/src/src/brain_opts.lu",
+		"/F/ludyna/lu_brain/TEMP.md",
+		"/F/ludyna/lu_brain/src/src/brain.c",
+		"/F/ludyna/lu_brain/src/src/system/src/mem/preallocated_mem.lu",
+		"/F/ludyna/lu_brain/src/lu_brain.h",
+		"/F/ludyna/lu_brain/test/test_lu_brain.c",
 		"/F/ludyna/lu_brain/src/src/public_to_private.h",
 		"/F/ludyna/lu_brain/src/src/templates/name.h",
 		"/F/ludyna/lu_brain/src/src/templates/name.c",
 		"/F/ludyna/lu_brain/src/src/name.lu",
 		"/F/ludyna/lu_brain/src/src/rec_opts.lu",
 		"/F/ludyna/lu_brain/src/src/lib/lists.h",
-		"/F/ludyna/lu_brain/src/src/lib/src/lists/list.lu",
 		"/F/ludyna/lu_brain/src/src/lib/lib.h",
 		"/F/ludyna/lu_brain/test/core/mem/test_mem_arr.c",
 		"/F/ludyna/lu_brain/src/src/lib/src/lists.lu",
@@ -834,16 +676,12 @@
 		"/F/ludyna/lu_brain/src/src/basic/src/types.h",
 		"/F/ludyna/lu_brain/src/src/ph_mem/src/ph_block.lu",
 		"/F/ludyna/lu_brain/src/src/lib/rand.h",
-		"/F/ludyna/lu_brain/src/__read.md",
 		"/F/ludyna/lu_brain/src/src/rec.lu",
 		"/F/ludyna/lu_brain/src/src/story.lu",
 		"/F/ludyna/lu_brain/src/src/ph_mem/sis_alloc.h",
 		"/F/ludyna/lu_brain/src/src/lib/src/rand.lu",
 		"/F/ludyna/lu_brain/src/src/memory/memory.h",
 		"/F/ludyna/lu_brain/test/lib/test_ecs.c",
-		"/F/ludyna/lu_brain/src/src/lib/arrays.h",
-		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr2.lu",
-		"/F/ludyna/lu_brain/src/src/lib/src/arrays/arr.lu",
 		"/F/ludyna/lu_brain/src/src/neto.lu",
 		"/F/ludyna/lu_brain/src/src/basic/src/constants.h",
 		"/F/ludyna/lu_brain/src/src/basic/src/debug.h",
@@ -870,7 +708,6 @@
 		"/F/ludyna/lu_brain/src/src/wave_resp.lu",
 		"/F/ludyna/lu_brain/src/src/save_opts.lu",
 		"/F/ludyna/lu_brain/test/lib/test_rand.c",
-		"/F/ludyna/lu_brain/test/lib/test_arr.c",
 		"/F/ludyna/lu_brain/src/src/memory/src/m_neto.lu",
 		"/F/ludyna/lu_brain/src/public_to_private.h",
 		"/F/ludyna/lu_brain/src/name/name.h",
@@ -878,13 +715,7 @@
 		"/F/ludyna/lu_brain/src/brain/brain.h",
 		"/F/ludyna/lu_brain/src/src/memory/src/m_block.lu",
 		"/F/ludyna/lu_brain/sub.sublime-project",
-		"/F/ludyna/lu_brain/project.yml",
-		"/F/ludyna/lu_brain/src/brain_opts/brain_opts.h",
-		"/F/ludyna/lu_brain/src/neto/neto.h",
-		"/F/ludyna/lu_brain/src/brain/src/memory/memory.h",
-		"/F/ludyna/lu_brain/src/save_resp/save_resp.h",
-		"/F/ludyna/lu_brain/src/save_resp/src/save_resp.c",
-		"/F/ludyna/lu_brain/src/brain/public_to_private.h"
+		"/F/ludyna/lu_brain/project.yml"
 	],
 	"find":
 	{
@@ -920,6 +751,11 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"mem_free(ma",
+			"mem_alloc(ma",
+			"mem_arr_item_free",
+			"mem_arr_item_alloc(ma);",
+			"mem_arr_item_alloc(ma)",
 			"g_default_mem",
 			"g_defaul_mem",
 			"mem_preallocated_destroy",
@@ -1042,12 +878,7 @@
 			"tail",
 			"rand_bits",
 			"ph_mem_usages",
-			"_LU_PH_TYPE_H",
-			"_LU_PH_MEM_H",
-			";\n",
-			"ph_usage_desc",
-			"Ph_Usage_Desc",
-			"Ph_Type"
+			"_LU_PH_TYPE_H"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1055,6 +886,11 @@
 		"regex": false,
 		"replace_history":
 		[
+			"mem_free((Mem) ma",
+			"mem_alloc((Mem) ma",
+			"mem_free",
+			"mem_alloc(ma, 0);",
+			"mem_alloc(ma, 0)",
 			"g_mem_default",
 			"mem_preallocated_destroy_internal",
 			"mem_preallocated_free_internal",
@@ -1177,482 +1013,71 @@
 			"Ph_Usage_Desc",
 			"ph_usage_desc",
 			"n_mem",
-			"N_Mem",
-			"n_mem",
-			"ph_mem",
-			"Ph_Mem",
-			"_LU_PH_MEM_H",
-			"Ecs"
+			"N_Mem"
 		],
 		"reverse": false,
 		"show_context": true,
 		"use_buffer2": true,
-		"whole_word": true,
+		"whole_word": false,
 		"wrap": true
 	},
 	"groups":
 	[
 		{
-			"selected": 15,
+			"selected": 1,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "src/src/brain_opts.lu",
+					"file": "README.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 775,
+						"buffer_size": 12,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								775,
-								775
+								12,
+								12
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax",
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 22,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "test/lib/test_arr.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 690,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								393,
-								393
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 21,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "src/src/system/src/mem/mem_arr.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2340,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1653,
-								1653
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 13,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "src/src/lib/arrays.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2016,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1308,
-								1308
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 438.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 20,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "src/src/lib/src/arrays/arr.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2647,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2315,
-								2315
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1502.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 19,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "src/src/lib/src/arrays/arr2.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1018,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1018,
-								1018
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 18,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/src/system/src/mem/mem.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2134,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								893,
-								893
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 171.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "src/src/system/src/mem/mem.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2134,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								509,
-								509
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 342.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 12,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "src/src/system/src/mem/mem_preallocated.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2354,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1339,
-								1339
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 171.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"file": "src/src/system/src/system.lu",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 663,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								564,
-								564
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 38.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"file": "test/lib/list/s_list/test_s_list.c",
-					"semi_transient": false,
+					"buffer": 1,
+					"file": "project.yml",
+					"semi_transient": true,
 					"settings":
 					{
-						"buffer_size": 8150,
+						"buffer_size": 2113,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								8150,
-								8150
+								644,
+								641
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"tab_size": 4,
+							"syntax": "Packages/YAML/YAML.sublime-syntax",
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 4560.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "test/lib/list/test_list.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3155,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2125,
-								2125
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1197.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 11,
-					"file": "test/system/mem/test_mem_arr.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2526,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								232,
-								245
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 12,
-					"file": "test/test_brain.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 504,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								502,
-								352
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 13,
-					"file": "test/system/test_system.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 274,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								202,
-								202
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 14,
-					"file": "test/system/mem/test_mem_preallocated.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 314,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								314,
-								314
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -1668,69 +1093,12 @@
 			"sheets":
 			[
 				{
-					"buffer": 15,
-					"file": "src/src/system/system.h",
+					"buffer": 2,
+					"file": "src/__readme.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 587,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								389,
-								389
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 16,
-					"file": "src/src/system/mem.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3790,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								792,
-								792
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 17,
-					"file": "src/src/lib/rand.h",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 413,
+						"buffer_size": 55,
 						"regions":
 						{
 						},
@@ -1743,76 +1111,22 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax"
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 11,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 18,
+					"buffer": 3,
+					"file": "src/src/src/__readme.md",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 757,
-						"regions":
-						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										161,
-										177
-									],
-									[
-										370,
-										386
-									],
-									[
-										600,
-										616
-									]
-								],
-								"scope": ""
-							}
-						},
-						"selection":
-						[
-							[
-								376,
-								376
-							]
-						],
-						"settings":
-						{
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([^ \t].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 14,
-					"type": "text"
-				},
-				{
-					"buffer": 19,
-					"file": "src/src/n_mem/n_mem.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2894,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -1825,23 +1139,21 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 16,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 20,
-					"file": "src/src/n_mem/src/n_mem.lu",
+					"buffer": 4,
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 306,
+						"buffer_size": 0,
 						"regions":
 						{
 						},
@@ -1854,43 +1166,14 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"default_dir": "F:\\ludyna\\lu_brain\\src\\src\\src",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 15,
-					"type": "text"
-				},
-				{
-					"buffer": 21,
-					"file": "src/src/brain.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2977,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								206,
-								206
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 17,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -2048,7 +1331,7 @@
 		],
 		"width": 700.0
 	},
-	"selected_group": 1,
+	"selected_group": 0,
 	"settings":
 	{
 	},

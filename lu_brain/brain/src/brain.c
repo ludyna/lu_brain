@@ -2,7 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-#include "brain.h"
+#include "../brain.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Fundamental modules
