@@ -14,27 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Modules related to public nouns (with public and private methods)
 
-	// Options 
-	#include "brain_opts.lu"
-	#include "rec_opts.lu"
-	#include "save_opts.lu"
-	#include "find_opts.lu"
-	#include "restore_opts.lu"
-	
-	// Responses
-	#include "wave_resp.lu"
-	#include "save_resp.lu"
-	#include "find_resp.lu"
-	#include "restore_resp.lu"
-
-	// Main nouns
-	#include "rec.lu"
-	#include "block.lu"
-	#include "story.lu"
-	#include "wave.lu"
-	#include "neto.lu"
-	#include "name.lu"
-	#include "reception.lu"
+	#include "public/public.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Private modules
