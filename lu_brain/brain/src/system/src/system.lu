@@ -1,8 +1,6 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
- 
-#include "mem_abstractors/mem_abstractors.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy

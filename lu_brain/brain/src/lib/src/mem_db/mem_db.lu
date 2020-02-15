@@ -13,17 +13,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Ecs
 
-	Ecs ecs_create(lu_size component_types_size, lu_size soa_size)
-	{
-		Ecs self 			= (Ecs) malloc(sizeof(struct ecs));
+	// Ecs ecs_create(lu_size component_types_size, lu_size soa_size)
+	// {
+	// 	Ecs self 			= (Ecs) malloc(sizeof(struct ecs));
 
-		// Initialize
+	// 	// Initialize
 
-		return self;
-	}
+	// 	return self;
+	// }
 
-	void ecs_destroy(Ecs* self)
-	{
-		lu_free((void**) self);
-	}
+	// void ecs_destroy(Ecs* self)
+	// {
+	// 	lu_free((void**) self);
+	// }
 

@@ -5,8 +5,8 @@
 #define _LU_SRC_BRAIN_H
 
 #include "basic/basic.h"
-#include "system/system.h"
 #include "lib/lib.h"
+#include "system/system.h"
 
 #include "brain/public_to_private.h"
 

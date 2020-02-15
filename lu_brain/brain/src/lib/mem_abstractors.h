@@ -25,8 +25,9 @@
 		   	Mem mem2 = mem_preallocated_create(mem1, 512); 
 		   	could be another Mem_Preallocated or Mem_Arr or just Mem or something else.
 */			
-#ifndef _LU_MEM_H
-#define _LU_MEM_H
+#ifndef _LU_MEM_ABSTRACTORS_H
+#define _LU_MEM_ABSTRACTORS_H
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
@@ -134,4 +135,4 @@
 		lu_flags 		flags
 	);
 
-#endif // _LU_MEM_H
+#endif // _LU_MEM_ABSTRACTORS_H

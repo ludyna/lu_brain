@@ -1,16 +1,16 @@
 #include "unity.h"
 #include "brain/brain.h"
 
-Ecs ecs;
+// Ecs ecs;
 
 void setUp(void)
 { 
-	ecs = ecs_create(2, 2);
+	// ecs = ecs_create(2, 2);
 }
 
 void tearDown(void)
 {	
-	ecs_destroy(&ecs);
+	// ecs_destroy(&ecs);
 }
 
 void test_ecs(void)
