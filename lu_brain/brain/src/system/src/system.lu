@@ -2,10 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
  
-#include "mem/mem.lu"
-#include "mem/mem_preallocated.lu"
-#include "mem/mem_arr.lu"
-
+#include "mem_abstractors/mem_abstractors.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
@@ -14,13 +11,14 @@
 	{
 		Mem mem_preallocated 	= (Mem) 	mem_preallocated_create(g_mem_default, mem_size_in_bytes);
 		System self 			= (System) 	mem_alloc(mem_preallocated, sizeof(struct system));
-		self->mem 				= g_mem_default;
-		self->mem_preallocated 	= mem_preallocated;
+		
+		self->mem 				= mem_preallocated;
+		self->mem_default 		= g_mem_default;
 
 		return self;
 	}
 
 	void system_destroy(System self)
 	{
-		mem_destroy(self->mem_preallocated, g_mem_default);
+		mem_destroy(self->mem, self->mem_default);
 	}

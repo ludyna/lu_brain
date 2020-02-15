@@ -53,7 +53,7 @@ But you can have something like this
 		my_something.h
 		my_something_3.h
 
-As a result we have module my_module that uses one sub-module: my_module_2 and source sublfolder my_src_subfolder.
+As a result we have module my_module that uses one sub-module my_module_2 and source sublfolder my_src_subfolder.
 What is difference between my_module_2 and my_src_subfolder? The last one doesn't have header files and therefore is 
 directly included in my_module.lu.
 
@@ -67,7 +67,7 @@ Files my_src_1.lu and my_src_2.lu should be included in my_src_subfolder.lu.
 
 Files my_module_2.lu and my_src_subfolder.lu should be included in my_module.lu.
 
-Source subfolders like my_src_subfolder should not have src folder. src folder should be in modules only.
+Source sub-folders like my_src_subfolder should not have src folder. src folder should be in modules only.
 
 In short, modules have top-level header files and top-level src folder, source sub-folders don't have top-level header files and top-level src folders.
 
