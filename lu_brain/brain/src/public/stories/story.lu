@@ -48,12 +48,12 @@
 
 	}
 
-	Restore_Resp story_restore(Neto neto, Restore_Opts opts)
+	Restore_Resp story_restore(Neto neuron, Restore_Opts opts)
 	{
 
 	}
 
-	Wave story_restore_async(Neto neto, Restore_Opts opts)
+	Wave story_restore_async(Neto neuron, Restore_Opts opts)
 	{ 
 
 	}

@@ -23,7 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	Neto save_resp_neto(Save_Resp self)
+	Neto save_resp_neuron(Save_Resp self)
 	{
 		return NULL;
 	}

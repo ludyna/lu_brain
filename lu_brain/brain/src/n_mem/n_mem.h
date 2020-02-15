@@ -7,7 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
-	typedef struct m_neto* 			M_Neto;
+	typedef struct m_neuron* 			M_Neto;
 	typedef struct m_val_neu* 		M_Val_Neu;
 	typedef struct m_neu*			M_Neu;
 	typedef struct m_perception* 	M_Perception;
@@ -20,12 +20,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // MNeto
 
-	enum m_neto_type {
+	enum m_neuron_type {
 		MNT_VAL_NEU
 	};
 
-	// struct m_neto { 
-	// 	enum m_neto_type type;
+	// struct m_neuron { 
+	// 	enum m_neuron_type type;
 
 	// 	void 	(*consume)(MNeto self, MNeto src, lu_value p);
 	// 	void	(*bconsume)(MNeto self, MNeto src, lu_value p);
@@ -36,7 +36,7 @@
 	// 	#endif 
 	// };
 
-	struct m_neto {
+	struct m_neuron {
 		lu_size 		with_parents_id;
 		lu_size 		with_children_id;
 		lu_size 		with_p_id;
@@ -48,49 +48,49 @@
 // MValNeu
 
 	struct m_val_neu {
-		struct m_neto sup;
+		struct m_neuron sup;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // MNeu
 
 	struct m_neu {
-		struct m_neto sup;
+		struct m_neuron sup;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // MPerception
 
 	struct m_perception {
-		struct m_neto sup;
+		struct m_neuron sup;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // MRec
 
 	struct m_rec {
-		struct m_neto sup;
+		struct m_neuron sup;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // MBlock
 
 	struct m_block {
-		struct m_neto sup;
+		struct m_neuron sup;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // MStory
 
 	struct m_story {
-		struct m_neto sup;
+		struct m_neuron sup;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // MTime
 
 	struct m_time {
-		struct m_neto sup;
+		struct m_neuron sup;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

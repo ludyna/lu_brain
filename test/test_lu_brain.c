@@ -109,14 +109,14 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Name
 
-	Lu_Neto save_neto = lu_save_resp_neto(save_response);
+	Lu_Neuron save_neuron = lu_save_resp_neuron(save_response);
 
 	Lu_Name apple = lu_name_create(brain);
 
-	lu_name_link(apple, save_neto);
+	lu_name_link(apple, save_neuron);
 
 	/////////////////////////////////////////////////////////
 	// Restore
 
-	Lu_Restore_Resp restore_resp = lu_story_restore(save_neto, restore_opts);
+	Lu_Restore_Resp restore_resp = lu_story_restore(save_neuron, restore_opts);
 }

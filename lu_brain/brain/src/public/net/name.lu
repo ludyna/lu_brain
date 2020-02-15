@@ -24,12 +24,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void lu_name_link(Lu_Name self, Lu_Neto dst)
+	void lu_name_link(Lu_Name self, Lu_Neuron dst)
 	{
 
 	}
 
-	void lu_name_unlink(Lu_Name self, Lu_Neto dst)
+	void lu_name_unlink(Lu_Name self, Lu_Neuron dst)
 	{
 
 	}

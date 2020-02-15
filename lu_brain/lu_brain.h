@@ -11,7 +11,7 @@
 // Nouns
 
 	typedef struct lu_brain* 			Lu_Brain;
-	typedef struct lu_neto*				Lu_Neto;
+	typedef struct lu_neuron*			Lu_Neuron;
 	typedef struct lu_name* 			Lu_Name;
 	typedef struct lu_rec* 				Lu_Rec;
 	typedef struct lu_story* 			Lu_Story;
@@ -38,7 +38,7 @@
 		LU_WS_CANCELED
 	};
 
-	enum lu_neto_type {
+	enum lu_neuron_type {
 		LU_NT_STORY,
 		LU_NT_BLOCK,
 		LU_NT_PERCEPTION
@@ -86,7 +86,7 @@
 	///////////////////////////////////////////////////////////////////////
 	// Getters / Setters
 
-	lu_size lu_brain_neto_count(Lu_Brain);
+	lu_size lu_brain_neuron_count(Lu_Brain);
 	Lu_Rec lu_brain_rec_get(Lu_Brain, lu_size index); 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -113,8 +113,8 @@
 	Lu_Find_Resp lu_story_find(Lu_Story, Lu_Find_Opts);
 	Lu_Wave lu_story_find_async(Lu_Story, Lu_Find_Opts);
 
-	Lu_Restore_Resp lu_story_restore(Lu_Neto, Lu_Restore_Opts);
-	Lu_Wave lu_story_restore_async(Lu_Neto, Lu_Restore_Opts);
+	Lu_Restore_Resp lu_story_restore(Lu_Neuron, Lu_Restore_Opts);
+	Lu_Wave lu_story_restore_async(Lu_Neuron, Lu_Restore_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave API
@@ -133,35 +133,35 @@
 	Lu_Name lu_name_create(Lu_Brain);
 	void lu_name_destroy(Lu_Name);
 
-	void lu_name_link(Lu_Name, Lu_Neto dst);
-	void lu_name_unlink(Lu_Name, Lu_Neto dst);
+	void lu_name_link(Lu_Name, Lu_Neuron dst);
+	void lu_name_unlink(Lu_Name, Lu_Neuron dst);
 	
 ///////////////////////////////////////////////////////////////////////////////
 // Wave_Resp API
 
 	lu_size lu_wave_resp_time(Lu_Wave_Resp);
 	enum lu_wave_status lu_wave_resp_status(Lu_Wave_Resp);
-	lu_size lu_wave_resp_neto_touched(Lu_Wave_Resp);
-	lu_size lu_wave_resp_neto_excited(Lu_Wave_Resp);
+	lu_size lu_wave_resp_neuron_touched(Lu_Wave_Resp);
+	lu_size lu_wave_resp_neuron_excited(Lu_Wave_Resp);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Neto API
 
-	enum lu_neto_type lu_neto_type(Lu_Neto);
-	lu_value lu_neto_p(Lu_Neto);
-	Lu_Name*	lu_neto_names(Lu_Neto);
-	Lu_Neto* lu_neto_parents(Lu_Neto);
-	Lu_Neto* lu_neto_children(Lu_Neto);
+	enum lu_neuron_type lu_neuron_type(Lu_Neuron);
+	lu_value lu_neuron_p(Lu_Neuron);
+	Lu_Name*	lu_neuron_names(Lu_Neuron);
+	Lu_Neuron* lu_neuron_parents(Lu_Neuron);
+	Lu_Neuron* lu_neuron_children(Lu_Neuron);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Save_Resp API
 
-	Lu_Neto lu_save_resp_neto(Lu_Save_Resp);
+	Lu_Neuron lu_save_resp_neuron(Lu_Save_Resp);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Find_Resp API
 
-	Lu_Neto* lu_find_resp_netos(Lu_Find_Resp);
+	Lu_Neuron* lu_find_resp_neurons(Lu_Find_Resp);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Reception API

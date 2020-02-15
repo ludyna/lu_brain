@@ -79,12 +79,12 @@ lu_story_destroy(&story);
 // Restore data:
 
 // Return story info associated with Neto
-Lu_Restore_Response response = lu_story_restore(neto); // lu_story_restore_async()
+Lu_Restore_Response response = lu_story_restore(neuron); // lu_story_restore_async()
 
 // 
 // Name data:
 
-lu_neto_link(neto_dst, neto_src1, neto_src2);
+lu_neuron_link(neuron_dst, neuron_src1, neuron_src2);
 
 // 
 // Destroy brain:

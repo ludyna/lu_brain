@@ -5,16 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Neto neto_create()
+	Neto neuron_create()
 	{
-		Neto self 			= (Neto) malloc(sizeof(struct neto));
+		Neto self 			= (Neto) malloc(sizeof(struct neuron));
 
 		// Initialize
 
 		return self;
 	}
 
-	void neto_destroy(Neto* self)
+	void neuron_destroy(Neto* self)
 	{
 		lu_free((void**) self);
 	}
@@ -22,27 +22,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	enum lu_neto_type lu_neto_type(Lu_Neto self)
+	enum lu_neuron_type lu_neuron_type(Lu_Neuron self)
 	{
 
 	}
 
-	lu_value lu_neto_p(Lu_Neto self)
+	lu_value lu_neuron_p(Lu_Neuron self)
 	{
 
 	}
 
-	Lu_Neto*	lu_neto_netos(Lu_Neto self)
+	Lu_Neuron*	lu_neuron_neurons(Lu_Neuron self)
 	{
 
 	}
 
-	Lu_Neto* lu_neto_parents(Lu_Neto self)
+	Lu_Neuron* lu_neuron_parents(Lu_Neuron self)
 	{
 
 	}
 
-	Lu_Neto* lu_neto_children(Lu_Neto self)
+	Lu_Neuron* lu_neuron_children(Lu_Neuron self)
 	{
 
 	}

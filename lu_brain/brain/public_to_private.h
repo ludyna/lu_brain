@@ -12,8 +12,8 @@
 	#define brain lu_brain 
 	#define Brain Lu_Brain
 
-	#define neto lu_neto
-	#define Neto Lu_Neto
+	#define neuron lu_neuron
+	#define Neto Lu_Neuron
 
 	#define name lu_name
 	#define Name Lu_Name
@@ -63,7 +63,7 @@
 
 	// Enums 
 	#define wave_status lu_wave_status
-	#define neto_type lu_neto_type
+	#define neuron_type lu_neuron_type
 
 ///////////////////////////////////////////////////////////////////////////////
 // Brain_Opts API
@@ -104,7 +104,7 @@
 	#define brain_create lu_brain_create
 	#define brain_destroy lu_brain_destroy
 	#define brain_rect_get lu_brain_rec_get
-	#define brain_neto_count lu_brain_neto_count
+	#define brain_neuron_count lu_brain_neuron_count
 
 ///////////////////////////////////////////////////////////////////////////////
 // Rec API
@@ -162,27 +162,27 @@
 
 	#define wave_resp_time lu_wave_resp_time
 	#define wave_resp_status lu_wave_resp_status
-	#define wave_resp_neto_touched lu_wave_resp_neto_touched
-	#define wave_resp_neto_excited lu_wave_resp_neto_excited
+	#define wave_resp_neuron_touched lu_wave_resp_neuron_touched
+	#define wave_resp_neuron_excited lu_wave_resp_neuron_excited
 
 ///////////////////////////////////////////////////////////////////////////////
 // Neto API
 
-	#define neto_type lu_neto_type
-	#define neto_p lu_neto_p
-	#define neto_names lu_neto_names
-	#define neto_parents lu_neto_parents
-	#define neto_children lu_neto_children
+	#define neuron_type lu_neuron_type
+	#define neuron_p lu_neuron_p
+	#define neuron_names lu_neuron_names
+	#define neuron_parents lu_neuron_parents
+	#define neuron_children lu_neuron_children
 
 ///////////////////////////////////////////////////////////////////////////////
 // Save_Resp API
 
-	#define save_resp_neto lu_save_resp_neto
+	#define save_resp_neuron lu_save_resp_neuron
 
 ///////////////////////////////////////////////////////////////////////////////
 // Find_Resp API
 
-	#define find_resp_netos lu_find_resp_netos
+	#define find_resp_neurons lu_find_resp_neurons
 
 ///////////////////////////////////////////////////////////////////////////////
 // Reception API

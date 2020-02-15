@@ -10,9 +10,10 @@ I use "modular" folder structure:
 
 	my_module
 		src 
+			my_module.lu
 			my_something_1.lu
 			my_something_2.lu
-			my_module.lu
+
 
 		my_module.h
 
