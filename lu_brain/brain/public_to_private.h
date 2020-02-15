@@ -154,7 +154,7 @@
 	#define name_create lu_name_create
 	#define name_destroy lu_name_destroy
 
-	#define name_link lu_name_link
+	#define name_give lu_name_give
 	#define name_unlink lu_name_unlink
 	
 ///////////////////////////////////////////////////////////////////////////////

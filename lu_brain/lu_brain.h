@@ -133,7 +133,7 @@
 	Lu_Name lu_name_create(Lu_Brain);
 	void lu_name_destroy(Lu_Name);
 
-	void lu_name_link(Lu_Name, Lu_Neuron dst);
+	void lu_name_give(Lu_Name, Lu_Neuron dst);
 	void lu_name_unlink(Lu_Name, Lu_Neuron dst);
 	
 ///////////////////////////////////////////////////////////////////////////////

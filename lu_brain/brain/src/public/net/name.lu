@@ -24,7 +24,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void lu_name_link(Lu_Name self, Lu_Neuron dst)
+	void lu_name_give(Lu_Name self, Lu_Neuron dst)
 	{
 
 	}

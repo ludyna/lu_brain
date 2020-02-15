@@ -113,7 +113,7 @@ void test_lu_brain_basics(void)
 
 	Lu_Name apple = lu_name_create(brain);
 
-	lu_name_link(apple, save_neuron);
+	lu_name_give(apple, save_neuron);
 
 	/////////////////////////////////////////////////////////
 	// Restore
