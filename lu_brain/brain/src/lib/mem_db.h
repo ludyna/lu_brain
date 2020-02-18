@@ -1,84 +1,73 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
-
-	ECS is Entity Component System which is optimized for speed 
-	(not normalized) database in memory similar to relational databases.
-
-	Ideally component dont need to have reference to entity. Component should 
-	have everything system needs even if it means data is repeated.
-
-	Ideally entity should not have list of components. All work should be done 
-	at system levels. Ideally components should just have entity_id.
 */
-#ifndef _LU_ECS_DB_H
-#define _LU_ECS_DB_H
+#ifndef _LU_MEM_DB_H
+#define _LU_MEM_DB_H
 
-// ///////////////////////////////////////////////////////////////////////////////
-// // Nouns
+///////////////////////////////////////////////////////////////////////////////
+// Nouns
 
-// 	typedef struct ecs* 		Ecs; 
-// 	typedef struct entity* 		Entity;
-// 	typedef struct component* 	Component;
+	typedef struct mem_db* 			Mem_Db;
+	typedef struct mem_instance* 	Mem_Instance;
+	typedef struct mem_table* 		Mem_Table;
+	typedef struct mem_record* 		Mem_Record;
 
-// ///////////////////////////////////////////////////////////////////////////////
-// // Component
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Db
 
-// 	struct record {
-		
-// 	};
+	struct mem_db {
 
-// ///////////////////////////////////////////////////////////////////////////////
-// // Entity_+
+	};
 
-// 	struct table {	
+	Mem_Db mem_db_create(Mem mem, lu_size);
+	void mem_db_destroy(Mem_Db, Mem);
 
-// 	};
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Instance
 
-// 	Entity entity_create(Ecs);
-// 	void entity_destroy(Entity*);
+	struct mem_instance {
 
-// 	//entity_append(
+	};
 
-// 	static inline lu_p_void entity_get(Entity self, lu_size index)
-// 	{
-// 		return arr_get(self->components, index); 
-// 	}
+	lu_p_byte mem_instance_create_internal(Mem_Db self, lu_size, const char* file, int line);
 
-// ///////////////////////////////////////////////////////////////////////////////
-// // ECS
+	#define mem_instance_create(mem_db, size) mem_instance_create_internal(mem_db, size, __FILE__, __LINE__)
 
-// 	struct ecs_db {
-// 		//Sis_Alloc 		entities; 
-// 		Arr 			tables; // SOA, Ideally we should be able to get components by entity ID?
-// 	};
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Table
 
-// 	//
-// 	// systems_size potentially could be greater than components_size but usually (not required) not
-// 	// less than components_size
-// 	//
-// 	Ecs ecs_create(lu_size components_size, lu_size systems_size);
-// 	void ecs_destroy(Ecs*);
+	struct mem_table {
 
-// 	void ecs_component_type_append(
-// 		Ecs self, 
-// 		lu_size soa_index, 
-// 		lu_size component_size, 
-// 		lu_size components_size
-// 	);
+	};
 
-// 	void ecs_components_each(Ecs self, lu_size components_index, void (*block)(lu_p_void));
-// 	void ecs_components_each_1p(
-// 		Ecs self, lu_size components_index, 
-// 		void (*block)(lu_p_void, lu_p_void p1), 
-// 		lu_p_void p1
-// 	);
-// 	void ecs_components_each_2p(
-// 		Ecs self, 
-// 		lu_size components_index, 
-// 		void (*block)(lu_p_void, lu_p_void p2), 
-// 		lu_p_void p1, 
-// 		lu_p_void p2
-// 	);
+	 Mem_Table mem_table_create_internal(
+ 		Mem_Db self, 
+ 		lu_size record_size_in_bytes, 
+ 		lu_size table_size_in_records, 
+ 		lu_flags flags,
+ 		const char* file,
+ 		int line
+ 	); 
 
+	#define mem_table_create(mem_db, r_size, t_size, f) mem_table_create_internal(mem_db, r_size, t_size, f, __FILE__, __LINE__)
+
+	void mem_table_resize_internal(Mem_Table, lu_size new_size_in_bytes, lu_flags flags, const char* file, int line);
+
+	#define mem_table_resize(mem_table, new_size, f) mem_table_resize_internal(mem_table, new_size, f, __FILE__, __LINE__)
+
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Record
+
+	struct mem_record {
+
+	};
+
+ 	lu_p_byte mem_record_alloc_internal(Mem_Table, const char* file, int line);
+
+ 	#define mem_record_alloc(mem_table) mem_record_alloc_internal(mem_table, __FILE__, __LINE__)
+ 
+ 	void mem_record_free(Mem_Table, lu_p_byte record, const char* file, int line);
+
+	#define mem_record_free(mem_table, rec) mem_record_free_internal(mem_table, rec, __FILE__, __LINE__)
 
 #endif // _LU_ECS_H
