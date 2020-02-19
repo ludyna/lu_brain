@@ -43,6 +43,6 @@ void lu_debug_internal(const char * format, ...)
 
 void lu_debug_message_internal(const char* file, int line, const char * message)
 { 
-	fprintf(stderr, "\n%s:%d: %s", file, line, message);
+	fprintf(stderr, "\n<%s:%d> %s", file, line, message);
 }
 
