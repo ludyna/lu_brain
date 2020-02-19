@@ -92,7 +92,17 @@
 		lu_p_byte 		buff_pos;
 	};
 
+	void mem_preallocated_init(
+		Mem_Preallocated 	self, 
+		Mem 				parent_mem, 
+		lu_p_byte 			buff_start, 
+		lu_size 			size_in_bytes, 
+		lu_size 			self_struct_size
+	);
+
 	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes);
+
+	lu_bool mem_preallocated_is_out_of_mem(Mem_Preallocated self);
 
 	static inline lu_size mem_preallocated_avail(Mem_Preallocated self)
 	{

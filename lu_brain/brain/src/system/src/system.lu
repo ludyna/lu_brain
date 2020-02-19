@@ -7,10 +7,10 @@
 
 	System system_create(lu_size mem_size_in_bytes)
 	{
-		Mem mem_preallocated 	= (Mem) 	mem_preallocated_create(g_mem_default, mem_size_in_bytes);
-		System self 			= (System) 	mem_alloc(mem_preallocated, sizeof(struct system));
+		Mem_Db mem_db 			= mem_db_create(g_mem_default, mem_size_in_bytes);
+		System self 			= (System) mem_instance_create(mem_db, sizeof(struct system));
 		
-		self->mem 				= mem_preallocated;
+		self->mem_db 			= mem_db;
 		self->mem_default 		= g_mem_default;
 
 		return self;
@@ -18,5 +18,5 @@
 
 	void system_destroy(System self)
 	{
-		mem_destroy(self->mem, self->mem_default);
+		mem_db_destroy(self->mem_db, self->mem_default);
 	}

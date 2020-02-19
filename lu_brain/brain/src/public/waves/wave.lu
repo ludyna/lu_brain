@@ -24,12 +24,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	bool wave_is_working(Lu_Wave self)
+	lu_bool wave_is_working(Lu_Wave self)
 	{
 		return false;
 	}
 
-	bool wave_cancel(Lu_Wave self)
+	lu_bool wave_cancel(Lu_Wave self)
 	{
 
 	}

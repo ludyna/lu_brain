@@ -11,15 +11,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-
-	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes)
+	void mem_preallocated_init(
+		Mem_Preallocated 	self, 
+		Mem 				parent_mem, 
+		lu_p_byte 			buff_start, 
+		lu_size 			size_in_bytes, 
+		lu_size 			self_struct_size
+	)
 	{
-		lu_p_void start			= mem_alloc(parent_mem, size_in_bytes);
-
-		if (start == NULL) return NULL;
-
-		Mem_Preallocated self 	= (Mem_Preallocated) start;
-
 		// super
 		self->super.type 		= mem_preallocated_type_internal;
 		self->super.alloc 		= mem_preallocated_alloc_internal;
@@ -29,11 +28,31 @@
 
 		// other
 		self->parent_mem 		= parent_mem;
-		self->buff_start 		= (lu_p_byte) start;
+		self->buff_start 		= (lu_p_byte) buff_start;
 		self->buff_end			= self->buff_start + size_in_bytes;
-		self->buff_pos 			= self->buff_start + sizeof(struct mem_preallocated);
+		self->buff_pos 			= self->buff_start + self_struct_size;
 
+	}
+
+	lu_bool mem_preallocated_is_out_of_mem(Mem_Preallocated self)
+	{
 		if (self->buff_pos >= self->buff_end)
+			return true;
+
+		return false;
+	}
+
+	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes)
+	{
+		lu_p_void buff_start	= mem_alloc(parent_mem, size_in_bytes);
+
+		if (buff_start == NULL) return NULL;
+
+		Mem_Preallocated self 	= (Mem_Preallocated) buff_start;
+
+		mem_preallocated_init(self, parent_mem, buff_start, size_in_bytes, sizeof(struct mem_preallocated));
+
+		if (mem_preallocated_is_out_of_mem(self))
 		{
 			mem_destroy((Mem) self, parent_mem);
 			return NULL;

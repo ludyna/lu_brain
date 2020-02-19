@@ -14,7 +14,7 @@
 */
 void lu_free(void **p);
 
-static inline bool lu_value_eq(lu_value a, lu_value b)
+static inline lu_bool lu_value_eq(lu_value a, lu_value b)
 {
 	return lu_value_abs(a - b) < LU_NON_SIGNF;
 }

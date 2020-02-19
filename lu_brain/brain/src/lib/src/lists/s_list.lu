@@ -242,7 +242,7 @@ static S_Node s_list_insert(S_List self, lu_p_void value)
 {
 	S_Node path[self->level_size];
 
-	bool eq		= false;
+	lu_bool eq		= false;
  	lu_size i 	= self->level_size - 1;
  	path[i] 	= self->header;
 

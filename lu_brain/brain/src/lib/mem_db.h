@@ -1,5 +1,8 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
+
+	Mem_Db: Is preallocated memory with capabilities to better track, debug and 
+	organize data in memory.
 */
 #ifndef _LU_MEM_DB_H
 #define _LU_MEM_DB_H
@@ -16,6 +19,8 @@
 // Mem_Db
 
 	struct mem_db {
+		struct mem_preallocated super;
+
 
 	};
 
@@ -26,7 +31,7 @@
 // Mem_Instance
 
 	struct mem_instance {
-
+		// reserved for later for debug mode
 	};
 
 	lu_p_byte mem_instance_create_internal(Mem_Db self, lu_size, const char* file, int line);
@@ -37,7 +42,7 @@
 // Mem_Table
 
 	struct mem_table {
-
+		Mem_Db 	mem_db;
 	};
 
 	 Mem_Table mem_table_create_internal(
@@ -59,7 +64,7 @@
 // Mem_Record
 
 	struct mem_record {
-
+		// reserved for later for debug mode
 	};
 
  	lu_p_byte mem_record_alloc_internal(Mem_Table, const char* file, int line);

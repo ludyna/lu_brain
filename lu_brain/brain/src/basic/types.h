@@ -25,7 +25,7 @@ struct lu_size_range {
 };
 
 typedef lu_value (*lu_fp_compare)(lu_p_void x, lu_p_void y);
-typedef bool (*lu_fp_is_value)(lu_p_void value);
+typedef lu_bool (*lu_fp_is_value)(lu_p_void value);
 typedef lu_value(*lu_fp_get_value)(lu_p_void);
 
 #define lu_flags uint

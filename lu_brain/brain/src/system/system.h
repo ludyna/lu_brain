@@ -11,8 +11,8 @@
 	typedef struct system* System;
 
  	struct system {
- 		Mem 	mem;
  		Mem 	mem_default;
+ 		Mem_Db	mem_db;
  	};
 
 ///////////////////////////////////////////////////////////////////////////////

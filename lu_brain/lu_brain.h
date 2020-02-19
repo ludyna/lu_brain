@@ -119,8 +119,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Wave API
 
-	bool lu_wave_is_working(Lu_Wave);
-	bool lu_wave_cancel(Lu_Wave);
+	lu_bool lu_wave_is_working(Lu_Wave);
+	lu_bool lu_wave_cancel(Lu_Wave);
 	lu_size lu_wave_time(Lu_Wave);
 	enum lu_wave_status lu_wave_status(Lu_Wave);
 	lu_size lu_wave_touched_count(Lu_Wave);
