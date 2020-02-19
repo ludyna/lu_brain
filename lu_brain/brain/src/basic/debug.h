@@ -9,10 +9,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Debug related macroses
 
-void lu_printf(const char* file, int line, const char * format, ...);
 
-#define lu_debug_message(format) lu_printf(__FILE__, __LINE__, format)
-#define lu_debug(format, ...) lu_printf(__FILE__, __LINE__, format, __VA_ARGS__)
+void lu_debug_internal(const char * format, ...);
+void lu_debug_message_internal(const char* file, int line, const char * message);
+
+#define lu_debug lu_debug_internal
+#define lu_debug_message(message) lu_debug_message_internal(__FILE__, __LINE__, message)
+#define lu_debug_message_args(message, ...) lu_debug_message_internal(__FILE__, __LINE__, message, __VA_ARGS__)
 
 #define lu_save_debug printf
 

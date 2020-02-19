@@ -63,3 +63,17 @@
 	{
 		lu_debug_message("NOT IMPLEMENTED YET!!!");
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Record
+
+	lu_p_byte mem_record_alloc_internal(Mem_Table mem_table, const char* file, int line)
+	{
+
+	}
+
+ 	void mem_record_free_internal(Mem_Table mem_table, lu_p_byte record, const char* file, int line)
+ 	{
+
+ 	}
+

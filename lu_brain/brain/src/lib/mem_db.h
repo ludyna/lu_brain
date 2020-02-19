@@ -69,7 +69,7 @@
 
  	#define mem_record_alloc(mem_table) mem_record_alloc_internal(mem_table, __FILE__, __LINE__)
  
- 	void mem_record_free(Mem_Table, lu_p_byte record, const char* file, int line);
+ 	void mem_record_free_internal(Mem_Table, lu_p_byte record, const char* file, int line);
 
 	#define mem_record_free(mem_table, rec) mem_record_free_internal(mem_table, rec, __FILE__, __LINE__)
 
