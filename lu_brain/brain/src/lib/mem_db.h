@@ -20,8 +20,6 @@
 
 	struct mem_db {
 		struct mem_preallocated super;
-
-
 	};
 
 	Mem_Db mem_db_create(Mem mem, lu_size);

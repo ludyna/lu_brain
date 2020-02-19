@@ -214,19 +214,19 @@ void s_list_debug(S_List self)
 	S_Node curr;
 
 	lu_size i = self->level_size - 1;
-	lu_debug("\n ======= SLIST ======");
+	lu_debug_message("\n ======= SLIST ======");
 	while (head)
 	{
 		lu_debug("\n%ld:  ", i);
 		curr = head->next;
 		while (curr)
 		{
-			if (curr->value == NULL) lu_debug("NULL, ");
+			if (curr->value == NULL) lu_debug_message("NULL, ");
 			else 
 			{
 				//lu_debug("%.1f", ((Neu)(curr->value))->p);	
 				if(curr->values.count > 0) lu_debug("(%ld)", curr->values.count + 1);
-				lu_debug(", ");
+				lu_debug_message(", ");
 			}
 
 			curr = curr->next;

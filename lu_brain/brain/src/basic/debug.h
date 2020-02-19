@@ -6,8 +6,13 @@
 
 #include <assert.h>
 
-// for debug porposes
-#define lu_debug printf
+///////////////////////////////////////////////////////////////////////////////
+// Debug related macroses
+
+void lu_printf(const char* file, int line, const char * format, ...);
+
+#define lu_debug_message(format) lu_printf(__FILE__, __LINE__, format)
+#define lu_debug(format, ...) lu_printf(__FILE__, __LINE__, format, __VA_ARGS__)
 
 #define lu_save_debug printf
 
@@ -29,10 +34,10 @@ struct label_gen
 
 typedef struct label_gen* LabelGen;
 
-///////////////////////////////////////////////////////////////////////////////
-// Global 
 struct label_gen g_label_gen;
 
 void label_gen_set(char* lbl);
+
+
 
 #endif // _LU_DEBUG_H

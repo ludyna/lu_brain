@@ -32,3 +32,11 @@ void label_gen_set(char* lbl)
 		++g_label_gen.l_num;
 	}
 }
+
+void lu_printf(const char* file, int line, const char * format, ...)
+{ 
+	va_list arguments;
+
+	fprintf(stderr, "%s:%d: ", file, line);
+	vfprintf(stderr, format, arguments);
+}

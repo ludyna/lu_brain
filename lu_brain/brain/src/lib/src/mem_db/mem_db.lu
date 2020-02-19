@@ -42,3 +42,24 @@
 
 		return mem_alloc((Mem) self, size_in_bytes);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Table
+
+	Mem_Table mem_table_create_internal(
+ 		Mem_Db 			self, 
+ 		lu_size 		record_size_in_bytes, 
+ 		lu_size 		table_size_in_records, 
+ 		lu_flags 		flags,
+ 		const char* 	file,
+ 		int 			line
+ 	)
+ 	{
+
+ 	}
+
+
+	void mem_table_resize_internal(Mem_Table self, lu_size new_size_in_bytes, lu_flags flags, const char* file, int line)
+	{
+		lu_debug_message("NOT IMPLEMENTED YET!!!");
+	}

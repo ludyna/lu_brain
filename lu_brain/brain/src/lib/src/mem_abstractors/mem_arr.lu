@@ -115,7 +115,7 @@
 
 	lu_p_byte mem_arr_realloc_internal(Mem mem, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
 	{
-		lu_debug("MEM_ARR REALLOC?");
+		lu_debug_message("MEM_ARR REALLOC?");
 	}
 
 	void mem_arr_free_internal(Mem mem, lu_p_byte item, const char* file, int line)

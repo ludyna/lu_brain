@@ -87,12 +87,12 @@
 
 	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
 	{
-		lu_debug("PREALLOCATED REALLOC??");
+		lu_debug_message("PREALLOCATED REALLOC??");
 	}
 
 	void mem_preallocated_free_internal(Mem self, lu_p_byte p, const char* file, int line)
 	{
-		lu_debug("PREALLOCATED FREE??");
+		lu_debug_message("PREALLOCATED FREE??");
 	}
 
 	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
