@@ -8,7 +8,7 @@
 	System system_create(lu_size mem_size_in_bytes)
 	{
 		Mem_Db mem_db 			= mem_db_create(g_mem_default, mem_size_in_bytes);
-		System self 			= (System) mem_instance_create(mem_db, sizeof(struct system));
+		System self 			= (System) mem_instance_alloc(mem_db, sizeof(struct system));
 		
 		self->mem_db 			= mem_db;
 		self->mem_default 		= g_mem_default;

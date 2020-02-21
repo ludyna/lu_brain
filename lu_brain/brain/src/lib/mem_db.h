@@ -1,8 +1,8 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 
-	Mem_Db: Is preallocated memory with capabilities to better track, debug and 
-	organize data in memory.
+	Mem_Db: manages memory allocations, reallocations, resizes. Also helps with
+	memory debugging. More complicated than memory abstractors. 
 */
 #ifndef _LU_MEM_DB_H
 #define _LU_MEM_DB_H
@@ -32,9 +32,9 @@
 		// reserved for later for debug mode
 	};
 
-	lu_p_byte mem_instance_create_internal(Mem_Db self, lu_size, const char* file, int line);
+	lu_p_byte mem_instance_alloc_internal(Mem_Db self, lu_size, const char* file, int line);
 
-	#define mem_instance_create(mem_db, size) mem_instance_create_internal(mem_db, size, __FILE__, __LINE__)
+	#define mem_instance_alloc(mem_db, size) mem_instance_alloc_internal(mem_db, size, __FILE__, __LINE__)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Table

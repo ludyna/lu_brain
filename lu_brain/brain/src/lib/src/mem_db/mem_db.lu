@@ -5,11 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Db
 
-	void mem_db_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
-	{
-		mem_free(parent_mem, (lu_p_byte) self);
-	}
-
 	Mem_Db mem_db_create(Mem parent_mem, lu_size size_in_bytes)
 	{
 		lu_p_void buff_start		= mem_alloc(parent_mem, size_in_bytes);
@@ -36,7 +31,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Instance
 
-	lu_p_byte mem_instance_create_internal(Mem_Db self, lu_size size_in_bytes, const char* file, int line)
+	lu_p_byte mem_instance_alloc_internal(Mem_Db self, lu_size size_in_bytes, const char* file, int line)
 	{
 		// log for debug
 
