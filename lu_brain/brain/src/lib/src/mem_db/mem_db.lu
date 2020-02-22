@@ -41,16 +41,71 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Table
 
-	Mem_Table mem_table_create_internal(
- 		Mem_Db 			self, 
- 		lu_size 		record_size_in_bytes, 
- 		lu_size 		table_size_in_records, 
- 		lu_flags 		flags,
- 		const char* 	file,
- 		int 			line
+ 	Mem_Table mem_table_create_internal(
+ 		Mem_Db 		mem_db, 
+ 		lu_size 	record_size_in_bytes, 
+ 		lu_size 	table_size_in_records, 
+ 		lu_value 	percent,
+ 		lu_flags 	flags,
+ 		const char* file,
+ 		int line
  	)
  	{
+		if (record_size_in_bytes == 0) return NULL;
 
+		if (table_size_in_records == 0 && percent == 0) return NULL;
+
+		if (percent > 100.0) return NULL;
+
+		// if its not preallocated mem, table_size_in_records should be provided
+		if (table_size_in_records == 0 && !(mem_type((Mem) mem_db) & MEM_TYPE_PREALLOCATED)) return NULL;
+
+		if (table_size_in_records == 0 && percent > 0)
+		{
+			// x * ps + x * is + sisa = a
+			// x * (ps + is) = a - sisa
+			// x = (a - sisa)/(ps + is)
+
+			lu_size a = mem_preallocated_avail((Mem_Preallocated) mem_db) * percent  / 100.0;
+
+			lu_size fis = record_size_in_bytes;
+			if (flags & MEM_ARR_ITEM_FREEABLE) 
+				fis += sizeof(lu_p_byte);
+
+			table_size_in_records = (a - sizeof(struct mem_table)) / fis;
+		}
+
+		lu_size full_size = sizeof(struct mem_table) + record_size_in_bytes * table_size_in_records;
+		
+		if (flags & MEM_ARR_ITEM_FREEABLE) 
+			full_size += sizeof(lu_p_byte) * table_size_in_records;
+
+
+		lu_p_byte start = mem_alloc((Mem) mem_db, full_size);
+
+		if (start == NULL) return NULL;
+
+		Mem_Table self 					= (Mem_Table) start;
+
+		// super
+		self->super.type 				= mem_arr_type_internal;
+		self->super.alloc 				= mem_arr_alloc_internal;
+		self->super.realloc 			= mem_arr_realloc_internal;
+		self->super.free 				= mem_arr_free_internal;
+		self->super.destroy 			= mem_arr_destroy_internal;
+
+		// other
+		self->record_size_in_bytes 		= record_size_in_bytes;
+		self->table_size_in_records 	= table_size_in_records;
+		self->flags 					= flags;
+		self->items_start 				= start + sizeof(struct mem_table);
+		self->items_pos					= self->items_start;
+		self->items_end					= self->items_start + self->table_size_in_records * self->record_size_in_bytes;
+		self->free_start 				= (lu_p_byte*) self->items_end;
+		self->items_count 				= 0;
+		self->free_count				= 0;
+
+		return self;
  	}
 
 
@@ -64,11 +119,36 @@
 
 	lu_p_byte mem_record_alloc_internal(Mem_Table mem_table, const char* file, int line)
 	{
+		lu_p_byte res;
+		if (mem_table->items_pos < mem_table->items_end)
+		{
+			res = mem_table->items_pos;
+			mem_table->items_pos += mem_table->item_size;
+		}
+		else 
+		{
+			if (mem_table->free_count <= 0)
+				return NULL; // out of available memory
 
+			res = mem_table->free_start[--mem_table->free_count];
+		}
+
+		++mem_table->items_count;
+
+		return res;
 	}
 
  	void mem_record_free_internal(Mem_Table mem_table, lu_p_byte record, const char* file, int line)
  	{
+		if (record == NULL) return;  // should prob debug this
 
+		if (!(mem_table->flags & MEM_ARR_ITEM_FREEABLE)) return;
+
+		lu_assert(mem_table->items_count > 0);
+		lu_assert(mem_table->free_count < mem_table->size); 
+
+		mem_table->free_start[mem_table->free_count++] = record;
+
+		--mem_table->items_count;
  	}
 
