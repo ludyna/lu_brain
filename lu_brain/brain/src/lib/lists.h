@@ -40,17 +40,17 @@
 		L_Node 			first;
 		L_Node 			last;
 		lu_size 		count;
-		Mem_Arr 		mem_arr;
+		Mem_Table 		mem_table;
 		lu_size 		max_size;
 	};
 
 	// Init, create and destroy
-	static inline List list_init(List self, Mem_Arr mem_arr, lu_size max_size)
+	static inline List list_init(List self, Mem_Table mem_table, lu_size max_size)
 	{
 		self->first 		= NULL;
 		self->last 			= NULL;
 		self->count 		= 0;
-		self->mem_arr 		= mem_arr;
+		self->mem_table 		= mem_table;
 		self->max_size 		= max_size;
 	}
 
@@ -106,9 +106,9 @@
 
 	// Init, create and destroy
 
-	static inline void s_node_init(S_Node self, Mem_Arr mem_arr, lu_size limit_size)
+	static inline void s_node_init(S_Node self, Mem_Table mem_table, lu_size limit_size)
 	{
-		list_init(&self->values, mem_arr, limit_size);
+		list_init(&self->values, mem_table, limit_size);
 
 		self->next 				= NULL;
 		self->prev				= NULL;
@@ -120,9 +120,9 @@
 
 	// Main public methods
 
-	S_Node s_node_create(Mem_Arr mem_arr, lu_size limit_size);
+	S_Node s_node_create(Mem_Table mem_table, lu_size limit_size);
 
-	void s_node_destroy(Mem_Arr mem_arr, S_Node* s_node);
+	void s_node_destroy(Mem_Table mem_table, S_Node* s_node);
 
 ///////////////////////////////////////////////////////////////////////////////
 // S_List
@@ -140,7 +140,7 @@
 		lu_size				level_size;
 		lu_size 			count;
 		lu_fp_compare 		compare;
-		Mem_Arr 			mem_arr;
+		Mem_Table 			mem_table;
 
 		S_Node 				first;
 		S_Node 				last;

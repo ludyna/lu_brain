@@ -1,108 +1,103 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
-
-	Memory Abstractors
-
-		help with managing memory, debuging memory, memory preallocation, etc.
-	
-	Usage: 
-
-		1. Always assign created memory type to Mem pointer
-
-			Mem mem2 = (Mem) mem_preallocated_create(mem1, 512);
-
-		2. Always use only mem_alloc(), mem_realloc(), mem_free(), mem_realloc()
-		   and mem_destroy() macroses.
-
-			Arr a = (Arr) mem_alloc(mem2, sizeof(struct arr));
-
-			Use mem_preallocated_create() but don't use mem_preallocated_destroy(), 
-			intead use mem_destroy().
-
-		3. Memories could be compositional. Every memory could be based on another memory. 
-
-	       	For example mem1 here:
-		   	Mem mem2 = mem_preallocated_create(mem1, 512); 
-		   	could be another Mem_Preallocated or Mem_Arr or just Mem or something else.
-*/			
-#ifndef _LU_MEM_ABSTRACTORS_H
-#define _LU_MEM_ABSTRACTORS_H
-
+*/
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
-	
-	typedef struct mem* 				Mem;
-	typedef struct mem_preallocated*	Mem_Preallocated;
-	typedef struct mem_arr* 			Mem_Arr;
+
+	typedef struct mem* 						Mem;
+	typedef struct mem_table* 					Mem_Table;
+	typedef struct mem_preallocated* 			Mem_Preallocated;
+	typedef struct mem_table_preallocated* 		Mem_Table_Preallocated;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
-
 	extern Mem g_mem_default;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem
 
-	enum mem_type {
-		MEM_TYPE_DYNAMIC 		= 1,
-		MEM_TYPE_PREALLOCATED 	= 2
-	};
-
 	struct mem {
-		lu_flags 	(*type)(Mem);
+
 		lu_p_byte 	(*alloc)(Mem, lu_size size, const char* file, int line);
 		lu_p_byte 	(*realloc)(Mem, lu_p_byte, lu_size, const char* file, int line);
 		void 		(*free)(Mem, lu_p_byte, const char* file, int line);
 		void 		(*destroy)(Mem, Mem, const char* file, int line);
+
+		Mem_Table 	(*table_create)(
+			Mem 		mem, 
+	 		lu_size 	record_size_in_bytes, 
+	 		lu_size 	table_size_in_records, 
+	 		lu_value 	percent,
+	 		lu_flags 	flags,
+	 		const char* file,
+	 		int line
+	 	);
 	};
 
-	//
-	// mem_init() useful when we dont want to allocate memory for mem instance from heap.
-	// For example:
-	// 		struct mem mem;
-	//		mem_init(&mem);
-	//		My_Struct ms = mem_alloc(&mem, sizeof(struct mystruct));
-	//
-	void mem_init(Mem self);
+	#define mem_alloc(mem, size) mem->alloc(mem, size, __FILE__, __LINE__)
+	#define mem_realloc(mem, p, size) mem->realloc(mem, p, size, __FILE__, __LINE__)
+	#define mem_free(mem, p) mem->free(mem, p, __FILE__, __LINE__)
+	#define mem_destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __FILE__, __LINE__)
+	#define mem_table_create(mem, r_size, t_size, p, f) mem->table_create(mem, r_size, t_size, p, f, __FILE__, __LINE__)
+
 	Mem mem_create();
 
-	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line);
-	lu_p_byte mem_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line);
-	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line);
-	void mem_destroy_internal(Mem self, Mem parent_mem, const char* file, int line);
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Table
 
-	#define mem_type(mem) mem_type_internal(mem)
-	#define mem_alloc(mem, size) mem_alloc_internal(mem, size, __FILE__, __LINE__)
-	#define mem_realloc(mem, p, size) mem_realloc_internal(mem, p, size, __FILE__, __LINE__)
-	#define mem_free(mem, p) mem_free_internal(mem, p, __FILE__, __LINE__)
-	#define mem_destroy(mem, parent_mem) mem_destroy_internal(mem, parent_mem, __FILE__, __LINE__)
+	enum mem_table_flags {
+		MEM_TABLE_CAN_FREE_ITEMS = 1
+	};
+
+	struct mem_table {
+		void 		(*realloc)(Mem_Table, lu_size new_size_in_bytes, lu_flags flags, const char* file, int line);
+	 	void 		(*destroy)(Mem_Table, Mem, const char* file, int line);
+
+		lu_p_byte 	(*record_alloc)(Mem_Table, const char* file, int line);
+		void 		(*record_free)(Mem_Table, lu_p_byte record, const char* file, int line);
+
+		lu_size 		record_size_in_bytes;
+		lu_size			table_size_in_records;
+		lu_flags		flags;
+
+		lu_p_byte		records_start;
+		lu_p_byte		records_end;
+		lu_p_byte		records_pos;
+		lu_size 		records_count;
+
+		lu_p_byte* 		free_start;
+		lu_size 		free_count;
+	};
+
+	#define mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __FILE__, __LINE__)
+	#define mem_table_destroy(mt, parent_mem) mt->destroy(mt, parent_mem, __FILE__, __LINE__)
+
+	#define mem_record_alloc(mt) mt->record_alloc(mt, __FILE__, __LINE__)
+	#define mem_record_free(mt, p) mt->record_free(mt, p, __FILE__, __LINE__)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Preallocated
 
 	struct mem_preallocated {
+		struct mem 			super;
 
-		struct mem 		super;
-
-		Mem 			parent_mem;
-		lu_size 		size_in_bytes;
-		lu_p_byte 		buff_start;
-		lu_p_byte 		buff_end;
-		lu_p_byte 		buff_pos;
+		lu_size 			size_in_bytes;
+		lu_p_byte 			buff_start;
+		lu_p_byte 			buff_end;
+		lu_p_byte 			buff_pos;
 	};
 
-	void mem_preallocated_init(
-		Mem_Preallocated 	self, 
-		Mem 				parent_mem, 
-		lu_p_byte 			buff_start, 
-		lu_size 			size_in_bytes, 
-		lu_size 			self_struct_size
-	);
 
 	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes);
 
-	lu_bool mem_preallocated_is_out_of_mem(Mem_Preallocated self);
+	static inline lu_bool mem_preallocated_is_out_of_mem(Mem_Preallocated self)
+	{
+		if (self->buff_pos >= self->buff_end)
+			return true;
+
+		return false;
+	}
 
 	static inline lu_size mem_preallocated_avail(Mem_Preallocated self)
 	{
@@ -110,39 +105,19 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Arr
+// Mem_Preallocated_Table
 
-	enum mem_arr_flags {
-		MEM_ARR_ITEM_FREEABLE = 1
+	struct mem_table_preallocated {
+		struct mem_table 	super;
+		Mem_Preallocated 	mem_preallocated;
 	};
 
-	struct mem_arr {
-
-		struct mem 		super;
-
-		lu_size 		item_size;
-		lu_size			size;
-		lu_flags		flags;
-
-		lu_p_byte		items_start;
-		lu_p_byte		items_end;
-		lu_p_byte		items_pos;
-		lu_size 		items_count;
-
-		lu_p_byte* 		free_start;
-		lu_size 		free_count;
-	};
-
-	// 
-	//	If percent is provided (>0 && <= 100), sisa size is calculated from currently
-	//  available space with minimum one item_size.
-	//
-	Mem_Arr mem_arr_create (
-		Mem 			mem, 
-		lu_size 		item_size, 
-		lu_size 		size, 
-		lu_value 		percent,
-		lu_flags 		flags
+	Mem_Table_Preallocated mem_table_preallocated_create(
+		Mem_Preallocated 	mem, 
+		lu_size 			record_size_in_bytes, 
+		lu_size 			table_size_in_records, 
+		lu_value 			percent,
+		lu_flags 			flags,
+		const char* 		file,
+		int 				line
 	);
-
-#endif // _LU_MEM_ABSTRACTORS_H

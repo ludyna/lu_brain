@@ -29,7 +29,7 @@ void test_list1(void)
     List list = list_create(mem, 10);
 
     TEST_ASSERT(list != NULL);
-    TEST_ASSERT(list->mem_arr != NULL);
+    TEST_ASSERT(list->mem_table != NULL);
 
     L_Node node1 = list_append(list, n1);
     

@@ -5,19 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S_Node
 
-S_Node s_node_create(Mem_Arr mem_arr, lu_size limit_size)
+S_Node s_node_create(Mem_Table mem_table, lu_size limit_size)
 {
-	S_Node node = (S_Node) mem_alloc((Mem) mem_arr, 0);
+	S_Node node = (S_Node) mem_record_alloc(mem_table);
 
-	s_node_init(node, mem_arr, limit_size);
+	s_node_init(node, mem_table, limit_size);
 
 	return node;
 }
 
-void s_node_destroy(Mem_Arr mem_arr, S_Node* s_node)
+void s_node_destroy(Mem_Table mem_table, S_Node* s_node)
 {
 	//list_destroy_all(&(*s_node)->values);
-	mem_free((Mem) mem_arr, (lu_p_byte) *s_node);
+	mem_record_free(mem_table, (lu_p_byte) *s_node);
 	*s_node = NULL;
 }
 
@@ -29,12 +29,12 @@ static void build_header(S_List self)
 {
 	S_Node above;  
 	
-	S_Node below 	= s_node_create(self->mem_arr, self->limit_size); 
+	S_Node below 	= s_node_create(self->mem_table, self->limit_size); 
 	below->value 	= NULL; 
 
 	for (lu_size i = 1; i < self->level_size; i++)
 	{
-		above			= s_node_create(self->mem_arr, self->limit_size);
+		above			= s_node_create(self->mem_table, self->limit_size);
 
 		above->below	= below;
 		above->value 	= NULL;
@@ -63,15 +63,15 @@ S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_
 	self->count 		= 0;
 	self->compare 		= compare;
 
-	self->mem_arr 		= mem_arr_create(
+	self->mem_table 		= mem_table_create(
 							mem, 
 							sizeof(struct s_node), 
 							self->limit_size * 3 + self->level_size, 
 							0, 
-							MEM_ARR_ITEM_FREEABLE
+							MEM_TABLE_CAN_FREE_ITEMS
 						);
 
-	lu_assert(self->mem_arr != NULL);
+	lu_assert(self->mem_table != NULL);
 
 	self->first			= NULL;
 	self->last			= NULL;
@@ -115,7 +115,7 @@ static S_Node build_column(S_List self, S_Node* path, lu_p_void value)
 { 
 	S_Node above;
 
-	S_Node below 		= s_node_create(self->mem_arr, self->limit_size); 
+	S_Node below 		= s_node_create(self->mem_table, self->limit_size); 
 	S_Node bottom		= below;
 	S_Node prev, next;
 
@@ -134,7 +134,7 @@ static S_Node build_column(S_List self, S_Node* path, lu_p_void value)
 
 	for (lu_size i = 1; i < self->level_size && toss_coin(); i++)
 	{
-		above 			= s_node_create(self->mem_arr, self->limit_size);
+		above 			= s_node_create(self->mem_table, self->limit_size);
 
 		above->below 	= below;
 		below->above 	= above;
@@ -199,7 +199,7 @@ static void s_list_remove(S_List self, S_Node bottom)
 		if (above)
 			above->below = NULL;
 
-		s_node_destroy(self->mem_arr, &curr);
+		s_node_destroy(self->mem_table, &curr);
 
 		curr = above;
 	}

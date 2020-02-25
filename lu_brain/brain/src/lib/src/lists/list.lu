@@ -5,37 +5,37 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-L_Node l_node_create(Mem_Arr mem_arr, lu_p_void value)
+L_Node l_node_create(Mem_Table mem_table, lu_p_void value)
 {
-	L_Node node = (L_Node) mem_alloc((Mem)mem_arr, 0);
+	L_Node node = (L_Node) mem_record_alloc(mem_table);
 
 	l_node_init(node, value);
 
 	return node;
 }
 
-void l_node_destroy(Mem_Arr mem_arr, L_Node* l_node)
+void l_node_destroy(Mem_Table mem_table, L_Node* l_node)
 {
 	//list_destroy_all(&(*l_node)->values);
-	mem_free((Mem) mem_arr, (lu_p_void) *l_node);
+	mem_record_free(mem_table, (lu_p_void) *l_node);
 	*l_node = NULL;
 }
 
 List list_create(Mem mem, lu_size max_size_in_items)
 {
-	List self 			= (List) mem_alloc(mem, sizeof(struct list));
-	Mem_Arr mem_arr 	= mem_arr_create(
+	List self 				= (List) mem_alloc(mem, sizeof(struct list));
+	Mem_Table mem_table 	= mem_table_create(
 		mem, 
 		sizeof(struct l_node),
 		max_size_in_items,
 		0,
-		MEM_ARR_ITEM_FREEABLE
+		MEM_TABLE_CAN_FREE_ITEMS
 	);
 
-	lu_assert(mem_arr != NULL);
+	lu_assert(mem_table != NULL);
 
 	// Initialize
-	return list_init(self, mem_arr, max_size_in_items);
+	return list_init(self, mem_table, max_size_in_items);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,7 +61,7 @@ L_Node list_attach(List self, L_Node node)
 
 L_Node list_append(List self, lu_p_void value)
 {
-	L_Node node = l_node_create(self->mem_arr, value);
+	L_Node node = l_node_create(self->mem_table, value);
 	
 	list_attach(self, node);
 
@@ -70,7 +70,7 @@ L_Node list_append(List self, lu_p_void value)
 
 L_Node list_prepend(List self, lu_p_void value)
 {
-	L_Node node 	= l_node_create(self->mem_arr, value);
+	L_Node node 	= l_node_create(self->mem_table, value);
 	L_Node first = self->first;
 	
 	if (first) 
@@ -109,7 +109,7 @@ void list_remove(List self, L_Node node)
 { 
 	list_detach(self, node);
 
- 	l_node_destroy(self->mem_arr, &node);
+ 	l_node_destroy(self->mem_table, &node);
 }
 
 L_Node list_insert_after(List self, lu_p_void value, L_Node node)
@@ -172,7 +172,7 @@ void list_destroy_all(List self)
 		to_dest = curr;
 		curr 	= curr->next;
 
-		l_node_destroy(self->mem_arr, &to_dest);
+		l_node_destroy(self->mem_table, &to_dest);
 	}			
 }
 

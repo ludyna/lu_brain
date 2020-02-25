@@ -2,72 +2,8 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	lu_flags mem_preallocated_type_internal(Mem self);
-	lu_p_byte mem_preallocated_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line);
-	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line);
-	void mem_preallocated_free_internal(Mem, lu_p_byte, const char* file, int line);
-	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem, const char* file, int line);
- 
 ///////////////////////////////////////////////////////////////////////////////
-// Inits, create and destroy
-
-	void mem_preallocated_init(
-		Mem_Preallocated 	self, 
-		Mem 				parent_mem, 
-		lu_p_byte 			buff_start, 
-		lu_size 			size_in_bytes, 
-		lu_size 			self_struct_size
-	)
-	{
-		// super
-		self->super.type 		= mem_preallocated_type_internal;
-		self->super.alloc 		= mem_preallocated_alloc_internal;
-		self->super.realloc 	= mem_preallocated_realloc_internal;
-		self->super.free 		= mem_preallocated_free_internal;
-		self->super.destroy 	= mem_preallocated_destroy_internal;
-
-		// other
-		self->parent_mem 		= parent_mem;
-		self->buff_start 		= (lu_p_byte) buff_start;
-		self->buff_end			= self->buff_start + size_in_bytes;
-		self->buff_pos 			= self->buff_start + self_struct_size;
-
-	}
-
-	lu_bool mem_preallocated_is_out_of_mem(Mem_Preallocated self)
-	{
-		if (self->buff_pos >= self->buff_end)
-			return true;
-
-		return false;
-	}
-
-	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes)
-	{
-		lu_p_void buff_start	= mem_alloc(parent_mem, size_in_bytes);
-
-		if (buff_start == NULL) return NULL;
-
-		Mem_Preallocated self 	= (Mem_Preallocated) buff_start;
-
-		mem_preallocated_init(self, parent_mem, buff_start, size_in_bytes, sizeof(struct mem_preallocated));
-
-		if (mem_preallocated_is_out_of_mem(self))
-		{
-			mem_destroy((Mem) self, parent_mem);
-			return NULL;
-		}
-
-		return self;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Main methods
-
-	lu_flags mem_preallocated_type_internal(Mem self)
-	{
-		return MEM_TYPE_PREALLOCATED;
-	}	
+// Mem_Preallocated
 
 	// 
 	// All allocations should be at the beginning of app existance executed 
@@ -87,15 +23,145 @@
 
 	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
 	{
-		lu_debug_message("PREALLOCATED REALLOC??");
+		lu_debug_message("NOT IMPLEMENTED");
+		return NULL;
 	}
 
 	void mem_preallocated_free_internal(Mem self, lu_p_byte p, const char* file, int line)
 	{
-		lu_debug_message("PREALLOCATED FREE??");
+		lu_debug_message("NOT IMPLEMENTED");
 	}
 
 	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
 	{
 		mem_free(parent_mem, (lu_p_byte) self);
+	}
+
+	Mem_Table mem_table_preallocated_create_internal(
+		Mem 		mem, 
+		lu_size 	record_size_in_bytes, 
+		lu_size 	table_size_in_records, 
+		lu_value 	percent,
+		lu_flags 	flags,
+		const char* file,
+		int 		line
+	)
+	{
+		return (Mem_Table) mem_table_preallocated_create(
+			(Mem_Preallocated) mem,
+			record_size_in_bytes,
+			table_size_in_records,
+			percent,
+			flags,
+			file,
+			line
+		); 
+	}
+
+	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes)
+	{
+		lu_p_void buff_start	= mem_alloc(parent_mem, size_in_bytes);
+
+		if (buff_start == NULL) return NULL;
+
+		Mem_Preallocated self 		= (Mem_Preallocated) buff_start;
+
+		self->super.alloc 			= mem_preallocated_alloc_internal;
+		self->super.realloc 		= mem_preallocated_realloc_internal;
+		self->super.free 			= mem_preallocated_free_internal;
+		self->super.destroy 		= mem_preallocated_destroy_internal;
+		self->super.table_create 	= mem_table_preallocated_create_internal;
+
+		self->buff_start 			= (lu_p_byte) buff_start;
+		self->buff_end				= self->buff_start + size_in_bytes;
+		self->buff_pos 				= self->buff_start + sizeof(struct mem_preallocated);
+
+		if (mem_preallocated_is_out_of_mem(self))
+		{
+			Mem mem = (Mem) self;
+			mem_destroy(mem, parent_mem);
+			return NULL;
+		}
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Table_Preallocated
+
+	void mem_table_preallocated_realloc_internal(
+		Mem_Table self, 
+		lu_size new_size_in_bytes, 
+		lu_flags flags, 
+		const char* file, 
+		int line
+	)
+	{
+		lu_debug_message("NOT IMPLEMENTED");
+	}
+
+	Mem_Table_Preallocated mem_table_preallocated_create(
+		Mem_Preallocated 	mem_preallocated, 
+		lu_size 			record_size_in_bytes, 
+		lu_size 			table_size_in_records, 
+		lu_value 			percent,
+		lu_flags 			flags,
+		const char* 		file,
+		int 				line
+	)
+	{
+		if (record_size_in_bytes == 0) return NULL;
+
+		if (table_size_in_records == 0 && percent == 0) return NULL;
+
+		if (percent > 100.0) return NULL;
+
+		if (table_size_in_records == 0 && percent > 0)
+		{
+			// x * ps + x * is + sisa = a
+			// x * (ps + is) = a - sisa
+			// x = (a - sisa)/(ps + is)
+
+			lu_size a = mem_preallocated_avail(mem_preallocated) * percent  / 100.0;
+
+			lu_size fis = record_size_in_bytes;
+			if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
+				fis += sizeof(lu_p_byte);
+
+			table_size_in_records = (a - sizeof(struct mem_table_preallocated)) / fis;
+		}
+
+		lu_size full_size = sizeof(struct mem_table_preallocated) + record_size_in_bytes * table_size_in_records;
+		
+		if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
+			full_size += sizeof(lu_p_byte) * table_size_in_records;
+
+		Mem mem = (Mem) mem_preallocated;
+		lu_p_byte start = mem_alloc(mem, full_size);
+
+		if (start == NULL) return NULL;
+
+		Mem_Table_Preallocated self = (Mem_Table_Preallocated) start;
+
+		// super
+
+		self->super.realloc 				= mem_table_preallocated_realloc_internal;
+		self->super.destroy 				= mem_table_destroy_default;
+		self->super.record_alloc 			= mem_table_record_alloc_default;
+		self->super.record_free 			= mem_table_record_free_default;
+
+		self->super.record_size_in_bytes 	= record_size_in_bytes;
+		self->super.table_size_in_records 	= table_size_in_records;
+		self->super.flags 					= flags;
+		self->super.records_start 			= start + sizeof(struct mem_table_preallocated);
+		self->super.records_pos				= self->super.records_start;
+		self->super.records_end				= self->super.records_start + self->super.table_size_in_records * self->super.record_size_in_bytes;
+		self->super.free_start 				= (lu_p_byte*) self->super.records_end;
+		self->super.records_count 			= 0;
+		self->super.free_count				= 0;
+
+		// own
+		self->mem_preallocated 				= mem_preallocated;
+
+		return self;
 	}

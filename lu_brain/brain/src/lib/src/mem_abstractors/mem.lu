@@ -3,64 +3,69 @@
 */
  
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Mem (default)
 
-	lu_flags mem_type_dynamic(Mem self)
-	{
-		return MEM_TYPE_DYNAMIC;
-	}
-
-	lu_p_byte mem_alloc_dynamic(Mem self, lu_size size, const char* file, int line)
+	lu_p_byte mem_alloc_default(Mem self, lu_size size, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		return (lu_p_byte) malloc(size);
 	}
 
-	lu_p_byte mem_realloc_dynamic(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
+	lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		return (lu_p_byte) realloc(p, size_in_bytes);
 	}
 
-	void mem_free_dynamic(Mem self, lu_p_byte p, const char* file, int line)
+	void mem_free_default(Mem self, lu_p_byte p, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		free((lu_p_void) p);
 	}
 
-	static void mem_destroy_dynamic(Mem self, Mem parent_mem, const char* file, int line)
+	void mem_destroy_default(Mem self, Mem parent_mem, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		free((lu_p_void) self);
 	}
 
+	Mem_Table mem_table_create_default(
+		Mem 		mem, 
+		lu_size 	record_size_in_bytes, 
+		lu_size 	table_size_in_records, 
+		lu_value 	percent,
+		lu_flags 	flags,
+		const char* file,
+		int line
+	);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
 
-	struct mem g_default_mem_instance = {
-		.type 		= mem_type_dynamic,
-		.alloc 		= mem_alloc_dynamic,
-		.realloc 	= mem_realloc_dynamic,
-		.free 		= mem_free_dynamic,
-		.destroy 	= mem_destroy_dynamic
+	struct mem g_mem_default_instance = {
+		.alloc 			= mem_alloc_default,
+		.realloc 		= mem_realloc_default,
+		.free 			= mem_free_default,
+		.destroy 		= mem_destroy_default,
+		.table_create 	= mem_table_create_default
 	};
 
-	Mem g_mem_default = &g_default_mem_instance;
+	Mem g_mem_default = &g_mem_default_instance;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
 	void mem_init(Mem self)
 	{
-		self->type 		= g_default_mem_instance.type;
-		self->alloc 	= g_default_mem_instance.alloc;
-		self->realloc 	= g_default_mem_instance.realloc;
-		self->free 		= g_default_mem_instance.free;
-		self->destroy 	= g_default_mem_instance.destroy;
+		self->alloc 		= g_mem_default_instance.alloc;
+		self->realloc 		= g_mem_default_instance.realloc;
+		self->free 			= g_mem_default_instance.free;
+		self->destroy 		= g_mem_default_instance.destroy;
+		self->table_create 	= g_mem_default_instance.table_create;
 	}
 
 	Mem mem_create()
@@ -73,37 +78,100 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Main methods
+// Mem_Table
 
-	lu_flags mem_type_internal(Mem self)
+	void mem_table_realloc_default(
+		Mem_Table self, 
+		lu_size new_size_in_bytes, 
+		lu_flags flags, 
+		const char* file, 
+		int line
+	)
 	{
-		return self->type(self);
+		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	lu_p_byte mem_alloc_internal(Mem self, lu_size size_in_bytes, const char* file, int line)
+	void mem_table_destroy_default(Mem_Table self, Mem mem, const char* file, int line)
 	{
-		// shared debug here
+		mem_free(mem, (lu_p_byte) self);
+	}
+	
+	lu_p_byte mem_table_record_alloc_default(Mem_Table self, const char* file, int line)
+	{
+		lu_p_byte res;
+		if (self->records_pos < self->records_end)
+		{
+			res = self->records_pos;
+			self->records_pos += self->record_size_in_bytes;
+		}
+		else 
+		{
+			if (self->free_count <= 0)
+				return NULL; // out of available memory
 
-		return self->alloc(self, size_in_bytes, file, line);
+			res = self->free_start[--self->free_count];
+		}
+
+		++self->records_count;
+
+		return res;
 	}
 
-	lu_p_byte mem_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
+	void mem_table_record_free_default(Mem_Table self, lu_p_byte record, const char* file, int line)
 	{
-		// shared debug here
+		if (record == NULL) return;  // should prob debug this
 
-		return self->realloc(self, p, size_in_bytes, file, line);
+		if (!(self->flags & MEM_TABLE_CAN_FREE_ITEMS)) return;
+
+		lu_assert(self->records_count > 0);
+		lu_assert(self->free_count < self->table_size_in_records); 
+
+		self->free_start[self->free_count++] = record;
+
+		--self->records_count;
 	}
 
-	lu_p_byte mem_free_internal(Mem self, lu_p_byte p, const char* file, int line)
+	Mem_Table mem_table_create_default(
+		Mem 		mem, 
+		lu_size 	record_size_in_bytes, 
+		lu_size 	table_size_in_records, 
+		lu_value 	percent,
+		lu_flags 	flags,
+		const char* file,
+		int line
+	)
 	{
-		// shared debug here
+		if (record_size_in_bytes == 0) return NULL;
 
-		self->free(self, p, file, line);
-	}
+		if (table_size_in_records == 0) return NULL;
 
-	void mem_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
-	{
-		// shared debug here
+		if (percent > 100.0) return NULL;
 
-		self->destroy(self, parent_mem, file, line);
+		lu_size full_size = sizeof(struct mem_table) + record_size_in_bytes * table_size_in_records;
+		
+		if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
+			full_size += sizeof(lu_p_byte) * table_size_in_records;
+
+		lu_p_byte start = mem_alloc(mem, full_size);
+
+		if (start == NULL) return NULL;
+
+		Mem_Table self 				= (Mem_Table) start;
+
+		self->realloc 				= mem_table_realloc_default;
+		self->destroy 				= mem_table_destroy_default;
+		self->record_alloc 			= mem_table_record_alloc_default;
+		self->record_free 			= mem_table_record_free_default;
+
+		self->record_size_in_bytes 	= record_size_in_bytes;
+		self->table_size_in_records = table_size_in_records;
+		self->flags 				= flags;
+		self->records_start 		= start + sizeof(struct mem_table);
+		self->records_pos			= self->records_start;
+		self->records_end			= self->records_start + self->table_size_in_records * self->record_size_in_bytes;
+		self->free_start 			= (lu_p_byte*) self->records_end;
+		self->records_count 		= 0;
+		self->free_count			= 0;
+
+		return self;
 	}

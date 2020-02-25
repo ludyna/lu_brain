@@ -145,11 +145,11 @@
 		Brain 			brain;
 		//M_Time 		time;
 
-		Mem_Arr 		m_neulable;
+		Mem_Table 		m_neulable;
 		
-		Mem_Arr 		s_waves;
-		Mem_Arr 		f_waves;
-		Mem_Arr 		r_waves;
+		Mem_Table 		s_waves;
+		Mem_Table 		f_waves;
+		Mem_Table 		r_waves;
 	};
 	
 	N_Mem n_mem_create(Brain brain);
