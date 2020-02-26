@@ -13,7 +13,7 @@
 	typedef struct lu_brain* 			Lu_Brain;
 	typedef struct lu_neuron*			Lu_Neuron;
 	typedef struct lu_name* 			Lu_Name;
-	typedef struct lu_rec* 				Lu_Rec;
+	typedef struct lu_receiver* 		Lu_Receiver;
 	typedef struct lu_story* 			Lu_Story;
 	typedef struct lu_block*			Lu_Block;
 	typedef struct lu_wave* 			Lu_Wave;
@@ -87,10 +87,10 @@
 	// Getters / Setters
 
 	lu_size lu_brain_neuron_count(Lu_Brain);
-	Lu_Rec lu_brain_rec_get(Lu_Brain, lu_size index); 
+	Lu_Receiver lu_brain_rec_get(Lu_Brain, lu_size index); 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Rec API
+// Receiver API
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,7 +105,7 @@
 	Lu_Story lu_story_create(Lu_Brain);
 	void lu_story_destroy(Lu_Story*);
 
-	void lu_story_push(Lu_Story, Lu_Rec, lu_value* data);
+	void lu_story_push(Lu_Story, Lu_Receiver, lu_value* data);
 
 	Lu_Save_Resp lu_story_save(Lu_Story, Lu_Save_Opts);
 	Lu_Wave lu_story_save_async(Lu_Story, Lu_Save_Opts);
@@ -166,7 +166,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Reception API
 
-	Lu_Rec lu_reception_rec(Lu_Reception);
+	Lu_Receiver lu_reception_rec(Lu_Reception);
 	lu_value* lu_reception_data(Lu_Reception);
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -10,8 +10,8 @@
 #include "brain/brain.h"
 
 Lu_Brain 			brain;
-Lu_Rec 				rec_1;
-Lu_Rec 				rec_2;
+Lu_Receiver 				rec_1;
+Lu_Receiver 				rec_2;
 
 Lu_Brain_Opts 		brain_opts;
 Lu_Rec_Opts 		rec_opts_1;

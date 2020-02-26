@@ -7,7 +7,7 @@
 
 	Rec_Opts rec_opts_create(Lu_Brain_Opts brain_opts, lu_size w, lu_size h, lu_value min, lu_value max)
 	{
-		// Rec_Opts self = (Rec_Opts) malloc(sizeof(struct rec_opts));
+		// Rec_Opts self = (Rec_Opts) malloc(sizeof(struct receiver_opts));
 
 		// // Initialize
 

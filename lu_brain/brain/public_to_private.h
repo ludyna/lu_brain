@@ -18,8 +18,8 @@
 	#define name lu_name
 	#define Name Lu_Name
 
-	#define rec lu_rec
-	#define Rec Lu_Rec
+	#define receiver lu_receiver
+	#define Receiver Lu_Receiver
 
 	#define story lu_story
 	#define Story Lu_Story
@@ -49,7 +49,7 @@
 	#define brain_opts lu_brain_opts 
 	#define Brain_Opts Lu_Brain_Opts
 
-	#define rec_opts lu_rec_opts
+	#define receiver_opts lu_rec_opts
 	#define Rec_Opts Lu_Rec_Opts
 
 	#define save_opts lu_save_opts 
@@ -107,7 +107,7 @@
 	#define brain_neuron_count lu_brain_neuron_count
 
 ///////////////////////////////////////////////////////////////////////////////
-// Rec API
+// Receiver API
 
 
 

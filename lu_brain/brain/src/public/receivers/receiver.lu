@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Rec rec_create(Brain brain, Rec_Opts opts)
+	Receiver rec_create(Brain brain, Rec_Opts opts)
 	{
-		Rec self 			= (Rec) malloc(sizeof(struct rec));
+		Receiver self 			= (Receiver) malloc(sizeof(struct receiver));
 
 		// Initialize
 		self->brain 			= brain;
@@ -15,7 +15,7 @@
 		return self;
 	}
 
-	void rec_destroy(Rec* self)
+	void rec_destroy(Receiver* self)
 	{
 		lu_free((void**) self);
 	}

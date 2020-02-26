@@ -23,7 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void story_push(Story self, Rec rec, lu_value* data)
+	void story_push(Story self, Receiver receiver, lu_value* data)
 	{
 
 	}

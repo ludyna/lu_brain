@@ -1,3 +1,3 @@
 
-#include "rec.lu"
-#include "rec_opts.lu"
+#include "receiver.lu"
+#include "receiver_opts.lu"
