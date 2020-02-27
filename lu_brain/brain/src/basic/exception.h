@@ -25,13 +25,18 @@ enum lu_e {
 	LU_E_LAST
 };
 
-
-
 void lu_throw_internal(enum lu_e e, const char* file, int line);
 void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, const char* fmt, ...);
 
 #define lu_throw(e) lu_throw_internal(e, __FILE__, __LINE__);
 #define lu_throw_with_message(e, msg, ...) lu_throw_with_message_internal(e, __FILE__, __LINE__, msg, __VA_ARGS__)
+
+void* lu_user_throw_internal(const char* func, const char* file, int line, const char* fmt);
+void* lu_user_throw_args_internal(const char* func, const char* file, int line, const char* fmt, ...);
+
+#define lu_user_throw(msg) lu_user_throw_internal(__func__, __FILE__, __LINE__, msg)
+#define lu_user_throw_args(msg, ...) lu_user_throw_args_internal(__func__, __FILE__, __LINE__, msg, __VA_ARGS__)
+
 
 #endif // _LU_EXCEPTION_H
 

@@ -4,7 +4,7 @@
 
 void lu_throw_internal(enum lu_e e, const char* file, int line)
 {
-	fprintf(stderr, "\nEXCEPTION: <%s:%d> %d", file, line, e);
+	fprintf(stderr, "\nEXCEPTION: <%s:%d> ID: %d", file, line, e);
 	Throw(e);
 }
 
@@ -17,11 +17,34 @@ void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, con
 
 	    char final_fmt[512];
 
-	    sprintf(final_fmt, "\nEXCEPTION: <%s:%d> %s", file, line, fmt);
+	    sprintf(final_fmt, "\nEXCEPTION: <%s:%d> ID: <%d> %s", file, line, e, fmt);
 
 	    vfprintf(stderr, final_fmt, ap);
 	    va_end(ap);
 	}
 
 	Throw(e);
+}
+
+void* lu_user_throw_internal(const char* func, const char* file, int line, const char* fmt)
+{
+	fprintf(stderr, "\nError while calling lu_%s(): <%s:%d> %s", func, file, line, fmt);
+    return NULL;
+}
+
+void* lu_user_throw_args_internal(const char* func, const char* file, int line, const char* fmt, ...)
+{
+	if (fmt == NULL) return NULL;
+	
+    va_list ap;
+    va_start(ap, fmt);
+
+    char final_fmt[512];
+
+    sprintf(final_fmt, "\nError while calling lu_%s(): <%s:%d> %s", func, file, line, fmt);
+
+    vfprintf(stderr, final_fmt, ap);
+    va_end(ap);
+
+    return NULL;
 }

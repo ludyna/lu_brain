@@ -7,7 +7,7 @@
 
 	Rec rec_create(Brain brain, Rec_Opts opts)
 	{
-		Rec self 			= (Rec) mem_temp_alloc(sizeof(struct rec));
+		Rec self 			= (Rec) mem_alloc(brain->sys->mem_perm, sizeof(struct rec));
 
 		// Initialize
 		self->brain 		= brain;
@@ -17,7 +17,7 @@
 
 	void rec_destroy(Rec self)
 	{
-		mem_temp_free((lu_p_byte) self);
+		mem_free(self->brain->sys->mem_perm, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

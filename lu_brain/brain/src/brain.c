@@ -24,9 +24,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
+	void for_each_rec_opts_create_rec(void* item, void* p1)
+	{
+		Rec_Opts rec_opts 	= (Rec_Opts) item;
+		Brain brain 		= (Brain) p1;
+
+		arr_append(brain->recs, rec_create(brain, rec_opts));
+	}
+
 	Brain brain_create(Brain_Opts opts)
 	{
-		if (opts == NULL) lu_throw(LU_E_BRAIN_OPTS_REQUIRED);
+		if (opts == NULL) 
+			return lu_user_throw("brain options should not be NULL");
+
+		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
+			return lu_user_throw("brain options should include information about recs");
 
 		System sys 		= system_create(opts->size_in_bytes);
 		Brain self 		= (Brain) mem_alloc(sys->mem_perm, sizeof(struct brain));
@@ -35,6 +47,8 @@
 		self->sys 		= sys;
 
 		self->recs 		= arr_create(sys->mem_perm, opts->rec_opts->count);
+
+		arr_each_1p(opts->rec_opts, for_each_rec_opts_create_rec, self);
 
 		return self;
 	}
