@@ -10,8 +10,8 @@
 #include "brain/brain.h"
 
 Lu_Brain 			brain;
-Lu_Rec 		rec_1;
-Lu_Rec 		rec_2;
+Lu_Rec 				rec_1;
+Lu_Rec 				rec_2;
 
 Lu_Brain_Opts 		brain_opts;
 Lu_Rec_Opts 		rec_opts_1;
@@ -119,4 +119,7 @@ void test_lu_brain_basics(void)
 	// Restore
 
 	Lu_Restore_Resp restore_resp = lu_story_restore(save_neuron, restore_opts);
+
+	/////////////////////////////////////////////////////////
+	// Restore stories by name
 }

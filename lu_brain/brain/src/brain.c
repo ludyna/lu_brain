@@ -26,11 +26,15 @@
 
 	Brain brain_create(Brain_Opts opts)
 	{
+		if (opts == NULL) lu_throw(LU_E_BRAIN_OPTS_REQUIRED);
+
 		System sys 		= system_create(opts->size_in_bytes);
 		Brain self 		= (Brain) mem_alloc(sys->mem_perm, sizeof(struct brain));
 		
 		self->id 		= opts->id;
 		self->sys 		= sys;
+
+		self->recs 		= arr_create(sys->mem_perm, opts->rec_opts->count);
 
 		return self;
 	}

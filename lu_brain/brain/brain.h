@@ -54,6 +54,8 @@
 		System			sys;		// global state/devices/memory possibly
 									// shared between objects of the brain 
 
+		Arr				recs;		// receivers
+
 		N_Mem 			n_mem;
 	};	
 

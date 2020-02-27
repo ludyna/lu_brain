@@ -16,14 +16,22 @@ enum lu_e {
 	LU_E_FIRST = 6000, 
 	
 	// Mem 
-	LU_E_PH_MEM_ALLOC_FAILED,
-	LU_E_PH_MEM_OUT_OF_MEMORY, 
-	LU_E_PH_MEM_OUT_OF_BLOCK_MEMORY,
+	LU_E_MEM_ALLOC_FAIL, 
+
+	// Brain
+	LU_E_BRAIN_OPTS_REQUIRED, 
+	LU_E_BRAIN_RECS_REQUIRED, 
 
 	LU_E_LAST
 };
 
-void lu_throw(enum lu_e e, lu_cstring fmt, ...);
+
+
+void lu_throw_internal(enum lu_e e, const char* file, int line);
+void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, const char* fmt, ...);
+
+#define lu_throw(e) lu_throw_internal(e, __FILE__, __LINE__);
+#define lu_throw_with_message(e, msg, ...) lu_throw_with_message_internal(e, __FILE__, __LINE__, msg, __VA_ARGS__)
 
 #endif // _LU_EXCEPTION_H
 

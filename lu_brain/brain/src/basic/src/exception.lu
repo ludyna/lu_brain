@@ -2,13 +2,24 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-void lu_throw(enum lu_e e, lu_cstring fmt, ...)
+void lu_throw_internal(enum lu_e e, const char* file, int line)
+{
+	fprintf(stderr, "\nEXCEPTION: <%s:%d> %d", file, line, e);
+	Throw(e);
+}
+
+void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, const char* fmt, ...)
 {
 	if (fmt != NULL)
 	{
 	    va_list ap;
 	    va_start(ap, fmt);
-	    vfprintf(stderr, fmt, ap);
+
+	    char final_fmt[512];
+
+	    sprintf(final_fmt, "\nEXCEPTION: <%s:%d> %s", file, line, fmt);
+
+	    vfprintf(stderr, final_fmt, ap);
 	    va_end(ap);
 	}
 

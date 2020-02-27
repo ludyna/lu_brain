@@ -16,7 +16,7 @@
 		self->find_waves_size		= 1;
 		self->restore_waves_size	= 1;
 
-		self->rec_opts			= arr_temp_create(10);
+		self->rec_opts				= arr_temp_create(10);
 
 		return self;
 	}  
