@@ -41,6 +41,11 @@
 	#define mem_destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __FILE__, __LINE__)
 	#define mem_table_create(mem, r_size, t_size, p, f) mem->table_create(mem, r_size, t_size, p, f, __FILE__, __LINE__)
 
+	#define mem_temp_alloc(size) g_mem_temp->alloc(g_mem_temp, size, __FILE__, __LINE__)
+	#define mem_temp_realloc(p, size) g_mem_temp->realloc(g_mem_temp, p, size, __FILE__, __LINE__)
+	#define mem_temp_free(p) g_mem_temp->free(g_mem_temp, p, __FILE__, __LINE__)
+	#define mem_temp_table_create(r_size, t_size, p, f) g_mem_temp->table_create(g_mem_temp, r_size, t_size, p, f, __FILE__, __LINE__)
+
 	Mem mem_create();
 
 ///////////////////////////////////////////////////////////////////////////////

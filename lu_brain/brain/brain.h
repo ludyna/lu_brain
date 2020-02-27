@@ -41,7 +41,7 @@
 		lu_size			find_waves_size;		
 		lu_size			restore_waves_size;
 
-		Arr				receiver_opts;				// receivers options
+		Arr				rec_opts;				// recs options
 
 		Mem 			mem;
 	};
@@ -58,13 +58,20 @@
 	};	
 
 ///////////////////////////////////////////////////////////////////////////////
-// Receiver API
+// Rec API
 
-	struct receiver_opts {
-		
+	struct rec_opts {
+		Brain_Opts  	brain_opts;
+
+		lu_size 		width;
+		lu_size 		height;
+		lu_value 		min_value;
+		lu_value 		max_value;
+		lu_size			val_neu_size;
+		lu_value		val_ssp;  // val significant similarity percent
 	};
 
-	struct receiver {
+	struct rec {
 		Brain 			brain;
 	};
 

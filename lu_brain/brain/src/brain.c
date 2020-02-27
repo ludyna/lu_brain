@@ -40,7 +40,7 @@
 		system_destroy(self->sys);
 	}
 
-	Receiver lu_brain_rec_get(Brain self, lu_size index)
+	Rec lu_brain_rec_get(Brain self, lu_size index)
 	{
 		return NULL;
 	}

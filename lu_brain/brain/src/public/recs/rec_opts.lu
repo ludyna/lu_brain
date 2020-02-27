@@ -1,0 +1,39 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Rec_Opts rec_opts_create(
+		Lu_Brain_Opts 	brain_opts, 
+		lu_size 		width, 
+		lu_size 		height, 
+		lu_value 		min_value, 
+		lu_value 		max_value, 
+		lu_size 		val_neu_size, 
+		lu_value 		val_ssp
+	)
+	{
+		Rec_Opts self = (Rec_Opts) mem_temp_alloc(sizeof(struct rec_opts));
+
+		// Initialize
+		self->brain_opts 	= brain_opts;
+		self->width 		= width;
+		self->height		= height;
+		self->min_value 	= min_value;
+		self->max_value 	= max_value;
+		self->val_neu_size	= val_neu_size;
+		self->val_ssp		= val_ssp;
+
+		return self;
+	}
+
+	void rec_opts_destroy(Rec_Opts self)
+	{
+		mem_temp_free((lu_p_byte) self);
+	} 
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 

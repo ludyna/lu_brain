@@ -11,7 +11,6 @@
 		System self 			= (System) mem_alloc(mem_perm, sizeof(struct system));
 		
 		self->mem_perm 			= mem_perm;
-		self->mem_temp			= g_mem_temp;
 
 		return self;
 	}

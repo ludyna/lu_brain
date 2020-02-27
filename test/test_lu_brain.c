@@ -10,8 +10,8 @@
 #include "brain/brain.h"
 
 Lu_Brain 			brain;
-Lu_Receiver 		rec_1;
-Lu_Receiver 		rec_2;
+Lu_Rec 		rec_1;
+Lu_Rec 		rec_2;
 
 Lu_Brain_Opts 		brain_opts;
 Lu_Rec_Opts 		rec_opts_1;
@@ -30,8 +30,8 @@ lu_value* 			data_5 			= NULL;
 void setUp(void)
 { 
 	brain_opts 			= lu_brain_opts_create(1, 2048);
-	rec_opts_1 			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0);
-	rec_opts_2			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0);
+	rec_opts_1 			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0, 10, .2);
+	rec_opts_2			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0, 10, .2);
 
 	brain 				= lu_brain_create(brain_opts);
 

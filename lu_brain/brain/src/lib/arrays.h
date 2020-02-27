@@ -22,7 +22,9 @@
 	// Create and destroy 
 
 	Arr arr_create(Mem mem, lu_size size);
+	static inline Arr arr_temp_create(lu_size size) { return arr_create(g_mem_temp, size); }
 	void arr_destroy(Arr, Mem);
+	static inline void arr_temp_destroy(Arr self) { arr_destroy(self, g_mem_temp); }
 
 	// Setters / getters
 

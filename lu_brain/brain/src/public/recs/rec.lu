@@ -5,19 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Receiver rec_create(Brain brain, Rec_Opts opts)
+	Rec rec_create(Brain brain, Rec_Opts opts)
 	{
-		Receiver self 			= (Receiver) malloc(sizeof(struct receiver));
+		Rec self 			= (Rec) mem_temp_alloc(sizeof(struct rec));
 
 		// Initialize
-		self->brain 			= brain;
+		self->brain 		= brain;
 
 		return self;
 	}
 
-	void rec_destroy(Receiver* self)
+	void rec_destroy(Rec self)
 	{
-		lu_free((void**) self);
+		mem_temp_free((lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

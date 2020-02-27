@@ -10,8 +10,10 @@
 
 	typedef struct system* System;
 
+	// Ya ne mozhu vykorystovuvaty system yak global zminnu bo
+	// mem_perm specifichna dlia kozhnoho brain. 
+	// Faktychno system - ce system (allocated) resourses yaki usaye brain.
  	struct system {
- 		Mem 				mem_temp;
 		Mem 			 	mem_perm;
  	};
 
