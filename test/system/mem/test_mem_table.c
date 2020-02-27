@@ -17,7 +17,7 @@ typedef struct test1* Test1;
 
 void test_mem_table1(void)
 {
-    Mem mem        = (Mem) mem_preallocated_create(g_mem_default, 512);
+    Mem mem        = (Mem) mem_perm_create(g_mem_temp, 512);
     Mem_Table mt   = mem_table_create(
         /*Mem*/                     mem, 
         /*record_size_in_bytes*/    sizeof(struct test1), 
@@ -26,7 +26,7 @@ void test_mem_table1(void)
         /*flags*/                   MEM_TABLE_CAN_FREE_ITEMS
     );
 
-    TEST_ASSERT( ((Mem_Table_Preallocated)mt)->mem_preallocated == (Mem_Preallocated) mem );
+    TEST_ASSERT( ((Mem_Table_Perm)mt)->mem_perm == (Mem_Perm) mem );
 
     TEST_ASSERT(mt->table_size_in_records == 3);
     TEST_ASSERT(mt->free_count == 0);
@@ -90,5 +90,5 @@ void test_mem_table1(void)
     // TEST_ASSERT(mt->free_count == 8);
     // TEST_ASSERT(mt->records_count == 0);
 
-    mem_destroy(mem, g_mem_default);
+    mem_destroy(mem, g_mem_temp);
 }

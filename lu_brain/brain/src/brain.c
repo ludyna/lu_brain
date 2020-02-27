@@ -27,7 +27,7 @@
 	Brain brain_create(Brain_Opts opts)
 	{
 		System sys 		= system_create(opts->size_in_bytes);
-		Brain self 		= (Brain) mem_alloc(sys->mem, sizeof(struct brain));
+		Brain self 		= (Brain) mem_alloc(sys->mem_perm, sizeof(struct brain));
 		
 		self->id 		= opts->id;
 		self->sys 		= sys;

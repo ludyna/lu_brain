@@ -54,7 +54,7 @@
 		.table_create 	= mem_table_create_default
 	};
 
-	Mem g_mem_default = &g_mem_default_instance;
+	Mem g_mem_temp = &g_mem_default_instance;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy

@@ -61,7 +61,7 @@
 // Receiver API
 
 	struct receiver_opts {
-
+		
 	};
 
 	struct receiver {

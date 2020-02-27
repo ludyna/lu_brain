@@ -7,12 +7,12 @@
 
 	typedef struct mem* 						Mem;
 	typedef struct mem_table* 					Mem_Table;
-	typedef struct mem_preallocated* 			Mem_Preallocated;
-	typedef struct mem_table_preallocated* 		Mem_Table_Preallocated;
+	typedef struct mem_perm* 			Mem_Perm;
+	typedef struct mem_table_perm* 		Mem_Table_Perm;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
-	extern Mem g_mem_default;
+	extern Mem g_mem_temp;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem
@@ -77,9 +77,11 @@
 	#define mem_record_free(mt, p) mt->record_free(mt, p, __FILE__, __LINE__)
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Preallocated
+// Mem_Perm
+// Permanent memory means that allocations should stay until the end of life of 
+// brain.
 
-	struct mem_preallocated {
+	struct mem_perm {
 		struct mem 			super;
 
 		lu_size 			size_in_bytes;
@@ -89,9 +91,9 @@
 	};
 
 
-	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes);
+	Mem_Perm mem_perm_create(Mem parent_mem, lu_size size_in_bytes);
 
-	static inline lu_bool mem_preallocated_is_out_of_mem(Mem_Preallocated self)
+	static inline lu_bool mem_perm_is_out_of_mem(Mem_Perm self)
 	{
 		if (self->buff_pos >= self->buff_end)
 			return true;
@@ -99,21 +101,21 @@
 		return false;
 	}
 
-	static inline lu_size mem_preallocated_avail(Mem_Preallocated self)
+	static inline lu_size mem_perm_avail(Mem_Perm self)
 	{
 		return self->buff_end - self->buff_pos;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Preallocated_Table
+// Mem_Perm_Table
 
-	struct mem_table_preallocated {
+	struct mem_table_perm {
 		struct mem_table 	super;
-		Mem_Preallocated 	mem_preallocated;
+		Mem_Perm 	mem_perm;
 	};
 
-	Mem_Table_Preallocated mem_table_preallocated_create(
-		Mem_Preallocated 	mem, 
+	Mem_Table_Perm mem_table_perm_create(
+		Mem_Perm 	mem, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,

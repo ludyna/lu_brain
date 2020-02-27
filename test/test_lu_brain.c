@@ -2,7 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 
 	test_lu_brain tests public interfaces (from library user point of view) and includes 
-	integration tests in general. It uses nouns with Lu_ prefix only and methods with lu_ prefixes 
+	general integration tests. It uses nouns with Lu_ prefix only and methods with lu_ prefixes 
 	only.
 */
 
@@ -10,8 +10,8 @@
 #include "brain/brain.h"
 
 Lu_Brain 			brain;
-Lu_Receiver 				rec_1;
-Lu_Receiver 				rec_2;
+Lu_Receiver 		rec_1;
+Lu_Receiver 		rec_2;
 
 Lu_Brain_Opts 		brain_opts;
 Lu_Rec_Opts 		rec_opts_1;

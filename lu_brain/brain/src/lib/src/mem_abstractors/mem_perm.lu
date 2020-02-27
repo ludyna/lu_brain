@@ -3,15 +3,15 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Preallocated
+// Mem_Perm
 
 	// 
 	// All allocations should be at the beginning of app existance executed 
 	// in single thread. No multi-threading support is needed.
 	//
-	lu_p_byte mem_preallocated_alloc_internal(Mem mem, lu_size size_in_bytes, const char* file, int line)
+	lu_p_byte mem_perm_alloc_internal(Mem mem, lu_size size_in_bytes, const char* file, int line)
 	{
-		Mem_Preallocated self = (Mem_Preallocated) mem;
+		Mem_Perm self = (Mem_Perm) mem;
 
 		if (self->buff_pos + size_in_bytes > self->buff_end) 
 			return NULL;
@@ -21,23 +21,23 @@
 		return tmp;
 	} 
 
-	lu_p_byte mem_preallocated_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
+	lu_p_byte mem_perm_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
 	{
 		lu_debug_message("NOT IMPLEMENTED");
 		return NULL;
 	}
 
-	void mem_preallocated_free_internal(Mem self, lu_p_byte p, const char* file, int line)
+	void mem_perm_free_internal(Mem self, lu_p_byte p, const char* file, int line)
 	{
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	void mem_preallocated_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
+	void mem_perm_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
 	{
 		mem_free(parent_mem, (lu_p_byte) self);
 	}
 
-	Mem_Table mem_table_preallocated_create_internal(
+	Mem_Table mem_table_perm_create_internal(
 		Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
@@ -47,8 +47,8 @@
 		int 		line
 	)
 	{
-		return (Mem_Table) mem_table_preallocated_create(
-			(Mem_Preallocated) mem,
+		return (Mem_Table) mem_table_perm_create(
+			(Mem_Perm) mem,
 			record_size_in_bytes,
 			table_size_in_records,
 			percent,
@@ -58,25 +58,25 @@
 		); 
 	}
 
-	Mem_Preallocated mem_preallocated_create(Mem parent_mem, lu_size size_in_bytes)
+	Mem_Perm mem_perm_create(Mem parent_mem, lu_size size_in_bytes)
 	{
 		lu_p_void buff_start	= mem_alloc(parent_mem, size_in_bytes);
 
 		if (buff_start == NULL) return NULL;
 
-		Mem_Preallocated self 		= (Mem_Preallocated) buff_start;
+		Mem_Perm self 		= (Mem_Perm) buff_start;
 
-		self->super.alloc 			= mem_preallocated_alloc_internal;
-		self->super.realloc 		= mem_preallocated_realloc_internal;
-		self->super.free 			= mem_preallocated_free_internal;
-		self->super.destroy 		= mem_preallocated_destroy_internal;
-		self->super.table_create 	= mem_table_preallocated_create_internal;
+		self->super.alloc 			= mem_perm_alloc_internal;
+		self->super.realloc 		= mem_perm_realloc_internal;
+		self->super.free 			= mem_perm_free_internal;
+		self->super.destroy 		= mem_perm_destroy_internal;
+		self->super.table_create 	= mem_table_perm_create_internal;
 
 		self->buff_start 			= (lu_p_byte) buff_start;
 		self->buff_end				= self->buff_start + size_in_bytes;
-		self->buff_pos 				= self->buff_start + sizeof(struct mem_preallocated);
+		self->buff_pos 				= self->buff_start + sizeof(struct mem_perm);
 
-		if (mem_preallocated_is_out_of_mem(self))
+		if (mem_perm_is_out_of_mem(self))
 		{
 			Mem mem = (Mem) self;
 			mem_destroy(mem, parent_mem);
@@ -87,9 +87,9 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Table_Preallocated
+// Mem_Table_Perm
 
-	void mem_table_preallocated_realloc_internal(
+	void mem_table_perm_realloc_internal(
 		Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
@@ -100,8 +100,8 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	Mem_Table_Preallocated mem_table_preallocated_create(
-		Mem_Preallocated 	mem_preallocated, 
+	Mem_Table_Perm mem_table_perm_create(
+		Mem_Perm 	mem_perm, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,
@@ -122,30 +122,30 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = mem_preallocated_avail(mem_preallocated) * percent  / 100.0;
+			lu_size a = mem_perm_avail(mem_perm) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
 			if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
 				fis += sizeof(lu_p_byte);
 
-			table_size_in_records = (a - sizeof(struct mem_table_preallocated)) / fis;
+			table_size_in_records = (a - sizeof(struct mem_table_perm)) / fis;
 		}
 
-		lu_size full_size = sizeof(struct mem_table_preallocated) + record_size_in_bytes * table_size_in_records;
+		lu_size full_size = sizeof(struct mem_table_perm) + record_size_in_bytes * table_size_in_records;
 		
 		if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
-		Mem mem = (Mem) mem_preallocated;
+		Mem mem = (Mem) mem_perm;
 		lu_p_byte start = mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
 
-		Mem_Table_Preallocated self = (Mem_Table_Preallocated) start;
+		Mem_Table_Perm self = (Mem_Table_Perm) start;
 
 		// super
 
-		self->super.realloc 				= mem_table_preallocated_realloc_internal;
+		self->super.realloc 				= mem_table_perm_realloc_internal;
 		self->super.destroy 				= mem_table_destroy_default;
 		self->super.record_alloc 			= mem_table_record_alloc_default;
 		self->super.record_free 			= mem_table_record_free_default;
@@ -153,7 +153,7 @@
 		self->super.record_size_in_bytes 	= record_size_in_bytes;
 		self->super.table_size_in_records 	= table_size_in_records;
 		self->super.flags 					= flags;
-		self->super.records_start 			= start + sizeof(struct mem_table_preallocated);
+		self->super.records_start 			= start + sizeof(struct mem_table_perm);
 		self->super.records_pos				= self->super.records_start;
 		self->super.records_end				= self->super.records_start + self->super.table_size_in_records * self->super.record_size_in_bytes;
 		self->super.free_start 				= (lu_p_byte*) self->super.records_end;
@@ -161,7 +161,7 @@
 		self->super.free_count				= 0;
 
 		// own
-		self->mem_preallocated 				= mem_preallocated;
+		self->mem_perm 				= mem_perm;
 
 		return self;
 	}

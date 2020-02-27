@@ -11,7 +11,7 @@
 		return self;
 	}
 
-	void n_mem_preallocated_destroy(N_Mem* self)
+	void n_mem_perm_destroy(N_Mem* self)
 	{
 		lu_free((void**) self);
 	}
