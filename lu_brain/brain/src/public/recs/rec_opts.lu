@@ -26,6 +26,8 @@
 		self->val_neu_size	= val_neu_size;
 		self->val_ssp		= val_ssp;
 
+		arr_append(self->brain_opts->rec_opts, self);
+
 		return self;
 	}
 

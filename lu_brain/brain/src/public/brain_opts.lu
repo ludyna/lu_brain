@@ -19,10 +19,17 @@
 		self->rec_opts			= arr_temp_create(10);
 
 		return self;
+	}  
+
+	void each_rec_opts_destroy(lu_p_void item)
+	{
+		rec_opts_destroy((Rec_Opts) item);
 	}
 
 	void brain_opts_destroy(Brain_Opts self)
 	{
+		arr_each(self->rec_opts, each_rec_opts_destroy);
+
 		arr_temp_destroy(self->rec_opts);
 		mem_temp_free((lu_p_byte) self);
 	}

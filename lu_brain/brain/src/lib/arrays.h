@@ -33,6 +33,9 @@
 
 	// Main public methods
 
+	// 
+	// Appends next value, if needed tries to resize array.
+	//
 	lu_size arr_append(Arr, lu_p_void);
 
 	void arr_each(Arr self, void (*block)(lu_p_void item));
