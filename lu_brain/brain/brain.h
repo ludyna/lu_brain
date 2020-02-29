@@ -75,6 +75,13 @@
 
 	struct rec {
 		Brain 			brain;
+
+		lu_size 		width;
+		lu_size 		height;
+		lu_value 		min_value;
+		lu_value 		max_value;
+		lu_size			val_neu_size;
+		lu_value		val_ssp;  // val significant similarity percent
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

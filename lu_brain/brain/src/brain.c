@@ -38,7 +38,7 @@
 			return lu_user_throw("brain options should not be NULL");
 
 		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
-			return lu_user_throw("brain options should include information about recs");
+			return lu_user_throw("brain options should include information about recs (rec_opts)");
 
 		System sys 		= system_create(opts->size_in_bytes);
 		Brain self 		= (Brain) mem_alloc(sys->mem_perm, sizeof(struct brain));
@@ -60,5 +60,8 @@
 
 	Rec lu_brain_rec_get(Brain self, lu_size index)
 	{
-		return NULL;
+		if (index > arr_count(self->recs)) 
+			return lu_user_throw("index is out of range");
+
+		return arr_get(self->recs, index);
 	}
