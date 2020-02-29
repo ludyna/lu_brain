@@ -7,7 +7,7 @@
 
 	Story story_create(Brain brain)
 	{
-		Story self 		= (Story) malloc(sizeof(struct story));
+		Story self 		= (Story) mem_alloc(g_mem_temp, sizeof(struct story));
 
 		// Initialize
 		self->brain 	= brain;
@@ -15,9 +15,9 @@
 		return self;
 	}
 
-	void story_destroy(Story* self)
+	void story_destroy(Story self)
 	{
-		lu_free((void**) self);
+		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

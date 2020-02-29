@@ -112,7 +112,7 @@
 // Story API
 
 	Lu_Story lu_story_create(Lu_Brain);
-	void lu_story_destroy(Lu_Story*);
+	void lu_story_destroy(Lu_Story);
 
 	void lu_story_push(Lu_Story, Lu_Rec, lu_value* data);
 
@@ -158,7 +158,7 @@
 
 	enum lu_neuron_type lu_neuron_type(Lu_Neuron);
 	lu_value lu_neuron_p(Lu_Neuron);
-	Lu_Name*	lu_neuron_names(Lu_Neuron);
+	Lu_Name* lu_neuron_names(Lu_Neuron);
 	Lu_Neuron* lu_neuron_parents(Lu_Neuron);
 	Lu_Neuron* lu_neuron_children(Lu_Neuron);
 

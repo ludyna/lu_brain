@@ -14,7 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Modules related to public nouns (with public and private methods)
 
-	#include "public/public.lu"
+	#include "public/src/public.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Private modules
@@ -60,7 +60,7 @@
 
 	Rec lu_brain_rec_get(Brain self, lu_size index)
 	{
-		if (index > arr_count(self->recs)) 
+		if (index >= arr_count(self->recs)) 
 			return lu_user_throw("index is out of range");
 
 		return arr_get(self->recs, index);

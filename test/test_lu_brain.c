@@ -79,7 +79,7 @@ void test_lu_brain_basics(void)
 
 	// Destroy all temporary info associated with story. 
 	// Does not destroy created related neurons.
-	lu_story_destroy(&story);  
+	lu_story_destroy(story);  
 
 	/////////////////////////////////////////////////////////
 	// Find
@@ -105,6 +105,8 @@ void test_lu_brain_basics(void)
 	wave = lu_story_find_async(story, find_opts);
 	while (lu_wave_is_working(wave)) sleep(1);
 	find_response = (Lu_Find_Resp) lu_wave_response(wave);
+
+	lu_story_destroy(story); 
 
 	/////////////////////////////////////////////////////////
 	// Name
