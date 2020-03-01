@@ -12,6 +12,8 @@
 #include <math.h>
 #include <float.h>
 #include <stdarg.h>
+#include <unistd.h> 
+#include <pthread.h>
 
 #include "types.h"
 #include "version.h"

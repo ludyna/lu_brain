@@ -46,11 +46,6 @@ void tearDown(void)
 	lu_brain_destroy(brain);
 }
 
-void sleep(lu_size t)
-{
-
-}
-
 void test_lu_brain_basics(void) 
 {
 	/////////////////////////////////////////////////////////
