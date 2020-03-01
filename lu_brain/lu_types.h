@@ -10,6 +10,7 @@
 
 #define lu_size size_t
 #define lu_value double 
+#define lu_p_value lu_value*
 #define lu_char	char 
 #define lu_cstring const lu_char*
 #define lu_bool bool 

@@ -117,9 +117,6 @@
 	#define block_begin lu_block_begin
 	#define block_end lu_block_end
 
-	Block block_create(Story story);
-	void block_destroy(Block* self);
-
 ///////////////////////////////////////////////////////////////////////////////
 // Story API
 

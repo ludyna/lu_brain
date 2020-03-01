@@ -62,6 +62,8 @@
 	void arr_realloc(Arr self, lu_size new_size);
 	Arr arr_merge(Arr self, Arr src);
 
+	lu_p_void arr_find_first_1p(Arr self, bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1);
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Arr2 
 

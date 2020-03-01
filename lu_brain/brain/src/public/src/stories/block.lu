@@ -7,34 +7,64 @@
 
 	Block block_create(Story story)
 	{
-		Block self 			= (Block) malloc(sizeof(struct block));
+		Block self 			= (Block) mem_alloc(g_mem_temp, sizeof(struct block));
 
 		// Initialize
 		self->story 		= story;
+		self->rec_inputs	= arr_create(g_mem_temp, BLOCK_INITIAL_REC_INPUTS_SIZE);
 
 		return self;
 	}
 
-	void block_destroy(Block* self)
+	void block_each_rec_input_destroy(lu_p_void item)
 	{
-		lu_free((void**) self);
+		Rec_Input ri = (Rec_Input) item;
+		mem_free(g_mem_temp, (lu_p_byte) ri);
+	}
+
+	void block_destroy(Block self)
+	{
+		arr_each(self->rec_inputs, block_each_rec_input_destroy);
+
+ 		arr_destroy(self->rec_inputs, g_mem_temp);
+		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	Block block_begin(Story story)
+	Block block_begin(Story self)
 	{
 
 	}
 
-	void block_end(Story story)
+	void block_end(Story self)
 	{
 
 	}
 
- 	void block_append(Block self, lu_value* data)
+	bool block_find_rec_input(lu_p_void item, lu_p_void p1)
+	{
+		Rec_Input ri 	= (Rec_Input) item;
+		Rec rec 		= (Rec) p1;
+		if (ri->rec == rec) return true;
+
+		return false;
+	}
+
+ 	void block_append(Block self, Rec rec, lu_p_value data)
  	{  
+ 		Rec_Input ri = arr_find_first_1p(self->rec_inputs, block_find_rec_input, rec);
 
+ 		if (ri == NULL) 
+ 		{
+			ri = (Rec_Input) mem_alloc(g_mem_temp, sizeof(struct rec_input));
+			arr_append(self->rec_inputs, ri);
+		}
+ 		else 
+ 			lu_user_throw("Data for rec already exists in block. Overwriting.");
+ 	
+ 		ri->rec 	= rec; 
+ 		ri->data 	= data;
  	}

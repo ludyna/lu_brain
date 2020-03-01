@@ -119,6 +119,18 @@ Arr arr_merge(Arr self, Arr src)
 		self->items[self->count++] = src->items[i];
 
 	return self;
+} 
+
+lu_p_void arr_find_first_1p(Arr self, bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+{
+	lu_p_void item;
+	for(lu_size i = 0; i < self->count; i++) 
+	{
+		item = self->items[i];
+		if (block(item, p1)) return item;
+	}
+
+	return NULL;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
