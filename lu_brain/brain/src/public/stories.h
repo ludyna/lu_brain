@@ -3,16 +3,31 @@
 */
 
 
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Story API
+	
+	#define STORY_INITIAL_BLOCKS_SIZE 256
+
+	enum story_state {
+		SS_BLOCK_STARTED,
+		SS_BLOCK_ENDED
+	};
+
+	struct story {
+		Brain 				brain;
+
+		Arr					blocks;
+		enum story_state	state;
+	};
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Block API
  
  	struct block {
- 		Story 			story;
+ 		Story 		story;
  	};
 
-///////////////////////////////////////////////////////////////////////////////
-// Story API
-
-	struct story {
-		Brain 			brain;
-	};
+ 	void block_append(Block self, lu_value* data);

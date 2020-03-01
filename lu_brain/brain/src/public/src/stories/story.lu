@@ -11,12 +11,15 @@
 
 		// Initialize
 		self->brain 	= brain;
+		self->blocks 	= arr_create(g_mem_temp, STORY_INITIAL_BLOCKS_SIZE);
+		self->state 	= SS_BLOCK_ENDED;
 
 		return self;
 	}
 
 	void story_destroy(Story self)
 	{
+		arr_destroy(self->blocks, g_mem_temp);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
@@ -25,7 +28,19 @@
 
 	void story_push(Story self, Rec rec, lu_value* data)
 	{
+		if (self == NULL) lu_user_throw("self should not be NULL");
+		if (rec == NULL) lu_user_throw("rec should not be NULL");
+		if (data == NULL) lu_user_throw("data should not be NULL");
 
+		Block block = arr_last(self->blocks);
+
+		if (self->state == SS_BLOCK_ENDED) 
+		{
+			block = block_create(self);
+			arr_append(self->blocks, block);
+		}
+
+		block_append(block, data);
 	}
 
 	Save_Resp story_save(Story sef, Save_Opts opts)

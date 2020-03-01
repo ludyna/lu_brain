@@ -20,12 +20,13 @@ Lu_Save_Opts		save_opts 		= NULL;
 Lu_Find_Opts		find_opts 		= NULL;
 Lu_Restore_Opts		restore_opts 	= NULL;
 
-lu_value*			data_0 			= NULL;
-lu_value*			data_1 			= NULL;
-lu_value* 			data_2 			= NULL;
-lu_value* 			data_3 			= NULL;
-lu_value* 			data_4 			= NULL;
-lu_value* 			data_5 			= NULL; 
+
+lu_value			data_0[] 		= { 0, 0, 1, 1 };
+lu_value			data_1[] 		= { 0, 0, 1, 1 };
+lu_value 			data_2[] 		= { 0, 0, 1, 1 };
+lu_value 			data_3[] 		= { 0, 0, 1, 1 };
+lu_value			data_4[] 		= { 0, 0, 1, 1 };
+lu_value			data_5[] 		= { 0, 0, 1, 1 };
 
 void setUp(void)
 { 
