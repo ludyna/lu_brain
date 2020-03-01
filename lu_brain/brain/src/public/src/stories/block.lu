@@ -34,14 +34,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	Block block_begin(Story self)
+	Block block_begin(Story story)
 	{
-
+		story->state 	= SS_BLOCK_STARTED;
+		Block block 	= block_create(story);
+		arr_append(story->blocks, block);
 	}
 
-	void block_end(Story self)
+	void block_end(Story story)
 	{
-
+		story->state 	= SS_BLOCK_ENDED;
 	}
 
 	bool block_find_rec_input(lu_p_void item, lu_p_void p1)
