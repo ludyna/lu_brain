@@ -144,6 +144,7 @@
 	#define wave_touched_count lu_wave_touched_count
 	#define wave_excited_count lu_wave_excited_count
 	#define wave_response lu_wave_response
+	#define wave_join lu_wave_join
 
 ///////////////////////////////////////////////////////////////////////////////
 // Name API

@@ -56,9 +56,10 @@
 
 	Save_Resp story_save(Story self, Save_Opts opts)
 	{
-		// https://www.geeksforgeeks.org/multithreading-c-2/
 		Lu_Wave wave = story_save_async(self, opts);
-		while (wave_is_working(wave)) sleep(1);
+		
+		wave_join(wave);
+
 		return (Lu_Save_Resp) wave_response(wave);
 	}
 

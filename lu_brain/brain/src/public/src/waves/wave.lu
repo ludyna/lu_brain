@@ -24,37 +24,42 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	lu_bool wave_is_working(Lu_Wave self)
+	lu_bool wave_is_working(Wave self)
 	{
 		return false;
 	}
 
-	lu_bool wave_cancel(Lu_Wave self)
+	lu_bool wave_cancel(Wave self)
 	{
 
 	}
 
-	lu_size wave_time(Lu_Wave self)
+	lu_size wave_time(Wave self)
 	{
 
 	}
 
-	enum wave_status wave_status(Lu_Wave self)
+	enum wave_status wave_status(Wave self)
 	{
 
 	}
 
-	lu_size wave_touched_count(Lu_Wave self)
+	lu_size wave_touched_count(Wave self)
 	{
 
 	}
 
-	lu_size wave_excited_count(Lu_Wave self)
+	lu_size wave_excited_count(Wave self)
 	{
 
 	}
 
-	Lu_Wave_Resp wave_response(Lu_Wave self)
+	Lu_Wave_Resp wave_response(Wave self)
+	{
+
+	}
+
+	void wave_join(Wave self)
 	{
 
 	}

@@ -135,6 +135,7 @@
 	lu_size lu_wave_touched_count(Lu_Wave);
 	lu_size lu_wave_excited_count(Lu_Wave);
 	Lu_Wave_Resp lu_wave_response(Lu_Wave);
+	void lu_wave_join(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Name API

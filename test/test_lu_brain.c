@@ -70,7 +70,7 @@ void test_lu_brain_basics(void)
 		lu_block_end(story);
 
 	Lu_Wave wave = lu_story_save_async(story, save_opts);
-	while (lu_wave_is_working(wave)) sleep(1);
+	lu_wave_join(wave);
 	save_response = (Lu_Save_Resp) lu_wave_response(wave);
 
 	// Destroy all temporary info associated with story. 
@@ -99,7 +99,7 @@ void test_lu_brain_basics(void)
 		lu_block_end(story);
 
 	wave = lu_story_find_async(story, find_opts);
-	while (lu_wave_is_working(wave)) sleep(1);
+	lu_wave_join(wave);
 	find_response = (Lu_Find_Resp) lu_wave_response(wave);
 
 	lu_story_destroy(story); 
