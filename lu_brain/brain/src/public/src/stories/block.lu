@@ -16,7 +16,7 @@
 		return self;
 	}
 
-	void block_each_rec_input_destroy(lu_p_void item)
+	static void block_each_rec_input_destroy(lu_p_void item)
 	{
 		Rec_Input ri = (Rec_Input) item;
 		mem_free(g_mem_temp, (lu_p_byte) ri);
@@ -55,7 +55,7 @@
 		return false;
 	}
 
- 	void block_append(Block self, Rec rec, lu_p_value data)
+ 	static void block_append(Block self, Rec rec, lu_p_value data)
  	{  
  		Rec_Input ri = arr_find_first_1p(self->rec_inputs, block_find_rec_input, rec);
 

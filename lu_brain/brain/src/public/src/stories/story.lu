@@ -1,6 +1,4 @@
-/**
-	Copyright © 2020 Oleh Ihorovych Novosad 
-*/
+
  
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
@@ -17,7 +15,7 @@
 		return self;
 	}
 
-	void story_each_block_destroy(lu_p_void item)
+	static void story_each_block_destroy(lu_p_void item)
 	{
 		Block block = (Block) item;
 		block_destroy(block);
@@ -54,36 +52,64 @@
 		block_append(block, rec, data);
 	}
 
-	Save_Resp story_save(Story self, Save_Opts opts)
-	{
-		Lu_Wave wave = story_save_async(self, opts);
-		
-		wave_join(wave);
-
-		return (Lu_Save_Resp) wave_response(wave);
-	}
 
 	Wave story_save_async(Story self, Save_Opts opts)
 	{
+		Gate gate = brain_gate(self->brain);
 
+		Save_Wave wave = gate_save_wave_wait(gate);
+
+		save_wave_process(wave);
+
+		return (Wave) wave;
 	}
 
-	Find_Resp story_find(Story self, Find_Opts opts)
+	Save_Resp story_save(Story self, Save_Opts opts)
 	{
+		Wave wave = story_save_async(self, opts);
+		
+		wave_join(wave);
 
+		return (Save_Resp) wave_response(wave);
 	}
 
 	Wave story_find_async(Story self, Find_Opts opts)
 	{
+		Gate gate = brain_gate(self->brain);
 
+		Find_Wave wave = gate_find_wave_wait(gate);
+
+		find_wave_process(wave);
+
+		return (Wave) wave;
 	}
 
-	Restore_Resp story_restore(Neto neuron, Restore_Opts opts)
+	Find_Resp story_find(Story self, Find_Opts opts)
 	{
+		Wave wave = story_find_async(self, opts);
+		
+		wave_join(wave);
 
+		return (Find_Resp) wave_response(wave);
 	}
 
-	Wave story_restore_async(Neto neuron, Restore_Opts opts)
+	Wave story_restore_async(Brain brain, Neuron neuron, Restore_Opts opts)
 	{ 
+		Gate gate = brain_gate(brain);
 
+		Restore_Wave wave = gate_restore_wave_wait(gate);
+
+		restore_wave_process(wave);
+
+		return (Wave) wave;
 	}
+
+	Restore_Resp story_restore(Brain brain, Neuron neuron, Restore_Opts opts)
+	{
+		Wave wave = story_restore_async(brain, neuron, opts);
+		
+		wave_join(wave);
+
+		return (Restore_Resp) wave_response(wave);
+	}
+

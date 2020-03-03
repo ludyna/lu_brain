@@ -7,7 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
-	typedef struct m_neuron* 			M_Neto;
+	typedef struct m_neuron* 			M_Neuron;
 	typedef struct m_val_neu* 		M_Val_Neu;
 	typedef struct m_neu*			M_Neu;
 	typedef struct m_perception* 	M_Perception;
@@ -18,7 +18,7 @@
 	typedef struct n_mem* 			N_Mem;
 
 ///////////////////////////////////////////////////////////////////////////////
-// MNeto
+// MNeuron
 
 	enum m_neuron_type {
 		MNT_VAL_NEU
@@ -27,9 +27,9 @@
 	// struct m_neuron { 
 	// 	enum m_neuron_type type;
 
-	// 	void 	(*consume)(MNeto self, MNeto src, lu_value p);
-	// 	void	(*bconsume)(MNeto self, MNeto src, lu_value p);
-	// 	void	(*debug)(MNeto self);
+	// 	void 	(*consume)(MNeuron self, MNeuron src, lu_value p);
+	// 	void	(*bconsume)(MNeuron self, MNeuron src, lu_value p);
+	// 	void	(*debug)(MNeuron self);
 
 	// 	#ifdef LU_DEBUG
 	// 	char 				lbl[20];

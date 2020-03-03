@@ -5,16 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Neto neuron_create()
+	Neuron neuron_create()
 	{
-		Neto self 			= (Neto) malloc(sizeof(struct neuron));
+		Neuron self 			= (Neuron) malloc(sizeof(struct neuron));
 
 		// Initialize
 
 		return self;
 	}
 
-	void neuron_destroy(Neto* self)
+	void neuron_destroy(Neuron* self)
 	{
 		lu_free((void**) self);
 	}

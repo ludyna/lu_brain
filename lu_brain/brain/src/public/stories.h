@@ -36,7 +36,7 @@
  		Arr 		rec_inputs;
  	};
 
- 	void block_append(Block self, Rec rec, lu_p_value data);
+ 	static void block_append(Block self, Rec rec, lu_p_value data);
 
  ///////////////////////////////////////////////////////////////////////////////
 // Rec_Input

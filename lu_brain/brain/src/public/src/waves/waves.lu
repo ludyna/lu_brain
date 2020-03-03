@@ -6,9 +6,12 @@
 
 #include "find/find_opts.lu"
 #include "find/find_resp.lu"
+#include "find/find_wave.lu"
 
 #include "restore/restore_opts.lu"
 #include "restore/restore_resp.lu"
+#include "restore/restore_wave.lu"
 
 #include "save/save_opts.lu"
 #include "save/save_resp.lu"
+#include "save/save_wave.lu"

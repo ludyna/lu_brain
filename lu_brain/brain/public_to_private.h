@@ -13,7 +13,7 @@
 	#define Brain Lu_Brain
 
 	#define neuron lu_neuron
-	#define Neto Lu_Neuron
+	#define Neuron Lu_Neuron
 
 	#define name lu_name
 	#define Name Lu_Name
@@ -164,7 +164,7 @@
 	#define wave_resp_neuron_excited lu_wave_resp_neuron_excited
 
 ///////////////////////////////////////////////////////////////////////////////
-// Neto API
+// Neuron API
 
 	#define neuron_type lu_neuron_type
 	#define neuron_p lu_neuron_p

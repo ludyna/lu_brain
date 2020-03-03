@@ -1,0 +1,8 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+static void restore_wave_process(Restore_Wave self)
+{
+
+}

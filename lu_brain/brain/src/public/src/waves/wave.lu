@@ -54,9 +54,18 @@
 
 	}
 
-	Lu_Wave_Resp wave_response(Wave self)
+	void wave_release(Wave self)
 	{
 
+	}
+
+	Lu_Wave_Resp wave_response(Wave self)
+	{
+		Lu_Wave_Resp resp = NULL;
+
+		wave_release(self);
+
+		return resp;
 	}
 
 	void wave_join(Wave self)

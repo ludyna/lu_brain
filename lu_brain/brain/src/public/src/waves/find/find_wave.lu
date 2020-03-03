@@ -1,0 +1,8 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+static void find_wave_process(Find_Wave self)
+{
+
+}

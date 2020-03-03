@@ -18,13 +18,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Private modules
-	
+	#include "gate/src/gate.lu"
 	#include "n_mem/src/n_mem.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
-	void for_each_rec_opts_create_rec(void* item, void* p1)
+	static void for_each_rec_opts_create_rec(void* item, void* p1)
 	{
 		Rec_Opts rec_opts 	= (Rec_Opts) item;
 		Brain brain 		= (Brain) p1;

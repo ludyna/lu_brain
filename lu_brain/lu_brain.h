@@ -122,8 +122,8 @@
 	Lu_Find_Resp lu_story_find(Lu_Story, Lu_Find_Opts);
 	Lu_Wave lu_story_find_async(Lu_Story, Lu_Find_Opts);
 
-	Lu_Restore_Resp lu_story_restore(Lu_Neuron, Lu_Restore_Opts);
-	Lu_Wave lu_story_restore_async(Lu_Neuron, Lu_Restore_Opts);
+	Lu_Restore_Resp lu_story_restore(Lu_Brain, Lu_Neuron, Lu_Restore_Opts);
+	Lu_Wave lu_story_restore_async(Lu_Brain, Lu_Neuron, Lu_Restore_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave API
@@ -155,7 +155,7 @@
 	lu_size lu_wave_resp_neuron_excited(Lu_Wave_Resp);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Neto API
+// Neuron API
 
 	enum lu_neuron_type lu_neuron_type(Lu_Neuron);
 	lu_value lu_neuron_p(Lu_Neuron);
