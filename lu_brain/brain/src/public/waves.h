@@ -36,6 +36,8 @@
 
 	};
 
+	static Save_Wave save_wave_create(Mem);
+
 	static void save_wave_process(Save_Wave self);
 
 //////////////////////////7/////////////////////////////////////////////////////
@@ -52,6 +54,8 @@
 	struct find_resp {
 
 	};
+
+	static Find_Wave find_wave_create(Mem);
 
 	static void find_wave_process(Find_Wave self);
 
@@ -77,5 +81,8 @@
 	struct restore_resp {
 
 	};
+
+
+	static Restore_Wave restore_wave_create(Mem);
 
 	static void restore_wave_process(Restore_Wave self);

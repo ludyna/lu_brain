@@ -3,17 +3,42 @@
 */
 
 
- 	Save_Wave gate_save_wave_wait(Gate self)
+
+	static Gate gate_create(Mem mem, Brain_Opts opts)
+	{
+		lu_assert(opts->save_waves_size > 0);
+		lu_assert(opts->find_waves_size > 0);
+		lu_assert(opts->restore_waves_size > 0);
+
+		Gate self 			= (Gate) mem_alloc(mem, sizeof(struct gate));
+		lu_size i; 
+
+		self->save_waves 	= arr_create(mem, opts->save_waves_size);
+		for(i = 0; i < opts->save_waves_size; i++)
+			arr_set(self->save_waves, i, save_wave_create(mem));
+
+		self->find_waves 	= arr_create(mem, opts->find_waves_size);
+		for(i = 0; i < opts->find_waves_size; i++)
+			arr_set(self->find_waves, i, find_wave_create(mem)); 
+
+		self->restore_waves = arr_create(mem, opts->restore_waves_size);
+		for(i = 0; i < opts->restore_waves_size; i++)
+			arr_set(self->restore_waves, i, restore_wave_create(mem)); 
+
+		return self;
+	}
+
+ 	static Save_Wave gate_save_wave_wait(Gate self)
  	{
 
  	}
 
-	Find_Wave gate_find_wave_wait(Gate self)
+	static Find_Wave gate_find_wave_wait(Gate self)
 	{
 
 	}
 
-	Restore_Wave gate_restore_wave_wait(Gate self)
+	static Restore_Wave gate_restore_wave_wait(Gate self)
 	{
 
 	}

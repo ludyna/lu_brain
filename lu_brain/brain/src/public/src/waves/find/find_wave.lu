@@ -2,6 +2,11 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+static Find_Wave find_wave_create(Mem mem)
+{
+
+}
+
 static void find_wave_process(Find_Wave self)
 {
 

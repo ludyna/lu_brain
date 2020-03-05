@@ -11,9 +11,13 @@
 // Gate
 
 	struct gate {
-
+		Arr save_waves;
+		Arr find_waves;
+		Arr restore_waves;
 	};
 
-	Save_Wave gate_save_wave_wait(Gate self);
-	Find_Wave gate_find_wave_wait(Gate self);
-	Restore_Wave gate_restore_wave_wait(Gate self);
+	static Gate gate_create(Mem, Brain_Opts);
+
+	static Save_Wave gate_save_wave_wait(Gate self);
+	static Find_Wave gate_find_wave_wait(Gate self);
+	static Restore_Wave gate_restore_wave_wait(Gate self);

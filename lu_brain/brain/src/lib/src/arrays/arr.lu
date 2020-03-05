@@ -81,17 +81,6 @@ void arr_each_2p(Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void
 	}
 }
 
-void arr_set(Arr self, lu_size index, lu_p_void value)
-{
-	if (index >= self->size)
-		return;
-
-	if (index >= self->count)
-		self->count = index + 1;
-
-	self->items[index] = value;
-}
-
 void arr_nullify(Arr self)
 { 
 	for (lu_size i = 0; i < self->size; i++)

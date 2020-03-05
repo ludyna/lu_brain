@@ -53,7 +53,16 @@
 		return self->items[index];
 	}
 
-	void arr_set(Arr, lu_size, lu_p_void);
+	static inline void arr_set(Arr self, lu_size index, lu_p_void value)
+	{
+		if (index >= self->size)
+			return;
+
+		if (index >= self->count)
+			self->count = index + 1;
+
+		self->items[index] = value;
+	}
 
 	void arr_nullify(Arr);
 
