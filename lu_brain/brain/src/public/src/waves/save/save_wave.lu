@@ -5,7 +5,11 @@
 
 	static Save_Wave save_wave_create(Mem mem, Save_Wave_Opts opts)
 	{
+		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
+		
+
+		return self;
 	}
 
 	static void save_wave_process(Save_Wave self, Save_Opts opts)

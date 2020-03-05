@@ -4,7 +4,11 @@
 
 	static Find_Wave find_wave_create(Mem mem, Find_Wave_Opts opts)
 	{
+		Find_Wave self 		= (Find_Wave) mem_alloc(mem, sizeof(struct find_wave));
 
+		
+
+		return self;
 	}
 
 	static void find_wave_process(Find_Wave self, Find_Opts opts)

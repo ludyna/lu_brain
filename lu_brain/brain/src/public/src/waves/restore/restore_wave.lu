@@ -4,7 +4,11 @@
 
 	static Restore_Wave restore_wave_create(Mem mem, Restore_Wave_Opts opts)
 	{
+		Restore_Wave self 		= (Restore_Wave) mem_alloc(mem, sizeof(struct restore_wave));
 
+		
+
+		return self;
 	}
 
 	static void restore_wave_process(Restore_Wave self, Restore_Opts opts)
