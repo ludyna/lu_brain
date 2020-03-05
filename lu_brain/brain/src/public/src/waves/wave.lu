@@ -5,20 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Wave wave_create(Story story)
-	{
-		Wave self 			= (Wave) malloc(sizeof(struct wave));
-
-		// Initialize 
-		self->story 		= story;
-
-		return self;
-	}
-
-	void wave_destroy(Wave* self)
-	{
-		lu_free((void**) self);
-	}
 
 
 ///////////////////////////////////////////////////////////////////////////////

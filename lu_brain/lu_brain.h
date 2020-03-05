@@ -13,7 +13,7 @@
 	typedef struct lu_brain* 			Lu_Brain;
 	typedef struct lu_neuron*			Lu_Neuron;
 	typedef struct lu_name* 			Lu_Name;
-	typedef struct lu_rec* 		Lu_Rec;
+	typedef struct lu_rec* 				Lu_Rec;
 	typedef struct lu_story* 			Lu_Story;
 	typedef struct lu_block*			Lu_Block;
 	typedef struct lu_wave* 			Lu_Wave;

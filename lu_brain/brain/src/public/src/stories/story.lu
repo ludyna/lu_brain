@@ -59,7 +59,9 @@
 
 		Save_Wave wave = gate_save_wave_wait(gate);
 
-		save_wave_process(wave, opts);
+		save_wave_init(wave, self, opts);
+
+		save_wave_process(wave);
 
 		return (Wave) wave;
 	}
@@ -79,7 +81,9 @@
 
 		Find_Wave wave = gate_find_wave_wait(gate);
 
-		find_wave_process(wave, opts);
+		find_wave_init(wave, self, opts);
+
+		find_wave_process(wave);
 
 		return (Wave) wave;
 	}
@@ -99,7 +103,9 @@
 
 		Restore_Wave wave = gate_restore_wave_wait(gate);
 
-		restore_wave_process(wave, opts);
+		restore_wave_init(wave, brain, opts);
+
+		restore_wave_process(wave);
 
 		return (Wave) wave;
 	}

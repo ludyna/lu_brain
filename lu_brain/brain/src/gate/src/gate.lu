@@ -14,15 +14,15 @@
 
 		self->save_waves 	= arr_create(mem, opts->save_waves_size);
 		for(i = 0; i < opts->save_waves_size; i++)
-			arr_set(self->save_waves, i, save_wave_create(mem, &opts->save_wave_opts));
+			arr_set(self->save_waves, i, save_wave_create(mem, &opts->save_wave_create_opts));
 
 		self->find_waves 	= arr_create(mem, opts->find_waves_size);
 		for(i = 0; i < opts->find_waves_size; i++)
-			arr_set(self->find_waves, i, find_wave_create(mem, &opts->find_wave_opts)); 
+			arr_set(self->find_waves, i, find_wave_create(mem, &opts->find_wave_create_opts)); 
 
 		self->restore_waves = arr_create(mem, opts->restore_waves_size);
 		for(i = 0; i < opts->restore_waves_size; i++)
-			arr_set(self->restore_waves, i, restore_wave_create(mem, &opts->restore_wave_opts)); 
+			arr_set(self->restore_waves, i, restore_wave_create(mem, &opts->restore_wave_create_opts)); 
 
 		return self;
 	}

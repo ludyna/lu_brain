@@ -2,7 +2,15 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static Find_Wave find_wave_create(Mem mem, Find_Wave_Opts opts)
+	static void find_wave_init(Find_Wave self, Story story, Find_Opts opts)
+	{
+		if (opts)
+			self->find_opts = *opts;
+
+		self->story = story;
+	}
+
+	static Find_Wave find_wave_create(Mem mem, Find_Wave_Create_Opts opts)
 	{
 		Find_Wave self 		= (Find_Wave) mem_alloc(mem, sizeof(struct find_wave));
 
@@ -11,7 +19,7 @@
 		return self;
 	}
 
-	static void find_wave_process(Find_Wave self, Find_Opts opts)
+	static void find_wave_process(Find_Wave self)
 	{
 
 	}

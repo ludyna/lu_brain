@@ -2,7 +2,15 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static Restore_Wave restore_wave_create(Mem mem, Restore_Wave_Opts opts)
+	static void restore_wave_init(Restore_Wave self, Brain brain, Restore_Opts opts)
+	{
+		if (opts)
+			self->restore_opts = *opts;
+
+		self->brain = brain;
+	}
+
+	static Restore_Wave restore_wave_create(Mem mem, Restore_Wave_Create_Opts opts)
 	{
 		Restore_Wave self 		= (Restore_Wave) mem_alloc(mem, sizeof(struct restore_wave));
 
@@ -11,7 +19,7 @@
 		return self;
 	}
 
-	static void restore_wave_process(Restore_Wave self, Restore_Opts opts)
+	static void restore_wave_process(Restore_Wave self)
 	{
 
 	}
