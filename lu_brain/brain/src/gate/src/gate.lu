@@ -4,7 +4,7 @@
 
 
 
-	static Gate gate_create(Mem mem, Brain_Opts opts)
+	static Gate gate_create(Mem mem, Gate_Opts opts)
 	{
 		lu_assert(opts->save_waves_size > 0);
 		lu_assert(opts->find_waves_size > 0);

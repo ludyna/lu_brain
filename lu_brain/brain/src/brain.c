@@ -24,7 +24,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
-	static void for_each_rec_opts_create_rec(void* item, void* p1)
+	static void brain_for_each_rec_opts_create_rec(void* item, void* p1)
 	{
 		Rec_Opts rec_opts 	= (Rec_Opts) item;
 		Brain brain 		= (Brain) p1;
@@ -46,9 +46,13 @@
 		self->id 		= opts->id;
 		self->sys 		= sys;
 
+		// Recs
 		self->recs 		= arr_create(sys->mem_perm, opts->rec_opts->count);
 
-		arr_each_1p(opts->rec_opts, for_each_rec_opts_create_rec, self);
+		arr_each_1p(opts->rec_opts, brain_for_each_rec_opts_create_rec, self);
+
+		// Gate 
+		self->gate 		= gate_create(sys->mem_perm, &opts->gate_opts);
 
 		return self;
 	}

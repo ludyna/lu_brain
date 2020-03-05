@@ -3,12 +3,12 @@
 */
 
 
-static Save_Wave save_wave_create(Mem mem)
-{
+	static Save_Wave save_wave_create(Mem mem)
+	{
 
-}
+	}
 
-static void save_wave_process(Save_Wave self)
-{
+	static void save_wave_process(Save_Wave self)
+	{
 
-}
+	}
