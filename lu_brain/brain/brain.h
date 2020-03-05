@@ -23,13 +23,13 @@
 // Brain API
 
 	struct brain_opts {
-		lu_size			id;
-		lu_size 		size_in_bytes;			// brain size in bytes including 
-												// everything related
+		lu_size				id;
+		lu_size 			size_in_bytes;			// brain size in bytes including 
+													// everything related
 
 		////////////////////////////////////
 		// Recs
-		Arr				rec_opts;				// recs options
+		Arr					rec_opts;				// recs options
 
 		////////////////////////////////////
 		// Gate

@@ -11,10 +11,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Gate
 	struct gate_opts {
-		lu_size 		save_waves_size;		// max number of save waves that could 
-												// run in parallel
-		lu_size			find_waves_size;		
-		lu_size			restore_waves_size;
+		lu_size 					save_waves_size;		// max number of save waves that could 
+															// run in parallel
+		struct save_wave_opts		save_wave_opts;
+
+		lu_size						find_waves_size;
+		struct find_wave_opts  		find_wave_opts;
+
+		lu_size						restore_waves_size;
+		struct restore_wave_opts	restore_wave_opts;
 	};
 
 	struct gate {

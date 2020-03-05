@@ -2,12 +2,12 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static Restore_Wave restore_wave_create(Mem mem)
+	static Restore_Wave restore_wave_create(Mem mem, Restore_Wave_Opts opts)
 	{
 
 	}
 
-	static void restore_wave_process(Restore_Wave self)
+	static void restore_wave_process(Restore_Wave self, Restore_Opts opts)
 	{
 
 	}

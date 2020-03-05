@@ -3,7 +3,6 @@
 */
 
 
-
 	static Gate gate_create(Mem mem, Gate_Opts opts)
 	{
 		lu_assert(opts->save_waves_size > 0);
@@ -15,30 +14,33 @@
 
 		self->save_waves 	= arr_create(mem, opts->save_waves_size);
 		for(i = 0; i < opts->save_waves_size; i++)
-			arr_set(self->save_waves, i, save_wave_create(mem));
+			arr_set(self->save_waves, i, save_wave_create(mem, &opts->save_wave_opts));
 
 		self->find_waves 	= arr_create(mem, opts->find_waves_size);
 		for(i = 0; i < opts->find_waves_size; i++)
-			arr_set(self->find_waves, i, find_wave_create(mem)); 
+			arr_set(self->find_waves, i, find_wave_create(mem, &opts->find_wave_opts)); 
 
 		self->restore_waves = arr_create(mem, opts->restore_waves_size);
 		for(i = 0; i < opts->restore_waves_size; i++)
-			arr_set(self->restore_waves, i, restore_wave_create(mem)); 
+			arr_set(self->restore_waves, i, restore_wave_create(mem, &opts->restore_wave_opts)); 
 
 		return self;
 	}
 
  	static Save_Wave gate_save_wave_wait(Gate self)
  	{
-
+ 		// simplified atm
+ 		return arr_get(self->save_waves, 0);
  	}
 
 	static Find_Wave gate_find_wave_wait(Gate self)
 	{
-
+ 		// simplified atm
+ 		return arr_get(self->find_waves, 0);
 	}
 
 	static Restore_Wave gate_restore_wave_wait(Gate self)
 	{
-
+ 		// simplified atm
+ 		return arr_get(self->find_waves, 0);
 	}
