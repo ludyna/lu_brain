@@ -1,8 +1,9 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
+
 ///////////////////////////////////////////////////////////////////////////////
-// Nound
+// Nouns
 
 	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
 	typedef struct save_wave* 					Save_Wave;

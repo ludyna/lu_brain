@@ -21,5 +21,8 @@
 
 	static void save_wave_process(Save_Wave self)
 	{
-
+		// vse connetytsia po chasu
+		// i sytuaciyu v odnomu rec i 
+		// i sytuaciyu mizh rec
+		// i osoblyvo sytuaciyi v odnomu bloci
 	}
