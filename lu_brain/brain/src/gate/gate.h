@@ -20,7 +20,9 @@
 
 		lu_size						restore_waves_size;
 		struct restore_wave_create_opts	restore_wave_create_opts;
-	};
+	}; 
+
+	static void gate_opts_init(Gate_Opts self);
 
 	struct gate {
 		Arr save_waves;

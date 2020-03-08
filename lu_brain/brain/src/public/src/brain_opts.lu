@@ -12,6 +12,7 @@
 		// Initialize
 		self->id							= id;
 		self->size_in_bytes					= size_in_bytes;
+		
 		self->gate_opts.save_waves_size 	= 1;
 		self->gate_opts.find_waves_size		= 1;
 		self->gate_opts.restore_waves_size	= 1;

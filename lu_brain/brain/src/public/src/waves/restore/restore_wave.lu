@@ -2,6 +2,17 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// Restore_Wave_Create_Opts
+
+	static void restore_wave_create_opts_init(Restore_Wave_Create_Opts self)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Restore_Wave
+
 	static void restore_wave_init(Restore_Wave self, Brain brain, Restore_Opts opts)
 	{
 		if (opts)

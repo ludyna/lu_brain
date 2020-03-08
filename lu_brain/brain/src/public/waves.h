@@ -32,8 +32,10 @@
 
 	struct save_wave_create_opts
 	{
-
+		lu_size 			block_neus_size;
 	};
+
+	static void save_wave_create_opts_init(Save_Wave_Create_Opts);
 
 	struct save_opts {
 
@@ -43,6 +45,8 @@
 		struct wave 		super;
 		struct save_opts 	save_opts;
 		Story 				story;
+
+		Arr 				block_neus;
 	};
 
 	struct save_resp {
@@ -62,6 +66,8 @@
 	{
 
 	};
+
+	static void find_wave_create_opts_init(Find_Wave_Create_Opts);
 
 	struct find_opts {
 
@@ -97,6 +103,8 @@
 	{
 
 	};
+
+	static void restore_wave_create_opts_init(Restore_Wave_Create_Opts);
 
 	struct restore_opts {
 

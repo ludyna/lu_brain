@@ -2,6 +2,26 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// Gate_Opts
+
+	//
+	//	Default Gate_Opts init
+	//
+	static void gate_opts_init(Gate_Opts self)
+	{
+		self->save_waves_size = 1;
+		save_wave_create_opts_init(&self->save_wave_create_opts);
+
+		self->find_waves_size = 1;
+		find_wave_create_opts_init(&self->find_wave_create_opts);
+
+		self->restore_waves_size = 1;
+		restore_wave_create_opts_init(&self->restore_wave_create_opts);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Gate
 
 	static Gate gate_create(Mem mem, Gate_Opts opts)
 	{

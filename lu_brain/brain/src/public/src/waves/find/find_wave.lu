@@ -2,6 +2,17 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// Find_Wave_Create_Opts
+
+	static void find_wave_create_opts_init(Find_Wave_Create_Opts self)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Find_Wave
+
 	static void find_wave_init(Find_Wave self, Story story, Find_Opts opts)
 	{
 		if (opts)
