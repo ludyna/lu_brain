@@ -8,11 +8,14 @@
 #include "lib/lib.h"
 #include "system/system.h"
 
-#include "brain/public_to_private.h"
+#include "public_to_private.h"
 
-#include "src/n_mem/n_mem.h"
-#include "src/public/public.h"
-#include "src/gate/gate.h"
+#include "n_mem/n_mem.h"
+#include "recs/recs.h"
+#include "stories/stories.h"
+#include "net/net.h"
+#include "waves/waves.h"
+#include "gate/gate.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns

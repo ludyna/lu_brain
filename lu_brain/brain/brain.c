@@ -7,19 +7,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Fundamental modules
 
-	#include "basic/src/basic.lu"
-	#include "system/src/system.lu"
-	#include "lib/src/lib.lu"
+	#include "basic/basic.lu"
+	#include "system/system.lu"
+	#include "lib/lib.lu"
  
 ///////////////////////////////////////////////////////////////////////////////
 // Modules related to public nouns (with public and private methods)
 
-	#include "public/src/public.lu"
+	#include "brain_opts.lu"
+
+	#include "net/net.lu"
+	#include "recs/recs.lu"
+	#include "stories/stories.lu"
+	#include "waves/waves.lu" 
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Private modules
-	#include "gate/src/gate.lu"
-	#include "n_mem/src/n_mem.lu"
+	#include "gate/gate.lu"
+	#include "n_mem/n_mem.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
