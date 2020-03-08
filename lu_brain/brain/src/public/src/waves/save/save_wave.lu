@@ -2,7 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-//////////////////////////7/////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // Save_Wave_Create_Opts
 
 	static void save_wave_create_opts_init(Save_Wave_Create_Opts self)
@@ -10,7 +10,7 @@
 		self->block_neus_size = 256;
 	}
 
-//////////////////////////7/////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // Save_Wave
 
 	static void save_wave_init(Save_Wave self, Story story, Save_Opts opts)
@@ -23,11 +23,21 @@
 
 	static Save_Wave save_wave_create(Mem mem, Save_Wave_Create_Opts opts)
 	{
+		lu_assert(opts->block_neus_size > 0);
+
 		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
-		
+		self->block_neus 	= arr_create(mem, opts->block_neus_size);
 
 		return self;
+	}
+
+
+	static void save_wave_each_block_save(lu_p_void item, lu_p_void p1)
+	{
+		Block block 		= (Block) item;
+		Save_Wave wave 		= (Save_Wave) p1;
+		arr_append(wave->block_neus, block_save(block, wave));
 	}
 
 	static void save_wave_process(Save_Wave self)
@@ -36,6 +46,8 @@
 		// i sytuaciyu v odnomu rec i 
 		// i sytuaciyu mizh rec
 		// i osoblyvo sytuaciyi v odnomu bloci
+
+		// znachenia dlia neurons isnuyut tilky dlia potochnoyi wave
 
 		if (self == NULL) {
 			lu_user_throw("self should not be NULL");
@@ -54,9 +66,14 @@
 			return;
 		}
 
+		if (arr_count(story->blocks) > arr_count(self->block_neus))
+		{
+			lu_user_throw("not enough block neus for story size");
+			return;
+		}
+
 
 		// simplified atm
 		// multithreading required 
-
-		
+		//arr_each_1p(story->blocks, save_wave_each_block_save, self);
 	}

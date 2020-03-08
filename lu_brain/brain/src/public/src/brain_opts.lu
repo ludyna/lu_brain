@@ -12,10 +12,8 @@
 		// Initialize
 		self->id							= id;
 		self->size_in_bytes					= size_in_bytes;
-		
-		self->gate_opts.save_waves_size 	= 1;
-		self->gate_opts.find_waves_size		= 1;
-		self->gate_opts.restore_waves_size	= 1;
+
+		gate_opts_init(&self->gate_opts);
 
 		self->rec_opts						= arr_temp_create(10);
 

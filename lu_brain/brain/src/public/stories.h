@@ -37,6 +37,7 @@
  	};
 
  	static void block_append(Block self, Rec rec, lu_p_value data);
+ 	//static lu_p_byte block_save(Block self, Save_Wave wave);  
 
  ///////////////////////////////////////////////////////////////////////////////
 // Rec_Input

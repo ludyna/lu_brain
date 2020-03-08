@@ -70,3 +70,8 @@
  		ri->rec 	= rec; 
  		ri->data 	= data;
  	}
+
+ 	static lu_p_byte block_save(Block self, Save_Wave wave)
+ 	{
+ 		return NULL;
+ 	}
