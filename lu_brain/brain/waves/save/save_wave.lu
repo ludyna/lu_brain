@@ -32,12 +32,10 @@
 		return self;
 	}
 
-
-	static void save_wave_each_block_save(lu_p_void item, lu_p_void p1)
+	static void save_wave_each_block_save(lu_p_void item)
 	{
 		Block block 		= (Block) item;
-		Save_Wave wave 		= (Save_Wave) p1;
-		arr_append(wave->block_neus, block_save(block, wave));
+		//arr_append(self->block_neus, block_save(block, self));
 	}
 
 	static void save_wave_process(Save_Wave self)
@@ -48,6 +46,7 @@
 		// i osoblyvo sytuaciyi v odnomu bloci
 
 		// znachenia dlia neurons isnuyut tilky dlia potochnoyi wave
+		// yaki my attachymo do neus yak componentu ES
 
 		if (self == NULL) {
 			lu_user_throw("self should not be NULL");
@@ -66,14 +65,13 @@
 			return;
 		}
 
-		if (arr_count(story->blocks) > arr_count(self->block_neus))
+		if (arr_size(story->blocks) > arr_size(self->block_neus))
 		{
 			lu_user_throw("not enough block neus for story size");
 			return;
 		}
 
-
 		// simplified atm
 		// multithreading required 
-		//arr_each_1p(story->blocks, save_wave_each_block_save, self);
+		//arr_each(story->blocks, save_wave_each_block_save);
 	}
