@@ -32,16 +32,30 @@
 		return self;
 	}
 
-	static void save_wave_each_block_save(lu_p_void item)
+	void save_wave_each_block_save(Arr self, lu_p_void item, lu_size index, lu_p_void p1)
 	{
-		Block block 		= (Block) item;
-		//arr_append(self->block_neus, block_save(block, self));
+		// simplified atm, use threads later
+
+		Save_Wave save_wave = (Save_Wave) p1;
+
+		Block prev, curr, next;
+
+		if (index == 0)
+			prev = NULL;
+		else 
+			prev = arr_get(self, index - 1);
+
+		curr = (Block) item;
+
+		next = arr_get(self, index + 1);
+
+		block_save(prev, curr, next, save_wave);
 	}
 
 	static void save_wave_process(Save_Wave self)
 	{
 		// vse connetytsia po chasu
-		// i sytuaciyu v odnomu rec i 
+		// i sytuaciyu v odnomu rec 
 		// i sytuaciyu mizh rec
 		// i osoblyvo sytuaciyi v odnomu bloci
 
@@ -71,7 +85,5 @@
 			return;
 		}
 
-		// simplified atm
-		// multithreading required 
-		//arr_each(story->blocks, save_wave_each_block_save);
+		arr_each_with_index_1p(story->blocks, save_wave_each_block_save, self);
 	}

@@ -71,7 +71,7 @@
  		ri->data 	= data;
  	}
 
- 	static lu_p_byte block_save(Block self, Save_Wave wave)
+ 	static lu_p_byte block_save(Block prev, Block curr, Block next, Save_Wave wave)
  	{
  		return NULL;
  	}

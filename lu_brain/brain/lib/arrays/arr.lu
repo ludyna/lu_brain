@@ -81,6 +81,15 @@ void arr_each_2p(Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void
 	}
 }
 
+void arr_each_with_index_1p(Arr self, void (*block)(Arr self, lu_p_void item, lu_size index, lu_p_void p1), lu_p_void p1)
+{
+	for (lu_size i = 0; i < self->count; i++)
+	{
+		block(self, (lu_p_void) self->items[i], i, p1);
+	}
+}
+
+
 void arr_nullify(Arr self)
 { 
 	for (lu_size i = 0; i < self->size; i++)
