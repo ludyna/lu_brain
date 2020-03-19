@@ -6,7 +6,7 @@
 // Nouns
 
 	typedef struct block* 		Block;
-	typedef struct rec_input* 	Rec_Input;
+	typedef struct rec_datum* 	Rec_Datum;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Story 
@@ -24,6 +24,13 @@
 
 		Arr					blocks;
 		enum story_state	state;
+
+		// lu_p_value* 		data;
+		// lu_size				data_size;
+		// lu_size				data_count;
+
+		Arr2 				data;
+		lu_size				data_y;
 	};
 
 
@@ -33,15 +40,18 @@
  	struct block {
  		Story 		story;
 
- 		Arr 		rec_inputs;
+ 		Arr 		rec_data;
  	};
 
  	static void block_append(Block self, Rec rec, lu_p_value data);
+ 	// static Rec_Datum block_rec_datum_get(Block, Rec);
 
  ///////////////////////////////////////////////////////////////////////////////
-// Rec_Input
+// Rec_Datum
 
- 	struct rec_input {
+ 	struct rec_datum {
  		Rec 		rec;
  		lu_p_value 	data;
  	};
+
+ 	// static void rec_datum_save(Rec_Datum, Rec_Datum, Rec_Datum, Save_Wave);

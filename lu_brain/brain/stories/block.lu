@@ -11,22 +11,22 @@
 
 		// Initialize
 		self->story 		= story;
-		self->rec_inputs	= arr_create(g_mem_temp, BLOCK_INITIAL_REC_INPUTS_SIZE);
+		self->rec_data		= arr_create(g_mem_temp, BLOCK_INITIAL_REC_INPUTS_SIZE);
 
 		return self;
 	}
 
 	static void block_each_rec_input_destroy(lu_p_void item)
 	{
-		Rec_Input ri = (Rec_Input) item;
+		Rec_Datum ri = (Rec_Datum) item;
 		mem_free(g_mem_temp, (lu_p_byte) ri);
 	}
 
 	void block_destroy(Block self)
 	{
-		arr_each(self->rec_inputs, block_each_rec_input_destroy);
+		arr_each(self->rec_data, block_each_rec_input_destroy);
 
- 		arr_destroy(self->rec_inputs, g_mem_temp);
+ 		arr_destroy(self->rec_data);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
@@ -48,7 +48,7 @@
 
 	bool block_find_rec_input(lu_p_void item, lu_p_void p1)
 	{
-		Rec_Input ri 	= (Rec_Input) item;
+		Rec_Datum ri 	= (Rec_Datum) item;
 		Rec rec 		= (Rec) p1;
 		if (ri->rec == rec) return true;
 
@@ -57,12 +57,12 @@
 
  	static void block_append(Block self, Rec rec, lu_p_value data)
  	{  
- 		Rec_Input ri = arr_find_first_1p(self->rec_inputs, block_find_rec_input, rec);
+ 		Rec_Datum ri = arr_find_first_1p(self->rec_data, block_find_rec_input, rec);
 
  		if (ri == NULL) 
  		{
-			ri = (Rec_Input) mem_alloc(g_mem_temp, sizeof(struct rec_input));
-			arr_append(self->rec_inputs, ri);
+			ri = (Rec_Datum) mem_alloc(g_mem_temp, sizeof(struct rec_datum));
+			arr_append(self->rec_data, ri);
 		}
  		else 
  			lu_user_throw("Data for rec already exists in block. Overwriting.");
@@ -71,7 +71,32 @@
  		ri->data 	= data;
  	}
 
- 	static lu_p_byte block_save(Block prev, Block curr, Block next, Save_Wave wave)
- 	{
- 		return NULL;
- 	}
+ 	// static Rec_Datum block_rec_datum_get(Block self, Rec rec)
+ 	// {
+
+ 	// }
+
+ 	// static lu_p_byte block_save(Block prev, Block curr, Block next, Save_Wave wave)
+ 	// {
+ 	// 	lu_assert(wave);
+ 	// 	lu_assert(wave->story);6` 
+ 	// 	lu_assert(wave->story->brain->recs);
+
+ 	// 	Arr recs 	= wave->story->brain->recs;
+ 	// 	Rec_Datum ri_prev, ri_curr, ri_next;
+		// Rec rec;
+		// Space_Time_Pyra pyra;
+
+	 // 	for(lu_size i = 0; i < recs->count; i++)
+	 // 	{
+	 // 		rec = recs->items[i];
+
+	 // 		ri_prev = block_rec_datum_get(prev, rec);
+	 // 		ri_curr = block_rec_datum_get(curr, rec);
+	 // 		ri_next = block_rec_datum_get(curr, rec);
+
+	 // 		pyra_add(rec_datum_save(ri_prev, ri_curr, ri_next, wave));
+	 // 	}
+
+	 // 	return pyra_save(pyra, wave);
+ 	// }

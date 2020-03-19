@@ -44,6 +44,7 @@
 	struct save_wave {
 		struct wave 		super;
 		struct save_opts 	save_opts;
+
 		Story 				story;
 
 		Arr 				block_neus;

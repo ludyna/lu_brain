@@ -25,3 +25,12 @@
 	"theme": "Default.sublime-theme",
 	"preview_on_click": true
 }
+
+
+		// vse connetytsia po chasu
+		// i sytuaciyu v odnomu rec 
+		// i sytuaciyu mizh rec
+		// i osoblyvo sytuaciyi v odnomu bloci
+
+		// znachenia dlia neurons isnuyut tilky dlia potochnoyi wave
+		// yaki my attachymo do neus yak componentu ES

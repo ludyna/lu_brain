@@ -15,6 +15,7 @@
 
 	struct rec {
 		Brain 			brain;
+		lu_size 		id;
 
 		lu_size 		width;
 		lu_size 		height;

@@ -51,7 +51,7 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Save 
 
-	Lu_Story story = lu_story_create(brain); 
+	Lu_Story story = lu_story_create(brain, 0); 
 
 		lu_story_push(story, rec_1, data_0);
 
@@ -80,7 +80,7 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Find
 
-	story = lu_story_create(brain);
+	story = lu_story_create(brain, 0);
 
 		lu_story_push(story, rec_1, data_0);
 

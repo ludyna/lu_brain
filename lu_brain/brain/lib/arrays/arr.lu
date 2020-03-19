@@ -14,21 +14,23 @@
 Arr arr_create(Mem mem, lu_size size)
 {
 	lu_assert(size > 0);
+	lu_assert(mem != NULL);
 
 	Arr self = (Arr) mem_alloc(mem, sizeof(struct arr));
 	
 	// Initialize
 	self->size 			= size;
 	self->count 		= 0;
-	self->items 		= (lu_p_void*) calloc(self->size, sizeof(lu_p_void));
+	self->items 		= (lu_p_void*) mem_alloc(mem, self->size * sizeof(lu_p_void));
+	self->mem 			= mem;
 
 	return self;
 }
 
-void arr_destroy(Arr self, Mem mem)
+void arr_destroy(Arr self)
 {
-	mem_free(mem, (lu_p_byte) self->items);
-	mem_free(mem, (lu_p_byte) self);
+	mem_free(self->mem, (lu_p_byte) self->items);
+	mem_free(self->mem, (lu_p_byte) self);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -104,7 +106,7 @@ void arr_realloc(Arr self, lu_size new_size)
 
 	self->size = new_size;
 
-	self->items = (lu_p_void*) realloc(self->items, sizeof(lu_p_void) * self->size);
+	self->items = (lu_p_void*) mem_realloc(self->mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
 	lu_assert(self->items != NULL);
 }
 

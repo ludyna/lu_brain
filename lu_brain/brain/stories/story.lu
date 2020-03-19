@@ -3,14 +3,37 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Story story_create(Brain brain)
+	Story story_create(Brain brain, lu_size initial_block_size)
 	{
+		if (brain == NULL)
+			return lu_user_throw("Brain should not be NULL");
+
+		if (brain->recs == NULL || arr_count(brain->recs) < 1)
+			return lu_user_throw("Brain recs should be created first");
+
 		Story self 		= (Story) mem_alloc(g_mem_temp, sizeof(struct story));
 
 		// Initialize
 		self->brain 	= brain;
 		self->blocks 	= arr_create(g_mem_temp, STORY_INITIAL_BLOCKS_SIZE);
 		self->state 	= SS_BLOCK_ENDED;
+
+		// self->data_size 	= initial_block_size == 0 ? STORY_INITIAL_BLOCKS_SIZE : initial_block_size;
+		// self->data			= (lu_p_value*) mem_alloc(g_mem_temp, sizeof(lu_p_value*) * self->data_size * arr_size(brain->recs));
+		// self->data_count 	= 0;
+
+		lu_size w 		= arr_count(self->brain->recs);
+		lu_size h 		= initial_block_size == 0 ? STORY_INITIAL_BLOCKS_SIZE : initial_block_size;
+		self->data 		= arr2_create(g_mem_temp, w, h);
+
+		lu_size x, y;
+		for(y = 0; y < h; y++)
+			for(x = 0; x < w; x++)
+			{
+				arr2_set(self->data, x, y, NULL);
+			}
+
+		self->data_y 	= 0;
 
 		return self;
 	}
@@ -24,7 +47,9 @@
 	void story_destroy(Story self)
 	{
 		arr_each(self->blocks, story_each_block_destroy);
-		arr_destroy(self->blocks, g_mem_temp);
+		arr_destroy(self->blocks);
+		// mem_free(g_mem_temp, (lu_p_byte) self->data);
+		arr2_destroy(self->data);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
@@ -37,36 +62,78 @@
 		if (rec == NULL) lu_user_throw("rec should not be NULL");
 		if (data == NULL) lu_user_throw("data should not be NULL");
 
-		Block block;
+
+		
+		//Block block;
 
 		if (self->state == SS_BLOCK_ENDED) 
 		{
-			block = block_create(self);
-			arr_append(self->blocks, block);
+			// block = block_create(self);
+			// arr_append(self->blocks, block);
 		}
 		else 
 		{
-			block = arr_last(self->blocks);
+			// block = arr_last(self->blocks);
 		}
 
-		block_append(block, rec, data);
+		// block_append(block, rec, data);
 	}
 
 
-	Wave story_save_async(Story self, Save_Opts opts)
+	mv_alg Wave story_save_async(Story self, Save_Opts opts)
 	{
+		if (self == NULL) 
+			return lu_user_throw("self should not be NULL");
+
+		Brain brain = self->brain;
+		if (brain == NULL)
+			return lu_user_throw("story not linked to brain?");
+
+		Arr recs = brain->recs;
+
+		if (recs == NULL || arr_size(recs) < 1)
+			return lu_user_throw("Brain has no recs");
+
+		if (self->blocks == NULL || arr_count(self->blocks) < 1) 
+			return lu_user_throw("story without blocks");
+
 		Gate gate = brain_gate(self->brain);
 
 		Save_Wave wave = gate_save_wave_wait(gate);
 
+		if (arr_size(self->blocks) > arr_size(wave->block_neus))
+			return lu_user_throw("not enough block neus for story size");
+
 		save_wave_init(wave, self, opts);
 
-		save_wave_process(wave);
+		// Reorhanizuvaty i stvoryty percepciyi
+
+		lu_size i, j;
+
+		Arr blocks = self->blocks;
+		//Wave data = 
+
+		for(i = 0; i < blocks->count; i++)
+		{
+			for(j = 0; j < recs->count; j++)
+			{
+
+			}
+		}
+
+
+		// Zbuduvaty neus dlia percepciy
+
+		// Zbuduvaty neus dlia neus percepciy 
+
+
+
+		//arr_each_with_index_1p(story->blocks, save_wave_each_block_save, self);
 
 		return (Wave) wave;
 	}
 
-	Save_Resp story_save(Story self, Save_Opts opts)
+	mv_setup Save_Resp story_save(Story self, Save_Opts opts)
 	{
 		Wave wave = story_save_async(self, opts);
 		

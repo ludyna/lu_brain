@@ -5,8 +5,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
-	typedef struct mem* 						Mem;
-	typedef struct mem_table* 					Mem_Table;
+	typedef struct mem* 				Mem;
+	typedef struct mem_table* 			Mem_Table;
 	typedef struct mem_perm* 			Mem_Perm;
 	typedef struct mem_table_perm* 		Mem_Table_Perm;
 

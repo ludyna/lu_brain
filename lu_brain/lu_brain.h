@@ -111,7 +111,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Story API
 
-	Lu_Story lu_story_create(Lu_Brain);
+	Lu_Story lu_story_create(Lu_Brain, lu_size);
 	void lu_story_destroy(Lu_Story);
 
 	void lu_story_push(Lu_Story, Lu_Rec, lu_value* data);

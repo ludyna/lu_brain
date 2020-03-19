@@ -30,4 +30,8 @@ typedef lu_value(*lu_fp_get_value)(lu_p_void);
 
 #define lu_flags uint
 
+#define mv_alg
+#define mv_setup
+#define mv_get
+
 #endif // _LU_TYPES_H

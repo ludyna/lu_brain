@@ -5,8 +5,8 @@
 #define _LU_LIB_H
 
 #include "rand.h"
-#include "mem_abstractors.h"
-#include "arrays.h"
-#include "lists.h" 
+#include "mem_abstractors/mem_abstractors.h"
+#include "arrays/arrays.h"
+#include "lists/lists.h" 
 
 #endif // _LU_LIB_H

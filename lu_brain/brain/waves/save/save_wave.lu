@@ -49,7 +49,7 @@
 
 		next = arr_get(self, index + 1);
 
-		block_save(prev, curr, next, save_wave);
+		//block_save(prev, curr, next, save_wave);
 	}
 
 	static void save_wave_process(Save_Wave self)

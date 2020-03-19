@@ -34,7 +34,9 @@
 		Rec_Opts rec_opts 	= (Rec_Opts) item;
 		Brain brain 		= (Brain) p1;
 
-		arr_append(brain->recs, rec_create(brain, rec_opts));
+		Rec rec = rec_create(brain, rec_opts);
+		arr_append(brain->recs, rec);
+		rec->id = arr_count(brain->recs) - 1;
 	}
 
 	Brain brain_create(Brain_Opts opts)

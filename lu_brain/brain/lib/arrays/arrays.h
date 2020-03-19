@@ -17,14 +17,15 @@
 		lu_size 	size;
 		lu_size 	count;
 		lu_p_void* 	items;
+		Mem 		mem;
 	};
 
 	// Create and destroy 
 
 	Arr arr_create(Mem mem, lu_size size);
 	static inline Arr arr_temp_create(lu_size size) { return arr_create(g_mem_temp, size); }
-	void arr_destroy(Arr, Mem);
-	static inline void arr_temp_destroy(Arr self) { arr_destroy(self, g_mem_temp); }
+	void arr_destroy(Arr);
+	static inline void arr_temp_destroy(Arr self) { arr_destroy(self); }
 
 	// Setters / getters
 
@@ -86,20 +87,62 @@
 
 	// Create and destroy
 
-	Arr2 arr2_create(Mem, lu_size width, lu_size height);
-	void arr2_destroy(Arr2, Mem);
+	static inline Arr2 arr2_create(Mem mem, lu_size width, lu_size height)
+	{
+		Arr2 self = (Arr2) mem_alloc(mem, sizeof(struct arr2));
+		
+		self->width 	= width;
+		self->height 	= height;
+		self->items 	= arr_create(mem, width * height);
+
+		return self;
+	} 
+
+	static inline void arr2_destroy(Arr2 self)
+	{
+		Mem mem = self->items->mem;
+		arr_destroy(self->items);
+		mem_free(mem, (lu_p_byte) self);
+	}
 
 	// Main public methods
 
-	void arr2_each(Arr2 self, void (*block)(lu_p_void item));
-	void arr2_each_2p(Arr2 self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), lu_p_void p1, lu_p_void p2);
+	static inline void arr2_each(Arr2 self, void (*block)(lu_p_void item))
+	{
+		arr_each(self->items, block);
+	}
+
+	static inline void arr2_each_2p(
+		Arr2 self, 
+		void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), 
+		lu_p_void p1, 
+		lu_p_void p2
+	)
+	{
+		arr_each_2p(self->items, block, p1, p2);
+	}
 
 	static inline lu_p_void arr2_get(Arr2 self, lu_size x, lu_size y)
 	{
 		return arr_get(self->items, (y * self->width) + x);
 	}
 
-	void arr2_set(Arr2, lu_size, lu_size, lu_p_void);
+	static inline void arr2_set(Arr2 self, lu_size x, lu_size y, lu_p_void value)
+	{
+		lu_size index = (y * self->width) + x;
+
+		arr_set(self->items, (y * self->width) + x, value);
+	}
+
+	static inline void arr2_realloc(Arr2 self, lu_size w, lu_size h)  
+	{ 
+		lu_assert(w + h > self->width + self->height);
+
+		self->width = w;
+		self->height = h;
+
+		arr_realloc(self->items, self->width * self->height);
+	} 
 
 
 #endif // _LU_ARRAYS_H
