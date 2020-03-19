@@ -3,7 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Story story_create(Brain brain, lu_size initial_block_size)
+	Story story_create(Brain brain, lu_size story_size_in_blocks)
 	{
 		if (brain == NULL)
 			return lu_user_throw("Brain should not be NULL");
@@ -15,15 +15,9 @@
 
 		// Initialize
 		self->brain 	= brain;
-		self->blocks 	= arr_create(g_mem_temp, STORY_INITIAL_BLOCKS_SIZE);
-		self->state 	= SS_BLOCK_ENDED;
-
-		// self->data_size 	= initial_block_size == 0 ? STORY_INITIAL_BLOCKS_SIZE : initial_block_size;
-		// self->data			= (lu_p_value*) mem_alloc(g_mem_temp, sizeof(lu_p_value*) * self->data_size * arr_size(brain->recs));
-		// self->data_count 	= 0;
 
 		lu_size w 		= arr_count(self->brain->recs);
-		lu_size h 		= initial_block_size == 0 ? STORY_INITIAL_BLOCKS_SIZE : initial_block_size;
+		lu_size h 		= story_size_in_blocks == 0 ? STORY_INITIAL_BLOCKS_SIZE : story_size_in_blocks;
 		self->data 		= arr2_create(g_mem_temp, w, h);
 
 		lu_size x, y;
@@ -38,17 +32,8 @@
 		return self;
 	}
 
-	static void story_each_block_destroy(lu_p_void item)
-	{
-		Block block = (Block) item;
-		block_destroy(block);
-	}
-
 	void story_destroy(Story self)
 	{
-		arr_each(self->blocks, story_each_block_destroy);
-		arr_destroy(self->blocks, g_mem_temp);
-		// mem_free(g_mem_temp, (lu_p_byte) self->data);
 		arr2_destroy(self->data, g_mem_temp);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
@@ -58,25 +43,17 @@
 
 	void story_push(Story self, Rec rec, lu_value* data)
 	{
-		if (self == NULL) lu_user_throw("self should not be NULL");
-		if (rec == NULL) lu_user_throw("rec should not be NULL");
-		if (data == NULL) lu_user_throw("data should not be NULL");
+		if (self == NULL) { lu_user_throw("self should not be NULL"); return; }
+		if (rec == NULL) { lu_user_throw("rec should not be NULL"); return; }
+		if (data == NULL) { lu_user_throw("data should not be NULL"); return; }
 
+		// new inpute to the same rec advances story
+		if (arr2_get(self->data, rec->id, self->data_y) != NULL) ++self->data_y;
+ 
+ 		if (self->data_y >= arr2_height(self->data)) 
+ 			{ lu_user_throw("Out of available blocks in story."); return; }
 
-		
-		//Block block;
-
-		if (self->state == SS_BLOCK_ENDED) 
-		{
-			// block = block_create(self);
-			// arr_append(self->blocks, block);
-		}
-		else 
-		{
-			// block = arr_last(self->blocks);
-		}
-
-		// block_append(block, rec, data);
+		arr2_set(self->data, rec->id, self->data_y, (lu_p_void) data);
 	}
 
 
@@ -94,32 +71,28 @@
 		if (recs == NULL || arr_size(recs) < 1)
 			return lu_user_throw("Brain has no recs");
 
-		if (self->blocks == NULL || arr_count(self->blocks) < 1) 
+		if (self->data_y < 1) 
 			return lu_user_throw("story without blocks");
 
 		Gate gate = brain_gate(self->brain);
 
 		Save_Wave wave = gate_save_wave_wait(gate);
 
-		if (arr_size(self->blocks) > arr_size(wave->block_neus))
-			return lu_user_throw("not enough block neus for story size");
 
 		save_wave_init(wave, self, opts);
 
 		// Reorhanizuvaty i stvoryty percepciyi
 
-		lu_size i, j;
 
-		Arr blocks = self->blocks;
 		//Wave data = 
 
-		for(i = 0; i < blocks->count; i++)
-		{
-			for(j = 0; j < recs->count; j++)
-			{
+		// for(i = 0; i < blocks->count; i++)
+		// {
+		// 	for(j = 0; j < recs->count; j++)
+		// 	{
 
-			}
-		}
+		// 	}
+		// }
 
 
 		// Zbuduvaty neus dlia percepciy

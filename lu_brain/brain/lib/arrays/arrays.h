@@ -84,6 +84,9 @@
 		Arr items;
 	};
 
+	static inline lu_size arr2_width(Arr2 self) { return self->width; }
+	static inline lu_size arr2_height(Arr2 self) { return self->height; }
+
 	// Create and destroy
 
 	static inline Arr2 arr2_create(Mem mem, lu_size width, lu_size height)
