@@ -17,15 +17,14 @@
 		lu_size 	size;
 		lu_size 	count;
 		lu_p_void* 	items;
-		Mem 		mem;
 	};
 
 	// Create and destroy 
 
 	Arr arr_create(Mem mem, lu_size size);
 	static inline Arr arr_temp_create(lu_size size) { return arr_create(g_mem_temp, size); }
-	void arr_destroy(Arr);
-	static inline void arr_temp_destroy(Arr self) { arr_destroy(self); }
+	void arr_destroy(Arr, Mem);
+	static inline void arr_temp_destroy(Arr self) { arr_destroy(self, g_mem_temp); }
 
 	// Setters / getters
 
@@ -71,7 +70,7 @@
 
 	static inline void arr_reset(Arr self) { self->count = 0; }
 
-	void arr_realloc(Arr self, lu_size new_size);
+	void arr_realloc(Arr self, lu_size new_size, Mem mem);
 	Arr arr_merge(Arr self, Arr src);
 
 	lu_p_void arr_find_first_1p(Arr self, bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1);
@@ -98,10 +97,9 @@
 		return self;
 	} 
 
-	static inline void arr2_destroy(Arr2 self)
+	static inline void arr2_destroy(Arr2 self, Mem mem)
 	{
-		Mem mem = self->items->mem;
-		arr_destroy(self->items);
+		arr_destroy(self->items, mem);
 		mem_free(mem, (lu_p_byte) self);
 	}
 
@@ -134,14 +132,14 @@
 		arr_set(self->items, (y * self->width) + x, value);
 	}
 
-	static inline void arr2_realloc(Arr2 self, lu_size w, lu_size h)  
+	static inline void arr2_realloc(Arr2 self, lu_size w, lu_size h, Mem mem)  
 	{ 
 		lu_assert(w + h > self->width + self->height);
 
 		self->width = w;
 		self->height = h;
 
-		arr_realloc(self->items, self->width * self->height);
+		arr_realloc(self->items, self->width * self->height, mem);
 	} 
 
 

@@ -26,7 +26,7 @@
 	{
 		arr_each(self->rec_data, block_each_rec_input_destroy);
 
- 		arr_destroy(self->rec_data);
+ 		arr_destroy(self->rec_data, g_mem_temp);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 

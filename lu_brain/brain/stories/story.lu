@@ -47,9 +47,9 @@
 	void story_destroy(Story self)
 	{
 		arr_each(self->blocks, story_each_block_destroy);
-		arr_destroy(self->blocks);
+		arr_destroy(self->blocks, g_mem_temp);
 		// mem_free(g_mem_temp, (lu_p_byte) self->data);
-		arr2_destroy(self->data);
+		arr2_destroy(self->data, g_mem_temp);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 

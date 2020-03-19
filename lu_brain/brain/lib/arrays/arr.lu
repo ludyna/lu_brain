@@ -22,15 +22,14 @@ Arr arr_create(Mem mem, lu_size size)
 	self->size 			= size;
 	self->count 		= 0;
 	self->items 		= (lu_p_void*) mem_alloc(mem, self->size * sizeof(lu_p_void));
-	self->mem 			= mem;
 
 	return self;
 }
 
-void arr_destroy(Arr self)
+void arr_destroy(Arr self, Mem mem)
 {
-	mem_free(self->mem, (lu_p_byte) self->items);
-	mem_free(self->mem, (lu_p_byte) self);
+	mem_free(mem, (lu_p_byte) self->items);
+	mem_free(mem, (lu_p_byte) self);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -39,9 +38,12 @@ void arr_destroy(Arr self)
 lu_size arr_append(Arr self, lu_p_void item)
 {
 	lu_assert(self != NULL);
+	lu_assert(self->count < self->size);
  
-	if (self->count >= self->size) 
-		arr_realloc(self, self->size * 2);
+ 	// no automatic realloc 
+	// if (self->count >= self->size) 
+		// arr_realloc(self, self->size * 2);
+
 	
 	lu_size index = self->count;
 
@@ -100,20 +102,23 @@ void arr_nullify(Arr self)
 	}
 }
 
-void arr_realloc(Arr self, lu_size new_size)
+void arr_realloc(Arr self, lu_size new_size, Mem mem)
 {
 	lu_assert(new_size > self->size);
 
 	self->size = new_size;
 
-	self->items = (lu_p_void*) mem_realloc(self->mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
+	self->items = (lu_p_void*) mem_realloc(mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
 	lu_assert(self->items != NULL);
 }
 
 Arr arr_merge(Arr self, Arr src)
 {
-	if (self->count + src->count > self->size)
-		arr_realloc(self, self->count + src->count);
+	lu_assert(self->count + src->count < self->size);
+
+	// no automatic realloc
+	// if (self->count + src->count > self->size)
+	// 	arr_realloc(self, self->count + src->count);
 
 	for(lu_size i = 0; i < src->count; i++)
 		self->items[self->count++] = src->items[i];
