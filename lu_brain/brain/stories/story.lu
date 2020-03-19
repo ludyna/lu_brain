@@ -78,7 +78,6 @@
 
 		Save_Wave wave = gate_save_wave_wait(gate);
 
-
 		save_wave_init(wave, self, opts);
 
 		// Reorhanizuvaty i stvoryty percepciyi
