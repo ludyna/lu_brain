@@ -44,10 +44,9 @@
 	struct save_wave {
 		struct wave 		super;
 		struct save_opts 	save_opts;
-
 		Story 				story;
 
-		Arr 				block_neus;
+		Arr2				percs;
 	};
 
 	struct save_resp {
@@ -91,11 +90,9 @@
 	static void find_wave_process(Find_Wave self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Reception API
+// Perc API
 
-	struct reception {
-
-	};
+lu_p_void perc_cont_create(Rec rec, lu_p_void prev, lu_p_void curr, lu_p_void next);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Restore API

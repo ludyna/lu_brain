@@ -43,9 +43,9 @@
 
 	void story_push(Story self, Rec rec, lu_value* data)
 	{
-		if (self == NULL) { lu_user_throw("self should not be NULL"); return; }
-		if (rec == NULL) { lu_user_throw("rec should not be NULL"); return; }
-		if (data == NULL) { lu_user_throw("data should not be NULL"); return; }
+		if (self == NULL) { lu_user_throw("Story should not be NULL"); return; }
+		if (rec == NULL) { lu_user_throw("Rec should not be NULL"); return; }
+		if (data == NULL) { lu_user_throw("Data should not be NULL"); return; }
 
 		// new inpute to the same rec advances story
 		if (arr2_get(self->data, rec->id, self->data_y) != NULL) ++self->data_y;
@@ -60,11 +60,11 @@
 	mv_alg Wave story_save_async(Story self, Save_Opts opts)
 	{
 		if (self == NULL) 
-			return lu_user_throw("self should not be NULL");
+			return lu_user_throw("Story should not be NULL");
 
 		Brain brain = self->brain;
 		if (brain == NULL)
-			return lu_user_throw("story not linked to brain?");
+			return lu_user_throw("Story has no like to brain");
 
 		Arr recs = brain->recs;
 
@@ -72,7 +72,7 @@
 			return lu_user_throw("Brain has no recs");
 
 		if (self->data_y < 1) 
-			return lu_user_throw("story without blocks");
+			return lu_user_throw("Story without blocks");
 
 		Gate gate = brain_gate(self->brain);
 
@@ -80,18 +80,38 @@
 
 		save_wave_init(wave, self, opts);
 
-		// Reorhanizuvaty i stvoryty percepciyi
+		// Stvoryty percepciyi
 
+		lu_size xi, yi, x, y;
+		lu_p_value prev;
+		lu_p_value curr;
+		lu_p_value next;
+		Rec rec; 
+		Arr2 data = self->data;
 
-		//Wave data = 
+		for(xi = 0; xi < arr2_width(data); xi++)
+		{
+			rec = lu_brain_rec_get(brain, xi);
 
-		// for(i = 0; i < blocks->count; i++)
-		// {
-		// 	for(j = 0; j < recs->count; j++)
-		// 	{
+			for(yi = 0; yi < arr2_height(data); yi++)
+			{
+				if (yi - 1 < 0)
+					prev = NULL;
+				else 
+					prev = (lu_p_value) arr2_get(data, xi, yi - 1);
 
-		// 	}
-		// }
+				curr = (lu_p_value) arr2_get(data, xi, yi);
+
+				if (yi + 1 >= arr2_height(data))
+					next = NULL;
+				else
+					next = (lu_p_value) arr2_get(data, xi, yi + 1);
+
+				// lu_p_value perc = perc_cont_create(rec, prev, curr, next);
+
+				// arr2_set(wave->percs, xi, yi, perc);
+			} 
+		}
 
 
 		// Zbuduvaty neus dlia percepciy

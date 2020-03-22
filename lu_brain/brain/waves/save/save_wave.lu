@@ -27,8 +27,8 @@
 
 		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
-		self->block_neus 	= arr_create(mem, opts->block_neus_size);
-
+		
+	
 		return self;
 	}
 
