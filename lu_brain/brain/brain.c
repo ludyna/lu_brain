@@ -8,7 +8,6 @@
 // Fundamental modules
 
 	#include "basic/basic.lu"
-	#include "system/system.lu"
 	#include "lib/lib.lu"
  
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,26 +46,27 @@
 		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
 			return lu_user_throw("brain options should include information about recs (rec_opts)");
 
-		System sys 		= system_create(opts->size_in_bytes);
-		Brain self 		= (Brain) mem_alloc(sys->mem_perm, sizeof(struct brain));
+		Mem mem_perm		= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
+
+		Brain self 		= (Brain) mem_alloc(mem_perm, sizeof(struct brain));
 		
 		self->id 		= opts->id;
-		self->sys 		= sys;
+		self->mem_perm  = mem_perm;
 
 		// Recs
-		self->recs 		= arr_create(sys->mem_perm, opts->rec_opts->count);
+		self->recs 		= arr_create(mem_perm, opts->rec_opts->count);
 
 		arr_each_1p(opts->rec_opts, brain_for_each_rec_opts_create_rec, self);
 
 		// Gate 
-		self->gate 		= gate_create(sys->mem_perm, &opts->gate_opts);
+		self->gate 		= gate_create(mem_perm, &opts->gate_opts);
 
 		return self;
 	}
 
 	void brain_destroy(Brain self)
 	{
-		system_destroy(self->sys);
+		mem_destroy(self->mem_perm, g_mem_temp);
 	}
 
 	Rec lu_brain_rec_get(Brain self, lu_size index)

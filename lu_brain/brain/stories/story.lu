@@ -43,9 +43,9 @@
 
 	void story_push(Story self, Rec rec, lu_value* data)
 	{
-		if (self == NULL) { lu_user_throw("Story should not be NULL"); return; }
-		if (rec == NULL) { lu_user_throw("Rec should not be NULL"); return; }
-		if (data == NULL) { lu_user_throw("Data should not be NULL"); return; }
+		lu_user_assert_void(self, "Story should not be NULL"); 
+		lu_user_assert_void(rec, "Rec should not be NULL"); 
+		lu_user_assert_void(data, "Data should not be NULL");
 
 		// new inpute to the same rec advances story
 		if (arr2_get(self->data, rec->id, self->data_y) != NULL) ++self->data_y;
@@ -59,20 +59,15 @@
 
 	mv_alg Wave story_save_async(Story self, Save_Opts opts)
 	{
-		if (self == NULL) 
-			return lu_user_throw("Story should not be NULL");
+		lu_user_assert(self, "Story should not be NULL");
 
 		Brain brain = self->brain;
-		if (brain == NULL)
-			return lu_user_throw("Story has no like to brain");
+		lu_user_assert(brain, "Story has no like to brain");
 
 		Arr recs = brain->recs;
 
-		if (recs == NULL || arr_size(recs) < 1)
-			return lu_user_throw("Brain has no recs");
-
-		if (self->data_y < 1) 
-			return lu_user_throw("Story without blocks");
+		lu_user_assert(recs == NULL || arr_size(recs) < 1, "Brain has no recs");
+		lu_user_assert(self->data_y < 1, "Story without blocks");
 
 		Gate gate = brain_gate(self->brain);
 
@@ -107,7 +102,7 @@
 				else
 					next = (lu_p_value) arr2_get(data, xi, yi + 1);
 
-				// lu_p_value perc = perc_cont_create(rec, prev, curr, next);
+				lu_p_value perc = perc_cont_create(rec, prev, curr, next);
 
 				// arr2_set(wave->percs, xi, yi, perc);
 			} 

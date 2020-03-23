@@ -6,7 +6,6 @@
 
 #include "basic/basic.h"
 #include "lib/lib.h"
-#include "system/system.h"
 
 #include "public_to_private.h"
 
@@ -45,8 +44,7 @@
 		lu_size			id;  		// useful for logs and debugging 
 									// in multi-brain env
 
-		System			sys;		// global state/devices/memory possibly
-									// shared between objects of the brain 
+		Mem 			mem_perm;
 
 		Arr				recs;		// receivers
   
