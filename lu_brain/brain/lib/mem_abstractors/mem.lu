@@ -9,7 +9,9 @@
 	{
 		// Mem specific debug here
 
-		return (lu_p_byte) malloc(size);
+		// I am using calloc instead of malloc here for easier debugging 
+		// changing to malloc should not change program behavior
+		return (lu_p_byte) calloc(1, size);
 	}
 
 	lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)

@@ -13,8 +13,9 @@
 	{
 		Mem_Perm self = (Mem_Perm) mem;
 
-		if (self->buff_pos + size_in_bytes > self->buff_end) 
-			return NULL;
+		lu_debug("\n POS: %p", self->buff_pos + size_in_bytes);
+
+		lu_user_assert(self->buff_pos + size_in_bytes <= self->buff_end, "Out of preallocated memory."); 
 
 		lu_p_byte tmp 	= self->buff_pos;
 		self->buff_pos 	+= size_in_bytes;

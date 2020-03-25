@@ -32,6 +32,26 @@
 		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
 		self->cont_percs 	= arr2_create(mem, arr_count(brain->recs), opts->max_story_size_in_blocks);
+		
+		lu_size xi, yi;
+		lu_size width = arr2_width(self->cont_percs);
+		lu_size height = arr2_height(self->cont_percs);
+		Rec rec;
+		lu_p_value block;
+		lu_p_byte b;
+		for(xi = 0; xi < width; xi++)
+		{
+			rec = (Rec) arr_get(brain->recs, xi);
+			for(yi = 0; yi < height; yi++)
+			{
+				b = mem_alloc(mem, rec->width * rec->height * sizeof(lu_value));
+
+				// lu_assert(block);
+
+				// arr2_set(self->cont_percs, xi, yi, block);
+			}
+		}
+
 	
 		return self;
 	}
@@ -47,19 +67,19 @@
 		// yaki my attachymo do neus yak componentu ES
 
 		// if (self == NULL) {
-		// 	lu_user_throw("self should not be NULL");
+		// 	lu_user_debug("self should not be NULL");
 		// 	return;
 		// }
 
 		// Story story = self->story;
 
 		// if (story == NULL) {
-		// 	lu_user_throw("story should not be NULL");
+		// 	lu_user_debug("story should not be NULL");
 		// 	return;
 		// }
 
 		// if (story->data_y < 1) {
-		// 	lu_user_throw("story without blocks");
+		// 	lu_user_debug("story without blocks");
 		// 	return;
 		// }
 

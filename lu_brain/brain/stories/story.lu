@@ -53,7 +53,7 @@
 		if (arr2_get(self->data, rec->id, self->data_y) != NULL) ++self->data_y;
  
  		if (self->data_y >= arr2_height(self->data)) 
- 			{ lu_user_throw("Out of available blocks in story."); return; }
+ 			{ lu_user_debug("Out of available blocks in story."); return; }
 
 		arr2_set(self->data, rec->id, self->data_y, (lu_p_void) data);
 	}
@@ -108,7 +108,10 @@
 
 				// treba stvroruvaty v wave masyvy i tudy spochatku 
 				// rahuvaty contr. Musymo spochatku porahuvaty contrasty
+				// Mozhna rahuvaty vykorystovuyuchy nearal net, ale 
+				// ne oboviazkovo.
 
+				
 			} 
 		}
 

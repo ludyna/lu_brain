@@ -37,19 +37,19 @@ void setUp(void)
 
 	brain 				= lu_brain_create(brain_opts);
 
-	lu_assert(brain);
-	lu_assert(brain->recs);
-	lu_user_assert_void(brain->recs->count, "Brain recs count is 0");
+	TEST_ASSERT(brain);
+	TEST_ASSERT(brain->recs);
+	TEST_ASSERT(brain->recs->count);
 
 	rec_1 				= lu_brain_rec_get(brain, 0);
 
-	lu_assert(rec_1);
+	TEST_ASSERT(rec_1);
 
 	rec_2 				= lu_brain_rec_get(brain, 1);
 
-	lu_assert(rec_2);
+	TEST_ASSERT(rec_2);
 
-	lu_user_assert_void(brain->recs->count, "Brain recs count is 0");
+	TEST_ASSERT(brain->recs->count);
 
 	save_opts 			= lu_save_opts_create();
 }

@@ -47,10 +47,10 @@
 	Brain lu_brain_create(Brain_Opts opts)
 	{
 		if (opts == NULL) 
-			return lu_user_throw("brain options should not be NULL");
+			return lu_user_debug("brain options should not be NULL");
 
 		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
-			return lu_user_throw("brain options should include information about recs (rec_opts)");
+			return lu_user_debug("brain options should include information about recs (rec_opts)");
 
 		Mem mem_perm		= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
 

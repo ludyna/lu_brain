@@ -2,6 +2,8 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+bool g_user_assert = LU_USER_ASSERT_DEFAULT;
+
 void lu_throw_internal(enum lu_e e, const char* file, int line)
 {
 	fprintf(stderr, "\nEXCEPTION: <%s:%d> ID: %d", file, line, e);
@@ -26,13 +28,13 @@ void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, con
 	Throw(e);
 }
 
-void* lu_user_throw_internal(const char* func, const char* file, int line, const char* fmt)
+void* lu_user_debug_internal(const char* func, const char* file, int line, const char* fmt)
 {
 	fprintf(stderr, "\nError while calling %s(): <%s:%d> %s", func, file, line, fmt);
     return NULL;
 }
 
-void* lu_user_throw_args_internal(const char* func, const char* file, int line, const char* fmt, ...)
+void* lu_user_debug_args_internal	(const char* func, const char* file, int line, const char* fmt, ...)
 {
 	if (fmt == NULL) return NULL;
 	
