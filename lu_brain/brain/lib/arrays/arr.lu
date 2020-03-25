@@ -17,6 +17,7 @@ Arr arr_create(Mem mem, lu_size size)
 	lu_assert(mem != NULL);
 
 	Arr self = (Arr) mem_alloc(mem, sizeof(struct arr));
+	lu_user_assert(self, "Unable to allocate array");
 	
 	// Initialize
 	self->size 			= size;
