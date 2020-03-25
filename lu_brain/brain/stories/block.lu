@@ -5,13 +5,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	Block block_begin(Story story)
+	void block_begin(Story story)
 	{
+		lu_user_assert_void(story, "Story is NULL");
+
 		++story->data_y;
 	}
 
 	void block_end(Story story)
 	{
+		lu_user_assert_void(story, "Story is NULL");
+
 		++story->data_y;
 	}
 

@@ -15,7 +15,6 @@
 	typedef struct lu_name* 			Lu_Name;
 	typedef struct lu_rec* 				Lu_Rec;
 	typedef struct lu_story* 			Lu_Story;
-	typedef struct lu_block*			Lu_Block;
 	typedef struct lu_wave* 			Lu_Wave;
 	typedef struct lu_wave_resp*		Lu_Wave_Resp;
 	typedef struct lu_save_resp*		Lu_Save_Resp;
@@ -102,11 +101,6 @@
 // Rec API
 
 
-///////////////////////////////////////////////////////////////////////////////
-// Block API
-
-	Lu_Block lu_block_begin(Lu_Story);
-	void lu_block_end(Lu_Story);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Story API
@@ -124,6 +118,9 @@
 
 	Lu_Restore_Resp lu_story_restore(Lu_Brain, Lu_Neuron, Lu_Restore_Opts);
 	Lu_Wave lu_story_restore_async(Lu_Brain, Lu_Neuron, Lu_Restore_Opts);
+
+	void lu_block_begin(Lu_Story);
+	void lu_block_end(Lu_Story);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave API

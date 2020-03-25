@@ -46,7 +46,7 @@
 		struct save_opts 	save_opts;
 		Story 				story;
 
-		Arr2				percs;
+		Arr2				cont_percs;
 	};
 
 	struct save_resp {

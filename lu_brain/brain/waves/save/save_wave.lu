@@ -31,7 +31,7 @@
 
 		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
-		self->percs 		= arr2_create(mem, arr_count(brain->recs), opts->max_story_size_in_blocks);
+		self->cont_percs 	= arr2_create(mem, arr_count(brain->recs), opts->max_story_size_in_blocks);
 	
 		return self;
 	}

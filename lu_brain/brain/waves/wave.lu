@@ -47,6 +47,8 @@
 
 	Lu_Wave_Resp wave_response(Wave self)
 	{
+		lu_user_assert(self, "Wave is NULL");
+
 		Lu_Wave_Resp resp = NULL;
 
 		wave_release(self);
@@ -56,5 +58,5 @@
 
 	void wave_join(Wave self)
 	{
-
+		lu_user_assert_void(self, "Wave is NULL");
 	}
