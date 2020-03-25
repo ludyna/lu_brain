@@ -39,9 +39,17 @@ void setUp(void)
 
 	lu_assert(brain);
 	lu_assert(brain->recs);
+	lu_user_assert_void(brain->recs->count, "Brain recs count is 0");
 
 	rec_1 				= lu_brain_rec_get(brain, 0);
+
+	lu_assert(rec_1);
+
 	rec_2 				= lu_brain_rec_get(brain, 1);
+
+	lu_assert(rec_2);
+
+	lu_user_assert_void(brain->recs->count, "Brain recs count is 0");
 }
 
 void tearDown(void)
@@ -107,6 +115,10 @@ void test_lu_brain_basics(void)
 {
 	/////////////////////////////////////////////////////////
 	// Save 
+
+	lu_user_assert_void(brain, "Brain is NULL");
+	lu_user_assert_void(brain->recs, "Brain recs is NULL");
+	lu_user_assert_void(brain->recs->count > 0, "Brain recs is empty");
 
 	Lu_Story story = lu_story_create(brain, 0); 
 

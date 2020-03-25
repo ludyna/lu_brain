@@ -7,7 +7,7 @@
 	{
 		lu_user_assert(brain, "Brain should not be NULL");
 		lu_user_assert(
-			brain->recs == NULL || arr_count(brain->recs) < 1, 
+			brain->recs && arr_count(brain->recs), 
 			"Brain recs should be created first"
 		);
 

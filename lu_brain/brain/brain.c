@@ -34,7 +34,13 @@
 		Brain brain 		= (Brain) p1;
 
 		Rec rec = rec_create(brain, rec_opts);
+
+		lu_user_assert_void(rec, "Cannot create rec!. Not enough memory?");
+
 		arr_append(brain->recs, rec);
+
+		lu_user_assert_void(arr_count(brain->recs) > 0, "Cannot append rec. Something went wrong.");
+
 		rec->id = arr_count(brain->recs) - 1;
 	}
 
@@ -56,7 +62,11 @@
 		// Recs
 		self->recs 		= arr_create(mem_perm, opts->rec_opts->count);
 
+		lu_user_assert(self->recs, "Cannot create recs. Not enough memory?");
+
 		arr_each_1p(opts->rec_opts, brain_for_each_rec_opts_create_rec, self);
+
+		lu_user_assert(arr_count(self->recs) > 0, "Brain recs count is 0");
 
 		// Gate 
 		self->gate 		= gate_create(self, &opts->gate_opts);
