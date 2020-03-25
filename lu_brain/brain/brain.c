@@ -44,7 +44,7 @@
 		rec->id = arr_count(brain->recs) - 1;
 	}
 
-	Brain brain_create(Brain_Opts opts)
+	Brain lu_brain_create(Brain_Opts opts)
 	{
 		if (opts == NULL) 
 			return lu_user_throw("brain options should not be NULL");
@@ -74,15 +74,14 @@
 		return self;
 	}
 
-	void brain_destroy(Brain self)
+	void lu_brain_destroy(Brain self)
 	{
 		mem_destroy(self->mem_perm, g_mem_temp);
 	}
 
 	Rec lu_brain_rec_get(Brain self, lu_size index)
 	{
-		if (index >= arr_count(self->recs)) 
-			return lu_user_throw("index is out of range");
+		lu_user_assert(index < arr_count(self->recs), "index is out of range");
 
 		return arr_get(self->recs, index);
 	}

@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	Name name_create();
-	void name_destroy(Name self);
+	Name lu_name_create();
+	void lu_name_destroy(Name self);
 
 #endif // _LU_NAME_H

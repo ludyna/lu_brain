@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Brain_Opts brain_opts_create(lu_size id, lu_size size_in_bytes)
+	Brain_Opts lu_brain_opts_create(lu_size id, lu_size size_in_bytes)
 	{
 		Brain_Opts self 					= (Brain_Opts) mem_temp_alloc(sizeof(struct brain_opts));
 
@@ -22,10 +22,10 @@
 
 	void each_rec_opts_destroy(lu_p_void item)
 	{
-		rec_opts_destroy((Rec_Opts) item);
+		lu_rec_opts_destroy((Rec_Opts) item);
 	}
 
-	void brain_opts_destroy(Brain_Opts self)
+	void lu_brain_opts_destroy(Brain_Opts self)
 	{
 		arr_each(self->rec_opts, each_rec_opts_destroy);
 

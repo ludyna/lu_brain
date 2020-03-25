@@ -23,7 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	Neuron save_resp_neuron(Save_Resp self)
+	Neuron lu_save_resp_neuron(Save_Resp self)
 	{
 		return NULL;
 	}

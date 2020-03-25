@@ -35,8 +35,8 @@ void* lu_user_throw_internal(const char* func, const char* file, int line, const
 void* lu_user_throw_args_internal(const char* func, const char* file, int line, const char* fmt, ...);
 
 #define lu_user_throw(msg) lu_user_throw_internal(__func__, __FILE__, __LINE__, msg)
-
 #define lu_user_throw_args(msg, ...) lu_user_throw_args_internal(__func__, __FILE__, __LINE__, msg, __VA_ARGS__)
+
 #define lu_user_assert(exp, msg) if(!(exp)) return lu_user_throw(msg);
 #define lu_user_assert_void(exp, msg) if(!(exp)) { lu_user_throw(msg); return; }
 

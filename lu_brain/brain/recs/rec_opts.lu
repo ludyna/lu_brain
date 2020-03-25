@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Rec_Opts rec_opts_create(
+	Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts 	brain_opts, 
 		lu_size 		width, 
 		lu_size 		height, 
@@ -31,7 +31,7 @@
 		return self;
 	}
 
-	void rec_opts_destroy(Rec_Opts self)
+	void lu_rec_opts_destroy(Rec_Opts self)
 	{
 		mem_temp_free((lu_p_byte) self);
 	} 
