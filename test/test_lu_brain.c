@@ -62,57 +62,57 @@ void tearDown(void)
 	lu_brain_destroy(brain);
 }
 
-void test_lu_story(void)
-{ 
-	lu_p_value d;
-	Lu_Story story = lu_story_create(brain, 0); 
+// void test_lu_story(void)
+// { 
+// 	lu_p_value d;
+// 	Lu_Story story = lu_story_create(brain, 0); 
 
- 		TEST_ASSERT(story->data_y == 0);
- 		TEST_ASSERT(arr2_get(story->data, 0, 0) == NULL);
+//  		TEST_ASSERT(story->data_y == 0);
+//  		TEST_ASSERT(arr2_get(story->data, 0, 0) == NULL);
 		
-	lu_story_push(story, rec_1, data_0);
+// 	lu_story_push(story, rec_1, data_0);
 
-		d = (lu_p_value) arr2_get(story->data, rec_1->id, story->data_y);
-		TEST_ASSERT(d[0] == 0);
-		TEST_ASSERT(story->data_y == 0);
+// 		d = (lu_p_value) arr2_get(story->data, rec_1->id, story->data_y);
+// 		TEST_ASSERT(d[0] == 0);
+// 		TEST_ASSERT(story->data_y == 0);
 
-	lu_story_push(story, rec_1, data_1);
-	lu_story_push(story, rec_2, data_2);
+// 	lu_story_push(story, rec_1, data_1);
+// 	lu_story_push(story, rec_2, data_2);
 
-		TEST_ASSERT(story->data_y == 1);
-		d = (lu_p_value) arr2_get(story->data, rec_1->id, story->data_y);
-		TEST_ASSERT(d[0] == 1);
-		d = (lu_p_value) arr2_get(story->data, rec_2->id, story->data_y);
-		TEST_ASSERT(d[0] == 2);
+// 		TEST_ASSERT(story->data_y == 1);
+// 		d = (lu_p_value) arr2_get(story->data, rec_1->id, story->data_y);
+// 		TEST_ASSERT(d[0] == 1);
+// 		d = (lu_p_value) arr2_get(story->data, rec_2->id, story->data_y);
+// 		TEST_ASSERT(d[0] == 2);
 
 
-	lu_block_begin(story);
+// 	lu_block_begin(story);
 
-		TEST_ASSERT(story->data_y == 2);
+// 		TEST_ASSERT(story->data_y == 2);
 
-	lu_story_push(story, rec_1, data_2);
-	lu_story_push(story, rec_2, data_3);
+// 	lu_story_push(story, rec_1, data_2);
+// 	lu_story_push(story, rec_2, data_3);
 		
-		d = (lu_p_value) arr2_get(story->data, rec_2->id, story->data_y);
-		TEST_ASSERT(d[0] == 3);
+// 		d = (lu_p_value) arr2_get(story->data, rec_2->id, story->data_y);
+// 		TEST_ASSERT(d[0] == 3);
 
-	lu_block_end(story);
+// 	lu_block_end(story);
 		
-		TEST_ASSERT(story->data_y == 3);
+// 		TEST_ASSERT(story->data_y == 3);
 
-	lu_story_push(story, rec_1, data_4);
+// 	lu_story_push(story, rec_1, data_4);
 		
-		TEST_ASSERT(story->data_y == 3);
+// 		TEST_ASSERT(story->data_y == 3);
 
-	Lu_Save_Resp save_response = lu_story_save(story, save_opts); 
+// 	Lu_Save_Resp save_response = lu_story_save(story, save_opts); 
 
-		lu_block_begin(story);
-		lu_story_push(story, rec_1, data_5);
-		lu_story_push(story, rec_2, data_6);
-		lu_block_end(story);
+// 		lu_block_begin(story);
+// 		lu_story_push(story, rec_1, data_5);
+// 		lu_story_push(story, rec_2, data_6);
+// 		lu_block_end(story);
 
-	lu_story_destroy(story);
-}
+// 	lu_story_destroy(story);
+// }
 
 
 void test_lu_brain_basics(void) 
