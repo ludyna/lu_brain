@@ -21,12 +21,18 @@
 		self->story = story;
 	}
 
-	static Find_Wave find_wave_create(Mem mem, Find_Wave_Create_Opts opts)
+	static Find_Wave find_wave_create(Gate gate, Find_Wave_Create_Opts opts)
 	{
+		lu_assert(gate);
+		lu_assert(gate->brain);
+
+		Mem mem = gate->brain->mem_perm;
+
+		lu_assert(mem);
+
 		Find_Wave self 		= (Find_Wave) mem_alloc(mem, sizeof(struct find_wave));
 
 		
-
 		return self;
 	}
 

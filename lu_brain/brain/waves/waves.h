@@ -32,7 +32,7 @@
 
 	struct save_wave_create_opts
 	{
-		lu_size 			block_neus_size;
+		lu_size 			max_story_size_in_blocks;
 	};
 
 	static void save_wave_create_opts_init(Save_Wave_Create_Opts);
@@ -52,8 +52,6 @@
 	struct save_resp {
 
 	};
-
-	static Save_Wave save_wave_create(Mem, Save_Wave_Create_Opts);
 
 	static void save_wave_init(Save_Wave, Story, Save_Opts);
 
@@ -82,8 +80,6 @@
 	struct find_resp {
 
 	};
-
-	static Find_Wave find_wave_create(Mem, Find_Wave_Create_Opts);
 
 	static void find_wave_init(Find_Wave, Story, Find_Opts);
 
@@ -117,9 +113,6 @@ lu_p_void perc_cont_create(Rec rec, lu_p_void prev, lu_p_void curr, lu_p_void ne
 	struct restore_resp {
 
 	};
-
-
-	static Restore_Wave restore_wave_create(Mem, Restore_Wave_Create_Opts);
 
 	static void restore_wave_init(Restore_Wave, Brain, Restore_Opts);
 

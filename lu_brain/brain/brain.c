@@ -59,7 +59,7 @@
 		arr_each_1p(opts->rec_opts, brain_for_each_rec_opts_create_rec, self);
 
 		// Gate 
-		self->gate 		= gate_create(mem_perm, &opts->gate_opts);
+		self->gate 		= gate_create(self, &opts->gate_opts);
 
 		return self;
 	}

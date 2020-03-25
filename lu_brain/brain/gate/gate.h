@@ -25,12 +25,14 @@
 	static void gate_opts_init(Gate_Opts self);
 
 	struct gate {
+		Brain  brain;
+
 		Arr save_waves;
 		Arr find_waves;
 		Arr restore_waves;
 	};
 
-	static Gate gate_create(Mem, Gate_Opts);
+	static Gate gate_create(Brain, Gate_Opts);
 
 	static Save_Wave gate_save_wave_wait(Gate self);
 	static Find_Wave gate_find_wave_wait(Gate self);

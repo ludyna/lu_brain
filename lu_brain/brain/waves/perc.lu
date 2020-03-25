@@ -9,6 +9,8 @@ lu_p_void perc_cont_create(Rec rec, lu_p_void prev, lu_p_void curr, lu_p_void ne
 
 	Mem mem = rec->brain->mem_perm;
 	
+	// mem_alloc
+
 
 	return NULL;
 }

@@ -23,26 +23,33 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Gate
 
-	static Gate gate_create(Mem mem, Gate_Opts opts)
+	static Gate gate_create(Brain brain, Gate_Opts opts)
 	{
 		lu_assert(opts->save_waves_size > 0);
 		lu_assert(opts->find_waves_size > 0);
 		lu_assert(opts->restore_waves_size > 0);
+		lu_assert(brain);
+
+		Mem mem = brain->mem_perm;
+
+		lu_assert(mem);
 
 		Gate self 			= (Gate) mem_alloc(mem, sizeof(struct gate));
 		lu_size i; 
 
+		self->brain 		= brain;
+
 		self->save_waves 	= arr_create(mem, opts->save_waves_size);
 		for(i = 0; i < opts->save_waves_size; i++)
-			arr_set(self->save_waves, i, save_wave_create(mem, &opts->save_wave_create_opts));
+			arr_set(self->save_waves, i, save_wave_create(self, &opts->save_wave_create_opts));
 
 		self->find_waves 	= arr_create(mem, opts->find_waves_size);
 		for(i = 0; i < opts->find_waves_size; i++)
-			arr_set(self->find_waves, i, find_wave_create(mem, &opts->find_wave_create_opts)); 
+			arr_set(self->find_waves, i, find_wave_create(self, &opts->find_wave_create_opts)); 
 
 		self->restore_waves = arr_create(mem, opts->restore_waves_size);
 		for(i = 0; i < opts->restore_waves_size; i++)
-			arr_set(self->restore_waves, i, restore_wave_create(mem, &opts->restore_wave_create_opts)); 
+			arr_set(self->restore_waves, i, restore_wave_create(self, &opts->restore_wave_create_opts)); 
 
 		return self;
 	}

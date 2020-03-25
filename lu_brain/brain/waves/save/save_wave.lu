@@ -7,7 +7,7 @@
 
 	static void save_wave_create_opts_init(Save_Wave_Create_Opts self)
 	{
-		self->block_neus_size = 256;
+		self->max_story_size_in_blocks = 256;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -21,13 +21,17 @@
 		self->story = story;
 	}
 
-	static Save_Wave save_wave_create(Mem mem, Save_Wave_Create_Opts opts)
+	static Save_Wave save_wave_create(Gate gate, Save_Wave_Create_Opts opts)
 	{
-		lu_assert(opts->block_neus_size > 0);
+		lu_assert(opts->max_story_size_in_blocks > 0);
+		lu_assert(gate && gate->brain && gate->brain->mem_perm);
+
+		Brain brain 	= gate->brain;
+		Mem mem 		= brain->mem_perm;
 
 		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
-		
+		self->percs 		= arr2_create(mem, arr_count(brain->recs), opts->max_story_size_in_blocks);
 	
 		return self;
 	}
