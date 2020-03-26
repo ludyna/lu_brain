@@ -58,6 +58,10 @@
 		arr2_set(self->data, rec->id, self->data_y, (lu_p_void) data);
 	}
 
+ 	static void cont_perc_calc(lu_p_value cont_perc, lu_p_value prev, lu_p_value curr, lu_p_value next)
+ 	{
+
+ 	}
 
 	mv_alg Wave lu_story_save_async(Story self, Save_Opts opts)
 	{
@@ -87,12 +91,16 @@
 		lu_p_value next;
 		Rec rec; 
 		Arr2 data = self->data;
+		lu_p_value curr_cont;
+
+		lu_size rec_width, rec_height;
 
 		for(yi = 0; yi < arr2_height(data); yi++)
 		{
 			for(xi = 0; xi < arr2_width(data); xi++)
 			{
-				rec = lu_brain_rec_get(brain, xi);
+				rec 		= lu_brain_rec_get(brain, xi);
+				curr_cont 	= arr2_get(wave->cont_percs, xi, yi);
 
 				if (yi - 1 < 0)
 					prev = NULL;
@@ -111,7 +119,9 @@
 				// Mozhna rahuvaty vykorystovuyuchy nearal net, ale 
 				// ne oboviazkovo.
 
-				
+				memset(curr_cont, 0, rec->width * rec->height * sizeof(lu_value));
+
+				cont_perc_calc(curr_cont, prev, curr, next);
 			} 
 		}
 
