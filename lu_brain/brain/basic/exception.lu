@@ -30,7 +30,7 @@ void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, con
 
 void* lu_user_debug_internal(const char* func, const char* file, int line, const char* fmt)
 {
-	fprintf(stderr, "\nError while calling %s(): <%s:%d> %s", func, file, line, fmt);
+	fprintf(stderr, "\nError in %s(): <%s:%d> %s", func, file, line, fmt);
     return NULL;
 }
 

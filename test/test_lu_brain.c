@@ -31,7 +31,7 @@ lu_value			data_6[] 		= { 6, 0, 1, 1 };
 
 void setUp(void)
 { 
-	brain_opts 			= lu_brain_opts_create(1, 2048);
+	brain_opts 			= lu_brain_opts_create(1, 200048);
 	rec_opts_1 			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0, 10, .2);
 	rec_opts_2			= lu_rec_opts_create(brain_opts, 2, 2, 0.0, 10.0, 10, .2);
 

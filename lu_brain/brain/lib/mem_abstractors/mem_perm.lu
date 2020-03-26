@@ -13,19 +13,21 @@
 	{
 		Mem_Perm self = (Mem_Perm) mem;
 
-		//lu_debug("\n TRYING TO ALLOC: %d, POS: %p", size_in_bytes, self->buff_pos + size_in_bytes);
-
-		char msg[256];
-		sprintf(
-			msg, 
-			"mem_perm %ld bytes alloc failed. Used %ld from %ld bytes.", 
-			size_in_bytes,
-			self->buff_pos - self->buff_start, 
-			self->size_in_bytes
-		);
 
 		if (self->buff_pos + size_in_bytes > self->buff_end)
+		{
+			char msg[256];
+			sprintf(
+				msg, 
+				"MEM_PERM alloc %ld bytes failed. Used %ld from %ld bytes.", 
+				size_in_bytes,
+				self->buff_pos - self->buff_start, 
+				self->size_in_bytes
+			);
+
 			lu_user_debug_internal(func, file, line, msg);
+			return NULL;
+		}
 
 		lu_p_byte tmp 	= self->buff_pos;
 		self->buff_pos 	+= size_in_bytes;
