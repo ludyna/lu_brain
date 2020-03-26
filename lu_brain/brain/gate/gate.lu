@@ -72,8 +72,6 @@
 			arr_set(self->restore_waves, i, restore_wave); 
 		}
 		return self;
-
-		return NULL;
 	}
 
  	static Save_Wave gate_save_wave_wait(Gate self)

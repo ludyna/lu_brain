@@ -9,31 +9,41 @@
 	// All allocations should be at the beginning of app existance executed 
 	// in single thread. No multi-threading support is needed.
 	//
-	lu_p_byte mem_perm_alloc_internal(Mem mem, lu_size size_in_bytes, const char* file, int line)
+	lu_p_byte mem_perm_alloc_internal(Mem mem, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		Mem_Perm self = (Mem_Perm) mem;
 
-		lu_debug("\n TRYING TO ALLOC: %d, POS: %p", size_in_bytes, self->buff_pos + size_in_bytes);
+		//lu_debug("\n TRYING TO ALLOC: %d, POS: %p", size_in_bytes, self->buff_pos + size_in_bytes);
 
-		lu_user_assert(self->buff_pos + size_in_bytes <= self->buff_end, "Out of preallocated memory."); 
+		char msg[256];
+		sprintf(
+			msg, 
+			"mem_perm %ld bytes alloc failed. Used %ld from %ld bytes.", 
+			size_in_bytes,
+			self->buff_pos - self->buff_start, 
+			self->size_in_bytes
+		);
+
+		if (self->buff_pos + size_in_bytes > self->buff_end)
+			lu_user_debug_internal(func, file, line, msg);
 
 		lu_p_byte tmp 	= self->buff_pos;
 		self->buff_pos 	+= size_in_bytes;
 		return tmp;
 	} 
 
-	lu_p_byte mem_perm_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
+	lu_p_byte mem_perm_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		lu_debug_message("NOT IMPLEMENTED");
 		return NULL;
 	}
 
-	void mem_perm_free_internal(Mem self, lu_p_byte p, const char* file, int line)
+	void mem_perm_free_internal(Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	void mem_perm_destroy_internal(Mem self, Mem parent_mem, const char* file, int line)
+	void mem_perm_destroy_internal(Mem self, Mem parent_mem, const char* func, const char* file, int line)
 	{
 		mem_free(parent_mem, (lu_p_byte) self);
 	}
@@ -44,6 +54,7 @@
 		lu_size 	table_size_in_records, 
 		lu_value 	percent,
 		lu_flags 	flags,
+		const char* func, 
 		const char* file,
 		int 		line
 	)
@@ -54,6 +65,7 @@
 			table_size_in_records,
 			percent,
 			flags,
+			func,
 			file,
 			line
 		); 
@@ -76,6 +88,7 @@
 		self->buff_start 			= (lu_p_byte) buff_start;
 		self->buff_end				= self->buff_start + size_in_bytes;
 		self->buff_pos 				= self->buff_start + sizeof(struct mem_perm);
+		self->size_in_bytes 		= size_in_bytes;
 
 		if (mem_perm_is_out_of_mem(self))
 		{
@@ -94,6 +107,7 @@
 		Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
+		const char* func, 
 		const char* file, 
 		int line
 	)
@@ -102,11 +116,12 @@
 	}
 
 	Mem_Table_Perm mem_table_perm_create(
-		Mem_Perm 	mem_perm, 
+		Mem_Perm 			mem_perm, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,
 		lu_flags 			flags,
+		const char* 		func, 
 		const char* 		file,
 		int 				line
 	)

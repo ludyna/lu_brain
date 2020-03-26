@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem (default)
 
-	lu_p_byte mem_alloc_default(Mem self, lu_size size, const char* file, int line)
+	lu_p_byte mem_alloc_default(Mem self, lu_size size, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
@@ -14,21 +14,21 @@
 		return (lu_p_byte) calloc(1, size);
 	}
 
-	lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* file, int line)
+	lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		return (lu_p_byte) realloc(p, size_in_bytes);
 	}
 
-	void mem_free_default(Mem self, lu_p_byte p, const char* file, int line)
+	void mem_free_default(Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		free((lu_p_void) p);
 	}
 
-	void mem_destroy_default(Mem self, Mem parent_mem, const char* file, int line)
+	void mem_destroy_default(Mem self, Mem parent_mem, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
@@ -41,6 +41,7 @@
 		lu_size 	table_size_in_records, 
 		lu_value 	percent,
 		lu_flags 	flags,
+		const char* func, 
 		const char* file,
 		int line
 	);
@@ -86,6 +87,7 @@
 		Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
+		const char* func, 
 		const char* file, 
 		int line
 	)
@@ -93,12 +95,12 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	void mem_table_destroy_default(Mem_Table self, Mem mem, const char* file, int line)
+	void mem_table_destroy_default(Mem_Table self, Mem mem, const char* func, const char* file, int line)
 	{
 		mem_free(mem, (lu_p_byte) self);
 	}
 	
-	lu_p_byte mem_table_record_alloc_default(Mem_Table self, const char* file, int line)
+	lu_p_byte mem_table_record_alloc_default(Mem_Table self, const char* func, const char* file, int line)
 	{
 		lu_p_byte res;
 		if (self->records_pos < self->records_end)
@@ -119,7 +121,7 @@
 		return res;
 	}
 
-	void mem_table_record_free_default(Mem_Table self, lu_p_byte record, const char* file, int line)
+	void mem_table_record_free_default(Mem_Table self, lu_p_byte record, const char* func, const char* file, int line)
 	{
 		if (record == NULL) return;  // should prob debug this
 
@@ -139,6 +141,7 @@
 		lu_size 	table_size_in_records, 
 		lu_value 	percent,
 		lu_flags 	flags,
+		const char* func, 
 		const char* file,
 		int line
 	)
