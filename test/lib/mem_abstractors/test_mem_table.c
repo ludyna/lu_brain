@@ -78,7 +78,10 @@ void test_mem_table1(void)
     TEST_ASSERT(mt->free_count == 0);
     TEST_ASSERT(mt->records_count == 3);
 
+    lu_user_assert_off();
     Test1 l4 = (Test1) mem_record_alloc(mt);
+    lu_user_assert_on();
+    
     TEST_ASSERT(l4 == NULL);
 
     mem_record_free(mt, (lu_p_byte) l4);

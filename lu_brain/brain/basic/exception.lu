@@ -30,6 +30,8 @@ void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, con
 
 void* lu_user_debug_internal(const char* func, const char* file, int line, const char* fmt)
 {
+	if (!g_user_assert) return NULL;
+
 	fprintf(stderr, "\nError in %s(): <%s:%d> %s", func, file, line, fmt);
     return NULL;
 }
