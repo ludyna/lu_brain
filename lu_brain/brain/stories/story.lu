@@ -119,9 +119,9 @@
 				// Mozhna rahuvaty vykorystovuyuchy nearal net, ale 
 				// ne oboviazkovo.
 
-				memset(curr_cont, 0, rec->width * rec->height * sizeof(lu_value));
+				//memset(curr_cont, 0, rec->width * rec->height * sizeof(lu_value));
 
-				cont_perc_calc(curr_cont, prev, curr, next);
+				//cont_perc_calc(curr_cont, prev, curr, next);
 			} 
 		}
 

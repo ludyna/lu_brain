@@ -46,6 +46,10 @@
 		struct save_opts 	save_opts;
 		Story 				story;
 
+
+		Arr2 				percs;
+		
+
 		Arr2				cont_percs;
 		Arr					cont_perc_ends;  // shob peredavaty kinci z odniyeyi story save v inshu
 											 // max_story_size_in_blocks mozhe buty navit 1 pry takomu
