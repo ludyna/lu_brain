@@ -12,6 +12,7 @@
 		// Initialize
 		self->brain 		= brain;
 
+		self->channel_size	= opts->channel_size;
 		self->width 		= opts->width;
 		self->height 		= opts->height;
 		self->min_value		= opts->min_value;

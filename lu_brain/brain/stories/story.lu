@@ -43,7 +43,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void lu_story_push(Story self, Rec rec, lu_value* data)
+	void lu_story_push(Story self, Rec rec, lu_size channel_index, lu_value* data)
 	{
 		lu_user_assert_void(self, "Story should not be NULL"); 
 		lu_user_assert_void(rec, "Rec should not be NULL"); 

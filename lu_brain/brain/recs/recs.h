@@ -5,6 +5,7 @@
 	struct rec_opts {
 		Brain_Opts  	brain_opts;
 
+		lu_size 		channel_size;
 		lu_size 		width;
 		lu_size 		height;
 		lu_value 		min_value;
@@ -17,6 +18,7 @@
 		Brain 			brain;
 		lu_size 		id;
 
+		lu_size 		channel_size;
 		lu_size 		width;
 		lu_size 		height;
 		lu_value 		min_value;

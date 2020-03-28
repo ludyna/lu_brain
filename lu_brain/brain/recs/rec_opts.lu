@@ -7,6 +7,7 @@
 
 	Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts 	brain_opts, 
+		lu_size 		channel_size,
 		lu_size 		width, 
 		lu_size 		height, 
 		lu_value 		min_value, 
@@ -19,6 +20,7 @@
 
 		// Initialize
 		self->brain_opts 	= brain_opts;
+		self->channel_size 	= channel_size;
 		self->width 		= width;
 		self->height		= height;
 		self->min_value 	= min_value;
