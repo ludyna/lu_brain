@@ -21,10 +21,15 @@
 		self->data 		= arr2_create(g_mem_temp, w, h);
 
 		lu_size x, y;
+		Rec rec;
+		Arr channels;
 		for(y = 0; y < h; y++)
 			for(x = 0; x < w; x++)
 			{
-				arr2_set(self->data, x, y, NULL);
+				rec = lu_brain_rec_get(brain, x);
+				channels = arr_create(brain->mem_perm, rec->channel_size);
+
+				arr2_set(self->data, x, y, channels);
 			}
 
 		self->data_y 	= 0;
@@ -45,18 +50,27 @@
 
 	void lu_story_push(Story self, Rec rec, lu_size channel_index, lu_value* data)
 	{
-		lu_user_assert_void(self, "Story should not be NULL"); 
-		lu_user_assert_void(rec, "Rec should not be NULL"); 
-		lu_user_assert_void(data, "Data should not be NULL");
+		lu_user_assert_void(self, "story should not be NULL"); 
+		lu_user_assert_void(rec, "rec should not be NULL"); 
+		lu_user_assert_void(data, "data should not be NULL");
+		lu_user_assert_void(channel_index < rec->channel_size, "channel_index is out of range");
+
+		Arr channels = (Arr)arr2_get(self->data, rec->id, self->data_y);
 
 		// new inpute to the same rec advances story
-		if (arr2_get(self->data, rec->id, self->data_y) != NULL) ++self->data_y;
+		if (arr_get(channels, channel_index) != NULL) 
+		{
+			++self->data_y;
+			channels = (Arr)arr2_get(self->data, rec->id, self->data_y);
+		}
  
- 		if (self->data_y >= arr2_height(self->data)) 
- 			{ lu_user_debug("Out of available blocks in story."); return; }
+ 		lu_user_assert_void(
+ 			self->data_y < arr2_height(self->data), 
+ 			"Out of available blocks in story."
+ 		); 
 
-		arr2_set(self->data, rec->id, self->data_y, (lu_p_void) data);
-	}
+ 		arr_set(channels, channel_index, (lu_p_void) data);
+	} 
 
  	static void cont_perc_calc(lu_p_value cont_perc, lu_p_value prev, lu_p_value curr, lu_p_value next)
  	{

@@ -16,6 +16,12 @@
 		lu_value 		val_ssp
 	)
 	{
+		lu_user_assert(channel_size > 0, "Channel size should be at least 1.");
+		lu_user_assert(width > 0, "Width should be greater than 0");
+		lu_user_assert(height > 0, "Height should be greater than 0");
+		lu_user_assert(max_value - min_value > 0, "max_value minus min_value should greater than 0");
+		lu_user_assert(val_neu_size > 0, "val_neu_size should be greater than 0");
+
 		Rec_Opts self = (Rec_Opts) mem_temp_alloc(sizeof(struct rec_opts));
 
 		// Initialize

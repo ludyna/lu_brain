@@ -68,11 +68,11 @@ void test_lu_story(void)
 	Lu_Story story = lu_story_create(brain, 0); 
 
  		TEST_ASSERT(story->data_y == 0);
- 		TEST_ASSERT(arr2_get(story->data, 0, 0) == NULL);
+ 		TEST_ASSERT(story_data_get(story, 0, 0, 0) == NULL);
 		
 	lu_story_push(story, rec_1, 0, data_0);
 
-		d = (lu_p_value) arr2_get(story->data, rec_1->id, story->data_y);
+		d = story_data_get(story, rec_1->id, story->data_y, 0);
 		TEST_ASSERT(d[0] == 0);
 		TEST_ASSERT(story->data_y == 0);
 
@@ -80,9 +80,9 @@ void test_lu_story(void)
 	lu_story_push(story, rec_2, 0, data_2);
 
 		TEST_ASSERT(story->data_y == 1);
-		d = (lu_p_value) arr2_get(story->data, rec_1->id, story->data_y);
+		d = story_data_get(story, rec_1->id, story->data_y, 0);
 		TEST_ASSERT(d[0] == 1);
-		d = (lu_p_value) arr2_get(story->data, rec_2->id, story->data_y);
+		d = story_data_get(story, rec_2->id, story->data_y, 0);
 		TEST_ASSERT(d[0] == 2);
 
 
@@ -93,7 +93,7 @@ void test_lu_story(void)
 	lu_story_push(story, rec_1, 0, data_2);
 	lu_story_push(story, rec_2, 0, data_3);
 		
-		d = (lu_p_value) arr2_get(story->data, rec_2->id, story->data_y);
+		d = story_data_get(story, rec_2->id, story->data_y, 0);
 		TEST_ASSERT(d[0] == 3);
 
 	lu_block_end(story);
