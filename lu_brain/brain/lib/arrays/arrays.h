@@ -45,26 +45,47 @@
 
 	void arr_each_with_index_1p(Arr self, void (*block)(Arr self, lu_p_void item, lu_size index, lu_p_void p1), lu_p_void p1);
 
-	static inline lu_p_void arr_get(Arr self, lu_size index)
-	{
-		if (index >= self->count)
-		{
-			return NULL;
-		}
 
+	static inline lu_p_void arr_get_internal(Arr self, lu_size index)
+	{
 		return self->items[index];
 	}
 
-	static inline void arr_set(Arr self, lu_size index, lu_p_void value)
+	static inline void arr_set_internal(Arr self, lu_size index, lu_p_void value)
 	{
-		if (index >= self->size)
-			return;
-
 		if (index >= self->count)
 			self->count = index + 1;
 
 		self->items[index] = value;
 	}
+
+	static inline lu_p_void arr_get_internal_debug(Arr self, lu_size index, const char* func, const char* file, int line)
+	{
+		if (g_user_assert && index >= self->size)
+			lu_user_debug_args_internal(func, file, line, "arr_get: Out of range(index=%lu, size=%lu)", index, self->size);
+		
+		return arr_get_internal(self, index);
+	}
+
+	static inline void arr_set_internal_debug(Arr self, lu_size index, lu_p_void value, const char* func, const char* file, int line)
+	{
+		if (g_user_assert && index >= self->size)
+			lu_user_debug_args_internal(func, file, line, "arr_set: Out of range(index=%lu, size=%lu)", index, self->size);
+
+		arr_set_internal(self, index, value);
+	}
+
+	#ifdef LU_DEBUG
+
+	#define arr_get(self, index) arr_get_internal_debug(self, index, __func__, __FILE__, __LINE__)
+	#define arr_set(self, index, value) arr_set_internal_debug(self, index, value, __func__, __FILE__, __LINE__);
+
+	#else
+
+	#define arr_get(self, index) arr_get_internal(self, index)
+	#define arr_set(self, index, value) arr_set_internal(self, index, value);
+
+	#endif
 
 	void arr_nullify(Arr);
 
@@ -123,17 +144,42 @@
 		arr_each_2p(self->items, block, p1, p2);
 	}
 
-	static inline lu_p_void arr2_get(Arr2 self, lu_size x, lu_size y)
+	static inline lu_p_void arr2_get_internal(Arr2 self, lu_size x, lu_size y)
 	{
 		return arr_get(self->items, (y * self->width) + x);
 	}
 
-	static inline void arr2_set(Arr2 self, lu_size x, lu_size y, lu_p_void value)
+	static inline void arr2_set_internal(Arr2 self, lu_size x, lu_size y, lu_p_void value)
 	{
 		lu_size index = (y * self->width) + x;
 
 		arr_set(self->items, (y * self->width) + x, value);
 	}
+
+	static inline lu_p_void arr2_get_internal_debug(Arr2 self, lu_size x, lu_size y, const char* func, const char* file, int line)
+	{
+		// lu_user_debug_args_internal(func, file, line, "arr2_get_internal_debug: (x=%lu, y=%lu, index=%lu)", x, y, (y * self->width) + x);
+		return arr_get_internal_debug(self->items, (y * self->width) + x, func, file, line);
+	}
+
+	static inline void arr2_set_internal_debug(Arr2 self, lu_size x, lu_size y, lu_p_void value, const char* func, const char* file, int line)
+	{
+		lu_size index = (y * self->width) + x;
+
+		arr_set_internal_debug(self->items, (y * self->width) + x, value, func, file, line);
+	}
+
+	#ifdef LU_DEBUG
+
+	#define arr2_get(self, x, y) arr2_get_internal_debug(self, x, y, __func__, __FILE__, __LINE__)
+	#define arr2_set(self, x, y, v) arr2_set_internal_debug(self, x, y, v, __func__, __FILE__, __LINE__)
+
+	#else
+
+	#define arr2_get(self, x, y) arr2_get_internal(self, x, y)
+	#define arr2_set(self, x, y, v) arr2_set_internal(self, x, y, v)
+
+	#endif
 
 	static inline void arr2_realloc(Arr2 self, lu_size w, lu_size h, Mem mem)  
 	{ 

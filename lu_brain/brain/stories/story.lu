@@ -19,6 +19,7 @@
 		lu_size w 		= arr_count(self->brain->recs);
 		lu_size h 		= story_size_in_blocks == 0 ? STORY_INITIAL_BLOCKS_SIZE : story_size_in_blocks;
 		self->data 		= arr2_create(g_mem_temp, w, h);
+		self->data_y 	= 0;
 
 		lu_size x, y;
 		Rec rec;
@@ -31,8 +32,6 @@
 
 				arr2_set(self->data, x, y, channels);
 			}
-
-		self->data_y 	= 0;
 
 		return self;
 	}
@@ -57,7 +56,7 @@
 
 		Arr channels = (Arr)arr2_get(self->data, rec->id, self->data_y);
 
-		// new inpute to the same rec advances story
+		// new input to the same rec and channel advances story
 		if (arr_get(channels, channel_index) != NULL) 
 		{
 			++self->data_y;
@@ -116,7 +115,7 @@
 				rec 		= lu_brain_rec_get(brain, xi);
 				curr_cont 	= arr2_get(wave->cont_percs, xi, yi);
 
-				if (yi - 1 < 0)
+				if (yi == 0)
 					prev = NULL;
 				else 
 					prev = (lu_p_value) arr2_get(data, xi, yi - 1);

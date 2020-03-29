@@ -32,7 +32,7 @@ void* lu_user_debug_internal(const char* func, const char* file, int line, const
 {
 	if (!g_user_assert) return NULL;
 
-	fprintf(stderr, "\nError in %s(): <%s:%d> %s", func, file, line, fmt);
+	fprintf(stderr, "\n%s(): <%s:%d> %s", func, file, line, fmt);
     return NULL;
 }
 
@@ -45,7 +45,7 @@ void* lu_user_debug_args_internal	(const char* func, const char* file, int line,
 
     char final_fmt[512];
 
-    sprintf(final_fmt, "\nError while calling %s(): <%s:%d> %s", func, file, line, fmt);
+    sprintf(final_fmt, "\n%s(): <%s:%d> %s", func, file, line, fmt);
 
     vfprintf(stderr, final_fmt, ap);
     va_end(ap);
