@@ -16,17 +16,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-// void save_wave_init(SaveWave self, lu_time t)
-// {
-// 	self->top 	= NULL;
-// 	self->t 	= t;
-// }
 
-// SaveWave save_wave_create()
+// SaveWave save_wave_create(Brain brain)
 // {
 // 	SaveWave self = (SaveWave) malloc(sizeof(struct save_wave));
 
-// 	save_wave_init(self, 0);
+// 	lu_user_assert(self, "Unable allocate Save_Wave");
+
+// 	self->recs_data = arr_create(
 
 // 	return self;
 // }

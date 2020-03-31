@@ -31,23 +31,39 @@
 
 		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
-		self->cont_percs 	= arr2_create(mem, arr_count(brain->recs), opts->max_story_size_in_blocks);
-		
-		lu_size xi, yi;
-		lu_size width = arr2_width(self->cont_percs);
-		lu_size height = arr2_height(self->cont_percs);
-		Rec rec;
-		lu_p_value block;
-		for(xi = 0; xi < width; xi++)
-		{
-			rec = (Rec) arr_get(brain->recs, xi);
-			for(yi = 0; yi < height; yi++)
-			{
-				block =(lu_p_value) mem_alloc(mem, rec->width * rec->height * sizeof(lu_value));
-				arr2_set(self->cont_percs, xi, yi, block);
-			}
-		}
+		lu_user_assert(self, "Unable to allocate Save_Wave");
 
+		self->recs_data = arr_create(mem, arr_count(brain->recs));
+
+		lu_user_assert(self->recs_data, "Unable to allocate memory for recs_data");
+
+		lu_size i, j;
+		Rec rec;
+		Arr channels;
+		lu_p_value block;
+		for(i = 0; i < arr_count(self->recs_data); i++)
+		{
+			rec = (Rec) arr_get(brain->recs, i);
+
+			channels = arr_create(mem, rec->channel_size);
+			lu_user_assert(channels, "Unable to allocate memory for channels");
+
+			for(j = 0; j < arr_count(channels); j++)
+			{
+				lu_p_value block = (lu_p_value) mem_alloc(
+					mem, 
+					// here max_story_size_in_blocks + 1 because block[0] item is used to save 
+					// info z poperednioyi istoriyi. Potochna istoriya pochynayetsia z block[1]
+					sizeof(lu_value) * rec->width * rec->height * opts->max_story_size_in_blocks + 1
+				);
+
+				lu_user_assert(block, "Unable to allocate memory for channel");
+
+				arr_set(channels, j, block);
+			}
+
+			arr_set(self->recs_data, i, channels);
+		}
 	
 		return self;
 	}

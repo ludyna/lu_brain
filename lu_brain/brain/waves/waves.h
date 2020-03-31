@@ -46,14 +46,16 @@
 		struct save_opts 	save_opts;
 		Story 				story;
 
+		// u vypadku z percepshynamy (na vidminu vid story) my musymo stvoryty
+		// povnistu array of data, tomu sho save_wave reusable i my ne znayemo napered 
+		// de data bude
+		// arr: 	recs i
+		// arr:  	channels j
+		// odyn velyky masyv: 	width: perc_count * rec_width 
+		// 						height: block_count * rec_height
+		// nu abo po masyvu dlia perc, dlia prostoty
 
-		Arr2 				percs;
-		
-
-		Arr2				cont_percs;
-		Arr					cont_perc_ends;  // shob peredavaty kinci z odniyeyi story save v inshu
-											 // max_story_size_in_blocks mozhe buty navit 1 pry takomu
-											 // pidhodi
+		Arr 	recs_data;
 	};
 
 	struct save_resp {
