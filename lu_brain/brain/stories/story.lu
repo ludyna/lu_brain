@@ -92,16 +92,19 @@
 
 		Gate gate = brain_gate(self->brain);
 
+		// my reset wave v gate_save_wave_wait
 		Save_Wave wave = gate_save_wave_wait(gate);
 
 		save_wave_init(wave, self, opts);
 
-		// Stvoryty percepciyi
+		// Dlia choho stvoruvaty percepciyi chy she shos koly vse mozhna 
+		// rahuvaty dynamichno? My dynamichno mozhemo rahuvaty contrasty
+		// abo kolir
 
 		lu_size xi, yi, x, y;
-		lu_p_value prev;
-		lu_p_value curr;
-		lu_p_value next;
+		Arr prev;
+		Arr curr;
+		Arr next;
 		Rec rec; 
 		Arr2 data = self->data;
 
@@ -116,23 +119,21 @@
 				if (yi == 0)
 					prev = NULL;
 				else 
-					prev = (lu_p_value) arr2_get(data, xi, yi - 1);
+					prev = (Arr) arr2_get(data, xi, yi - 1);
 
-				curr = (lu_p_value) arr2_get(data, xi, yi);
+				curr = (Arr) arr2_get(data, xi, yi);
 
 				if (yi + 1 >= arr2_height(data))
 					next = NULL;
 				else
-					next = (lu_p_value) arr2_get(data, xi, yi + 1);
+					next = (Arr) arr2_get(data, xi, yi + 1);
 
 				// treba stvroruvaty v wave masyvy i tudy spochatku 
 				// rahuvaty contr. Musymo spochatku porahuvaty contrasty
 				// Mozhna rahuvaty vykorystovuyuchy nearal net, ale 
 				// ne oboviazkovo.
 
-				// memset(curr_cont, 0, rec->width * rec->height * sizeof(lu_value));
 
-				//cont_perc_calc(curr_cont, prev, curr, next);
 			} 
 		}
 

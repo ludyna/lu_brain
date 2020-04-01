@@ -48,6 +48,8 @@
 			channels = arr_create(mem, rec->channel_size);
 			lu_user_assert(channels, "Unable to allocate memory for channels");
 
+			// data dlia channels my stvoruyemo, ale ne dlia percepciy, 
+			// bo percepciyi (contury) my mozhemo rahuvaty dynamichno z channel
 			for(j = 0; j < arr_size(channels); j++)
 				arr_set(channels, j, channel_data_create(mem, rec, opts->max_story_size_in_blocks));
 			

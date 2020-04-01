@@ -137,6 +137,11 @@ void test_lu_brain_basics(void)
 
 	Lu_Save_Resp save_response = lu_story_save(story, save_opts); 
 
+		// Because we called save (or find or restore) - it automatically 
+		// reset number of available blocks inside story. If available block count 
+		// was 13 before save (we filled 3 blocks above), after save avalable 
+		// block count will be again 16 (this number is configurable)
+
 		lu_block_begin(story);
 		lu_story_push(story, rec_1, 0, data_4);
 		lu_story_push(story, rec_2, 0, data_5);
@@ -150,8 +155,8 @@ void test_lu_brain_basics(void)
 		// Does not destroy created related neurons.
 		lu_story_destroy(story);  
 
-		/////////////////////////////////////////////////////////
-		// Find
+	/////////////////////////////////////////////////////////
+	// Find
 
 	story = lu_story_create(brain, 0);
 
