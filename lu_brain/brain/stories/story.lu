@@ -101,10 +101,21 @@
 		// rahuvaty dynamichno? My dynamichno mozhemo rahuvaty contrasty
 		// abo kolir
 
-		lu_size xi, yi, x, y;
-		Arr prev;
-		Arr curr;
-		Arr next;
+		// data x = recs, y - blocks 
+		// [x,y] - channels
+		// channel[i] = channel data
+
+		lu_size xi, yi;
+		lu_size i;
+		
+		Arr prev_ch;
+		Arr curr_ch;
+		Arr next_ch;
+		
+		lu_p_value prev_d;
+		lu_p_value curr_d;
+		lu_p_value next_d;
+
 		Rec rec; 
 		Arr2 data = self->data;
 
@@ -117,22 +128,25 @@
 				rec 		= lu_brain_rec_get(brain, xi);
 
 				if (yi == 0)
-					prev = NULL;
+					prev_ch = NULL;
 				else 
-					prev = (Arr) arr2_get(data, xi, yi - 1);
+					prev_ch = (Arr) arr2_get(data, xi, yi - 1);
 
-				curr = (Arr) arr2_get(data, xi, yi);
+				curr_ch = (Arr) arr2_get(data, xi, yi);
 
 				if (yi + 1 >= arr2_height(data))
-					next = NULL;
+					next_ch = NULL;
 				else
-					next = (Arr) arr2_get(data, xi, yi + 1);
+					next_ch = (Arr) arr2_get(data, xi, yi + 1);
 
-				// treba stvroruvaty v wave masyvy i tudy spochatku 
-				// rahuvaty contr. Musymo spochatku porahuvaty contrasty
-				// Mozhna rahuvaty vykorystovuyuchy nearal net, ale 
-				// ne oboviazkovo.
+				for(i = 0; i < rec->channel_size; i++)
+				{
+					prev_d = prev_ch ? arr_get(prev_ch, i) : NULL;
+					curr_d = curr_ch ? arr_get(curr_ch, i) : NULL;
+					next_d = next_ch ? arr_get(next_ch, i) : NULL;
 
+					
+				}
 
 			} 
 		}
