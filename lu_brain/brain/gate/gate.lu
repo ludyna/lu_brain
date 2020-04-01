@@ -77,7 +77,11 @@
  	static Save_Wave gate_save_wave_wait(Gate self)
  	{
  		// simplified atm
- 		return arr_get(self->save_waves, 0);
+ 		Save_Wave save_wave = arr_get(self->save_waves, 0);
+
+ 		save_wave_reset(save_wave);
+
+ 		return save_wave;
  	}
 
 	static Find_Wave gate_find_wave_wait(Gate self)

@@ -6,6 +6,7 @@
 // Nouns
 
 	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
+	typedef struct channel_data* 				Channel_Data;
 	typedef struct save_wave* 					Save_Wave;
 
 	typedef struct find_wave_create_opts*  		Find_Wave_Create_Opts;
@@ -41,6 +42,20 @@
 
 	};
 
+	struct channel_data {
+		lu_size width;
+		lu_size height;
+		lu_size block_count;
+		lu_p_value data;
+	};
+
+	static inline lu_size channel_data_size(Channel_Data self)
+	{
+		return sizeof(lu_value) * self->width * self->height * self->block_count;
+	}
+
+	static Channel_Data channel_data_create(Mem mem, Rec rec, lu_size block_count);
+
 	struct save_wave {
 		struct wave 		super;
 		struct save_opts 	save_opts;
@@ -55,7 +70,7 @@
 		// 						height: block_count * rec_height
 		// nu abo po masyvu dlia perc, dlia prostoty
 
-		Arr 	recs_data;
+		Arr 				recs_data;
 	};
 
 	struct save_resp {

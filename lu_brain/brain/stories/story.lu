@@ -98,45 +98,43 @@
 
 		// Stvoryty percepciyi
 
-		// lu_size xi, yi, x, y;
-		// lu_p_value prev;
-		// lu_p_value curr;
-		// lu_p_value next;
-		// Rec rec; 
-		// Arr2 data = self->data;
-		// lu_p_value curr_cont;
+		lu_size xi, yi, x, y;
+		lu_p_value prev;
+		lu_p_value curr;
+		lu_p_value next;
+		Rec rec; 
+		Arr2 data = self->data;
 
-		// lu_size rec_width, rec_height;
+		lu_size rec_width, rec_height;
 
-		// for(yi = 0; yi < arr2_height(data); yi++)
-		// {
-		// 	for(xi = 0; xi < arr2_width(data); xi++)
-		// 	{
-		// 		rec 		= lu_brain_rec_get(brain, xi);
-		// 		curr_cont 	= arr2_get(wave->cont_percs, xi, yi);
+		for(yi = 0; yi < arr2_height(data); yi++)
+		{
+			for(xi = 0; xi < arr2_width(data); xi++)
+			{
+				rec 		= lu_brain_rec_get(brain, xi);
 
-		// 		if (yi == 0)
-		// 			prev = NULL;
-		// 		else 
-		// 			prev = (lu_p_value) arr2_get(data, xi, yi - 1);
+				if (yi == 0)
+					prev = NULL;
+				else 
+					prev = (lu_p_value) arr2_get(data, xi, yi - 1);
 
-		// 		curr = (lu_p_value) arr2_get(data, xi, yi);
+				curr = (lu_p_value) arr2_get(data, xi, yi);
 
-		// 		if (yi + 1 >= arr2_height(data))
-		// 			next = NULL;
-		// 		else
-		// 			next = (lu_p_value) arr2_get(data, xi, yi + 1);
+				if (yi + 1 >= arr2_height(data))
+					next = NULL;
+				else
+					next = (lu_p_value) arr2_get(data, xi, yi + 1);
 
-		// 		// treba stvroruvaty v wave masyvy i tudy spochatku 
-		// 		// rahuvaty contr. Musymo spochatku porahuvaty contrasty
-		// 		// Mozhna rahuvaty vykorystovuyuchy nearal net, ale 
-		// 		// ne oboviazkovo.
+				// treba stvroruvaty v wave masyvy i tudy spochatku 
+				// rahuvaty contr. Musymo spochatku porahuvaty contrasty
+				// Mozhna rahuvaty vykorystovuyuchy nearal net, ale 
+				// ne oboviazkovo.
 
-		// 		// memset(curr_cont, 0, rec->width * rec->height * sizeof(lu_value));
+				// memset(curr_cont, 0, rec->width * rec->height * sizeof(lu_value));
 
-		// 		//cont_perc_calc(curr_cont, prev, curr, next);
-		// 	} 
-		// }
+				//cont_perc_calc(curr_cont, prev, curr, next);
+			} 
+		}
 
 
 		// Zbuduvaty neus dlia percepciy

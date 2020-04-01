@@ -41,31 +41,36 @@
 		Rec rec;
 		Arr channels;
 		lu_p_value block;
-		for(i = 0; i < arr_count(self->recs_data); i++)
+		for(i = 0; i < arr_size(self->recs_data); i++)
 		{
 			rec = (Rec) arr_get(brain->recs, i);
 
 			channels = arr_create(mem, rec->channel_size);
 			lu_user_assert(channels, "Unable to allocate memory for channels");
 
-			for(j = 0; j < arr_count(channels); j++)
-			{
-				lu_p_value block = (lu_p_value) mem_alloc(
-					mem, 
-					// here max_story_size_in_blocks + 1 because block[0] item is used to save 
-					// info z poperednioyi istoriyi. Potochna istoriya pochynayetsia z block[1]
-					sizeof(lu_value) * rec->width * rec->height * opts->max_story_size_in_blocks + 1
-				);
-
-				lu_user_assert(block, "Unable to allocate memory for channel");
-
-				arr_set(channels, j, block);
-			}
+			for(j = 0; j < arr_size(channels); j++)
+				arr_set(channels, j, channel_data_create(mem, rec, opts->max_story_size_in_blocks));
+			
 
 			arr_set(self->recs_data, i, channels);
 		}
 	
 		return self;
+	}
+
+	static void save_wave_reset(Save_Wave self)
+	{
+		Arr channels;
+		lu_size j;
+		lu_p_value block; 
+
+		for(lu_size i = 0; i < arr_count(self->recs_data); i++)
+		{
+			channels = arr_get(self->recs_data, i);
+
+			for(j = 0; j < arr_count(channels); j++)
+				channel_data_reset((Channel_Data) arr_get(channels, j));
+		}
 	}
 
 	static void save_wave_process(Save_Wave self)

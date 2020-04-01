@@ -1,0 +1,38 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	//
+	//	Data size 
+	//	
+
+	static Channel_Data channel_data_create(Mem mem, Rec rec, lu_size block_count)
+	{
+		lu_assert(block_count > 0);
+
+		Channel_Data self 	= (Channel_Data) mem_alloc(mem, sizeof(struct channel_data));
+
+		lu_user_assert(self, "Cannot allocate Channel_Data"); 
+
+		self->width 		= rec->width;
+		self->height 		= rec->height;
+		// here max_story_size_in_blocks + 1 because block[0] item is used to save 
+		// info z poperednioyi istoriyi. Potochna istoriya pochynayetsia z block[1]
+		self->block_count 	= block_count + 1;
+		self->data			= (lu_p_value) mem_alloc(
+			mem, 
+			channel_data_size(self)
+		);
+
+		lu_user_assert(self->data, "Unable to allocate memory for channel");
+
+		return self;
+	}
+
+	static void channel_data_reset(Channel_Data self)
+	{
+		memset(self->data, 0, channel_data_size(self));
+	}
