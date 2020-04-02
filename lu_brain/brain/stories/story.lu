@@ -19,7 +19,6 @@
 		lu_size w 		= arr_count(self->brain->recs);
 		lu_size h 		= story_size_in_blocks == 0 ? STORY_INITIAL_BLOCKS_SIZE : story_size_in_blocks;
 		self->data 		= arr2_create(g_mem_temp, w, h);
-		self->data_y 	= 0;
 
 		lu_size x, y;
 		Rec rec;
@@ -32,6 +31,9 @@
 
 				arr2_set(self->data, x, y, channels);
 			}
+
+
+		story_reset(self);
 
 		return self;
 	}
@@ -54,11 +56,24 @@
 		lu_user_assert_void(data, "data should not be NULL");
 		lu_user_assert_void(channel_index < rec->channel_size, "channel_index is out of range");
 
-		Arr channels = (Arr) arr2_get(self->data, rec->id, self->data_y);
+		Arr channels;
 
-		// new input to the same rec and channel advances story
-		if (arr_get(channels, channel_index) != NULL) 
+		if (self->start_block_on_next_data)
+		{ 
+			// yaksho my na nuliu, to ce itak pochatok bloka
+			if (self->block_count)
+			{
+				++self->data_y;	
+			}
+
+			self->start_block_on_next_data = false;
+		}
+	
+		channels = (Arr) arr2_get(self->data, rec->id, self->data_y);
+		lu_p_value v = arr_get(channels, channel_index);
+		if (v) 
 		{
+			// new input to the same rec and channel advances story
 			++self->data_y;
 			channels = (Arr) arr2_get(self->data, rec->id, self->data_y);
 		}
@@ -69,17 +84,47 @@
  		); 
 
  		arr_set(channels, channel_index, (lu_p_void) data);
+
+ 		self->block_count = self->data_y + 1;
 	} 
 
- 	static void cont_perc_calc(lu_p_value cont_perc, lu_p_value prev, lu_p_value curr, lu_p_value next)
- 	{
+	static void story_reset(Story self)
+	{
+		lu_user_assert_void(self, "Story should be present");
+		lu_user_assert_void(self->brain, "Story brain should be present");
+		lu_user_assert_void(self->data, "Story data should be present");
 
- 	}
+		lu_size yi, xi, i;
+		Arr curr_ch;
+		Arr2 data = self->data;
+		Rec rec;
+		Brain brain = self->brain;
+
+		for(yi = 0; yi <= self->data_y; yi++)
+		{
+			for(xi = 0; xi < arr2_width(data); xi++)
+			{
+				rec 	= lu_brain_rec_get(brain, xi);
+				curr_ch = (Arr) arr2_get(data, xi, yi);
+
+				for(i = 0; i < rec->channel_size; i++)
+				{
+					arr_set(curr_ch, i, NULL);
+				}
+			}
+		}
+
+		self->data_y = 0;
+		self->start_block_on_next_data = false; 
+		self->block_count = 0;
+	}
 
 	mv_alg Wave lu_story_save_async(Story self, Save_Opts opts)
 	{
 		lu_user_assert(self, "Story should not be NULL");
 		lu_user_assert(opts, "Save_Opts is NULL");
+
+		lu_debug("\nSAVE (block_count = %lu)\n", self->block_count);
 
 		Brain brain = self->brain;
 		lu_user_assert(brain, "Story not linked to brain");
@@ -88,7 +133,7 @@
 
 		lu_user_assert(recs, "Brain has no recs");
 		lu_user_assert(arr_count(recs), "Brain has no recs1");
-		lu_user_assert(self->data_y, "Story without blocks");
+		lu_user_assert(self->block_count, "Story without blocks");
 
 		Gate gate = brain_gate(self->brain);
 
@@ -119,37 +164,33 @@
 		Rec rec; 
 		Arr2 data = self->data;
 
-		lu_size rec_width, rec_height;
-
-		for(yi = 0; yi < arr2_height(data); yi++)
+		for(yi = 0; yi < self->block_count; yi++)
 		{
 			for(xi = 0; xi < arr2_width(data); xi++)
 			{
-				rec 		= lu_brain_rec_get(brain, xi);
+				rec 	= lu_brain_rec_get(brain, xi);
 
-				if (yi == 0)
-					prev_ch = NULL;
-				else 
-					prev_ch = (Arr) arr2_get(data, xi, yi - 1);
-
+				prev_ch = yi ? (Arr) arr2_get(data, xi, yi - 1) : NULL;
 				curr_ch = (Arr) arr2_get(data, xi, yi);
-
-				if (yi + 1 >= arr2_height(data))
-					next_ch = NULL;
-				else
-					next_ch = (Arr) arr2_get(data, xi, yi + 1);
+				next_ch = yi + 1 < arr2_height(data) ?  (Arr) arr2_get(data, xi, yi + 1) : NULL;
 
 				for(i = 0; i < rec->channel_size; i++)
 				{
 					prev_d = prev_ch ? arr_get(prev_ch, i) : NULL;
 					curr_d = curr_ch ? arr_get(curr_ch, i) : NULL;
 					next_d = next_ch ? arr_get(next_ch, i) : NULL;
+ 
+					lu_debug("\n DATA(y=%lu, rec=%lu, ch=%lu): ", yi, xi, i);
+					prev_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
+					curr_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
+					next_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
 
-					
 				}
 
 			} 
 		}
+
+		story_reset(self);
 
 
 		// Zbuduvaty neus dlia percepciy
