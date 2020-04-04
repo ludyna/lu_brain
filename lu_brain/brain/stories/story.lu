@@ -184,10 +184,9 @@
 					prev_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
 					curr_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
 					next_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
-
 				}
 
-			} 
+			}
 		}
 
 		story_reset(self);

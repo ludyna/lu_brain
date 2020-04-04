@@ -4,14 +4,10 @@
 
 	N_Mem n_mem_create(Brain brain)
 	{
-		N_Mem self 			= (N_Mem) malloc(sizeof(struct n_mem));
+		N_Mem self 			= (N_Mem) mem_alloc(brain->mem_perm, sizeof(struct n_mem));
 
 		self->brain 		= brain;
 
 		return self;
 	}
 
-	void n_mem_perm_destroy(N_Mem* self)
-	{
-		lu_free((void**) self);
-	}
