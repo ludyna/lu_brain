@@ -5,6 +5,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
+	typedef struct sig* 						Sig;
+
 	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
 	typedef struct channel_data* 				Channel_Data;
 	typedef struct save_wave* 					Save_Wave;
@@ -17,7 +19,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Sig
-	
+
 	struct sig {
 		lu_size 	neu;
 		lu_value 	p;
@@ -32,7 +34,7 @@
 
 	
 	struct wave_resp {
-
+		
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

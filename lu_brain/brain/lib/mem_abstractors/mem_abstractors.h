@@ -80,7 +80,12 @@
 	#define mem_table_destroy(mt, parent_mem) mt->destroy(mt, parent_mem, __func__, __FILE__, __LINE__)
 
 	#define mem_record_alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
-	#define mem_record_free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__)
+	#define mem_record_free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 
+
+	static inline lu_p_byte mem_table_get(Mem_Table self, lu_size index)
+	{
+		return (self->records_start + index * self->record_size_in_bytes); 
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Perm
@@ -121,7 +126,7 @@
 	};
 
 	Mem_Table_Perm mem_table_perm_create(
-		Mem_Perm 	mem, 
+		Mem_Perm 			mem, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,
