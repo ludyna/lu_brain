@@ -12,24 +12,44 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N Primitives
 
-	struct neu {
-		lu_size 	count;
+	enum neu_ent_id {
+		NEU_BASIC_ID = 0,
+		NEU_NAME_ID,
 
-		Lin 		l_p;
-		Lin 		l_c;
+		NEU_ENT_ID_SIZE
 	};
 
-	// Persha versiya:
-	struct lin {
-		Neu 		p;		// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
-		Neu 		c;
+	struct neu_ent {
+		lu_size ent_ids[NEU_ENT_ID_SIZE];
+	};
 
-		Lin 		p_p;
-		Lin 		p_n;
+	struct neu_basic {
+		lu_value 	count;
 
-		Lin 		c_p; 	// prev i next potribni u vypadku yakshou my vydaliayemo zviazok?
-		Lin 		c_n; 	// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys prev ale my neznayemo next
-		 		   			// tomu naspravdi i prev i next potribni
+		lu_size 	l_p_lin;
+		lu_size 	l_c_lin;
+	};
+
+	enum lin_ent_id {
+		LIN_BASIC_ID = 0,
+
+		LIN_ENT_ID_SIZE
+	};
+
+	struct lin_ent {
+		lu_size lin_ent[LIN_ENT_ID_SIZE];
+	};
+
+	struct lin_basic {
+		lu_size 	p_neu;		// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		lu_size 	c_neu;
+
+		lu_size 	p_lin_prev;
+		lu_size 	p_lin_next;
+
+		lu_size 	c_lin_prev; // prev i next potribni u vypadku yakshou my vydaliayemo zviazok?
+		lu_size 	c_lin_next; // yaksho my vydaliayemo zviazok, to my mozhemo podyvytys prev ale my neznayemo next
+		 		   				// tomu naspravdi i prev i next potribni
 	};
 
 
@@ -53,10 +73,11 @@
 	// 	// pamiati, abo link tilky v odnomu napriamku
 	// };
 
-	struct sig {
-		Neu 		n;
-		lu_value 	p;
-	};
+
+///////////////////////////////////////////////////////////////////////////////
+// N_Rec
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Val_Layer
@@ -108,6 +129,12 @@
 	struct n_mem {
 		Brain 			brain;
 
+		Mem_Table 		neu_ents;
+		Mem_Table 		lin_ents;
+
+		Mem_Table 		neu_basics;
+		Mem_Table 		lin_basics;
+		Mem_Table 		lin_names;
 
 
 	};
