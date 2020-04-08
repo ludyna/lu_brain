@@ -1,6 +1,3 @@
-
-#include "perc.lu"
-
 #include "wave.lu"
 #include "wave_resp.lu"
 

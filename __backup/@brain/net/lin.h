@@ -10,6 +10,7 @@ typedef struct lin* Lin;
 
 struct lin
 {
+	/// ce sam link
 	lu_p_void 		p;
 	lu_p_void		c;
 
@@ -18,6 +19,8 @@ struct lin
 	// yaksho neu staryy, to treba vydaliaty neuron i linky,
 	// i todi zhodytsia p i n
 
+	// ce dodatkova infa dlia optymizaciyi pamiati, schob ne 
+	// vykorystovuvaty array chy she shos podibne
 	struct lu_link* p_p;
 	struct lu_link* p_n;
 	struct lu_link* c_p;
