@@ -29,6 +29,8 @@ lu_value			data_4[] 		= { 4, 0, 1, 1 };
 lu_value			data_5[] 		= { 5, 0, 1, 1 };
 lu_value			data_6[] 		= { 6, 0, 1, 1 };
 
+
+// setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
 	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);

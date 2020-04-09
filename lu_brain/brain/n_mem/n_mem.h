@@ -8,14 +8,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
-
-
 	typedef struct neu_ent* 	Neu_Ent;
 	typedef struct neu_b* 		Neu_B;
 	typedef struct neu_name* 	Neu_Name;
 
 	typedef struct lin_ent* 	Lin_Ent;
 	typedef struct lin_b* 		Lin_B;
+
+
+	typedef struct val_layer* 	Val_Layer;
+
 
 	typedef struct n_channel*	N_Channel; 
 	typedef struct n_rec*		N_Rec;
@@ -46,7 +48,6 @@
 	struct neu_name {
 		lu_char 		name[255];
 	};
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lin
@@ -127,8 +128,6 @@
 		lu_value*			val_steps; 
 		lu_size 			ssp_i; 				// signif similarity percent
 	};
-
-	typedef struct val_layer* Val_Layer;
 
 	///////////////////////////////////////////////////////////////////////////////
 	// Create and destroy
