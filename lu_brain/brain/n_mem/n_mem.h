@@ -113,7 +113,7 @@
 	// 	Odyn val layer na percepciyu.
 	//
 	struct val_layer {
-		N_Mem 				n_mem;
+		Mem 				mem;
 
 		lu_size 			w, h;
 
@@ -133,7 +133,7 @@
 	///////////////////////////////////////////////////////////////////////////////
 	// Create and destroy
 
-	static Val_Layer val_layer_create(N_Mem mem, Rec rec);
+	static Val_Layer val_layer_create(Mem mem, Rec rec);
 	static void val_layer_destroy(Val_Layer*);
 
 	///////////////////////////////////////////////////////////////////////////////

@@ -12,7 +12,14 @@
 
 	static N_Channel n_channel_create(Mem mem, Rec rec)
 	{
-		return NULL;
+		N_Channel self = (N_Channel) mem_alloc(mem, sizeof(struct n_channel));
+
+		lu_user_assert(self, "Cannot allocate N_Channel");
+
+		self->color = val_layer_create(mem, rec);
+		self->cont  = val_layer_create(mem, rec);
+
+		return self;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

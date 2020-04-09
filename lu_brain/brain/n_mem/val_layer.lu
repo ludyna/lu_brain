@@ -5,20 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create 
 
-	Val_Layer val_layer_create(N_Mem n_mem, Rec rec)
+	Val_Layer val_layer_create(Mem mem, Rec rec)
 	{
+		lu_user_assert(mem, "Mem is NULL");
 		lu_user_assert(rec->max_value > rec->min_value, "Rec max_value should be greater than Rec min_value");
 		lu_user_assert(rec->val_ssp > 0 && rec->val_ssp <= 0.5, "Rec val_ssp should be greater than 0 and less equal to 0.5");
 
-		Mem mem = n_mem->brain->mem_perm;
-
-		lu_assert(mem);
 
 		Val_Layer self = (Val_Layer) mem_alloc(mem, sizeof(struct val_layer));
 		lu_user_assert(self, "Not enough memory for Val Layer");
 
 		// Initialize
-		self->n_mem			= n_mem;
+		self->mem			= mem;
 		self->w 			= rec->width;
 		self->h				= rec->height;
 		self->orig_min_val 	= rec->min_value;
