@@ -162,10 +162,10 @@
 	
 
 	struct n_rec {
-		Arr 			channels;
+		Arr 			n_channels;
 	};
 
-	static N_Rec n_rec_create(Rec rec);
+	static N_Rec n_rec_create(Mem mem, Rec rec);
 
 	struct n_mem {
 		Brain 			brain;

@@ -12,7 +12,11 @@
 
 	Rec rec_create(Brain brain, Rec_Opts opts)
 	{
+		lu_user_assert(brain, "Brain is NULL");
+		lu_user_assert(opts, "Opts is NULL");
+
 		Rec self 			= (Rec) mem_alloc(brain->mem_perm, sizeof(struct rec));
+		lu_user_assert(self, "Cannot allocate rec");
 
 		// Initialize
 		self->brain 		= brain;
