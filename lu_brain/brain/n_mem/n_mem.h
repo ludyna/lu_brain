@@ -1,6 +1,7 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
+
 #ifndef _LU_N_MEM_H
 #define _LU_N_MEM_H
 
@@ -67,7 +68,7 @@
 
 		lu_size 		c_lin_ent_prev; 	// prev i next potribni u vypadku yakshou my vydaliayemo zviazok?
 		lu_size 		c_lin_ent_next; 	// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys prev ale my neznayemo next
-		 		   						// tomu naspravdi i prev i next potribni
+		 		   							// tomu naspravdi i prev i next potribni
 	};
 
 
@@ -100,44 +101,54 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Val_Layer
 
-	/*
-		Val layer is optimized for standard PC CPUs but it is easy to build it 
-		as a pure NN for NN hardware implementations.
-	*/
-	// struct val_layer {
-	// 	N_Mem 				n_mem;
+	//
+	//	Val layer is optimized for standard PC CPUs but it is easy to build it 
+	//	as a pure NN for NN hardware implementations.
+	// 
+	// 	Napryklad val neu ce specialnyy neu yakyy maye specialnu componentu neu_val
+	// 	Cia neu_val maye znachenia value. neu_val zbudzhuyetsia tilky todi koly
+	// 	vhidnyy impuls znahodytsia na ssp vidstani vid neu_val value. Dlia PC CPU 
+	// 	ce oznachaye perebir vsih val neuroniv shob zbudyty potribnyy. Dlia hardware neural 
+	// 	network ce ne problema. Shob optymizuvaty dlia PC CPU ya vykorystovuyu hash-like 
+	// 	pidhid.
+	//
+	// 	Odyn val layer na percepciyu.
+	//
+	struct val_layer {
+		N_Mem 				n_mem;
 
-	// 	lu_value 			orig_min_val, orig_max_val;
-	// 	lu_value 			max_val;
-	// 	lu_value 			val_step;
+		lu_value 			orig_min_val, orig_max_val;
+		lu_value 			max_val;
+		lu_value 			val_step;
 
-	// 	lu_size 			val_neu_size;
-	// 	Neu*				val_neus;
-	// 	lu_value*			val_steps; 
-	// 	lu_size 			ssp_i; // significant similarity percent
-	// };
+		lu_size 			val_neu_size;
+		lu_size*			val_neus;			// triohmirnyy masyv, x i y - ce posyciya v percepciyi
+												// z - ce prostir znachen 
+		lu_value*			val_steps; 
+		lu_size 			ssp_i; 				// signif similarity percent
+	};
 
-	// typedef struct val_layer* ValLayer;
+	typedef struct val_layer* Val_Layer;
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// // Create and destroy
+	///////////////////////////////////////////////////////////////////////////////
+	// Create and destroy
 
-	// ValLayer val_layer_create(N_Mem mem, lu_value min_val, lu_value max_val, lu_size val_neu_size, lu_value val_ssp);
-	// void val_layer_destroy(ValLayer*);
+	Val_Layer val_layer_create(N_Mem mem, Rec rec);
+	void val_layer_destroy(Val_Layer*);
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// // Main public methods
+	///////////////////////////////////////////////////////////////////////////////
+	// Main public methods
 
-	// Neu val_layer_save(ValLayer self, lu_value input_val, lu_time);
-	// //void val_layer_find(ValLayer self, lu_value input_val, FindWave);
+	lu_size val_layer_save(Val_Layer self, lu_value input_val, lu_time);
+	//void val_layer_find(Val_Layer self, lu_value input_val, FindWave);
 
-	// ///////////////////////////////////////////////////////////////////////////////
-	// // Other public methods
+	///////////////////////////////////////////////////////////////////////////////
+	// Other public methods
 
-	// lu_value val_layer_norm(ValLayer self, lu_value request); 
-	// struct lu_size_range val_layer_indx_range(ValLayer self, lu_value val);
-	// lu_value val_layer_calc_potent(ValLayer self, lu_size val_step_i, lu_value val);
-	// lu_value val_layer_step_norm_dist(ValLayer self);
+	lu_value val_layer_norm(Val_Layer self, lu_value request); 
+	struct lu_size_range val_layer_indx_range(Val_Layer self, lu_value val);
+	lu_value val_layer_calc_potent(Val_Layer self, lu_size val_step_i, lu_value val);
+	lu_value val_layer_step_norm_dist(Val_Layer self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
