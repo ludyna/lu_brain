@@ -10,7 +10,7 @@
 #include "public_to_private.h"
 
 #include "n_mem/n_mem.h"
-#include "recs/recs.h"
+#include "rec/rec.h"
 #include "story/story.h"
 #include "net/net.h"
 #include "waves/waves.h"

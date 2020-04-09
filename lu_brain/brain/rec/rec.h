@@ -2,6 +2,9 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// Rec_Opts
+
 	struct rec_opts {
 		Brain_Opts  	brain_opts;
 
@@ -13,6 +16,9 @@
 		lu_size			val_neu_size;
 		lu_value		val_ssp;  // val significant similarity percent
 	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Rec
 
 	struct rec {
 		Brain 			brain;
