@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
-	typedef struct n_mem* 		N_Mem;
+
 
 	typedef struct neu_ent* 	Neu_Ent;
 	typedef struct neu_b* 		Neu_B;
@@ -17,6 +17,9 @@
 	typedef struct lin_ent* 	Lin_Ent;
 	typedef struct lin_b* 		Lin_B;
 
+	typedef struct n_channel*	N_Channel; 
+	typedef struct n_rec*		N_Rec;
+	typedef struct n_mem* 		N_Mem;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
@@ -94,11 +97,6 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// N_Rec
-
-
-
-///////////////////////////////////////////////////////////////////////////////
 // Val_Layer
 
 	//
@@ -117,6 +115,8 @@
 	struct val_layer {
 		N_Mem 				n_mem;
 
+		lu_size 			w, h;
+
 		lu_value 			orig_min_val, orig_max_val;
 		lu_value 			max_val;
 		lu_value 			val_step;
@@ -133,26 +133,39 @@
 	///////////////////////////////////////////////////////////////////////////////
 	// Create and destroy
 
-	Val_Layer val_layer_create(N_Mem mem, Rec rec);
-	void val_layer_destroy(Val_Layer*);
+	static Val_Layer val_layer_create(N_Mem mem, Rec rec);
+	static void val_layer_destroy(Val_Layer*);
 
 	///////////////////////////////////////////////////////////////////////////////
 	// Main public methods
 
-	lu_size val_layer_save(Val_Layer self, lu_value input_val, lu_time);
+	static lu_size val_layer_save(Val_Layer self, lu_value input_val, lu_time);
 	//void val_layer_find(Val_Layer self, lu_value input_val, FindWave);
 
 	///////////////////////////////////////////////////////////////////////////////
 	// Other public methods
 
-	lu_value val_layer_norm(Val_Layer self, lu_value request); 
-	struct lu_size_range val_layer_indx_range(Val_Layer self, lu_value val);
-	lu_value val_layer_calc_potent(Val_Layer self, lu_size val_step_i, lu_value val);
-	lu_value val_layer_step_norm_dist(Val_Layer self);
+	static lu_value val_layer_norm(Val_Layer self, lu_value request); 
+	static struct lu_size_range val_layer_indx_range(Val_Layer self, lu_value val);
+	static lu_value val_layer_calc_potent(Val_Layer self, lu_size val_step_i, lu_value val);
+	static lu_value val_layer_step_norm_dist(Val_Layer self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
+
+	struct n_channel {
+		Val_Layer 		color;		// colir
+		Val_Layer 		cont;  		// kontur
+	}; 
+
+	
+
+	struct n_rec {
+		Arr 			channels;
+	};
+
+	static N_Rec n_rec_create(Rec rec);
 
 	struct n_mem {
 		Brain 			brain;
@@ -165,9 +178,11 @@
 
 		Mem_Table 		lin_bs;
 		// Mem_Table 	lin_weights;
+
+		Arr 			n_recs;
 	};
 	
-	N_Mem n_mem_create(Brain brain);
+	static N_Mem n_mem_create(Brain brain);
 
 
 ///////////////////////////////////////////////////////////////////////////////

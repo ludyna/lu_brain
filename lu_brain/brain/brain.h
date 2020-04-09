@@ -11,7 +11,7 @@
 
 #include "n_mem/n_mem.h"
 #include "recs/recs.h"
-#include "stories/stories.h"
+#include "story/story.h"
 #include "net/net.h"
 #include "waves/waves.h"
 #include "gate/gate.h"

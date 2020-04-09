@@ -17,7 +17,7 @@
 
 	#include "net/net.lu"
 	#include "recs/recs.lu"
-	#include "stories/stories.lu"
+	#include "story/story.lu"
 	#include "waves/waves.lu" 
 
 ///////////////////////////////////////////////////////////////////////////////

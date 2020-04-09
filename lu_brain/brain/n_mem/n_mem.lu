@@ -7,15 +7,47 @@
 
 	#include "val_layer.lu"
 
+///////////////////////////////////////////////////////////////////////////////
+// N_Channel
+
+
+///////////////////////////////////////////////////////////////////////////////
+// N_Rec 
+	
+	static N_Rec n_rec_create(Rec rec)
+	{
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
 
-	N_Mem n_mem_create(Brain brain)
+	static N_Mem n_mem_create(Brain brain)
 	{
-		N_Mem self 			= (N_Mem) mem_alloc(brain->mem_perm, sizeof(struct n_mem));
+		lu_user_assert(brain, "Brain is NULL");
+		lu_user_assert(brain->mem_perm, "Brain mem_perm is NULL");
+		lu_user_assert(brain->recs, "Brain recs is NULL");
+		lu_user_assert(arr_count(brain->recs) > 0, "Brain without recs");
+
+		Mem mem = brain->mem_perm;
+
+		N_Mem self 			= (N_Mem) mem_alloc(mem, sizeof(struct n_mem));
+		lu_user_assert(self, "Cannot allocate N_Mem");
 
 		self->brain 		= brain;
+
+		// dvi percepshyny 
+		self->n_recs 	= arr_create(mem, arr_count(brain->recs));
+
+		Rec rec;	
+		N_Rec n_rec;
+		for(lu_size i = 0; i < arr_size(self->n_recs); i++)
+		{
+			rec = (Rec) arr_get(brain->recs, i);
+
+			n_rec = n_rec_create(rec);
+			arr_set(self->n_recs, i, n_rec);
+		}
 
 		return self;
 	}

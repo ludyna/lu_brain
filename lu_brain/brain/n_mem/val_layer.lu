@@ -1,3 +1,44 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
+
+///////////////////////////////////////////////////////////////////////////////
+// Create 
+
+	Val_Layer val_layer_create(N_Mem n_mem, Rec rec)
+	{
+		lu_user_assert(rec->max_value > rec->min_value, "Rec max_value should be greater than Rec min_value");
+		lu_user_assert(rec->val_ssp > 0 && rec->val_ssp <= 0.5, "Rec val_ssp should be greater than 0 and less equal to 0.5");
+
+		Mem mem = n_mem->brain->mem_perm;
+
+		lu_assert(mem);
+
+		Val_Layer self = (Val_Layer) mem_alloc(mem, sizeof(struct val_layer));
+		lu_user_assert(self, "Not enough memory for Val Layer");
+
+		// Initialize
+		self->n_mem			= n_mem;
+		self->w 			= rec->width;
+		self->h				= rec->height;
+		self->orig_min_val 	= rec->min_value;
+		self->orig_max_val 	= rec->max_value;
+		self->val_neu_size 	= rec->val_neu_size;
+		self->max_val 		= self->orig_max_val - self->orig_min_val;
+		self->val_step 		= self->max_val / (lu_value) self->val_neu_size;
+		self->ssp_i 		= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->val_step); // ssp in indexes
+	 
+	 	// Val neus 
+		// self->val_neus = (Neu*) calloc(self->val_neu_size, sizeof(Neu));
+		// lu_assert(self->val_neus != NULL);
+	 
+	 	// Kroky preobchysleni
+		self->val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->val_neu_size);
+		lu_user_assert(self->val_steps, "Not enough memory for val_steps");
+		for (int i = 0; i < self->val_neu_size; i++) 
+		{
+			self->val_steps[i] = (lu_value)i * self->val_step;
+		}
+
+		return self;
+	}
