@@ -19,22 +19,27 @@
 		self->mem			= mem;
 		self->w 			= rec->width;
 		self->h				= rec->height;
+		self->d 			= rec->val_neu_size; // depth
+		self->wh 			= self->w * self->h;
 		self->orig_min_val 	= rec->min_value;
 		self->orig_max_val 	= rec->max_value;
-		self->val_neu_size 	= rec->val_neu_size;
 		self->max_val 		= self->orig_max_val - self->orig_min_val;
-		self->val_step 		= self->max_val / (lu_value) self->val_neu_size;
+		self->val_step 		= self->max_val / (lu_value) self->d;
 		self->ssp_i 		= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->val_step); // ssp in indexes
 
 		// my stvoruyemo indeksy/komirky/misce tut, sami neu_val budut stvoreni todi koly vony pershyy raz 
 		// budut zadiyani
-		self->val_neus 		= (lu_size*) mem_alloc(mem, self->w * self->h * self->val_neu_size * sizeof(lu_size*));
-		lu_user_assert(self->val_neus, "Cannot allocate val_neus");
-	 
+
+		lu_size neus_size 	= self->wh * self->d * sizeof(lu_size*);
+		self->neus 			= (lu_size*) mem_alloc(mem, neus_size);
+		lu_user_assert(self->neus, "Cannot allocate neus");
+
+		memset(self->neus, ENT_NULL, neus_size);
+
 	 	// Kroky preobchysleni
-		self->val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->val_neu_size);
+		self->val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->d);
 		lu_user_assert(self->val_steps, "Not enough memory for val_steps");
-		for (int i = 0; i < self->val_neu_size; i++) 
+		for (int i = 0; i < self->d; i++) 
 		{
 			self->val_steps[i] = (lu_value)i * self->val_step;
 		}
@@ -69,7 +74,7 @@
 		if (begin < 0) begin = 0;
 
 		end = orig_i + self->ssp_i;
-		if (end > (self->val_neu_size - 1)) end = self->val_neu_size - 1; 
+		if (end > (self->d - 1)) end = self->d - 1; 
 
 		struct lu_size_range r;
 		r.begin = (lu_size) begin;
@@ -84,12 +89,12 @@
 
 	static lu_value val_layer_step_norm_dist(Val_Layer self)
 	{
-		return 1.0 / self->val_neu_size;
+		return 1.0 / self->d;
 	}
 
 	// static Neu get_val_neu(Val_Layer self, lu_size indx)
 	// {
-	// 	Neu neu = self->val_neus[indx];
+	// 	Neu neu = self->neus[indx];
 	// 	// if (!neu)
 	// 	// {
 	// 	// 	neu = core_neu_alloc(self->core);
@@ -97,7 +102,7 @@
 			
 	// 	// 	neu_inc_count(neu);
 
-	// 	// 	self->val_neus[indx] = neu;
+	// 	// 	self->neus[indx] = neu;
 	// 	// }
 
 	// 	return neu;

@@ -6,6 +6,11 @@
 #define _LU_N_MEM_H
 
 ///////////////////////////////////////////////////////////////////////////////
+// Defs
+
+	#define ENT_NULL 0
+
+///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
 	typedef struct neu_ent* 	Neu_Ent;
@@ -116,14 +121,14 @@
 	struct val_layer {
 		Mem 				mem;
 
-		lu_size 			w, h;
+		lu_size 			w, h, d;
+		lu_size 			wh;
 
 		lu_value 			orig_min_val, orig_max_val;
 		lu_value 			max_val;
 		lu_value 			val_step;
 
-		lu_size 			val_neu_size;
-		lu_size*			val_neus;			// triohmirnyy masyv, x i y - ce posyciya v percepciyi
+		lu_size*			neus;				// triohmirnyy masyv, x i y - ce posyciya v percepciyi
 												// z - ce prostir znachen 
 		lu_value*			val_steps; 
 		lu_size 			ssp_i; 				// signif similarity percent
@@ -149,6 +154,20 @@
 	static lu_value val_layer_calc_potent(Val_Layer self, lu_size val_step_i, lu_value val);
 	static lu_value val_layer_step_norm_dist(Val_Layer self);
 
+	static inline lu_size val_layer_index(Val_Layer self, lu_size x, lu_size y, lu_size z)
+	{
+		return z * self->wh + y * self->w + x;
+	}
+
+	static inline lu_size val_layer_neu_ent_get(Val_Layer self, lu_size x, lu_size y, lu_size z) 
+	{
+		return self->neus[val_layer_index(self, x, y, z)];
+	};
+
+	static inline void val_layer_neu_ent_set(Val_Layer self, lu_size x, lu_size y, lu_size z, lu_size value)
+	{
+		self->neus[val_layer_index(self, x, y, z)] = value;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
