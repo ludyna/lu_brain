@@ -131,7 +131,10 @@
 		lu_size*			neus;				// triohmirnyy masyv, x i y - ce posyciya v percepciyi
 												// z - ce prostir znachen 
 		lu_value*			val_steps; 
-		lu_size 			ssp_i; 				// signif similarity percent
+		lu_size 			val_ssp_i; 			// signif similarity percent
+		lu_size 			time_ssp;			// musyt buty, rytm
+		lu_size 			w_ssp;				// space ssp po hor
+		lu_size 			h_ssp;				// po ver
 	};
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -154,19 +157,19 @@
 	static lu_value val_layer_calc_potent(Val_Layer self, lu_size val_step_i, lu_value val);
 	static lu_value val_layer_step_norm_dist(Val_Layer self);
 
-	static inline lu_size val_layer_index(Val_Layer self, lu_size x, lu_size y, lu_size z)
+	static inline lu_size val_layer_xyz_indx(Val_Layer self, lu_size x, lu_size y, lu_size z)
 	{
 		return z * self->wh + y * self->w + x;
 	}
 
 	static inline lu_size val_layer_neu_ent_get(Val_Layer self, lu_size x, lu_size y, lu_size z) 
 	{
-		return self->neus[val_layer_index(self, x, y, z)];
+		return self->neus[val_layer_xyz_indx(self, x, y, z)];
 	};
 
 	static inline void val_layer_neu_ent_set(Val_Layer self, lu_size x, lu_size y, lu_size z, lu_size value)
 	{
-		self->neus[val_layer_index(self, x, y, z)] = value;
+		self->neus[val_layer_xyz_indx(self, x, y, z)] = value;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
