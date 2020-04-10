@@ -40,6 +40,10 @@
 
 	struct neu_ent {
 		lu_size 		coms[NEU_ENT_ID_SIZE];
+
+		// tut mozhna bulo prosto postvoruvaty zminni dlia kozhnoyi componenty
+		// lu_size 	neu_b;
+		// lu_size 	neu_name;
 	};
 
 	// basic 
@@ -131,10 +135,15 @@
 		lu_size*			neus;				// triohmirnyy masyv, x i y - ce posyciya v percepciyi
 												// z - ce prostir znachen 
 		lu_value*			val_steps; 
-		lu_size 			val_ssp_i; 			// signif similarity percent
-		lu_size 			time_ssp;			// musyt buty, rytm
-		lu_size 			w_ssp;				// space ssp po hor
-		lu_size 			h_ssp;				// po ver
+		lu_size 			val_ssp_i; 			// signif similarity percent 
+
+		// time i space ssp ne potribni
+		// abcd bcda - ne pryncypovo
+		// abca bcaa 
+		// abaa aaba 
+		// lu_size 			time_ssp;			// musyt buty, rytm
+		// lu_size 			w_ssp;				// space ssp po hor
+		// lu_size 			h_ssp;				// po ver
 	};
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -176,6 +185,12 @@
 // N_Mem
 
 	struct n_channel {
+		// v nas ne mozhe buty dva val_layer dlia 
+		// kolir i kontur - bo kolir i kontur - ce haracterystyka 
+		// odnoho pikselia. Tobto kolir i contur - ce vseredyni 
+		// val_layer, a n_channel - ne potriben. Takym chynom
+		// kozhen pixel ce dva neurony
+		// kozhnomu channel vidpovidaye odyn val_layer
 		Val_Layer 		color;		// colir
 		Val_Layer 		cont;  		// kontur
 	}; 
