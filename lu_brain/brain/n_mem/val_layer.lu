@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create 
 
-	Val_Layer val_layer_create(Mem mem, Rec rec)
+	static Val_Layer val_layer_create(Mem mem, Rec rec)
 	{
 		lu_user_assert(mem, "Mem is NULL");
 		lu_user_assert(rec->max_value > rec->min_value, "Rec max_value should be greater than Rec min_value");
@@ -25,10 +25,11 @@
 		self->max_val 		= self->orig_max_val - self->orig_min_val;
 		self->val_step 		= self->max_val / (lu_value) self->val_neu_size;
 		self->ssp_i 		= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->val_step); // ssp in indexes
-	 
-	 	// Val neus 
-		// self->val_neus = (Neu*) calloc(self->val_neu_size, sizeof(Neu));
-		// lu_assert(self->val_neus != NULL);
+
+		// my stvoruyemo indeksy/komirky/misce tut, sami neu_val budut stvoreni todi koly vony pershyy raz 
+		// budut zadiyani
+		self->val_neus 		= (lu_size*) mem_alloc(mem, self->w * self->h * self->val_neu_size * sizeof(lu_size*));
+		lu_user_assert(self->val_neus, "Cannot allocate val_neus");
 	 
 	 	// Kroky preobchysleni
 		self->val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->val_neu_size);
@@ -40,3 +41,72 @@
 
 		return self;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Save
+
+	static lu_value val_layer_norm(Val_Layer self, lu_value request)
+	{
+		lu_value val = request - self->orig_min_val;
+		if (val < 0) val = 0;
+		if (val > self->max_val) val = self->max_val;
+
+		return val;
+	}
+
+	static lu_size val_layer_indx(Val_Layer self, lu_value val)
+	{
+		return (lu_size) lu_value_round(val / self->val_step);
+	}
+
+	static struct lu_size_range val_layer_indx_range(Val_Layer self, lu_value val)
+	{
+		lu_size orig_i = val_layer_indx(self, val);
+
+		long begin, end;
+
+		begin = orig_i - self->ssp_i;
+		if (begin < 0) begin = 0;
+
+		end = orig_i + self->ssp_i;
+		if (end > (self->val_neu_size - 1)) end = self->val_neu_size - 1; 
+
+		struct lu_size_range r;
+		r.begin = (lu_size) begin;
+		r.end = (lu_size) end;
+		return r;
+	}
+
+	static lu_value val_layer_calc_potent(Val_Layer self, lu_size val_step_i, lu_value val) 
+	{ 
+		return 1.0 - lu_value_abs(self->val_steps[val_step_i] - val) / self->max_val;
+	}
+
+	static lu_value val_layer_step_norm_dist(Val_Layer self)
+	{
+		return 1.0 / self->val_neu_size;
+	}
+
+	// static Neu get_val_neu(Val_Layer self, lu_size indx)
+	// {
+	// 	Neu neu = self->val_neus[indx];
+	// 	// if (!neu)
+	// 	// {
+	// 	// 	neu = core_neu_alloc(self->core);
+	// 	// 	lu_assert(neu != NULL);
+			
+	// 	// 	neu_inc_count(neu);
+
+	// 	// 	self->val_neus[indx] = neu;
+	// 	// }
+
+	// 	return neu;
+	// }
+
+	// static Neu val_layer_save(Val_Layer self, lu_value input_val, lu_time t)
+	// {
+	// 	lu_value val 	= val_layer_norm(self, input_val);
+	// 	lu_size indx 	= val_layer_indx(self, val);
+
+	// 	return get_val_neu(self, indx);
+	// }

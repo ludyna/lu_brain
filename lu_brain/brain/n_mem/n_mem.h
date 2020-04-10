@@ -158,8 +158,6 @@
 		Val_Layer 		cont;  		// kontur
 	}; 
 
-	
-
 	struct n_rec {
 		Arr 			n_channels;
 	};
