@@ -170,7 +170,11 @@
 
 		Rec rec; 
 		Arr2 data = self->data;
+ 
 
+ 		// vidsutnist danyh oznachaye povtoruvanist danyh
+ 		// yaksho my mayemo NULL NULL 123 todi my mayemo skompiluvaty ce v
+ 		// 123 123 123
 		for(yi = 0; yi < self->block_count; yi++)
 		{
 			for(xi = 0; xi < arr2_width(data); xi++)

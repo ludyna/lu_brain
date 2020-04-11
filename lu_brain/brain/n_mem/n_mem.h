@@ -127,7 +127,7 @@
 	struct val_layer {
 		Mem 				mem;
 
-		lu_size 			w, h, d;
+		lu_size 			w, h, depth;
 		lu_size 			wh;
 
 		lu_value 			orig_min_val, orig_max_val;
