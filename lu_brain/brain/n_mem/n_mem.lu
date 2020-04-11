@@ -8,21 +8,6 @@
 	#include "val_layer.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
-// N_Channel
-
-	static N_Channel n_channel_create(Mem mem, Rec rec)
-	{
-		N_Channel self = (N_Channel) mem_alloc(mem, sizeof(struct n_channel));
-
-		lu_user_assert(self, "Cannot allocate N_Channel");
-
-		self->color = val_layer_create(mem, rec);
-		self->cont  = val_layer_create(mem, rec);
-
-		return self;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
 // N_Rec 
 	
 	static N_Rec n_rec_create(Mem mem, Rec rec)
@@ -30,16 +15,16 @@
 		N_Rec self 			= (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
 		lu_user_assert(self, "Cannot allocate N_Rec");
 
-		self->n_channels 	= arr_create(mem, rec->channel_size);
+		self->val_layers 	= arr_create(mem, rec->channel_size);
 
-		N_Channel chan;
-		for(lu_size i = 0; i < arr_size(self->n_channels); i++)
+		Val_Layer val_layer;
+		for(lu_size i = 0; i < arr_size(self->val_layers); i++)
 		{
-			chan = n_channel_create(mem, rec);
+			val_layer = val_layer_create(mem, rec);
 
-			lu_user_assert(chan, "Cannot create n_channel");
+			lu_user_assert(val_layer, "Cannot create val_layer");
 
-			arr_set(self->n_channels, i, chan);
+			arr_set(self->val_layers, i, val_layer);
 		}
 
 		return self;

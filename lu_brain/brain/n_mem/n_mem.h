@@ -23,8 +23,6 @@
 
 	typedef struct val_layer* 	Val_Layer;
 
-
-	typedef struct n_channel*	N_Channel; 
 	typedef struct n_rec*		N_Rec;
 	typedef struct n_mem* 		N_Mem;
 
@@ -38,6 +36,9 @@
 		NEU_ENT_ID_SIZE
 	};
 
+	// "generic" zviazky pracuvaty ne budut, bo ne nesut prostorovoy 
+	// informaciyi. My mayemo znaty prostorove i chasove "znachennia"
+	// zviazkiv
 	struct neu_ent {
 		lu_size 		coms[NEU_ENT_ID_SIZE];
 
@@ -47,6 +48,7 @@
 	};
 
 	// basic 
+
 	struct neu_b {
 		lu_value 		count;
 
@@ -183,20 +185,20 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
-
-	struct n_channel {
-		// v nas ne mozhe buty dva val_layer dlia 
-		// kolir i kontur - bo kolir i kontur - ce haracterystyka 
-		// odnoho pikselia. Tobto kolir i contur - ce vseredyni 
-		// val_layer, a n_channel - ne potriben. Takym chynom
-		// kozhen pixel ce dva neurony
-		// kozhnomu channel vidpovidaye odyn val_layer
-		Val_Layer 		color;		// colir
-		Val_Layer 		cont;  		// kontur
-	}; 
+ 
+	// v nas ne mozhe buty dva val_layer dlia 
+	// kolir i kontur - bo kolir i kontur - ce haracterystyka 
+	// odnoho pikselia. Tobto kolir i contur - ce vseredyni 
+	// val_layer, a n_channel - ne potriben. Takym chynom
+	// kozhen pixel ce dva neurony
+	// kozhnomu channel vidpovidaye odyn val_layer
+	// struct n_channel {
+	// 	Val_Layer 		color;		// colir
+	// 	Val_Layer 		cont;  		// kontur
+	// }; 
 
 	struct n_rec {
-		Arr 			n_channels;
+		Arr 			val_layers;
 	};
 
 	static N_Rec n_rec_create(Mem mem, Rec rec);
