@@ -10,8 +10,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Rec 
 	
-	static N_Rec n_rec_create(Mem mem, Rec rec)
+	static N_Rec n_rec_create(N_Mem n_mem, Rec rec)
 	{
+		lu_user_assert(n_mem, "N_Mem is blank");
+		lu_user_assert(n_mem->brain, "n_mem->brain is blank");
+
+		Mem mem = n_mem->brain->mem_perm;
+
+		lu_user_assert(mem, "Mem is blank");
+
 		N_Rec self 			= (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
 		lu_user_assert(self, "Cannot allocate N_Rec");
 
@@ -31,7 +38,7 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// N_Mem
+// N_Mem7
 
 	static N_Mem n_mem_create(Brain brain)
 	{
@@ -46,8 +53,6 @@
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
 		self->brain 		= brain;
-
-		// dvi percepshyny 
 		self->n_recs 		= arr_create(mem, arr_count(brain->recs));
 
 		Rec rec;	
@@ -56,7 +61,7 @@
 		{
 			rec = (Rec) arr_get(brain->recs, i);
 
-			n_rec = n_rec_create(mem, rec);
+			n_rec = n_rec_create(self, rec);
 
 			lu_user_assert(n_rec, "Cannot create n_rec");
 

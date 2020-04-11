@@ -198,10 +198,11 @@
 	// }; 
 
 	struct n_rec {
+		N_Mem 			n_mem;
 		Arr 			val_layers;
 	};
 
-	static N_Rec n_rec_create(Mem mem, Rec rec);
+	static N_Rec n_rec_create(N_Mem n_mem, Rec rec);
 
 	struct n_mem {
 		Brain 			brain;
