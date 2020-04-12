@@ -201,6 +201,9 @@
 				for(block_i = 0; block_i < self->block_count; block_i++)
 				{
 					curr_ch = arr2_get(data, rec_i, block_i);
+					if (!curr_ch)
+						continue;
+
 					curr_d = arr_get(curr_ch, chan_i);
 
 					if (curr_d) {
@@ -214,27 +217,54 @@
 			}
 		}
 
+		for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
+		{
+			rec 	= lu_brain_rec_get(brain, rec_i);
+			last_ch = last_data[rec_i];
+
+			for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
+			{
+				lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): %s", rec_i, chan_i, arr_get(last_ch, chan_i) ? "PRESENT" : "NULL");
+			}
+		}
+
 		for(block_i = 0; block_i < self->block_count; block_i++)
 		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 			{
 				rec 	= lu_brain_rec_get(brain, rec_i);
+				last_ch = last_data[rec_i];
 
 				prev_ch = block_i ? (Arr) arr2_get(data, rec_i, block_i - 1) : NULL;
 				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
 				next_ch = block_i + 1 < arr2_height(data) ?  (Arr) arr2_get(data, rec_i, block_i + 1) : NULL;
-				last_ch = last_data[rec_i];
 
 				for(chan_i = 0; chan_i < rec->channel_size; chan_i++)
 				{
 					prev_d = prev_ch ? arr_get(prev_ch, chan_i) : NULL;
 					curr_d = curr_ch ? arr_get(curr_ch, chan_i) : NULL;
 					next_d = next_ch ? arr_get(next_ch, chan_i) : NULL;
+
+					if (!prev_d) prev_d = arr_get(last_ch, chan_i);
+
+					if (curr_d)
+					{
+						arr_set(last_ch, chan_i, curr_d);
+					}
+					else 
+						curr_d = arr_get(last_ch, chan_i);
+
+					if (!next_d) next_d = arr_get(last_ch, chan_i);
+
  
-					lu_debug("\n DATA(y=%lu, rec=%lu, ch=%lu): ", block_i, rec_i, chan_i);
+					lu_debug("\n DATA(block=%lu, rec=%lu, ch=%lu): ", block_i, rec_i, chan_i);
 					prev_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
 					curr_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
-					next_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
+					next_d ? lu_debug("PRESENT ") : lu_debug("NULL ");  
+
+					// process
+
+
 				}
 
 			}
