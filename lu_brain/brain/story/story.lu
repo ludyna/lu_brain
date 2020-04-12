@@ -174,26 +174,13 @@
  		// vidsutnist danyh oznachaye povtoruvanist danyh
  		// yaksho my mayemo NULL NULL 123 todi my mayemo skompiluvaty ce v
  		// 123 123 123
-
 		// znayty pershi ne nuliovi dani dlia kozhnoho channel
 		// channel dani mozhut buty nuliovi dlia vsih blockiv
-
- 		// spochatku stvoremo misce dlia zberihannia ostannih ne nuliovyh danyh 
- 		// dlia kanaliv
-		Arr last_data[arr_count(brain->recs)];
-		for (rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
-		{
-			rec 	= lu_brain_rec_get(brain, rec_i);
-
-			// temp memory
-			last_data[rec_i] = arr_create(g_mem_temp, rec->channel_size);
-		}
-
-		// teper znaydemo pershi ne nuliovi dani
+		// zapovnymo prev_data, teper znaydemo pershi ne nuliovi dani
 		for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 		{
 			rec 	= lu_brain_rec_get(brain, rec_i);
-			last_ch = last_data[rec_i];
+			last_ch = wave->prev_data[rec_i];
 
 			for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
 			{
@@ -220,7 +207,7 @@
 		for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 		{
 			rec 	= lu_brain_rec_get(brain, rec_i);
-			last_ch = last_data[rec_i];
+			last_ch = wave->prev_data[rec_i];
 
 			for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
 			{
@@ -234,13 +221,16 @@
 		}
 
 		// naspravdi meni ne potriben prev i next, dostatnio tilky curr
-		// curr doyednuyetsia do poperednih danyh
+		// curr doyednuyetsia do poperednih danyh. My skorishe mayemo
+		// opraciovuvaty vsi channel dlia potochnoho bloku i rec 
+		// odnochasno - bo vsi channel formuyut piksel
+		// hiba dlia toho shob porahuvaty cont
 		for(block_i = 0; block_i < self->block_count; block_i++)
 		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 			{
 				rec 	= lu_brain_rec_get(brain, rec_i);
-				last_ch = last_data[rec_i];
+				last_ch = wave->prev_data[rec_i];
 
 				prev_ch = block_i ? (Arr) arr2_get(data, rec_i, block_i - 1) : NULL;
 				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
@@ -277,10 +267,6 @@
 			}
 		}
 
-		for (rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
-			// temp memory
-			arr_destroy(last_data[rec_i], g_mem_temp);
-		
 
 		story_reset(self);
 

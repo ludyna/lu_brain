@@ -5,6 +5,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
+	typedef struct gate* 						Gate;
+
 	typedef struct sig* 						Sig;
 
 	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
@@ -29,8 +31,10 @@
 // Wave API
 
 	struct wave {
-
+		Gate 	gate;
 	};
+
+	static void wave_init(Wave self, Gate gate);
 
 	
 	struct wave_resp {
@@ -70,16 +74,9 @@
 		struct save_opts 	save_opts;
 		Story 				story;
 
-		// u vypadku z percepshynamy (na vidminu vid story) my musymo stvoryty
-		// povnistu array of data, tomu sho save_wave reusable i my ne znayemo napered 
-		// de data bude
-		// arr: 	recs i
-		// arr:  	channels j
-		// odyn velyky masyv: 	width: perc_count * rec_width 
-		// 						height: block_count * rec_height
-		// nu abo po masyvu dlia perc, dlia prostoty
-
-		Arr 				recs_data;
+		// tymchasove zberezhenia linkiv na prev data 
+		// vidsutnist danyh oznachaye povtoruvanist danyh
+		Arr* 				prev_data;
 	};
 
 	struct save_resp {
@@ -89,6 +86,9 @@
 	static void save_wave_init(Save_Wave, Story, Save_Opts);
 
 	static void save_wave_process(Save_Wave self);
+
+	static void save_wave_prev_data_reset(Save_Wave self);
+
 
 //////////////////////////7/////////////////////////////////////////////////////
 // Find

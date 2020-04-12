@@ -19,42 +19,38 @@
 			self->save_opts = *opts;
 
 		self->story = story;
-	}
+	} 
 
 	static Save_Wave save_wave_create(Gate gate, Save_Wave_Create_Opts opts)
 	{
-		lu_assert(opts->max_story_size_in_blocks > 0);
-		lu_assert(gate && gate->brain && gate->brain->mem_perm);
+		lu_user_assert(opts->max_story_size_in_blocks > 0, "Option max_story_size_in_blocks should be greater than 0");
+		lu_user_assert(gate, "Gate is NULL");
 
-		Brain brain 	= gate->brain;
-		Mem mem 		= brain->mem_perm;
+		Brain brain = gate->brain;
+
+		lu_user_assert(brain, "Brain is NULL");
+
+		Mem mem = brain->mem_perm;
+
+		lu_user_assert(mem, "Mem is NULL");
 
 		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
 
+		wave_init(&self->super, gate);
+
 		lu_user_assert(self, "Unable to allocate Save_Wave");
 
-		self->recs_data = arr_create(mem, arr_count(brain->recs));
+		lu_user_assert(arr_count(brain->recs) > 0, "Brain has no recs");
 
-		lu_user_assert(self->recs_data, "Unable to allocate memory for recs_data");
-
-		lu_size i, j;
+		self->prev_data = (Arr*) mem_alloc(mem, sizeof(Arr*) * arr_count(brain->recs));
 		Rec rec;
-		Arr channels;
-		lu_p_value block;
-		for(i = 0; i < arr_size(self->recs_data); i++)
+		for (lu_size rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
 		{
-			rec = (Rec) arr_get(brain->recs, i);
+			rec 	= lu_brain_rec_get(brain, rec_i);
 
-			channels = arr_create(mem, rec->channel_size);
-			lu_user_assert(channels, "Unable to allocate memory for channels");
+			lu_user_assert(rec->channel_size, "Rec channel size is 0");
 
-			// data dlia channels my stvoruyemo, ale ne dlia percepciy, 
-			// bo percepciyi (contury) my mozhemo rahuvaty dynamichno z channel
-			for(j = 0; j < arr_size(channels); j++)
-				arr_set(channels, j, channel_data_create(mem, rec, opts->max_story_size_in_blocks));
-			
-
-			arr_set(self->recs_data, i, channels);
+			self->prev_data[rec_i] = arr_create(mem, rec->channel_size);
 		}
 	
 		return self;
@@ -62,16 +58,28 @@
 
 	static void save_wave_reset(Save_Wave self)
 	{
+		lu_user_assert_void(self, "Wave is NULL");
+		lu_user_assert_void(self->super.gate, "Gate is NULL");
+
+		Brain brain = self->super.gate->brain;
+
+		lu_user_assert_void(brain, "Brain is NULL");
+
+		lu_user_assert_void(arr_count(brain->recs) > 0, "Brain has no recs");
+
+		// Reset prev_data
 		Arr channels;
-		lu_size j;
-		lu_p_value block; 
-
-		for(lu_size i = 0; i < arr_count(self->recs_data); i++)
+		lu_size rec_i, chan_i;
+		Rec rec;
+		for (rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
 		{
-			channels = arr_get(self->recs_data, i);
+			rec 	= lu_brain_rec_get(brain, rec_i);
 
-			for(j = 0; j < arr_count(channels); j++)
-				channel_data_reset((Channel_Data) arr_get(channels, j));
+			lu_user_assert_void(rec->channel_size, "Rec channel size is 0");
+
+			channels = self->prev_data[rec_i];
+			for (chan_i = 0; chan_i < arr_count(channels); chan_i++)
+				arr_set(channels, chan_i, NULL);
 		}
 	}
 
