@@ -224,10 +224,17 @@
 
 			for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
 			{
-				lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): %s", rec_i, chan_i, arr_get(last_ch, chan_i) ? "PRESENT" : "NULL");
+				curr_d = arr_get(last_ch, chan_i);
+
+				if (curr_d)
+					lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): %.0f", rec_i, chan_i, curr_d[0]);
+				else
+					lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): NULL", rec_i, chan_i);
 			}
 		}
 
+		// naspravdi meni ne potriben prev i next, dostatnio tilky curr
+		// curr doyednuyetsia do poperednih danyh
 		for(block_i = 0; block_i < self->block_count; block_i++)
 		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
@@ -258,9 +265,9 @@
 
  
 					lu_debug("\n DATA(block=%lu, rec=%lu, ch=%lu): ", block_i, rec_i, chan_i);
-					prev_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
-					curr_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
-					next_d ? lu_debug("PRESENT ") : lu_debug("NULL ");  
+					prev_d ? lu_debug("%.0f ", prev_d[0]) : lu_debug("NULL ");
+					curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
+					next_d ? lu_debug("%.0f ", next_d[0]) : lu_debug("NULL ");  
 
 					// process
 
