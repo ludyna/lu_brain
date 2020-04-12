@@ -101,22 +101,22 @@
 		lu_user_assert_void(self->brain, "Story brain should be present");
 		lu_user_assert_void(self->data, "Story data should be present");
 
-		lu_size yi, xi, i;
+		lu_size block_i, rec_i, chan_i;
 		Arr curr_ch;
 		Arr2 data = self->data;
 		Rec rec;
 		Brain brain = self->brain;
 
-		for(yi = 0; yi <= self->data_y; yi++)
+		for(block_i = 0; block_i <= self->data_y; block_i++)
 		{
-			for(xi = 0; xi < arr2_width(data); xi++)
+			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 			{
-				rec 	= lu_brain_rec_get(brain, xi);
-				curr_ch = (Arr) arr2_get(data, xi, yi);
+				rec 	= lu_brain_rec_get(brain, rec_i);
+				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
 
-				for(i = 0; i < rec->channel_size; i++)
+				for(chan_i = 0; chan_i < rec->channel_size; chan_i++)
 				{
-					arr_set(curr_ch, i, NULL);
+					arr_set(curr_ch, chan_i, NULL);
 				}
 			}
 		}
@@ -155,10 +155,9 @@
 
 		// data x = recs, y - blocks 
 		// [x,y] - channels
-		// channel[i] = channel data
+		// channel[chan_i] = channel data
 
-		lu_size xi, yi;
-		lu_size i;
+		lu_size block_i, rec_i, chan_i;
 		
 		Arr prev_ch;
 		Arr curr_ch;
@@ -170,28 +169,69 @@
 
 		Rec rec; 
 		Arr2 data = self->data;
- 
+		Arr last_ch;
 
  		// vidsutnist danyh oznachaye povtoruvanist danyh
  		// yaksho my mayemo NULL NULL 123 todi my mayemo skompiluvaty ce v
  		// 123 123 123
-		for(yi = 0; yi < self->block_count; yi++)
+
+		// znayty pershi ne nuliovi dani dlia kozhnoho channel
+		// channel dani mozhut buty nuliovi dlia vsih blockiv
+
+ 		// spochatku stvoremo misce dlia zberihannia ostannih ne nuliovyh danyh 
+ 		// dlia kanaliv
+		Arr last_data[arr_count(brain->recs)];
+		for (rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
 		{
-			for(xi = 0; xi < arr2_width(data); xi++)
+			rec 	= lu_brain_rec_get(brain, rec_i);
+
+			// temp memory
+			last_data[rec_i] = arr_create(g_mem_temp, rec->channel_size);
+		}
+
+		// teper znaydemo pershi ne nuliovi dani
+		for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
+		{
+			rec 	= lu_brain_rec_get(brain, rec_i);
+			last_ch = last_data[rec_i];
+
+			for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
 			{
-				rec 	= lu_brain_rec_get(brain, xi);
 
-				prev_ch = yi ? (Arr) arr2_get(data, xi, yi - 1) : NULL;
-				curr_ch = (Arr) arr2_get(data, xi, yi);
-				next_ch = yi + 1 < arr2_height(data) ?  (Arr) arr2_get(data, xi, yi + 1) : NULL;
-
-				for(i = 0; i < rec->channel_size; i++)
+				for(block_i = 0; block_i < self->block_count; block_i++)
 				{
-					prev_d = prev_ch ? arr_get(prev_ch, i) : NULL;
-					curr_d = curr_ch ? arr_get(curr_ch, i) : NULL;
-					next_d = next_ch ? arr_get(next_ch, i) : NULL;
+					curr_ch = arr2_get(data, rec_i, block_i);
+					curr_d = arr_get(curr_ch, chan_i);
+
+					if (curr_d) {
+						arr_set(last_ch, chan_i, curr_d);
+						break; // znayshly, vyhodymo z cyclu po blokah
+					}
+				}
+
+				if (!arr_get(last_ch, chan_i))
+					lu_user_debug_args("Story has no data for rec %lu and channel %lu", rec_i, chan_i);
+			}
+		}
+
+		for(block_i = 0; block_i < self->block_count; block_i++)
+		{
+			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
+			{
+				rec 	= lu_brain_rec_get(brain, rec_i);
+
+				prev_ch = block_i ? (Arr) arr2_get(data, rec_i, block_i - 1) : NULL;
+				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
+				next_ch = block_i + 1 < arr2_height(data) ?  (Arr) arr2_get(data, rec_i, block_i + 1) : NULL;
+				last_ch = last_data[rec_i];
+
+				for(chan_i = 0; chan_i < rec->channel_size; chan_i++)
+				{
+					prev_d = prev_ch ? arr_get(prev_ch, chan_i) : NULL;
+					curr_d = curr_ch ? arr_get(curr_ch, chan_i) : NULL;
+					next_d = next_ch ? arr_get(next_ch, chan_i) : NULL;
  
-					lu_debug("\n DATA(y=%lu, rec=%lu, ch=%lu): ", yi, xi, i);
+					lu_debug("\n DATA(y=%lu, rec=%lu, ch=%lu): ", block_i, rec_i, chan_i);
 					prev_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
 					curr_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
 					next_d ? lu_debug("PRESENT ") : lu_debug("NULL ");
@@ -199,6 +239,11 @@
 
 			}
 		}
+
+		for (rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
+			// temp memory
+			arr_destroy(last_data[rec_i], g_mem_temp);
+		
 
 		story_reset(self);
 

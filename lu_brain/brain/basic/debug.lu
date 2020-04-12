@@ -34,7 +34,7 @@ void label_gen_set(char* lbl)
 }
 
 void lu_debug_internal(const char * format, ...)
-{ 
+{
 	va_list args;
 	va_start (args, format);
   	vfprintf(stderr, format, args);
