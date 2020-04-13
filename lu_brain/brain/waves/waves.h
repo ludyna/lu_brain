@@ -4,9 +4,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
-
-	typedef struct gate* 						Gate;
-
 	typedef struct sig* 						Sig;
 
 	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
@@ -23,12 +20,15 @@
 // Sig
 
 	struct sig {
-		lu_size 	neu;
+		lu_size 	neu_ent;
 		lu_value 	p;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave API
+
+	// typedef here to break cyclic dependency
+	typedef struct gate* 						Gate;
 
 	struct wave {
 		Gate 	gate;

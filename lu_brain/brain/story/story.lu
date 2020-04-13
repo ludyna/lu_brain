@@ -204,21 +204,21 @@
 			}
 		}
 
-		for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
-		{
-			rec 	= lu_brain_rec_get(brain, rec_i);
-			last_ch = wave->prev_data[rec_i];
+		// for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
+		// {
+		// 	rec 	= lu_brain_rec_get(brain, rec_i);
+		// 	last_ch = wave->prev_data[rec_i];
 
-			for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
-			{
-				curr_d = arr_get(last_ch, chan_i);
+		// 	for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
+		// 	{
+		// 		curr_d = arr_get(last_ch, chan_i);
 
-				if (curr_d)
-					lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): %.0f", rec_i, chan_i, curr_d[0]);
-				else
-					lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): NULL", rec_i, chan_i);
-			}
-		}
+		// 		if (curr_d)
+		// 			lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): %.0f", rec_i, chan_i, curr_d[0]);
+		// 		else
+		// 			lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): NULL", rec_i, chan_i);
+		// 	}
+		// }
 
 		// naspravdi meni ne potriben prev i next, dostatnio tilky curr
 		// curr doyednuyetsia do poperednih danyh. My skorishe mayemo
@@ -241,6 +241,7 @@
 					prev_d = prev_ch ? arr_get(prev_ch, chan_i) : NULL;
 					curr_d = curr_ch ? arr_get(curr_ch, chan_i) : NULL;
 					next_d = next_ch ? arr_get(next_ch, chan_i) : NULL;
+
 
 					if (!prev_d) prev_d = arr_get(last_ch, chan_i);
 
@@ -270,14 +271,6 @@
 
 		story_reset(self);
 
-
-		// Zbuduvaty neus dlia percepciy
-
-		// Zbuduvaty neus dlia neus percepciy 
-
-
-
-		//arr_each_with_index_1p(story->blocks, save_wave_each_block_save, self);
 
 		return (Wave) wave;
 	}
