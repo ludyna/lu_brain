@@ -34,7 +34,7 @@
 			for(x = 0; x < w; x++)
 			{
 				rec = lu_brain_rec_get(brain, x);
-				channels = arr_create(brain->mem_perm, rec->channel_size);
+				channels = arr_create(brain->mem_perm, rec->depth);
 
 				arr2_set(self->data, x, y, channels);
 			}
@@ -56,12 +56,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void lu_story_push(Story self, Rec rec, lu_size channel_index, lu_value* data)
+	void lu_story_push(Story self, Rec rec, lu_value* data)
 	{
+		lu_size channel_index = 0;
+
 		lu_user_assert_void(self, "story should not be NULL"); 
 		lu_user_assert_void(rec, "rec should not be NULL"); 
 		lu_user_assert_void(data, "data should not be NULL");
-		lu_user_assert_void(channel_index < rec->channel_size, "channel_index is out of range");
+		lu_user_assert_void(channel_index < rec->depth, "channel_index is out of range");
 
 		Arr channels;
 
@@ -114,7 +116,7 @@
 				rec 	= lu_brain_rec_get(brain, rec_i);
 				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
 
-				for(chan_i = 0; chan_i < rec->channel_size; chan_i++)
+				for(chan_i = 0; chan_i < rec->depth; chan_i++)
 				{
 					arr_set(curr_ch, chan_i, NULL);
 				}
@@ -182,7 +184,7 @@
 			rec 	= lu_brain_rec_get(brain, rec_i);
 			last_ch = wave->prev_data[rec_i];
 
-			for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
+			for (chan_i = 0; chan_i < rec->depth;  chan_i++)
 			{
 
 				for(block_i = 0; block_i < self->block_count; block_i++)
@@ -209,7 +211,7 @@
 		// 	rec 	= lu_brain_rec_get(brain, rec_i);
 		// 	last_ch = wave->prev_data[rec_i];
 
-		// 	for (chan_i = 0; chan_i < rec->channel_size;  chan_i++)
+		// 	for (chan_i = 0; chan_i < rec->depth;  chan_i++)
 		// 	{
 		// 		curr_d = arr_get(last_ch, chan_i);
 
@@ -236,7 +238,7 @@
 				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
 				next_ch = block_i + 1 < arr2_height(data) ?  (Arr) arr2_get(data, rec_i, block_i + 1) : NULL;
 
-				for(chan_i = 0; chan_i < rec->channel_size; chan_i++)
+				for(chan_i = 0; chan_i < rec->depth; chan_i++)
 				{
 					prev_d = prev_ch ? arr_get(prev_ch, chan_i) : NULL;
 					curr_d = curr_ch ? arr_get(curr_ch, chan_i) : NULL;

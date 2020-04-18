@@ -22,7 +22,7 @@
 		N_Rec self 			= (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
 		lu_user_assert(self, "Cannot allocate N_Rec");
 
-		self->val_layers 	= arr_create(mem, rec->channel_size);
+		self->val_layers 	= arr_create(mem, rec->depth);
 
 		Val_Layer val_layer;
 		for(lu_size i = 0; i < arr_size(self->val_layers); i++)

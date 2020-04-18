@@ -48,9 +48,9 @@
 		{
 			rec 	= lu_brain_rec_get(brain, rec_i);
 
-			lu_user_assert(rec->channel_size, "Rec channel size is 0");
+			lu_user_assert(rec->depth, "Rec channel size is 0");
 
-			self->prev_data[rec_i] = arr_create(mem, rec->channel_size);
+			self->prev_data[rec_i] = arr_create(mem, rec->depth);
 		}
 	
 		return self;
@@ -75,7 +75,7 @@
 		{
 			rec 	= lu_brain_rec_get(brain, rec_i);
 
-			lu_user_assert_void(rec->channel_size, "Rec channel size is 0");
+			lu_user_assert_void(rec->depth, "Rec channel size is 0");
 
 			channels = self->prev_data[rec_i];
 			for (chan_i = 0; chan_i < arr_count(channels); chan_i++)

@@ -54,9 +54,9 @@
 
 	Lu_Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts brain_opts, 
-		lu_size channel_size, 
 		lu_size w, 
 		lu_size h, 
+		lu_size depth, 
 		lu_value min, 
 		lu_value max, 
 		lu_size val_neu_size, 
@@ -109,7 +109,7 @@
 	Lu_Story lu_story_create(Lu_Brain, lu_size);
 	void lu_story_destroy(Lu_Story);
 
-	void lu_story_push(Lu_Story, Lu_Rec, lu_size channel_index, lu_value* data);
+	void lu_story_push(Lu_Story, Lu_Rec, lu_value* data);
 
 	Lu_Save_Resp lu_story_save(Lu_Story, Lu_Save_Opts);
 	Lu_Wave lu_story_save_async(Lu_Story, Lu_Save_Opts);

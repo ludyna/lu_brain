@@ -7,18 +7,18 @@
 
 	Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts 	brain_opts, 
-		lu_size 		channel_size,
 		lu_size 		width, 
 		lu_size 		height, 
+		lu_size 		depth,
 		lu_value 		min_value, 
 		lu_value 		max_value, 
 		lu_size 		val_neu_size, 
 		lu_value 		val_ssp
 	)
 	{
-		lu_user_assert(channel_size > 0, "Channel size should be at least 1.");
 		lu_user_assert(width > 0, "Width should be greater than 0");
 		lu_user_assert(height > 0, "Height should be greater than 0");
+		lu_user_assert(depth > 0, "Depth should be at least 1.");
 		lu_user_assert(max_value - min_value > 0, "max_value minus min_value should greater than 0");
 		lu_user_assert(val_neu_size > 0, "val_neu_size should be greater than 0");
 
@@ -26,9 +26,9 @@
 
 		// Initialize
 		self->brain_opts 	= brain_opts;
-		self->channel_size 	= channel_size;
 		self->width 		= width;
 		self->height		= height;
+		self->depth 		= depth;
 		self->min_value 	= min_value;
 		self->max_value 	= max_value;
 		self->val_neu_size	= val_neu_size;

@@ -21,9 +21,9 @@
 		// Initialize
 		self->brain 		= brain;
 
-		self->channel_size	= opts->channel_size;
+		self->depth	= opts->depth;
 
-		if (self->channel_size < 1) self->channel_size = 1;
+		if (self->depth < 1) self->depth = 1;
 
 		self->width 		= opts->width;
 		self->height 		= opts->height;
