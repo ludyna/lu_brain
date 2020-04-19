@@ -76,7 +76,7 @@
 
 		// tymchasove zberezhenia linkiv na prev data 
 		// vidsutnist danyh oznachaye povtoruvanist danyh
-		Arr* 				prev_data;
+		lu_p_value* 		fill_data;
 	};
 
 	struct save_resp {

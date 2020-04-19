@@ -29,16 +29,6 @@
 
 		lu_size x, y;
 		Rec rec;
-		Arr channels;
-		for(y = 0; y < h; y++)
-			for(x = 0; x < w; x++)
-			{
-				rec = lu_brain_rec_get(brain, x);
-				channels = arr_create(brain->mem_perm, rec->depth);
-
-				arr2_set(self->data, x, y, channels);
-			}
-
 
 		story_reset(self);
 
@@ -58,41 +48,32 @@
 
 	void lu_story_push(Story self, Rec rec, lu_value* data)
 	{
-		lu_size channel_index = 0;
-
 		lu_user_assert_void(self, "story should not be NULL"); 
 		lu_user_assert_void(rec, "rec should not be NULL"); 
 		lu_user_assert_void(data, "data should not be NULL");
-		lu_user_assert_void(channel_index < rec->depth, "channel_index is out of range");
+		lu_user_assert_void(rec->depth, "rec->depth is out of range");
 
-		Arr channels;
 
 		if (self->start_block_on_next_data)
 		{ 
 			// yaksho my na nuliu, to ce itak pochatok bloka
 			if (self->block_count)
-			{
 				++self->data_y;	
-			}
-
+			
 			self->start_block_on_next_data = false;
 		}
 	
-		channels = (Arr) arr2_get(self->data, rec->id, self->data_y);
-		lu_p_value v = arr_get(channels, channel_index);
+		lu_p_value v = arr2_get(self->data, rec->id, self->data_y);
 		if (v) 
-		{
 			// new input to the same rec and channel advances story
 			++self->data_y;
-			channels = (Arr) arr2_get(self->data, rec->id, self->data_y);
-		}
- 
+			
  		lu_user_assert_void(
  			self->data_y < arr2_height(self->data), 
  			"Out of available blocks in story."
  		); 
 
- 		arr_set(channels, channel_index, (lu_p_void) data);
+ 		arr2_set(self->data, rec->id, self->data_y, (lu_p_void) data);
 
  		self->block_count = self->data_y + 1;
 	} 
@@ -103,32 +84,22 @@
 		lu_user_assert_void(self->brain, "Story brain should be present");
 		lu_user_assert_void(self->data, "Story data should be present");
 
-		lu_size block_i, rec_i, chan_i;
-		Arr curr_ch;
+		lu_size block_i, rec_i;
 		Arr2 data = self->data;
 		Rec rec;
 		Brain brain = self->brain;
 
 		for(block_i = 0; block_i <= self->data_y; block_i++)
-		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
-			{
-				rec 	= lu_brain_rec_get(brain, rec_i);
-				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
+				arr2_set(data, rec_i, block_i, NULL);
 
-				for(chan_i = 0; chan_i < rec->depth; chan_i++)
-				{
-					arr_set(curr_ch, chan_i, NULL);
-				}
-			}
-		}
 
 		self->data_y = 0;
 		self->start_block_on_next_data = false; 
 		self->block_count = 0;
 	}
 
-	mv_alg Wave lu_story_save_async(Story self, Save_Opts opts)
+	Wave lu_story_save_async(Story self, Save_Opts opts)
 	{
 		lu_user_assert(self, "Story should not be NULL");
 		lu_user_assert(opts, "Save_Opts is NULL");
@@ -151,65 +122,39 @@
 
 		save_wave_init(wave, self, opts);
 
-		// Dlia choho stvoruvaty percepciyi chy she shos koly vse mozhna 
-		// rahuvaty dynamichno? My dynamichno mozhemo rahuvaty contrasty
-		// abo kolir
-
-		// data x = recs, y - blocks 
-		// [x,y] - channels
-		// channel[chan_i] = channel data
-
-		lu_size block_i, rec_i, chan_i;
-		
-		Arr prev_ch;
-		Arr curr_ch;
-		Arr next_ch;
+		lu_size block_i, rec_i;
 		
 		lu_p_value prev_d;
 		lu_p_value curr_d;
 		lu_p_value next_d;
+		lu_p_value fill_d;
 
 		Rec rec; 
 		Arr2 data = self->data;
-		Arr last_ch;
 
- 		// vidsutnist danyh oznachaye povtoruvanist danyh
- 		// yaksho my mayemo NULL NULL 123 todi my mayemo skompiluvaty ce v
- 		// 123 123 123
-		// znayty pershi ne nuliovi dani dlia kozhnoho channel
-		// channel dani mozhut buty nuliovi dlia vsih blockiv
-		// zapovnymo prev_data, teper znaydemo pershi ne nuliovi dani
 		for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 		{
 			rec 	= lu_brain_rec_get(brain, rec_i);
-			last_ch = wave->prev_data[rec_i];
 
-			for (chan_i = 0; chan_i < rec->depth;  chan_i++)
+			for(block_i = 0; block_i < self->block_count; block_i++)
 			{
+				curr_d = arr2_get(data, rec_i, block_i);
 
-				for(block_i = 0; block_i < self->block_count; block_i++)
-				{
-					curr_ch = arr2_get(data, rec_i, block_i);
-					if (!curr_ch)
-						continue;
-
-					curr_d = arr_get(curr_ch, chan_i);
-
-					if (curr_d) {
-						arr_set(last_ch, chan_i, curr_d);
-						break; // znayshly, vyhodymo z cyclu po blokah
-					}
+				if (curr_d) {
+					wave->fill_data[rec_i] = curr_d;
+					break; 
 				}
-
-				if (!arr_get(last_ch, chan_i))
-					lu_user_debug_args("Story has no data for rec %lu and channel %lu", rec_i, chan_i);
 			}
+
+			if (wave->fill_data[rec_i] == NULL)
+				lu_user_debug_args("Story has no data for rec %lu", rec_i);
+		
 		}
 
 		// for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 		// {
 		// 	rec 	= lu_brain_rec_get(brain, rec_i);
-		// 	last_ch = wave->prev_data[rec_i];
+		// 	last_ch = wave->fill_data[rec_i];
 
 		// 	for (chan_i = 0; chan_i < rec->depth;  chan_i++)
 		// 	{
@@ -232,40 +177,19 @@
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 			{
 				rec 	= lu_brain_rec_get(brain, rec_i);
-				last_ch = wave->prev_data[rec_i];
+				curr_d 	= arr2_get(data, rec_i, block_i);
 
-				prev_ch = block_i ? (Arr) arr2_get(data, rec_i, block_i - 1) : NULL;
-				curr_ch = (Arr) arr2_get(data, rec_i, block_i);
-				next_ch = block_i + 1 < arr2_height(data) ?  (Arr) arr2_get(data, rec_i, block_i + 1) : NULL;
-
-				for(chan_i = 0; chan_i < rec->depth; chan_i++)
-				{
-					prev_d = prev_ch ? arr_get(prev_ch, chan_i) : NULL;
-					curr_d = curr_ch ? arr_get(curr_ch, chan_i) : NULL;
-					next_d = next_ch ? arr_get(next_ch, chan_i) : NULL;
+				if (curr_d)
+					wave->fill_data[rec_i] = curr_d;
+				else 
+					curr_d = wave->fill_data[rec_i];
 
 
-					if (!prev_d) prev_d = arr_get(last_ch, chan_i);
+				lu_debug("\n DATA(block=%lu, rec=%lu): ", block_i, rec_i);
+				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
 
-					if (curr_d)
-					{
-						arr_set(last_ch, chan_i, curr_d);
-					}
-					else 
-						curr_d = arr_get(last_ch, chan_i);
+				// process
 
-					if (!next_d) next_d = arr_get(last_ch, chan_i);
-
- 
-					lu_debug("\n DATA(block=%lu, rec=%lu, ch=%lu): ", block_i, rec_i, chan_i);
-					prev_d ? lu_debug("%.0f ", prev_d[0]) : lu_debug("NULL ");
-					curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
-					next_d ? lu_debug("%.0f ", next_d[0]) : lu_debug("NULL ");  
-
-					// process
-
-
-				}
 
 			}
 		}
@@ -277,7 +201,7 @@
 		return (Wave) wave;
 	}
 
-	mv_setup Save_Resp lu_story_save(Story self, Save_Opts opts)
+	Save_Resp lu_story_save(Story self, Save_Opts opts)
 	{
 		lu_user_assert(self, "Story is NULL");
 		lu_user_assert(opts, "Save_Opts is NULL");

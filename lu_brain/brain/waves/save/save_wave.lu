@@ -21,6 +21,20 @@
 		self->story = story;
 	} 
 
+	static void save_wave_reset(Save_Wave self)
+	{
+		lu_user_assert_void(self, "Wave is NULL");
+		lu_user_assert_void(self->super.gate, "Gate is NULL");
+
+		Brain brain = self->super.gate->brain;
+
+		lu_user_assert_void(brain, "Brain is NULL");
+		lu_user_assert_void(arr_count(brain->recs) > 0, "Brain has no recs");
+
+		for (lu_size rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
+			self->fill_data[rec_i] = NULL;
+	}
+
 	static Save_Wave save_wave_create(Gate gate, Save_Wave_Create_Opts opts)
 	{
 		lu_user_assert(opts->max_story_size_in_blocks > 0, "Option max_story_size_in_blocks should be greater than 0");
@@ -42,46 +56,14 @@
 
 		lu_user_assert(arr_count(brain->recs) > 0, "Brain has no recs");
 
-		self->prev_data = (Arr*) mem_alloc(mem, sizeof(Arr*) * arr_count(brain->recs));
-		Rec rec;
-		for (lu_size rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
-		{
-			rec 	= lu_brain_rec_get(brain, rec_i);
+		self->fill_data = (lu_p_value*) mem_alloc(mem, sizeof(lu_p_value*) * arr_count(brain->recs));
 
-			lu_user_assert(rec->depth, "Rec channel size is 0");
+		save_wave_reset(self);
 
-			self->prev_data[rec_i] = arr_create(mem, rec->depth);
-		}
-	
 		return self;
 	}
 
-	static void save_wave_reset(Save_Wave self)
-	{
-		lu_user_assert_void(self, "Wave is NULL");
-		lu_user_assert_void(self->super.gate, "Gate is NULL");
 
-		Brain brain = self->super.gate->brain;
-
-		lu_user_assert_void(brain, "Brain is NULL");
-
-		lu_user_assert_void(arr_count(brain->recs) > 0, "Brain has no recs");
-
-		// Reset prev_data
-		Arr channels;
-		lu_size rec_i, chan_i;
-		Rec rec;
-		for (rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
-		{
-			rec 	= lu_brain_rec_get(brain, rec_i);
-
-			lu_user_assert_void(rec->depth, "Rec channel size is 0");
-
-			channels = self->prev_data[rec_i];
-			for (chan_i = 0; chan_i < arr_count(channels); chan_i++)
-				arr_set(channels, chan_i, NULL);
-		}
-	}
 
 	static void save_wave_process(Save_Wave self)
 	{
