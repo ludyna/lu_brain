@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Lu_Save_Resp save_resp_create()
+	static Lu_Save_Resp save_resp_create()
 	{
 		Lu_Save_Resp self 			= (Lu_Save_Resp) malloc(sizeof(struct lu_save_resp));
 
@@ -14,7 +14,7 @@
 		return self;
 	}
 
-	void save_resp_destroy(Lu_Save_Resp* self)
+	static void save_resp_destroy(Lu_Save_Resp* self)
 	{
 		lu_free((void**) self);
 	}

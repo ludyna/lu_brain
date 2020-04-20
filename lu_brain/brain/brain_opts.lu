@@ -20,7 +20,7 @@
 		return self;
 	}  
 
-	void each_rec_opts_destroy(lu_p_void item)
+	static void each_rec_opts_destroy(lu_p_void item)
 	{
 		lu_rec_opts_destroy((Lu_Rec_Opts) item);
 	}

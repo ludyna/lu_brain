@@ -39,7 +39,7 @@ typedef struct label_gen* LabelGen;
 
 struct label_gen g_label_gen;
 
-void label_gen_set(char* lbl);
+static void label_gen_set(char* lbl);
 
 
 

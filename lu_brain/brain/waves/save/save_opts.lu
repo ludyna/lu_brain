@@ -1,11 +1,11 @@
 
 
-Lu_Save_Opts lu_save_opts_create()
-{
-	return (Lu_Save_Opts) mem_alloc(g_mem_temp, sizeof(struct lu_save_opts));
-}
+	Lu_Save_Opts lu_save_opts_create()
+	{
+		return (Lu_Save_Opts) mem_alloc(g_mem_temp, sizeof(struct lu_save_opts));
+	}
 
-void lu_save_opts_destroy(Lu_Save_Opts self)
-{
-	mem_free(g_mem_temp, (lu_p_byte) self);
-}
+	void lu_save_opts_destroy(Lu_Save_Opts self)
+	{
+		mem_free(g_mem_temp, (lu_p_byte) self);
+	}

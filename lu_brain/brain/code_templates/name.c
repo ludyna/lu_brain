@@ -5,12 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	Name lu_name_create()
+	static Name name_create()
 	{
 		
 	}
 
-	void lu_name_destroy(Name self)
+	static void name_destroy(Name self)
 	{
 
 	}

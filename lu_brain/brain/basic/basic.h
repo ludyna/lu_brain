@@ -16,9 +16,11 @@
 #include <pthread.h>
 
 #include "types.h"
+#include "debug.h"
 #include "version.h"
 #include "constants.h"
 #include "exception.h"
 #include "util.h"
+
 
 #endif // _LU_BASIC_H

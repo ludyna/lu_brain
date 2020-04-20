@@ -47,7 +47,7 @@
 	#define mem_temp_free(p) g_mem_temp->free(g_mem_temp, p, __func__, __FILE__, __LINE__)
 	#define mem_temp_table_create(r_size, t_size, p, f) g_mem_temp->table_create(g_mem_temp, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
 
-	Mem mem_create();
+	static Mem mem_create();
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Table
@@ -102,7 +102,7 @@
 	};
 
 
-	Mem_Perm mem_perm_create(Mem parent_mem, lu_size size_in_bytes);
+	static Mem_Perm mem_perm_create(Mem parent_mem, lu_size size_in_bytes);
 
 	static inline lu_bool mem_perm_is_out_of_mem(Mem_Perm self)
 	{
@@ -125,7 +125,7 @@
 		Mem_Perm 	mem_perm;
 	};
 
-	Mem_Table_Perm mem_table_perm_create(
+	static Mem_Table_Perm mem_table_perm_create(
 		Mem_Perm 			mem, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 

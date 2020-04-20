@@ -13,7 +13,7 @@ struct label_gen g_label_gen = {
 	.l_num = 0
 };
 
-void label_gen_set(char* lbl)
+static void label_gen_set(char* lbl)
 {
 	if (g_label_gen.l_num > 0)
 	{ 
