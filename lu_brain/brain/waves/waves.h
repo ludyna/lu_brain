@@ -25,19 +25,19 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// Wave API
+// Lu_Wave API
 
 	// typedef here to break cyclic dependency
 	typedef struct gate* 						Gate;
 
-	struct wave {
+	struct lu_wave {
 		Gate 	gate;
 	};
 
-	static void wave_init(Wave self, Gate gate);
+	static void wave_init(Lu_Wave self, Gate gate);
 
 	
-	struct wave_resp {
+	struct lu_wave_resp {
 		
 	};
 
@@ -51,7 +51,7 @@
 
 	static void save_wave_create_opts_init(Save_Wave_Create_Opts);
 
-	struct save_opts {
+	struct lu_save_opts {
 
 	};
 
@@ -67,23 +67,23 @@
 		return sizeof(lu_value) * self->width * self->height * self->block_count;
 	}
 
-	static Channel_Data channel_data_create(Mem mem, Rec rec, lu_size block_count);
+	static Channel_Data channel_data_create(Mem mem, Lu_Rec lu_rec, lu_size block_count);
 
 	struct save_wave {
-		struct wave 		super;
-		struct save_opts 	save_opts;
-		Story 				story;
+		struct lu_wave 		super;
+		struct lu_save_opts 	save_opts;
+		Lu_Story 				story;
 
 		// tymchasove zberezhenia linkiv na prev data 
 		// vidsutnist danyh oznachaye povtoruvanist danyh
 		lu_p_value* 		fill_data;
 	};
 
-	struct save_resp {
+	struct lu_save_resp {
 
 	};
 
-	static void save_wave_init(Save_Wave, Story, Save_Opts);
+	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
 
 	static void save_wave_process(Save_Wave self);
 
@@ -100,28 +100,28 @@
 
 	static void find_wave_create_opts_init(Find_Wave_Create_Opts);
 
-	struct find_opts {
+	struct lu_find_opts {
 
 	};
 
 	struct find_wave {
-		struct wave 		super;
-		struct find_opts 	find_opts;
-		Story 				story;
+		struct lu_wave 			super;
+		struct lu_find_opts 	find_opts;
+		Lu_Story 				story;
 	};
 
-	struct find_resp {
+	struct lu_find_resp {
 
 	};
 
-	static void find_wave_init(Find_Wave, Story, Find_Opts);
+	static void find_wave_init(Find_Wave, Lu_Story, Lu_Find_Opts);
 
 	static void find_wave_process(Find_Wave self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Perc API
 
-lu_p_void perc_cont_create(Rec rec, lu_p_void prev, lu_p_void curr, lu_p_void next);
+lu_p_void perc_cont_create(Lu_Rec lu_rec, lu_p_void prev, lu_p_void curr, lu_p_void next);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Restore API
@@ -133,20 +133,20 @@ lu_p_void perc_cont_create(Rec rec, lu_p_void prev, lu_p_void curr, lu_p_void ne
 
 	static void restore_wave_create_opts_init(Restore_Wave_Create_Opts);
 
-	struct restore_opts {
+	struct lu_restore_opts {
 
 	};
 
 	struct restore_wave {
-		struct wave 			super;
-		struct restore_opts 	restore_opts;
-		Brain 					brain;
+		struct lu_wave 			super;
+		struct lu_restore_opts 	restore_opts;
+		Lu_Brain 				brain;
 	};
 
-	struct restore_resp {
+	struct lu_restore_resp {
 
 	};
 
-	static void restore_wave_init(Restore_Wave, Brain, Restore_Opts);
+	static void restore_wave_init(Restore_Wave, Lu_Brain, Lu_Restore_Opts);
 
 	static void restore_wave_process(Restore_Wave self);

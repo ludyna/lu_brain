@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Save_Wave
 
-	static void save_wave_init(Save_Wave self, Story story, Save_Opts opts)
+	static void save_wave_init(Save_Wave self, Lu_Story story, Lu_Save_Opts opts)
 	{
 		if (opts)
 			self->save_opts = *opts;
@@ -23,13 +23,13 @@
 
 	static void save_wave_reset(Save_Wave self)
 	{
-		lu_user_assert_void(self, "Wave is NULL");
+		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(self->super.gate, "Gate is NULL");
 
-		Brain brain = self->super.gate->brain;
+		Lu_Brain brain = self->super.gate->brain;
 
-		lu_user_assert_void(brain, "Brain is NULL");
-		lu_user_assert_void(arr_count(brain->recs) > 0, "Brain has no recs");
+		lu_user_assert_void(brain, "Lu_Brain is NULL");
+		lu_user_assert_void(arr_count(brain->recs) > 0, "Lu_Brain has no recs");
 
 		for (lu_size rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
 			self->fill_data[rec_i] = NULL;
@@ -40,9 +40,9 @@
 		lu_user_assert(opts->max_story_size_in_blocks > 0, "Option max_story_size_in_blocks should be greater than 0");
 		lu_user_assert(gate, "Gate is NULL");
 
-		Brain brain = gate->brain;
+		Lu_Brain brain = gate->brain;
 
-		lu_user_assert(brain, "Brain is NULL");
+		lu_user_assert(brain, "Lu_Brain is NULL");
 
 		Mem mem = brain->mem_perm;
 
@@ -54,7 +54,7 @@
 
 		lu_user_assert(self, "Unable to allocate Save_Wave");
 
-		lu_user_assert(arr_count(brain->recs) > 0, "Brain has no recs");
+		lu_user_assert(arr_count(brain->recs) > 0, "Lu_Brain has no recs");
 
 		self->fill_data = (lu_p_value*) mem_alloc(mem, sizeof(lu_p_value*) * arr_count(brain->recs));
 
@@ -68,11 +68,11 @@
 	static void save_wave_process(Save_Wave self)
 	{
 		// vse connetytsia po chasu
-		// i sytuaciyu v odnomu rec 
-		// i sytuaciyu mizh rec
+		// i sytuaciyu v odnomu lu_rec 
+		// i sytuaciyu mizh lu_rec
 		// i osoblyvo sytuaciyi v odnomu bloci
 
-		// znachenia dlia neurons isnuyut tilky dlia potochnoyi wave
+		// znachenia dlia neurons isnuyut tilky dlia potochnoyi lu_wave
 		// yaki my attachymo do neus yak componentu ES
 
 		// if (self == NULL) {
@@ -80,7 +80,7 @@
 		// 	return;
 		// }
 
-		// Story story = self->story;
+		// Lu_Story story = self->story;
 
 		// if (story == NULL) {
 		// 	lu_user_debug("story should not be NULL");

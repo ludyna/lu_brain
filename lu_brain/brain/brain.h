@@ -7,7 +7,7 @@
 #include "basic/basic.h"
 #include "lib/lib.h"
 
-#include "public_to_private.h"
+#include "../lu_brain.h" // public interface
 
 #include "n_mem/n_mem.h"
 #include "rec/rec.h"
@@ -24,9 +24,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
-	struct brain_opts {
+	struct lu_brain_opts {
 		lu_size				id;
-		lu_size 			size_in_bytes;			// brain size in bytes including 
+		lu_size 			size_in_bytes;			// lu_brain size in bytes including 
 													// everything related
 
 		////////////////////////////////////
@@ -40,9 +40,9 @@
 	};
 
 
-	struct brain {
+	struct lu_brain {
 		lu_size			id;  		// useful for logs and debugging 
-									// in multi-brain env
+									// in multi-lu_brain env
 
 		Mem 			mem_perm;
 
@@ -54,7 +54,7 @@
 	};	
 
 
-	static inline Gate brain_gate(Brain self)
+	static inline Gate brain_gate(Lu_Brain self)
 	{
 		return self->gate;
 	}	

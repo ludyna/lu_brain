@@ -23,7 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Gate
 
-	static Gate gate_create(Brain brain, Gate_Opts opts)
+	static Gate gate_create(Lu_Brain brain, Gate_Opts opts)
 	{
 		lu_assert(opts->save_waves_size > 0);
 		lu_assert(opts->find_waves_size > 0);

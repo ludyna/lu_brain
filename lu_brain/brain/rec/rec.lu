@@ -10,13 +10,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Rec rec_create(Brain brain, Rec_Opts opts)
+	static Lu_Rec rec_create(Lu_Brain brain, Lu_Rec_Opts opts)
 	{
-		lu_user_assert(brain, "Brain is NULL");
+		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(opts, "Opts is NULL");
 
-		Rec self 			= (Rec) mem_alloc(brain->mem_perm, sizeof(struct rec));
-		lu_user_assert(self, "Cannot allocate rec");
+		Lu_Rec self 			= (Lu_Rec) mem_alloc(brain->mem_perm, sizeof(struct lu_rec));
+		lu_user_assert(self, "Cannot allocate lu_rec");
 
 		// Initialize
 		self->brain 		= brain;
@@ -35,7 +35,7 @@
 		return self;
 	}
 
-	void rec_destroy(Rec self)
+	static void rec_destroy(Lu_Rec self)
 	{
 		mem_free(self->brain->mem_perm, (lu_p_byte) self);
 	}

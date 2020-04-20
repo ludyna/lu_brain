@@ -10,15 +10,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Story lu_story_create(Brain brain, lu_size story_size_in_blocks)
+	Lu_Story lu_story_create(Lu_Brain brain, lu_size story_size_in_blocks)
 	{
-		lu_user_assert(brain, "Brain should not be NULL");
+		lu_user_assert(brain, "Lu_Brain should not be NULL");
 		lu_user_assert(
 			brain->recs && arr_count(brain->recs), 
-			"Brain recs should be created first"
+			"Lu_Brain recs should be created first"
 		);
 
-		Story self 		= (Story) mem_alloc(g_mem_temp, sizeof(struct story));
+		Lu_Story self 		= (Lu_Story) mem_alloc(g_mem_temp, sizeof(struct lu_story));
 
 		// Initialize
 		self->brain 	= brain;
@@ -28,16 +28,16 @@
 		self->data 		= arr2_create(g_mem_temp, w, h);
 
 		lu_size x, y;
-		Rec rec;
+		Lu_Rec rec;
 
 		story_reset(self);
 
 		return self;
 	}
 
-	void lu_story_destroy(Story self)
+	void lu_story_destroy(Lu_Story self)
 	{
-		lu_user_assert_void(self, "Story is NULL");
+		lu_user_assert_void(self, "Lu_Story is NULL");
 
 		arr2_destroy(self->data, g_mem_temp);
 		mem_free(g_mem_temp, (lu_p_byte) self);
@@ -46,12 +46,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void lu_story_push(Story self, Rec rec, lu_value* data)
+	void lu_story_push(Lu_Story self, Lu_Rec rec, lu_value* data)
 	{
-		lu_user_assert_void(self, "story should not be NULL"); 
-		lu_user_assert_void(rec, "rec should not be NULL"); 
+		lu_user_assert_void(self, "Lu_Story should not be NULL"); 
+		lu_user_assert_void(rec, "Lu_Rec should not be NULL"); 
 		lu_user_assert_void(data, "data should not be NULL");
-		lu_user_assert_void(rec->depth, "rec->depth is out of range");
+		lu_user_assert_void(rec->depth, "Lu_Rec depth is out of range");
 
 
 		if (self->start_block_on_next_data)
@@ -78,16 +78,16 @@
  		self->block_count = self->data_y + 1;
 	} 
 
-	static void story_reset(Story self)
+	static void story_reset(Lu_Story self)
 	{
-		lu_user_assert_void(self, "Story should be present");
-		lu_user_assert_void(self->brain, "Story brain should be present");
-		lu_user_assert_void(self->data, "Story data should be present");
+		lu_user_assert_void(self, "Lu_Story should be present");
+		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
+		lu_user_assert_void(self->data, "Lu_Story data should be present");
 
 		lu_size block_i, rec_i;
 		Arr2 data = self->data;
-		Rec rec;
-		Brain brain = self->brain;
+		Lu_Rec rec;
+		Lu_Brain brain = self->brain;
 
 		for(block_i = 0; block_i <= self->data_y; block_i++)
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
@@ -99,21 +99,21 @@
 		self->block_count = 0;
 	}
 
-	Wave lu_story_save_async(Story self, Save_Opts opts)
+	Lu_Wave lu_story_save_async(Lu_Story self, Lu_Save_Opts opts)
 	{
-		lu_user_assert(self, "Story should not be NULL");
-		lu_user_assert(opts, "Save_Opts is NULL");
+		lu_user_assert(self, "Lu_Story should not be NULL");
+		lu_user_assert(opts, "Lu_Save_Opts is NULL");
 
 		lu_debug("\nSAVE (block_count = %lu)\n", self->block_count);
 
-		Brain brain = self->brain;
-		lu_user_assert(brain, "Story not linked to brain");
+		Lu_Brain brain = self->brain;
+		lu_user_assert(brain, "Lu_Story not linked to brain");
 
 		Arr recs = brain->recs;
 
-		lu_user_assert(recs, "Brain has no recs");
-		lu_user_assert(arr_count(recs), "Brain has no recs1");
-		lu_user_assert(self->block_count, "Story without blocks");
+		lu_user_assert(recs, "Lu_Brain has no recs");
+		lu_user_assert(arr_count(recs), "Lu_Brain has no recs1");
+		lu_user_assert(self->block_count, "Lu_Story without blocks");
 
 		Gate gate = brain_gate(self->brain);
 
@@ -129,7 +129,7 @@
 		lu_p_value next_d;
 		lu_p_value fill_d;
 
-		Rec rec; 
+		Lu_Rec rec; 
 		Arr2 data = self->data;
 
 		for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
@@ -147,7 +147,7 @@
 			}
 
 			if (wave->fill_data[rec_i] == NULL)
-				lu_user_debug_args("Story has no data for rec %lu", rec_i);
+				lu_user_debug_args("Lu_Story has no data for rec %lu", rec_i);
 		
 		}
 
@@ -167,11 +167,6 @@
 		// 	}
 		// }
 
-		// naspravdi meni ne potriben prev i next, dostatnio tilky curr
-		// curr doyednuyetsia do poperednih danyh. My skorishe mayemo
-		// opraciovuvaty vsi channel dlia potochnoho bloku i rec 
-		// odnochasno - bo vsi channel formuyut piksel
-		// hiba dlia toho shob porahuvaty cont
 		for(block_i = 0; block_i < self->block_count; block_i++)
 		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
@@ -185,11 +180,10 @@
 					curr_d = wave->fill_data[rec_i];
 
 
-				lu_debug("\n DATA(block=%lu, rec=%lu): ", block_i, rec_i);
+				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
 				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
 
-				// process
-
+				
 
 			}
 		}
@@ -198,25 +192,25 @@
 		story_reset(self);
 
 
-		return (Wave) wave;
+		return (Lu_Wave) wave;
 	}
 
-	Save_Resp lu_story_save(Story self, Save_Opts opts)
+	Lu_Save_Resp lu_story_save(Lu_Story self, Lu_Save_Opts opts)
 	{
-		lu_user_assert(self, "Story is NULL");
-		lu_user_assert(opts, "Save_Opts is NULL");
+		lu_user_assert(self, "Lu_Story is NULL");
+		lu_user_assert(opts, "Lu_Save_Opts is NULL");
 
-		Wave wave = lu_story_save_async(self, opts);
+		Lu_Wave wave = lu_story_save_async(self, opts);
 		
 		lu_wave_join(wave);
 
-		return (Save_Resp) lu_wave_response(wave);
+		return (Lu_Save_Resp) lu_wave_response(wave);
 	}
 
-	Wave lu_story_find_async(Story self, Find_Opts opts)
+	Lu_Wave lu_story_find_async(Lu_Story self, Lu_Find_Opts opts)
 	{
-		lu_user_assert(self, "Story is NULL");
-		lu_user_assert(opts, "Find_Opts is NULL");
+		lu_user_assert(self, "Lu_Story is NULL");
+		lu_user_assert(opts, "Lu_Find_Opts is NULL");
 
 		Gate gate = brain_gate(self->brain);
 
@@ -226,26 +220,26 @@
 
 		find_wave_process(wave);
 
-		return (Wave) wave;
+		return (Lu_Wave) wave;
 	}
 
-	Find_Resp lu_story_find(Story self, Find_Opts opts)
+	Lu_Find_Resp lu_story_find(Lu_Story self, Lu_Find_Opts opts)
 	{
-		lu_user_assert(self, "Story is NULL");
-		lu_user_assert(opts, "Find_Opts is NULL");
+		lu_user_assert(self, "Lu_Story is NULL");
+		lu_user_assert(opts, "Lu_Find_Opts is NULL");
 
-		Wave wave = lu_story_find_async(self, opts);
+		Lu_Wave wave = lu_story_find_async(self, opts);
 		
 		lu_wave_join(wave);
 
-		return (Find_Resp) lu_wave_response(wave);
+		return (Lu_Find_Resp) lu_wave_response(wave);
 	}
 
-	Wave lu_story_restore_async(Brain brain, Neuron neuron, Restore_Opts opts)
+	Lu_Wave lu_story_restore_async(Lu_Brain brain, Lu_Neuron lu_neuron, Lu_Restore_Opts opts)
 	{ 
-		lu_user_assert(brain, "Brain is NULL");
-		lu_user_assert(neuron, "Neuron is NULL");
-		lu_user_assert(opts, "Restore_Opts is NULL");
+		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(lu_neuron, "Lu_Neuron is NULL");
+		lu_user_assert(opts, "Lu_Restore_Opts is NULL");
 
 		Gate gate = brain_gate(brain);
 
@@ -255,19 +249,19 @@
 
 		restore_wave_process(wave);
 
-		return (Wave) wave;
+		return (Lu_Wave) wave;
 	}
 
-	Restore_Resp lu_story_restore(Brain brain, Neuron neuron, Restore_Opts opts)
+	Lu_Restore_Resp lu_story_restore(Lu_Brain brain, Lu_Neuron lu_neuron, Lu_Restore_Opts opts)
 	{
-		lu_user_assert(brain, "Brain is NULL");
-		lu_user_assert(neuron, "Neuron is NULL");
-		lu_user_assert(opts, "Restore_Opts is NULL");
+		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(lu_neuron, "Lu_Neuron is NULL");
+		lu_user_assert(opts, "Lu_Restore_Opts is NULL");
 
-		Wave wave = lu_story_restore_async(brain, neuron, opts);
+		Lu_Wave wave = lu_story_restore_async(brain, lu_neuron, opts);
 		
 		lu_wave_join(wave);
 
-		return (Restore_Resp) lu_wave_response(wave);
+		return (Lu_Restore_Resp) lu_wave_response(wave);
 	}
 

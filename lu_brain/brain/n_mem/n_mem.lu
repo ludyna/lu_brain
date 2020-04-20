@@ -10,7 +10,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Rec 
 	
-	static N_Rec n_rec_create(N_Mem n_mem, Rec rec)
+	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec)
 	{
 		lu_user_assert(n_mem, "N_Mem is blank");
 		lu_user_assert(n_mem->brain, "n_mem->brain is blank");
@@ -40,12 +40,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem7
 
-	static N_Mem n_mem_create(Brain brain)
+	static N_Mem n_mem_create(Lu_Brain brain)
 	{
-		lu_user_assert(brain, "Brain is NULL");
-		lu_user_assert(brain->mem_perm, "Brain mem_perm is NULL");
-		lu_user_assert(brain->recs, "Brain recs is NULL");
-		lu_user_assert(arr_count(brain->recs) > 0, "Brain without recs");
+		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(brain->mem_perm, "Lu_Brain mem_perm is NULL");
+		lu_user_assert(brain->recs, "Lu_Brain recs is NULL");
+		lu_user_assert(arr_count(brain->recs) > 0, "Lu_Brain without recs");
 
 		Mem mem = brain->mem_perm;
 
@@ -55,11 +55,11 @@
 		self->brain 		= brain;
 		self->n_recs 		= arr_create(mem, arr_count(brain->recs));
 
-		Rec rec;	
+		Lu_Rec rec;	
 		N_Rec n_rec;
 		for(lu_size i = 0; i < arr_size(self->n_recs); i++)
 		{
-			rec = (Rec) arr_get(brain->recs, i);
+			rec = (Lu_Rec) arr_get(brain->recs, i);
 
 			n_rec = n_rec_create(self, rec);
 

@@ -7,13 +7,13 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Story 
+// Lu_Story 
 	
 	#define STORY_INITIAL_BLOCKS_SIZE 8
 
-	struct story {
+	struct lu_story {
 		// not resetable
-		Brain 				brain;
+		Lu_Brain 			brain;
 		Arr2 				data;
 
 		// resetable
@@ -25,4 +25,4 @@
 	//
 	//	
 	//
-	static void story_reset(Story);
+	static void story_reset(Lu_Story);

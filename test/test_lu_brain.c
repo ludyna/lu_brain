@@ -143,18 +143,18 @@ void test_lu_brain_basics(void)
 	 save_response = lu_story_save(story, save_opts); 
 
 		// Because we called save (or find or restore) - it automatically 
-		// reset number of available blocks inside story. If available block count 
+		// reset number of available blocks inside story. If available lu_block count 
 		// was 13 before save (we filled 3 blocks above), after save avalable 
-		// block count will be again 16 (this number is configurable)
+		// lu_block count will be again 16 (this number is configurable)
 
 		lu_block_begin(story);
 		lu_story_push(story, rec_1, data_4);
 		lu_story_push(story, rec_2, data_5);
 		lu_block_end(story);
 
-		Lu_Wave wave = lu_story_save_async(story, save_opts);
-		lu_wave_join(wave);
-		save_response = (Lu_Save_Resp) lu_wave_response(wave);
+		Lu_Wave lu_wave = lu_story_save_async(story, save_opts);
+		lu_wave_join(lu_wave);
+		save_response = (Lu_Save_Resp) lu_wave_response(lu_wave);
 
 	// Destroy all temporary info associated with story. 
 	// Does not destroy created related neurons.
@@ -182,14 +182,14 @@ void test_lu_brain_basics(void)
 			lu_story_push(story, rec_2, data_5);
 			lu_block_end(story);
 
-	wave = lu_story_find_async(story, find_opts);
-	lu_wave_join(wave);
-	find_response = (Lu_Find_Resp) lu_wave_response(wave);
+	lu_wave = lu_story_find_async(story, find_opts);
+	lu_wave_join(lu_wave);
+	find_response = (Lu_Find_Resp) lu_wave_response(lu_wave);
 
 	lu_story_destroy(story); 
 
 	/////////////////////////////////////////////////////////
-	// Name
+	// Lu_Name
 
 	Lu_Neuron save_neuron = lu_save_resp_neuron(save_response);
 
@@ -200,9 +200,9 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Restore
 
-	Lu_Restore_Resp restore_resp = lu_story_restore(brain, save_neuron, restore_opts);
+	Lu_Restore_Resp lu_restore_resp = lu_story_restore(brain, save_neuron, restore_opts);
 
 	/////////////////////////////////////////////////////
-	// Restore stories by name
+	// Restore stories by lu_name
 
 }

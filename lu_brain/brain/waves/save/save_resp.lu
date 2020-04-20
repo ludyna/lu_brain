@@ -5,16 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Save_Resp save_resp_create()
+	Lu_Save_Resp save_resp_create()
 	{
-		Save_Resp self 			= (Save_Resp) malloc(sizeof(struct save_resp));
+		Lu_Save_Resp self 			= (Lu_Save_Resp) malloc(sizeof(struct lu_save_resp));
 
 		// Initialize
 
 		return self;
 	}
 
-	void save_resp_destroy(Save_Resp* self)
+	void save_resp_destroy(Lu_Save_Resp* self)
 	{
 		lu_free((void**) self);
 	}
@@ -23,7 +23,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	Neuron lu_save_resp_neuron(Save_Resp self)
+	Lu_Neuron lu_save_resp_neuron(Lu_Save_Resp self)
 	{
 		return NULL;
 	}

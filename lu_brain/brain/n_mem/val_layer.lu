@@ -5,11 +5,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create 
 
-	static Val_Layer val_layer_create(Mem mem, Rec rec)
+	static Val_Layer val_layer_create(Mem mem, Lu_Rec rec)
 	{
 		lu_user_assert(mem, "Mem is NULL");
-		lu_user_assert(rec->max_value > rec->min_value, "Rec max_value should be greater than Rec min_value");
-		lu_user_assert(rec->val_ssp > 0 && rec->val_ssp <= 0.5, "Rec val_ssp should be greater than 0 and less equal to 0.5");
+		lu_user_assert(rec->max_value > rec->min_value, "Lu_Rec max_value should be greater than Lu_Rec min_value");
+		lu_user_assert(rec->val_ssp > 0 && rec->val_ssp <= 0.5, "Lu_Rec val_ssp should be greater than 0 and less equal to 0.5");
 
 		Val_Layer self = (Val_Layer) mem_alloc(mem, sizeof(struct val_layer));
 		lu_user_assert(self, "Not enough memory for Val Layer");

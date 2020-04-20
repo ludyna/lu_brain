@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	static void wave_init(Wave self, Gate gate)
+	static void wave_init(Lu_Wave self, Gate gate)
 	{
 		self->gate = gate;
 	}
@@ -13,44 +13,44 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	lu_bool lu_wave_is_working(Wave self)
+	lu_bool lu_wave_is_working(Lu_Wave self)
 	{
 		return false;
 	}
 
-	lu_bool lu_wave_cancel(Wave self)
+	lu_bool lu_wave_cancel(Lu_Wave self)
 	{
 
 	}
 
-	lu_size lu_wave_time(Wave self)
+	lu_size lu_wave_time(Lu_Wave self)
 	{
 
 	}
 
-	enum lu_wave_status lu_wave_status(Wave self)
+	enum lu_wave_status lu_wave_status(Lu_Wave self)
 	{
 
 	}
 
-	lu_size lu_wave_touched_count(Wave self)
+	lu_size lu_wave_touched_count(Lu_Wave self)
 	{
 
 	}
 
-	lu_size lu_wave_excited_count(Wave self)
+	lu_size lu_wave_excited_count(Lu_Wave self)
 	{
 
 	}
 
-	void wave_release(Wave self)
+	void wave_release(Lu_Wave self)
 	{
 
 	}
 
-	Lu_Wave_Resp lu_wave_response(Wave self)
+	Lu_Wave_Resp lu_wave_response(Lu_Wave self)
 	{
-		lu_user_assert(self, "Wave is NULL");
+		lu_user_assert(self, "Lu_Wave is NULL");
 
 		Lu_Wave_Resp resp = NULL;
 
@@ -59,7 +59,7 @@
 		return resp;
 	}
 
-	void lu_wave_join(Wave self)
+	void lu_wave_join(Lu_Wave self)
 	{
-		lu_user_assert_void(self, "Wave is NULL");
+		lu_user_assert_void(self, "Lu_Wave is NULL");
 	}

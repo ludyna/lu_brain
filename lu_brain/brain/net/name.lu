@@ -5,17 +5,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Name lu_name_create(Brain brain)
+	Lu_Name lu_name_create(Lu_Brain lu_brain)
 	{
-		Name self 			= (Name) malloc(sizeof(struct name));
+		Lu_Name self 			= (Lu_Name) malloc(sizeof(struct lu_name));
 
 		// Initialize 
-		self->brain 		= brain;
+		self->brain 		= lu_brain;
 
 		return self;
 	}
 
-	void lu_name_destroy(Name self)
+	void lu_name_destroy(Lu_Name self)
 	{
 		lu_free((void**) self);
 	}

@@ -44,16 +44,16 @@
 	}; 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Brain_Opts API
+// Lu_Brain_Opts API
 
 	Lu_Brain_Opts lu_brain_opts_create(lu_size id, lu_size size_in_bytes);
 	void lu_brain_opts_destroy(Lu_Brain_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Rec_Opts API
+// Lu_Rec_Opts API
 
 	Lu_Rec_Opts lu_rec_opts_create(
-		Lu_Brain_Opts brain_opts, 
+		Lu_Brain_Opts lu_brain_opts, 
 		lu_size w, 
 		lu_size h, 
 		lu_size depth, 
@@ -66,13 +66,13 @@
 	void lu_rec_opts_destroy(Lu_Rec_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Save_Opts API
+// Lu_Save_Opts API
 
 	Lu_Save_Opts lu_save_opts_create();
 	void lu_save_opts_destroy(Lu_Save_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Find_Opts API
+// Lu_Find_Opts API
 
 	Lu_Find_Opts lu_find_opts_create();
 	void lu_find_opts_destroy(Lu_Find_Opts*);
@@ -81,13 +81,13 @@
 	void lu_find_opts_limit_set(Lu_Find_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Restore_Opts API
+// Lu_Restore_Opts API
 
 	Lu_Restore_Opts lu_restore_opts_create();
 	void lu_restore_opts_destroy(Lu_Restore_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Brain API
+// Lu_Brain API
 
 	Lu_Brain lu_brain_create(Lu_Brain_Opts);
 	void lu_brain_destroy(Lu_Brain);
@@ -99,12 +99,12 @@
 	Lu_Rec lu_brain_rec_get(Lu_Brain, lu_size index); 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Rec API
+// Lu_Rec API
 
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Story API
+// Lu_Story API
 
 	Lu_Story lu_story_create(Lu_Brain, lu_size);
 	void lu_story_destroy(Lu_Story);
@@ -124,7 +124,7 @@
 	void lu_block_end(Lu_Story);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Wave API
+// Lu_Wave API
 
 	lu_bool lu_wave_is_working(Lu_Wave);
 	lu_bool lu_wave_cancel(Lu_Wave);
@@ -136,7 +136,7 @@
 	void lu_wave_join(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Name API
+// Lu_Name API
 	
 	Lu_Name lu_name_create(Lu_Brain);
 	void lu_name_destroy(Lu_Name);
@@ -145,7 +145,7 @@
 	void lu_name_unlink(Lu_Name, Lu_Neuron dst);
 	
 ///////////////////////////////////////////////////////////////////////////////
-// Wave_Resp API
+// Lu_Wave_Resp API
 
 	lu_size lu_wave_resp_time(Lu_Wave_Resp);
 	enum lu_wave_status lu_wave_resp_status(Lu_Wave_Resp);
@@ -153,7 +153,7 @@
 	lu_size lu_wave_resp_neuron_excited(Lu_Wave_Resp);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Neuron API
+// Lu_Neuron API
 
 	enum lu_neuron_type lu_neuron_type(Lu_Neuron);
 	lu_value lu_neuron_p(Lu_Neuron);
@@ -162,23 +162,23 @@
 	Lu_Neuron* lu_neuron_children(Lu_Neuron);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Save_Resp API
+// Lu_Save_Resp API
 
 	Lu_Neuron lu_save_resp_neuron(Lu_Save_Resp);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Find_Resp API
+// Lu_Find_Resp API
 
 	Lu_Neuron* lu_find_resp_neurons(Lu_Find_Resp);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Reception API
+// Lu_Reception API
 
 	Lu_Rec lu_reception_rec(Lu_Reception);
 	lu_value* lu_reception_data(Lu_Reception);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Restore_Resp API
+// Lu_Restore_Resp API
 
 	Lu_Reception* lu_restore_resp_layers(Lu_Restore_Resp);
 

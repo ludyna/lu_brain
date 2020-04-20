@@ -13,12 +13,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Restore_Wave
 
-	static void restore_wave_init(Restore_Wave self, Brain brain, Restore_Opts opts)
+	static void restore_wave_init(Restore_Wave self, Lu_Brain lu_brain, Lu_Restore_Opts opts)
 	{
 		if (opts)
 			self->restore_opts = *opts;
 
-		self->brain = brain;
+		self->brain = lu_brain;
 	}
 
 	static Restore_Wave restore_wave_create(Gate gate, Restore_Wave_Create_Opts opts)

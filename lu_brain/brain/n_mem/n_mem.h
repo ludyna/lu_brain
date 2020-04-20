@@ -151,7 +151,7 @@
 	///////////////////////////////////////////////////////////////////////////////
 	// Create and destroy
 
-	static Val_Layer val_layer_create(Mem mem, Rec rec);
+	static Val_Layer val_layer_create(Mem mem, Lu_Rec rec);
 	static void val_layer_destroy(Val_Layer*);
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -202,10 +202,10 @@
 		Arr 			val_layers;
 	};
 
-	static N_Rec n_rec_create(N_Mem n_mem, Rec rec);
+	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec);
 
 	struct n_mem {
-		Brain 			brain;
+		Lu_Brain 		brain;
 
 		Mem_Table 		neu_ents;
 		Mem_Table 		lin_ents;
@@ -219,7 +219,7 @@
 		Arr 			n_recs;
 	};
 	
-	static N_Mem n_mem_create(Brain brain);
+	static N_Mem n_mem_create(Lu_Brain brain);
 
 
 ///////////////////////////////////////////////////////////////////////////////

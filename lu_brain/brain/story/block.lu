@@ -5,16 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void lu_block_begin(Story story)
+	void lu_block_begin(Lu_Story story)
 	{
-		lu_user_assert_void(story, "Story is NULL");
+		lu_user_assert_void(story, "Lu_Story is NULL");
 		//lu_debug("\nlu_block_begin");
 		story->start_block_on_next_data = true;
 	}
 
-	void lu_block_end(Story story)
+	void lu_block_end(Lu_Story story)
 	{
-		lu_user_assert_void(story, "Story is NULL");
+		lu_user_assert_void(story, "Lu_Story is NULL");
 		//lu_debug("\nlu_block_end");
 		story->start_block_on_next_data = true;
 	}

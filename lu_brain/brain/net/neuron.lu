@@ -5,16 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Neuron neuron_create()
+	Lu_Neuron neuron_create()
 	{
-		Neuron self 			= (Neuron) malloc(sizeof(struct neuron));
+		Lu_Neuron self 			= (Lu_Neuron) malloc(sizeof(struct lu_neuron));
 
 		// Initialize
 
 		return self;
 	}
 
-	void neuron_destroy(Neuron* self)
+	void neuron_destroy(Lu_Neuron* self)
 	{
 		lu_free((void**) self);
 	}

@@ -30,31 +30,31 @@
 
 	static void brain_for_each_rec_opts_create_rec(void* item, void* p1)
 	{
-		Rec_Opts rec_opts 	= (Rec_Opts) item;
-		Brain brain 		= (Brain) p1;
+		Lu_Rec_Opts rec_opts 	= (Lu_Rec_Opts) item;
+		Lu_Brain lu_brain 		= (Lu_Brain) p1;
 
-		Rec rec = rec_create(brain, rec_opts);
+		Lu_Rec rec = rec_create(lu_brain, rec_opts);
 
 		lu_user_assert_void(rec, "Cannot create rec!. Not enough memory?");
 
-		arr_append(brain->recs, rec);
+		arr_append(lu_brain->recs, rec);
 
-		lu_user_assert_void(arr_count(brain->recs) > 0, "Cannot append rec. Something went wrong.");
+		lu_user_assert_void(arr_count(lu_brain->recs) > 0, "Cannot append rec. Something went wrong.");
 
-		rec->id = arr_count(brain->recs) - 1;
+		rec->id = arr_count(lu_brain->recs) - 1;
 	}
 
-	Brain lu_brain_create(Brain_Opts opts)
+	Lu_Brain lu_brain_create(Lu_Brain_Opts opts)
 	{
 		if (opts == NULL) 
-			return lu_user_debug("brain options should not be NULL");
+			return lu_user_debug("lu_brain options should not be NULL");
 
 		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
-			return lu_user_debug("brain options should include information about recs (rec_opts)");
+			return lu_user_debug("lu_brain options should include information about recs (rec_opts)");
 
 		Mem mem_perm		= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
 
-		Brain self 		= (Brain) mem_alloc(mem_perm, sizeof(struct brain));
+		Lu_Brain self 		= (Lu_Brain) mem_alloc(mem_perm, sizeof(struct lu_brain));
 		
 		self->id 		= opts->id;
 		self->mem_perm  = mem_perm;
@@ -66,7 +66,7 @@
 
 		arr_each_1p(opts->rec_opts, brain_for_each_rec_opts_create_rec, self);
 
-		lu_user_assert(arr_count(self->recs) > 0, "Brain recs count is 0");
+		lu_user_assert(arr_count(self->recs) > 0, "Lu_Brain recs count is 0");
 
 		// Gate 
 		self->gate 		= gate_create(self, &opts->gate_opts);
@@ -79,12 +79,12 @@
 		return self;
 	}
 
-	void lu_brain_destroy(Brain self)
+	void lu_brain_destroy(Lu_Brain self)
 	{
 		mem_destroy(self->mem_perm, g_mem_temp);
 	}
 
-	Rec lu_brain_rec_get(Brain self, lu_size index)
+	Lu_Rec lu_brain_rec_get(Lu_Brain self, lu_size index)
 	{
 		lu_user_assert(index < arr_count(self->recs), "index is out of range");
 

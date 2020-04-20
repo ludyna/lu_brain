@@ -5,15 +5,15 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Neuron API
+// Lu_Neuron API
 
-	struct neuron {
-		Brain 			brain;
+	struct lu_neuron {
+		Lu_Brain 			brain;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// Name API
+// Lu_Name API
 	
-	struct name {
-		Brain 			brain;
+	struct lu_name {
+		Lu_Brain 			brain;
 	};

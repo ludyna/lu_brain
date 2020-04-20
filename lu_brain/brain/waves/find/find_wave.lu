@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Find_Wave
 
-	static void find_wave_init(Find_Wave self, Story story, Find_Opts opts)
+	static void find_wave_init(Find_Wave self, Lu_Story story, Lu_Find_Opts opts)
 	{
 		if (opts)
 			self->find_opts = *opts;

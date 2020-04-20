@@ -3,10 +3,10 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Rec_Opts
+// Lu_Rec_Opts
 
-	struct rec_opts {
-		Brain_Opts  	brain_opts;
+	struct lu_rec_opts {
+		Lu_Brain_Opts  	brain_opts;
 
 		lu_size 		width;
 		lu_size 		height;
@@ -19,10 +19,10 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// Rec
+// Lu_Rec
 
-	struct rec {
-		Brain 			brain;
+	struct lu_rec {
+		Lu_Brain 		brain;
 		lu_size 		id;
 
 		lu_size 		width;
