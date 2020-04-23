@@ -75,7 +75,7 @@
 // Lu_Find_Opts API
 
 	Lu_Find_Opts lu_find_opts_create();
-	void lu_find_opts_destroy(Lu_Find_Opts*);
+	void lu_find_opts_destroy(Lu_Find_Opts);
 
 	lu_size lu_find_opts_limit(Lu_Find_Opts);
 	void lu_find_opts_limit_set(Lu_Find_Opts);

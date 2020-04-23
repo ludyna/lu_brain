@@ -7,7 +7,6 @@
 	typedef struct sig* 						Sig;
 
 	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
-	typedef struct channel_data* 				Channel_Data;
 	typedef struct save_wave* 					Save_Wave;
 
 	typedef struct find_wave_create_opts*  		Find_Wave_Create_Opts;
@@ -51,32 +50,20 @@
 
 	static void save_wave_create_opts_init(Save_Wave_Create_Opts);
 
-	struct lu_save_opts {
-
+	struct lu_save_opts {	
+		lu_size 				cont_create_x_radius;
+		lu_size 				cont_create_y_radius;
+		lu_size 				cont_create_t_radius;
 	};
-
-	struct channel_data {
-		lu_size width;
-		lu_size height;
-		lu_size block_count;
-		lu_p_value data;
-	};
-
-	static inline lu_size channel_data_size(Channel_Data self)
-	{
-		return sizeof(lu_value) * self->width * self->height * self->block_count;
-	}
-
-	static Channel_Data channel_data_create(Mem mem, Lu_Rec lu_rec, lu_size block_count);
 
 	struct save_wave {
-		struct lu_wave 		super;
+		struct lu_wave 			super;
 		struct lu_save_opts 	save_opts;
 		Lu_Story 				story;
 
 		// tymchasove zberezhenia linkiv na prev data 
 		// vidsutnist danyh oznachaye povtoruvanist danyh
-		lu_p_value* 		fill_data;
+		lu_p_value* 			fill_data;
 	};
 
 	struct lu_save_resp {
@@ -101,7 +88,13 @@
 	static void find_wave_create_opts_init(Find_Wave_Create_Opts);
 
 	struct lu_find_opts {
+		lu_size 				cont_exc_x_radius;
+		lu_size 				cont_exc_y_radius;
+		lu_size 				cont_exc_t_radius;
 
+		lu_size 				color_exc_x_radius;
+		lu_size 				color_exc_y_radius;
+		lu_size 				color_exc_val_radius;
 	};
 
 	struct find_wave {
@@ -117,11 +110,6 @@
 	static void find_wave_init(Find_Wave, Lu_Story, Lu_Find_Opts);
 
 	static void find_wave_process(Find_Wave self);
-
-///////////////////////////////////////////////////////////////////////////////
-// Perc API
-
-lu_p_void perc_cont_create(Lu_Rec lu_rec, lu_p_void prev, lu_p_void curr, lu_p_void next);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Restore API

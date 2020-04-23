@@ -1,8 +1,18 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
 
 
 	Lu_Save_Opts lu_save_opts_create()
 	{
-		return (Lu_Save_Opts) mem_alloc(g_mem_temp, sizeof(struct lu_save_opts));
+		Lu_Save_Opts self = (Lu_Save_Opts) mem_alloc(g_mem_temp, sizeof(struct lu_save_opts));
+
+		self->cont_create_x_radius 	= 1;
+		self->cont_create_y_radius 	= 1;
+		self->cont_create_t_radius 	= 1;
+
+
+		return self;
 	}
 
 	void lu_save_opts_destroy(Lu_Save_Opts self)
