@@ -72,10 +72,9 @@
 
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
 
-	static void save_wave_process(Save_Wave self);
+	static void wave_rec_save(Save_Wave wave, lu_size block_i, lu_size rec_i, lu_p_value curr_d);
 
-	static void save_wave_prev_data_reset(Save_Wave self);
-
+	static void wave_block_progress(Save_Wave wave, lu_size block_i);
 
 //////////////////////////7/////////////////////////////////////////////////////
 // Find

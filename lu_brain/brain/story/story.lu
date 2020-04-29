@@ -183,14 +183,13 @@
 				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
 				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
 
-				
-
+				wave_rec_save(wave, block_i, rec_i, curr_d);
 			}
+
+			wave_block_progress(wave, block_i);
 		}
 
-
 		story_reset(self);
-
 
 		return (Lu_Wave) wave;
 	}

@@ -65,32 +65,12 @@
 
 
 
-	static void save_wave_process(Save_Wave self)
+	static void wave_rec_save(Save_Wave wave, lu_size block_i, lu_size rec_i, lu_p_value curr_d)
 	{
-		// vse connetytsia po chasu
-		// i sytuaciyu v odnomu lu_rec 
-		// i sytuaciyu mizh lu_rec
-		// i osoblyvo sytuaciyi v odnomu bloci
+		
+	}
 
-		// znachenia dlia neurons isnuyut tilky dlia potochnoyi lu_wave
-		// yaki my attachymo do neus yak componentu ES
+	static void wave_block_progress(Save_Wave wave, lu_size block_i)
+	{
 
-		// if (self == NULL) {
-		// 	lu_user_debug("self should not be NULL");
-		// 	return;
-		// }
-
-		// Lu_Story story = self->story;
-
-		// if (story == NULL) {
-		// 	lu_user_debug("story should not be NULL");
-		// 	return;
-		// }
-
-		// if (story->data_y < 1) {
-		// 	lu_user_debug("story without blocks");
-		// 	return;
-		// }
-
-		// arr_each_with_index_1p(story->blocks, save_wave_each_block_save, self);
 	}
