@@ -35,7 +35,6 @@
 
 	static void wave_init(Lu_Wave self, Gate gate);
 
-	
 	struct lu_wave_resp {
 		
 	};
@@ -45,7 +44,7 @@
 
 	struct save_wave_create_opts
 	{
-		lu_size 			max_story_size_in_blocks;
+		lu_size 				max_story_size_in_blocks;
 	};
 
 	static void save_wave_create_opts_init(Save_Wave_Create_Opts);

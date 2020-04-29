@@ -37,3 +37,6 @@
 	static Save_Wave gate_save_wave_wait(Gate self);
 	static Find_Wave gate_find_wave_wait(Gate self);
 	static Restore_Wave gate_restore_wave_wait(Gate self);
+
+	static void gate_wave_book(Gate self, Lu_Wave wave);
+	static void gate_wave_free(Gate self, Lu_Wave wave);

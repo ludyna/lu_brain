@@ -39,9 +39,48 @@
 	{
 		lu_user_assert_void(self, "Lu_Story is NULL");
 
+		story_wave_detach(self);
+
 		arr2_destroy(self->data, g_mem_temp);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Private
+
+	static void story_reset(Lu_Story self)
+	{
+		lu_user_assert_void(self, "Lu_Story should be present");
+		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
+		lu_user_assert_void(self->data, "Lu_Story data should be present");
+
+		lu_size block_i, rec_i;
+		Arr2 data = self->data;
+		Lu_Rec rec;
+		Lu_Brain brain = self->brain;
+
+		for(block_i = 0; block_i <= self->data_y; block_i++)
+			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
+				arr2_set(data, rec_i, block_i, NULL);
+
+
+		self->data_y = 0;
+		self->start_block_on_next_data = false; 
+		self->block_count = 0;
+	}
+
+
+	static void story_wave_attach(Lu_Story self, Gate gate, Lu_Wave wave)
+	{
+
+	}
+
+
+	static void story_wave_detach(Lu_Story self)
+	{
+
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // API
@@ -78,26 +117,6 @@
  		self->block_count = self->data_y + 1;
 	} 
 
-	static void story_reset(Lu_Story self)
-	{
-		lu_user_assert_void(self, "Lu_Story should be present");
-		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
-		lu_user_assert_void(self->data, "Lu_Story data should be present");
-
-		lu_size block_i, rec_i;
-		Arr2 data = self->data;
-		Lu_Rec rec;
-		Lu_Brain brain = self->brain;
-
-		for(block_i = 0; block_i <= self->data_y; block_i++)
-			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
-				arr2_set(data, rec_i, block_i, NULL);
-
-
-		self->data_y = 0;
-		self->start_block_on_next_data = false; 
-		self->block_count = 0;
-	}
 
 	Lu_Wave lu_story_save_async(Lu_Story self, Lu_Save_Opts opts)
 	{
@@ -124,9 +143,7 @@
 
 		lu_size block_i, rec_i;
 		
-		lu_p_value prev_d;
 		lu_p_value curr_d;
-		lu_p_value next_d;
 		lu_p_value fill_d;
 
 		Lu_Rec rec; 
@@ -188,6 +205,8 @@
 
 			wave_block_progress(wave, block_i);
 		}
+
+		story_wave_attach(self, gate, (Lu_Wave) wave);
 
 		story_reset(self);
 

@@ -63,8 +63,6 @@
 		return self;
 	}
 
-
-
 	static void wave_rec_save(Save_Wave wave, lu_size block_i, lu_size rec_i, lu_p_value curr_d)
 	{
 		
