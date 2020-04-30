@@ -15,6 +15,9 @@
 	typedef struct restore_wave_create_opts*	Restore_Wave_Create_Opts;
 	typedef struct restore_wave* 				Restore_Wave;
 
+	// typedef here to break cyclic dependency
+	typedef struct gate* 						Gate;
+
 ///////////////////////////////////////////////////////////////////////////////
 // Sig
 
@@ -26,11 +29,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave API
 
-	// typedef here to break cyclic dependency
-	typedef struct gate* 						Gate;
-
 	struct lu_wave {
-		Gate 	gate;
+		Gate 					gate;
+		Lu_Story 				story;
 	};
 
 	static void wave_init(Lu_Wave self, Gate gate);
@@ -58,7 +59,6 @@
 	struct save_wave {
 		struct lu_wave 			super;
 		struct lu_save_opts 	save_opts;
-		Lu_Story 				story;
 
 		// tymchasove zberezhenia linkiv na prev data 
 		// vidsutnist danyh oznachaye povtoruvanist danyh

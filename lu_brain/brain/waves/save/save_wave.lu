@@ -18,7 +18,7 @@
 		if (opts)
 			self->save_opts = *opts;
 
-		self->story = story;
+		self->super.story = story;
 	} 
 
 	static void save_wave_reset(Save_Wave self)
