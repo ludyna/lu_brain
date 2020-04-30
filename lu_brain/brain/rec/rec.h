@@ -36,12 +36,12 @@
 	};
 
 
-	static inline lu_value lu_rec_data_get(Lu_Rec rec, lu_p_value data, lu_size x, lu_size y, lu_size z)
+	static inline lu_value rec_data_get(Lu_Rec rec, lu_p_value data, lu_size x, lu_size y, lu_size z)
 	{
 		return data[z * rec->width * rec->height + y * rec->width + x];
 	}
 
-	static inline void lu_rec_data_set(Lu_Rec rec, lu_p_value data, lu_size x, lu_size y, lu_size z, lu_value value)
+	static inline void rec_data_set(Lu_Rec rec, lu_p_value data, lu_size x, lu_size y, lu_size z, lu_value value)
 	{
 		data[z * rec->width * rec->height + y * rec->width + x] = value;
 	}

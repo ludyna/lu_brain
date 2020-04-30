@@ -31,17 +31,17 @@
 	static void brain_for_each_rec_opts_create_rec(void* item, void* p1)
 	{
 		Lu_Rec_Opts rec_opts 	= (Lu_Rec_Opts) item;
-		Lu_Brain lu_brain 		= (Lu_Brain) p1;
+		Lu_Brain brain 		= (Lu_Brain) p1;
 
-		Lu_Rec rec = rec_create(lu_brain, rec_opts);
+		Lu_Rec rec = rec_create(brain, rec_opts);
 
 		lu_user_assert_void(rec, "Cannot create rec!. Not enough memory?");
 
-		arr_append(lu_brain->recs, rec);
+		arr_append(brain->recs, rec);
 
-		lu_user_assert_void(arr_count(lu_brain->recs) > 0, "Cannot append rec. Something went wrong.");
+		lu_user_assert_void(arr_count(brain->recs) > 0, "Cannot append rec. Something went wrong.");
 
-		rec->id = arr_count(lu_brain->recs) - 1;
+		rec->id = arr_count(brain->recs) - 1;
 	}
 
 	Lu_Brain lu_brain_create(Lu_Brain_Opts opts)
@@ -68,13 +68,13 @@
 
 		lu_user_assert(arr_count(self->recs) > 0, "Lu_Brain recs count is 0");
 
-		// Gate 
-		self->gate 		= gate_create(self, &opts->gate_opts);
-		lu_user_assert(self->gate, "Cannot create gate");
-
 		// N_Mem
 		self->n_mem 	= n_mem_create(self);
 		lu_user_assert(self->n_mem, "Cannot create n_mem");
+
+		// Gate 
+		self->gate 		= gate_create(self, &opts->gate_opts);
+		lu_user_assert(self->gate, "Cannot create gate");
 
 		return self;
 	}

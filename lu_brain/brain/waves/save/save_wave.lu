@@ -70,11 +70,15 @@
 		lu_user_assert_void(data, "Data is NULL");
 
 		lu_size x, y, z;
+		lu_value value;
 		for(y = 0; y < rec->height; y++)
 			for(x = 0; x < rec->width; x++)
 				for(z = 0; z < rec->depth; z++)
 				{
-					
+					value = rec_data_get(rec, data, x, y, z);
+
+					// nejrony osnovy vzhe mayut buty pobudovani, tut
+					// my stvoruyemo tilky sig
 				}
 	}
 
