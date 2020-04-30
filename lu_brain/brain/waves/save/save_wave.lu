@@ -63,9 +63,19 @@
 		return self;
 	}
 
-	static void wave_rec_save(Save_Wave wave, lu_size block_i, lu_size rec_i, lu_p_value curr_d)
+	static void wave_rec_save(Save_Wave wave, lu_size block_i, Lu_Rec rec, lu_p_value data)
 	{
-		
+		lu_user_assert_void(wave, "Save_Wave is NULL");
+		lu_user_assert_void(rec, "Rec is NULL");
+		lu_user_assert_void(data, "Data is NULL");
+
+		lu_size x, y, z;
+		for(y = 0; y < rec->height; y++)
+			for(x = 0; x < rec->width; x++)
+				for(z = 0; z < rec->depth; z++)
+				{
+					
+				}
 	}
 
 	static void wave_block_progress(Save_Wave wave, lu_size block_i)
