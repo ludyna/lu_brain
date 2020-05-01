@@ -199,7 +199,8 @@
 
 	struct n_rec {
 		N_Mem 			n_mem;
-		Arr 			val_layers;
+
+		lu_p_size 		neu_ents;
 	};
 
 	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec);
