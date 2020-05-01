@@ -23,7 +23,7 @@
 
 	typedef struct val_layer* 	Val_Layer;
 
-	typedef struct n_col 		N_Col;
+	typedef struct n_col* 		N_Col;
 	typedef struct n_rec*		N_Rec;
 	typedef struct n_mem* 		N_Mem;
 
@@ -187,38 +187,33 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
  
-	// v nas ne mozhe buty dva val_layer dlia 
-	// kolir i kontur - bo kolir i kontur - ce haracterystyka 
-	// odnoho pikselia. Tobto kolir i contur - ce vseredyni 
-	// val_layer, a n_channel - ne potriben. Takym chynom
-	// kozhen pixel ce dva neurony
-	// kozhnomu channel vidpovidaye odyn val_layer
-	// struct n_channel {
-	// 	Val_Layer 		color;		// colir
-	// 	Val_Layer 		cont;  		// kontur
-	// }; 
-
 	struct n_col {
-		N_Rec 				n_rec; 				// vlasnyk
-		//Queue_List 			exc_neus;			// poperedni zbudzheni neurony
+		N_Rec 				n_rec; 		// vlasnyk
+		List 				exc_neus;  	// poperedni i potochnyy zbudzheni neurony
 
-		lu_size*			neus;				// triohmirnyy masyv, x i y - ce posyciya v percepciyi
-												// z - ce prostir znachen 
+		lu_size*			neus; 		// odnomirnyy masyv
 	};
 
+	static lu_value n_col_norm(N_Col self, lu_value request); 
+	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);
+	static lu_value n_col_calc_sig(N_Col self, lu_size val_step_i, lu_value val);
+	static lu_value n_col_step_norm_dist(N_Col self);
+
 	struct n_rec {
-		N_Mem 				n_mem; // vlasnyk
+		N_Mem 				n_mem; 		// vlasnyk
 
 		N_Col* 				n_cols;
 
 		// Ci dani spilni dlia vsih n_cols
 		// i odnakovi dlia znachen i perepadiv
-		lu_value 			orig_min_val, orig_max_val;
+		lu_value 			orig_min_val;
+		lu_value 			orig_max_val;
 		lu_value 			max_val;
 		lu_value 			val_step;
 
-		lu_value*			val_steps; 
-		lu_size 			val_ssp_i; 			// (tilky dlia poshuku) signif similarity percent 
+		lu_value*			val_steps;  // preobchysleni kroky
+		lu_size 			val_ssp_i; 	// (tilky dlia poshuku) signif similarity percent 
+		lu_size 			val_neu_size;
 	};
 
 	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec);
