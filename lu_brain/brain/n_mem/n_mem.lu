@@ -39,12 +39,12 @@
 		else
 			h = (lu_size) lu_value_round(((lu_value) rec->height) / 2.0);
 
-		self->neu_ents = (lu_p_size) mem_alloc(
+		self->n_cols = (N_Col*) mem_alloc(
 			mem, 
-			sizeof(lu_size) * (rec->width + w) * (rec->height * h)
+			sizeof(N_Col) * (rec->width + w) * (rec->height * h)
 		);
 
-		lu_user_assert(self->neu_ents, "Cannot allocate N_Rec neu_ents");
+		lu_user_assert(self->n_cols, "Cannot allocate N_Rec n_cols");
 
 		return self;
 	}
