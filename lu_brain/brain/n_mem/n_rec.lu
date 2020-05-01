@@ -60,33 +60,51 @@
 		N_Rec self = (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
 		lu_user_assert(self, "Cannot allocate N_Rec");
 
-		// // Initialize
-		// self->mem			= mem;
-		// self->w 			= rec->width;
-		// self->h				= rec->height;
-		// self->depth 		= rec->val_neu_size; // value depth in indexes
-		// self->wh 			= self->w * self->h;
-		// self->orig_min_val 	= rec->min_value;
-		// self->orig_max_val 	= rec->max_value;
-		// self->max_val 		= self->orig_max_val - self->orig_min_val;
-		// self->val_step 		= self->max_val / (lu_value) self->depth;
-		// self->val_ssp_i 	= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->val_step); // ssp in indexes
+		// Initialize
+		self->n_mem			= n_mem;
 
-		// // my stvoruyemo indeksy/komirky/misce tut, sami neu_val budut stvoreni todi koly vony pershyy raz 
-		// // budut zadiyani
+		lu_size w;
+		lu_size h;
 
-		// lu_size neus_size 	= self->wh * self->depth * sizeof(lu_size*);
-		// self->neus 			= (lu_size*) mem_alloc(mem, neus_size);
-		// lu_user_assert(self->neus, "Cannot allocate neus");
+		if (rec->width == 1)
+			w = 1;
+		else 
+			w = (lu_size) lu_value_round(((lu_value) rec->width) / 2.0);
 
-		// memset(self->neus, ENT_NULL, neus_size);
+		if (rec->height == 1)
+			h = 1;
+		else
+			h = (lu_size) lu_value_round(((lu_value) rec->height) / 2.0);
 
-	 // 	// Kroky preobchysleni
-		// self->val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->depth);
-		// lu_user_assert(self->val_steps, "Not enough memory for val_steps");
+		self->width 		= rec->width + w;
+		self->height		= rec->height + h;
+		self->wh 			= self->width * self->height;
+
+		self->n_cols = (N_Col*) mem_alloc(
+			mem, 
+			sizeof(N_Col) * self->wh
+		);
+
+		self->val_neu_size = rec->val_neu_size; // value depth in indexes
+		self->orig_min_val 	= rec->min_value;
+		self->orig_max_val 	= rec->max_value;
+		self->max_val 		= self->orig_max_val - self->orig_min_val;
+		self->val_step 		= self->max_val / (lu_value) self->val_neu_size;
+		self->val_ssp_i 	= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->val_step); // ssp in indexes
+
+	 	// Kroky preobchysleni
+		self->val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->val_neu_size);
+		lu_user_assert(self->val_steps, "Cannot allocate val_steps");
 		
-		// for (int i = 0; i < self->depth; i++) 
-		// 	self->val_steps[i] = (lu_value)i * self->val_step;
+		lu_size i;
+		for (i = 0; i < self->val_neu_size; i++)
+			self->val_steps[i] = (lu_value)i * self->val_step;
+
+		// stvoryty n_cols
+		lu_size x, y;
+		for (y = 0; y < self->height; y++)
+			for(x = 0; x < self->width; x++)
+				n_rec_n_col_set(self, x, y, n_col_create(mem, self));
 
 		return self;
 	}

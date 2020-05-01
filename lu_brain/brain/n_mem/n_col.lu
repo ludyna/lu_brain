@@ -2,6 +2,19 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// Create and destroy
+
+	static N_Col n_col_create(Mem mem, N_Rec n_rec)
+	{
+		N_Col self = (N_Col) mem_alloc(mem, sizeof(struct n_col));
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Calculations
+
 	static lu_value n_col_norm(N_Col self, lu_value request)
 	{
 		lu_value val = request - self->n_rec->orig_min_val;

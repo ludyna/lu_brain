@@ -118,6 +118,8 @@
 		lu_size*			neus; 		// odnomirnyy masyv
 	};
 
+	static N_Col n_col_create(Mem mem, N_Rec rec);
+
 	static lu_value n_col_norm(N_Col self, lu_value request); 
 	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);
 	static lu_value n_col_calc_sig(N_Col self, lu_size val_step_i, lu_value val);
@@ -126,6 +128,9 @@
 	struct n_rec {
 		N_Mem 				n_mem; 		// vlasnyk
 
+		lu_size 			width;
+		lu_size 			height; 
+		lu_size 			wh;
 		N_Col* 				n_cols;
 
 		// Ci dani spilni dlia vsih n_cols
@@ -140,7 +145,10 @@
 		lu_size 			val_neu_size;
 	};
 
-	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec);
+	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec n_rec);
+
+	static inline void n_rec_n_col_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->n_cols[x + y * self->width] = n_col; }
+	static inline N_Col n_rec_n_col_get(N_Rec self, lu_size x, lu_size y) { return self->n_cols[x + y * self->width]; }
 
 	struct n_mem {
 		Lu_Brain 			brain;
