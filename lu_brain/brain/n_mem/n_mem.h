@@ -111,8 +111,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
  
+	enum n_col_type {
+		NCT_COL,			// kolir
+		NCT_PER, 
+		NCT_PER_DIAG
+	};
+
 	struct n_col {
 		N_Rec 				n_rec; 		// vlasnyk
+
+		enum n_col_type 	type;
+
 		List 				exc_neus;  	// poperedni i potochnyy zbudzheni neurony
 
 		lu_size*			neus; 		// odnomirnyy masyv
