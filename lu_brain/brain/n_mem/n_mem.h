@@ -23,6 +23,7 @@
 
 	typedef struct val_layer* 	Val_Layer;
 
+	typedef struct n_val_col 	N_Val_Col;
 	typedef struct n_rec*		N_Rec;
 	typedef struct n_mem* 		N_Mem;
 
@@ -197,27 +198,42 @@
 	// 	Val_Layer 		cont;  		// kontur
 	// }; 
 
-	struct n_rec {
-		N_Mem 			n_mem;
+	struct n_val_col {
+		N_Rec 				n_rec; 				// owner
+		//Queue_List 			exc_neus;			// 
 
-		lu_p_size 		neu_ents;
+		lu_size*			neus;				// triohmirnyy masyv, x i y - ce posyciya v percepciyi
+												// z - ce prostir znachen 
+	};
+
+	struct n_rec {
+		N_Mem 				n_mem;
+
+		lu_p_size 			neu_ents;
+
+		lu_value 			orig_min_val, orig_max_val;
+		lu_value 			max_val;
+		lu_value 			val_step;
+
+		lu_value*			val_steps; 
+		lu_size 			val_ssp_i; 			// (only for find) signif similarity percent 
 	};
 
 	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec);
 
 	struct n_mem {
-		Lu_Brain 		brain;
+		Lu_Brain 			brain;
 
-		Mem_Table 		neu_ents;
-		Mem_Table 		lin_ents;
+		Mem_Table 			neu_ents;
+		Mem_Table 			lin_ents;
 
-		Mem_Table 		neu_bs;
-		Mem_Table 		neu_names;
+		Mem_Table 			neu_bs;
+		Mem_Table 			neu_names;
 
-		Mem_Table 		lin_bs;
-		// Mem_Table 	lin_weights;
+		Mem_Table 			lin_bs;
+		// Mem_Table 		lin_weights;
 
-		Arr 			n_recs;
+		Arr 				n_recs;
 	};
 	
 	static N_Mem n_mem_create(Lu_Brain brain);
