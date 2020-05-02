@@ -112,7 +112,7 @@
 // N_Mem
  
 	enum n_col_type {
-		NCT_COL,			// kolir
+		NCT_COL,			
 		NCT_PER, 
 		NCT_PER_DIAG
 	};
@@ -122,12 +122,15 @@
 
 		enum n_col_type 	type;
 
+		lu_size 			x;
+		lu_size 			y;
+
 		List 				exc_neus;  	// poperedni i potochnyy zbudzheni neurony
 
 		lu_size*			neus; 		// odnomirnyy masyv
 	};
 
-	static N_Col n_col_create(Mem mem, N_Rec rec);
+	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, enum n_col_type);
 
 	static lu_value n_col_norm(N_Col self, lu_value request); 
 	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);
@@ -135,12 +138,14 @@
 	static lu_value n_col_step_norm_dist(N_Col self);
 
 	struct n_rec {
-		N_Mem 				n_mem; 		// vlasnyk
+		N_Mem 				n_mem; 			// vlasnyk
+		Lu_Rec 				rec;			// poviazanyy z rec
 
-		lu_size 			width;
-		lu_size 			height; 
-		lu_size 			wh;
+		lu_size 			n_cols_w;
+		lu_size 			n_cols_h; 
 		N_Col* 				n_cols;
+		N_Col*				n_col_colors;
+		N_Col* 				n_col_pers;
 
 		// Ci dani spilni dlia vsih n_cols
 		// i odnakovi dlia znachen i perepadiv
@@ -149,15 +154,15 @@
 		lu_value 			max_val;
 		lu_value 			val_step;
 
-		lu_value*			val_steps;  // preobchysleni kroky
-		lu_size 			val_ssp_i; 	// (tilky dlia poshuku) signif similarity percent 
+		lu_value*			val_steps;  	// preobchysleni kroky
+		lu_size 			val_ssp_i; 		// (tilky dlia poshuku) signif similarity percent 
 		lu_size 			val_neu_size;
 	};
 
 	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec n_rec);
 
-	static inline void n_rec_n_col_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->n_cols[x + y * self->width] = n_col; }
-	static inline N_Col n_rec_n_col_get(N_Rec self, lu_size x, lu_size y) { return self->n_cols[x + y * self->width]; }
+	static inline void n_rec_n_col_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->n_cols[x + y * self->n_cols_w] = n_col; }
+	static inline N_Col n_rec_n_col_get(N_Rec self, lu_size x, lu_size y) { return self->n_cols[x + y * self->n_cols_w]; }
 
 	struct n_mem {
 		Lu_Brain 			brain;
