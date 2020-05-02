@@ -21,28 +21,85 @@
 	// 	// N_Rec self 			= (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
 	// 	// lu_user_assert(self, "Cannot allocate N_Rec");
 
-	// 	// lu_size w;
-	// 	// lu_size h;
+	// 	// lu_size self->colors_w;
+	// 	// lu_size self->colors_h;
 
 	// 	// if (rec->width == 1)
-	// 	// 	w = 1;
+	// 	// 	self->colors_w = 1;
 	// 	// else 
-	// 	// 	w = (lu_size) lu_value_round(((lu_value) rec->width) / 2.0);
+	// 	// 	self->colors_w = (lu_size) lu_value_round(((lu_value) rec->width) / 2.0);
 
 	// 	// if (rec->height == 1)
-	// 	// 	h = 1;
+	// 	// 	self->colors_h = 1;
 	// 	// else
-	// 	// 	h = (lu_size) lu_value_round(((lu_value) rec->height) / 2.0);
+	// 	// 	self->colors_h = (lu_size) lu_value_round(((lu_value) rec->height) / 2.0);
 
 	// 	// self->n_cols = (N_Col*) mem_alloc(
 	// 	// 	mem, 
-	// 	// 	sizeof(N_Col) * (rec->width + w) * (rec->height * h)
+	// 	// 	sizeof(N_Col) * (rec->width + self->colors_w) * (rec->height * self->colors_h)
 	// 	// );
 
 	// 	// lu_user_assert(self->n_cols, "Cannot allocate N_Rec n_cols");
 
 	// 	return self;
 	// }
+
+	static void n_rec_debug_print(N_Rec self)
+	{
+		lu_debug("\n---------------------");
+		lu_debug("\nn_cols: ");
+		lu_size x, y;
+		N_Col col;
+		for(y = 0; y < self->n_cols_h; y++)
+		{
+			lu_debug("\n");
+			for(x = 0; x < self->n_cols_w; x++)
+			{
+				col = n_rec_n_cols_get(self, x, y);
+
+				if (col == NULL)
+					lu_debug(" ");
+				else
+				{
+					switch(col->type)
+					{
+						case NCT_COL:
+							lu_debug("c");
+							break;
+						case NCT_PER:
+							lu_debug("p");
+							break;
+						case NCT_PER_DIAG:
+							lu_debug("x");
+							break;
+						default:
+							lu_debug("ERROR");
+					}
+				} 
+			}
+		}
+
+		lu_debug("\n---------------------");
+		lu_debug("\ncolors: ");
+
+		for(y = 0; y < self->colors_h; y++)
+		{
+			lu_debug("\n");
+			for(x = 0; x < self->colors_w; x++)
+			{
+				col = n_rec_colors_get(self, x, y);
+
+				if (col == NULL)
+					lu_debug("NULL ");
+				else if (col->type != NCT_COL)
+					lu_debug("ERROR ");
+				else
+					lu_debug("(%d, %d) ", col->x, col->y);
+			}
+		}  
+
+		lu_debug("\n");
+	}
 
 
 	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec)
@@ -60,6 +117,12 @@
 		N_Rec self = (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
 		lu_user_assert(self, "Cannot allocate N_Rec");
 
+		self->colors_w = rec->width;
+		self->colors_h = rec->height;
+
+		// self->colors_w = 10;
+		// self->colors_h = 10;
+
 		// Initialize
 		self->n_mem			= n_mem;
 		self->rec 			= rec;
@@ -67,15 +130,17 @@
 		if (rec->width == 1)
 			self->pers_w = 0;
 		else 
-			self->pers_w = rec->width / 2 + rec->width % 2;
+			self->pers_w = self->colors_w - 1;
 
 		if (rec->height == 1)
 			self->pers_h = 0;
 		else
-			self->pers_h = rec->height / 2 + rec->height % 2;
+			self->pers_h = self->colors_h - 1;
 
-		self->n_cols_w 	= rec->width + self->pers_w;
-		self->n_cols_h	= rec->height + self->pers_h;
+		//lu_debug("\npers_w = %d, pers_h = %d \n", self->pers_w, self->pers_h);
+
+		self->n_cols_w 	= self->colors_w + self->pers_w;
+		self->n_cols_h	= self->colors_h + self->pers_h;
 
 		self->n_cols = (N_Col*) mem_alloc(
 			mem, 
@@ -86,7 +151,7 @@
 
 		self->colors = (N_Col*) mem_alloc(
 			mem,
-			sizeof(N_Col) * rec->width * rec->height
+			sizeof(N_Col) * self->colors_w * self->colors_h
 		);
 
 		lu_user_assert(self->colors, "Cannot allocate colors");
@@ -122,6 +187,8 @@
 		for (y = 0, cy = 0; y < self->n_cols_h; y++)
 			for(x = 0, cx = 0; x < self->n_cols_w; x++)
 			{
+				col = NULL;
+
 				if (y % 2 == 1)
 				{
 					temp_col = n_rec_n_cols_get(self, x, y - 1);
@@ -151,12 +218,15 @@
 
 				if (col && col->type == NCT_COL)
 				{
+					//lu_debug("\n(%d, %d)=>(%d, %d)", col->x, col->y, cx, cy);
 					n_rec_colors_set(self, cx, cy, col);
 					++cx;
 
-					if (cx >= rec->width) ++cy;
+					if (cx >= self->colors_w) ++cy;
 				}
-			}
+			} 
+
+		n_rec_debug_print(self);
 
 		return self;
 	}

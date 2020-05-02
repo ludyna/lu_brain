@@ -141,6 +141,9 @@
 		N_Mem 				n_mem; 			// vlasnyk
 
 		Lu_Rec 				rec;			// poviazanyy z rec
+
+		lu_size 			colors_w;
+		lu_size 			colors_h;
 		N_Col*				colors;
 
 		lu_size 			n_cols_w;
@@ -165,15 +168,14 @@
 
 	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec n_rec);
 
-	static inline void n_rec_colors_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->colors[x + y * self->rec->width] = n_col; }
-	static inline N_Col n_rec_colors_get(N_Rec self, lu_size x, lu_size y) { return self->colors[x + y * self->rec->width]; }
+	static inline void n_rec_colors_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->colors[x + y * self->colors_w] = n_col; }
+	static inline N_Col n_rec_colors_get(N_Rec self, lu_size x, lu_size y) { return self->colors[x + y * self->colors_w]; }
 
 	static inline void n_rec_n_cols_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->n_cols[x + y * self->n_cols_w] = n_col; }
 	static inline N_Col n_rec_n_cols_get(N_Rec self, lu_size x, lu_size y) { return self->n_cols[x + y * self->n_cols_w]; }
 
 	// static inline void n_rec_pers_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->pers[x + y * self->pers_w] = n_col; }
 	// static inline N_Col n_rec_pers_get(N_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }
-
 
 	struct n_mem {
 		Lu_Brain 			brain;
