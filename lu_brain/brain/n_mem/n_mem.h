@@ -148,6 +148,7 @@
 
 		lu_size 			n_cols_w;
 		lu_size 			n_cols_h; 
+		lu_size 			n_cols_t_max;
 		N_Col* 				n_cols;			// vsi N_Cols
 
 		lu_size 			pers_w;

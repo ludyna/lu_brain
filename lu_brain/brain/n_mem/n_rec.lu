@@ -101,7 +101,6 @@
 		lu_debug("\n");
 	}
 
-
 	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec)
 	{
 		lu_user_assert(n_mem, "N_Mem is NULL");

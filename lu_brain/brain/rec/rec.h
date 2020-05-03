@@ -10,12 +10,13 @@
 
 		lu_size 		width;
 		lu_size 		height;
-		lu_size 		depth;
+		lu_size 		component_size;
+		lu_size 		t_size;
 
 		lu_value 		min_value;
 		lu_value 		max_value;
 		lu_size			val_neu_size;
-		lu_value		val_ssp;  // val significant similarity percent
+		lu_value		val_ssp;  
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -27,12 +28,13 @@
 
 		lu_size 		width;
 		lu_size 		height;
-		lu_size 		depth;
+		lu_size 		component_size;
+		lu_size 		t_size;
 
 		lu_value 		min_value;
 		lu_value 		max_value;
 		lu_size			val_neu_size;
-		lu_value		val_ssp;  // val significant similarity percent
+		lu_value		val_ssp;  
 	};
 
 

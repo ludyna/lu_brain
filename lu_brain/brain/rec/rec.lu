@@ -19,18 +19,16 @@
 		lu_user_assert(self, "Cannot allocate lu_rec");
 
 		// Initialize
-		self->brain 		= brain;
+		self->brain 			= brain;
 
-		self->depth	= opts->depth;
-
-		if (self->depth < 1) self->depth = 1;
-
-		self->width 		= opts->width;
-		self->height 		= opts->height;
-		self->min_value		= opts->min_value;
-		self->max_value 	= opts->max_value;
-		self->val_neu_size 	= opts->val_neu_size;
-		self->val_ssp		= opts->val_ssp;
+		self->width 			= opts->width;
+		self->height 			= opts->height;
+		self->component_size	= opts->component_size;
+		self->t_size			= opts->t_size;
+		self->min_value			= opts->min_value;
+		self->max_value 		= opts->max_value;
+		self->val_neu_size 		= opts->val_neu_size;
+		self->val_ssp			= opts->val_ssp;
 
 		return self;
 	}

@@ -90,7 +90,8 @@
 		lu_user_assert_void(self, "Lu_Story should not be NULL"); 
 		lu_user_assert_void(rec, "Lu_Rec should not be NULL"); 
 		lu_user_assert_void(data, "data should not be NULL");
-		lu_user_assert_void(rec->depth, "Lu_Rec depth is out of range");
+		lu_user_assert_void(rec->component_size, "Lu_Rec component_size is zero"); 
+		lu_user_assert_void(rec->t_size, "Lu_Rec t_size is zero");
 
 
 		if (self->start_block_on_next_data)

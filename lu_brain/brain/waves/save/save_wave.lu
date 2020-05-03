@@ -73,7 +73,7 @@
 		lu_value value;
 		for(y = 0; y < rec->height; y++)
 			for(x = 0; x < rec->width; x++)
-				for(z = 0; z < rec->depth; z++)
+				for(z = 0; z < rec->component_size; z++)
 				{
 					value = rec_data_get(rec, data, x, y, z);
 

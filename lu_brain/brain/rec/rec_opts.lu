@@ -9,7 +9,8 @@
 		Lu_Brain_Opts 	brain_opts, 
 		lu_size 		width, 
 		lu_size 		height, 
-		lu_size 		depth,
+		lu_size 		component_size,
+		lu_size 		t_size,
 		lu_value 		min_value, 
 		lu_value 		max_value, 
 		lu_size 		val_neu_size, 
@@ -18,21 +19,23 @@
 	{
 		lu_user_assert(width > 0, "Width should be greater than 0");
 		lu_user_assert(height > 0, "Height should be greater than 0");
-		lu_user_assert(depth > 0, "Depth should be at least 1.");
+		lu_user_assert(component_size > 0, "component_size should be at least 1");
+		lu_user_assert(t_size, "t_size should be at least 1");
 		lu_user_assert(max_value - min_value > 0, "max_value minus min_value should greater than 0");
 		lu_user_assert(val_neu_size > 0, "val_neu_size should be greater than 0");
 
 		Lu_Rec_Opts self = (Lu_Rec_Opts) mem_temp_alloc(sizeof(struct lu_rec_opts));
 
 		// Initialize
-		self->brain_opts 	= brain_opts;
-		self->width 		= width;
-		self->height		= height;
-		self->depth 		= depth;
-		self->min_value 	= min_value;
-		self->max_value 	= max_value;
-		self->val_neu_size	= val_neu_size;
-		self->val_ssp		= val_ssp;
+		self->brain_opts 		= brain_opts;
+		self->width 			= width;
+		self->height			= height;
+		self->component_size 	= component_size;
+		self->t_size 			= t_size;
+		self->min_value 		= min_value;
+		self->max_value 		= max_value;
+		self->val_neu_size		= val_neu_size;
+		self->val_ssp			= val_ssp;
 
 		arr_append(self->brain_opts->rec_opts, self);
 
