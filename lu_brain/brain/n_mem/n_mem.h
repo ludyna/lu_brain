@@ -123,14 +123,17 @@
 		enum n_col_type 	type;
 
 		lu_size 			x;
-		lu_size 			y;
+		lu_size 			y; 
+		lu_size 			t;
 
-		List 				exc_neus;  	// poperedni i potochnyy zbudzheni neurony
+		// ce vzhe bude ne potribno
+		//List 				exc_neus;  	// poperedni i potochnyy zbudzheni neurony
+		lu_size 			exc_neu_ent;
 
 		lu_size*			neus; 		// odnomirnyy masyv
 	};
 
-	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, enum n_col_type);
+	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, lu_size t, enum n_col_type);
 
 	static lu_value n_col_norm(N_Col self, lu_value request); 
 	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);
@@ -142,18 +145,17 @@
 
 		Lu_Rec 				rec;			// poviazanyy z rec
 
+		lu_size 			pers_w;
+		lu_size 			pers_h;
+
 		lu_size 			colors_w;
 		lu_size 			colors_h;
 		N_Col*				colors;
 
 		lu_size 			n_cols_w;
 		lu_size 			n_cols_h; 
-		lu_size 			n_cols_t_max;
+		lu_size 			n_cols_t_size;
 		N_Col* 				n_cols;			// vsi N_Cols
-
-		lu_size 			pers_w;
-		lu_size 			pers_h;
-		//N_Col* 				pers;
 
 		// Ci dani spilni dlia vsih n_cols
 		// i odnakovi dlia znachen i perepadiv
@@ -172,8 +174,8 @@
 	static inline void n_rec_colors_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->colors[x + y * self->colors_w] = n_col; }
 	static inline N_Col n_rec_colors_get(N_Rec self, lu_size x, lu_size y) { return self->colors[x + y * self->colors_w]; }
 
-	static inline void n_rec_n_cols_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->n_cols[x + y * self->n_cols_w] = n_col; }
-	static inline N_Col n_rec_n_cols_get(N_Rec self, lu_size x, lu_size y) { return self->n_cols[x + y * self->n_cols_w]; }
+	static inline void n_rec_n_cols_set(N_Rec self, lu_size x, lu_size y, lu_size t, N_Col n_col) { self->n_cols[t * self->n_cols_w * self->n_cols_h + y * self->n_cols_w + x] = n_col; }
+	static inline N_Col n_rec_n_cols_get(N_Rec self, lu_size x, lu_size y, lu_size t) { return self->n_cols[t * self->n_cols_w * self->n_cols_h + y * self->n_cols_w + x]; }
 
 	// static inline void n_rec_pers_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->pers[x + y * self->pers_w] = n_col; }
 	// static inline N_Col n_rec_pers_get(N_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }

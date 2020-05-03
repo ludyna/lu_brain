@@ -5,12 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static N_Col n_col_create(Mem mem, N_Rec n_rec, lu_size x, lu_size y, enum n_col_type type)
+	static N_Col n_col_create(Mem mem, N_Rec n_rec, lu_size x, lu_size y, lu_size t, enum n_col_type type)
 	{
 		N_Col self = (N_Col) mem_alloc(mem, sizeof(struct n_col));
 
 		self->x 	= x;
 		self->y 	= y;
+		self->t 	= t;
 		self->type 	= type;
 
 		return self;
