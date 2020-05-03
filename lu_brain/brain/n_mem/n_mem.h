@@ -147,6 +147,7 @@
 
 		lu_size 			pers_w;
 		lu_size 			pers_h;
+		lu_size 			pers_t_size;
 
 		lu_size 			colors_w;
 		lu_size 			colors_h;
