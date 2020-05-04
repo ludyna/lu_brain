@@ -62,8 +62,3 @@
 
 		return self;
 	}
-
-	static void wave_block_progress(Save_Wave wave, lu_size block_i)
-	{
-
-	}

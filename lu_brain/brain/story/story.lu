@@ -191,7 +191,7 @@
 		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 			{
-				n_rec 	= (N_Rec) arr_get(self->brain->n_mem->n_recs, rec_i);
+				n_rec 	= (N_Rec) arr_get(brain->n_mem->n_recs, rec_i);
 
 				lu_user_assert(n_rec, "N_Rec is NULL");
 
@@ -208,7 +208,7 @@
 				n_rec_save(n_rec, curr_d, wave, block_i);
 			}
 
-			wave_block_progress(wave, block_i);
+			n_mem_save_wave_progress(brain->n_mem, wave, block_i);
 		}
 
 		story_wave_attach(self, gate, (Lu_Wave) wave);

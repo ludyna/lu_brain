@@ -20,7 +20,6 @@ Lu_Save_Opts		save_opts 		= NULL;
 Lu_Find_Opts		find_opts 		= NULL;
 Lu_Restore_Opts		restore_opts 	= NULL;
 
-
 lu_value			data_0[] 		= { 0, 0, 1, 1 };
 lu_value			data_1[] 		= { 1, 0, 1, 1 };
 lu_value 			data_2[] 		= { 2, 0, 1, 1 };
@@ -34,8 +33,8 @@ lu_value			data_6[] 		= { 6, 0, 1, 1 };
 void setUp(void)
 { 
 	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
-	rec_opts_1 			= lu_rec_opts_create(brain_opts, 2, 2, 1, 1, 0.0, 10.0, 10, .2);
-	rec_opts_2			= lu_rec_opts_create(brain_opts, 2, 2, 1, 1, 0.0, 10.0, 10, .2);
+	rec_opts_1 			= lu_rec_opts_create(brain_opts, 2, 2, 1, 10, 0.0, 10.0, 10, .2);
+	rec_opts_2			= lu_rec_opts_create(brain_opts, 2, 2, 1, 10, 0.0, 10.0, 10, .2);
 
 	brain 				= lu_brain_create(brain_opts);
 

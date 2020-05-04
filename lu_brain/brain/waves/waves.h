@@ -71,10 +71,6 @@
 
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
 
-	static void wave_rec_save(Save_Wave wave, lu_size block_i, Lu_Rec rec, lu_p_value curr_d);
-
-	static void wave_block_progress(Save_Wave wave, lu_size block_i);
-
 //////////////////////////7/////////////////////////////////////////////////////
 // Find
 

@@ -201,6 +201,7 @@
 	
 	static N_Mem n_mem_create(Lu_Brain brain);
 
+	static void n_mem_save_wave_progress(N_Mem self, Save_Wave wave, lu_size block_i); 
 
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem Neu getters
