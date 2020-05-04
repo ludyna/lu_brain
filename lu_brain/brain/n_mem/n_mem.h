@@ -126,11 +126,10 @@
 		lu_size 			y; 
 		lu_size 			t;
 
-		// ce vzhe bude ne potribno
-		//List 				exc_neus;  	// poperedni i potochnyy zbudzheni neurony
-		lu_size 			exc_neu_ent;
+		lu_p_size 			exc_neus;   // tilky potochni zbudzheni neu, poperedni v t-1 shari
+										// rozmir masyvu rivnyy kilkosti component
 
-		lu_size*			neus; 		// odnomirnyy masyv
+		lu_p_size			step_neus; 	// odnomirnyy masyv (optymizaciya: ne zalezhyt vid kilkosti komponent)
 	};
 
 	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, lu_size t, enum n_col_type);
