@@ -185,11 +185,16 @@
 		// 	}
 		// }
 
+		N_Rec n_rec;
+
 		for(block_i = 0; block_i < self->block_count; block_i++)
 		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 			{
-				rec 	= lu_brain_rec_get(brain, rec_i);
+				n_rec 	= (N_Rec) arr_get(self->brain->n_mem->n_recs, rec_i);
+
+				lu_user_assert(n_rec, "N_Rec is NULL");
+
 				curr_d 	= arr2_get(data, rec_i, block_i);
 
 				if (curr_d)
@@ -197,11 +202,10 @@
 				else 
 					curr_d = wave->fill_data[rec_i];
 
-
 				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
 				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
 
-				wave_rec_save(wave, block_i, rec, curr_d);
+				n_rec_save(n_rec, curr_d, wave, block_i);
 			}
 
 			wave_block_progress(wave, block_i);

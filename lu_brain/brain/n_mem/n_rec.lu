@@ -252,3 +252,24 @@
 
 		return self;
 	}
+
+	static void n_rec_save(N_Rec self, lu_p_value data, Save_Wave wave, lu_size block_i)
+	{
+		lu_user_assert_void(self, "N_Rec is NULL");
+		lu_user_assert_void(wave, "Save_Wave is NULL");
+		lu_user_assert_void(data, "Data is NULL");
+
+		lu_size x, y, z;
+		lu_value value;
+		//lu_value 
+
+		for(y = 0; y < self->colors_h; y++)
+			for(x = 0; x < self->colors_w; x++)
+				for(z = 0; z < self->component_size; z++)
+				{
+					value = lu_data_get(data, self->colors_w, self->colors_h, self->component_size, x, y, z);
+
+					// nejrony osnovy vzhe mayut buty pobudovani, tut
+					// my stvoruyemo tilky sig
+				}
+	}
