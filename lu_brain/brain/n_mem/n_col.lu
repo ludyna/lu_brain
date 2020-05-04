@@ -85,3 +85,9 @@
 
 	// 	return neu;
 	// }
+
+
+	static void n_col_send_data(N_Col self, Lu_Wave wave, lu_p_value values)
+	{
+
+	}

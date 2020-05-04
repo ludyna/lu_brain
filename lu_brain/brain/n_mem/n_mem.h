@@ -139,6 +139,8 @@
 	static lu_value n_col_calc_sig(N_Col self, lu_size val_step_i, lu_value val);
 	static lu_value n_col_step_norm_dist(N_Col self);
 
+	static void n_col_send_data(N_Col self, Lu_Wave wave, lu_p_value values);
+
 	struct n_rec {
 		N_Mem 				n_mem; 			// vlasnyk
 
@@ -182,7 +184,7 @@
 	// static inline void n_rec_pers_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->pers[x + y * self->pers_w] = n_col; }
 	// static inline N_Col n_rec_pers_get(N_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }
 
-	static void n_rec_save(N_Rec self, lu_p_value data, Save_Wave wave, lu_size block_i);
+	static void n_rec_send_data(N_Rec self, Lu_Wave wave, lu_p_value data, lu_size block_i);
 
 	struct n_mem {
 		Lu_Brain 			brain;
@@ -200,8 +202,6 @@
 	};
 	
 	static N_Mem n_mem_create(Lu_Brain brain);
-
-	static void n_mem_save_wave_progress(N_Mem self, Save_Wave wave, lu_size block_i); 
 
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem Neu getters

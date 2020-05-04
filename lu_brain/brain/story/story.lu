@@ -205,10 +205,12 @@
 				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
 				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
 
-				n_rec_save(n_rec, curr_d, wave, block_i);
+				n_rec_send_data(n_rec, (Lu_Wave) wave, curr_d, block_i);
+
+				save_wave_rec_progress(wave, n_rec, block_i);
 			}
 
-			n_mem_save_wave_progress(brain->n_mem, wave, block_i);
+			save_wave_block_progress(wave, block_i);
 		}
 
 		story_wave_attach(self, gate, (Lu_Wave) wave);

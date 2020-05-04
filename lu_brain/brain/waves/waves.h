@@ -69,7 +69,11 @@
 
 	};
 
+	typedef struct n_rec* N_Rec; // to break dep loop
+
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
+	static void save_wave_rec_progress(Save_Wave wave, N_Rec n_rec, lu_size block_i);
+	static void save_wave_block_progress(Save_Wave wave, lu_size block_i); 
 
 //////////////////////////7/////////////////////////////////////////////////////
 // Find
