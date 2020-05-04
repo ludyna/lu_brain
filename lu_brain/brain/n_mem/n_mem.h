@@ -132,7 +132,7 @@
 		lu_p_size			step_neus; 	// odnomirnyy masyv (optymizaciya: ne zalezhyt vid kilkosti komponent)
 	};
 
-	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, lu_size t, enum n_col_type);
+	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, lu_size t, enum n_col_type, lu_size component_size);
 
 	static lu_value n_col_norm(N_Col self, lu_value request); 
 	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);
@@ -143,6 +143,8 @@
 		N_Mem 				n_mem; 			// vlasnyk
 
 		Lu_Rec 				rec;			// poviazanyy z rec
+
+		lu_size 			component_size;
 
 		lu_size 			pers_w;
 		lu_size 			pers_h;
