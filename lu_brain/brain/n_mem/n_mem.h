@@ -144,6 +144,7 @@
 
 		Lu_Rec 				rec;			// poviazanyy z rec
 
+		lu_size 			id;
 		lu_size 			component_size;
 
 		lu_size 			pers_w;

@@ -116,6 +116,7 @@
 		N_Rec self = (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
 		lu_user_assert(self, "Cannot allocate N_Rec");
 
+		self->id 				= rec->id;
 		self->component_size 	= rec->component_size;
 		self->colors_w 			= rec->width;
 		self->colors_h 			= rec->height;

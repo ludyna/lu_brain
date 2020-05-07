@@ -69,27 +69,34 @@
 		lu_user_assert_void(n_rec, "N_Rec is NULL");
 		lu_user_assert_void(data, "Data is NULL");
 
-		// lu_size x, y, z;
-		// lu_value value;
-		// lu_value values[n_rec->component_size];
-		// N_Col col;
+		//W_Rec w_rec = wave_w_rec_get(self, 
 
-		// for(y = 0; y < n_rec->colors_h; y++)
-		// 	for(x = 0; x < n_rec->colors_w; x++)
-		// 	{
-		// 		col = n_rec_colors_get(n_rec, x, y);
+		lu_size x, y, z;
+		lu_value value;
+		lu_value values[n_rec->component_size];
 
-		// 		lu_user_assert_void(col, "N_Col is NULL");
+		N_Col n_col;
+		W_Col w_col;
 
-		// 		// zibraty koliory
-		// 		for(z = 0; z < self->component_size; z++)
-		// 		{
-		// 			value = lu_data_get(data, self->colors_w, self->colors_h, self->component_size, x, y, z);
-		// 			values[z] = value;
-		// 		} 
+		for(y = 0; y < n_rec->colors_h; y++)
+			for(x = 0; x < n_rec->colors_w; x++)
+			{
+				n_col = n_rec_colors_get(n_rec, x, y);
+				lu_user_assert_void(n_col, "N_Col is NULL");
 
-		// 		n_col_data_send(col, wave, values);
-		// 	}
+				//w_col = 
+
+				// zibraty koliory
+				for(z = 0; z < n_rec->component_size; z++)
+				{
+					value = lu_data_get(data, n_rec->colors_w, n_rec->colors_h, n_rec->component_size, x, y, z);
+					values[z] = value;
+				} 
+
+				//n_col_data_send(col, wave, values);
+
+
+			}
 	}
 
 	static void save_wave_rec_progress(Save_Wave wave, N_Rec n_rec, lu_size block_i)
