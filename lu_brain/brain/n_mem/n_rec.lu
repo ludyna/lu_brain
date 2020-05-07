@@ -226,7 +226,7 @@
 		return self;
 	}
 
-	static void n_rec_send_data(N_Rec self, Lu_Wave wave, lu_p_value data, lu_size block_i)
+	static void n_rec_data_send(N_Rec self, Lu_Wave wave, lu_p_value data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "N_Rec is NULL");
 		lu_user_assert_void(wave, "Lu_Wave is NULL");
@@ -251,7 +251,7 @@
 					values[z] = value;
 				} 
 
-				n_col_send_data(col, wave, values);
+				n_col_data_send(col, wave, values);
 			}
 
 

@@ -63,3 +63,12 @@
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Static
+
+	static W_Rec wave_rec_get(Lu_Wave self, lu_size id)
+	{
+		return NULL;
+	}

@@ -127,7 +127,7 @@
 					
 		lu_p_size			v_neus; 	// value neus, mozhe buty prostoryvym perepadom, 
 										// odnomirnyy masyv (optymizaciya: ne zalezhyt vid kilkosti komponent)
-		lu_p_size 			p_neus;		// v perepad neus
+		lu_p_size 			p_neus;		// t perepad neus
 	};
 
 	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, enum n_col_type);
@@ -137,7 +137,7 @@
 	static lu_value n_col_calc_sig(N_Col self, lu_size val_step_i, lu_value val);
 	static lu_value n_col_step_norm_dist(N_Col self);
 
-	static void n_col_send_data(N_Col self, Lu_Wave wave, lu_p_value values);
+	static void n_col_data_send(N_Col self, Lu_Wave wave, lu_p_value values);
 
 	struct n_rec {
 		N_Mem 				n_mem; 			// vlasnyk
@@ -180,7 +180,7 @@
 	// static inline void n_rec_pers_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->pers[x + y * self->pers_w] = n_col; }
 	// static inline N_Col n_rec_pers_get(N_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }
 
-	static void n_rec_send_data(N_Rec self, Lu_Wave wave, lu_p_value data, lu_size block_i);
+	static void n_rec_data_send(N_Rec self, Lu_Wave wave, lu_p_value data, lu_size block_i);
 
 	struct n_mem {
 		Lu_Brain 			brain;
