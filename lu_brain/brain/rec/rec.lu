@@ -24,7 +24,6 @@
 		self->width 			= opts->width;
 		self->height 			= opts->height;
 		self->component_size	= opts->component_size;
-		self->t_size			= opts->t_size;
 		self->min_value			= opts->min_value;
 		self->max_value 		= opts->max_value;
 		self->val_neu_size 		= opts->val_neu_size;

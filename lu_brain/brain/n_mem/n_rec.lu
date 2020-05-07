@@ -50,13 +50,12 @@
 		lu_debug("\nn_cols: ");
 		lu_size x, y;
 		N_Col col;
-		lu_size t = 0;
 		for(y = 0; y < self->n_cols_h; y++)
 		{
 			lu_debug("\n");
 			for(x = 0; x < self->n_cols_w; x++)
 			{
-				col = n_rec_n_cols_get(self, x, y, t);
+				col = n_rec_n_cols_get(self, x, y);
 
 				if (col == NULL)
 					lu_debug(" ");
@@ -138,20 +137,14 @@
 		else
 			self->pers_h = self->colors_h - 1;
 
-		if(rec->t_size == 1)
-			self->pers_t_size = 0;
-		else 
-			self->pers_t_size = rec->t_size - 1;
-
 		//lu_debug("\npers_w = %d, pers_h = %d \n", self->pers_w, self->pers_h);
 
 		self->n_cols_w 			= self->colors_w + self->pers_w;
 		self->n_cols_h			= self->colors_h + self->pers_h;
-		self->n_cols_t_size 	= rec->t_size + self->pers_t_size;
 
 		self->n_cols = (N_Col*) mem_alloc(
 			mem, 
-			sizeof(N_Col) * self->n_cols_w * self->n_cols_h * self->n_cols_t_size
+			sizeof(N_Col) * self->n_cols_w * self->n_cols_h 
 		);
 
 		lu_user_assert(self->n_cols, "Cannot allocate n_cols");
@@ -180,73 +173,54 @@
 			self->val_steps[i] = (lu_value)i * self->val_step;
 
 		// stvoryty n_cols
-		lu_size t, x, y, cx, cy;
+		lu_size x, y, cx, cy;
 		N_Col col;
 		N_Col temp_col;
 		enum n_col_type type = NCT_PER;
 
-		for(t = 0; t < self->n_cols_t_size; t++)
-		{
-			if (t % 2 == 0) // zavzhdy neu dlia vhidnyh danyh
-				for (y = 0, cy = 0; y < self->n_cols_h; y++)
-					for(x = 0, cx = 0; x < self->n_cols_w; x++)
+		for (y = 0, cy = 0; y < self->n_cols_h; y++)
+			for(x = 0, cx = 0; x < self->n_cols_w; x++)
+			{
+				col = NULL;
+
+				if (y % 2 == 1)
+				{
+					temp_col = n_rec_n_cols_get(self, x, y - 1);
+					switch(temp_col->type)
 					{
-						col = NULL;
+						case NCT_COL:
+							type = NCT_PER;
+							break;
+						case NCT_PER:
+							type = NCT_PER_DIAG;
+							break;
+						default:
+							lu_user_assert(false, "Impossible case, something is wrong");
+					} 
+				}
+				else
+					type = type == NCT_COL ? NCT_PER : NCT_COL;
 
-						if (y % 2 == 1)
-						{
-							temp_col = n_rec_n_cols_get(self, x, y - 1, t);
-							switch(temp_col->type)
-							{
-								case NCT_COL:
-									type = NCT_PER;
-									break;
-								case NCT_PER:
-									type = NCT_PER_DIAG;
-									break;
-								default:
-									lu_user_assert(false, "Impossible case, something is wrong");
-							} 
-						}
-						else
-							type = type == NCT_COL ? NCT_PER : NCT_COL;
+				if (type == NCT_PER_DIAG)
+					col = NULL;
+				else
+				{
+					col = n_col_create(mem, self, x, y, type, self->component_size);
+					lu_user_assert(col, "Cannot allocate n_col");
+				}
 
-						if (type == NCT_PER_DIAG)
-							col = NULL;
-						else
-						{
-							col = n_col_create(mem, self, x, y, t, type, self->component_size);
-							lu_user_assert(col, "Cannot allocate n_col");
-						}
+				n_rec_n_cols_set(self, x, y, col);
 
-						n_rec_n_cols_set(self, x, y, t, col);
+				if (col && col->type == NCT_COL)
+				{
+					//lu_debug("\n(%d, %d)=>(%d, %d)", col->x, col->y, cx, cy);
+					n_rec_colors_set(self, cx, cy, col);
+					++cx;
 
-						if (t == 0 && col && col->type == NCT_COL)
-						{
-							//lu_debug("\n(%d, %d)=>(%d, %d)", col->x, col->y, cx, cy);
-							n_rec_colors_set(self, cx, cy, col);
-							++cx;
+					if (cx >= self->colors_w) ++cy;
+				}
+			}
 
-							if (cx >= self->colors_w) ++cy;
-						}
-					}
-			else // zavzhdy perepadni 
-				for (y = 0; y < self->n_cols_h; y++)
-					for(x = 0; x < self->n_cols_w; x++)
-					{
-						col = n_rec_n_cols_get(self, x, y, t - 1);
-
-						if (col && col->type == NCT_COL)
-						{
-							col = n_col_create(mem, self, x, y, t, NCT_PER, self->component_size);
-							lu_user_assert(col, "Cannot allocate n_col");
-
-							n_rec_n_cols_set(self, x, y, t, col);
-						}
-						else
-							n_rec_n_cols_set(self, x, y, t, NULL);
-					}
-		}
 
 		n_rec_debug_print(self);
 

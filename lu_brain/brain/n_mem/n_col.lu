@@ -10,7 +10,6 @@
 		N_Rec n_rec, 
 		lu_size x, 
 		lu_size y, 
-		lu_size t, 
 		enum n_col_type type,
 		lu_size component_size
 	)
@@ -19,7 +18,6 @@
 
 		self->x 	= x;
 		self->y 	= y;
-		self->t 	= t;
 		self->type 	= type;
 
 		return self;

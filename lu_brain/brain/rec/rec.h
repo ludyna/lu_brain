@@ -11,7 +11,6 @@
 		lu_size 		width;
 		lu_size 		height;
 		lu_size 		component_size;
-		lu_size 		t_size;
 
 		lu_value 		min_value;
 		lu_value 		max_value;
@@ -29,7 +28,6 @@
 		lu_size 		width;
 		lu_size 		height;
 		lu_size 		component_size;
-		lu_size 		t_size;
 
 		lu_value 		min_value;
 		lu_value 		max_value;

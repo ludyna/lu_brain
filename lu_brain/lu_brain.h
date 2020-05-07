@@ -61,7 +61,6 @@
 		lu_size w, 
 		lu_size h, 
 		lu_size component_size,
-		lu_size t_size, 
 		lu_value min, 
 		lu_value max, 
 		lu_size val_neu_size, 
