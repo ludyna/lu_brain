@@ -1,0 +1,11 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	static W_Col w_col_create(lu_size component_size)
+	{
+		return NULL;
+	}

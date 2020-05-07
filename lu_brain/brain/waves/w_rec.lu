@@ -2,10 +2,26 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+	static W_Rec w_rec_create(Mem mem, lu_size w, lu_size h)
+	{
+		lu_user_assert(mem, "Mem is NULL");
+
+		W_Rec self = (W_Rec) mem_alloc(mem, sizeof(struct w_rec));
+		lu_user_assert(self, "Cannot allocate W_Rec");
+
+		self->w_cols_w 	= w;
+		self->w_cols_h 	= h;
+		self->w_cols 	= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
+		lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
+
+
+		return self;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
 	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size neu_ent)
 	{
-		
+
 	}

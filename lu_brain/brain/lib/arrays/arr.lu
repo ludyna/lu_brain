@@ -24,6 +24,10 @@ Arr arr_create(Mem mem, lu_size size)
 	self->count 		= 0;
 	self->items 		= (lu_p_void*) mem_alloc(mem, self->size * sizeof(lu_p_void));
 
+	// init with NULLs for safety 
+	for(lu_size i = 0; i < self->size; i++)
+		self->items[i] = NULL;
+
 	return self;
 }
 

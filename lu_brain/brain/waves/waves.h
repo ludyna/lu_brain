@@ -6,6 +6,7 @@
 // Nouns
 	typedef struct sig* 						Sig;
 
+	typedef struct w_col* 						W_Col;
 	typedef struct w_rec*						W_Rec;
 
 	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
@@ -29,12 +30,26 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
+// W_Col
+
+	struct w_col
+	{
+		lu_p_size sigs;
+	};
+
+	static W_Col w_col_create(lu_size component_size);
+
+///////////////////////////////////////////////////////////////////////////////
 // W_Rec 
 
 	struct w_rec
 	{
-
+		lu_size w_cols_w;
+		lu_size w_cols_h;
+		W_Col* w_cols;
 	};
+
+	static W_Rec w_rec_create(Mem mem, lu_size w, lu_size h);
 
 	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size neu_ent);
 
@@ -44,6 +59,8 @@
 	struct lu_wave {
 		Gate 					gate;
 		Lu_Story 				story;
+
+		Arr						w_recs;
 	};
 
 	static void wave_init(Lu_Wave self, Gate gate); 

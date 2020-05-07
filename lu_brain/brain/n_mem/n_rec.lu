@@ -253,6 +253,4 @@
 
 				n_col_data_send(col, wave, values);
 			}
-
-
 	}
