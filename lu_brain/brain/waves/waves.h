@@ -49,9 +49,12 @@
 		W_Col* w_cols;
 	};
 
-	static W_Rec w_rec_create(Mem mem, lu_size w, lu_size h);
+	static W_Rec w_rec_create(Mem mem, lu_size w, lu_size h, lu_size component_size);
 
 	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size neu_ent);
+
+	static inline void w_rec_w_cols_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->w_cols[y * self->w_cols_w + x] = w_col; }
+	static inline W_Col w_rec_w_cols_get(W_Rec self, lu_size x, lu_size y) { return self->w_cols[y * self->w_cols_w + x]; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave

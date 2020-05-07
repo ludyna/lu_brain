@@ -95,7 +95,7 @@
 
 			N_Rec n_rec = n_mem_n_rec_get(brain->n_mem, id);
 
-			w_rec = w_rec_create(brain->mem_perm, n_rec->n_cols_w, n_rec->n_cols_h);
+			w_rec = w_rec_create(brain->mem_perm, n_rec->n_cols_w, n_rec->n_cols_h, n_rec->component_size);
 
 			arr_set(self->w_recs, id, w_rec);
 		}

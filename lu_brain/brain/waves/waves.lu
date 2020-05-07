@@ -1,3 +1,4 @@
+#include "w_col.lu"
 #include "w_rec.lu"
 #include "wave.lu"
 #include "wave_resp.lu"
