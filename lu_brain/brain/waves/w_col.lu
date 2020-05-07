@@ -5,7 +5,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	static W_Col w_col_create(lu_size component_size)
+	static W_Col w_col_create(Mem mem, lu_size component_size)
 	{
-		return NULL;
+		W_Col self = (W_Col) mem_alloc(mem, sizeof(struct w_col));
+
+		self->sigs = (lu_p_size) mem_alloc(mem, sizeof(lu_size) * component_size);
+
+		return self;
 	}

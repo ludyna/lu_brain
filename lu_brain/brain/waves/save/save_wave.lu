@@ -63,6 +63,35 @@
 		return self;
 	}
 
+	static void save_wave_data_send(Save_Wave self, N_Rec n_rec, lu_p_value data, lu_size block_i)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu_user_assert_void(n_rec, "N_Rec is NULL");
+		lu_user_assert_void(data, "Data is NULL");
+
+		// lu_size x, y, z;
+		// lu_value value;
+		// lu_value values[n_rec->component_size];
+		// N_Col col;
+
+		// for(y = 0; y < n_rec->colors_h; y++)
+		// 	for(x = 0; x < n_rec->colors_w; x++)
+		// 	{
+		// 		col = n_rec_colors_get(n_rec, x, y);
+
+		// 		lu_user_assert_void(col, "N_Col is NULL");
+
+		// 		// zibraty koliory
+		// 		for(z = 0; z < self->component_size; z++)
+		// 		{
+		// 			value = lu_data_get(data, self->colors_w, self->colors_h, self->component_size, x, y, z);
+		// 			values[z] = value;
+		// 		} 
+
+		// 		n_col_data_send(col, wave, values);
+		// 	}
+	}
+
 	static void save_wave_rec_progress(Save_Wave wave, N_Rec n_rec, lu_size block_i)
 	{
 

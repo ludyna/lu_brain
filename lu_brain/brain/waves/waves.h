@@ -37,13 +37,15 @@
 		lu_p_size sigs;
 	};
 
-	static W_Col w_col_create(lu_size component_size);
+	static W_Col w_col_create(Mem mem, lu_size component_size);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Rec 
 
 	struct w_rec
 	{
+		lu_size component_size;
+
 		lu_size w_cols_w;
 		lu_size w_cols_h;
 		W_Col* w_cols;
@@ -108,8 +110,9 @@
 	typedef struct n_rec* N_Rec; // to break dep loop
 
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
-	static void save_wave_rec_progress(Save_Wave wave, N_Rec n_rec, lu_size block_i);
-	static void save_wave_block_progress(Save_Wave wave, lu_size block_i); 
+	static void save_wave_data_send(Save_Wave self, N_Rec n_rec, lu_p_value data, lu_size block_i);
+	static void save_wave_rec_progress(Save_Wave self, N_Rec n_rec, lu_size block_i);
+	static void save_wave_block_progress(Save_Wave self, lu_size block_i); 
 
 //////////////////////////7/////////////////////////////////////////////////////
 // Find

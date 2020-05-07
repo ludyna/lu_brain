@@ -180,8 +180,6 @@
 	// static inline void n_rec_pers_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->pers[x + y * self->pers_w] = n_col; }
 	// static inline N_Col n_rec_pers_get(N_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }
 
-	static void n_rec_data_send(N_Rec self, Lu_Wave wave, lu_p_value data, lu_size block_i);
-
 	struct n_mem {
 		Lu_Brain 			brain;
 

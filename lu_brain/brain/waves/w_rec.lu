@@ -9,9 +9,10 @@
 		W_Rec self = (W_Rec) mem_alloc(mem, sizeof(struct w_rec));
 		lu_user_assert(self, "Cannot allocate W_Rec");
 
-		self->w_cols_w 	= w;
-		self->w_cols_h 	= h;
-		self->w_cols 	= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
+		self->component_size 	= component_size;
+		self->w_cols_w 			= w;
+		self->w_cols_h 			= h;
+		self->w_cols 			= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
 		lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
 
 		lu_size x;
@@ -20,7 +21,7 @@
 		for(y = 0; y < self->w_cols_h; y++)
 			for(x = 0; x < self->w_cols_w; x++)
 			{
-				W_Col col = w_col_create(component_size);
+				W_Col col = w_col_create(mem, component_size);
 				w_rec_w_cols_set(self, x, y, col);
 			}
 
