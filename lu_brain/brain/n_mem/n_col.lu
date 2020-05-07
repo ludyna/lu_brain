@@ -106,7 +106,7 @@
 			lu_value norm_val 	= n_col_norm(self, input_val);
 			lu_size indx 		= n_col_indx(self, norm_val);
 
-			//lu_size c_neu_ent	= n_col_c_neu_get(self, indx);
+			lu_size c_neu_ent	= n_col_c_neu_get(self, indx);
 
 			// wave_c_sig_create(wave, self, v_neu, norm_val, i);
 		}

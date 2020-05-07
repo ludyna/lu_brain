@@ -148,7 +148,6 @@
 
 		lu_size 			pers_w;
 		lu_size 			pers_h;
-		lu_size 			pers_t_size;
 
 		lu_size 			colors_w;
 		lu_size 			colors_h;
@@ -156,7 +155,6 @@
 
 		lu_size 			n_cols_w;
 		lu_size 			n_cols_h; 
-		lu_size 			n_cols_t_size;
 		N_Col* 				n_cols;			// vsi N_Cols
 
 		// Ci dani spilni dlia vsih n_cols
