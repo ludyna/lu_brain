@@ -135,9 +135,8 @@
 	static lu_value n_col_norm(N_Col self, lu_value request); 
 	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);
 	static lu_value n_col_calc_sig(N_Col self, lu_size val_step_i, lu_value val);
-	static lu_value n_col_step_norm_dist(N_Col self);
-
-	static void n_col_data_send(N_Col self, Lu_Wave wave, lu_p_value values);
+	static lu_value n_col_step_norm_dist(N_Col self); 
+	static lu_size n_col_neu_ent_get(N_Col self, lu_value input_val);
 
 	struct n_rec {
 		N_Mem 				n_mem; 			// vlasnyk
@@ -201,7 +200,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu creators
 
-	static lu_size n_mem_c_neu_create(N_Mem self);
+	static lu_size n_mem_c_neu_create(N_Mem self, N_Col n_col);
 
 
 ///////////////////////////////////////////////////////////////////////////////

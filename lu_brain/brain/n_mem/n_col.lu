@@ -85,34 +85,17 @@
 			N_Mem n_mem = n_rec->n_mem;
 			lu_user_assert_ent(n_mem, "N_Mem is NULL");
 
-			c_neu_ent = n_mem_c_neu_create(n_mem);
+			c_neu_ent = n_mem_c_neu_create(n_mem, self);
 			self->v_neus[indx] = c_neu_ent;
 		}
 
 		return c_neu_ent;
 	}
 
-	static void n_col_data_send(N_Col self, Lu_Wave wave, lu_p_value values)
+	static lu_size n_col_neu_ent_get(N_Col self, lu_value input_val)
 	{
-		lu_value input_val;
-		lu_size i;
-		N_Rec n_rec = self->n_rec;
-		lu_user_assert_void(n_rec, "N_Rec is NULL");
-		Lu_Rec rec = n_rec->rec;
-		lu_user_assert_void(rec, "Lu_Rec is NULL");
+		lu_value norm_val 	= n_col_norm(self, input_val);
+		lu_size indx 		= n_col_indx(self, norm_val);
 
-		W_Rec w_rec = wave_rec_get(wave, rec->id);
-
-		for(i = 0; i < n_rec->component_size; i++)
-		{
-			input_val 			= values[i];
-
-			lu_value norm_val 	= n_col_norm(self, input_val);
-			lu_size indx 		= n_col_indx(self, norm_val);
-
-			lu_size c_neu_ent	= n_col_c_neu_get(self, indx);
-
-
-			w_rec_sig_send(w_rec, self->x, self->y, c_neu_ent);
-		}
+		return n_col_c_neu_get(self, indx);
 	}

@@ -73,10 +73,9 @@
 
 		lu_size x, y, z;
 		lu_value value;
-		lu_value values[n_rec->component_size];
 
 		N_Col n_col;
-		W_Col w_col;
+		lu_size neu_ent = ENT_NULL;
 
 		for(y = 0; y < n_rec->colors_h; y++)
 			for(x = 0; x < n_rec->colors_w; x++)
@@ -84,19 +83,20 @@
 				n_col = n_rec_colors_get(n_rec, x, y);
 				lu_user_assert_void(n_col, "N_Col is NULL");
 
-				//w_col = 
-
-				// zibraty koliory
 				for(z = 0; z < n_rec->component_size; z++)
 				{
 					value = lu_data_get(data, n_rec->colors_w, n_rec->colors_h, n_rec->component_size, x, y, z);
-					values[z] = value;
-				} 
 
-				//n_col_data_send(col, wave, values);
+					neu_ent = n_col_neu_ent_get(n_col, value);
 
-
+					save_wave_fire(self, neu_ent, value);
+				}				
 			}
+	}
+
+	static void save_wave_fire(Save_Wave self, lu_size neu_ent, lu_value value)
+	{
+
 	}
 
 	static void save_wave_rec_progress(Save_Wave wave, N_Rec n_rec, lu_size block_i)

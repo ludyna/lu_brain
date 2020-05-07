@@ -111,6 +111,7 @@
 
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
 	static void save_wave_data_send(Save_Wave self, N_Rec n_rec, lu_p_value data, lu_size block_i);
+	static void save_wave_fire(Save_Wave self, lu_size neu_ent, lu_value value);	
 	static void save_wave_rec_progress(Save_Wave self, N_Rec n_rec, lu_size block_i);
 	static void save_wave_block_progress(Save_Wave self, lu_size block_i); 
 
