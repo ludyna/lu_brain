@@ -149,7 +149,6 @@
 
 		lu_user_assert(self->n_cols, "Cannot allocate n_cols");
 
-		// dlia pershoho t tilky
 		self->colors = (N_Col*) mem_alloc(
 			mem,
 			sizeof(N_Col) * self->colors_w * self->colors_h
@@ -205,7 +204,7 @@
 					col = NULL;
 				else
 				{
-					col = n_col_create(mem, self, x, y, type, self->component_size);
+					col = n_col_create(mem, self, x, y, type);
 					lu_user_assert(col, "Cannot allocate n_col");
 				}
 

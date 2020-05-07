@@ -11,6 +11,9 @@
 #define lu_try Try 
 #define lu_catch Catch
 
+// entity NULL
+#define ENT_NULL 0
+
 // Exceptions list
 enum lu_e {
 	LU_E_FIRST = 6000, 
@@ -48,8 +51,10 @@ void* lu_user_debug_args_internal(const char* func, const char* file, int line, 
 
 #define lu_user_assert(exp, msg) if(!(exp)) return g_user_assert ? lu_user_debug(msg) : NULL;
 #define lu_user_assert_void(exp, msg) if(!(exp)) { if (g_user_assert) lu_user_debug(msg); return; }
+#define lu_user_assert_ent(exp, msg) if(!(exp)) { if (g_user_assert) lu_user_debug(msg); return ENT_NULL; }
 #define lu_user_assert_ext(exp, msg, func, file, line) if(!(exp)) return g_user_assert ? lu_user_debug_internal(func, file, line, msg) : NULL;
 #define lu_user_assert_void_ext(exp, msg, func, file, line) if(!(exp)) { if (g_user_assert) lu_user_debug_internal(func, file, line, msg); return; }
+#define lu_user_assert_ent_ext(exp, msg, func, file, line) if(!(exp)) { if (g_user_assert) lu_user_debug_internal(func, file, line, msg); return EXT_NULL; }
 
 
 #endif // _LU_EXCEPTION_H

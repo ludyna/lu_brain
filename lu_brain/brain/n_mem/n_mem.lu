@@ -47,3 +47,11 @@
 	{
 
 	}	
+
+///////////////////////////////////////////////////////////////////////////////
+// Neu creators
+
+	static lu_size n_mem_c_neu_create(N_Mem self)
+	{
+		return ENT_NULL;
+	}

@@ -10,15 +10,22 @@
 		N_Rec n_rec, 
 		lu_size x, 
 		lu_size y, 
-		enum n_col_type type,
-		lu_size component_size
+		enum n_col_type type
 	)
 	{
+		lu_user_assert(n_rec, "N_Rec is NULL");
+		lu_user_assert(type > NCT_FIRST && type < NCT_LAST, "Unknown enum n_col_type");
+
 		N_Col self = (N_Col) mem_alloc(mem, sizeof(struct n_col));
 
-		self->x 	= x;
-		self->y 	= y;
-		self->type 	= type;
+		self->n_rec 	= n_rec;
+
+		self->x 		= x;
+		self->y 		= y;
+		self->type 		= type;
+
+		self->v_neus 	= (lu_p_size) mem_alloc(mem, sizeof(lu_size) * n_rec->val_neu_size);
+		self->p_neus	= (lu_p_size) mem_alloc(mem, sizeof(lu_size) * n_rec->val_neu_size);
 
 		return self;
 	}
@@ -68,24 +75,39 @@
 		return 1.0 / self->n_rec->val_neu_size;
 	}
 
-	// static Neu get_val_neu(ValLayer self, lu_size indx)
-	// {
-	// 	Neu neu = self->val_neus[indx];
-	// 	if (!neu)
-	// 	{
-	// 		neu = core_neu_alloc(self->core);
-	// 		lu_assert(neu != NULL);
-			
-	// 		neu_inc_count(neu);
+	static lu_size n_col_c_neu_get(N_Col self, lu_size indx)
+	{
+		lu_size c_neu_ent = self->v_neus[indx];
+		if (c_neu_ent == ENT_NULL)
+		{
+			N_Rec n_rec = self->n_rec;
+			lu_user_assert_ent(n_rec, "N_Rec is NULL");
+			N_Mem n_mem = n_rec->n_mem;
+			lu_user_assert_ent(n_mem, "N_Mem is NULL");
 
-	// 		self->val_neus[indx] = neu;
-	// 	}
+			c_neu_ent = n_mem_c_neu_create(n_mem);
+			self->v_neus[indx] = c_neu_ent;
+		}
 
-	// 	return neu;
-	// }
-
+		return c_neu_ent;
+	}
 
 	static void n_col_send_data(N_Col self, Lu_Wave wave, lu_p_value values)
 	{
+		lu_value input_val;
+		lu_size i;
+		N_Rec n_rec = self->n_rec;
+		lu_user_assert_void(n_rec, "N_Rec is NULL");
 
+		for(i = 0; i < n_rec->component_size; i++)
+		{
+			input_val 			= values[i];
+
+			lu_value norm_val 	= n_col_norm(self, input_val);
+			lu_size indx 		= n_col_indx(self, norm_val);
+
+			//lu_size c_neu_ent	= n_col_c_neu_get(self, indx);
+
+			// wave_c_sig_create(wave, self, v_neu, norm_val, i);
+		}
 	}

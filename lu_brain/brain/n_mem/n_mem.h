@@ -6,11 +6,6 @@
 #define _LU_N_MEM_H
 
 ///////////////////////////////////////////////////////////////////////////////
-// Defs
-
-	#define ENT_NULL 0
-
-///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
 	typedef struct neu_ent* 	Neu_Ent;
@@ -112,9 +107,11 @@
 // N_Mem
  
 	enum n_col_type {
-		NCT_COL,			
+		NCT_FIRST,
+		NCT_COL, 			
 		NCT_PER, 
-		NCT_PER_DIAG
+		NCT_PER_DIAG, 
+		NCT_LAST
 	};
 
 	struct n_col {
@@ -126,14 +123,14 @@
 		lu_size 			y; 
 
 		// // tut ciho ne mozhe buty bo ce mozhe buty tilky v wave
-		// lu_p_size 			exc_neus;   // tilky potochni zbudzheni neu, poperedni v t-1 shari
-		// 								// rozmir masyvu rivnyy kilkosti component
-
-		lu_p_size			v_step_neus; 	// value step neus, odnomirnyy masyv (optymizaciya: ne zalezhyt vid kilkosti komponent)
-		lu_p_size 			d_step_neus;	// delta step neus
+		// lu_p_size 			exc_neus;   
+					
+		lu_p_size			v_neus; 	// value neus, mozhe buty prostoryvym perepadom, 
+										// odnomirnyy masyv (optymizaciya: ne zalezhyt vid kilkosti komponent)
+		lu_p_size 			p_neus;		// v perepad neus
 	};
 
-	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, enum n_col_type, lu_size component_size);
+	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, enum n_col_type);
 
 	static lu_value n_col_norm(N_Col self, lu_value request); 
 	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);
@@ -203,6 +200,11 @@
 	};
 	
 	static N_Mem n_mem_create(Lu_Brain brain);
+
+///////////////////////////////////////////////////////////////////////////////
+// Neu creators
+
+	static lu_size n_mem_c_neu_create(N_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem Neu getters
