@@ -6,23 +6,6 @@
 #define _LU_N_MEM_H
 
 ///////////////////////////////////////////////////////////////////////////////
-// Nouns
-
-	typedef struct neu_ent* 	Neu_Ent;
-	typedef struct neu_b* 		Neu_B;
-	typedef struct neu_name* 	Neu_Name;
-
-	typedef struct lin_ent* 	Lin_Ent;
-	typedef struct lin_b* 		Lin_B;
-
-
-	typedef struct val_layer* 	Val_Layer;
-
-	typedef struct n_col* 		N_Col;
-	typedef struct n_rec*		N_Rec;
-	typedef struct n_mem* 		N_Mem;
-
-///////////////////////////////////////////////////////////////////////////////
 // Neu
 
 	enum neu_ent_id {

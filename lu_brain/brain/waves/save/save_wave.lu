@@ -69,8 +69,6 @@
 		lu_user_assert_void(n_rec, "N_Rec is NULL");
 		lu_user_assert_void(data, "Data is NULL");
 
-		//W_Rec w_rec = wave_w_rec_get(self, 
-
 		lu_size x, y, z;
 		lu_value value;
 
@@ -88,13 +86,14 @@
 					value = lu_data_get(data, n_rec->colors_w, n_rec->colors_h, n_rec->component_size, x, y, z);
 
 					neu_ent = n_col_neu_ent_get(n_col, value);
+					lu_user_assert_void(neu_ent, "Cannot get neu_ent for value");
 
-					save_wave_fire(self, neu_ent, value);
+					save_wave_c_neu_fire(self, neu_ent, value);
 				}				
 			}
 	}
 
-	static void save_wave_fire(Save_Wave self, lu_size neu_ent, lu_value value)
+	static void save_wave_c_neu_fire(Save_Wave self, lu_size neu_ent, lu_value value)
 	{
 
 	}

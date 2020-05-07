@@ -3,25 +3,6 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Nouns
-	typedef struct sig* 						Sig;
-
-	typedef struct w_col* 						W_Col;
-	typedef struct w_rec*						W_Rec;
-
-	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
-	typedef struct save_wave* 					Save_Wave;
-
-	typedef struct find_wave_create_opts*  		Find_Wave_Create_Opts;
-	typedef struct find_wave* 					Find_Wave;
-
-	typedef struct restore_wave_create_opts*	Restore_Wave_Create_Opts;
-	typedef struct restore_wave* 				Restore_Wave;
-
-	// typedef here to break cyclic dependency
-	typedef struct gate* 						Gate;
-
-///////////////////////////////////////////////////////////////////////////////
 // Sig
 
 	struct sig {
@@ -64,8 +45,7 @@
 	struct lu_wave {
 		Gate 					gate;
 		Lu_Story 				story;
-
-		Arr						w_recs;
+		N_Mem 					n_mem;
 	};
 
 	static void wave_init(Lu_Wave self, Gate gate); 
@@ -111,7 +91,7 @@
 
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
 	static void save_wave_data_send(Save_Wave self, N_Rec n_rec, lu_p_value data, lu_size block_i);
-	static void save_wave_fire(Save_Wave self, lu_size neu_ent, lu_value value);	
+	static void save_wave_c_neu_fire(Save_Wave self, lu_size neu_ent, lu_value value);	
 	static void save_wave_rec_progress(Save_Wave self, N_Rec n_rec, lu_size block_i);
 	static void save_wave_block_progress(Save_Wave self, lu_size block_i); 
 

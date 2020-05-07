@@ -9,7 +9,7 @@
 
 #include "../lu_brain.h" // public interface
 
-
+#include "typedefs.h"
 #include "rec/rec.h"
 #include "net/net.h"
 #include "waves/waves.h"

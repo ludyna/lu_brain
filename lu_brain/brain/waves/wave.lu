@@ -13,10 +13,9 @@
 
 		Lu_Brain brain = gate->brain;
 		lu_user_assert_void(brain, "Brain is NULL");
-		lu_user_assert_void(brain->recs, "Brain recs is NULL");
-		lu_user_assert_void(brain->mem_perm, "Brain mem_perm is NULL");
+		lu_user_assert_void(brain->n_mem, "Brain n_mem is NULL");
 
-		self->w_recs = arr_create((Mem) brain->mem_perm, brain->recs->count);
+		self->n_mem = brain->n_mem; // for easier access
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,26 +78,26 @@
 
 	static W_Rec wave_rec_get(Lu_Wave self, lu_size id)
 	{
-		lu_user_assert(id < arr_size(self->w_recs), "id is out of range");
+		// lu_user_assert(id < arr_size(self->w_recs), "id is out of range");
 
-		// lazy 
-		W_Rec w_rec = arr_get(self->w_recs, id);
+		// // lazy 
+		// W_Rec w_rec = arr_get(self->w_recs, id);
 
-		if (!w_rec)
-		{
-			Gate gate = self->gate;
-			lu_user_assert(gate, "Gate is NULL");
+		// if (!w_rec)
+		// {
+		// 	Gate gate = self->gate;
+		// 	lu_user_assert(gate, "Gate is NULL");
 
-			Lu_Brain brain = gate->brain;
-			lu_user_assert(brain, "Brain is NULL");
-			lu_user_assert(brain->n_mem, "Brain N_Mem is NULL");
+		// 	Lu_Brain brain = gate->brain;
+		// 	lu_user_assert(brain, "Brain is NULL");
+		// 	lu_user_assert(brain->n_mem, "Brain N_Mem is NULL");
 
-			N_Rec n_rec = n_mem_n_rec_get(brain->n_mem, id);
+		// 	N_Rec n_rec = n_mem_n_rec_get(brain->n_mem, id);
 
-			w_rec = w_rec_create(brain->mem_perm, n_rec->n_cols_w, n_rec->n_cols_h, n_rec->component_size);
+		// 	w_rec = w_rec_create(brain->mem_perm, n_rec->n_cols_w, n_rec->n_cols_h, n_rec->component_size);
 
-			arr_set(self->w_recs, id, w_rec);
-		}
+		// 	arr_set(self->w_recs, id, w_rec);
+		// }
 
-		return w_rec;
+		// return w_rec;
 	}
