@@ -92,6 +92,8 @@
 
 		enum n_col_type 	type;
 
+		lu_size 			data_x;
+		lu_size 			data_y;
 		lu_size 			x;
 		lu_size 			y; 
 
@@ -103,7 +105,7 @@
 		lu_p_size 			p_neus;		// t perepad neus
 	};
 
-	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size x, lu_size y, enum n_col_type);
+	static N_Col n_col_create(Mem mem, N_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum n_col_type);
 
 	static lu_value n_col_norm(N_Col self, lu_value request); 
 	static struct lu_size_range n_col_indx_range(N_Col self, lu_value val);

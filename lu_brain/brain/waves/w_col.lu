@@ -26,8 +26,8 @@
 		self->p_vals 	= (lu_p_value) mem_alloc(mem, sizeof(lu_value) * n_rec->component_size);
 		lu_user_assert(self->p_vals, "Cannot allocate W_Col p_vals");
 
-		self->prev_vals = (lu_p_value) mem_alloc(mem, sizeof(lu_value) * n_rec->component_size);
-		lu_user_assert(self->prev_vals, "Cannot allocate W_Col prev_vals");
+		// self->prev_vals = (lu_p_value) mem_alloc(mem, sizeof(lu_value) * n_rec->component_size);
+		// lu_user_assert(self->prev_vals, "Cannot allocate W_Col prev_vals");
 
 		return self;
 	}

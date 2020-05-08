@@ -8,6 +8,8 @@
 	static N_Col n_col_create(
 		Mem mem, 
 		N_Rec n_rec, 
+		lu_size data_x, 
+		lu_size data_y,
 		lu_size x, 
 		lu_size y, 
 		enum n_col_type type
@@ -20,6 +22,8 @@
 
 		self->n_rec 	= n_rec;
 
+		self->data_x 	= data_x;
+		self->data_y 	= data_y;
 		self->x 		= x;
 		self->y 		= y;
 		self->type 		= type;

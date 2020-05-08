@@ -22,9 +22,9 @@
 		lu_size 			x;
 		lu_size 			y; 
 
-		lu_p_value curr_vals;
-		lu_p_value p_vals;
-		lu_p_value prev_vals;
+		lu_p_value 			curr_vals;
+		lu_p_value 			p_vals; 	// for t
+		lu_p_size 			prev_neus;
 	};
 
 	static W_Col w_col_create(Mem mem, W_Rec w_rec, N_Col n_col);
@@ -40,9 +40,9 @@
 		lu_size 			w_cols_h;
 		W_Col* 				w_cols;
 
-		lu_size 			colors_w;
-		lu_size 			colors_h;
-		W_Col*				colors;
+		lu_size 			pers_w;
+		lu_size 			pers_h;
+		W_Col*				pers;
 	};
 
 	static W_Rec w_rec_create(Mem mem, N_Rec n_rec);
@@ -56,8 +56,8 @@
 	static inline void w_rec_w_cols_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->w_cols[y * self->w_cols_w + x] = w_col; }
 	static inline W_Col w_rec_w_cols_get(W_Rec self, lu_size x, lu_size y) { return self->w_cols[y * self->w_cols_w + x]; }
 
-	static inline void w_rec_colors_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->colors[x + y * self->colors_w] = w_col; }
-	static inline W_Col w_rec_colors_get(W_Rec self, lu_size x, lu_size y) { return self->colors[x + y * self->colors_w]; }
+	static inline void w_rec_pers_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->pers[x + y * self->pers_w] = w_col; }
+	static inline W_Col w_rec_pers_get(W_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave

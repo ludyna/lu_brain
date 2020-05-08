@@ -2,48 +2,6 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-
-
-	
-	// static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec)
-	// {
-	// 	lu_user_assert(n_mem, "N_Mem is NULL");
-	// 	lu_user_assert(n_mem->brain, "n_mem->brain is NULL");
-	// 	lu_user_assert(rec, "Rec is NULL");
-
-	// 	Mem mem = n_mem->brain->mem_perm;
-
-	// 	;
-
-	// 	lu_user_assert(rec->width > 0, "Rec width is 0");
-	// 	lu_user_assert(rec->height > 0, "Rec height is 0");
-
-	// 	// N_Rec self 			= (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
-	// 	// lu_user_assert(self, "Cannot allocate N_Rec");
-
-	// 	// lu_size self->colors_w;
-	// 	// lu_size self->colors_h;
-
-	// 	// if (rec->width == 1)
-	// 	// 	self->colors_w = 1;
-	// 	// else 
-	// 	// 	self->colors_w = (lu_size) lu_value_round(((lu_value) rec->width) / 2.0);
-
-	// 	// if (rec->height == 1)
-	// 	// 	self->colors_h = 1;
-	// 	// else
-	// 	// 	self->colors_h = (lu_size) lu_value_round(((lu_value) rec->height) / 2.0);
-
-	// 	// self->n_cols = (N_Col*) mem_alloc(
-	// 	// 	mem, 
-	// 	// 	sizeof(N_Col) * (rec->width + self->colors_w) * (rec->height * self->colors_h)
-	// 	// );
-
-	// 	// lu_user_assert(self->n_cols, "Cannot allocate N_Rec n_cols");
-
-	// 	return self;
-	// }
-
 	static void n_rec_debug_print(N_Rec self)
 	{
 		lu_debug("\n---------------------");
@@ -64,7 +22,7 @@
 					switch(col->type)
 					{
 						case NCT_COL:
-							lu_debug("c");
+							lu_debug("c", col->data_x, col->data_y);
 							break;
 						case NCT_PER:
 							lu_debug("p");
@@ -142,13 +100,13 @@
 			self->val_steps[i] = (lu_value)i * self->val_step;
 
 		// stvoryty n_cols
-		lu_size x, y;
+		lu_size x, y, cx, cy;
 		N_Col col;
 		N_Col temp_col;
 		enum n_col_type type = NCT_PER;
 
-		for (y = 0; y < self->n_cols_h; y++)
-			for(x = 0; x < self->n_cols_w; x++)
+		for (y = 0, cy = 0; y < self->n_cols_h; y++)
+			for(x = 0, cx = 0; x < self->n_cols_w; x++)
 			{
 				col = NULL;
 
@@ -174,8 +132,15 @@
 					col = NULL;
 				else
 				{
-					col = n_col_create(mem, self, x, y, type);
+					col = n_col_create(mem, self, cx, cy, x, y, type);
 					lu_user_assert(col, "Cannot allocate n_col");
+
+					if (type == NCT_COL)
+					{
+						++cx;
+
+						if (cx >= rec->width) ++cy;
+					}
 				}
 
 				n_rec_n_cols_set(self, x, y, col);
