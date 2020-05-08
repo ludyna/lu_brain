@@ -30,6 +30,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
 
+	enum n_col_type {
+		NCT_FIRST,
+		NCT_COL, 			
+		NCT_PER, 
+		NCT_PER_DIAG, 
+		NCT_LAST
+	};
+
 	typedef struct neu_ent* 	Neu_Ent;
 	typedef struct neu_b* 		Neu_B;
 	typedef struct neu_name* 	Neu_Name;

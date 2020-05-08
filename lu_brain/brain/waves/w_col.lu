@@ -5,11 +5,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	static W_Col w_col_create(Mem mem, lu_size component_size)
+	static W_Col w_col_create(Mem mem, N_Col n_col)
 	{
-		W_Col self = (W_Col) mem_alloc(mem, sizeof(struct w_col));
+		lu_user_assert(n_col, "N_Col is NULL");
 
-		self->sigs = (lu_p_size) mem_alloc(mem, sizeof(lu_size) * component_size);
+		W_Col self = (W_Col) mem_alloc(mem, sizeof(struct w_col));
+		lu_user_assert(self, "Cannot allocate W_Col");
+
+		N_Rec n_rec = n_col->n_rec;
+		lu_user_assert(n_rec, "N_Rec is NULL");
+
+		self->curr_vals = (lu_p_value) mem_alloc(mem, sizeof(lu_value) * n_rec->component_size);
+		lu_user_assert(self->curr_vals, "Cannot allocate W_Col curr_vals");
+
+		self->p_vals 	= (lu_p_value) mem_alloc(mem, sizeof(lu_value) * n_rec->component_size);
+		lu_user_assert(self->p_vals, "Cannot allocate W_Col p_vals");
+
+		self->prev_vals = (lu_p_value) mem_alloc(mem, sizeof(lu_value) * n_rec->component_size);
+		lu_user_assert(self->prev_vals, "Cannot allocate W_Col prev_vals");
 
 		return self;
 	}

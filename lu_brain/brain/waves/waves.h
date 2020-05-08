@@ -15,24 +15,37 @@
 
 	struct w_col
 	{
-		lu_p_size sigs;
+		W_Rec 				w_rec; 		// vlasnyk
+
+		enum n_col_type 	type;
+
+		lu_size 			x;
+		lu_size 			y; 
+
+		lu_p_value curr_vals;
+		lu_p_value p_vals;
+		lu_p_value prev_vals;
 	};
 
-	static W_Col w_col_create(Mem mem, lu_size component_size);
+	static W_Col w_col_create(Mem mem, N_Col n_col);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Rec 
 
 	struct w_rec
 	{
-		lu_size component_size;
+		lu_size 			component_size;
 
-		lu_size w_cols_w;
-		lu_size w_cols_h;
-		W_Col* w_cols;
+		lu_size 			w_cols_w;
+		lu_size 			w_cols_h;
+		W_Col* 				w_cols;
+
+		lu_size 			colors_w;
+		lu_size 			colors_h;
+		N_Col*				colors;
 	};
 
-	static W_Rec w_rec_create(Mem mem, lu_size w, lu_size h, lu_size component_size);
+	static W_Rec w_rec_create(Mem mem, N_Rec n_rec);
 
 	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size neu_ent);
 
@@ -45,7 +58,9 @@
 	struct lu_wave {
 		Gate 					gate;
 		Lu_Story 				story;
-		N_Mem 					n_mem;
+		N_Mem 					n_mem; 
+
+		Arr 					w_recs;
 	};
 
 	static void wave_init(Lu_Wave self, Gate gate); 

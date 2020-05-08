@@ -2,26 +2,29 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static W_Rec w_rec_create(Mem mem, lu_size w, lu_size h, lu_size component_size)
+	static W_Rec w_rec_create(Mem mem, N_Rec n_rec)
 	{
-		lu_user_assert(mem, "Mem is NULL");
+		lu_user_assert(mem, "Mem is NULL"); 
+		lu_user_assert(n_rec, "N_Rec is NULL");
 
 		W_Rec self = (W_Rec) mem_alloc(mem, sizeof(struct w_rec));
 		lu_user_assert(self, "Cannot allocate W_Rec");
 
-		self->component_size 	= component_size;
-		self->w_cols_w 			= w;
-		self->w_cols_h 			= h;
+		self->component_size 	= n_rec->component_size;
+		self->w_cols_w 			= n_rec->n_cols_w;
+		self->w_cols_h 			= n_rec->n_cols_h;
 		self->w_cols 			= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
 		lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
 
 		lu_size x;
 		lu_size y;
+		N_Col n_col;
 
 		for(y = 0; y < self->w_cols_h; y++)
 			for(x = 0; x < self->w_cols_w; x++)
 			{
-				W_Col col = w_col_create(mem, component_size);
+				n_col = n_rec_n_cols_get(n_rec, x, y);
+				W_Col col = w_col_create(mem, n_col);
 				w_rec_w_cols_set(self, x, y, col);
 			}
 
