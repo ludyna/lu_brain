@@ -19,13 +19,25 @@
 		lu_size x;
 		lu_size y;
 		N_Col n_col;
+		lu_size cx;
+		lu_size cy;
 
-		for(y = 0; y < self->w_cols_h; y++)
-			for(x = 0; x < self->w_cols_w; x++)
+		for(y = 0, cy = 0; y < self->w_cols_h; y++)
+			for(x = 0, cx = 0; x < self->w_cols_w; x++)
 			{
 				n_col = n_rec_n_cols_get(n_rec, x, y);
-				W_Col col = w_col_create(mem, n_col);
+				if (!n_col) continue;
+
+				W_Col col = w_col_create(mem, self, n_col);
 				w_rec_w_cols_set(self, x, y, col);
+
+				if (col->type == NCT_COL)
+				{
+					w_rec_colors_set(self, cx, cy, col);
+					++cx;
+
+					if (cx >= self->colors_w) ++cy;
+				}
 			}
 
 		return self;

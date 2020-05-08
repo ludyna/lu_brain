@@ -27,7 +27,7 @@
 		lu_p_value prev_vals;
 	};
 
-	static W_Col w_col_create(Mem mem, N_Col n_col);
+	static W_Col w_col_create(Mem mem, W_Rec w_rec, N_Col n_col);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Rec 
@@ -42,7 +42,7 @@
 
 		lu_size 			colors_w;
 		lu_size 			colors_h;
-		N_Col*				colors;
+		W_Col*				colors;
 	};
 
 	static W_Rec w_rec_create(Mem mem, N_Rec n_rec);
@@ -51,6 +51,9 @@
 
 	static inline void w_rec_w_cols_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->w_cols[y * self->w_cols_w + x] = w_col; }
 	static inline W_Col w_rec_w_cols_get(W_Rec self, lu_size x, lu_size y) { return self->w_cols[y * self->w_cols_w + x]; }
+
+	static inline void w_rec_colors_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->colors[x + y * self->colors_w] = w_col; }
+	static inline W_Col w_rec_colors_get(W_Rec self, lu_size x, lu_size y) { return self->colors[x + y * self->colors_w]; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave
