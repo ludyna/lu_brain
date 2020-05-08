@@ -84,20 +84,20 @@
 		// porahuvaty potochni __val__ dlia vsih w_col
 		// porahuvaty perepady dlia vsih w_col z prev
 		// tilky dlia perepadiv po chasu i prostoru znayty c i p neus i sformuvaty t-neu
-		for(y = 0; y < w_rec->pers_h; y++)
-			for(x = 0; x < w_rec->pers_w; x++)
-			{
-				w_col = w_rec_pers_get(w_rec, x, y);
-				lu_user_assert_void(w_col, "W_Col is NULL");
+		// for(y = 0; y < w_rec->pers_h; y++)
+		// 	for(x = 0; x < w_rec->pers_w; x++)
+		// 	{
+		// 		w_col = w_rec_pers_get(w_rec, x, y);
+		// 		lu_user_assert_void(w_col, "W_Col is NULL");
 				
-				// for(z = 0; z < w_rec->component_size; z++)
-				// {
-				// 	// we are assuming data sizes and w_rec->pers sizes are the same
-				// 	value = lu_data_get(data, data_w, data_h, w_rec->component_size, x, y, z);
+		// 		// for(z = 0; z < w_rec->component_size; z++)
+		// 		// {
+		// 		// 	// we are assuming data sizes and w_rec->pers sizes are the same
+		// 		// 	value = lu_data_get(data, data_w, data_h, w_rec->component_size, x, y, z);
 
-				// 	//w_col->curr_vals[z] = value;
-				// }
-			}
+		// 		// 	//w_col->curr_vals[z] = value;
+		// 		// }
+		// 	}
 
 
 				// 		n_col = n_rec_pers_get(n_rec, x, y);

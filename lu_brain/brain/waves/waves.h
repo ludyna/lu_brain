@@ -40,9 +40,7 @@
 		lu_size 			w_cols_h;
 		W_Col* 				w_cols;
 
-		lu_size 			pers_w;
-		lu_size 			pers_h;
-		W_Col*				pers;
+		Arr					pers;
 	};
 
 	static W_Rec w_rec_create(Mem mem, N_Rec n_rec);
@@ -55,9 +53,6 @@
 
 	static inline void w_rec_w_cols_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->w_cols[y * self->w_cols_w + x] = w_col; }
 	static inline W_Col w_rec_w_cols_get(W_Rec self, lu_size x, lu_size y) { return self->w_cols[y * self->w_cols_w + x]; }
-
-	static inline void w_rec_pers_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->pers[x + y * self->pers_w] = w_col; }
-	static inline W_Col w_rec_pers_get(W_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave

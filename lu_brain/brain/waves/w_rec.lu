@@ -3,26 +3,22 @@
 */
 	static void w_rec_debug_print(W_Rec self)
 	{
-		lu_size x, y;
+		lu_size i;
 		W_Col col;
 
 		lu_debug("\n---------------------");
-		lu_debug("\nW_Rec pers: ");
+		lu_debug("\nW_Rec pers(count=%d, size=%d): ", arr_count(self->pers), arr_size(self->pers));
 
-		for(y = 0; y < self->pers_h; y++)
+		for(i = 0; i < arr_count(self->pers); i++)
 		{
-			lu_debug("\n");
-			for(x = 0; x < self->pers_w; x++)
-			{
-				col = w_rec_pers_get(self, x, y);
+			col = (W_Col) arr_get(self->pers, i);
 
-				if (col == NULL)
-					lu_debug("NULL ");
-				else if (col->type != NCT_COL)
-					lu_debug("ERROR ");
-				else
-					lu_debug("(%d, %d) ", col->x, col->y);
-			}
+			if (col == NULL)
+				lu_debug("NULL ");
+			else if (col->type != NCT_PER)
+				lu_debug("ERROR ");
+			else
+				lu_debug("(%d, %d) ", col->x, col->y);
 		}  
 
 		lu_debug("\n");
@@ -31,7 +27,8 @@
 	static W_Rec w_rec_create(Mem mem, N_Rec n_rec)
 	{
 		lu_user_assert(mem, "Mem is NULL"); 
-		lu_user_assert(n_rec, "N_Rec is NULL");
+		lu_user_assert(n_rec, "N_Rec is NULL"); 
+		lu_user_assert(n_rec->rec, "N_Rec n_rec is NULL");
 
 		W_Rec self = (W_Rec) mem_alloc(mem, sizeof(struct w_rec));
 		lu_user_assert(self, "Cannot allocate W_Rec");
@@ -42,21 +39,15 @@
 		self->w_cols 			= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
 		lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
 
-		lu_size x, y, cx, cy;
+		lu_size x, y;
 		N_Col n_col;
 
-		self->pers_w = n_rec->pers_w;
-		self->pers_h = n_rec->pers_h;
-
-		self->pers = (W_Col*) mem_alloc(
-			mem,
-			sizeof(W_Col) * self->pers_w * self->pers_h
-		);
+		self->pers 		= arr_create(mem, n_rec->rec->width * n_rec->rec->height);
 
 		lu_user_assert(self->pers, "Cannot allocate pers");
 
-		for(y = 0, cy = 0; y < self->w_cols_h; y++)
-			for(x = 0, cx = 0; x < self->w_cols_w; x++)
+		for(y = 0; y < self->w_cols_h; y++)
+			for(x = 0; x < self->w_cols_w; x++)
 			{
 				n_col = n_rec_n_cols_get(n_rec, x, y);
 				if (!n_col) continue;
@@ -65,12 +56,7 @@
 				w_rec_w_cols_set(self, x, y, col);
 
 				if (col && col->type == NCT_PER)
-				{
-					w_rec_pers_set(self, cx, cy, col);
-					++cx;
-
-					if (cx >= self->pers_w) ++cy;
-				}
+					arr_append(self->pers, col);
 			}
 
 		return self;
