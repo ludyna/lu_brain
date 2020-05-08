@@ -24,8 +24,11 @@
 						case NCT_COL:
 							lu_debug("c", col->data_x, col->data_y);
 							break;
-						case NCT_PER:
-							lu_debug("p");
+						case NCT_PER_HOR:
+							lu_debug("h");
+							break;
+						case NCT_PER_VER:
+							lu_debug("v");
 							break;
 						case NCT_PER_DIAG:
 							lu_debug("x");
@@ -103,7 +106,7 @@
 		lu_size x, y, cx, cy;
 		N_Col col;
 		N_Col temp_col;
-		enum n_col_type type = NCT_PER;
+		enum n_col_type type = NCT_PER_HOR;
 
 		for (y = 0, cy = 0; y < self->n_cols_h; y++)
 			for(x = 0, cx = 0; x < self->n_cols_w; x++)
@@ -116,9 +119,9 @@
 					switch(temp_col->type)
 					{
 						case NCT_COL:
-							type = NCT_PER;
+							type = NCT_PER_VER;
 							break;
-						case NCT_PER:
+						case NCT_PER_HOR:
 							type = NCT_PER_DIAG;
 							break;
 						default:
@@ -126,7 +129,7 @@
 					} 
 				}
 				else
-					type = type == NCT_COL ? NCT_PER : NCT_COL;
+					type = type == NCT_COL ? NCT_PER_HOR : NCT_COL;
 
 				if (type == NCT_PER_DIAG)
 					col = NULL;

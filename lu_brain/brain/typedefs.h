@@ -35,7 +35,8 @@
 	enum n_col_type {
 		NCT_FIRST,
 		NCT_COL, 			
-		NCT_PER, 
+		NCT_PER_HOR, 
+		NCT_PER_VER,
 		NCT_PER_DIAG, 
 		NCT_LAST
 	};

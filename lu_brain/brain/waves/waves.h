@@ -58,11 +58,11 @@
 // Lu_Wave
 
 	struct lu_wave {
-		Gate 					gate;
-		Lu_Story 				story;
-		N_Mem 					n_mem; 
+		Gate 				gate;
+		Lu_Story 			story;
+		N_Mem 				n_mem; 
 
-		Arr 					w_recs;
+		Arr 				w_recs;
 	};
 
 	static void wave_init(Lu_Wave self, Gate gate); 
