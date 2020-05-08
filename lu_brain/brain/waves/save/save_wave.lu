@@ -101,6 +101,8 @@
 
 		lu_value vpsum, v1, v2;
 
+		lu_value val_comp_size = (lu_value) w_rec->component_size;
+
 
 		for(i = 0; i < arr_count(w_rec->pers); i++)
 		{
@@ -144,7 +146,7 @@
 				vpsum += vp[j];
 			}
 
-			if (vpsum > opts->contrast)
+			if ((vpsum / val_comp_size) >= opts->contrast)
 			{
 				p_n_col = n_rec_n_cols_get(n_rec, p_w_col->x, p_w_col->y);
 				c_n_col1 = n_rec_n_cols_get(n_rec, c_w_col1->x, c_w_col1->y);
