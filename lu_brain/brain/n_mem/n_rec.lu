@@ -79,25 +79,6 @@
 			}
 		}
 
-		// lu_debug("\n---------------------");
-		// lu_debug("\ncolors: ");
-
-		// for(y = 0; y < self->colors_h; y++)
-		// {
-		// 	lu_debug("\n");
-		// 	for(x = 0; x < self->colors_w; x++)
-		// 	{
-		// 		col = n_rec_colors_get(self, x, y);
-
-		// 		if (col == NULL)
-		// 			lu_debug("NULL ");
-		// 		else if (col->type != NCT_COL)
-		// 			lu_debug("ERROR ");
-		// 		else
-		// 			lu_debug("(%d, %d) ", col->x, col->y);
-		// 	}
-		// }  
-
 		lu_debug("\n");
 	}
 

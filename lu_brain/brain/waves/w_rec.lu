@@ -1,6 +1,32 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
+	static void w_rec_debug_print(W_Rec self)
+	{
+		lu_size x, y;
+		W_Col col;
+
+		lu_debug("\n---------------------");
+		lu_debug("\ncolors: ");
+
+		for(y = 0; y < self->colors_h; y++)
+		{
+			lu_debug("\n");
+			for(x = 0; x < self->colors_w; x++)
+			{
+				col = w_rec_colors_get(self, x, y);
+
+				if (col == NULL)
+					lu_debug("NULL ");
+				else if (col->type != NCT_COL)
+					lu_debug("ERROR ");
+				else
+					lu_debug("(%d, %d) ", col->x, col->y);
+			}
+		}  
+
+		lu_debug("\n");
+	}
 
 	static W_Rec w_rec_create(Mem mem, N_Rec n_rec)
 	{
