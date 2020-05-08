@@ -203,7 +203,7 @@
 				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
 				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
 
-				save_wave_data_send(wave, n_rec, curr_d, block_i);
+				save_wave_data_send(wave, opts, n_rec, curr_d, block_i);
 
 				save_wave_rec_progress(wave, n_rec, block_i);
 			}

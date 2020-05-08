@@ -68,7 +68,7 @@
 	// 	return x >= 0 && x < self->w_cols_w && y >= 0 && y < self->w_cols_h; 
 	// }
 
-	static void save_wave_data_send(Save_Wave self, N_Rec n_rec, lu_p_value data, lu_size block_i)
+	static void save_wave_data_send(Save_Wave self, Lu_Save_Opts opts, N_Rec n_rec, lu_p_value data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(n_rec, "N_Rec is NULL");
@@ -97,7 +97,10 @@
 		lu_size i, j;
 
 		int x1, y1, x2, y2;
-		//lu_value v[w_rec->component_size];
+		lu_value vp[w_rec->component_size];
+
+		lu_value vpsum, v1, v2;
+
 
 		for(i = 0; i < arr_count(w_rec->pers); i++)
 		{
@@ -134,9 +137,20 @@
 
 			for (j = 0; j < w_rec->component_size; j++)
 			{
+				v1 = lu_data_get(data, data_w, data_h, w_rec->component_size, c_w_col1->x, c_w_col1->y, j);
+				v2 = lu_data_get(data, data_w, data_h, w_rec->component_size, c_w_col2->x, c_w_col2->y, j);
 
+				vp[j] = lu_value_abs(v1 - v2);
+				vpsum += vp[j];
+			}
 
-				//lu_value_abs(
+			if (vpsum > opts->contrast)
+			{
+				p_n_col = n_rec_n_cols_get(n_rec, p_w_col->x, p_w_col->y);
+				c_n_col1 = n_rec_n_cols_get(n_rec, c_w_col1->x, c_w_col1->y);
+				c_n_col2 = n_rec_n_cols_get(n_rec, c_w_col2->x, c_w_col2->y);
+
+				//neu_ent = n_col_neu_ent_get(n_col, value);
 			}
 		}
 
