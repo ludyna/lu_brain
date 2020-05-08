@@ -46,8 +46,12 @@
 	};
 
 	static W_Rec w_rec_create(Mem mem, N_Rec n_rec);
+	static void w_rec_debug_print(W_Rec self);
 
 	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size neu_ent);
+
+	///////////////////////////
+	// Accessors
 
 	static inline void w_rec_w_cols_set(W_Rec self, lu_size x, lu_size y, W_Col w_col) { self->w_cols[y * self->w_cols_w + x] = w_col; }
 	static inline W_Col w_rec_w_cols_get(W_Rec self, lu_size x, lu_size y) { return self->w_cols[y * self->w_cols_w + x]; }
@@ -103,8 +107,6 @@
 	struct lu_save_resp {
 
 	};
-
-	typedef struct n_rec* N_Rec; // to break dep loop
 
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
 	static void save_wave_data_send(Save_Wave self, N_Rec n_rec, lu_p_value data, lu_size block_i);

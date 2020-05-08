@@ -7,7 +7,7 @@
 		W_Col col;
 
 		lu_debug("\n---------------------");
-		lu_debug("\ncolors: ");
+		lu_debug("\nW_Rec colors: ");
 
 		for(y = 0; y < self->colors_h; y++)
 		{

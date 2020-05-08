@@ -36,8 +36,9 @@
 			w_rec = w_rec_create(brain->mem_perm, n_rec);
 
 			arr_set(self->w_recs, i, w_rec);
-		}
 
+			w_rec_debug_print(w_rec);
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
