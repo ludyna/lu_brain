@@ -72,8 +72,10 @@
 		lu_size x, y, z;
 		lu_value value;
 
-		N_Col n_col;
-		lu_size neu_ent = ENT_NULL;
+		Lu_Wave wave = &self->super;
+
+		W_Rec w_rec = wave_w_rec_get(wave, n_rec->id);
+
 
 		// for(y = 0; y < n_rec->colors_h; y++)
 		// 	for(x = 0; x < n_rec->colors_w; x++)

@@ -72,6 +72,8 @@
 
 	static void wave_init(Lu_Wave self, Gate gate); 
 
+	static inline W_Rec wave_w_rec_get(Lu_Wave self, lu_size id) { return (W_Rec) arr_get(self->w_recs, id); }
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave_Resp
 
