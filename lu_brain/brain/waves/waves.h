@@ -41,6 +41,7 @@
 		W_Col* 				w_cols;
 
 		Arr					pers;
+		Arr 				active_pers; // or t-neus?
 	};
 
 	static W_Rec w_rec_create(Mem mem, N_Rec n_rec);

@@ -81,17 +81,23 @@
 		Lu_Wave wave 		= &self->super;
 
 		W_Rec w_rec 		= wave_w_rec_get(wave, n_rec->id);
+		lu_user_assert_void(w_rec, "W_Rec is NULL");
+
 		W_Col p_w_col 		= NULL;
 		W_Col c_w_col1 		= NULL;
 		W_Col c_w_col2 		= NULL;
 
+		N_Col p_n_col		= NULL;
+		N_Col c_n_col1  	= NULL;
+		N_Col c_n_col2		= NULL;
+
 		lu_size data_w 		= n_rec->rec->width;
 		lu_size data_h 		= n_rec->rec->height;
 
-		lu_size i;
+		lu_size i, j;
 
-
-		int x0, y0, x1, y1, x2, y2;
+		int x1, y1, x2, y2;
+		//lu_value v[w_rec->component_size];
 
 		for(i = 0; i < arr_count(w_rec->pers); i++)
 		{
@@ -100,15 +106,38 @@
 			lu_user_assert_void(p_w_col, "w_col is NULL");
 			lu_user_assert_void(p_w_col->type == NCT_PER_HOR || p_w_col->type == NCT_PER_VER, "Something went wrong");
 
+			if (p_w_col->type == NCT_PER_HOR)
+			{
+				x1 = p_w_col->x - 1;
+				y1 = p_w_col->y;
+
+				x2 = p_w_col->x + 1;
+				y2 = p_w_col->y;
+
+				c_w_col1 = w_rec_w_cols_get(w_rec, x1, y1);
+				c_w_col2 = w_rec_w_cols_get(w_rec, x2, y2);
+			}
+			else
+			{
+				x1 = p_w_col->x;
+				y1 = p_w_col->y - 1;
+
+				x2 = p_w_col->x;
+				y2 = p_w_col->y + 1;
+
+				c_w_col1 = w_rec_w_cols_get(w_rec, x1, y1);
+				c_w_col2 = w_rec_w_cols_get(w_rec, x2, y2);
+			}
+
+			lu_user_assert_void(c_w_col1 && c_w_col1->type == NCT_COL, "Something went wrong");
+			lu_user_assert_void(c_w_col2 && c_w_col2->type == NCT_COL, "Something went wrong");
+
+			for (j = 0; j < w_rec->component_size; j++)
+			{
 
 
-			// if (w_col->y == 0)
-			// {
-
-			// }
-	
-
-
+				//lu_value_abs(
+			}
 		}
 
 		// porahuvaty potochni __val__ dlia vsih w_col
