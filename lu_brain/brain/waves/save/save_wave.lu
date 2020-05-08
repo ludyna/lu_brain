@@ -75,22 +75,22 @@
 		N_Col n_col;
 		lu_size neu_ent = ENT_NULL;
 
-		for(y = 0; y < n_rec->colors_h; y++)
-			for(x = 0; x < n_rec->colors_w; x++)
-			{
-				n_col = n_rec_colors_get(n_rec, x, y);
-				lu_user_assert_void(n_col, "N_Col is NULL");
+		// for(y = 0; y < n_rec->colors_h; y++)
+		// 	for(x = 0; x < n_rec->colors_w; x++)
+		// 	{
+		// 		n_col = n_rec_colors_get(n_rec, x, y);
+		// 		lu_user_assert_void(n_col, "N_Col is NULL");
 
-				for(z = 0; z < n_rec->component_size; z++)
-				{
-					value = lu_data_get(data, n_rec->colors_w, n_rec->colors_h, n_rec->component_size, x, y, z);
+		// 		for(z = 0; z < n_rec->component_size; z++)
+		// 		{
+		// 			value = lu_data_get(data, n_rec->colors_w, n_rec->colors_h, n_rec->component_size, x, y, z);
 
-					neu_ent = n_col_neu_ent_get(n_col, value);
-					lu_user_assert_void(neu_ent, "Cannot get neu_ent for value");
+		// 			neu_ent = n_col_neu_ent_get(n_col, value);
+		// 			lu_user_assert_void(neu_ent, "Cannot get neu_ent for value");
 
-					//save_wave_c_neu_fire(self, neu_ent, value);
-				}				
-			}
+		// 			//save_wave_c_neu_fire(self, neu_ent, value);
+		// 		}				
+		// 	}
 	}
 
 	static void save_wave_c_neu_fire(Save_Wave self, lu_size neu_ent, lu_value value)
