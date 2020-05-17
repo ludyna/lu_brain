@@ -145,8 +145,7 @@
 	static inline void n_rec_n_cols_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->n_cols[y * self->n_cols_w + x] = n_col; }
 	static inline N_Col n_rec_n_cols_get(N_Rec self, lu_size x, lu_size y) { return self->n_cols[y * self->n_cols_w + x]; }
 
-	// static inline void n_rec_pers_set(N_Rec self, lu_size x, lu_size y, N_Col n_col) { self->pers[x + y * self->pers_w] = n_col; }
-	// static inline N_Col n_rec_pers_get(N_Rec self, lu_size x, lu_size y) { return self->pers[x + y * self->pers_w]; }
+	static void n_rec_debug_print(N_Rec self);
 
 	struct n_mem {
 		Lu_Brain 			brain;

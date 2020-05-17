@@ -5,7 +5,7 @@
 	static void n_rec_debug_print(N_Rec self)
 	{
 		lu_debug("\n---------------------");
-		lu_debug("\nn_cols: ");
+		lu_debug("\nn_cols(%d, %d): ", self->n_cols_w, self->n_cols_h);
 		lu_size x, y;
 		N_Col col;
 		for(y = 0; y < self->n_cols_h; y++)
@@ -64,6 +64,9 @@
 		// Initialize
 		self->n_mem			= n_mem;
 		self->rec 			= rec;
+
+		// rec->width = 10;
+		// rec->height = 10;
 
 		if (rec->width == 1)
 			self->pers_w = 0;

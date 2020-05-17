@@ -10,7 +10,8 @@
 		self->cont_create_x_radius 	= 1;
 		self->cont_create_y_radius 	= 1;
 		self->cont_create_t_radius 	= 1;
-
+ 
+ 		self->contrast 				= 0.2;
 
 		return self;
 	}

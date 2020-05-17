@@ -75,86 +75,129 @@
 		lu_user_assert_void(n_rec->rec, "N_Rec rec is NULL");
 		lu_user_assert_void(data, "Data is NULL");
 
-		lu_size x, y, z;
-		lu_value value;
-
 		Lu_Wave wave 		= &self->super;
 
 		W_Rec w_rec 		= wave_w_rec_get(wave, n_rec->id);
 		lu_user_assert_void(w_rec, "W_Rec is NULL");
 
-		W_Col p_w_col 		= NULL;
-		W_Col c_w_col1 		= NULL;
-		W_Col c_w_col2 		= NULL;
+		// W_Col p_w_col 		= NULL;
+		// W_Col c_w_col1 		= NULL;
+		// W_Col c_w_col2 		= NULL;
 
-		N_Col p_n_col		= NULL;
-		N_Col c_n_col1  	= NULL;
-		N_Col c_n_col2		= NULL;
+		// N_Col p_n_col		= NULL;
+		// N_Col c_n_col1  		= NULL;
+		// N_Col c_n_col2		= NULL;
 
 		lu_size data_w 		= n_rec->rec->width;
 		lu_size data_h 		= n_rec->rec->height;
 
-		lu_size i, j;
-
-		int x1, y1, x2, y2;
-		lu_value vp[w_rec->component_size];
-
-		lu_value vpsum, v1, v2;
-
 		lu_value val_comp_size = (lu_value) w_rec->component_size;
 
+		// ce ne zovsim pravylno, bo kozhna n_col takozh mozhe maty t perep,
+		// tomu odnakovo treba proytysia po vsih 
 
-		for(i = 0; i < arr_count(w_rec->pers); i++)
+		lu_size x, y, j, dx, dy;
+		N_Col n_col = NULL;
+
+		n_rec_debug_print(n_rec); 
+
+		lu_value v;
+
+		if (block_i == 0) 
 		{
-			p_w_col = arr_get(w_rec->pers, i);
-
-			lu_user_assert_void(p_w_col, "w_col is NULL");
-			lu_user_assert_void(p_w_col->type == NCT_PER_HOR || p_w_col->type == NCT_PER_VER, "Something went wrong");
-
-			if (p_w_col->type == NCT_PER_HOR)
-			{
-				x1 = p_w_col->x - 1;
-				y1 = p_w_col->y;
-
-				x2 = p_w_col->x + 1;
-				y2 = p_w_col->y;
-
-				c_w_col1 = w_rec_w_cols_get(w_rec, x1, y1);
-				c_w_col2 = w_rec_w_cols_get(w_rec, x2, y2);
-			}
-			else
-			{
-				x1 = p_w_col->x;
-				y1 = p_w_col->y - 1;
-
-				x2 = p_w_col->x;
-				y2 = p_w_col->y + 1;
-
-				c_w_col1 = w_rec_w_cols_get(w_rec, x1, y1);
-				c_w_col2 = w_rec_w_cols_get(w_rec, x2, y2);
-			}
-
-			lu_user_assert_void(c_w_col1 && c_w_col1->type == NCT_COL, "Something went wrong");
-			lu_user_assert_void(c_w_col2 && c_w_col2->type == NCT_COL, "Something went wrong");
-
-			for (j = 0; j < w_rec->component_size; j++)
-			{
-				v1 = lu_data_get(data, data_w, data_h, w_rec->component_size, c_w_col1->x, c_w_col1->y, j);
-				v2 = lu_data_get(data, data_w, data_h, w_rec->component_size, c_w_col2->x, c_w_col2->y, j);
-
-				vp[j] = lu_value_abs(v1 - v2);
-				vpsum += vp[j];
-			}
-
-			if ((vpsum / val_comp_size) >= opts->contrast)
-			{
-				p_n_col = n_rec_n_cols_get(n_rec, p_w_col->x, p_w_col->y);
-				c_n_col1 = n_rec_n_cols_get(n_rec, c_w_col1->x, c_w_col1->y);
-				c_n_col2 = n_rec_n_cols_get(n_rec, c_w_col2->x, c_w_col2->y);
-
-				//neu_ent = n_col_neu_ent_get(n_col, value);
-			}
+			// zmin po chasu nema, tomu mo
 		}
+
+		// prohodymsia po vsih prostorovyh perepadah, obchysluyemo yih
+		// (yaksho block_i != 0 obchysluyemo chasovi perepady)
+		// paralelno formuyemo chetvirky dlia perepadiv (2 i 4)
+		// pochynayemo buduvaty piramidy dlia kozhnoyi hrupy chetvirok (yaksho v niy ye hocha b odyn neu)
+
+		for (y = 0; y < n_rec->n_cols_h; y++)
+			for (x = 0; x < n_rec->n_cols_w; x++)
+			{
+				n_col = n_rec_n_cols_get(n_rec, x, y);
+
+				// lu_debug("\n n_col (%d, %d)", x, y);
+				// lu_user_assert_void(n_col, "N_Col is NULL");
+
+				if (n_col == NULL) continue;
+
+				dx = n_col->data_x;
+				dy = n_col->data_y;
+
+				for (j = 0; j < n_rec->component_size; j++)
+				{
+					v = lu_data_get(data, data_w, data_h, n_rec->component_size, dx, dy, j);
+				}	
+
+				
+			} 
+
+
+		// for (y = 0; y < w_rec->w_cols_h; y++)
+		// 	for (x = 0; x < w_rec->w_cols_w; x++)
+		// 	{
+
+		// 		col = w_rec_w_cols_get(w_rec, x, y);
+
+		// 		for (j = 0; j < w_rec->component_size; j++)
+		// 		{
+		// 			lu_debug("\n TTT: %d, %d, %d, %d", x, y, data_w, data_h);
+		// 			v = lu_data_get(data, data_w, data_h, w_rec->component_size, col->x, col->y, j);
+		// 			///col->curr_vals[j] = v;
+		// 		}	
+
+				// p_w_col = arr_get(w_rec->pers, i);
+
+				// lu_user_assert_void(p_w_col, "w_col is NULL");
+				// lu_user_assert_void(p_w_col->type == NCT_PER_HOR || p_w_col->type == NCT_PER_VER, "Something went wrong");
+
+				// if (p_w_col->type == NCT_PER_HOR)
+				// {
+				// 	x1 = p_w_col->x - 1;
+				// 	y1 = p_w_col->y;
+
+				// 	x2 = p_w_col->x + 1;
+				// 	y2 = p_w_col->y;
+
+				// 	c_w_col1 = w_rec_w_cols_get(w_rec, x1, y1);
+				// 	c_w_col2 = w_rec_w_cols_get(w_rec, x2, y2);
+				// }
+				// else
+				// {
+				// 	x1 = p_w_col->x;
+				// 	y1 = p_w_col->y - 1;
+
+				// 	x2 = p_w_col->x;
+				// 	y2 = p_w_col->y + 1;
+
+				// 	c_w_col1 = w_rec_w_cols_get(w_rec, x1, y1);
+				// 	c_w_col2 = w_rec_w_cols_get(w_rec, x2, y2);
+				// }
+
+				// lu_user_assert_void(c_w_col1 && c_w_col1->type == NCT_COL, "Something went wrong");
+				// lu_user_assert_void(c_w_col2 && c_w_col2->type == NCT_COL, "Something went wrong");
+
+				// for (j = 0; j < w_rec->component_size; j++)
+				// {
+				// 	v1 = lu_data_get(data, data_w, data_h, w_rec->component_size, c_w_col1->x, c_w_col1->y, j);
+				// 	v2 = lu_data_get(data, data_w, data_h, w_rec->component_size, c_w_col2->x, c_w_col2->y, j);
+
+				// 	vp[j] = lu_value_abs(v1 - v2);
+				// 	vpsum += vp[j];
+				// }
+
+				// if ((vpsum / val_comp_size) >= opts->contrast)
+				// {
+				// 	p_n_col		= n_rec_n_cols_get(n_rec, p_w_col->x, p_w_col->y);
+				// 	c_n_col1 	= n_rec_n_cols_get(n_rec, c_w_col1->x, c_w_col1->y);
+				// 	c_n_col2 	= n_rec_n_cols_get(n_rec, c_w_col2->x, c_w_col2->y);
+
+
+				// 	//neu_ent = n_col_neu_ent_get(n_col, value);
+				// }
+			// }
 
 		// porahuvaty potochni __val__ dlia vsih w_col
 		// porahuvaty perepady dlia vsih w_col z prev
