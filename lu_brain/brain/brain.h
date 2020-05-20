@@ -10,12 +10,13 @@
 #include "../lu_brain.h" // public interface
 
 #include "typedefs.h"
+#include "n/n.h"
 #include "rec/rec.h"
 #include "net/net.h"
-#include "waves/waves.h"
+#include "w/w.h"
 #include "gate/gate.h"
 #include "story/story.h"
-#include "n_mem/n_mem.h"
+#include "s/s.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
@@ -51,7 +52,7 @@
   
 		Gate 			gate;
 
-		N_Mem 			n_mem;
+		S_Mem 			s_mem;
 	};	
 
 

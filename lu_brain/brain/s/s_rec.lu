@@ -2,12 +2,12 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static void n_rec_debug_print(N_Rec self)
+	static void n_rec_debug_print(S_Rec self)
 	{
 		lu_debug("\n---------------------");
 		lu_debug("\nn_cols(%d, %d): ", self->n_cols_w, self->n_cols_h);
 		lu_size x, y;
-		N_Col col;
+		S_Col col;
 		for(y = 0; y < self->n_cols_h; y++)
 		{
 			lu_debug("\n");
@@ -43,26 +43,26 @@
 		lu_debug("\n");
 	}
 
-	static N_Rec n_rec_create(N_Mem n_mem, Lu_Rec rec)
+	static S_Rec n_rec_create(S_Mem s_mem, Lu_Rec rec)
 	{
-		lu_user_assert(n_mem, "N_Mem is NULL");
-		lu_user_assert(n_mem->brain, "n_mem->brain is NULL");
+		lu_user_assert(s_mem, "S_Mem is NULL");
+		lu_user_assert(s_mem->brain, "s_mem->brain is NULL");
 		lu_user_assert(rec, "Rec is NULL");
 		lu_user_assert(rec->max_value > rec->min_value, "Lu_Rec max_value should be greater than Lu_Rec min_value");
 		lu_user_assert(rec->val_ssp > 0 && rec->val_ssp <= 0.5, "Lu_Rec val_ssp should be greater than 0 and less equal to 0.5");
 
-		Mem mem = n_mem->brain->mem_perm;
+		Mem mem = s_mem->brain->mem_perm;
 
 		lu_user_assert(mem, "Mem is NULL");
 
-		N_Rec self = (N_Rec) mem_alloc(mem, sizeof(struct n_rec));
-		lu_user_assert(self, "Cannot allocate N_Rec");
+		S_Rec self = (S_Rec) mem_alloc(mem, sizeof(struct s_rec));
+		lu_user_assert(self, "Cannot allocate S_Rec");
 
 		self->id 				= rec->id;
 		self->component_size 	= rec->component_size;
 
 		// Initialize
-		self->n_mem			= n_mem;
+		self->s_mem			= s_mem;
 		self->rec 			= rec;
 
 		// rec->width = 10;
@@ -83,9 +83,9 @@
 		self->n_cols_w 			= rec->width + self->pers_w;
 		self->n_cols_h			= rec->height + self->pers_h;
 
-		self->n_cols = (N_Col*) mem_alloc(
+		self->n_cols = (S_Col*) mem_alloc(
 			mem, 
-			sizeof(N_Col) * self->n_cols_w * self->n_cols_h 
+			sizeof(S_Col) * self->n_cols_w * self->n_cols_h 
 		);
 
 		lu_user_assert(self->n_cols, "Cannot allocate n_cols");
@@ -107,8 +107,8 @@
 
 		// stvoryty n_cols
 		lu_size x, y, cx, cy;
-		N_Col col;
-		N_Col temp_col;
+		S_Col col;
+		S_Col temp_col;
 		enum n_col_type type = NCT_PER_HOR;
 
 		for (y = 0, cy = 0; y < self->n_cols_h; y++)
@@ -138,8 +138,8 @@
 					col = NULL;
 				else
 				{
-					col = n_col_create(mem, self, cx, cy, x, y, type);
-					lu_user_assert(col, "Cannot allocate n_col");
+					col = s_col_create(mem, self, cx, cy, x, y, type);
+					lu_user_assert(col, "Cannot allocate s_col");
 
 					if (type == NCT_COL)
 					{

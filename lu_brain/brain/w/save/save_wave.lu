@@ -68,38 +68,38 @@
 	// 	return x >= 0 && x < self->w_cols_w && y >= 0 && y < self->w_cols_h; 
 	// }
 
-	static void save_wave_data_send(Save_Wave self, Lu_Save_Opts opts, N_Rec n_rec, lu_p_value data, lu_size block_i)
+	static void save_wave_data_send(Save_Wave self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
-		lu_user_assert_void(n_rec, "N_Rec is NULL");
-		lu_user_assert_void(n_rec->rec, "N_Rec rec is NULL");
+		lu_user_assert_void(s_rec, "S_Rec is NULL");
+		lu_user_assert_void(s_rec->rec, "S_Rec rec is NULL");
 		lu_user_assert_void(data, "Data is NULL");
 
 		Lu_Wave wave 		= &self->super;
 
-		W_Rec w_rec 		= wave_w_rec_get(wave, n_rec->id);
+		W_Rec w_rec 		= wave_w_rec_get(wave, s_rec->id);
 		lu_user_assert_void(w_rec, "W_Rec is NULL");
 
 		// W_Col p_w_col 		= NULL;
 		// W_Col c_w_col1 		= NULL;
 		// W_Col c_w_col2 		= NULL;
 
-		// N_Col p_n_col		= NULL;
-		// N_Col c_n_col1  		= NULL;
-		// N_Col c_n_col2		= NULL;
+		// S_Col p_n_col		= NULL;
+		// S_Col c_n_col1  		= NULL;
+		// S_Col c_n_col2		= NULL;
 
-		lu_size data_w 		= n_rec->rec->width;
-		lu_size data_h 		= n_rec->rec->height;
+		lu_size data_w 		= s_rec->rec->width;
+		lu_size data_h 		= s_rec->rec->height;
 
 		lu_value val_comp_size = (lu_value) w_rec->component_size;
 
-		// ce ne zovsim pravylno, bo kozhna n_col takozh mozhe maty t perep,
+		// ce ne zovsim pravylno, bo kozhna s_col takozh mozhe maty t perep,
 		// tomu odnakovo treba proytysia po vsih 
 
 		lu_size x, y, j, dx, dy;
-		N_Col n_col = NULL;
+		S_Col s_col = NULL;
 
-		n_rec_debug_print(n_rec); 
+		n_rec_debug_print(s_rec); 
 
 		lu_value v;
 
@@ -113,22 +113,22 @@
 		// paralelno formuyemo chetvirky dlia perepadiv (2 i 4)
 		// pochynayemo buduvaty piramidy dlia kozhnoyi hrupy chetvirok (yaksho v niy ye hocha b odyn neu)
 
-		for (y = 0; y < n_rec->n_cols_h; y++)
-			for (x = 0; x < n_rec->n_cols_w; x++)
+		for (y = 0; y < s_rec->n_cols_h; y++)
+			for (x = 0; x < s_rec->n_cols_w; x++)
 			{
-				n_col = n_rec_n_cols_get(n_rec, x, y);
+				s_col = n_rec_n_cols_get(s_rec, x, y);
 
-				// lu_debug("\n n_col (%d, %d)", x, y);
-				// lu_user_assert_void(n_col, "N_Col is NULL");
+				// lu_debug("\n s_col (%d, %d)", x, y);
+				// lu_user_assert_void(s_col, "S_Col is NULL");
 
-				if (n_col == NULL) continue;
+				if (s_col == NULL) continue;
 
-				dx = n_col->data_x;
-				dy = n_col->data_y;
+				dx = s_col->data_x;
+				dy = s_col->data_y;
 
-				for (j = 0; j < n_rec->component_size; j++)
+				for (j = 0; j < s_rec->component_size; j++)
 				{
-					v = lu_data_get(data, data_w, data_h, n_rec->component_size, dx, dy, j);
+					v = lu_data_get(data, data_w, data_h, s_rec->component_size, dx, dy, j);
 				}	
 
 				
@@ -190,12 +190,12 @@
 
 				// if ((vpsum / val_comp_size) >= opts->contrast)
 				// {
-				// 	p_n_col		= n_rec_n_cols_get(n_rec, p_w_col->x, p_w_col->y);
-				// 	c_n_col1 	= n_rec_n_cols_get(n_rec, c_w_col1->x, c_w_col1->y);
-				// 	c_n_col2 	= n_rec_n_cols_get(n_rec, c_w_col2->x, c_w_col2->y);
+				// 	p_n_col		= n_rec_n_cols_get(s_rec, p_w_col->x, p_w_col->y);
+				// 	c_n_col1 	= n_rec_n_cols_get(s_rec, c_w_col1->x, c_w_col1->y);
+				// 	c_n_col2 	= n_rec_n_cols_get(s_rec, c_w_col2->x, c_w_col2->y);
 
 
-				// 	//neu_ent = n_col_neu_ent_get(n_col, value);
+				// 	//n_ent = s_col_neu_ent_get(s_col, value);
 				// }
 			// }
 
@@ -218,25 +218,25 @@
 		// 	}
 
 
-				// 		n_col = n_rec_pers_get(n_rec, x, y);
-		// 		lu_user_assert_void(n_col, "N_Col is NULL");
+				// 		s_col = n_rec_pers_get(s_rec, x, y);
+		// 		lu_user_assert_void(s_col, "S_Col is NULL");
 
-		// 		for(z = 0; z < n_rec->component_size; z++)
+		// 		for(z = 0; z < s_rec->component_size; z++)
 		// 		{
-		// 			value = lu_data_get(data, n_rec->pers_w, n_rec->pers_h, n_rec->component_size, x, y, z);
+		// 			value = lu_data_get(data, s_rec->pers_w, s_rec->pers_h, s_rec->component_size, x, y, z);
 
-		// 			neu_ent = n_col_neu_ent_get(n_col, value);
-		// 			lu_user_assert_void(neu_ent, "Cannot get neu_ent for value");
+		// 			n_ent = s_col_neu_ent_get(s_col, value);
+		// 			lu_user_assert_void(n_ent, "Cannot get n_ent for value");
 
-		// 			//save_wave_c_neu_fire(self, neu_ent, value);
+		// 			//save_wave_c_neu_fire(self, n_ent, value);
 	}
 
-	static void save_wave_c_neu_fire(Save_Wave self, lu_size neu_ent, lu_value value)
+	static void save_wave_c_neu_fire(Save_Wave self, lu_size n_ent, lu_value value)
 	{
 
 	}
 
-	static void save_wave_rec_progress(Save_Wave wave, N_Rec n_rec, lu_size block_i)
+	static void save_wave_rec_progress(Save_Wave wave, S_Rec s_rec, lu_size block_i)
 	{
 
 	}

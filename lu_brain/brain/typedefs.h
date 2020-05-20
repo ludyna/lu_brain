@@ -6,7 +6,44 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Waves
+// Gate
+
+	typedef struct gate_opts* 	Gate_Opts;
+	typedef struct gate* 		Gate;
+
+///////////////////////////////////////////////////////////////////////////////
+// N
+
+	typedef struct n_ent* 		N_Ent;
+	typedef struct n_base* 		N_Base;
+	typedef struct n_name* 		N_Name;
+
+///////////////////////////////////////////////////////////////////////////////
+// S
+
+	enum n_col_type {
+		NCT_FIRST,
+		NCT_COL, 			
+		NCT_PER_HOR, 
+		NCT_PER_VER,
+		NCT_PER_DIAG, 
+		NCT_LAST
+	};
+
+
+	typedef struct lin_ent* 	Lin_Ent;
+	typedef struct lin_b* 		Lin_B;
+
+	typedef struct val_layer* 	Val_Layer;
+
+	typedef struct s_cb* 		S_Cb;
+	typedef struct s_col* 		S_Col;
+	typedef struct s_rec*		S_Rec;
+	typedef struct s_mem* 		S_Mem;
+
+
+///////////////////////////////////////////////////////////////////////////////
+// W
 
 	typedef struct sig* 						Sig;
 
@@ -21,35 +58,3 @@
 
 	typedef struct restore_wave_create_opts*	Restore_Wave_Create_Opts;
 	typedef struct restore_wave* 				Restore_Wave; 
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Gate
-
-	typedef struct gate_opts* 	Gate_Opts;
-	typedef struct gate* 		Gate;
-
-///////////////////////////////////////////////////////////////////////////////
-// N_Mem
-
-	enum n_col_type {
-		NCT_FIRST,
-		NCT_COL, 			
-		NCT_PER_HOR, 
-		NCT_PER_VER,
-		NCT_PER_DIAG, 
-		NCT_LAST
-	};
-
-	typedef struct neu_ent* 	Neu_Ent;
-	typedef struct neu_b* 		Neu_B;
-	typedef struct neu_name* 	Neu_Name;
-
-	typedef struct lin_ent* 	Lin_Ent;
-	typedef struct lin_b* 		Lin_B;
-
-	typedef struct val_layer* 	Val_Layer;
-
-	typedef struct n_col* 		N_Col;
-	typedef struct n_rec*		N_Rec;
-	typedef struct n_mem* 		N_Mem;

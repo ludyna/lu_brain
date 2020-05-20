@@ -13,27 +13,27 @@
 
 		Lu_Brain brain = gate->brain;
 		lu_user_assert_void(brain, "Brain is NULL");
-		lu_user_assert_void(brain->n_mem, "Brain n_mem is NULL");
+		lu_user_assert_void(brain->s_mem, "Brain s_mem is NULL");
 
-		self->n_mem = brain->n_mem; // for easier access
+		self->s_mem = brain->s_mem; // for easier access
 
 		lu_user_assert_void(brain->mem_perm, "Brain mem is NULL");
 
-		Arr n_recs = brain->n_mem->n_recs;
+		Arr n_recs = brain->s_mem->n_recs;
 
-		lu_user_assert_void(n_recs, "Brain n_mem n_recs is NULL");
+		lu_user_assert_void(n_recs, "Brain s_mem n_recs is NULL");
 
-		self->w_recs = arr_create(brain->mem_perm, arr_size(self->n_mem->n_recs));
+		self->w_recs = arr_create(brain->mem_perm, arr_size(self->s_mem->n_recs));
 
-		N_Rec n_rec;
+		S_Rec s_rec;
 		W_Rec w_rec;
 
 		for(lu_size i = 0; i < arr_count(n_recs); i++)
 		{
-			n_rec = n_mem_n_rec_get(brain->n_mem, i);
-			lu_user_assert_void(n_rec, "N_Rec is NULL");
+			s_rec = n_mem_n_rec_get(brain->s_mem, i);
+			lu_user_assert_void(s_rec, "S_Rec is NULL");
 
-			w_rec = w_rec_create(brain->mem_perm, n_rec);
+			w_rec = w_rec_create(brain->mem_perm, s_rec);
 
 			arr_set(self->w_recs, i, w_rec);
 

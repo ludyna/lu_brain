@@ -6,7 +6,7 @@
 // Sig
 
 	struct sig {
-		lu_size 	neu_ent;
+		lu_size 	n_ent;
 		lu_value 	p;
 	};
 
@@ -27,7 +27,7 @@
 		lu_p_size 			prev_neus;
 	};
 
-	static W_Col w_col_create(Mem mem, W_Rec w_rec, N_Col n_col);
+	static W_Col w_col_create(Mem mem, W_Rec w_rec, S_Col s_col);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Rec 
@@ -44,10 +44,10 @@
 		Arr 				pers_active; // or t-neus?
 	};
 
-	static W_Rec w_rec_create(Mem mem, N_Rec n_rec);
+	static W_Rec w_rec_create(Mem mem, S_Rec s_rec);
 	static void w_rec_debug_print(W_Rec self);
 
-	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size neu_ent);
+	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size n_ent);
 
 	///////////////////////////
 	// Accessors
@@ -61,7 +61,7 @@
 	struct lu_wave {
 		Gate 				gate;
 		Lu_Story 			story;
-		N_Mem 				n_mem; 
+		S_Mem 				s_mem; 
 
 		Arr 				w_recs;
 	};
@@ -109,9 +109,9 @@
 	};
 
 	static void save_wave_init(Save_Wave, Lu_Story, Lu_Save_Opts);
-	static void save_wave_data_send(Save_Wave self, Lu_Save_Opts opts, N_Rec n_rec, lu_p_value data, lu_size block_i);
-	static void save_wave_c_neu_fire(Save_Wave self, lu_size neu_ent, lu_value value);	
-	static void save_wave_rec_progress(Save_Wave self, N_Rec n_rec, lu_size block_i);
+	static void save_wave_data_send(Save_Wave self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i);
+	static void save_wave_c_neu_fire(Save_Wave self, lu_size n_ent, lu_value value);	
+	static void save_wave_rec_progress(Save_Wave self, S_Rec s_rec, lu_size block_i);
 	static void save_wave_block_progress(Save_Wave self, lu_size block_i); 
 
 //////////////////////////7/////////////////////////////////////////////////////
