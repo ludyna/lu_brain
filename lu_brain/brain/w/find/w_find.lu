@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // W_Find_Create_Opts
 
-	static void find_wave_create_opts_init(W_Find_Create_Opts self)
+	static void w_find_create_opts_init(W_Find_Create_Opts self)
 	{
 
 	}
@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // W_Find
 
-	static void find_wave_init(W_Find self, Lu_Story story, Lu_Find_Opts opts)
+	static void w_find_init(W_Find self, Lu_Story story, Lu_Find_Opts opts)
 	{
 		if (opts)
 			self->find_opts = *opts;
@@ -36,7 +36,7 @@
 		return self;
 	}
 
-	static void find_wave_process(W_Find self)
+	static void w_find_progress(W_Find self)
 	{
 
 	}

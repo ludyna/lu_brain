@@ -14,10 +14,10 @@
 		save_wave_create_opts_init(&self->w_save_create_opts);
 
 		self->find_waves_size = 1;
-		find_wave_create_opts_init(&self->w_find_create_opts);
+		w_find_create_opts_init(&self->w_find_create_opts);
 
 		self->restore_waves_size = 1;
-		restore_wave_create_opts_init(&self->w_restore_create_opts);
+		w_restore_create_opts_init(&self->w_restore_create_opts);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

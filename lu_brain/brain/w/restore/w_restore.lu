@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // W_Restore_Create_Opts
 
-	static void restore_wave_create_opts_init(W_Restore_Create_Opts self)
+	static void w_restore_create_opts_init(W_Restore_Create_Opts self)
 	{
 
 	}
@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // W_Restore
 
-	static void restore_wave_init(W_Restore self, Lu_Brain lu_brain, Lu_Restore_Opts opts)
+	static void w_restore_init(W_Restore self, Lu_Brain lu_brain, Lu_Restore_Opts opts)
 	{
 		if (opts)
 			self->restore_opts = *opts;
@@ -36,7 +36,7 @@
 		return self;
 	}
 
-	static void restore_wave_process(W_Restore self)
+	static void w_restore_process(W_Restore self)
 	{
 
 	}

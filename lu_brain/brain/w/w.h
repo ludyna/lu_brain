@@ -108,11 +108,10 @@
 
 	};
 
-	static void save_wave_init(W_Save, Lu_Story, Lu_Save_Opts);
-	static void save_wave_data_send(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i);
-	static void save_wave_c_neu_fire(W_Save self, lu_size n_ent, lu_value value);	
-	static void save_wave_rec_progress(W_Save self, S_Rec s_rec, lu_size block_i);
-	static void save_wave_block_progress(W_Save self, lu_size block_i); 
+	static void w_save_init(W_Save, Lu_Story, Lu_Save_Opts);
+	static void w_save_data_send(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i);
+	static void w_save_rec_progress(W_Save self, S_Rec s_rec, lu_size block_i);
+	static void w_save_block_progress(W_Save self, lu_size block_i); 
 
 //////////////////////////7/////////////////////////////////////////////////////
 // Find
@@ -122,7 +121,7 @@
 
 	};
 
-	static void find_wave_create_opts_init(W_Find_Create_Opts);
+	static void w_find_create_opts_init(W_Find_Create_Opts);
 
 	struct lu_find_opts {
 		lu_size 				cont_exc_x_radius;
@@ -144,9 +143,9 @@
 
 	};
 
-	static void find_wave_init(W_Find, Lu_Story, Lu_Find_Opts);
+	static void w_find_init(W_Find, Lu_Story, Lu_Find_Opts);
 
-	static void find_wave_process(W_Find self);
+	static void w_find_progress(W_Find self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Restore API
@@ -156,7 +155,7 @@
 
 	};
 
-	static void restore_wave_create_opts_init(W_Restore_Create_Opts);
+	static void w_restore_create_opts_init(W_Restore_Create_Opts);
 
 	struct lu_restore_opts {
 
@@ -172,6 +171,6 @@
 
 	};
 
-	static void restore_wave_init(W_Restore, Lu_Brain, Lu_Restore_Opts);
+	static void w_restore_init(W_Restore, Lu_Brain, Lu_Restore_Opts);
 
-	static void restore_wave_process(W_Restore self);
+	static void w_restore_process(W_Restore self);
