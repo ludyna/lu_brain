@@ -7,13 +7,13 @@
 	struct gate_opts {
 		lu_size 					save_waves_size;		// max number of save waves that could 
 															// run in parallel
-		struct save_wave_create_opts		save_wave_create_opts;
+		struct w_save_create_opts		w_save_create_opts;
 
 		lu_size						find_waves_size;
-		struct find_wave_create_opts  		find_wave_create_opts;
+		struct w_find_create_opts  		w_find_create_opts;
 
 		lu_size						restore_waves_size;
-		struct restore_wave_create_opts	restore_wave_create_opts;
+		struct w_restore_create_opts	w_restore_create_opts;
 	}; 
 
 	static void gate_opts_init(Gate_Opts self);
@@ -28,9 +28,9 @@
 
 	static Gate gate_create(Lu_Brain, Gate_Opts);
 
-	static Save_Wave gate_save_wave_wait(Gate self);
-	static Find_Wave gate_find_wave_wait(Gate self);
-	static Restore_Wave gate_restore_wave_wait(Gate self);
+	static W_Save gate_save_wave_wait(Gate self);
+	static W_Find gate_find_wave_wait(Gate self);
+	static W_Restore gate_restore_wave_wait(Gate self);
 
 	static void gate_wave_book(Gate self, Lu_Wave wave);
 	static void gate_wave_free(Gate self, Lu_Wave wave);

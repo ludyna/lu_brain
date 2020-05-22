@@ -34,7 +34,6 @@
 	static lu_value s_col_step_norm_dist(S_Col self); 
 	static lu_size s_col_neu_ent_get(S_Col self, lu_value input_val);
 
-
 	struct s_cb {
 		S_Cb parent;
 

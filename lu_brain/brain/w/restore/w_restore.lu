@@ -3,17 +3,17 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Restore_Wave_Create_Opts
+// W_Restore_Create_Opts
 
-	static void restore_wave_create_opts_init(Restore_Wave_Create_Opts self)
+	static void restore_wave_create_opts_init(W_Restore_Create_Opts self)
 	{
 
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Restore_Wave
+// W_Restore
 
-	static void restore_wave_init(Restore_Wave self, Lu_Brain lu_brain, Lu_Restore_Opts opts)
+	static void restore_wave_init(W_Restore self, Lu_Brain lu_brain, Lu_Restore_Opts opts)
 	{
 		if (opts)
 			self->restore_opts = *opts;
@@ -21,7 +21,7 @@
 		self->brain = lu_brain;
 	}
 
-	static Restore_Wave restore_wave_create(Gate gate, Restore_Wave_Create_Opts opts)
+	static W_Restore restore_wave_create(Gate gate, W_Restore_Create_Opts opts)
 	{
 		lu_assert(gate);
 		lu_assert(gate->brain);
@@ -30,13 +30,13 @@
 
 		lu_assert(mem);
 
-		Restore_Wave self 		= (Restore_Wave) mem_alloc(mem, sizeof(struct restore_wave));
+		W_Restore self 		= (W_Restore) mem_alloc(mem, sizeof(struct w_restore));
 
 		
 		return self;
 	}
 
-	static void restore_wave_process(Restore_Wave self)
+	static void restore_wave_process(W_Restore self)
 	{
 
 	}

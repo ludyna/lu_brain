@@ -136,7 +136,7 @@
 		Gate gate = brain_gate(self->brain);
 
 		// my reset wave v gate_save_wave_wait
-		Save_Wave wave = gate_save_wave_wait(gate);
+		W_Save wave = gate_save_wave_wait(gate);
 
 		save_wave_init(wave, self, opts);
 
@@ -237,7 +237,7 @@
 
 		Gate gate = brain_gate(self->brain);
 
-		Find_Wave wave = gate_find_wave_wait(gate);
+		W_Find wave = gate_find_wave_wait(gate);
 
 		find_wave_init(wave, self, opts);
 
@@ -266,7 +266,7 @@
 
 		Gate gate = brain_gate(brain);
 
-		Restore_Wave wave = gate_restore_wave_wait(gate);
+		W_Restore wave = gate_restore_wave_wait(gate);
 
 		restore_wave_init(wave, brain, opts);
 

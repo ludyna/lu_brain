@@ -3,17 +3,17 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Find_Wave_Create_Opts
+// W_Find_Create_Opts
 
-	static void find_wave_create_opts_init(Find_Wave_Create_Opts self)
+	static void find_wave_create_opts_init(W_Find_Create_Opts self)
 	{
 
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Find_Wave
+// W_Find
 
-	static void find_wave_init(Find_Wave self, Lu_Story story, Lu_Find_Opts opts)
+	static void find_wave_init(W_Find self, Lu_Story story, Lu_Find_Opts opts)
 	{
 		if (opts)
 			self->find_opts = *opts;
@@ -21,7 +21,7 @@
 		self->story = story;
 	}
 
-	static Find_Wave find_wave_create(Gate gate, Find_Wave_Create_Opts opts)
+	static W_Find find_wave_create(Gate gate, W_Find_Create_Opts opts)
 	{
 		lu_assert(gate);
 		lu_assert(gate->brain);
@@ -30,13 +30,13 @@
 
 		lu_assert(mem);
 
-		Find_Wave self 		= (Find_Wave) mem_alloc(mem, sizeof(struct find_wave));
+		W_Find self 		= (W_Find) mem_alloc(mem, sizeof(struct w_find));
 
 		
 		return self;
 	}
 
-	static void find_wave_process(Find_Wave self)
+	static void find_wave_process(W_Find self)
 	{
 
 	}

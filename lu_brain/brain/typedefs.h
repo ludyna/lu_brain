@@ -30,7 +30,6 @@
 		NCT_LAST
 	};
 
-
 	typedef struct lin_ent* 	Lin_Ent;
 	typedef struct lin_b* 		Lin_B;
 
@@ -41,20 +40,19 @@
 	typedef struct s_rec*		S_Rec;
 	typedef struct s_mem* 		S_Mem;
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // W
 
-	typedef struct sig* 						Sig;
+	typedef struct w_sig* 						W_Sig;
 
 	typedef struct w_col* 						W_Col;
 	typedef struct w_rec*						W_Rec;
 
-	typedef struct save_wave_create_opts* 		Save_Wave_Create_Opts;
-	typedef struct save_wave* 					Save_Wave;
+	typedef struct w_save_create_opts* 			W_Save_Create_Opts;
+	typedef struct w_save* 						W_Save;
 
-	typedef struct find_wave_create_opts*  		Find_Wave_Create_Opts;
-	typedef struct find_wave* 					Find_Wave;
+	typedef struct w_find_create_opts*  		W_Find_Create_Opts;
+	typedef struct w_find* 						W_Find;
 
-	typedef struct restore_wave_create_opts*	Restore_Wave_Create_Opts;
-	typedef struct restore_wave* 				Restore_Wave; 
+	typedef struct w_restore_create_opts*		W_Restore_Create_Opts;
+	typedef struct w_restore* 					W_Restore; 

@@ -3,17 +3,17 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Save_Wave_Create_Opts
+// W_Save_Create_Opts
 
-	static void save_wave_create_opts_init(Save_Wave_Create_Opts self)
+	static void save_wave_create_opts_init(W_Save_Create_Opts self)
 	{
 		self->max_story_size_in_blocks = 16;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Save_Wave
+// W_Save
 
-	static void save_wave_init(Save_Wave self, Lu_Story story, Lu_Save_Opts opts)
+	static void save_wave_init(W_Save self, Lu_Story story, Lu_Save_Opts opts)
 	{
 		if (opts)
 			self->save_opts = *opts;
@@ -21,7 +21,7 @@
 		self->super.story = story;
 	} 
 
-	static void save_wave_reset(Save_Wave self)
+	static void save_wave_reset(W_Save self)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(self->super.gate, "Gate is NULL");
@@ -35,7 +35,7 @@
 			self->fill_data[rec_i] = NULL;
 	}
 
-	static Save_Wave save_wave_create(Gate gate, Save_Wave_Create_Opts opts)
+	static W_Save save_wave_create(Gate gate, W_Save_Create_Opts opts)
 	{
 		lu_user_assert(opts->max_story_size_in_blocks > 0, "Option max_story_size_in_blocks should be greater than 0");
 		lu_user_assert(gate, "Gate is NULL");
@@ -48,11 +48,11 @@
 
 		lu_user_assert(mem, "Mem is NULL");
 
-		Save_Wave self 		= (Save_Wave) mem_alloc(mem, sizeof(struct save_wave));
+		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
 
 		wave_init(&self->super, gate);
 
-		lu_user_assert(self, "Unable to allocate Save_Wave");
+		lu_user_assert(self, "Unable to allocate W_Save");
 
 		lu_user_assert(arr_count(brain->recs) > 0, "Lu_Brain has no recs");
 
@@ -68,7 +68,7 @@
 	// 	return x >= 0 && x < self->w_cols_w && y >= 0 && y < self->w_cols_h; 
 	// }
 
-	static void save_wave_data_send(Save_Wave self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i)
+	static void save_wave_data_send(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(s_rec, "S_Rec is NULL");
@@ -231,17 +231,17 @@
 		// 			//save_wave_c_neu_fire(self, n_ent, value);
 	}
 
-	static void save_wave_c_neu_fire(Save_Wave self, lu_size n_ent, lu_value value)
+	static void save_wave_c_neu_fire(W_Save self, lu_size n_ent, lu_value value)
 	{
 
 	}
 
-	static void save_wave_rec_progress(Save_Wave wave, S_Rec s_rec, lu_size block_i)
+	static void save_wave_rec_progress(W_Save wave, S_Rec s_rec, lu_size block_i)
 	{
 
 	}
 
-	static void save_wave_block_progress(Save_Wave wave, lu_size block_i)
+	static void save_wave_block_progress(W_Save wave, lu_size block_i)
 	{
 
 	}

@@ -11,13 +11,13 @@
 	static void gate_opts_init(Gate_Opts self)
 	{
 		self->save_waves_size = 1;
-		save_wave_create_opts_init(&self->save_wave_create_opts);
+		save_wave_create_opts_init(&self->w_save_create_opts);
 
 		self->find_waves_size = 1;
-		find_wave_create_opts_init(&self->find_wave_create_opts);
+		find_wave_create_opts_init(&self->w_find_create_opts);
 
 		self->restore_waves_size = 1;
-		restore_wave_create_opts_init(&self->restore_wave_create_opts);
+		restore_wave_create_opts_init(&self->w_restore_create_opts);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -41,56 +41,56 @@
 
 		self->brain 		= brain;
 
-		Save_Wave save_wave;
-		Find_Wave find_wave;
-		Restore_Wave restore_wave;
+		W_Save w_save;
+		W_Find w_find;
+		W_Restore w_restore;
 
 		self->save_waves 	= arr_create(mem, opts->save_waves_size);
 		lu_user_assert(self->save_waves, "Unable to create save waves array");
 		for(i = 0; i < opts->save_waves_size; i++)
       	{
-      		save_wave = save_wave_create(self, &opts->save_wave_create_opts);
-      		lu_user_assert(save_wave, "Unable to create save wave");
-			arr_set(self->save_waves, i, save_wave);
+      		w_save = save_wave_create(self, &opts->w_save_create_opts);
+      		lu_user_assert(w_save, "Unable to create save wave");
+			arr_set(self->save_waves, i, w_save);
 		}
 
 		self->find_waves 	= arr_create(mem, opts->find_waves_size);
 		lu_user_assert(self->find_waves, "Unable to create find waves array");
 		for(i = 0; i < opts->find_waves_size; i++)
 		{
-			find_wave = find_wave_create(self, &opts->find_wave_create_opts);
-			lu_user_assert(find_wave, "Unable to create find wave");
-			arr_set(self->find_waves, i, find_wave); 
+			w_find = find_wave_create(self, &opts->w_find_create_opts);
+			lu_user_assert(w_find, "Unable to create find wave");
+			arr_set(self->find_waves, i, w_find); 
 		}
 
 		self->restore_waves = arr_create(mem, opts->restore_waves_size);
 		lu_user_assert(self->restore_waves, "Unable to create restore waves array");
 		for(i = 0; i < opts->restore_waves_size; i++)
 		{
-			restore_wave = restore_wave_create(self, &opts->restore_wave_create_opts);
-			lu_user_assert(restore_wave, "Unable to create restore wave");
-			arr_set(self->restore_waves, i, restore_wave); 
+			w_restore = restore_wave_create(self, &opts->w_restore_create_opts);
+			lu_user_assert(w_restore, "Unable to create restore wave");
+			arr_set(self->restore_waves, i, w_restore); 
 		}
 		return self;
 	}
 
- 	static Save_Wave gate_save_wave_wait(Gate self)
+ 	static W_Save gate_save_wave_wait(Gate self)
  	{
  		// simplified atm
- 		Save_Wave save_wave = arr_get(self->save_waves, 0);
+ 		W_Save w_save = arr_get(self->save_waves, 0);
 
- 		save_wave_reset(save_wave);
+ 		save_wave_reset(w_save);
 
- 		return save_wave;
+ 		return w_save;
  	}
 
-	static Find_Wave gate_find_wave_wait(Gate self)
+	static W_Find gate_find_wave_wait(Gate self)
 	{
  		// simplified atm
  		return arr_get(self->find_waves, 0);
 	}
 
-	static Restore_Wave gate_restore_wave_wait(Gate self)
+	static W_Restore gate_restore_wave_wait(Gate self)
 	{
  		// simplified atm
  		return arr_get(self->find_waves, 0);
