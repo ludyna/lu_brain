@@ -49,7 +49,7 @@
 		lu_user_assert(self->save_waves, "Unable to create save waves array");
 		for(i = 0; i < opts->w_saves_size; i++)
       	{
-      		w_save = save_wave_create(self, &opts->w_save_create_opts);
+      		w_save = w_save_create(self, &opts->w_save_create_opts);
       		lu_user_assert(w_save, "Unable to create save wave");
 			arr_set(self->save_waves, i, w_save);
 		}
@@ -79,7 +79,7 @@
  		// simplified atm
  		W_Save w_save = arr_get(self->save_waves, 0);
 
- 		save_wave_reset(w_save);
+ 		w_save_reset(w_save);
 
  		return w_save;
  	}

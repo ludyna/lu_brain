@@ -103,7 +103,7 @@
 		// vidsutnist danyh oznachaye povtoruvanist danyh
 		lu_p_value* 			fill_data;
 	};
-
+	
 	struct lu_save_resp {
 
 	};

@@ -21,7 +21,7 @@
 		self->super.story = story;
 	} 
 
-	static void save_wave_reset(W_Save self)
+	static void w_save_reset(W_Save self)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(self->super.gate, "Gate is NULL");
@@ -35,7 +35,7 @@
 			self->fill_data[rec_i] = NULL;
 	}
 
-	static W_Save save_wave_create(Gate gate, W_Save_Create_Opts opts)
+	static W_Save w_save_create(Gate gate, W_Save_Create_Opts opts)
 	{
 		lu_user_assert(opts->blocks_max_size > 0, "Option blocks_max_size should be greater than 0");
 		lu_user_assert(gate, "Gate is NULL");
@@ -58,7 +58,7 @@
 
 		self->fill_data = (lu_p_value*) mem_alloc(mem, sizeof(lu_p_value*) * arr_count(brain->recs));
 
-		save_wave_reset(self);
+		w_save_reset(self);
 
 		return self;
 	}

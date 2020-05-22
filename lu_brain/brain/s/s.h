@@ -8,6 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
+	// nam ne treba s_col dlia kozhnoho pix bo my teper mayemo s_cb
 	struct s_col {
 		S_Rec 				s_rec; 		// vlasnyk
 
