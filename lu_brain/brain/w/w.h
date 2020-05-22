@@ -82,7 +82,7 @@
 
 	struct w_save_create_opts
 	{
-		lu_size 				max_blocks_size;
+		lu_size 				blocks_max_size;
 	};
 
 	static void save_wave_create_opts_init(W_Save_Create_Opts);
