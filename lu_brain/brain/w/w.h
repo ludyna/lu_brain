@@ -82,7 +82,7 @@
 
 	struct w_save_create_opts
 	{
-		lu_size 				max_story_size_in_blocks;
+		lu_size 				max_blocks_size;
 	};
 
 	static void save_wave_create_opts_init(W_Save_Create_Opts);

@@ -10,13 +10,13 @@
 	//
 	static void gate_opts_init(Gate_Opts self)
 	{
-		self->save_waves_size = 1;
+		self->w_saves_size = 1;
 		save_wave_create_opts_init(&self->w_save_create_opts);
 
-		self->find_waves_size = 1;
+		self->w_finds_size = 1;
 		w_find_create_opts_init(&self->w_find_create_opts);
 
-		self->restore_waves_size = 1;
+		self->w_restores_size = 1;
 		w_restore_create_opts_init(&self->w_restore_create_opts);
 	}
 
@@ -25,9 +25,9 @@
 
 	static Gate gate_create(Lu_Brain brain, Gate_Opts opts)
 	{
-		lu_assert(opts->save_waves_size > 0);
-		lu_assert(opts->find_waves_size > 0);
-		lu_assert(opts->restore_waves_size > 0);
+		lu_assert(opts->w_saves_size > 0);
+		lu_assert(opts->w_finds_size > 0);
+		lu_assert(opts->w_restores_size > 0);
 		lu_assert(brain);
 
 		Mem mem = brain->mem_perm;
@@ -45,27 +45,27 @@
 		W_Find w_find;
 		W_Restore w_restore;
 
-		self->save_waves 	= arr_create(mem, opts->save_waves_size);
+		self->save_waves 	= arr_create(mem, opts->w_saves_size);
 		lu_user_assert(self->save_waves, "Unable to create save waves array");
-		for(i = 0; i < opts->save_waves_size; i++)
+		for(i = 0; i < opts->w_saves_size; i++)
       	{
       		w_save = save_wave_create(self, &opts->w_save_create_opts);
       		lu_user_assert(w_save, "Unable to create save wave");
 			arr_set(self->save_waves, i, w_save);
 		}
 
-		self->find_waves 	= arr_create(mem, opts->find_waves_size);
+		self->find_waves 	= arr_create(mem, opts->w_finds_size);
 		lu_user_assert(self->find_waves, "Unable to create find waves array");
-		for(i = 0; i < opts->find_waves_size; i++)
+		for(i = 0; i < opts->w_finds_size; i++)
 		{
 			w_find = find_wave_create(self, &opts->w_find_create_opts);
 			lu_user_assert(w_find, "Unable to create find wave");
 			arr_set(self->find_waves, i, w_find); 
 		}
 
-		self->restore_waves = arr_create(mem, opts->restore_waves_size);
+		self->restore_waves = arr_create(mem, opts->w_restores_size);
 		lu_user_assert(self->restore_waves, "Unable to create restore waves array");
-		for(i = 0; i < opts->restore_waves_size; i++)
+		for(i = 0; i < opts->w_restores_size; i++)
 		{
 			w_restore = restore_wave_create(self, &opts->w_restore_create_opts);
 			lu_user_assert(w_restore, "Unable to create restore wave");

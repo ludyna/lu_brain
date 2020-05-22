@@ -5,14 +5,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Gate
 	struct gate_opts {
-		lu_size 					save_waves_size;		// max number of save waves that could 
+		lu_size 						w_saves_size;		// max number of save waves that could 
 															// run in parallel
 		struct w_save_create_opts		w_save_create_opts;
 
-		lu_size						find_waves_size;
+		lu_size							w_finds_size;
 		struct w_find_create_opts  		w_find_create_opts;
 
-		lu_size						restore_waves_size;
+		lu_size							w_restores_size;
 		struct w_restore_create_opts	w_restore_create_opts;
 	}; 
 
