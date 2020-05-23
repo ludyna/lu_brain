@@ -99,7 +99,7 @@
 		lu_size x, y, j, dx, dy;
 		S_Col s_col = NULL;
 
-		n_rec_debug_print(s_rec); 
+		s_rec_debug_print(s_rec); 
 
 		lu_value v;
 
@@ -113,10 +113,10 @@
 		// paralelno formuyemo chetvirky dlia perepadiv (2 i 4)
 		// pochynayemo buduvaty piramidy dlia kozhnoyi hrupy chetvirok (yaksho v niy ye hocha b odyn neu)
 
-		for (y = 0; y < s_rec->n_cols_h; y++)
-			for (x = 0; x < s_rec->n_cols_w; x++)
+		for (y = 0; y < s_rec->s_cols_h; y++)
+			for (x = 0; x < s_rec->s_cols_w; x++)
 			{
-				s_col = n_rec_n_cols_get(s_rec, x, y);
+				s_col = s_rec_s_cols_get(s_rec, x, y);
 
 				// lu_debug("\n s_col (%d, %d)", x, y);
 				// lu_user_assert_void(s_col, "S_Col is NULL");
@@ -190,9 +190,9 @@
 
 				// if ((vpsum / val_comp_size) >= opts->contrast)
 				// {
-				// 	p_n_col		= n_rec_n_cols_get(s_rec, p_w_col->x, p_w_col->y);
-				// 	c_n_col1 	= n_rec_n_cols_get(s_rec, c_w_col1->x, c_w_col1->y);
-				// 	c_n_col2 	= n_rec_n_cols_get(s_rec, c_w_col2->x, c_w_col2->y);
+				// 	p_n_col		= s_rec_s_cols_get(s_rec, p_w_col->x, p_w_col->y);
+				// 	c_n_col1 	= s_rec_s_cols_get(s_rec, c_w_col1->x, c_w_col1->y);
+				// 	c_n_col2 	= s_rec_s_cols_get(s_rec, c_w_col2->x, c_w_col2->y);
 
 
 				// 	//n_ent = s_col_neu_ent_get(s_col, value);

@@ -2,18 +2,18 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static void n_rec_debug_print(S_Rec self)
+	static void s_rec_debug_print(S_Rec self)
 	{
 		lu_debug("\n---------------------");
-		lu_debug("\nn_cols(%d, %d): ", self->n_cols_w, self->n_cols_h);
+		lu_debug("\nn_cols(%d, %d): ", self->s_cols_w, self->s_cols_h);
 		lu_size x, y;
 		S_Col col;
-		for(y = 0; y < self->n_cols_h; y++)
+		for(y = 0; y < self->s_cols_h; y++)
 		{
 			lu_debug("\n");
-			for(x = 0; x < self->n_cols_w; x++)
+			for(x = 0; x < self->s_cols_w; x++)
 			{
-				col = n_rec_n_cols_get(self, x, y);
+				col = s_rec_s_cols_get(self, x, y);
 
 				if (col == NULL)
 					lu_debug(" ");
@@ -43,7 +43,7 @@
 		lu_debug("\n");
 	}
 
-	static S_Rec n_rec_create(S_Mem s_mem, Lu_Rec rec)
+	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec rec)
 	{
 		lu_user_assert(s_mem, "S_Mem is NULL");
 		lu_user_assert(s_mem->brain, "s_mem->brain is NULL");
@@ -80,15 +80,15 @@
 
 		//lu_debug("\npers_w = %d, pers_h = %d \n", self->pers_w, self->pers_h);
 
-		self->n_cols_w 			= rec->width + self->pers_w;
-		self->n_cols_h			= rec->height + self->pers_h;
+		self->s_cols_w 			= rec->width + self->pers_w;
+		self->s_cols_h			= rec->height + self->pers_h;
 
-		self->n_cols = (S_Col*) mem_alloc(
+		self->s_cols = (S_Col*) mem_alloc(
 			mem, 
-			sizeof(S_Col) * self->n_cols_w * self->n_cols_h 
+			sizeof(S_Col) * self->s_cols_w * self->s_cols_h 
 		);
 
-		lu_user_assert(self->n_cols, "Cannot allocate n_cols");
+		lu_user_assert(self->s_cols, "Cannot allocate s_cols");
 
 		self->val_neu_size  = rec->val_neu_size; // value depth in indexes
 		self->orig_min_val 	= rec->min_value;
@@ -105,20 +105,20 @@
 		for (i = 0; i < self->val_neu_size; i++)
 			self->val_steps[i] = (lu_value)i * self->val_step;
 
-		// stvoryty n_cols
+		// stvoryty s_cols
 		lu_size x, y, cx, cy;
 		S_Col col;
 		S_Col temp_col;
 		enum n_col_type type = NCT_PER_HOR;
 
-		for (y = 0, cy = 0; y < self->n_cols_h; y++)
-			for(x = 0, cx = 0; x < self->n_cols_w; x++)
+		for (y = 0, cy = 0; y < self->s_cols_h; y++)
+			for(x = 0, cx = 0; x < self->s_cols_w; x++)
 			{
 				col = NULL;
 
 				if (y % 2 == 1)
 				{
-					temp_col = n_rec_n_cols_get(self, x, y - 1);
+					temp_col = s_rec_s_cols_get(self, x, y - 1);
 					switch(temp_col->type)
 					{
 						case NCT_COL:
@@ -149,11 +149,11 @@
 					}
 				}
 
-				n_rec_n_cols_set(self, x, y, col);
+				s_rec_s_cols_set(self, x, y, col);
 			}
 
 
-		n_rec_debug_print(self);
+		s_rec_debug_print(self);
 
 		return self;
 	}

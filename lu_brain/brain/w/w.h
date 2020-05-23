@@ -30,6 +30,17 @@
 	static W_Col w_col_create(Mem mem, W_Rec w_rec, S_Col s_col);
 
 ///////////////////////////////////////////////////////////////////////////////
+// W_Cb
+
+	// vony musiat buty zaasayneni dlia kozhnoho s_cb
+	// ne znayu chy nam treba she shos krim w_cb (w_rec i w_col mozhut buty 
+	// ne potribni)
+	struct w_cb
+	{
+		S_Cb 				s_cb;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
 // W_Rec 
 
 	struct w_rec

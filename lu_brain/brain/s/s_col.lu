@@ -89,7 +89,7 @@
 			S_Mem s_mem = s_rec->s_mem;
 			lu_user_assert_ent(s_mem, "S_Mem is NULL");
 
-			c_neu_ent = n_mem_c_neu_create(s_mem, self);
+			c_neu_ent = s_mem_c_neu_create(s_mem, self);
 			self->v_neus[indx] = c_neu_ent;
 		}
 

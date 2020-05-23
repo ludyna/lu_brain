@@ -56,11 +56,11 @@
 		lu_size 			pers_w;
 		lu_size 			pers_h;
 
-		lu_size 			n_cols_w;
-		lu_size 			n_cols_h; 
-		S_Col* 				n_cols;			// vsi N_Cols
+		lu_size 			s_cols_w;
+		lu_size 			s_cols_h; 
+		S_Col* 				s_cols;			// vsi N_Cols
 
-		// Ci dani spilni dlia vsih n_cols
+		// Ci dani spilni dlia vsih s_cols
 		// i odnakovi dlia znachen i perepadiv
 		lu_value 			orig_min_val;
 		lu_value 			orig_max_val;
@@ -72,12 +72,12 @@
 		lu_size 			val_neu_size;
 	};
 
-	static S_Rec n_rec_create(S_Mem s_mem, Lu_Rec s_rec);
+	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec s_rec);
 
-	static inline void n_rec_n_cols_set(S_Rec self, lu_size x, lu_size y, S_Col s_col) { self->n_cols[y * self->n_cols_w + x] = s_col; }
-	static inline S_Col n_rec_n_cols_get(S_Rec self, lu_size x, lu_size y) { return self->n_cols[y * self->n_cols_w + x]; }
+	static inline void s_rec_s_cols_set(S_Rec self, lu_size x, lu_size y, S_Col s_col) { self->s_cols[y * self->s_cols_w + x] = s_col; }
+	static inline S_Col s_rec_s_cols_get(S_Rec self, lu_size x, lu_size y) { return self->s_cols[y * self->s_cols_w + x]; }
 
-	static void n_rec_debug_print(S_Rec self);
+	static void s_rec_debug_print(S_Rec self);
 
 	struct s_mem {
 		Lu_Brain 			brain;
@@ -94,18 +94,18 @@
 		Arr 				n_recs;
 	};
 	
-	static S_Mem n_mem_create(Lu_Brain brain);
+	static S_Mem s_mem_create(Lu_Brain brain);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Neu creators
 
-	static lu_size n_mem_c_neu_create(S_Mem self, S_Col s_col);
+	static lu_size s_mem_c_neu_create(S_Mem self, S_Col s_col);
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // S_Mem getters
 
-	static inline S_Rec n_mem_n_rec_get(S_Mem self, lu_size indx) { return arr_get(self->n_recs, indx); }
+	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->n_recs, indx); }
 
 ///////////////////////////////////////////////////////////////////////////////
 // S_Mem Neu getters

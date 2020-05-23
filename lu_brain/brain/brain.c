@@ -70,7 +70,7 @@
 		lu_user_assert(arr_count(self->recs) > 0, "Lu_Brain recs count is 0");
 
 		// S_Mem
-		self->s_mem 	= n_mem_create(self);
+		self->s_mem 	= s_mem_create(self);
 		lu_user_assert(self->s_mem, "Cannot create s_mem");
 
 		// Gate 

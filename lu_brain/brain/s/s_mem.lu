@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S_Mem
 
-	static S_Mem n_mem_create(Lu_Brain brain)
+	static S_Mem s_mem_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->mem_perm, "Lu_Brain mem_perm is NULL");
@@ -26,7 +26,7 @@
 		{
 			rec = (Lu_Rec) arr_get(brain->recs, i);
 
-			s_rec = n_rec_create(self, rec);
+			s_rec = s_rec_create(self, rec);
 
 			lu_user_assert(s_rec, "Cannot create s_rec");
 
@@ -39,7 +39,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu creators
 
-	static lu_size n_mem_c_neu_create(S_Mem self, S_Col s_col)
+	static lu_size s_mem_c_neu_create(S_Mem self, S_Col s_col)
 	{
 		
 		
