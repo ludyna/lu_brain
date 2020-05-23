@@ -19,8 +19,7 @@
 		lu_size 			x;
 		lu_size 			y; 
 					
-		lu_p_size			n_vals; 	// value neus, mozhe buty prostoryvym perepadom, 
-										// odnomirnyy masyv (optymizaciya: ne zalezhyt vid kilkosti komponent)
+		lu_p_size			n_vals; 	
 	};
 
 	static S_Col s_col_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum n_col_type);
@@ -30,6 +29,22 @@
 	static lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
 	static lu_value s_col_step_norm_dist(S_Col self); 
 	static lu_size s_col_neu_ent_get(S_Col self, lu_value input_val);
+
+	
+
+	// p or v cell
+	struct s_cell {
+		S_Rec 				s_rec; 		// vlasnyk
+
+		enum n_col_type 	type;
+
+		lu_size 			data_x;
+		lu_size 			data_y;
+		lu_size 			x;
+		lu_size 			y; 
+
+		Arr 				s_cols;    	// p or v cols
+	};
 
 	struct s_cb_pos {
 		lu_size 	lvl;
