@@ -12,7 +12,7 @@
 	struct s_col {
 		S_Rec 				s_rec; 		// vlasnyk
 
-		enum n_col_type 	type;
+		enum s_cell_type 	type;
 
 		lu_size 			data_x;
 		lu_size 			data_y;
@@ -22,7 +22,7 @@
 		lu_p_size			n_vals; 	
 	};
 
-	static S_Col s_col_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum n_col_type);
+	static S_Col s_col_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
 
 	static lu_value s_col_norm(S_Col self, lu_value request); 
 	static struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
@@ -36,7 +36,7 @@
 	struct s_cell {
 		S_Rec 				s_rec; 		// vlasnyk
 
-		enum n_col_type 	type;
+		enum s_cell_type 	type;
 
 		lu_size 			data_x;
 		lu_size 			data_y;

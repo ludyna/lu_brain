@@ -17,7 +17,7 @@
 	{
 		W_Rec 				w_rec; 		// vlasnyk
 
-		enum n_col_type 	type;
+		enum s_cell_type 	type;
 
 		lu_size 			x;
 		lu_size 			y; 

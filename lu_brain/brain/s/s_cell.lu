@@ -12,11 +12,11 @@
 		lu_size data_y,
 		lu_size x, 
 		lu_size y, 
-		enum n_col_type type
+		enum s_cell_type type
 	)
 	{
 		lu_user_assert(s_rec, "S_Rec is NULL");
-		lu_user_assert(type > NCT_FIRST && type < NCT_LAST, "Unknown enum n_col_type");
+		lu_user_assert(type > SCT_FIRST && type < SCT_LAST, "Unknown enum s_cell_type");
 
 		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_cell));
 

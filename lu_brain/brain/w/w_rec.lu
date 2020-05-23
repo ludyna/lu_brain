@@ -15,7 +15,7 @@
 
 			if (col == NULL)
 				lu_debug("NULL ");
-			else if (col->type != NCT_PER_HOR && col->type != NCT_PER_VER)
+			else if (col->type != SCT_PER_HOR && col->type != SCT_PER_VER)
 				lu_debug("ERROR ");
 			else
 				lu_debug("(%d, %d) ", col->x, col->y);
@@ -55,7 +55,7 @@
 				W_Col col = w_col_create(mem, self, s_col);
 				w_rec_w_cols_set(self, x, y, col);
 
-				if (col && (col->type == NCT_PER_HOR || col->type == NCT_PER_VER))
+				if (col && (col->type == SCT_PER_HOR || col->type == SCT_PER_VER))
 					arr_append(self->pers, col);
 			}
 

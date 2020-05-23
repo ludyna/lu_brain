@@ -151,9 +151,9 @@
 				// p_w_col = arr_get(w_rec->pers, i);
 
 				// lu_user_assert_void(p_w_col, "w_col is NULL");
-				// lu_user_assert_void(p_w_col->type == NCT_PER_HOR || p_w_col->type == NCT_PER_VER, "Something went wrong");
+				// lu_user_assert_void(p_w_col->type == SCT_PER_HOR || p_w_col->type == SCT_PER_VER, "Something went wrong");
 
-				// if (p_w_col->type == NCT_PER_HOR)
+				// if (p_w_col->type == SCT_PER_HOR)
 				// {
 				// 	x1 = p_w_col->x - 1;
 				// 	y1 = p_w_col->y;
@@ -176,8 +176,8 @@
 				// 	c_w_col2 = w_rec_w_cols_get(w_rec, x2, y2);
 				// }
 
-				// lu_user_assert_void(c_w_col1 && c_w_col1->type == NCT_COL, "Something went wrong");
-				// lu_user_assert_void(c_w_col2 && c_w_col2->type == NCT_COL, "Something went wrong");
+				// lu_user_assert_void(c_w_col1 && c_w_col1->type == SCT_COL, "Something went wrong");
+				// lu_user_assert_void(c_w_col2 && c_w_col2->type == SCT_COL, "Something went wrong");
 
 				// for (j = 0; j < w_rec->component_size; j++)
 				// {
