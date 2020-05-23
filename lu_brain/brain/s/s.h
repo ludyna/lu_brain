@@ -7,8 +7,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
-
-	// nam ne treba s_col dlia kozhnoho pix bo my teper mayemo s_cb
+ 
+ 	// n_vals dlia kolioru i perp
 	struct s_col {
 		S_Rec 				s_rec; 		// vlasnyk
 
@@ -18,13 +18,9 @@
 		lu_size 			data_y;
 		lu_size 			x;
 		lu_size 			y; 
-
-		// // tut ciho ne mozhe buty bo ce mozhe buty tilky v wave
-		// lu_p_size 			exc_neus;   
 					
-		lu_p_size			v_neus; 	// value neus, mozhe buty prostoryvym perepadom, 
+		lu_p_size			n_vals; 	// value neus, mozhe buty prostoryvym perepadom, 
 										// odnomirnyy masyv (optymizaciya: ne zalezhyt vid kilkosti komponent)
-		lu_p_size 			p_neus;		// t perepad neus
 	};
 
 	static S_Col s_col_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum n_col_type);
@@ -35,14 +31,21 @@
 	static lu_value s_col_step_norm_dist(S_Col self); 
 	static lu_size s_col_neu_ent_get(S_Col self, lu_value input_val);
 
-	struct s_cb {
-		S_Cb parent;
+	struct s_cb_pos {
+		lu_size 	lvl;
+		lu_size 	x;
+		lu_size 	y; 
+	};
 
-		S_Cb cl;
-		S_Cb cr;
-		S_Cb pl;
-		S_Cb pr;
-		
+	struct s_cb {
+		S_Cb 				parent;
+
+		S_Cb 				cl;
+		S_Cb 				cr;
+		S_Cb 				pl;
+		S_Cb 				pr;
+
+		struct s_cb_pos 	pos;
 	};
 
 	struct s_rec {
@@ -51,11 +54,14 @@
 		Lu_Rec 				rec;			// poviazanyy z rec
 
 		lu_size 			id;
-		lu_size 			component_size;
+		lu_size 			component_size; // ce maye buty v col, col povertaye odyn neu yak rezult
 
 		lu_size 			pers_w;
 		lu_size 			pers_h;
 
+		// cioho vzhe ne bude, bude odyn col
+		// zamist cioho meni treba s_pix (s_cell?)
+		// s_pix budut orhanizovani ya s_col 
 		lu_size 			s_cols_w;
 		lu_size 			s_cols_h; 
 		S_Col* 				s_cols;			// vsi N_Cols

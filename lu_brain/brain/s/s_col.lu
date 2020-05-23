@@ -28,8 +28,7 @@
 		self->y 		= y;
 		self->type 		= type;
 
-		self->v_neus 	= (lu_p_size) mem_alloc(mem, sizeof(lu_size) * s_rec->val_neu_size);
-		self->p_neus	= (lu_p_size) mem_alloc(mem, sizeof(lu_size) * s_rec->val_neu_size);
+		self->n_vals 	= (lu_p_size) mem_alloc(mem, sizeof(lu_size) * s_rec->val_neu_size);
 
 		return self;
 	}
@@ -81,7 +80,7 @@
 
 	static lu_size n_col_c_neu_get(S_Col self, lu_size indx)
 	{
-		lu_size c_neu_ent = self->v_neus[indx];
+		lu_size c_neu_ent = self->n_vals[indx];
 		if (c_neu_ent == ENT_NULL)
 		{
 			S_Rec s_rec = self->s_rec;
@@ -90,7 +89,7 @@
 			lu_user_assert_ent(s_mem, "S_Mem is NULL");
 
 			c_neu_ent = s_mem_c_neu_create(s_mem, self);
-			self->v_neus[indx] = c_neu_ent;
+			self->n_vals[indx] = c_neu_ent;
 		}
 
 		return c_neu_ent;
