@@ -8,6 +8,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
 
+	// predstavliye znachenia komponenty
+	struct n_val {
+		lu_value 		val;
+	};
+
+	// neu yakyy vidpovidaye za vsi komponenty
+	// same n_col predstavliaye s_col
+	struct n_col {
+		S_Col 			s_col;
+		
+	};
+
+	// predstavliaye s_cb
+	struct n_cb {
+		S_Cb 			s_cb;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Neu
+
 	enum neu_ent_id {
 		NEU_B_ID = 0,
 		NEU_NAME_ID,

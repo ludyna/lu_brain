@@ -54,20 +54,17 @@
 		Lu_Rec 				rec;			// poviazanyy z rec
 
 		lu_size 			id;
-		lu_size 			component_size; // ce maye buty v col, col povertaye odyn neu yak rezult
 
 		lu_size 			pers_w;
 		lu_size 			pers_h;
 
-		// cioho vzhe ne bude, bude odyn col
-		// zamist cioho meni treba s_pix (s_cell?)
-		// s_pix budut orhanizovani ya s_col 
 		lu_size 			s_cols_w;
 		lu_size 			s_cols_h; 
 		S_Col* 				s_cols;			// vsi N_Cols
 
 		// Ci dani spilni dlia vsih s_cols
 		// i odnakovi dlia znachen i perepadiv
+		lu_size 			component_size; // col povertaye odyn n_val yak rezult vsih components
 		lu_value 			orig_min_val;
 		lu_value 			orig_max_val;
 		lu_value 			max_val;
