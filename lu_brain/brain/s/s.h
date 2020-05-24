@@ -8,29 +8,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
  
- 	// n_vals dlia kolioru i perp
+ 	// n_cols dlia kolioru i perp
 	struct s_col {
-		S_Rec 				s_rec; 		// vlasnyk
+		S_Cell				s_cell;		// vlasnyk
+		S_Rec 				s_rec; 		
 
-		enum s_cell_type 	type;
-
-		lu_size 			data_x;
-		lu_size 			data_y;
-		lu_size 			x;
-		lu_size 			y; 
-					
-		lu_p_size			n_vals; 	
+		N_Col*				n_cols; 	
 	};
 
-	static S_Col s_col_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
+	static S_Col s_col_create(Mem mem, S_Cell s_cell);
 
 	static lu_value s_col_norm(S_Col self, lu_value request); 
 	static struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
 	static lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
 	static lu_value s_col_step_norm_dist(S_Col self); 
-	static lu_size s_col_neu_ent_get(S_Col self, lu_value input_val);
-
-	
+	static N_Col s_col_n_get(S_Col self, lu_value input_val);
 
 	// p or v cell
 	struct s_cell {
@@ -43,8 +35,12 @@
 		lu_size 			x;
 		lu_size 			y; 
 
-		Arr 				s_cols;    	// p or v cols
+		Arr 				s_cells;    	// p or v cols
 	};
+
+	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
+
+	static N_Cell s_cell_n_get(S_Cell, lu_p_value components);
 
 	struct s_cb_pos {
 		lu_size 	lvl;
@@ -73,11 +69,11 @@
 		lu_size 			pers_w;
 		lu_size 			pers_h;
 
-		lu_size 			s_cols_w;
-		lu_size 			s_cols_h; 
-		S_Col* 				s_cols;			// vsi N_Cols
+		lu_size 			s_cells_w;
+		lu_size 			s_cells_h; 
+		S_Cell* 			s_cells;			// vsi N_Cols
 
-		// Ci dani spilni dlia vsih s_cols
+		// Ci dani spilni dlia vsih s_cells
 		// i odnakovi dlia znachen i perepadiv
 		lu_size 			component_size; // col povertaye odyn n_val yak rezult vsih components
 		lu_value 			orig_min_val;
@@ -92,8 +88,8 @@
 
 	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec s_rec);
 
-	static inline void s_rec_s_cols_set(S_Rec self, lu_size x, lu_size y, S_Col s_col) { self->s_cols[y * self->s_cols_w + x] = s_col; }
-	static inline S_Col s_rec_s_cols_get(S_Rec self, lu_size x, lu_size y) { return self->s_cols[y * self->s_cols_w + x]; }
+	static inline void s_rec_s_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->s_cells[y * self->s_cells_w + x] = s_cell; }
+	static inline S_Cell s_rec_s_cell_get(S_Rec self, lu_size x, lu_size y) { return self->s_cells[y * self->s_cells_w + x]; }
 
 	static void s_rec_debug_print(S_Rec self);
 

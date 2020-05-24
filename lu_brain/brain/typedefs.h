@@ -14,6 +14,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N
 
+	typedef struct n_col* 		N_Col;
+	typedef struct n_cell* 		N_Cell;
+
+
+
 	typedef struct n_ent* 		N_Ent;
 	typedef struct n_base* 		N_Base;
 	typedef struct n_name* 		N_Name;

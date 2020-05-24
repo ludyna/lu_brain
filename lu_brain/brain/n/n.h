@@ -9,13 +9,13 @@
 // Neu
 
 	// predstavliye znachenia komponenty
-	struct n_val {
+	struct n_col {
 		lu_value 		val;
 	};
 
 	// neu yakyy vidpovidaye za vsi komponenty
-	// same n_col predstavliaye s_col
-	struct n_col {
+	// same n_cell predstavliaye s_cell
+	struct n_cell {
 		S_Col 			s_col;
 		
 	};

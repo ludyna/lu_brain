@@ -7,28 +7,17 @@
 
 	static S_Col s_col_create(
 		Mem mem, 
-		S_Rec s_rec, 
-		lu_size data_x, 
-		lu_size data_y,
-		lu_size x, 
-		lu_size y, 
-		enum s_cell_type type
+		S_Cell s_cell
 	)
 	{
-		lu_user_assert(s_rec, "S_Rec is NULL");
-		lu_user_assert(type > SCT_FIRST && type < SCT_LAST, "Unknown enum s_cell_type");
+		lu_user_assert(s_cell, "S_Cell is NULL");
 
 		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_col));
 
-		self->s_rec 	= s_rec;
+		self->s_cell 	= s_cell;
+		self->s_rec 	= self->s_cell->s_rec;
 
-		self->data_x 	= data_x;
-		self->data_y 	= data_y;
-		self->x 		= x;
-		self->y 		= y;
-		self->type 		= type;
-
-		self->n_vals 	= (lu_p_size) mem_alloc(mem, sizeof(lu_size) * s_rec->val_neu_size);
+		self->n_cols 	= (N_Col*) mem_alloc(mem, sizeof(N_Col) * self->s_rec->val_neu_size);
 
 		return self;
 	}
@@ -78,27 +67,29 @@
 		return 1.0 / self->s_rec->val_neu_size;
 	}
 
-	static lu_size n_col_c_neu_get(S_Col self, lu_size indx)
+	static N_Col n_col_n_get(S_Col self, lu_size indx)
 	{
-		lu_size c_neu_ent = self->n_vals[indx];
-		if (c_neu_ent == ENT_NULL)
-		{
-			S_Rec s_rec = self->s_rec;
-			lu_user_assert_ent(s_rec, "S_Rec is NULL");
-			S_Mem s_mem = s_rec->s_mem;
-			lu_user_assert_ent(s_mem, "S_Mem is NULL");
+		// N_Col n = self->n_cols[indx];
+		// if (c_neu_ent == ENT_NULL)
+		// {
+		// 	S_Rec s_rec = self->s_rec;
+		// 	lu_user_assert_ent(s_rec, "S_Rec is NULL");
+		// 	S_Mem s_mem = s_rec->s_mem;
+		// 	lu_user_assert_ent(s_mem, "S_Mem is NULL");
 
-			c_neu_ent = s_mem_c_neu_create(s_mem, self);
-			self->n_vals[indx] = c_neu_ent;
-		}
+		// 	c_neu_ent = s_mem_c_neu_create(s_mem, self);
+		// 	self->n_cols[indx] = c_neu_ent;
+		// }
 
-		return c_neu_ent;
+		// return c_neu_ent;
+
+		return NULL;
 	}
 
-	static lu_size s_col_neu_ent_get(S_Col self, lu_value input_val)
+	static N_Col s_col_n_get(S_Col self, lu_value input_val)
 	{
-		lu_value norm_val 	= s_col_norm(self, input_val);
-		lu_size indx 		= n_col_indx(self, norm_val);
+		// lu_value norm_val 	= s_col_norm(self, input_val);
+		// lu_size indx 		= n_col_indx(self, norm_val);
 
-		return n_col_c_neu_get(self, indx);
+		// return n_col_n_get(self, indx);
 	}

@@ -5,24 +5,24 @@
 	static void s_rec_debug_print(S_Rec self)
 	{
 		lu_debug("\n---------------------");
-		lu_debug("\nn_cols(%d, %d): ", self->s_cols_w, self->s_cols_h);
+		lu_debug("\nn_cols(%d, %d): ", self->s_cells_w, self->s_cells_h);
 		lu_size x, y;
-		S_Col col;
-		for(y = 0; y < self->s_cols_h; y++)
+		S_Cell cell;
+		for(y = 0; y < self->s_cells_h; y++)
 		{
 			lu_debug("\n");
-			for(x = 0; x < self->s_cols_w; x++)
+			for(x = 0; x < self->s_cells_w; x++)
 			{
-				col = s_rec_s_cols_get(self, x, y);
+				cell = s_rec_s_cell_get(self, x, y);
 
-				if (col == NULL)
+				if (cell == NULL)
 					lu_debug(" ");
 				else
 				{
-					switch(col->type)
+					switch(cell->type)
 					{
 						case SCT_COL:
-							lu_debug("c", col->data_x, col->data_y);
+							lu_debug("c", cell->data_x, cell->data_y);
 							break;
 						case SCT_PER_HOR:
 							lu_debug("h");
@@ -80,15 +80,15 @@
 
 		//lu_debug("\npers_w = %d, pers_h = %d \n", self->pers_w, self->pers_h);
 
-		self->s_cols_w 			= rec->width + self->pers_w;
-		self->s_cols_h			= rec->height + self->pers_h;
+		self->s_cells_w 			= rec->width + self->pers_w;
+		self->s_cells_h			= rec->height + self->pers_h;
 
-		self->s_cols = (S_Col*) mem_alloc(
+		self->s_cells = (S_Cell*) mem_alloc(
 			mem, 
-			sizeof(S_Col) * self->s_cols_w * self->s_cols_h 
+			sizeof(S_Cell) * self->s_cells_w * self->s_cells_h 
 		);
 
-		lu_user_assert(self->s_cols, "Cannot allocate s_cols");
+		lu_user_assert(self->s_cells, "Cannot allocate s_cells");
 
 		self->val_neu_size  = rec->val_neu_size; // value depth in indexes
 		self->orig_min_val 	= rec->min_value;
@@ -105,20 +105,20 @@
 		for (i = 0; i < self->val_neu_size; i++)
 			self->val_steps[i] = (lu_value)i * self->val_step;
 
-		// stvoryty s_cols
+		// stvoryty s_cells
 		lu_size x, y, cx, cy;
-		S_Col col;
-		S_Col temp_col;
+		S_Cell cell;
+		S_Cell temp_col;
 		enum s_cell_type type = SCT_PER_HOR;
 
-		for (y = 0, cy = 0; y < self->s_cols_h; y++)
-			for(x = 0, cx = 0; x < self->s_cols_w; x++)
+		for (y = 0, cy = 0; y < self->s_cells_h; y++)
+			for(x = 0, cx = 0; x < self->s_cells_w; x++)
 			{
-				col = NULL;
+				cell = NULL;
 
 				if (y % 2 == 1)
 				{
-					temp_col = s_rec_s_cols_get(self, x, y - 1);
+					temp_col = s_rec_s_cell_get(self, x, y - 1);
 					switch(temp_col->type)
 					{
 						case SCT_COL:
@@ -135,11 +135,11 @@
 					type = type == SCT_COL ? SCT_PER_HOR : SCT_COL;
 
 				if (type == SCT_PER_DIAG)
-					col = NULL;
+					cell = NULL;
 				else
 				{
-					col = s_col_create(mem, self, cx, cy, x, y, type);
-					lu_user_assert(col, "Cannot allocate s_col");
+					cell = s_cell_create(mem, self, cx, cy, x, y, type);
+					lu_user_assert(cell, "Cannot allocate s_col");
 
 					if (type == SCT_COL)
 					{
@@ -149,7 +149,7 @@
 					}
 				}
 
-				s_rec_s_cols_set(self, x, y, col);
+				s_rec_s_cell_set(self, x, y, cell);
 			}
 
 

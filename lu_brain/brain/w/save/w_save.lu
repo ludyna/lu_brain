@@ -93,11 +93,11 @@
 
 		lu_value val_comp_size = (lu_value) w_rec->component_size;
 
-		// ce ne zovsim pravylno, bo kozhna s_col takozh mozhe maty t perep,
+		// ce ne zovsim pravylno, bo kozhna s_cell takozh mozhe maty t perep,
 		// tomu odnakovo treba proytysia po vsih 
 
 		lu_size x, y, j, dx, dy;
-		S_Col s_col = NULL;
+		S_Cell s_cell = NULL;
 
 		s_rec_debug_print(s_rec); 
 
@@ -113,18 +113,18 @@
 		// paralelno formuyemo chetvirky dlia perepadiv (2 i 4)
 		// pochynayemo buduvaty piramidy dlia kozhnoyi hrupy chetvirok (yaksho v niy ye hocha b odyn neu)
 
-		for (y = 0; y < s_rec->s_cols_h; y++)
-			for (x = 0; x < s_rec->s_cols_w; x++)
+		for (y = 0; y < s_rec->s_cells_h; y++)
+			for (x = 0; x < s_rec->s_cells_w; x++)
 			{
-				s_col = s_rec_s_cols_get(s_rec, x, y);
+				s_cell = s_rec_s_cell_get(s_rec, x, y);
 
-				// lu_debug("\n s_col (%d, %d)", x, y);
-				// lu_user_assert_void(s_col, "S_Col is NULL");
+				// lu_debug("\n s_cell (%d, %d)", x, y);
+				// lu_user_assert_void(s_cell, "S_Col is NULL");
 
-				if (s_col == NULL) continue;
+				if (s_cell == NULL) continue;
 
-				dx = s_col->data_x;
-				dy = s_col->data_y;
+				dx = s_cell->data_x;
+				dy = s_cell->data_y;
 
 				for (j = 0; j < s_rec->component_size; j++)
 				{
@@ -190,12 +190,12 @@
 
 				// if ((vpsum / val_comp_size) >= opts->contrast)
 				// {
-				// 	p_n_col		= s_rec_s_cols_get(s_rec, p_w_col->x, p_w_col->y);
-				// 	c_n_col1 	= s_rec_s_cols_get(s_rec, c_w_col1->x, c_w_col1->y);
-				// 	c_n_col2 	= s_rec_s_cols_get(s_rec, c_w_col2->x, c_w_col2->y);
+				// 	p_n_col		= s_rec_s_cell_get(s_rec, p_w_col->x, p_w_col->y);
+				// 	c_n_col1 	= s_rec_s_cell_get(s_rec, c_w_col1->x, c_w_col1->y);
+				// 	c_n_col2 	= s_rec_s_cell_get(s_rec, c_w_col2->x, c_w_col2->y);
 
 
-				// 	//n_ent = s_col_neu_ent_get(s_col, value);
+				// 	//n_ent = s_col_n_get(s_cell, value);
 				// }
 			// }
 
@@ -218,14 +218,14 @@
 		// 	}
 
 
-				// 		s_col = n_rec_pers_get(s_rec, x, y);
-		// 		lu_user_assert_void(s_col, "S_Col is NULL");
+				// 		s_cell = n_rec_pers_get(s_rec, x, y);
+		// 		lu_user_assert_void(s_cell, "S_Col is NULL");
 
 		// 		for(z = 0; z < s_rec->component_size; z++)
 		// 		{
 		// 			value = lu_data_get(data, s_rec->pers_w, s_rec->pers_h, s_rec->component_size, x, y, z);
 
-		// 			n_ent = s_col_neu_ent_get(s_col, value);
+		// 			n_ent = s_col_n_get(s_cell, value);
 		// 			lu_user_assert_void(n_ent, "Cannot get n_ent for value");
 
 		// 			//save_wave_c_neu_fire(self, n_ent, value);

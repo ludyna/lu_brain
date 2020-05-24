@@ -13,9 +13,6 @@
 		lu_user_assert(self, "Cannot allocate W_Col");
 
 		self->w_rec = w_rec;
-		self->type 	= s_col->type;
-		self->x 	= s_col->x;
-		self->y 	= s_col->y;
 
 		S_Rec s_rec = s_col->s_rec;
 		lu_user_assert(s_rec, "S_Rec is NULL");
