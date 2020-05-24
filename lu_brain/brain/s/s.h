@@ -17,7 +17,7 @@
 		N_Col*				n_cols; 	
 	};
 
-	static S_Col s_col_create(Mem mem, S_Cell s_cell);
+	static inline S_Col s_col_create(Mem mem, S_Cell s_cell);
 	static inline lu_value s_col_norm(S_Col self, lu_value request);
 	static inline lu_size n_col_indx(S_Col self, lu_value val);
 	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
@@ -42,7 +42,7 @@
 	};
 
 	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
-
+	static inline S_Col s_cell_s_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cells, indx); }
 	static N_Cell s_cell_n_get(S_Cell, lu_p_value components);
 
 	struct s_cb_pos {

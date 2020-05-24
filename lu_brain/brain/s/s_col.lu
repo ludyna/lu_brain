@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static S_Col s_col_create(
+	static inline S_Col s_col_create(
 		Mem mem, 
 		S_Cell s_cell
 	)
