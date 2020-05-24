@@ -25,7 +25,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Calculations
 
-	static lu_value s_col_norm(S_Col self, lu_value request)
+	static inline lu_value s_col_norm(S_Col self, lu_value request)
 	{
 		lu_value val = request - self->s_rec->orig_min_val;
 		if (val < 0) val = 0;
@@ -34,12 +34,12 @@
 		return val;
 	}
 
-	static lu_size n_col_indx(S_Col self, lu_value val)
+	static inline lu_size n_col_indx(S_Col self, lu_value val)
 	{
 		return (lu_size) lu_value_round(val / self->s_rec->val_step);
 	}
 
-	static struct lu_size_range s_col_indx_range(S_Col self, lu_value val)
+	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val)
 	{
 		lu_size orig_i = n_col_indx(self, val);
 
@@ -57,17 +57,17 @@
 		return r;
 	}
 
-	static lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val)
+	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val)
 	{ 
 		return 1.0 - lu_value_abs(self->s_rec->val_steps[val_step_i] - val) / self->s_rec->max_val;
 	}
 
-	static lu_value s_col_step_norm_dist(S_Col self)
+	static inline lu_value s_col_step_norm_dist(S_Col self)
 	{
 		return 1.0 / self->s_rec->val_neu_size;
 	}
 
-	static N_Col n_col_n_get(S_Col self, lu_size indx)
+	static inline N_Col n_col_n_get(S_Col self, lu_size indx)
 	{
 		// N_Col n = self->n_cols[indx];
 		// if (c_neu_ent == ENT_NULL)
@@ -86,7 +86,7 @@
 		return NULL;
 	}
 
-	static N_Col s_col_n_get(S_Col self, lu_value input_val)
+	static inline N_Col s_col_n_get(S_Col self, lu_value input_val)
 	{
 		// lu_value norm_val 	= s_col_norm(self, input_val);
 		// lu_size indx 		= n_col_indx(self, norm_val);

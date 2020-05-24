@@ -10,23 +10,25 @@
  
  	// n_cols dlia kolioru i perp
 	struct s_col {
-		S_Cell				s_cell;		// vlasnyk
+		// vlasnyk
+		S_Cell				s_cell;		
 		S_Rec 				s_rec; 		
 
 		N_Col*				n_cols; 	
 	};
 
 	static S_Col s_col_create(Mem mem, S_Cell s_cell);
-
-	static lu_value s_col_norm(S_Col self, lu_value request); 
-	static struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
-	static lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
-	static lu_value s_col_step_norm_dist(S_Col self); 
-	static N_Col s_col_n_get(S_Col self, lu_value input_val);
+	static inline lu_value s_col_norm(S_Col self, lu_value request);
+	static inline lu_size n_col_indx(S_Col self, lu_value val);
+	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
+	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
+	static inline lu_value s_col_step_norm_dist(S_Col self);
+	static inline N_Col s_col_n_get(S_Col self, lu_value input_val);
 
 	// p or v cell
 	struct s_cell {
-		S_Rec 				s_rec; 		// vlasnyk
+		// vlasnyk
+		S_Rec 				s_rec; 		
 
 		enum s_cell_type 	type;
 
@@ -35,7 +37,8 @@
 		lu_size 			x;
 		lu_size 			y; 
 
-		Arr 				s_cells;    	// p or v cols
+		// p or v 
+		Arr 				s_cells;    	
 	};
 
 	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
@@ -60,9 +63,11 @@
 	};
 
 	struct s_rec {
-		S_Mem 				s_mem; 			// vlasnyk
+		// vlasnyk
+		S_Mem 				s_mem; 			
 
-		Lu_Rec 				rec;			// poviazanyy z rec
+		// poviazanyy z rec
+		Lu_Rec 				rec;			
 
 		lu_size 			id;
 
@@ -71,11 +76,11 @@
 
 		lu_size 			s_cells_w;
 		lu_size 			s_cells_h; 
-		S_Cell* 			s_cells;			// vsi N_Cols
+		S_Cell* 			s_cells;			
 
-		// Ci dani spilni dlia vsih s_cells
+		// Ci dani spilni dlia vsih s_cells i s_col
 		// i odnakovi dlia znachen i perepadiv
-		lu_size 			component_size; // col povertaye odyn n_val yak rezult vsih components
+		lu_size 			component_size; 
 		lu_value 			orig_min_val;
 		lu_value 			orig_max_val;
 		lu_value 			max_val;

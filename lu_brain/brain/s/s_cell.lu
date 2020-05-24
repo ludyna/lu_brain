@@ -28,7 +28,15 @@
 		self->y 		= y;
 		self->type 		= type;
 
-		self->s_cells 	= arr_create(mem, s_rec->val_neu_size);
+		self->s_cells 	= arr_create(mem, s_rec->component_size);
+
+		S_Col s_col;
+		for (lu_size i = 0; i < arr_size(self->s_cells); i++)
+		{
+			s_col = s_col_create(mem, self);
+
+			arr_append(self->s_cells, s_col);
+		}
 
 		return self;
 	}
