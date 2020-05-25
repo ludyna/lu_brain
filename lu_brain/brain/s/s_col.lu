@@ -15,7 +15,13 @@
 		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_col));
 
 		self->s_cell 	= s_cell;
-		self->s_rec 	= self->s_cell->s_rec;
+		lu_user_assert(self->s_cell, "S_Cell is NULL");
+
+		self->s_rec 	= self->s_cell->s_rec; 
+		lu_user_assert(self->s_rec, "S_Rec is NULL");
+
+		self->s_mem 	= self->s_rec->s_mem;
+		lu_user_assert(self->s_mem, "S_Mem is NULL");
 
 		self->n_cols 	= (N_Col*) mem_alloc(mem, sizeof(N_Col) * self->s_rec->val_neu_size);
 
@@ -34,14 +40,14 @@
 		return val;
 	}
 
-	static inline lu_size n_col_indx(S_Col self, lu_value val)
+	static inline lu_size s_col_indx(S_Col self, lu_value val)
 	{
 		return (lu_size) lu_value_round(val / self->s_rec->val_step);
 	}
 
 	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val)
 	{
-		lu_size orig_i = n_col_indx(self, val);
+		lu_size orig_i = s_col_indx(self, val);
 
 		long begin, end;
 
@@ -67,29 +73,22 @@
 		return 1.0 / self->s_rec->val_neu_size;
 	}
 
-	static inline N_Col n_col_n_get(S_Col self, lu_size indx)
-	{
-		// N_Col n = self->n_cols[indx];
-		// if (c_neu_ent == ENT_NULL)
-		// {
-		// 	S_Rec s_rec = self->s_rec;
-		// 	lu_user_assert_ent(s_rec, "S_Rec is NULL");
-		// 	S_Mem s_mem = s_rec->s_mem;
-		// 	lu_user_assert_ent(s_mem, "S_Mem is NULL");
+	// static inline N_Col s_col_n_get(S_Col self, lu_size indx)
+	// {
+	// 	N_Col n_col = self->n_cols[indx];
+	// 	if (n_col == NULL)
+	// 	{
+	// 		c_neu_ent = s_mem_n_col_create(self->s_mem, self);
+	// 		self->n_cols[indx] = c_neu_ent;
+	// 	}
 
-		// 	c_neu_ent = s_mem_c_neu_create(s_mem, self);
-		// 	self->n_cols[indx] = c_neu_ent;
-		// }
+	// 	return c_neu_ent;
+	// }
 
-		// return c_neu_ent;
+	// static inline N_Col s_col_n_get(S_Col self, lu_value input_val)
+	// {
+	// 	// lu_value norm_val 	= s_col_norm(self, input_val);
+	// 	// lu_size indx 		= s_col_indx(self, norm_val);
 
-		return NULL;
-	}
-
-	static inline N_Col s_col_n_get(S_Col self, lu_value input_val)
-	{
-		// lu_value norm_val 	= s_col_norm(self, input_val);
-		// lu_size indx 		= n_col_indx(self, norm_val);
-
-		// return n_col_n_get(self, indx);
-	}
+	// 	// return n_col_n_get(self, indx);
+	// }

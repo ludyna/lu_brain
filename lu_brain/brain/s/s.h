@@ -12,14 +12,19 @@
 	struct s_col {
 		// vlasnyk
 		S_Cell				s_cell;		
+
+		// maye spilni dani
 		S_Rec 				s_rec; 		
+
+		// kolekciya vsih neu i generator neu
+		S_Mem 				s_mem;
 
 		N_Col*				n_cols; 	
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_Cell s_cell);
 	static inline lu_value s_col_norm(S_Col self, lu_value request);
-	static inline lu_size n_col_indx(S_Col self, lu_value val);
+	static inline lu_size s_col_indx(S_Col self, lu_value val);
 	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
 	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
 	static inline lu_value s_col_step_norm_dist(S_Col self);
@@ -110,7 +115,7 @@
 		Mem_Table 			lin_bs;
 		// Mem_Table 		lin_weights;
 
-		Arr 				n_recs;
+		Arr 				s_recs;
 	};
 	
 	static S_Mem s_mem_create(Lu_Brain brain);
@@ -118,13 +123,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu creators
 
-	static lu_size s_mem_c_neu_create(S_Mem self, S_Col s_col);
+	static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col);
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // S_Mem getters
 
-	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->n_recs, indx); }
+	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->s_recs, indx); }
 
 ///////////////////////////////////////////////////////////////////////////////
 // S_Mem Neu getters

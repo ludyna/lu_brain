@@ -18,11 +18,11 @@
 		lu_user_assert(self, "Cannot allocate S_Mem");
 
 		self->brain 		= brain;
-		self->n_recs 		= arr_create(mem, arr_count(brain->recs));
+		self->s_recs 		= arr_create(mem, arr_count(brain->recs));
 
 		Lu_Rec rec;	
 		S_Rec s_rec;
-		for(lu_size i = 0; i < arr_size(self->n_recs); i++)
+		for(lu_size i = 0; i < arr_size(self->s_recs); i++)
 		{
 			rec = (Lu_Rec) arr_get(brain->recs, i);
 
@@ -30,7 +30,7 @@
 
 			lu_user_assert(s_rec, "Cannot create s_rec");
 
-			arr_set(self->n_recs, i, s_rec);
+			arr_set(self->s_recs, i, s_rec);
 		}
 
 		return self;
@@ -39,9 +39,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu creators
 
-	static lu_size s_mem_c_neu_create(S_Mem self, S_Col s_col)
+	static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col)
 	{
 		
 		
-		return ENT_NULL;
+		return NULL;
 	}

@@ -189,7 +189,7 @@
 		{
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 			{
-				s_rec 	= (S_Rec) arr_get(brain->s_mem->n_recs, rec_i);
+				s_rec 	= (S_Rec) arr_get(brain->s_mem->s_recs, rec_i);
 
 				lu_user_assert(s_rec, "S_Rec is NULL");
 
