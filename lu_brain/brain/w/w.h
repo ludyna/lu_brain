@@ -113,7 +113,11 @@
 		// tymchasove zberezhenia linkiv na prev data 
 		// vidsutnist danyh oznachaye povtoruvanist danyh
 		lu_p_value* 			fill_data;
-	};
+	}; 
+
+	static N_Col w_save_n_col_create(W_Save self, S_Col s_col, lu_value component_value);
+	static N_Cell w_save_n_cell_create(W_Save self, S_Cell s_cell, N_Col* n_cols);
+	static N_Cb w_save_n_cb_create(W_Save self, S_Cb s_cb, N_Cell* n_cells);
 	
 	struct lu_save_resp {
 

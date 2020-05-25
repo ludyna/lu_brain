@@ -16,7 +16,7 @@
 
 	typedef struct n_col* 		N_Col;
 	typedef struct n_cell* 		N_Cell;
-
+	typedef struct n_cb* 		N_Cb;
 	typedef struct n_mem* 		N_Mem;
 
 	typedef struct n_ent* 		N_Ent;
