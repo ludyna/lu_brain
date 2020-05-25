@@ -1,0 +1,82 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static N_Mem n_mem_create(Lu_Brain brain)
+	{
+		lu_user_assert(brain, "Lu_Brain is NULL");
+
+		Mem mem = brain->mem_perm;
+		lu_user_assert(mem, "Mem is NULL");
+
+		N_Mem self = (N_Mem) mem_alloc(mem, sizeof(struct n_mem));
+		lu_user_assert(self, "Cannot allocate N_Mem");
+
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Neu creators
+
+	static N_Col n_mem_n_col_create(N_Mem self, S_Col s_col)
+	{
+		
+		
+		return NULL;
+	}
+
+// ///////////////////////////////////////////////////////////////////////////////
+// // S_Mem Neu getters
+
+// 	static inline N_Ent neu_ent_get(S_Mem s_mem, lu_size neu_ent_id) 
+// 	{  	
+// 		return (N_Ent) mem_table_get(s_mem->neu_ents, neu_ent_id);
+// 	} 
+
+// 	static inline N_Base neu_b_get(S_Mem s_mem, lu_size neu_b_id) 
+// 	{  	
+// 		return (N_Base) mem_table_get(s_mem->neu_bs, neu_b_id);
+// 	} 
+
+// 	static inline N_Name neu_name_get(S_Mem s_mem, lu_size neu_name_id) 
+// 	{  	
+// 		return (N_Name) mem_table_get(s_mem->neu_names, neu_name_id);
+// 	}
+
+// 	static inline N_Base neu_ent_b_get(S_Mem s_mem, lu_size neu_ent_id) 
+// 	{  	
+// 		N_Ent ne = (N_Ent) mem_table_get(s_mem->neu_ents, neu_ent_id);
+// 		lu_size com_id = ne->coms[NEU_B_ID];
+// 		return com_id ? neu_b_get(s_mem, com_id) : NULL;
+// 	}
+
+// 	static inline N_Name neu_ent_name_get(S_Mem s_mem, lu_size neu_ent_id)
+// 	{
+// 		N_Ent ne = (N_Ent) mem_table_get(s_mem->neu_ents, neu_ent_id);
+// 		lu_size com_id = ne->coms[NEU_NAME_ID];
+// 		return com_id ? neu_name_get(s_mem, com_id) : NULL;
+// 	}
+
+// ///////////////////////////////////////////////////////////////////////////////
+// // S_Mem Lin getters
+
+// 	static inline Lin_Ent lin_ent_get(S_Mem s_mem, lu_size lin_ent_id) 
+// 	{  	
+// 		return (Lin_Ent) mem_table_get(s_mem->lin_ents, lin_ent_id);
+// 	} 
+
+// 	static inline Lin_B lin_b_get(S_Mem s_mem, lu_size lin_b_id) 
+// 	{  	
+// 		return (Lin_B) mem_table_get(s_mem->lin_bs, lin_b_id);
+// 	} 
+
+// 	static inline Lin_B lin_ent_b_get(S_Mem s_mem, lu_size lin_ent_id)
+// 	{
+// 		Lin_Ent lin_ent = (Lin_Ent) mem_table_get(s_mem->lin_ents, lin_ent_id);
+// 		lu_size com_id = lin_ent->coms[LIN_B_ID];
+// 		return com_id ? lin_b_get(s_mem, com_id) : NULL;
+// 	}

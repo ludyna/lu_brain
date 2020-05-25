@@ -28,6 +28,8 @@
 	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
 	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
 	static inline lu_value s_col_step_norm_dist(S_Col self);
+	
+	// ce ne pravylno? tilky wave mozhe stroruvaty neu
 	static inline N_Col s_col_n_get(S_Col self, lu_value input_val);
 
 	// p or v cell
@@ -48,7 +50,9 @@
 
 	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
 	static inline S_Col s_cell_s_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cells, indx); }
-	static N_Cell s_cell_n_get(S_Cell, lu_p_value components);
+	
+	// ce ne pravylno
+	//static N_Cell s_cell_n_get(S_Cell, lu_p_value components);
 
 	struct s_cb_pos {
 		lu_size 	lvl;

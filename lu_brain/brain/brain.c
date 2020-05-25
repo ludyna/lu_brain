@@ -15,7 +15,7 @@
 
 	#include "brain_opts.lu"
  
- 	#include "n/n.h"
+ 	#include "n/n.lu"
 	#include "net/net.lu"
 	#include "rec/rec.lu"
 	#include "story/story.lu"
