@@ -7,7 +7,32 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
- 
+
+ 	struct s_pos {
+		lu_size 	lvl;
+		lu_size 	x;
+		lu_size 	y; 
+	};
+
+	struct s_cb_links {
+		S_Cb 	tl;
+		S_Cb 	tr;
+		S_Cb 	bl;
+		S_Cb 	br;
+	};
+
+	struct s_cell_links {
+		S_Cell	tl;
+		S_Cell	tr;
+		S_Cell 	bl;
+		S_Cell	br;
+	};
+
+	union s_cb_parents {
+		struct s_cb_links cbs;
+		struct s_cell_links cols;
+	};
+
  	// n_cols dlia kolioru i perp
 	struct s_col {
 		// vlasnyk
@@ -20,6 +45,9 @@
 		S_Mem 				s_mem;
 
 		N_Col*				n_cols; 	
+
+		// odyn s_cb mozhe braty uchast tilky v 4roh child s_cb
+
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_Cell s_cell);
@@ -42,8 +70,9 @@
 
 		lu_size 			data_x;
 		lu_size 			data_y;
-		lu_size 			x;
-		lu_size 			y; 
+
+		// s_cell ye na 0 lvl
+		struct s_pos 		pos; 		
 
 		// p or v 
 		Arr 				s_cells;    	
@@ -54,21 +83,22 @@
 	
 	static N_Cell s_cell_n_get(S_Cell, lu_p_value components);
 
-	struct s_cb_pos {
-		lu_size 	lvl;
-		lu_size 	x;
-		lu_size 	y; 
+	struct s_cb_first {
+
+		
 	};
 
 	struct s_cb {
-		S_Cb 				parent;
 
-		S_Cb 				cl;
-		S_Cb 				cr;
-		S_Cb 				pl;
-		S_Cb 				pr;
 
-		struct s_cb_pos 	pos;
+		lu_flags			flags;
+
+		union s_cb_parents 	parents;
+
+		// odyn s_cb mozhe braty uchast tilky v 4roh child s_cb
+		struct s_cb_links 	children; 
+
+		struct s_pos 		pos;
 	};
 
 	struct s_rec {
@@ -90,11 +120,12 @@
 		// Ci dani spilni dlia vsih s_cells i s_col
 		// i odnakovi dlia znachen i perepadiv
 		lu_size 			component_size; 
+
 		lu_value 			orig_min_val;
 		lu_value 			orig_max_val;
 		lu_value 			max_val;
-		lu_value 			val_step;
 
+		lu_value 			val_step;
 		lu_value*			val_steps;  	// preobchysleni kroky
 		lu_size 			val_ssp_i; 		// (tilky dlia poshuku) signif similarity percent 
 		lu_size 			val_neu_size;
@@ -110,81 +141,12 @@
 	struct s_mem {
 		Lu_Brain 			brain;
 
-		Mem_Table 			neu_ents;
-		Mem_Table 			lin_ents;
-
-		Mem_Table 			neu_bs;
-		Mem_Table 			neu_names;
-
-		Mem_Table 			lin_bs;
-		// Mem_Table 		lin_weights;
-
 		Arr 				s_recs;
 	};
 	
 	static S_Mem s_mem_create(Lu_Brain brain);
 
-///////////////////////////////////////////////////////////////////////////////
-// Neu creators
-
-	static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col);
-
-
-///////////////////////////////////////////////////////////////////////////////
-// S_Mem getters
-
+	//static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col);
 	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->s_recs, indx); }
-
-///////////////////////////////////////////////////////////////////////////////
-// S_Mem Neu getters
-
-	static inline N_Ent neu_ent_get(S_Mem s_mem, lu_size neu_ent_id) 
-	{  	
-		return (N_Ent) mem_table_get(s_mem->neu_ents, neu_ent_id);
-	} 
-
-	static inline N_Base neu_b_get(S_Mem s_mem, lu_size neu_b_id) 
-	{  	
-		return (N_Base) mem_table_get(s_mem->neu_bs, neu_b_id);
-	} 
-
-	static inline N_Name neu_name_get(S_Mem s_mem, lu_size neu_name_id) 
-	{  	
-		return (N_Name) mem_table_get(s_mem->neu_names, neu_name_id);
-	}
-
-	static inline N_Base neu_ent_b_get(S_Mem s_mem, lu_size neu_ent_id) 
-	{  	
-		N_Ent ne = (N_Ent) mem_table_get(s_mem->neu_ents, neu_ent_id);
-		lu_size com_id = ne->coms[NEU_B_ID];
-		return com_id ? neu_b_get(s_mem, com_id) : NULL;
-	}
-
-	static inline N_Name neu_ent_name_get(S_Mem s_mem, lu_size neu_ent_id)
-	{
-		N_Ent ne = (N_Ent) mem_table_get(s_mem->neu_ents, neu_ent_id);
-		lu_size com_id = ne->coms[NEU_NAME_ID];
-		return com_id ? neu_name_get(s_mem, com_id) : NULL;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// S_Mem Lin getters
-
-	static inline Lin_Ent lin_ent_get(S_Mem s_mem, lu_size lin_ent_id) 
-	{  	
-		return (Lin_Ent) mem_table_get(s_mem->lin_ents, lin_ent_id);
-	} 
-
-	static inline Lin_B lin_b_get(S_Mem s_mem, lu_size lin_b_id) 
-	{  	
-		return (Lin_B) mem_table_get(s_mem->lin_bs, lin_b_id);
-	} 
-
-	static inline Lin_B lin_ent_b_get(S_Mem s_mem, lu_size lin_ent_id)
-	{
-		Lin_Ent lin_ent = (Lin_Ent) mem_table_get(s_mem->lin_ents, lin_ent_id);
-		lu_size com_id = lin_ent->coms[LIN_B_ID];
-		return com_id ? lin_b_get(s_mem, com_id) : NULL;
-	}
 
 #endif // _LU_S_H

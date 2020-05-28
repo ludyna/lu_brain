@@ -20,21 +20,49 @@ Lu_Save_Opts		save_opts 		= NULL;
 Lu_Find_Opts		find_opts 		= NULL;
 Lu_Restore_Opts		restore_opts 	= NULL;
 
-lu_value			data_0[] 		= { 0, 0, 1, 1 };
-lu_value			data_1[] 		= { 1, 0, 1, 1 };
-lu_value 			data_2[] 		= { 2, 0, 1, 1 };
-lu_value 			data_3[] 		= { 3, 0, 1, 1 };
-lu_value			data_4[] 		= { 4, 0, 1, 1 };
-lu_value			data_5[] 		= { 5, 0, 1, 1 };
-lu_value			data_6[] 		= { 6, 0, 1, 1 };
+lu_value			data_0[] 		= { 
+										0, 0, 0,
+										1, 1, 1,
+										1, 1, 1
+									};
+lu_value			data_1[] 		= { 
+										1, 0, 0, 
+										1, 1, 1,
+										1, 1, 1
+									};
+lu_value			data_2[] 		= { 
+										2, 0, 0,
+										1, 1, 1,
+										1, 1, 1
+									};
+lu_value			data_3[] 		= { 
+										3, 0, 0, 
+										1, 1, 1,
+										1, 1, 1
+									};
+lu_value			data_4[] 		= { 
+										4, 0, 0, 
+										1, 1, 1,
+										1, 1, 1
+									};
+lu_value			data_5[] 		= { 
+										5, 0, 0, 
+										1, 1, 1,
+										1, 1, 1
+									};
+lu_value			data_6[] 		= { 
+										6, 0, 0, 
+										1, 1, 1,
+										1, 1, 1
+									};
 
 
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
 	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
-	rec_opts_1 			= lu_rec_opts_create(brain_opts, 2, 2, 1, 0.0, 10.0, 10, .2);
-	rec_opts_2			= lu_rec_opts_create(brain_opts, 2, 2, 1, 0.0, 10.0, 10, .2);
+	rec_opts_1 			= lu_rec_opts_create(brain_opts, 3, 3, 1, 0.0, 10.0, 10, .2);
+	rec_opts_2			= lu_rec_opts_create(brain_opts, 3, 3, 1, 0.0, 10.0, 10, .2);
 
 	brain 				= lu_brain_create(brain_opts);
 

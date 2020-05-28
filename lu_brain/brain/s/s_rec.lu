@@ -80,7 +80,7 @@
 
 		//lu_debug("\npers_w = %d, pers_h = %d \n", self->pers_w, self->pers_h);
 
-		self->s_cells_w 			= rec->width + self->pers_w;
+		self->s_cells_w 		= rec->width + self->pers_w;
 		self->s_cells_h			= rec->height + self->pers_h;
 
 		self->s_cells = (S_Cell*) mem_alloc(
@@ -108,7 +108,7 @@
 		// stvoryty s_cells
 		lu_size x, y, cx, cy;
 		S_Cell cell;
-		S_Cell temp_col;
+		S_Cell temp_cell;
 		enum s_cell_type type = SCT_PER_HOR;
 
 		for (y = 0, cy = 0; y < self->s_cells_h; y++)
@@ -118,38 +118,43 @@
 
 				if (y % 2 == 1)
 				{
-					temp_col = s_rec_s_cell_get(self, x, y - 1);
-					switch(temp_col->type)
+					temp_cell = s_rec_s_cell_get(self, x, y - 1);
+
+					if (temp_cell)
 					{
-						case SCT_COL:
-							type = SCT_PER_VER;
-							break;
-						case SCT_PER_HOR:
-							type = SCT_PER_DIAG;
-							break;
-						default:
-							lu_user_assert(false, "Impossible case, something is wrong");
-					} 
+						switch(temp_cell->type)
+						{
+							case SCT_COL:
+								type = SCT_PER_VER;
+								break;
+							case SCT_PER_HOR:
+								type = SCT_PER_DIAG;
+								break;
+							default:
+								lu_user_assert(false, "Impossible case, something is wrong");
+						} 
+					}
 				}
 				else
 					type = type == SCT_COL ? SCT_PER_HOR : SCT_COL;
 
 				if (type == SCT_PER_DIAG)
 					cell = NULL;
-				else
+				else //if (type != SCT_COL)
 				{
 					cell = s_cell_create(mem, self, cx, cy, x, y, type);
 					lu_user_assert(cell, "Cannot allocate s_col");
-
-					if (type == SCT_COL)
-					{
-						++cx;
-
-						if (cx >= rec->width) ++cy;
-					}
+					s_rec_s_cell_set(self, x, y, cell);
 				}
 
-				s_rec_s_cell_set(self, x, y, cell);
+				if (type == SCT_COL)
+				{
+					++cx;
+
+					if (cx >= rec->width) ++cy;
+				}
+
+				
 			}
 
 

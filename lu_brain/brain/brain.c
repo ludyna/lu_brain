@@ -36,11 +36,11 @@
 
 		Lu_Rec rec = rec_create(brain, rec_opts);
 
-		lu_user_assert_void(rec, "Cannot create rec!. Not enough memory?");
+		lu_user_assert_void(rec, "Cannot create Lu_Rec");
 
 		arr_append(brain->recs, rec);
 
-		lu_user_assert_void(arr_count(brain->recs) > 0, "Cannot append rec. Something went wrong.");
+		lu_user_assert_void(arr_count(brain->recs) > 0, "Cannot append Lu_Rec");
 
 		rec->id = arr_count(brain->recs) - 1;
 	}

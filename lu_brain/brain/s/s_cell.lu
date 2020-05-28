@@ -18,17 +18,19 @@
 		lu_user_assert(s_rec, "S_Rec is NULL");
 		lu_user_assert(type > SCT_FIRST && type < SCT_LAST, "Unknown enum s_cell_type");
 
-		S_Cell self = (S_Cell) mem_alloc(mem, sizeof(struct s_cell));
+		S_Cell self 		= (S_Cell) mem_alloc(mem, sizeof(struct s_cell));
 
-		self->s_rec 	= s_rec;
+		self->s_rec 		= s_rec;
 
-		self->data_x 	= data_x;
-		self->data_y 	= data_y;
-		self->x 		= x;
-		self->y 		= y;
-		self->type 		= type;
+		self->data_x 		= data_x;
+		self->data_y 		= data_y;
+		self->type 			= type;
 
-		self->s_cells 	= arr_create(mem, s_rec->component_size);
+		self->pos.lvl		= 0;
+		self->pos.x 		= x;
+		self->pos.y 		= y;
+
+		self->s_cells 		= arr_create(mem, s_rec->component_size);
 
 		S_Col s_col;
 		for (lu_size i = 0; i < arr_size(self->s_cells); i++)
