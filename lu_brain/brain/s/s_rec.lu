@@ -90,20 +90,20 @@
 
 		lu_user_assert(self->s_cells, "Cannot allocate s_cells");
 
-		self->val_neu_size  = rec->val_neu_size; // value depth in indexes
+		self->c_val_neu_size  = rec->c_val_neu_size; // value depth in indexes
 		self->orig_min_val 	= rec->min_value;
 		self->orig_max_val 	= rec->max_value;
 		self->max_val 		= self->orig_max_val - self->orig_min_val;
-		self->val_step 		= self->max_val / (lu_value) self->val_neu_size;
-		self->val_ssp_i 	= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->val_step); // ssp in indexes
+		self->c_val_step 		= self->max_val / (lu_value) self->c_val_neu_size;
+		self->c_val_ssp_i 	= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->c_val_step); // ssp in indexes
 
 	 	// Kroky preobchysleni
-		self->val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->val_neu_size);
-		lu_user_assert(self->val_steps, "Cannot allocate val_steps");
+		self->c_val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->c_val_neu_size);
+		lu_user_assert(self->c_val_steps, "Cannot allocate c_val_steps");
 		
 		lu_size i;
-		for (i = 0; i < self->val_neu_size; i++)
-			self->val_steps[i] = (lu_value)i * self->val_step;
+		for (i = 0; i < self->c_val_neu_size; i++)
+			self->c_val_steps[i] = (lu_value)i * self->c_val_step;
 
 		// stvoryty s_cells
 		lu_size x, y, cx, cy;

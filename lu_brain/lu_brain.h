@@ -63,7 +63,7 @@
 		lu_size component_size,
 		lu_value min, 
 		lu_value max, 
-		lu_size val_neu_size, 
+		lu_size c_val_neu_size, 
 		lu_value val_ssp
 	);
 	

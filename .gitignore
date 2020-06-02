@@ -9,4 +9,5 @@
 sub.sublime-project
 test/test_con.c
 test/test_con3d.c
+test/test_con_t.c
 notes.md

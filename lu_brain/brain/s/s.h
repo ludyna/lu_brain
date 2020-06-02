@@ -125,10 +125,17 @@
 		lu_value 			orig_max_val;
 		lu_value 			max_val;
 
-		lu_value 			val_step;
-		lu_value*			val_steps;  	// preobchysleni kroky
-		lu_size 			val_ssp_i; 		// (tilky dlia poshuku) signif similarity percent 
-		lu_size 			val_neu_size;
+		// c
+		lu_value 			c_val_step;
+		lu_value*			c_val_steps;  		// preobchysleni kroky
+		lu_size 			c_val_ssp_i; 		// (tilky dlia poshuku) signif similarity percent 
+		lu_size 			c_val_neu_size;
+
+		// p 
+		lu_value 			p_val_step;
+		lu_value*			p_val_steps;  		// preobchysleni kroky
+		lu_size 			p_val_ssp_i; 		// (tilky dlia poshuku) signif similarity percent 
+		lu_size 			p_val_neu_size;
 	};
 
 	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec s_rec);

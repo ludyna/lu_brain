@@ -26,7 +26,7 @@
 		self->component_size	= opts->component_size;
 		self->min_value			= opts->min_value;
 		self->max_value 		= opts->max_value;
-		self->val_neu_size 		= opts->val_neu_size;
+		self->c_val_neu_size 		= opts->c_val_neu_size;
 		self->val_ssp			= opts->val_ssp;
 
 		return self;
