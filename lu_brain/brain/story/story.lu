@@ -59,12 +59,12 @@
 		Lu_Rec rec;
 		Lu_Brain brain = self->brain;
 
-		for(block_i = 0; block_i <= self->data_y; block_i++)
+		for(block_i = 0; block_i <= self->y; block_i++)
 			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
 				arr2_set(data, rec_i, block_i, NULL);
 
 
-		self->data_y = 0;
+		self->y = 0;
 		self->start_block_on_next_data = false; 
 		self->block_count = 0;
 	}
@@ -96,24 +96,24 @@
 		{ 
 			// yaksho my na nuliu, to ce itak pochatok bloka
 			if (self->block_count)
-				++self->data_y;	
+				++self->y;	
 			
 			self->start_block_on_next_data = false;
 		}
 	
-		lu_p_value v = arr2_get(self->data, rec->id, self->data_y);
+		lu_p_value v = arr2_get(self->data, rec->id, self->y);
 		if (v) 
 			// new input to the same rec and channel advances story
-			++self->data_y;
+			++self->y;
 			
  		lu_user_assert_void(
- 			self->data_y < arr2_height(self->data), 
+ 			self->y < arr2_height(self->data), 
  			"Out of available blocks in story."
  		); 
 
- 		arr2_set(self->data, rec->id, self->data_y, (lu_p_void) data);
+ 		arr2_set(self->data, rec->id, self->y, (lu_p_void) data);
 
- 		self->block_count = self->data_y + 1;
+ 		self->block_count = self->y + 1;
 	} 
 
 

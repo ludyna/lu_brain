@@ -123,13 +123,13 @@
 
 				if (s_cell == NULL) continue;
 
-				dx = s_cell->data_x;
-				dy = s_cell->data_y;
+				// dx = s_cell->x;
+				// dy = s_cell->y;
 
-				for (j = 0; j < s_rec->component_size; j++)
-				{
-					v = lu_data_get(data, data_w, data_h, s_rec->component_size, dx, dy, j);
-				}	
+				// for (j = 0; j < s_rec->component_size; j++)
+				// {
+				// 	v = lu_data_get(data, data_w, data_h, s_rec->component_size, dx, dy, j);
+				// }	
 
 				
 			} 

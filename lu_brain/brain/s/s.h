@@ -80,11 +80,6 @@
 		// vlasnyk
 		S_Rec 				s_rec; 		
 
-		enum s_cell_type 	type;
-
-		lu_size 			data_x;
-		lu_size 			data_y;
-
 		// s_cell ye na 0 lvl
 		struct s_pos 		pos; 		
 
@@ -92,7 +87,7 @@
 		Arr 				s_cols;    	
 	};
 
-	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
+	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size x, lu_size y);
 	static inline S_Col s_cell_s_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cols, indx); }
 	
 	static N_Cell s_cell_n_get(S_Cell, lu_p_value components);

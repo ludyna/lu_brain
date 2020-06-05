@@ -96,42 +96,42 @@ void test_lu_story(void)
 	// lu_p_value d;
 	// Lu_Story story = lu_story_create(brain, 0); 
 
- // 		TEST_ASSERT(story->data_y == 0);
+ // 		TEST_ASSERT(story->y == 0);
  // 		TEST_ASSERT(story_data_get(story, 0, 0, 0) == NULL);
 		
 	// lu_story_push(story, rec_1, 0, data_0);
 
-	// 	d = story_data_get(story, rec_1->id, story->data_y, 0);
+	// 	d = story_data_get(story, rec_1->id, story->y, 0);
 	// 	TEST_ASSERT(d[0] == 0);
-	// 	TEST_ASSERT(story->data_y == 0);
+	// 	TEST_ASSERT(story->y == 0);
 
 	// lu_story_push(story, rec_1, 0, data_1);
 	// lu_story_push(story, rec_2, 0, data_2);
 
-	// 	TEST_ASSERT(story->data_y == 1);
-	// 	d = story_data_get(story, rec_1->id, story->data_y, 0);
+	// 	TEST_ASSERT(story->y == 1);
+	// 	d = story_data_get(story, rec_1->id, story->y, 0);
 	// 	TEST_ASSERT(d[0] == 1);
-	// 	d = story_data_get(story, rec_2->id, story->data_y, 0);
+	// 	d = story_data_get(story, rec_2->id, story->y, 0);
 	// 	TEST_ASSERT(d[0] == 2);
 
 
 	// lu_block_begin(story);
 
-	// 	TEST_ASSERT(story->data_y == 2);
+	// 	TEST_ASSERT(story->y == 2);
 
 	// lu_story_push(story, rec_1, 0, data_2);
 	// lu_story_push(story, rec_2, 0, data_3);
 		
-	// 	d = story_data_get(story, rec_2->id, story->data_y, 0);
+	// 	d = story_data_get(story, rec_2->id, story->y, 0);
 	// 	TEST_ASSERT(d[0] == 3);
 
 	// lu_block_end(story);
 		
-	// 	TEST_ASSERT(story->data_y == 3);
+	// 	TEST_ASSERT(story->y == 3);
 
 	// lu_story_push(story, rec_1, 0, data_4);
 		
-	// 	TEST_ASSERT(story->data_y == 3);
+	// 	TEST_ASSERT(story->y == 3);
 
 	// Lu_Save_Resp save_response = lu_story_save(story, save_opts); 
 

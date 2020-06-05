@@ -8,23 +8,16 @@
 	static S_Cell s_cell_create(
 		Mem mem, 
 		S_Rec s_rec, 
-		lu_size data_x, 
-		lu_size data_y,
 		lu_size x, 
-		lu_size y, 
-		enum s_cell_type type
+		lu_size y
 	)
 	{
 		lu_user_assert(s_rec, "S_Rec is NULL");
-		lu_user_assert(type > SCT_FIRST && type < SCT_LAST, "Unknown enum s_cell_type");
 
 		S_Cell self 		= (S_Cell) mem_alloc(mem, sizeof(struct s_cell));
+		lu_user_assert(self, "Cannot allocate S_Cell");
 
 		self->s_rec 		= s_rec;
-
-		self->data_x 		= data_x;
-		self->data_y 		= data_y;
-		self->type 			= type;
 
 		self->pos.lvl		= 0;
 		self->pos.x 		= x;
