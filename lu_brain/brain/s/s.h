@@ -71,6 +71,10 @@
 	// zyednani z s_col
 	static inline N_Col s_col_n_get(S_Col self, lu_value input_val);
 
+	struct s_p_cell {
+
+	};
+
 	// p or v cell
 	struct s_cell {
 		// vlasnyk
@@ -85,11 +89,11 @@
 		struct s_pos 		pos; 		
 
 		// p or v 
-		Arr 				s_cells;    	
+		Arr 				s_cols;    	
 	};
 
 	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size data_x, lu_size data_y, lu_size x, lu_size y, enum s_cell_type);
-	static inline S_Col s_cell_s_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cells, indx); }
+	static inline S_Col s_cell_s_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cols, indx); }
 	
 	static N_Cell s_cell_n_get(S_Cell, lu_p_value components);
 
@@ -111,8 +115,6 @@
 		struct s_pos 		pos;
 	};
 
-
-
 	struct s_rec {
 		// vlasnyk
 		S_Mem 				s_mem; 			
@@ -121,9 +123,6 @@
 		Lu_Rec 				rec;			
 
 		lu_size 			id;
-
-		lu_size 			pers_w;
-		lu_size 			pers_h;
 
 		lu_size 			s_cells_w;
 		lu_size 			s_cells_h; 

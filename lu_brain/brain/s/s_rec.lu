@@ -84,23 +84,8 @@
 		///////////////////////////////
 		// s_cells
 
-		// rec->width = 10;
-		// rec->height = 10;
-
-		if (rec->width == 1)
-			self->pers_w = 0;
-		else 
-			self->pers_w = rec->width - 1;
-
-		if (rec->height == 1)
-			self->pers_h = 0;
-		else
-			self->pers_h = rec->height - 1;
-
-		//lu_debug("\npers_w = %d, pers_h = %d \n", self->pers_w, self->pers_h);
-
-		self->s_cells_w 		= rec->width + self->pers_w;
-		self->s_cells_h			= rec->height + self->pers_h;
+		self->s_cells_w 		= rec->width;
+		self->s_cells_h			= rec->height;
 
 		self->s_cells = (S_Cell*) mem_alloc(
 			mem, 
@@ -118,47 +103,9 @@
 		for (y = 0, cy = 0; y < self->s_cells_h; y++)
 			for(x = 0, cx = 0; x < self->s_cells_w; x++)
 			{
-				cell = NULL;
-
-				if (y % 2 == 1)
-				{
-					temp_cell = s_rec_s_cell_get(self, x, y - 1);
-
-					if (temp_cell)
-					{
-						switch(temp_cell->type)
-						{
-							case SCT_COL:
-								type = SCT_PER_VER;
-								break;
-							case SCT_PER_HOR:
-								type = SCT_PER_DIAG;
-								break;
-							default:
-								lu_user_assert(false, "Impossible case, something is wrong");
-						} 
-					}
-				}
-				else
-					type = type == SCT_COL ? SCT_PER_HOR : SCT_COL;
-
-				if (type == SCT_PER_DIAG)
-					cell = NULL;
-				else //if (type != SCT_COL)
-				{
-					cell = s_cell_create(mem, self, cx, cy, x, y, type);
-					lu_user_assert(cell, "Cannot allocate s_col");
-					s_rec_s_cell_set(self, x, y, cell);
-				}
-
-				if (type == SCT_COL)
-				{
-					++cx;
-
-					if (cx >= rec->width) ++cy;
-				}
-
-				
+				cell = s_cell_create(mem, self, cx, cy, x, y, type);
+				lu_user_assert(cell, "Cannot allocate s_col");
+				s_rec_s_cell_set(self, x, y, cell);
 			}
 
 
