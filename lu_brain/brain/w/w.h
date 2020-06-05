@@ -17,8 +17,6 @@
 	{
 		W_Rec 				w_rec; 		// vlasnyk
 
-		enum s_cell_type 	type;
-
 		lu_size 			x;
 		lu_size 			y; 
 
@@ -117,7 +115,7 @@
 
 	// mozhe ce maye buty u vidpovidnyh w_col, w_cell i w_cb?
 	static N_Col w_save_n_col_create(W_Save self, S_Col s_col, lu_value component_value);
-	static N_Cell w_save_n_cell_create(W_Save self, S_Cell s_cell, N_Col* n_cols);
+	static N_Cell w_save_n_cell_create(W_Save self, S_V_Cell s_v_cell, N_Col* n_cols);
 	static N_Cb w_save_n_cb_create(W_Save self, S_Cb s_cb, N_Cell* n_cells);
 	
 	struct lu_save_resp {

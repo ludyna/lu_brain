@@ -28,19 +28,10 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
-
-	enum s_cell_type {
-		SCT_FIRST,
-		SCT_COL, 			
-		SCT_PER_HOR, 
-		SCT_PER_VER,
-		SCT_PER_DIAG, 
-		SCT_LAST
-	};
  
  	typedef struct s_col_conf*	S_Col_Conf;
 	typedef struct s_col* 		S_Col;
-	typedef struct s_cell* 		S_Cell;
+	typedef struct s_v_cell* 	S_V_Cell;
 	typedef struct s_cb* 		S_Cb;
 	typedef struct s_rec*		S_Rec;
 	typedef struct s_mem* 		S_Mem;

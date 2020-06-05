@@ -21,16 +21,16 @@
 		S_Cb 	br;
 	};
 
-	struct s_cell_links {
-		S_Cell	tl;
-		S_Cell	tr;
-		S_Cell 	bl;
-		S_Cell	br;
+	struct s_v_cell_links {
+		S_V_Cell	tl;
+		S_V_Cell	tr;
+		S_V_Cell 	bl;
+		S_V_Cell	br;
 	};
 
 	union s_cb_parents {
 		struct s_cb_links cbs;
-		struct s_cell_links cols;
+		struct s_v_cell_links cols;
 	};
 
 	struct s_col_conf {
@@ -47,7 +47,7 @@
  	// n_cols dlia kolioru i perp
 	struct s_col {
 		// vlasnyk
-		S_Cell				s_cell;		
+		S_V_Cell				s_v_cell;		
 
 		// conf 
 		S_Col_Conf 			conf;
@@ -60,7 +60,7 @@
 		// odyn s_cb mozhe braty uchast tilky v 4roh child s_cb
 	};
 
-	static inline S_Col s_col_create(Mem mem, S_Cell s_cell, S_Col_Conf s_col_conf);
+	static inline S_Col s_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);
 	static inline lu_value s_col_norm(S_Col self, lu_value request);
 	static inline lu_size s_col_indx(S_Col self, lu_value val);
 	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
@@ -76,21 +76,20 @@
 	};
 
 	// p or v cell
-	struct s_cell {
+	struct s_v_cell {
 		// vlasnyk
 		S_Rec 				s_rec; 		
 
-		// s_cell ye na 0 lvl
+		// s_v_cell ye na 0 lvl
 		struct s_pos 		pos; 		
 
-		// p or v 
 		Arr 				s_cols;    	
 	};
 
-	static S_Cell s_cell_create(Mem mem, S_Rec rec, lu_size x, lu_size y);
-	static inline S_Col s_cell_s_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cols, indx); }
+	static S_V_Cell s_v_cell_create(Mem mem, S_Rec rec, lu_size x, lu_size y);
+	static inline S_Col s_v_cell_s_col_get(S_V_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cols, indx); }
 	
-	static N_Cell s_cell_n_get(S_Cell, lu_p_value components);
+	static N_Cell s_v_cell_n_get(S_V_Cell, lu_p_value components);
 
 	struct s_cb_first {
 
@@ -119,11 +118,11 @@
 
 		lu_size 			id;
 
-		lu_size 			s_cells_w;
-		lu_size 			s_cells_h; 
-		S_Cell* 			s_cells;	
+		lu_size 			s_v_cells_w;
+		lu_size 			s_v_cells_h; 
+		S_V_Cell* 			s_v_cells;	
 
-		// Ci dani spilni dlia vsih s_cells i s_col
+		// Ci dani spilni dlia vsih s_v_cells i s_col
 		// i odnakovi dlia znachen i perepadiv
 		lu_size 			component_size; 
 
@@ -133,8 +132,8 @@
 
 	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec s_rec);
 
-	static inline void s_rec_s_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->s_cells[y * self->s_cells_w + x] = s_cell; }
-	static inline S_Cell s_rec_s_cell_get(S_Rec self, lu_size x, lu_size y) { return self->s_cells[y * self->s_cells_w + x]; }
+	static inline void s_rec_s_v_cell_set(S_Rec self, lu_size x, lu_size y, S_V_Cell s_v_cell) { self->s_v_cells[y * self->s_v_cells_w + x] = s_v_cell; }
+	static inline S_V_Cell s_rec_s_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->s_v_cells[y * self->s_v_cells_w + x]; }
 
 	static void s_rec_debug_print(S_Rec self);
 

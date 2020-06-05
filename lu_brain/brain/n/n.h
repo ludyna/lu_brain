@@ -14,7 +14,7 @@
 	};
 
 	// neu yakyy vidpovidaye za vsi komponenty
-	// same n_cell predstavliaye s_cell
+	// same n_cell predstavliaye s_v_cell
 	struct n_cell {
 		S_Col 			s_col;
 		

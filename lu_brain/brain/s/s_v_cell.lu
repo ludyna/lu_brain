@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static S_Cell s_cell_create(
+	static S_V_Cell s_v_cell_create(
 		Mem mem, 
 		S_Rec s_rec, 
 		lu_size x, 
@@ -14,8 +14,8 @@
 	{
 		lu_user_assert(s_rec, "S_Rec is NULL");
 
-		S_Cell self 		= (S_Cell) mem_alloc(mem, sizeof(struct s_cell));
-		lu_user_assert(self, "Cannot allocate S_Cell");
+		S_V_Cell self 		= (S_V_Cell) mem_alloc(mem, sizeof(struct s_v_cell));
+		lu_user_assert(self, "Cannot allocate S_V_Cell");
 
 		self->s_rec 		= s_rec;
 
