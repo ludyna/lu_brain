@@ -10,17 +10,18 @@
 		lu_size 		width, 
 		lu_size 		height, 
 		lu_size 		component_size,
-		lu_value 		min_value, 
-		lu_value 		max_value, 
-		lu_size 		c_val_neu_size, 
-		lu_value 		val_ssp
+		lu_value 		v_min, 
+		lu_value 		v_max, 
+		lu_size 		v_neu_size, 
+		lu_size 		p_neu_size, 
+		lu_size 		p_nsc
 	)
 	{
 		lu_user_assert(width > 0, "Width should be greater than 0");
 		lu_user_assert(height > 0, "Height should be greater than 0");
 		lu_user_assert(component_size > 0, "component_size should be at least 1");
-		lu_user_assert(max_value - min_value > 0, "max_value minus min_value should greater than 0");
-		lu_user_assert(c_val_neu_size > 0, "c_val_neu_size should be greater than 0");
+		lu_user_assert(v_max - v_min > 0, "v_max minus v_min should greater than 0");
+		lu_user_assert(v_neu_size > 0, "v_neu_size should be greater than 0");
 
 		Lu_Rec_Opts self = (Lu_Rec_Opts) mem_temp_alloc(sizeof(struct lu_rec_opts));
 
@@ -29,10 +30,13 @@
 		self->width 			= width;
 		self->height			= height;
 		self->component_size 	= component_size;
-		self->min_value 		= min_value;
-		self->max_value 		= max_value;
-		self->c_val_neu_size		= c_val_neu_size;
-		self->val_ssp			= val_ssp;
+		
+		self->v_min 			= v_min;
+		self->v_max 			= v_max;
+		self->v_neu_size		= v_neu_size;
+
+		self->p_neu_size		= p_neu_size;
+		self->p_nsc			= p_nsc;
 
 		arr_append(self->brain_opts->rec_opts, self);
 

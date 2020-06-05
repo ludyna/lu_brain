@@ -48,8 +48,8 @@
 		lu_user_assert(s_mem, "S_Mem is NULL");
 		lu_user_assert(s_mem->brain, "s_mem->brain is NULL");
 		lu_user_assert(rec, "Rec is NULL");
-		lu_user_assert(rec->max_value > rec->min_value, "Lu_Rec max_value should be greater than Lu_Rec min_value");
-		lu_user_assert(rec->val_ssp > 0 && rec->val_ssp <= 0.5, "Lu_Rec val_ssp should be greater than 0 and less equal to 0.5");
+		lu_user_assert(rec->v_max > rec->v_min, "Lu_Rec v_max should be greater than Lu_Rec v_min");
+		lu_user_assert(rec->p_nsc >= 0 && rec->p_nsc <= rec->p_neu_size, "Lu_Rec val_nsc should be greater than 0 and less equal to 0.5");
 
 		Mem mem = s_mem->brain->mem_perm;
 
@@ -58,12 +58,31 @@
 		S_Rec self = (S_Rec) mem_alloc(mem, sizeof(struct s_rec));
 		lu_user_assert(self, "Cannot allocate S_Rec");
 
+		self->s_mem				= s_mem;
+		self->rec 				= rec;
 		self->id 				= rec->id;
 		self->component_size 	= rec->component_size;
 
-		// Initialize
-		self->s_mem			= s_mem;
-		self->rec 			= rec;
+		///////////////////////////////
+		// v_conf
+
+		self->v_conf.neu_size  	= rec->v_neu_size; // value depth in indexes
+		self->v_conf.orig_min 	= rec->v_min;
+		self->v_conf.orig_max 	= rec->v_max;
+		self->v_conf.max 		= self->v_conf.orig_max - self->v_conf.orig_min;
+		self->v_conf.step 		= self->v_conf.max / (lu_value) self->v_conf.neu_size;
+		self->v_conf.nsc 		= 0; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->v_conf.step); // nsc in indexes
+
+	 	// Kroky preobchysleni
+		self->v_conf.steps 		= (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->v_conf.neu_size);
+		lu_user_assert(self->v_conf.steps, "Cannot allocate c_val_steps");
+		
+		lu_size i;
+		for (i = 0; i < self->v_conf.neu_size; i++)
+			self->v_conf.steps[i] = (lu_value)i * self->v_conf.step;
+
+		///////////////////////////////
+		// s_cells
 
 		// rec->width = 10;
 		// rec->height = 10;
@@ -89,21 +108,6 @@
 		);
 
 		lu_user_assert(self->s_cells, "Cannot allocate s_cells");
-
-		self->c_val_neu_size  = rec->c_val_neu_size; // value depth in indexes
-		self->orig_min_val 	= rec->min_value;
-		self->orig_max_val 	= rec->max_value;
-		self->max_val 		= self->orig_max_val - self->orig_min_val;
-		self->c_val_step 		= self->max_val / (lu_value) self->c_val_neu_size;
-		self->c_val_ssp_i 	= (lu_size) lu_value_round(self->max_val * rec->val_ssp / self->c_val_step); // ssp in indexes
-
-	 	// Kroky preobchysleni
-		self->c_val_steps = (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->c_val_neu_size);
-		lu_user_assert(self->c_val_steps, "Cannot allocate c_val_steps");
-		
-		lu_size i;
-		for (i = 0; i < self->c_val_neu_size; i++)
-			self->c_val_steps[i] = (lu_value)i * self->c_val_step;
 
 		// stvoryty s_cells
 		lu_size x, y, cx, cy;

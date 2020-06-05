@@ -35,7 +35,7 @@
 		S_Col s_col;
 		for (lu_size i = 0; i < arr_size(self->s_cells); i++)
 		{
-			s_col = s_col_create(mem, self);
+			s_col = s_col_create(mem, self, &s_rec->v_conf);
 
 			arr_append(self->s_cells, s_col);
 		}

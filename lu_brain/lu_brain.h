@@ -61,10 +61,11 @@
 		lu_size w, 
 		lu_size h, 
 		lu_size component_size,
-		lu_value min, 
-		lu_value max, 
-		lu_size c_val_neu_size, 
-		lu_value val_ssp
+		lu_value v_min, 
+		lu_value v_max, 
+		lu_size v_neu_size, 
+		lu_size p_neu_size,
+		lu_size p_nsc
 	);
 	
 	void lu_rec_opts_destroy(Lu_Rec_Opts);

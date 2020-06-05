@@ -41,10 +41,10 @@ void tearDown(void)
 void test_s_col1and2(void)
 {
 	brain_opts 			= lu_brain_opts_create(1, 20 * 1024);
-	rec_opts_1 			= lu_rec_opts_create(brain_opts, 1, 1, 1, 0.0, 10.0, 10, .2);
+	rec_opts_1 			= lu_rec_opts_create(brain_opts, 1, 1, 1, 0.0, 10.0, 10, 4, 0);
 	TEST_ASSERT(rec_opts_1);
 
-	rec_opts_2			= lu_rec_opts_create(brain_opts, 1, 1, 2, -3.0, 4.0, 3, .2);
+	rec_opts_2			= lu_rec_opts_create(brain_opts, 1, 1, 2, -3.0, 4.0, 3, 2, 0);
 	TEST_ASSERT(rec_opts_2);
 
 	brain 				= lu_brain_create(brain_opts);

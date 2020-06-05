@@ -24,10 +24,13 @@
 		self->width 			= opts->width;
 		self->height 			= opts->height;
 		self->component_size	= opts->component_size;
-		self->min_value			= opts->min_value;
-		self->max_value 		= opts->max_value;
-		self->c_val_neu_size 		= opts->c_val_neu_size;
-		self->val_ssp			= opts->val_ssp;
+
+		self->v_min			= opts->v_min;
+		self->v_max 			= opts->v_max;
+		self->v_neu_size 		= opts->v_neu_size; 
+
+		self->p_neu_size		= opts->p_neu_size;
+		self->p_nsc 		= opts->p_nsc;
 
 		return self;
 	}

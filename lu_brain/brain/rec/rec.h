@@ -12,10 +12,13 @@
 		lu_size 		height;
 		lu_size 		component_size;
 
-		lu_value 		min_value;
-		lu_value 		max_value;
-		lu_size			c_val_neu_size;
-		lu_value		val_ssp;  
+		lu_value 		v_min;
+		lu_value 		v_max;
+		lu_size			v_neu_size;
+
+		lu_size 		p_neu_size;
+		lu_size 		p_nsc;  	// nei sim count
+
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -29,10 +32,12 @@
 		lu_size 		height;
 		lu_size 		component_size;
 
-		lu_value 		min_value;
-		lu_value 		max_value;
-		lu_size			c_val_neu_size;
-		lu_value		val_ssp;  
+		lu_value 		v_min;
+		lu_value 		v_max;
+		lu_size			v_neu_size;
+
+		lu_size 		p_neu_size;
+		lu_size 		p_nsc;  	// nei sim count
 	};
 
 
