@@ -23,7 +23,7 @@ lu_value			data_m1[] 		= { -1.0 };
 Mem 				mem;
 S_Mem				s_mem;
 S_Rec 				s_rec;
-S_V_Cell				s_v_cell;
+S_V_Cell			s_v_cell;
 S_Col 				s_col1;
 S_Col 				s_col2;
 
@@ -76,6 +76,13 @@ void test_s_col1and2(void)
 
 	s_col2 = s_v_cell_s_col_get(s_v_cell, 0);
 	TEST_ASSERT(s_col2);
+
+	// s_col1 tests
+
+	//N_Col n_col = s_col_n_get(s_col1, 5.0);
+
+
+	// s_col2 tests
 
 
 	lu_brain_opts_destroy(brain_opts);

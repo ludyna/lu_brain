@@ -67,7 +67,7 @@
 		// s_v_cells
 
 		self->s_v_cells_w 		= rec->width;
-		self->s_v_cells_h			= rec->height;
+		self->s_v_cells_h		= rec->height;
 
 		self->s_v_cells = (S_V_Cell*) mem_alloc(
 			mem, 

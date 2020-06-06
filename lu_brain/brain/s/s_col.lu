@@ -13,6 +13,7 @@
 	{
 		lu_user_assert(s_v_cell, "S_V_Cell is NULL");
 		lu_user_assert(s_v_cell->s_rec, "S_Rec is NULL");
+		lu_user_assert(s_v_cell->s_rec->s_mem, "S_Rec is NULL");
 		lu_user_assert(conf, "S_Col_Conf is NULL");
 
 		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_col));
@@ -23,8 +24,8 @@
 		self->conf = conf;
 		lu_user_assert(self->conf, "S_Col_Conf is NULL");
 
-		self->s_mem 	= s_v_cell->s_rec->s_mem;
-		lu_user_assert(self->s_mem, "S_Mem is NULL");
+		self->n_mem 	= s_v_cell->s_rec->s_mem->n_mem;
+		lu_user_assert(self->n_mem, "N_Mem is NULL");
 
 		self->n_cols 	= (N_Col*) mem_alloc(mem, sizeof(N_Col) * self->conf->neu_size);
 

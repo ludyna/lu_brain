@@ -44,20 +44,17 @@
 		lu_size 			nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
- 	// n_cols dlia kolioru i perp
 	struct s_col {
 		// vlasnyk
-		S_V_Cell				s_v_cell;		
+		S_V_Cell			s_v_cell;		
 
 		// conf 
 		S_Col_Conf 			conf;
 
 		// kolekciya vsih neu i generator neu
-		S_Mem 				s_mem;
+		N_Mem 				n_mem;
 
 		N_Col*				n_cols; 	
-
-		// odyn s_cb mozhe braty uchast tilky v 4roh child s_cb
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);
@@ -67,8 +64,7 @@
 	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
 	static inline lu_value s_col_step_norm_dist(S_Col self);
 
-	// tilky w_save mozhe stvoruvaty neu (w_save_n_col_create(), w_save kontroluye lock yaksho treba), vony stvoruyutsia v n_mem ale 
-	// zyednani z s_col
+	// tilky w_save mozhe stvoruvaty neu (lock vseredyni cioho methoda yakyy lokaye tilky dlia cioho input_val - tochnishe val index)
 	static inline N_Col s_col_n_get(S_Col self, lu_value input_val);
 
 	struct s_p_cell {
@@ -141,6 +137,8 @@
 		Lu_Brain 			brain;
 
 		Arr 				s_recs;
+
+		N_Mem				n_mem;
 	};
 	
 	static S_Mem s_mem_create(Lu_Brain brain);

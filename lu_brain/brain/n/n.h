@@ -27,9 +27,12 @@
 
 	struct n_mem {
 
+		// vlasnyk
+		S_Mem s_mem; 
+
 	};
 
-	static N_Mem n_mem_create(Lu_Brain brain);
+	static N_Mem n_mem_create(S_Mem s_mem);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
