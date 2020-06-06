@@ -7,22 +7,28 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
+	// struct n_v {
+	// 	S_V_Col s_col;
 
-	// predstavliye znachenia komponenty
+
+	// };
+
+	// struct n_p {
+	// 	S_P_Col s_col;
+
+	// };
+
 	struct n_col {
-		lu_value 		val;
-	};
-
-	// neu yakyy vidpovidaye za vsi komponenty
-	// same n_cell predstavliaye s_v_cell
-	struct n_cell {
 		S_Col 			s_col;
-		
+
+		lu_value 		val;
 	};
 
 	// predstavliaye s_cb
 	struct n_cb {
 		S_Cb 			s_cb;
+
+
 	};
 
 	struct n_mem {
@@ -35,7 +41,10 @@
 	static N_Mem n_mem_create(S_Mem s_mem);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Neu
+// Neu (nam neu potribne tilky dlia zviazkiv bilshe nichoho)
+
+
+
 
 	enum neu_ent_id {
 		NEU_B_ID = 0,
@@ -44,9 +53,7 @@
 		NEU_ENT_ID_SIZE
 	};
 
-	// "generic" zviazky pracuvaty ne budut, bo ne nesut prostorovoy 
-	// informaciyi. My mayemo znaty prostorove i chasove "znachennia"
-	// zviazkiv
+	// "generic" zviazky pracuvaty budut, yaksho link na structurno-prostorovu info 
 	struct n_ent {
 		lu_size 		coms[NEU_ENT_ID_SIZE];
 
@@ -56,7 +63,7 @@
 	};
 
 	struct n_base {
-		lu_value 		count;
+		lu_value 		count;  		// ce maye buty v w_neu
 
 		lu_size 		l_p_lin_ent;
 		lu_size 		l_c_lin_ent;
@@ -84,6 +91,8 @@
 		lu_size 		p_neu_ent;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
 		lu_size 		c_neu_ent;
 
+		// ce dva spysky
+		// odyn z storony p, inshyy z storony c
 		lu_size 		p_lin_ent_prev;
 		lu_size 		p_lin_ent_next;
 

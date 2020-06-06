@@ -9,52 +9,60 @@
 // S
 
  	struct s_pos {
-		lu_size 	lvl;
-		lu_size 	x;
-		lu_size 	y; 
+		lu_size 				lvl;
+		lu_size 				x;
+		lu_size 				y; 
+	};
+
+	struct s_base {
+		enum s_type 			type;
+
+		lu_size 				lvl;
+		lu_size 				x;
+		lu_size 				y;
 	};
 
 	struct s_cb_links {
-		S_Cb 	tl;
-		S_Cb 	tr;
-		S_Cb 	bl;
-		S_Cb 	br;
+		S_Cb 					tl;
+		S_Cb 					tr;
+		S_Cb 					bl;
+		S_Cb 					br;
 	};
 
 	struct s_v_cell_links {
-		S_V_Cell	tl;
-		S_V_Cell	tr;
-		S_V_Cell 	bl;
-		S_V_Cell	br;
+		S_V_Cell				tl;
+		S_V_Cell				tr;
+		S_V_Cell 				bl;
+		S_V_Cell				br;
 	};
 
 	union s_cb_parents {
-		struct s_cb_links cbs;
-		struct s_v_cell_links cols;
+		struct s_cb_links 		cbs;
+		struct s_v_cell_links 	cols;
 	};
 
 	struct s_col_conf {
-		lu_value 			orig_min;
-		lu_value 			orig_max;
-		lu_value 			max;
+		lu_value 				orig_min;
+		lu_value 				orig_max;
+		lu_value 				max;
 
-		lu_value 			step;
-		lu_value*			steps;  		// preobchysleni kroky
-		lu_size 			neu_size;
-		lu_size 			nsc; 			// (tilky dlia poshuku) nei sim count
+		lu_value 				step;
+		lu_value*				steps;  		// preobchysleni kroky
+		lu_size 				neu_size;
+		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
 	struct s_col {
 		// vlasnyk
-		S_V_Cell			s_v_cell;		
+		S_V_Cell				s_v_cell;		
 
 		// conf 
-		S_Col_Conf 			conf;
+		S_Col_Conf 				conf;
 
 		// kolekciya vsih neu i generator neu
-		N_Mem 				n_mem;
+		N_Mem 					n_mem;
 
-		N_Col*				n_cols; 	
+		N_Col*					n_cols; 	
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);
@@ -74,12 +82,12 @@
 	// p or v cell
 	struct s_v_cell {
 		// vlasnyk
-		S_Rec 				s_rec; 		
+		S_Rec 					s_rec; 		
 
 		// s_v_cell ye na 0 lvl
-		struct s_pos 		pos; 		
+		struct s_pos 			pos; 		
 
-		Arr 				s_cols;    	
+		Arr 					s_cols;    	
 	};
 
 	static S_V_Cell s_v_cell_create(Mem mem, S_Rec rec, lu_size x, lu_size y);
@@ -95,35 +103,35 @@
 	struct s_cb {
 
 
-		lu_flags			flags;
+		lu_flags				flags;
 
-		union s_cb_parents 	parents;
+		union s_cb_parents 		parents;
 
 		// odyn s_cb mozhe braty uchast tilky v 4roh child s_cb
-		struct s_cb_links 	children; 
+		struct s_cb_links 		children; 
 
-		struct s_pos 		pos;
+		struct s_pos 			pos;
 	};
 
 	struct s_rec {
 		// vlasnyk
-		S_Mem 				s_mem; 			
+		S_Mem 					s_mem; 			
 
 		// poviazanyy z rec
-		Lu_Rec 				rec;			
+		Lu_Rec 					rec;			
 
-		lu_size 			id;
+		lu_size 				id;
 
-		lu_size 			s_v_cells_w;
-		lu_size 			s_v_cells_h; 
-		S_V_Cell* 			s_v_cells;	
+		lu_size 				s_v_cells_w;
+		lu_size 				s_v_cells_h; 
+		S_V_Cell* 				s_v_cells;	
 
 		// Ci dani spilni dlia vsih s_v_cells i s_col
 		// i odnakovi dlia znachen i perepadiv
-		lu_size 			component_size; 
+		lu_size 				component_size; 
 
-		struct s_col_conf 	v_conf;
-		struct s_col_conf 	p_conf;
+		struct s_col_conf 		v_conf;
+		struct s_col_conf 		p_conf;
 	};
 
 	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec s_rec);
@@ -134,11 +142,11 @@
 	static void s_rec_debug_print(S_Rec self);
 
 	struct s_mem {
-		Lu_Brain 			brain;
+		Lu_Brain 				brain;
 
-		Arr 				s_recs;
+		Arr 					s_recs;
 
-		N_Mem				n_mem;
+		N_Mem					n_mem;
 	};
 	
 	static S_Mem s_mem_create(Lu_Brain brain);

@@ -28,7 +28,16 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
- 
+
+	enum s_type {
+		S_MEM, 
+		S_REC, 
+		S_COL, 
+		S_CB,
+		S_NAME
+	};
+
+ 	typedef struct s_base* 		S_Base;
  	typedef struct s_col_conf*	S_Col_Conf;
 	typedef struct s_col* 		S_Col;
 	typedef struct s_v_cell* 	S_V_Cell;
