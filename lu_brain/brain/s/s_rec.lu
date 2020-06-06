@@ -77,12 +77,11 @@
 		lu_user_assert(self->s_v_cells, "Cannot allocate s_v_cells");
 
 		// stvoryty s_v_cells
-		lu_size x, y, cx, cy;
+		lu_size x, y;
 		S_V_Cell cell;
-		S_V_Cell temp_cell;
 
-		for (y = 0, cy = 0; y < self->s_v_cells_h; y++)
-			for(x = 0, cx = 0; x < self->s_v_cells_w; x++)
+		for (y = 0; y < self->s_v_cells_h; y++)
+			for(x = 0; x < self->s_v_cells_w; x++)
 			{
 				cell = s_v_cell_create(mem, self, x, y);
 				lu_user_assert(cell, "Cannot allocate s_col");
