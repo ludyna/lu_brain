@@ -50,7 +50,7 @@
 		self->first 		= NULL;
 		self->last 			= NULL;
 		self->count 		= 0;
-		self->mem_table 		= mem_table;
+		self->mem_table 	= mem_table;
 		self->max_size 		= max_size;
 	}
 

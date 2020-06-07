@@ -8,18 +8,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
 
-	struct n_neu
-	{
+	struct n_v_neu {
+		S_Base 			s_base;
+		lu_value 		val;
+
+		N_Lin 			c_l;
+	};
+
+	struct n_neu {
 		S_Base 			s_base;
 		lu_size 		lid; 		
+		lu_value	 	count;
 
 		// ostanni linky
 		N_Lin 			c_l;
 		N_Lin 			p_l;
 	};
 
-	struct n_lin
-	{
+	struct n_lin {
 		N_Neu 			p;
 		N_Neu 			c;
 	

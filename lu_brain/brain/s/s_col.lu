@@ -7,8 +7,12 @@
 
 	static inline S_Col s_col_create(
 		Mem mem, 
-		S_V_Cell s_v_cell,
-		S_Col_Conf conf
+		S_Col_Conf conf, 
+		S_Base base,
+		lu_size x,
+		lu_size y, 
+		lu_size 
+
 	)
 	{
 		lu_user_assert(s_v_cell, "S_V_Cell is NULL");
@@ -20,6 +24,7 @@
 
 		self->s_v_cell 	= s_v_cell;
 		lu_user_assert(self->s_v_cell, "S_V_Cell is NULL");
+
 
 		self->conf = conf;
 		lu_user_assert(self->conf, "S_Col_Conf is NULL");

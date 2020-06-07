@@ -12,16 +12,11 @@
 		lu_size 				lvl;
 	};
 
- 	struct s_pos {
-		lu_size 				lvl;
-		lu_size 				x;
-		lu_size 				y; 
-	};
-
 	struct s_base {
 		enum s_type 			type;
 
 		S_Layer 				s_layer;
+		N_Mem 					n_mem;
 
 		lu_size 				x;
 		lu_size 				y;
@@ -57,17 +52,21 @@
 		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
+	struct s_p_col {
+		struct s_base 			s_base; 
+
+		S_Col_Conf 				conf;
+
+		N_Neu* 					neus;
+	};
+
 	struct s_col {
-		// vlasnyk
-		S_V_Cell				s_v_cell;		
+		struct s_base 			s_base;	
 
 		// conf 
 		S_Col_Conf 				conf;
 
-		// kolekciya vsih neu i generator neu
-		N_Mem 					n_mem;
-
-		N_Neu*					n_neus; 	
+		N_Neu*					neus; 	
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);
@@ -82,15 +81,15 @@
 
 	struct s_p_cell {
 
+
 	};
 
 	// p or v cell
 	struct s_v_cell {
-		// vlasnyk
-		S_Rec 					s_rec; 		
+		struct s_base 			s_base;
 
-		// s_v_cell ye na 0 lvl
-		struct s_pos 			pos; 		
+		// vlasnyk
+		S_Rec 					s_rec; 			
 
 		Arr 					s_cols;    	
 	};
@@ -104,7 +103,7 @@
 	};
 
 	struct s_cb {
-
+		struct s_base 			s_base;
 
 		lu_flags				flags;
 
@@ -112,8 +111,6 @@
 
 		// odyn s_cb mozhe braty uchast tilky v 4roh child s_cb
 		struct s_cb_links 		children; 
-
-		struct s_pos 			pos;
 	};
 
 	struct s_rec {
