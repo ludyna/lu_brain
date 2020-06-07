@@ -15,6 +15,17 @@
 		N_Lin 			c_l;
 	};
 
+	struct n_v_lin {
+		N_V_Neu 		p;
+		N_Neu 			c;
+
+		N_V_Lin         p_p;
+		N_V_Lin         p_n;
+
+		N_V_Lin 		c_p;
+		N_V_Lin 		c_n;
+	};
+
 	struct n_neu {
 		S_Base 			s_base;
 		lu_size 		lid; 		

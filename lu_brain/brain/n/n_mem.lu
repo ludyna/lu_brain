@@ -26,7 +26,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu creators
 
-	// static N_Col n_mem_n_col_create(N_Mem self, S_Col s_col)
+	// static N_Col n_mem_n_col_create(N_Mem self, S_Col s_v_col)
 	// {
 		
 		

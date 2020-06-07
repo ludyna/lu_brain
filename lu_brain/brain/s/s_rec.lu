@@ -84,7 +84,7 @@
 			for(x = 0; x < self->s_v_cells_w; x++)
 			{
 				cell = s_v_cell_create(mem, self, x, y);
-				lu_user_assert(cell, "Cannot allocate s_col");
+				lu_user_assert(cell, "Cannot allocate s_v_col");
 				s_rec_s_v_cell_set(self, x, y, cell);
 			}
 

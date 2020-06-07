@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static inline S_Col s_col_create(
+	static inline S_Col s_v_col_create(
 		Mem mem, 
 		S_Col_Conf conf, 
 		S_Base base,
@@ -20,7 +20,7 @@
 		lu_user_assert(s_v_cell->s_rec->s_mem, "S_Rec is NULL");
 		lu_user_assert(conf, "S_Col_Conf is NULL");
 
-		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_col));
+		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_v_col));
 
 		self->s_v_cell 	= s_v_cell;
 		lu_user_assert(self->s_v_cell, "S_V_Cell is NULL");

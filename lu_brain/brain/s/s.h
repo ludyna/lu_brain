@@ -52,6 +52,12 @@
 		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
+	static inline lu_value s_col_norm(S_Col self, lu_value request);
+	static inline lu_size s_col_indx(S_Col self, lu_value val);
+	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
+	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
+	static inline lu_value s_col_step_norm_dist(S_Col self);
+
 	struct s_p_col {
 		struct s_base 			s_base; 
 
@@ -60,21 +66,18 @@
 		N_Neu* 					neus;
 	};
 
-	struct s_col {
+	struct s_v_col {
 		struct s_base 			s_base;	
 
 		// conf 
 		S_Col_Conf 				conf;
 
-		N_Neu*					neus; 	
+		N_V_Neu*				neus; 	
+		N_V_Neu 				t_1_neu;
 	};
 
-	static inline S_Col s_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);
-	static inline lu_value s_col_norm(S_Col self, lu_value request);
-	static inline lu_size s_col_indx(S_Col self, lu_value val);
-	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val);
-	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
-	static inline lu_value s_col_step_norm_dist(S_Col self);
+	static inline S_Col s_v_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);
+
 
 	// tilky w_save mozhe stvoruvaty neu (lock vseredyni cioho methoda yakyy lokaye tilky dlia cioho input_val - tochnishe val index)
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
@@ -126,7 +129,7 @@
 		lu_size 				s_v_cells_h; 
 		S_V_Cell* 				s_v_cells;	
 
-		// Ci dani spilni dlia vsih s_v_cells i s_col
+		// Ci dani spilni dlia vsih s_v_cells i s_v_col
 		// i odnakovi dlia znachen i perepadiv
 		lu_size 				component_size; 
 
@@ -151,7 +154,7 @@
 	
 	static S_Mem s_mem_create(Lu_Brain brain);
 
-	//static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col);
+	//static N_Col s_mem_n_col_create(S_Mem self, S_Col s_v_col);
 	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->s_recs, indx); }
 
 #endif // _LU_S_H

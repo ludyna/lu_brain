@@ -25,12 +25,12 @@
 
 		self->s_cols 		= arr_create(mem, s_rec->component_size);
 
-		S_Col s_col;
+		S_Col s_v_col;
 		for (lu_size i = 0; i < arr_size(self->s_cols); i++)
 		{
-			s_col = s_col_create(mem, self, &s_rec->v_conf);
+			s_v_col = s_v_col_create(mem, self, &s_rec->v_conf);
 
-			arr_append(self->s_cols, s_col);
+			arr_append(self->s_cols, s_v_col);
 		}
 
 		return self;

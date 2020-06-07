@@ -25,7 +25,7 @@
 		lu_p_size 			prev_neus;
 	};
 
-	static W_Col w_col_create(Mem mem, W_Rec w_rec, S_Col s_col);
+	static W_Col w_col_create(Mem mem, W_Rec w_rec, S_Col s_v_col);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Cb

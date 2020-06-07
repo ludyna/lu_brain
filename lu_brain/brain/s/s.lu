@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Includes
 
-	#include "s_col.lu"
+	#include "s_v_col.lu"
 	#include "s_v_cell.lu"
 	#include "s_cb.lu"
 	#include "s_rec.lu"
