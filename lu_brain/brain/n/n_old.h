@@ -64,6 +64,52 @@
 //   } data; // access with some_info_object.data.a or some_info_object.data.b
 // };
 
+// struct some_info {
+//   int type; // set accordingly
+//   union {
+//     struct TYPEA a;
+//     struct TYPEB b;
+//   } data; // access with some_info_object.data.a or some_info_object.data.b
+// };
+
+	enum n_comp_type {
+		NCI_VALUE = 0,
+		NCI_NAME = 1,
+
+		NCI_SIZE
+	};
+
+	// "generic" zviazky pracuvaty budut, yaksho link na structurno-prostorovu info 
+	struct n_ent {
+		// spilni dlia vsih neu dani
+		// S_Base 					s_base;
+		// lu_value 				count;  		
+
+		// lu_size 				l_p_lin_ent;
+		// lu_size 				l_c_lin_ent;
+
+		// // odna dodatkova componenta
+		// enum n_comp_type		comp_type;
+		// lu_size 				comp_ent;
+
+		// mozhna zrobyty dvi componenty i vsi dani tudy pomistity
+		// napryklad comp1 ce zavzhdy typ zviazku (p i c, tilky p, tilky c i vidpovidno count yaksho treba)
+
+		// druha componenta ce specyfichni dani like name (s_base skorishe vsioho ne treba bude, tam bude shos zaviazane z w_)
+
+		// vzhe todi krashce 3 comp,
+		// 1) ce linky z p + count
+		// 2) ce linky do c
+		// 3) dodatkove shos (yak name)
+
+		lu_size 				l_p_lin_ent; // cia componenta vkluchaye count
+		lu_size 				l_c_lin_ent;
+
+		enum n_comp_type		comp_type;
+		lu_size 				comp_ent;	// cia componenta vkluchaye name abo value abo shos inshe
+	};
+
+
 	enum neu_ent_id {
 		NEU_B_ID = 0,
 		NEU_NAME_ID,

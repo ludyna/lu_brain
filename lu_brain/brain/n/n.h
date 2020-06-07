@@ -8,14 +8,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
 
-// struct some_info {
-//   int type; // set accordingly
-//   union {
-//     struct TYPEA a;
-//     struct TYPEB b;
-//   } data; // access with some_info_object.data.a or some_info_object.data.b
-// };
-
 	enum n_comp_type {
 		NCI_VALUE = 0,
 		NCI_NAME = 1,
@@ -23,89 +15,30 @@
 		NCI_SIZE
 	};
 
-	// "generic" zviazky pracuvaty budut, yaksho link na structurno-prostorovu info 
-	struct n_ent {
-		// spilni dlia vsih neu dani
-		// S_Base 					s_base;
-		// lu_value 				count;  		
+	struct n_neu {
 
-		// lu_size 				l_p_lin_ent;
-		// lu_size 				l_c_lin_ent;
+		lu_size 				p_l; 		
+		lu_value 				p_l_count;
 
-		// // odna dodatkova componenta
-		// enum n_comp_type		comp_type;
-		// lu_size 				comp_ent;
-
-		// mozhna zrobyty dvi componenty i vsi dani tudy pomistity
-		// napryklad comp1 ce zavzhdy typ zviazku (p i c, tilky p, tilky c i vidpovidno count yaksho treba)
-
-		// druha componenta ce specyfichni dani like name (s_base skorishe vsioho ne treba bude, tam bude shos zaviazane z w_)
-
-		// vzhe todi krashce 3 comp,
-		// 1) ce linky z p + count
-		// 2) ce linky do c
-		// 3) dodatkove shos (yak name)
-
-		lu_size 				l_p_lin_ent; // cia componenta vkluchaye count
-		lu_size 				l_c_lin_ent;
+		lu_size 				c_l;
 
 		enum n_comp_type		comp_type;
-		lu_size 				comp_ent;
+		lu_size 				comp;		// cia componenta vkluchaye name abo value abo shos inshe
 	};
 
-	struct n_name {
-		lu_char 		name[255];
-	};
-
-
-
-	struct n_base {
-		S_Base 			s_base;
-
-	};
-
-	struct n_v_neu {
-		
-		lu_value 		val;
-
-		N_Lin 			c_l;
-	};
-
-	struct n_v_lin { // ce ne bude pracuvaty, bo n_neu ne maye n_v_linka nazad, treba shos rozumnishe
-		N_V_Neu 		p;
-		N_Neu 			c;
-
-		N_V_Lin         p_p;
-		N_V_Lin         p_n;
-
-		N_V_Lin 		c_p;
-		N_V_Lin 		c_n;
-	};
-
-	struct n_neu {
-		S_Base 			s_base;
-		lu_size 		lid; 		
-		lu_value	 	count;
-
-		// ostanni linky
-		N_Lin 			c_l;
-		N_Lin 			p_l;
-	};
-
-	union n_pointer {
-		N_Neu 		neu;
-		N_V_Neu 	v_neu;
-	};
 
 	struct n_lin {
-		N_Neu 			p;
-		N_Neu 			c;
-	
-		N_Lin   		p_p;
-		N_Lin 			p_n;
+		lu_size 		p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		lu_size 		c;
 
-		N_Lin 			c_p;
-		N_Lin   		c_n;
+		// ce dva spysky
+		// odyn z storony p, inshyy z storony c
+		lu_size 		p_p;
+		lu_size 		p_n;
+
+		lu_size 		c_p; 	// prev i next potribni u vypadku yakshou my vydaliayemo zviazok?
+		lu_size 		c_n; 	// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys prev ale my neznayemo next
+		 		   				// tomu naspravdi i prev i next potribni
 	};
 
 	struct n_mem {
