@@ -37,6 +37,7 @@
 		S_NAME
 	};
 
+	typedef struct s_layer* 	S_Layer;
  	typedef struct s_base* 		S_Base;
  	typedef struct s_col_conf*	S_Col_Conf;
 	typedef struct s_col* 		S_Col;

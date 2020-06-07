@@ -8,6 +8,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
+	struct s_layer {
+		lu_size 				lvl;
+	};
+
  	struct s_pos {
 		lu_size 				lvl;
 		lu_size 				x;
@@ -17,7 +21,8 @@
 	struct s_base {
 		enum s_type 			type;
 
-		lu_size 				lvl;
+		S_Layer 				s_layer;
+
 		lu_size 				x;
 		lu_size 				y;
 	};

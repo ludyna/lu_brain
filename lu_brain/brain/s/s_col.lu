@@ -77,17 +77,17 @@
 		return 1.0 / self->conf->neu_size;
 	}
 
-	static inline N_Col s_col_n_get(S_Col self, lu_size indx)
-	{
-		N_Col n_col = self->n_cols[indx];
-		if (n_col == NULL)
-		{
-			neu_ent = n_create(self->n_mem, self, NT_COL);
-			self->n_cols[indx] = neu_ent;
-		}
+	// static inline N_Col s_col_n_get(S_Col self, lu_size indx)
+	// {
+	// 	N_Col n_col = self->n_cols[indx];
+	// 	if (n_col == NULL)
+	// 	{
+	// 		neu_ent = n_create(self->n_mem, self, NT_COL);
+	// 		self->n_cols[indx] = neu_ent;
+	// 	}
 
-		return neu_ent;
-	}
+	// 	return neu_ent;
+	// }
 
 	// static inline N_Col s_col_n_get(S_Col self, lu_value input_val)
 	// {

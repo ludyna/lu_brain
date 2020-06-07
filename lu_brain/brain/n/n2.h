@@ -10,15 +10,14 @@
 
 	struct n_neu
 	{
-		S_Base 	s_base;
+		S_Base 			s_base;
+		lu_size 		lid; 		
 
 		// ostanni linky
-		N_Lin 	c_l;
-		N_Lin 	p_l;
+		N_Lin 			c_l;
+		N_Lin 			p_l;
 	};
 
-	// koly my vydaliayem neu to vbyvayem vsi link 
-	// hotilos shob vony znykly i 
 	struct n_lin
 	{
 		N_Neu 	p;
