@@ -64,6 +64,7 @@
 		S_Col_Conf 				conf;
 
 		N_Neu* 					neus;
+		N_Neu 					t1neu; // stop ce maye buty v w_p_col
 	};
 
 	struct s_v_col {
@@ -73,7 +74,7 @@
 		S_Col_Conf 				conf;
 
 		N_V_Neu*				neus; 	
-		N_V_Neu 				t_1_neu;
+		N_V_Neu 				t1neu; // stop ce maye buty v w_v_col, i ce bude w_v_neu chy shos take
 	};
 
 	static inline S_Col s_v_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);

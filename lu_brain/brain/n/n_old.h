@@ -56,7 +56,13 @@
 // Neu (nam neu potribne tilky dlia zviazkiv bilshe nichoho)
 
 
-
+// struct some_info {
+//   int type; // set accordingly
+//   union {
+//     struct TYPEA a;
+//     struct TYPEB b;
+//   } data; // access with some_info_object.data.a or some_info_object.data.b
+// };
 
 	enum neu_ent_id {
 		NEU_B_ID = 0,
@@ -67,15 +73,20 @@
 
 	// "generic" zviazky pracuvaty budut, yaksho link na structurno-prostorovu info 
 	struct n_ent {
-		lu_size 		coms[NEU_ENT_ID_SIZE];
+		lu_size 		coms[NEU_ENT_ID_SIZE];  // yaksho zrobyty ce dynamichne, to problem z pam nema
 
 		// tut mozhna bulo prosto postvoruvaty zminni dlia kozhnoyi componenty
 		// lu_size 	n_base;
 		// lu_size 	n_name;
+
+		lu_value 		count;  		
+
+		lu_size 		l_p_lin_ent;
+		lu_size 		l_c_lin_ent;
 	};
 
 	struct n_base {
-		lu_value 		count;  		// ce maye buty v w_neu
+		lu_value 		count;  		
 
 		lu_size 		l_p_lin_ent;
 		lu_size 		l_c_lin_ent;
