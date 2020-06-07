@@ -39,12 +39,3 @@
 		return self;
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Neu creators
-
-	static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col)
-	{
-		
-		
-		return NULL;
-	}

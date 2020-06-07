@@ -27,7 +27,7 @@
 		self->n_mem 	= s_v_cell->s_rec->s_mem->n_mem;
 		lu_user_assert(self->n_mem, "N_Mem is NULL");
 
-		self->n_cols 	= (N_Col*) mem_alloc(mem, sizeof(N_Col) * self->conf->neu_size);
+		self->n_neus 	= (N_Neu*) mem_alloc(mem, sizeof(N_Neu) * self->conf->neu_size);
 
 		return self;
 	}

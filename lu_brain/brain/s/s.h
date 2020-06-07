@@ -67,7 +67,7 @@
 		// kolekciya vsih neu i generator neu
 		N_Mem 					n_mem;
 
-		N_Col*					n_cols; 	
+		N_Neu*					n_neus; 	
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_V_Cell s_v_cell, S_Col_Conf s_col_conf);
@@ -78,7 +78,7 @@
 	static inline lu_value s_col_step_norm_dist(S_Col self);
 
 	// tilky w_save mozhe stvoruvaty neu (lock vseredyni cioho methoda yakyy lokaye tilky dlia cioho input_val - tochnishe val index)
-	static inline N_Col s_col_n_get(S_Col self, lu_value input_val);
+	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
 
 	struct s_p_cell {
 
@@ -97,8 +97,6 @@
 
 	static S_V_Cell s_v_cell_create(Mem mem, S_Rec rec, lu_size x, lu_size y);
 	static inline S_Col s_v_cell_s_col_get(S_V_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cols, indx); }
-	
-	static N_Cell s_v_cell_n_get(S_V_Cell, lu_p_value components);
 
 	struct s_cb_first {
 

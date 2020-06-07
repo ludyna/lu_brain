@@ -14,17 +14,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N
 
-	typedef struct n_col* 		N_Col;
-	typedef struct n_cell* 		N_Cell;
-	typedef struct n_cb* 		N_Cb;
+	typedef struct n_neu*		N_Neu;
+	typedef struct n_lin* 		N_Lin;
 	typedef struct n_mem* 		N_Mem;
 
-	typedef struct n_ent* 		N_Ent;
-	typedef struct n_base* 		N_Base;
-	typedef struct n_name* 		N_Name;
-
-	typedef struct lin_ent* 	Lin_Ent;
-	typedef struct lin_b* 		Lin_B;
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
