@@ -8,13 +8,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
 
-	enum n_comp_type {
-		NCI_VALUE = 0,
-		NCI_NAME = 1,
-
-		NCI_SIZE
-	};
-
 	struct n_neu {
 
 		lu_size 				p_l; 		

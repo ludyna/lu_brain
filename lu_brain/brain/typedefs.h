@@ -14,10 +14,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N
 
+	enum n_comp_type {
+		NCI_VALUE = 0,
+		NCI_NAME = 1,
+
+		NCI_SIZE
+	};
+
 	typedef struct n_neu*		N_Neu;
 	typedef struct n_lin* 		N_Lin;
 	typedef struct n_mem* 		N_Mem;
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
@@ -33,7 +39,7 @@
 	typedef struct s_layer* 	S_Layer;
  	typedef struct s_base* 		S_Base;
  	typedef struct s_col_conf*	S_Col_Conf;
-	typedef struct s_v_col* 		S_Col;
+	typedef struct s_v_col* 	S_Col;
 	typedef struct s_v_cell* 	S_V_Cell;
 	typedef struct s_cb* 		S_Cb;
 	typedef struct s_rec*		S_Rec;
