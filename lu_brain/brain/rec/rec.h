@@ -51,7 +51,6 @@
 		lu_size 		p_nsc;  	// nei sim count
 	};
 
-
 	static inline lu_value rec_data_get(Lu_Rec rec, lu_p_value data, lu_size x, lu_size y, lu_size z)
 	{
 		return data[z * rec->width * rec->height + y * rec->width + x];

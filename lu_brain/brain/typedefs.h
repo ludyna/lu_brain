@@ -16,8 +16,9 @@
 
 	typedef lu_size lin_ix;
 	typedef lu_size neu_ix;
+	typedef lu_size com_ix;
 
-	enum n_comp_type {
+	enum n_com_type {
 		NCI_VALUE = 0,
 		NCI_NAME = 1,
 

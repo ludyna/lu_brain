@@ -58,14 +58,6 @@
 	static inline lu_value s_col_calc_sig(S_Col self, lu_size val_step_i, lu_value val);
 	static inline lu_value s_col_step_norm_dist(S_Col self);
 
-	struct s_p_col {
-		struct s_base 			s_base; 
-
-		S_Col_Conf 				conf;
-
-		N_Neu* 					neus;
-		N_Neu 					t1neu; // stop ce maye buty v w_p_col
-	};
 
 	struct s_v_col {
 		struct s_base 			s_base;	
