@@ -10,15 +10,22 @@
 
 		lu_size 		width;
 		lu_size 		height;
+		
 		lu_size 		component_size;
+
+		// (0, 1)
+		lu_value 		contrast;
+
+		// (0, 1)
+		lu_value 		color_influence;
 
 		lu_value 		v_min;
 		lu_value 		v_max;
 		lu_size			v_neu_size;
+		lu_size 		v_nsc;
 
 		lu_size 		p_neu_size;
 		lu_size 		p_nsc;  	// nei sim count
-
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -32,9 +39,13 @@
 		lu_size 		height;
 		lu_size 		component_size;
 
+		lu_value 		contrast;
+		lu_value 		color_influence;
+
 		lu_value 		v_min;
 		lu_value 		v_max;
 		lu_size			v_neu_size;
+		lu_size 		v_nsc;
 
 		lu_size 		p_neu_size;
 		lu_size 		p_nsc;  	// nei sim count

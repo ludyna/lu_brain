@@ -14,11 +14,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N
 
+	typedef lu_size lin_ix;
+	typedef lu_size neu_ix;
+
 	enum n_comp_type {
 		NCI_VALUE = 0,
 		NCI_NAME = 1,
 
 		NCI_SIZE
+	};
+
+	// batko => dytyna
+	enum n_lin_type {
+		NLT_V_TO_P,
+		NLT_P_TO_CB,
+		NLT_CB_TO_NAME
 	};
 
 	typedef struct n_neu*		N_Neu;
