@@ -14,6 +14,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N
 
+	#define IX_NULL 0
+
 	typedef lu_size lin_ix;
 	typedef lu_size neu_ix;
 	typedef lu_size com_ix;
@@ -50,8 +52,8 @@
 	typedef struct s_layer* 	S_Layer;
  	typedef struct s_base* 		S_Base;
  	typedef struct s_col_conf*	S_Col_Conf;
-	typedef struct s_v_col* 	S_Col;
-	typedef struct s_v_cell* 	S_V_Cell;
+	typedef struct s_col* 	S_Col;
+	typedef struct s_cell* 	S_Cell;
 	typedef struct s_cb* 		S_Cb;
 	typedef struct s_rec*		S_Rec;
 	typedef struct s_mem* 		S_Mem;

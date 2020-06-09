@@ -8,13 +8,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
 	// struct n_v {
-	// 	S_V_Col s_v_col;
+	// 	S_V_Col s_col;
 
 
 	// };
 
 	// struct n_p {
-	// 	S_P_Col s_v_col;
+	// 	S_P_Col s_col;
 
 	// };
 
@@ -31,7 +31,7 @@
 	// typedef struct lin_b* 		Lin_B;
 	
 	struct n_col {
-		S_Col 			s_v_col;
+		S_Col 			s_col;
 
 		lu_value 		val;
 	};

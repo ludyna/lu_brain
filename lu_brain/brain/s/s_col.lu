@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static inline S_Col s_v_col_create(
+	static inline S_Col s_col_create(
 		Mem mem, 
 		S_Col_Conf conf, 
 		S_Base base,
@@ -15,21 +15,21 @@
 
 	)
 	{
-		lu_user_assert(s_v_cell, "S_V_Cell is NULL");
-		lu_user_assert(s_v_cell->s_rec, "S_Rec is NULL");
-		lu_user_assert(s_v_cell->s_rec->s_mem, "S_Rec is NULL");
+		lu_user_assert(s_cell, "S_Cell is NULL");
+		lu_user_assert(s_cell->s_rec, "S_Rec is NULL");
+		lu_user_assert(s_cell->s_rec->s_mem, "S_Rec is NULL");
 		lu_user_assert(conf, "S_Col_Conf is NULL");
 
-		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_v_col));
+		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_col));
 
-		self->s_v_cell 	= s_v_cell;
-		lu_user_assert(self->s_v_cell, "S_V_Cell is NULL");
+		self->s_cell 	= s_cell;
+		lu_user_assert(self->s_cell, "S_Cell is NULL");
 
 
 		self->conf = conf;
 		lu_user_assert(self->conf, "S_Col_Conf is NULL");
 
-		self->n_mem 	= s_v_cell->s_rec->s_mem->n_mem;
+		self->n_mem 	= s_cell->s_rec->s_mem->n_mem;
 		lu_user_assert(self->n_mem, "N_Mem is NULL");
 
 		self->n_neus 	= (N_Neu*) mem_alloc(mem, sizeof(N_Neu) * self->conf->neu_size);
@@ -40,47 +40,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Calculations
 
-	static inline lu_value s_col_norm(S_Col self, lu_value request)
-	{
-		lu_value val = request - self->conf->orig_min;
-		if (val < 0) val = 0;
-		if (val > self->conf->max) val = self->conf->max;
-
-		return val;
-	}
-
-	static inline lu_size s_col_indx(S_Col self, lu_value val)
-	{
-		return (lu_size) lu_value_round(val / self->conf->step);
-	}
-
-	static inline struct lu_size_range s_col_indx_range(S_Col self, lu_value val)
-	{
-		lu_size orig_i = s_col_indx(self, val);
-
-		long begin, end;
-
-		begin = orig_i - self->conf->nsc;
-		if (begin < 0) begin = 0;
-
-		end = orig_i + self->conf->nsc;
-		if (end > (self->conf->neu_size - 1)) end = self->conf->neu_size - 1; 
-
-		struct lu_size_range r;
-		r.begin = (lu_size) begin;
-		r.end = (lu_size) end;
-		return r;
-	}
-
-	static inline lu_value s_col_calsig(S_Col self, lu_size val_step_i, lu_value val)
-	{ 
-		return 1.0 - lu_value_abs(self->conf->steps[val_step_i] - val) / self->conf->max;
-	}
-
-	static inline lu_value s_col_step_norm_dist(S_Col self)
-	{
-		return 1.0 / self->conf->neu_size;
-	}
 
 	// static inline N_Col s_col_n_get(S_Col self, lu_size indx)
 	// {
@@ -96,8 +55,8 @@
 
 	// static inline N_Col s_col_n_get(S_Col self, lu_value input_val)
 	// {
-	// 	// lu_value norm_val 	= s_col_norm(self, input_val);
-	// 	// lu_size indx 		= s_col_indx(self, norm_val);
+	// 	// lu_value norm_val 	= s_col_conf_norm(self, input_val);
+	// 	// lu_size indx 		= s_col_conf_indx(self, norm_val);
 
 	// 	// return n_col_n_get(self, indx);
 	// }

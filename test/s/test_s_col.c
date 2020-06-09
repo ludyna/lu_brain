@@ -23,7 +23,7 @@ lu_value			data_m1[] 		= { -1.0 };
 Mem 				mem;
 S_Mem				s_mem;
 S_Rec 				s_rec;
-S_V_Cell			s_v_cell;
+S_Cell				s_cell;
 S_Col 				s_col1;
 S_Col 				s_col2;
 
@@ -62,19 +62,19 @@ void test_s_col1and2(void)
 	s_rec = s_mem_s_rec_get(s_mem, 0);
 	TEST_ASSERT(s_rec);
 
-	s_v_cell = s_rec_s_v_cell_get(s_rec, 0, 0);
-	TEST_ASSERT(s_v_cell);
+	s_cell = s_rec_s_cell_get(s_rec, 0, 0);
+	TEST_ASSERT(s_cell);
 
-	s_col1 = s_v_cell_s_col_get(s_v_cell, 0);
+	s_col1 = s_cell_s_col_get(s_cell, 0);
 	TEST_ASSERT(s_col1);
 
 	s_rec = s_mem_s_rec_get(s_mem, 1);
 	TEST_ASSERT(s_rec);
 
-	s_v_cell = s_rec_s_v_cell_get(s_rec, 0, 0);
-	TEST_ASSERT(s_v_cell);
+	s_cell = s_rec_s_cell_get(s_rec, 0, 0);
+	TEST_ASSERT(s_cell);
 
-	s_col2 = s_v_cell_s_col_get(s_v_cell, 0);
+	s_col2 = s_cell_s_col_get(s_cell, 0);
 	TEST_ASSERT(s_col2);
 
 	// s_col1 tests

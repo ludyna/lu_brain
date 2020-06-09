@@ -5,16 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	static W_Col w_col_create(Mem mem, W_Rec w_rec, S_Col s_v_col)
+	static W_Col w_col_create(Mem mem, W_Rec w_rec, S_Col s_col)
 	{
-		lu_user_assert(s_v_col, "S_Col is NULL");
+		lu_user_assert(s_col, "S_Col is NULL");
 
 		W_Col self = (W_Col) mem_alloc(mem, sizeof(struct w_col));
 		lu_user_assert(self, "Cannot allocate W_Col");
 
 		// self->w_rec = w_rec;
 
-		// S_Rec s_rec = s_v_col->s_rec;
+		// S_Rec s_rec = s_col->s_rec;
 		// lu_user_assert(s_rec, "S_Rec is NULL");
 
 		// self->curr_vals = (lu_p_value) mem_alloc(mem, sizeof(lu_value) * s_rec->component_size);

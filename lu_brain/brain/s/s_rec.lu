@@ -5,15 +5,15 @@
 	static void s_rec_debug_print(S_Rec self)
 	{
 		lu_debug("\n---------------------");
-		lu_debug("\nn_cols(%d, %d): ", self->s_v_cells_w, self->s_v_cells_h);
+		lu_debug("\nn_cols(%d, %d): ", self->s_cells_w, self->s_cells_h);
 		lu_size x, y;
-		S_V_Cell cell;
-		for(y = 0; y < self->s_v_cells_h; y++)
+		S_Cell cell;
+		for(y = 0; y < self->s_cells_h; y++)
 		{
 			lu_debug("\n");
-			for(x = 0; x < self->s_v_cells_w; x++)
+			for(x = 0; x < self->s_cells_w; x++)
 			{
-				cell = s_rec_s_v_cell_get(self, x, y);
+				cell = s_rec_s_cell_get(self, x, y);
 
 				if (cell == NULL)
 					lu_debug("t");
@@ -64,28 +64,28 @@
 			self->v_conf.steps[i] = (lu_value)i * self->v_conf.step;
 
 		///////////////////////////////
-		// s_v_cells
+		// s_cells
 
-		self->s_v_cells_w 		= rec->width;
-		self->s_v_cells_h		= rec->height;
+		self->s_cells_w 		= rec->width;
+		self->s_cells_h		= rec->height;
 
-		self->s_v_cells = (S_V_Cell*) mem_alloc(
+		self->s_cells = (S_Cell*) mem_alloc(
 			mem, 
-			sizeof(S_V_Cell) * self->s_v_cells_w * self->s_v_cells_h 
+			sizeof(S_Cell) * self->s_cells_w * self->s_cells_h 
 		);
 
-		lu_user_assert(self->s_v_cells, "Cannot allocate s_v_cells");
+		lu_user_assert(self->s_cells, "Cannot allocate s_cells");
 
-		// stvoryty s_v_cells
+		// stvoryty s_cells
 		lu_size x, y;
-		S_V_Cell cell;
+		S_Cell cell;
 
-		for (y = 0; y < self->s_v_cells_h; y++)
-			for(x = 0; x < self->s_v_cells_w; x++)
+		for (y = 0; y < self->s_cells_h; y++)
+			for(x = 0; x < self->s_cells_w; x++)
 			{
-				cell = s_v_cell_create(mem, self, x, y);
-				lu_user_assert(cell, "Cannot allocate s_v_col");
-				s_rec_s_v_cell_set(self, x, y, cell);
+				cell = s_cell_create(mem, self, x, y);
+				lu_user_assert(cell, "Cannot allocate s_col");
+				s_rec_s_cell_set(self, x, y, cell);
 			}
 
 
