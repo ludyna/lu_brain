@@ -6,18 +6,18 @@
 #define _LU_S_H
 
 ///////////////////////////////////////////////////////////////////////////////
-// S
+// S Net
 //
 
 	struct s_base {
-		enum s_type 			type;
+		enum s_net_type 			type;
 
 		lu_size 				l;
 		lu_size 				x;
 		lu_size 				y;
 	};
 
-	static inline S_Base s_base_init(S_Base self, enum s_type type, lu_size l, lu_size x, lu_size y)
+	static inline S_Base s_base_init(S_Base self, enum s_net_type type, lu_size l, lu_size x, lu_size y)
 	{
 		self->type 				= type;
 		self->l 				= l;
@@ -31,10 +31,10 @@
 	struct s_neu {
 		struct s_base 			super;
 
-		enum s_type				p_type;
+		enum s_net_type				p_type;
 		s_neu_ix 				p[4];
 
-		enum s_type 			c_type;
+		enum s_net_type 			c_type;
 		s_neu_ix 				c[4];
 	};
 
@@ -55,19 +55,6 @@
 	static inline lu_value s_col_conf_calc_sig(S_Col_Conf self, lu_size val_step_i, lu_value val);
 	static inline lu_value s_col_conf_step_norm_dist(S_Col_Conf self);
 
-	struct s_col {
-		struct s_base 			super;	
-
-		// conf 
-		S_Col_Conf 				conf;
-
-		n_neu_ix*				neus; 	
-	};
-
-	static inline S_Col s_col_create(Mem mem, S_Cell s_cell, S_Col_Conf s_col_conf);
-	// tilky w_save mozhe stvoruvaty neu (lock vseredyni cioho methoda yakyy lokaye tilky dlia cioho input_val - tochnishe val index)
-	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
-
 	// p or v cell
 	struct s_cell {
 		struct s_base 			super;
@@ -79,6 +66,30 @@
 
 	static S_Cell s_cell_create(Mem mem, S_Rec rec, S_Col_Conf conf, lu_size x, lu_size y);
 	static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
+
+///////////////////////////////////////////////////////////////////////////////
+// S Helpers
+//
+	struct s_col {
+		S_Cell 					cell;
+
+		// conf 
+		S_Col_Conf 				conf;
+
+		n_neu_ix*				neus; 	
+	};
+
+	static inline S_Col s_col_create(Mem mem, S_Cell s_cell, S_Col_Conf s_col_conf);
+	// tilky w_save mozhe stvoruvaty neu (lock vseredyni cioho methoda yakyy lokaye tilky dlia cioho input_val - tochnishe val index)
+	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
+
+	struct s_layer {
+
+		lu_size 				w;
+		lu_size 				h;
+
+		s_neu_ix* 				neus;
+	};
 
 	struct s_rec {
 		// vlasnyk

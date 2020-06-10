@@ -21,7 +21,7 @@
 
 		self->rec 			= rec;
 
-		s_base_init(&self->super, ST_CELL, 0, x, y);
+		s_base_init(&self->super, SNT_CELL, 0, x, y);
 
 		self->cols 			= arr_create(mem, rec->component_size);
 

@@ -14,20 +14,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
-	enum s_type {
-		ST_CELL, 
-		ST_COL, 
-		ST_NEU,
-		ST_A_NEU
+	enum s_net_type {
+		SNT_CELL, 
+		SNT_NEU,
+		SNT_A_NEU
 	};
 
 	typedef lu_size s_neu_ix;
 
  	typedef struct s_base* 		S_Base;
  	typedef struct s_neu* 		S_Neu;
- 	typedef struct s_col_conf*	S_Col_Conf;
-	typedef struct s_col* 		S_Col;
 	typedef struct s_cell* 		S_Cell;
+	
+	// Helpers
+	typedef struct s_col_conf*	S_Col_Conf;
+	typedef struct s_col* 		S_Col;
 	typedef struct s_rec*		S_Rec;
 	typedef struct s_mem* 		S_Mem;
 

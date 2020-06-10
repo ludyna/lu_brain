@@ -16,8 +16,7 @@
 
 		S_Col self 		= (S_Col) mem_alloc(mem, sizeof(struct s_col));
 
-		s_base_init(&self->super, ST_COL, cell->super.l, cell->super.x, cell->super.y);
-
+		self->cell 		= cell;
 		self->conf 		= conf;
 		lu_user_assert(self->conf, "S_Col_Conf is NULL");
 

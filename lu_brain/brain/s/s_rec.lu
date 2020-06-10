@@ -9,6 +9,8 @@
 		lu_user_assert(rec, "Rec is NULL");
 		lu_user_assert(rec->v_max > rec->v_min, "Lu_Rec v_max should be greater than Lu_Rec v_min");
 		lu_user_assert(rec->p_nsc >= 0 && rec->p_nsc <= rec->p_neu_size, "Lu_Rec val_nsc should be greater than 0 and less equal to 0.5");
+		lu_user_assert(rec->width > 0, "Lu_Rec width should be greater than 0");
+		lu_user_assert(rec->height > 0, "Lu_Rec height should be greater than 0");
 
 		Mem mem = s_mem->brain->mem_perm;
 
@@ -73,6 +75,24 @@
 				lu_user_assert(cell, "Cannot allocate p cell");
 				s_rec_p_cell_set(self, x, y, cell);
 			}
+
+		// calculate what we need 
+		lu_size cell_count = rec->width * rec->height;
+		lu_size v_col_count = self->component_size * cell_count;
+		lu_size p_col_count = cell_count;
+
+		lu_size neu_count = 0;
+
+		x = rec->width;
+		y = rec->height;
+		
+		while (x != 1 && y != 1)
+		{
+			if (x > 1) --x;
+			if (y > 1) --y;
+
+			
+		} 
 
 		return self;
 	}
