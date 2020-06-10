@@ -7,15 +7,25 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
+//
 
 	struct s_base {
 		enum s_type 			type;
 
-		lu_size 				t;
 		lu_size 				l;
 		lu_size 				x;
 		lu_size 				y;
 	};
+
+	static inline S_Base s_base_init(S_Base self, enum s_type type, lu_size l, lu_size x, lu_size y)
+	{
+		self->type 		= type;
+		self->l 		= l;
+		self->x 		= x;
+		self->y 		= y;
+
+		return self;
+	}
 
 	// neu i a_neu
 	struct s_neu {
@@ -26,7 +36,6 @@
 
 		enum s_type 			c_type;
 		s_neu_ix 				c[4];
-
 	};
 
 	struct s_col_conf {
@@ -52,32 +61,28 @@
 		// conf 
 		S_Col_Conf 				conf;
 
-		n_neu_ix*					neus; 	
-		//N_V_Neu 				t1neu; // stop ce maye buty v w_v_col, i ce bude w_v_neu chy shos take
+		n_neu_ix*				neus; 	
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_Cell s_cell, S_Col_Conf s_col_conf);
 	// tilky w_save mozhe stvoruvaty neu (lock vseredyni cioho methoda yakyy lokaye tilky dlia cioho input_val - tochnishe val index)
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
 
-	struct s_p_cell {
-		struct s_base 			super;
-
-		S_Col 					col;
-	};
-
 	// p or v cell
-	struct s_v_cell {
+	struct s_cell {
 		struct s_base 			super;
+
+		S_Rec 					rec;
 		
 		Arr 					cols;    	
 	};
 
-	static inline S_Col s_v_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->s_cols, indx); }
+	static S_Cell s_cell_create(Mem mem, S_Rec rec, S_Col_Conf conf, lu_size x, lu_size y);
+	static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
 
 	struct s_rec {
 		// vlasnyk
-		S_Mem 					mem; 			
+		S_Mem 					s_mem; 			
 
 		// poviazanyy z rec
 		Lu_Rec 					rec;			
@@ -100,8 +105,6 @@
 
 	static inline void s_rec_s_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->cells[y * self->cells_w + x] = s_cell; }
 	static inline S_Cell s_rec_s_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[y * self->cells_w + x]; }
-
-	static void s_rec_debug_print(S_Rec self);
 
 	struct s_mem {
 		Lu_Brain 				brain;

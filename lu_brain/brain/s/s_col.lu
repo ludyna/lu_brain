@@ -7,32 +7,21 @@
 
 	static inline S_Col s_col_create(
 		Mem mem, 
-		S_Col_Conf conf, 
-		S_Base base,
-		lu_size x,
-		lu_size y, 
-		lu_size 
-
+		S_Cell cell, 
+		S_Col_Conf conf
 	)
 	{
-		lu_user_assert(s_cell, "S_Cell is NULL");
-		lu_user_assert(s_cell->s_rec, "S_Rec is NULL");
-		lu_user_assert(s_cell->s_rec->s_mem, "S_Rec is NULL");
+		lu_user_assert(cell, "S_Cell is NULL");
 		lu_user_assert(conf, "S_Col_Conf is NULL");
 
-		S_Col self = (S_Col) mem_alloc(mem, sizeof(struct s_col));
+		S_Col self 		= (S_Col) mem_alloc(mem, sizeof(struct s_col));
 
-		self->s_cell 	= s_cell;
-		lu_user_assert(self->s_cell, "S_Cell is NULL");
+		s_base_init(&self->super, ST_COL, cell->super.l, cell->super.x, cell->super.y);
 
-
-		self->conf = conf;
+		self->conf 		= conf;
 		lu_user_assert(self->conf, "S_Col_Conf is NULL");
 
-		self->n_mem 	= s_cell->s_rec->s_mem->n_mem;
-		lu_user_assert(self->n_mem, "N_Mem is NULL");
-
-		self->n_neus 	= (N_Neu*) mem_alloc(mem, sizeof(N_Neu) * self->conf->neu_size);
+		self->neus 		= (n_neu_ix*) mem_alloc(mem, sizeof(n_neu_ix) * self->conf->neu_size);
 
 		return self;
 	}

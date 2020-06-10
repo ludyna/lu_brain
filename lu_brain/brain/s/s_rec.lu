@@ -2,29 +2,6 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static void s_rec_debug_print(S_Rec self)
-	{
-		lu_debug("\n---------------------");
-		lu_debug("\nn_cols(%d, %d): ", self->cells_w, self->cells_h);
-		lu_size x, y;
-		S_Cell cell;
-		for(y = 0; y < self->cells_h; y++)
-		{
-			lu_debug("\n");
-			for(x = 0; x < self->cells_w; x++)
-			{
-				cell = s_rec_s_cell_get(self, x, y);
-
-				if (cell == NULL)
-					lu_debug("t");
-				else
-					lu_debug("c", cell->pos.x, cell->pos.y);
-			}
-		}
-
-		lu_debug("\n");
-	}
-
 	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec rec)
 	{
 		lu_user_assert(s_mem, "S_Mem is NULL");
@@ -83,13 +60,10 @@
 		for (y = 0; y < self->cells_h; y++)
 			for(x = 0; x < self->cells_w; x++)
 			{
-				cell = s_cell_create(mem, self, x, y);
+				cell = s_cell_create(mem, self, &self->v_conf, x, y);
 				lu_user_assert(cell, "Cannot allocate s_col");
 				s_rec_s_cell_set(self, x, y, cell);
 			}
-
-
-		s_rec_debug_print(self);
 
 		return self;
 	}

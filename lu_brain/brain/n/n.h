@@ -19,6 +19,11 @@
 		lu_value 				val;
 	};
 
+	struct n_time {
+		n_neu_ix				neu;
+		lu_size 				val;
+	};
+
 	struct n_neu {
 		n_v_lin_ix 				p_l; 		
 		lu_value 				p_count;

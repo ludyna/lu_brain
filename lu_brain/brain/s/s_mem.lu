@@ -20,9 +20,6 @@
 		self->brain 		= brain;
 		self->s_recs 		= arr_create(mem, arr_count(brain->recs));
 
-		// musymo stvoryty spochatku 
-		self->n_mem 		= n_mem_create(self);
-
 		Lu_Rec rec;	
 		S_Rec s_rec;
 		for(lu_size i = 0; i < arr_size(self->s_recs); i++)

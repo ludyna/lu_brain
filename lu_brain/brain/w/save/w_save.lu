@@ -99,8 +99,6 @@
 		lu_size x, y, j, dx, dy;
 		S_Cell s_cell = NULL;
 
-		s_rec_debug_print(s_rec); 
-
 		lu_value v;
 
 		if (block_i == 0) 

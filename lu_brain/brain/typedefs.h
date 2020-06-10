@@ -15,11 +15,10 @@
 // S
 
 	enum s_type {
-		S_MEM, 
-		S_REC, 
-		S_COL, 
-		S_NEU,
-		S_A_NEU
+		ST_CELL, 
+		ST_COL, 
+		ST_NEU,
+		ST_A_NEU
 	};
 
 	typedef lu_size s_neu_ix;
