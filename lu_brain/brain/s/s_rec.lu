@@ -41,19 +41,24 @@
 			self->v_conf.steps[i] = (lu_value)i * self->v_conf.step;
 
 		///////////////////////////////
-		// cells
+		// v_cells
 
 		self->cells_w 		= rec->width;
 		self->cells_h		= rec->height;
 
-		self->cells = (S_Cell*) mem_alloc(
+		self->v_cells = (S_Cell*) mem_alloc(
 			mem, 
 			sizeof(S_Cell) * self->cells_w * self->cells_h 
 		);
+		lu_user_assert(self->v_cells, "Cannot allocate v_cells");
 
-		lu_user_assert(self->cells, "Cannot allocate cells");
+		self->p_cells = (S_Cell*) mem_alloc(
+			mem, 
+			sizeof(S_Cell) * self->cells_w * self->cells_h 
+		);
+		lu_user_assert(self->p_cells, "Cannot allocate p_cells");
 
-		// stvoryty cells
+		// stvoryty v_cells
 		lu_size x, y;
 		S_Cell cell;
 
@@ -61,8 +66,12 @@
 			for(x = 0; x < self->cells_w; x++)
 			{
 				cell = s_cell_create(mem, self, &self->v_conf, x, y);
-				lu_user_assert(cell, "Cannot allocate s_col");
-				s_rec_s_cell_set(self, x, y, cell);
+				lu_user_assert(cell, "Cannot allocate v cell");
+				s_rec_v_cell_set(self, x, y, cell);
+
+				cell = s_cell_create(mem, self, &self->p_conf, x, y);
+				lu_user_assert(cell, "Cannot allocate p cell");
+				s_rec_p_cell_set(self, x, y, cell);
 			}
 
 		return self;

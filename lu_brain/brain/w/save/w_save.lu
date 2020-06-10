@@ -114,7 +114,7 @@
 		for (y = 0; y < s_rec->cells_h; y++)
 			for (x = 0; x < s_rec->cells_w; x++)
 			{
-				s_cell = s_rec_s_cell_get(s_rec, x, y);
+				s_cell = s_rec_v_cell_get(s_rec, x, y);
 
 				// lu_debug("\n s_cell (%d, %d)", x, y);
 				// lu_user_assert_void(s_cell, "S_Col is NULL");
@@ -188,9 +188,9 @@
 
 				// if ((vpsum / val_comp_size) >= opts->contrast)
 				// {
-				// 	p_n_col		= s_rec_s_cell_get(s_rec, p_w_col->x, p_w_col->y);
-				// 	c_n_col1 	= s_rec_s_cell_get(s_rec, c_w_col1->x, c_w_col1->y);
-				// 	c_n_col2 	= s_rec_s_cell_get(s_rec, c_w_col2->x, c_w_col2->y);
+				// 	p_n_col		= s_rec_v_cell_get(s_rec, p_w_col->x, p_w_col->y);
+				// 	c_n_col1 	= s_rec_v_cell_get(s_rec, c_w_col1->x, c_w_col1->y);
+				// 	c_n_col2 	= s_rec_v_cell_get(s_rec, c_w_col2->x, c_w_col2->y);
 
 
 				// 	//n_ent = s_col_n_get(s_cell, value);

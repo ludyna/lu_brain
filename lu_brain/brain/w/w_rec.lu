@@ -47,7 +47,7 @@
 		// for(y = 0; y < self->w_cols_h; y++)
 		// 	for(x = 0; x < self->w_cols_w; x++)
 		// 	{
-		// 		s_col = s_rec_s_cell_get(s_rec, x, y);
+		// 		s_col = s_rec_v_cell_get(s_rec, x, y);
 		// 		if (!s_col) continue;
 
 		// 		W_Col col = w_col_create(mem, self, s_col);

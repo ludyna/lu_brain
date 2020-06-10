@@ -91,9 +91,11 @@
 
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
-		S_Cell* 				cells;	
+		
+		S_Cell* 				v_cells;	
+		S_Cell* 				p_cells;
 
-		// Ci dani spilni dlia vsih cells i s_col
+		// Ci dani spilni dlia vsih v_cells i s_col
 		// i odnakovi dlia znachen i perepadiv
 		lu_size 				component_size; 
 
@@ -103,8 +105,10 @@
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
 
-	static inline void s_rec_s_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->cells[y * self->cells_w + x] = s_cell; }
-	static inline S_Cell s_rec_s_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[y * self->cells_w + x]; }
+	static inline void s_rec_v_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->v_cells[y * self->cells_w + x] = s_cell; }
+	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->v_cells[y * self->cells_w + x]; }
+	static inline void s_rec_p_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->p_cells[y * self->cells_w + x] = s_cell; }
+	static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->p_cells[y * self->cells_w + x]; }
 
 	struct s_mem {
 		Lu_Brain 				brain;

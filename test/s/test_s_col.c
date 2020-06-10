@@ -62,7 +62,7 @@ void test_s_col1and2(void)
 	s_rec = s_mem_s_rec_get(s_mem, 0);
 	TEST_ASSERT(s_rec);
 
-	s_cell = s_rec_s_cell_get(s_rec, 0, 0);
+	s_cell = s_rec_v_cell_get(s_rec, 0, 0);
 	TEST_ASSERT(s_cell);
 
 	s_col1 = s_cell_s_col_get(s_cell, 0);
@@ -71,7 +71,7 @@ void test_s_col1and2(void)
 	s_rec = s_mem_s_rec_get(s_mem, 1);
 	TEST_ASSERT(s_rec);
 
-	s_cell = s_rec_s_cell_get(s_rec, 0, 0);
+	s_cell = s_rec_v_cell_get(s_rec, 0, 0);
 	TEST_ASSERT(s_cell);
 
 	s_col2 = s_cell_s_col_get(s_cell, 0);
