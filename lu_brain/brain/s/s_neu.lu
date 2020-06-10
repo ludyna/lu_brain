@@ -1,0 +1,18 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Create
+
+	static S_Neu s_neu_create(Mem mem, lu_size l, lu_size x, lu_size y)
+	{
+		lu_user_assert(mem, "Mem is NULL");
+		lu_user_assert(l > 0, "S_Neu on wrong layer");
+
+		S_Neu self 		= (S_Neu) mem_alloc(mem, sizeof(struct s_neu));
+
+		s_base_init(&self->super, SNT_NEU, l, x, y);
+
+		return self;
+	}

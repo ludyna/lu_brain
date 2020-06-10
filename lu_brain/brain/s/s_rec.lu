@@ -100,12 +100,16 @@
 		}
 
 		self->neus_size *= 2;
+		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->neus_size);
+		lu_user_assert(self->neus, "Cannot allocate neus");
 
 		//lu_debug("\n YYYYYYYYYYYYYYYYYYYYYYYYYYY w = %d, h = %d, ns= %d", self->cells_w, self->cells_h, self->neus_size);
 
 		w = self->cells_w - 1;
 		h = self->cells_h - 1;
 		lu_size layer_ix = 0;
+		s_neu_ix neu_ix = 0;
+		S_Layer layer;
 		while (w > 0 && h > 0)
 		{
 			++layer_ix; 
@@ -115,10 +119,34 @@
 			self->v_layers[layer_ix] = s_layer_create(mem, self->cells_w, self->cells_h, true);
 			lu_user_assert(self->v_layers[layer_ix], "Cannot create S_Layer");
 
-			
+			layer = self->v_layers[layer_ix];
+			for (y = 0; y < h; y++)
+				for (x = 0; x < w; x++)
+				{
+					self->neus[neu_ix] = s_neu_create(mem, layer_ix, x, y);
+					lu_user_assert(self->neus[neu_ix], "Cannot create S_Neu");
+
+					s_layer_neu_set(layer, x, y, neu_ix);
+
+					++neu_ix;
+				}
+
 
 			self->p_layers[layer_ix] = s_layer_create(mem, self->cells_w, self->cells_h, true);
 			lu_user_assert(self->p_layers[layer_ix], "Cannot create S_Layer");
+
+			layer = self->p_layers[layer_ix];
+			for (y = 0; y < h; y++)
+				for (x = 0; x < w; x++)
+				{
+					self->neus[neu_ix] = s_neu_create(mem, layer_ix, x, y);
+					lu_user_assert(self->neus[neu_ix], "Cannot create S_Neu");
+
+					s_layer_neu_set(layer, x, y, neu_ix);
+
+					++neu_ix;
+				}
+
 		} 
 
 		return self;

@@ -36,7 +36,9 @@
 
 		enum s_net_type 		c_type;
 		s_neu_ix 				c[4];
-	};
+	}; 
+
+	static S_Neu s_neu_create(Mem mem, lu_size l, lu_size x, lu_size y);
 
 	// p or v cell
 	struct s_cell {
