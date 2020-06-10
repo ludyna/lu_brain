@@ -19,16 +19,16 @@
 
 		lu_user_assert_void(brain->mem_perm, "Brain mem is NULL");
 
-		Arr s_recs = brain->s_mem->s_recs;
+		Arr recs = brain->s_mem->recs;
 
-		lu_user_assert_void(s_recs, "Brain s_mem s_recs is NULL");
+		lu_user_assert_void(recs, "Brain s_mem recs is NULL");
 
-		self->w_recs = arr_create(brain->mem_perm, arr_size(self->s_mem->s_recs));
+		self->w_recs = arr_create(brain->mem_perm, arr_size(self->s_mem->recs));
 
 		S_Rec s_rec;
 		W_Rec w_rec;
 
-		for(lu_size i = 0; i < arr_count(s_recs); i++)
+		for(lu_size i = 0; i < arr_count(recs); i++)
 		{
 			s_rec = s_mem_s_rec_get(brain->s_mem, i);
 			lu_user_assert_void(s_rec, "S_Rec is NULL");

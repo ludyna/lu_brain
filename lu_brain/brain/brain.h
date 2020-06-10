@@ -53,6 +53,7 @@
 		Gate 			gate;
 
 		S_Mem 			s_mem;
+		N_Mem 			n_mem;
 	};	
 
 

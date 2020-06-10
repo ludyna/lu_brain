@@ -19,10 +19,10 @@
 
 	static inline S_Base s_base_init(S_Base self, enum s_type type, lu_size l, lu_size x, lu_size y)
 	{
-		self->type 		= type;
-		self->l 		= l;
-		self->x 		= x;
-		self->y 		= y;
+		self->type 				= type;
+		self->l 				= l;
+		self->x 				= x;
+		self->y 				= y;
 
 		return self;
 	}
@@ -109,12 +109,12 @@
 	struct s_mem {
 		Lu_Brain 				brain;
 
-		Arr 					s_recs;
+		Arr 					recs;
 	};
 	
 	static S_Mem s_mem_create(Lu_Brain brain);
 
 	//static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col);
-	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->s_recs, indx); }
+	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->recs, indx); }
 
 #endif // _LU_S_H

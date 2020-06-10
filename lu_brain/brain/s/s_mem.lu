@@ -18,11 +18,11 @@
 		lu_user_assert(self, "Cannot allocate S_Mem");
 
 		self->brain 		= brain;
-		self->s_recs 		= arr_create(mem, arr_count(brain->recs));
+		self->recs 			= arr_create(mem, arr_count(brain->recs));
 
 		Lu_Rec rec;	
 		S_Rec s_rec;
-		for(lu_size i = 0; i < arr_size(self->s_recs); i++)
+		for(lu_size i = 0; i < arr_size(self->recs); i++)
 		{
 			rec = (Lu_Rec) arr_get(brain->recs, i);
 
@@ -30,7 +30,7 @@
 
 			lu_user_assert(s_rec, "Cannot create s_rec");
 
-			arr_set(self->s_recs, i, s_rec);
+			arr_set(self->recs, i, s_rec);
 		}
 
 		return self;
