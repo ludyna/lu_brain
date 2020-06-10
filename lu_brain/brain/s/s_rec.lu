@@ -17,7 +17,7 @@
 		S_Rec self = (S_Rec) mem_alloc(mem, sizeof(struct s_rec));
 		lu_user_assert(self, "Cannot allocate S_Rec");
 
-		self->s_mem				= s_mem;
+		self->mem				= s_mem;
 		self->rec 				= rec;
 		self->id 				= rec->id;
 		self->component_size 	= rec->component_size;

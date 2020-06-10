@@ -82,7 +82,7 @@
 
 	struct s_rec {
 		// vlasnyk
-		S_Mem 					s_mem; 			
+		S_Mem 					mem; 			
 
 		// poviazanyy z rec
 		Lu_Rec 					rec;			
