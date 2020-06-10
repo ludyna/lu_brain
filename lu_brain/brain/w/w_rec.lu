@@ -32,8 +32,8 @@
 		lu_user_assert(self, "Cannot allocate W_Rec");
 
 		self->component_size 	= s_rec->component_size;
-		self->w_cols_w 			= s_rec->s_cells_w;
-		self->w_cols_h 			= s_rec->s_cells_h;
+		self->w_cols_w 			= s_rec->cells_w;
+		self->w_cols_h 			= s_rec->cells_h;
 		self->w_cols 			= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
 		lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
 

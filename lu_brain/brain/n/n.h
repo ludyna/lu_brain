@@ -9,35 +9,45 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Neu
 
+	struct n_name {
+		n_neu_ix 				neu;
+		lu_char 				name[255];
+	};	
+
+	struct n_val {
+		n_neu_ix 				neu;
+		lu_value 				val;
+	};
+
 	struct n_neu {
-		v_lin_ix 				p_l; 		
+		n_v_lin_ix 				p_l; 		
 		lu_value 				p_count;
 
-		v_lin_ix 				c_l;
+		n_v_lin_ix 				c_l;
 
-		h_lin_ix 				p;
-		h_lin_ix 				c;
+		n_h_lin_ix 				p;
+		n_h_lin_ix 				c;
 
 		enum n_com_type			com_type;
-		com_ix 					com;		
+		n_com_ix 				com;		
 	};
 
 	struct n_h_lin {
-		neu_ix	 				p;			
-		neu_ix					c;
+		n_neu_ix	 			p;			
+		n_neu_ix				c;
 	};
 
 	struct n_v_lin {
-		neu_ix	 				p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
-		neu_ix					c;
+		n_neu_ix	 			p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		n_neu_ix				c;
 
 		// ce dva spysky
 		// odyn z storony p, inshyy z storony c
-		v_lin_ix	 			p_p;
-		v_lin_ix	 			p_n;
+		n_v_lin_ix	 			p_p;
+		n_v_lin_ix	 			p_n;
 
-		v_lin_ix	 			c_p; 		// p i n potribni u vypadku yakshou my vydaliayemo zviazok?
-		v_lin_ix				c_n; 		// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys p ale my neznayemo n
+		n_v_lin_ix	 			c_p; 		// p i n potribni u vypadku yakshou my vydaliayemo zviazok?
+		n_v_lin_ix				c_n; 		// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys p ale my neznayemo n
 		 		   							// tomu naspravdi i p i n potribni
 	};
 

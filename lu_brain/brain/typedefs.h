@@ -12,14 +12,35 @@
 	typedef struct gate* 		Gate;
 
 ///////////////////////////////////////////////////////////////////////////////
+// S
+
+	enum s_type {
+		S_MEM, 
+		S_REC, 
+		S_COL, 
+		S_NEU,
+		S_A_NEU
+	};
+
+	typedef lu_size s_neu_ix;
+
+ 	typedef struct s_base* 		S_Base;
+ 	typedef struct s_neu* 		S_Neu;
+ 	typedef struct s_col_conf*	S_Col_Conf;
+	typedef struct s_col* 		S_Col;
+	typedef struct s_cell* 		S_Cell;
+	typedef struct s_rec*		S_Rec;
+	typedef struct s_mem* 		S_Mem;
+
+///////////////////////////////////////////////////////////////////////////////
 // N
 
 	#define IX_NULL 0
 
-	typedef lu_size h_lin_ix;
-	typedef lu_size v_lin_ix;
-	typedef lu_size neu_ix;
-	typedef lu_size com_ix;
+	typedef lu_size n_h_lin_ix;
+	typedef lu_size n_v_lin_ix;
+	typedef lu_size n_neu_ix;
+	typedef lu_size n_com_ix;
 
 	enum n_com_type {
 		NCI_VALUE = 0,
@@ -29,28 +50,10 @@
 	};
 
 	typedef struct n_neu*		N_Neu;
-	typedef struct n_lin* 		N_Lin;
+	typedef struct n_v_lin* 	N_V_Lin;
+	typedef struct n_h_lin* 	N_H_Lin;
 	typedef struct n_mem* 		N_Mem;
 
-///////////////////////////////////////////////////////////////////////////////
-// S
-
-	enum s_type {
-		S_MEM, 
-		S_REC, 
-		S_COL, 
-		S_CB,
-		S_NAME
-	};
-
-	typedef struct s_layer* 	S_Layer;
- 	typedef struct s_base* 		S_Base;
- 	typedef struct s_col_conf*	S_Col_Conf;
-	typedef struct s_col* 		S_Col;
-	typedef struct s_cell* 		S_Cell;
-	typedef struct s_cb* 		S_Cb;
-	typedef struct s_rec*		S_Rec;
-	typedef struct s_mem* 		S_Mem;
 
 ///////////////////////////////////////////////////////////////////////////////
 // W

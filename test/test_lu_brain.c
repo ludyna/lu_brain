@@ -147,7 +147,7 @@ void test_lu_story(void)
 void test_lu_brain_basics(void) 
 { 
 	lu_debug("\n n_neu: %lu", sizeof(struct n_neu));
-	lu_debug("\n n_lin: %lu", sizeof(struct n_lin));
+	lu_debug("\n n_v_lin: %lu", sizeof(struct n_v_lin));
 
 	/////////////////////////////////////////////////////////
 	// Save 

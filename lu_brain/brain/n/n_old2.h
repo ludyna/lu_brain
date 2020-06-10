@@ -26,7 +26,7 @@
 
 	struct n_lin {
 		enum n_lin_type  c_type;
-		neu_ix 			 c;
+		n_neu_ix 			 c;
 
 
 
@@ -63,8 +63,8 @@
 	};
 
 	struct n_p_lin {
-		neu_ix	 				p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
-		neu_ix					c;
+		n_neu_ix	 				p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		n_neu_ix					c;
 
 		lin_ix	 				p_p; 		// c_p, c_n ne potribni, bo my znayemo yaki i skily batkiv v child ye 
 		lin_ix	 				p_n;		// deyaki neu budut maty neubmezhenu kilkist batkiv (name neu), tomu tam krashce vykorystov 
@@ -90,8 +90,8 @@
 
 	struct n_lin2 {
 		enum n_lin_type 		lin_type;
-		neu_ix	 				p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
-		neu_ix					c;
+		n_neu_ix	 				p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		n_neu_ix					c;
 
 		// ce dva spysky
 		// odyn z storony p, inshyy z storony c
