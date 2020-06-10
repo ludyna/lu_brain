@@ -22,13 +22,14 @@
 
 	typedef lu_size s_neu_ix;
 
- 	typedef struct s_base* 		S_Base;
+ 	typedef struct s_net_base* 	S_Net_Base;
  	typedef struct s_neu* 		S_Neu;
 	typedef struct s_cell* 		S_Cell;
 	
 	// Helpers
 	typedef struct s_col_conf*	S_Col_Conf;
-	typedef struct s_col* 		S_Col;
+	typedef struct s_col* 		S_Col; 
+	typedef struct s_layer* 	S_Layer;
 	typedef struct s_rec*		S_Rec;
 	typedef struct s_mem* 		S_Mem;
 

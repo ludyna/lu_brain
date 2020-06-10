@@ -9,7 +9,7 @@
 // S Net
 //
 
-	struct s_base {
+	struct s_net_base {
 		enum s_net_type    		type;
 
 		lu_size 				l;
@@ -17,7 +17,7 @@
 		lu_size 				y;
 	};
 
-	static inline S_Base s_base_init(S_Base self, enum s_net_type type, lu_size l, lu_size x, lu_size y)
+	static inline S_Net_Base s_base_init(S_Net_Base self, enum s_net_type type, lu_size l, lu_size x, lu_size y)
 	{
 		self->type 				= type;
 		self->l 				= l;
@@ -29,7 +29,7 @@
 
 	// neu i a_neu
 	struct s_neu {
-		struct s_base 			super;
+		struct s_net_base 			super;
 
 		enum s_net_type			p_type;
 		s_neu_ix 				p[4];
@@ -40,7 +40,7 @@
 
 	// p or v cell
 	struct s_cell {
-		struct s_base 			super;
+		struct s_net_base 			super;
 
 		S_Rec 					rec;
 		
@@ -104,15 +104,14 @@
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
 		
-		S_Cell* 				v_cells;	
-		S_Cell* 				p_cells;
-
-		// Ci dani spilni dlia vsih v_cells i s_col
-		// i odnakovi dlia znachen i perepadiv
 		lu_size 				component_size; 
-
 		struct s_col_conf 		v_conf;
+		S_Cell* 				v_cells;	
+		S_Layer* 				v_layers;
+
 		struct s_col_conf 		p_conf;
+		S_Cell* 				p_cells;
+		S_Layer* 				p_layers;
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);

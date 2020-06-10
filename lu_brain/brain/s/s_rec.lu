@@ -76,16 +76,11 @@
 				s_rec_p_cell_set(self, x, y, cell);
 			}
 
-		// calculate what we need 
-		lu_size cell_count = rec->width * rec->height;
-		lu_size v_col_count = self->component_size * cell_count;
-		lu_size p_col_count = cell_count;
-
 		lu_size neu_count = 0;
 
 		x = rec->width;
 		y = rec->height;
-		
+
 		while (x != 1 && y != 1)
 		{
 			if (x > 1) --x;

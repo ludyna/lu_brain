@@ -82,7 +82,7 @@
 	// "generic" zviazky pracuvaty budut, yaksho link na structurno-prostorovu info 
 	struct n_ent {
 		// spilni dlia vsih neu dani
-		// S_Base 					s_base;
+		// S_Net_Base 					s_net_base;
 		// lu_value 				count;  		
 
 		// lu_size 				l_p_lin_ent;
@@ -95,7 +95,7 @@
 		// mozhna zrobyty dvi componenty i vsi dani tudy pomistity
 		// napryklad comp1 ce zavzhdy typ zviazku (p i c, tilky p, tilky c i vidpovidno count yaksho treba)
 
-		// druha componenta ce specyfichni dani like name (s_base skorishe vsioho ne treba bude, tam bude shos zaviazane z w_)
+		// druha componenta ce specyfichni dani like name (s_net_base skorishe vsioho ne treba bude, tam bude shos zaviazane z w_)
 
 		// vzhe todi krashce 3 comp,
 		// 1) ce linky z p + count
