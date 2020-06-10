@@ -60,6 +60,12 @@
 		);
 		lu_user_assert(self->p_cells, "Cannot allocate p_cells");
 
+		self->layers_size = self->cells_w > self->cells_h ? self->cells_w : self->cells_h;
+		self->v_layers = (S_Layer*) mem_alloc(mem, sizeof(S_Layer) * self->layers_size);
+		lu_user_assert(self->v_layers, "Cannot allocate v layers");
+		self->p_layers = (S_Layer*) mem_alloc(mem, sizeof(S_Layer) * self->layers_size);
+		lu_user_assert(self->v_layers, "Cannot allocate p layers");
+
 		// stvoryty v_cells
 		lu_size x, y;
 		S_Cell cell;
@@ -81,12 +87,7 @@
 		x = rec->width;
 		y = rec->height;
 
-		self->layers_size = x > y ? x : y;
-		self->v_layers = (S_Layer*) mem_alloc(mem, sizeof(S_Layer) * self->layers_size);
-		lu_user_assert(self->v_layers, "Cannot allocate v layers");
-		self->p_layers = (S_Layer*) mem_alloc(mem, sizeof(S_Layer) * self->layers_size);
-		lu_user_assert(self->v_layers, "Cannot allocate p layers");
-
+		lu_size layer_ix = 0;
 		while (x > 0 && y > 0)
 		{
 			if (x > 0) --x;
