@@ -88,8 +88,11 @@
 		lu_size 				w;
 		lu_size 				h;
 
+		lu_size 				neus_size;
 		s_neu_ix* 				neus;
 	};
+
+	S_Layer s_layer_create(Mem mem, lu_size w, lu_size h, lu_size neus_size);
 
 	struct s_rec {
 		// vlasnyk

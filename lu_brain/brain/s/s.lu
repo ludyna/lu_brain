@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Includes
 
+	#include "s_layer.lu"
  	#include "s_col_conf.lu"
 	#include "s_col.lu"
 	#include "s_cell.lu"

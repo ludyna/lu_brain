@@ -82,10 +82,13 @@
 				s_rec_p_cell_set(self, x, y, cell);
 			}
 
+		self->v_layers[0] = s_layer_create(mem, self->cells_w, self->cells_h, 0);
+		self->p_layers[0] = s_layer_create(mem, self->cells_w, self->cells_h, 0);
+
 		lu_size neu_count = 0;
 
-		x = rec->width;
-		y = rec->height;
+		x = rec->width - 1;
+		y = rec->height - 1;
 
 		lu_size layer_ix = 0;
 		while (x > 0 && y > 0)

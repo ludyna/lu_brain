@@ -1,0 +1,30 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Create and destroy
+
+	S_Layer s_layer_create(Mem mem, lu_size w, lu_size h, lu_size neus_size)
+	{
+		lu_user_assert(mem, "Mem is NULL");
+		lu_user_assert(w > 0, "Width should be greater than 0"); 
+		lu_user_assert(h > 0, "Height should be greater than 0");
+
+		S_Layer self 		= (S_Layer) mem_alloc(mem, sizeof(struct s_layer));
+		lu_user_assert(self, "Cannot allocate S_Layer");
+
+		self->w 		= w;
+		self->h 		= h;
+		self->neus_size = neus_size;
+
+		if (self->neus_size == 0)
+			self->neus = NULL;
+		else
+		{ 
+			self->neus = (s_neu_ix*) mem_alloc(mem, sizeof(s_neu_ix) * self->neus_size);
+			lu_user_assert(self->neus, "Cannot allocate S_Layer neus");
+		}
+
+		return self;
+	}
