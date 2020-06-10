@@ -45,8 +45,8 @@
 		///////////////////////////////
 		// v_cells
 
-		self->cells_w 		= rec->width;
-		self->cells_h		= rec->height;
+		self->cells_w 			= rec->width;
+		self->cells_h			= rec->height;
 
 		self->v_cells = (S_Cell*) mem_alloc(
 			mem, 
@@ -66,7 +66,6 @@
 		self->p_layers = (S_Layer*) mem_alloc(mem, sizeof(S_Layer) * self->layers_size);
 		lu_user_assert(self->v_layers, "Cannot allocate p layers");
 
-		// stvoryty v_cells
 		lu_size x, y;
 		S_Cell cell;
 
@@ -82,21 +81,44 @@
 				s_rec_p_cell_set(self, x, y, cell);
 			}
 
-		self->v_layers[0] = s_layer_create(mem, self->cells_w, self->cells_h, 0);
-		self->p_layers[0] = s_layer_create(mem, self->cells_w, self->cells_h, 0);
+		self->v_layers[0] = s_layer_create(mem, self->cells_w, self->cells_h, false);
+		lu_user_assert(self->v_layers[0], "Cannot create S_Layer");
+		self->p_layers[0] = s_layer_create(mem, self->cells_w, self->cells_h, false);
+		lu_user_assert(self->p_layers[0], "Cannot create S_Layer");
 
-		lu_size neu_count = 0;
+		lu_size w, h;
+		w = self->cells_w - 1;
+		h = self->cells_h - 1;
 
-		x = rec->width - 1;
-		y = rec->height - 1;
+		self->neus_size = 0;
 
-		lu_size layer_ix = 0;
-		while (x > 0 && y > 0)
+		while (w > 0 && h > 0)
 		{
-			if (x > 0) --x;
-			if (y > 0) --y;
+			self->neus_size += w * h;
+			if (w > 0) --w;
+			if (h > 0) --h;
+		}
+
+		self->neus_size *= 2;
+
+		//lu_debug("\n YYYYYYYYYYYYYYYYYYYYYYYYYYY w = %d, h = %d, ns= %d", self->cells_w, self->cells_h, self->neus_size);
+
+		w = self->cells_w - 1;
+		h = self->cells_h - 1;
+		lu_size layer_ix = 0;
+		while (w > 0 && h > 0)
+		{
+			++layer_ix; 
+			if (w > 0) --w;
+			if (h > 0) --h;
+
+			self->v_layers[layer_ix] = s_layer_create(mem, self->cells_w, self->cells_h, true);
+			lu_user_assert(self->v_layers[layer_ix], "Cannot create S_Layer");
 
 			
+
+			self->p_layers[layer_ix] = s_layer_create(mem, self->cells_w, self->cells_h, true);
+			lu_user_assert(self->p_layers[layer_ix], "Cannot create S_Layer");
 		} 
 
 		return self;

@@ -84,15 +84,15 @@
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
 
 	struct s_layer {
-
 		lu_size 				w;
 		lu_size 				h;
 
-		lu_size 				neus_size;
 		s_neu_ix* 				neus;
 	};
 
-	S_Layer s_layer_create(Mem mem, lu_size w, lu_size h, lu_size neus_size);
+	static S_Layer s_layer_create(Mem mem, lu_size w, lu_size h, bool allocate_neus);
+	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, s_neu_ix val) { self->neus[y * self->w + x] = val; }
+	static inline s_neu_ix s_layer_neu_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
 
 	struct s_rec {
 		// vlasnyk
@@ -105,6 +105,7 @@
 
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
+		lu_size 				neus_size;
 		S_Neu* 					neus;
 		lu_size 				layers_size;
 		
