@@ -10,7 +10,7 @@
 //
 
 	struct s_base {
-		enum s_net_type 			type;
+		enum s_net_type    		type;
 
 		lu_size 				l;
 		lu_size 				x;
@@ -31,12 +31,28 @@
 	struct s_neu {
 		struct s_base 			super;
 
-		enum s_net_type				p_type;
+		enum s_net_type			p_type;
 		s_neu_ix 				p[4];
 
-		enum s_net_type 			c_type;
+		enum s_net_type 		c_type;
 		s_neu_ix 				c[4];
 	};
+
+	// p or v cell
+	struct s_cell {
+		struct s_base 			super;
+
+		S_Rec 					rec;
+		
+		Arr 					cols;    	
+	};
+
+	static S_Cell s_cell_create(Mem mem, S_Rec rec, S_Col_Conf conf, lu_size x, lu_size y);
+	static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
+
+///////////////////////////////////////////////////////////////////////////////
+// S Dopomizhni
+//
 
 	struct s_col_conf {
 		lu_value 				orig_min;
@@ -55,21 +71,6 @@
 	static inline lu_value s_col_conf_calc_sig(S_Col_Conf self, lu_size val_step_i, lu_value val);
 	static inline lu_value s_col_conf_step_norm_dist(S_Col_Conf self);
 
-	// p or v cell
-	struct s_cell {
-		struct s_base 			super;
-
-		S_Rec 					rec;
-		
-		Arr 					cols;    	
-	};
-
-	static S_Cell s_cell_create(Mem mem, S_Rec rec, S_Col_Conf conf, lu_size x, lu_size y);
-	static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
-
-///////////////////////////////////////////////////////////////////////////////
-// S Helpers
-//
 	struct s_col {
 		S_Cell 					cell;
 
