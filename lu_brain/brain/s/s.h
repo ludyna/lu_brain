@@ -29,7 +29,7 @@
 
 	// neu i a_neu
 	struct s_neu {
-		struct s_net_base 			super;
+		struct s_net_base 		super;
 
 		enum s_net_type			p_type;
 		s_neu_ix 				p[4];
@@ -40,7 +40,7 @@
 
 	// p or v cell
 	struct s_cell {
-		struct s_net_base 			super;
+		struct s_net_base 		super;
 
 		S_Rec 					rec;
 		
@@ -81,7 +81,6 @@
 	};
 
 	static inline S_Col s_col_create(Mem mem, S_Cell s_cell, S_Col_Conf s_col_conf);
-	// tilky w_save mozhe stvoruvaty neu (lock vseredyni cioho methoda yakyy lokaye tilky dlia cioho input_val - tochnishe val index)
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
 
 	struct s_layer {
@@ -103,6 +102,8 @@
 
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
+		S_Neu* 					neus;
+		lu_size 				layers_size;
 		
 		lu_size 				component_size; 
 		struct s_col_conf 		v_conf;
@@ -128,8 +129,6 @@
 	};
 	
 	static S_Mem s_mem_create(Lu_Brain brain);
-
-	//static N_Col s_mem_n_col_create(S_Mem self, S_Col s_col);
 	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->recs, indx); }
 
 #endif // _LU_S_H

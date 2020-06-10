@@ -81,10 +81,16 @@
 		x = rec->width;
 		y = rec->height;
 
-		while (x != 1 && y != 1)
+		self->layers_size = x > y ? x : y;
+		self->v_layers = (S_Layer*) mem_alloc(mem, sizeof(S_Layer) * self->layers_size);
+		lu_user_assert(self->v_layers, "Cannot allocate v layers");
+		self->p_layers = (S_Layer*) mem_alloc(mem, sizeof(S_Layer) * self->layers_size);
+		lu_user_assert(self->v_layers, "Cannot allocate p layers");
+
+		while (x > 0 && y > 0)
 		{
-			if (x > 1) --x;
-			if (y > 1) --y;
+			if (x > 0) --x;
+			if (y > 0) --y;
 
 			
 		} 
