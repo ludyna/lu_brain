@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Create
+// 
 
 	static S_Neu s_neu_create(Mem mem, lu_size l, lu_size x, lu_size y)
 	{
@@ -15,4 +15,26 @@
 		s_base_init(&self->super, SNT_NEU, l, x, y);
 
 		return self;
+	} 
+
+	static inline void s_neu_lin_set(s_neu_ix l[4], lu_size x, lu_size y, s_neu_ix val)
+	{
+		l[y * 2 + x] = val;
+	}
+
+	static void s_neu_connect(S_Neu neu, S_Layer* layers)
+	{
+		lu_user_assert_void(neu, "S_Neu is NULL");
+		lu_user_assert_void(layers, "S_Layer* is NULL");
+		lu_user_assert_void(neu->super.l > 0, "Wrong layer");
+
+		if (neu->super.l == 1)
+		{
+			neu->c_type = SNT_CELL;
+			//s_neu_lin_set(neu->c, 0, 0, 
+		}	
+		else 
+		{
+
+		}
 	}

@@ -24,6 +24,7 @@
 
  	typedef struct s_net_base* 	S_Net_Base;
  	typedef struct s_neu* 		S_Neu;
+ 	typedef struct s_a_neu* 	S_A_Neu;
 	typedef struct s_cell* 		S_Cell;
 	
 	// Helpers

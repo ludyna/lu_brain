@@ -39,17 +39,29 @@
 	}; 
 
 	static S_Neu s_neu_create(Mem mem, lu_size l, lu_size x, lu_size y);
+	static void s_neu_connect(S_Neu neu, S_Layer* layers);
+
+	struct s_a_neu {
+		struct s_net_base 		super;
+
+		enum s_net_type			p_type;
+		s_neu_ix 				p[2];
+
+		enum s_net_type 		c_type;
+		s_neu_ix 				c[2];
+	};
 
 	// p or v cell
 	struct s_cell {
 		struct s_net_base 		super;
-
-		S_Rec 					rec;
 		
 		Arr 					cols;    	
+
+		enum s_net_type 		c_type;
+		s_neu_ix 				c[4];
 	};
 
-	static S_Cell s_cell_create(Mem mem, S_Rec rec, S_Col_Conf conf, lu_size x, lu_size y);
+	static S_Cell s_cell_create(Mem mem, S_Col_Conf conf, lu_size x, lu_size y);
 	static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -57,6 +69,7 @@
 //
 
 	struct s_col_conf {
+		lu_size 				component_size;
 		lu_value 				orig_min;
 		lu_value 				orig_max;
 		lu_value 				max;
@@ -67,6 +80,7 @@
 		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
+	static S_Col_Conf s_col_conf_init(S_Col_Conf, Mem mem, lu_size component_size, lu_value min, lu_value max, lu_size neu_size, lu_size nsc);
 	static inline lu_value s_col_conf_norm(S_Col_Conf self, lu_value request);
 	static inline lu_size s_col_conf_indx(S_Col_Conf self, lu_value val);
 	static inline struct lu_size_range s_col_conf_indx_range(S_Col_Conf self, lu_value val);
@@ -86,15 +100,19 @@
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
 
 	struct s_layer {
+		// vlasnyk
+		S_Rec 					rec;
+
 		lu_size 				w;
 		lu_size 				h;
 
 		s_neu_ix* 				neus;
 	};
 
-	static S_Layer s_layer_create(Mem mem, lu_size w, lu_size h, bool allocate_neus);
-	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, s_neu_ix val) { self->neus[y * self->w + x] = val; }
-	static inline s_neu_ix s_layer_neu_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
+	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size w, lu_size h, bool allocate_neus);
+	static inline void s_layer_neu_ix_set(S_Layer self, lu_size x, lu_size y, s_neu_ix val) { self->neus[y * self->w + x] = val; }
+	static inline s_neu_ix s_layer_neu_ix_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
+	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf);
 
 	struct s_rec {
 		// vlasnyk
@@ -107,26 +125,28 @@
 
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
+		lu_size 				cells_size;
+		lu_size 				cells_count;
+		S_Cell* 				cells;	
+
 		lu_size 				neus_size;
 		S_Neu* 					neus;
 		lu_size 				layers_size;
 		
-		lu_size 				component_size; 
-		struct s_col_conf 		v_conf;
-		S_Cell* 				v_cells;	
+		struct s_col_conf 		v_conf;	
 		S_Layer* 				v_layers;
 
 		struct s_col_conf 		p_conf;
-		S_Cell* 				p_cells;
 		S_Layer* 				p_layers;
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
-
-	static inline void s_rec_v_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->v_cells[y * self->cells_w + x] = s_cell; }
-	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->v_cells[y * self->cells_w + x]; }
-	static inline void s_rec_p_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->p_cells[y * self->cells_w + x] = s_cell; }
-	static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->p_cells[y * self->cells_w + x]; }
+ 
+ 	// static inline s_neu_ix s_rec_cell_ix(S_Rec self, lu_size x, lu_size y) { return y * self->cells_w + x; }
+	//static inline void s_rec_v_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) {  s_layer_neus_cell; }
+	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->v_layers[0], x, y)]; }
+	//static inline void s_rec_p_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) { self->p_cells[s_rec_cell_ix(self, x, y)] = s_cell; }
+	static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->p_layers[0], x, y)]; }
 
 	struct s_mem {
 		Lu_Brain 				brain;

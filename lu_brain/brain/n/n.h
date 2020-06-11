@@ -9,6 +9,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N Net
 
+// serializaciya bude duzhe prostoyu, 
+// treba prosto zberehty N Net ta parametry za yakymy buv stvorenyy brain
+// vse reshtu perestvoruyetsia. Tak samo perevydilenia pamiati (z mozhlyvym peremishcheniam v inshe misce).
+
 	struct n_name {
 		n_neu_ix 				neu;
 		lu_char 				name[255];

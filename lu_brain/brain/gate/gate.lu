@@ -71,6 +71,7 @@
 			lu_user_assert(w_restore, "Unable to create restore wave");
 			arr_set(self->restore_waves, i, w_restore); 
 		}
+
 		return self;
 	}
 
@@ -79,7 +80,7 @@
  		// simplified atm
  		W_Save w_save = arr_get(self->save_waves, 0);
 
- 		w_save_reset(w_save);
+ 		//w_save_reset(w_save);
 
  		return w_save;
  	}

@@ -31,18 +31,18 @@
 		W_Rec self = (W_Rec) mem_alloc(mem, sizeof(struct w_rec));
 		lu_user_assert(self, "Cannot allocate W_Rec");
 
-		self->component_size 	= s_rec->component_size;
-		self->w_cols_w 			= s_rec->cells_w;
-		self->w_cols_h 			= s_rec->cells_h;
-		self->w_cols 			= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
-		lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
+		// self->component_size 	= s_rec->component_size;
+		// self->w_cols_w 			= s_rec->cells_w;
+		// self->w_cols_h 			= s_rec->cells_h;
+		// self->w_cols 			= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
+		// lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
 
-		lu_size x, y;
-		S_Col s_col;
+		// lu_size x, y;
+		// S_Col s_col;
 
-		self->pers 		= arr_create(mem, s_rec->rec->width * s_rec->rec->height);
+		// self->pers 		= arr_create(mem, s_rec->rec->width * s_rec->rec->height);
 
-		lu_user_assert(self->pers, "Cannot allocate pers");
+		// lu_user_assert(self->pers, "Cannot allocate pers");
 
 		// for(y = 0; y < self->w_cols_h; y++)
 		// 	for(x = 0; x < self->w_cols_w; x++)

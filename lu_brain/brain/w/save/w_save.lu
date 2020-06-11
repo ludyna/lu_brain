@@ -50,15 +50,15 @@
 
 		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
 
-		wave_init(&self->super, gate);
+		//hwave_init(&self->super, gate);
 
-		lu_user_assert(self, "Unable to allocate W_Save");
+		// lu_user_assert(self, "Unable to allocate W_Save");
 
-		lu_user_assert(arr_count(brain->recs) > 0, "Lu_Brain has no recs");
+		// lu_user_assert(arr_count(brain->recs) > 0, "Lu_Brain has no recs");
 
-		self->fill_data = (lu_p_value*) mem_alloc(mem, sizeof(lu_p_value*) * arr_count(brain->recs));
+		// self->fill_data = (lu_p_value*) mem_alloc(mem, sizeof(lu_p_value*) * arr_count(brain->recs));
 
-		w_save_reset(self);
+		// w_save_reset(self);
 
 		return self;
 	}
@@ -75,62 +75,63 @@
 		lu_user_assert_void(s_rec->rec, "S_Rec rec is NULL");
 		lu_user_assert_void(data, "Data is NULL");
 
-		Lu_Wave wave 		= &self->super;
 
-		W_Rec w_rec 		= wave_w_rec_get(wave, s_rec->id);
-		lu_user_assert_void(w_rec, "W_Rec is NULL");
+		// Lu_Wave wave 		= &self->super;
 
-		// W_Col p_w_col 		= NULL;
-		// W_Col c_w_col1 		= NULL;
-		// W_Col c_w_col2 		= NULL;
+		// W_Rec w_rec 		= wave_w_rec_get(wave, s_rec->id);
+		// lu_user_assert_void(w_rec, "W_Rec is NULL");
 
-		// S_Col p_n_col		= NULL;
-		// S_Col c_n_col1  		= NULL;
-		// S_Col c_n_col2		= NULL;
+		// // W_Col p_w_col 		= NULL;
+		// // W_Col c_w_col1 		= NULL;
+		// // W_Col c_w_col2 		= NULL;
 
-		lu_size data_w 		= s_rec->rec->width;
-		lu_size data_h 		= s_rec->rec->height;
+		// // S_Col p_n_col		= NULL;
+		// // S_Col c_n_col1  		= NULL;
+		// // S_Col c_n_col2		= NULL;
 
-		lu_value val_comp_size = (lu_value) w_rec->component_size;
+		// lu_size data_w 		= s_rec->rec->width;
+		// lu_size data_h 		= s_rec->rec->height;
 
-		// ce ne zovsim pravylno, bo kozhna s_cell takozh mozhe maty t perep,
-		// tomu odnakovo treba proytysia po vsih 
+		// lu_value val_comp_size = (lu_value) w_rec->component_size;
 
-		lu_size x, y, j, dx, dy;
-		S_Cell s_cell = NULL;
+		// // ce ne zovsim pravylno, bo kozhna s_cell takozh mozhe maty t perep,
+		// // tomu odnakovo treba proytysia po vsih 
 
-		lu_value v;
+		// lu_size x, y, j, dx, dy;
+		// S_Cell s_cell = NULL;
 
-		if (block_i == 0) 
-		{
-			// zmin po chasu nema, tomu mo
-		}
+		// lu_value v;
 
-		// prohodymsia po vsih prostorovyh perepadah, obchysluyemo yih
-		// (yaksho block_i != 0 obchysluyemo chasovi perepady)
-		// paralelno formuyemo chetvirky dlia perepadiv (2 i 4)
-		// pochynayemo buduvaty piramidy dlia kozhnoyi hrupy chetvirok (yaksho v niy ye hocha b odyn neu)
+		// if (block_i == 0) 
+		// {
+		// 	// zmin po chasu nema, tomu mo
+		// }
 
-		for (y = 0; y < s_rec->cells_h; y++)
-			for (x = 0; x < s_rec->cells_w; x++)
-			{
-				s_cell = s_rec_v_cell_get(s_rec, x, y);
+		// // prohodymsia po vsih prostorovyh perepadah, obchysluyemo yih
+		// // (yaksho block_i != 0 obchysluyemo chasovi perepady)
+		// // paralelno formuyemo chetvirky dlia perepadiv (2 i 4)
+		// // pochynayemo buduvaty piramidy dlia kozhnoyi hrupy chetvirok (yaksho v niy ye hocha b odyn neu)
 
-				// lu_debug("\n s_cell (%d, %d)", x, y);
-				// lu_user_assert_void(s_cell, "S_Col is NULL");
+		// for (y = 0; y < s_rec->cells_h; y++)
+		// 	for (x = 0; x < s_rec->cells_w; x++)
+		// 	{
+		// 		// s_cell = s_rec_v_cell_get(s_rec, x, y);
 
-				if (s_cell == NULL) continue;
+		// 		// // lu_debug("\n s_cell (%d, %d)", x, y);
+		// 		// // lu_user_assert_void(s_cell, "S_Col is NULL");
 
-				// dx = s_cell->x;
-				// dy = s_cell->y;
+		// 		// if (s_cell == NULL) continue;
 
-				// for (j = 0; j < s_rec->component_size; j++)
-				// {
-				// 	v = lu_data_get(data, data_w, data_h, s_rec->component_size, dx, dy, j);
-				// }	
+		// 		// dx = s_cell->x;
+		// 		// dy = s_cell->y;
+
+		// 		// for (j = 0; j < s_rec->component_size; j++)
+		// 		// {
+		// 		// 	v = lu_data_get(data, data_w, data_h, s_rec->component_size, dx, dy, j);
+		// 		// }	
 
 				
-			} 
+		// 	} 
 
 
 		// for (y = 0; y < w_rec->w_cols_h; y++)

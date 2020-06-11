@@ -118,7 +118,10 @@
 
 
 	Lu_Wave lu_story_save_async(Lu_Story self, Lu_Save_Opts opts)
-	{
+	{ 
+		lu_debug("\n\nreturn NULL; %s:%d\n\n", __FILE__, __LINE__);
+		return NULL;
+
 		lu_user_assert(self, "Lu_Story should not be NULL");
 		lu_user_assert(opts, "Lu_Save_Opts is NULL");
 
@@ -182,6 +185,7 @@
 		// 			lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): NULL", rec_i, chan_i);
 		// 	}
 		// }
+
 
 		S_Rec s_rec;
 

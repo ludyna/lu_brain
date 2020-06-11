@@ -5,6 +5,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	static S_Col_Conf s_col_conf_init(S_Col_Conf self, Mem mem, lu_size component_size, lu_value min, lu_value max, lu_size neu_size, lu_size nsc)
+	{
+		self->component_size 	= component_size;
+		self->neu_size  		= neu_size; // value depth in indexes
+		self->orig_min 			= min;
+		self->orig_max 			= max;
+		self->max 				= self->orig_max - self->orig_min;
+		self->step 				= self->max / (lu_value) self->neu_size;
+		self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
+
+	 	// Kroky preobchysleni
+		self->steps 		= (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->neu_size);
+		lu_user_assert(self->steps, "Cannot allocate steps");
+	
+		lu_size i;
+		for (i = 0; i < self->neu_size; i++)
+			self->steps[i] = (lu_value)i * self->step;
+	}
+
 	static inline lu_value s_col_conf_norm(S_Col_Conf self, lu_value request)
 	{
 		lu_value val = request - self->orig_min;
