@@ -7,6 +7,7 @@
 
 	static S_Cell s_cell_create(
 		Mem mem, 
+		S_Layer layer, 
 		S_Col_Conf conf, 
 		lu_size x, 
 		lu_size y
@@ -17,7 +18,7 @@
 		S_Cell self 		= (S_Cell) mem_alloc(mem, sizeof(struct s_cell));
 		lu_user_assert(self, "Cannot allocate S_Cell");
 
-		s_base_init(&self->super, SNT_CELL, 0, x, y);
+		s_base_init(&self->super, SNT_CELL, layer, x, y);
 
 		self->cols 			= arr_create(mem, conf->component_size);
 

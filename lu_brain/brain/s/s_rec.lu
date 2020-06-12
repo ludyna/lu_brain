@@ -46,12 +46,12 @@
 		///////////////////////////////////////
 		// Cells
 
-		self->v_layers[0] = s_layer_create(self, mem, self->cells_w, self->cells_h);
+		self->v_layers[0] = s_layer_create(self, mem, 0, self->cells_w, self->cells_h);
 		lu_user_assert(self->v_layers[0], "Cannot create S_Layer");
 
 		s_layer_cells_create(self->v_layers[0], mem, &self->v_conf);
 
-		self->p_layers[0] = s_layer_create(self, mem, self->cells_w, self->cells_h);
+		self->p_layers[0] = s_layer_create(self, mem, 0, self->cells_w, self->cells_h);
 		lu_user_assert(self->p_layers[0], "Cannot create S_Layer");
 
 		s_layer_cells_create(self->p_layers[0], mem, &self->p_conf);
@@ -78,53 +78,61 @@
 
 		//lu_debug("\n YYYYYYYYYYYYYYYYYYYYYYYYYYY w = %d, h = %d, ns= %d", self->cells_w, self->cells_h, self->neus_size);
 
-		// w = self->cells_w - 1;
-		// h = self->cells_h - 1;
-		// lu_size layer_ix = 0;
-		// s_neu_ix neu_ix = 0;
-		// S_Layer layer;
-		// S_Neu neu;
-		// while (w > 0 && h > 0)
-		// {
-		// 	++layer_ix; 
-		// 	if (w > 0) --w;
-		// 	if (h > 0) --h;
+		w = self->cells_w - 1;
+		h = self->cells_h - 1;
+		lu_size layer_ix = 1;
+		S_Layer v_layer;
+		S_Layer p_layer;
+		S_Neu v_neu;
+		S_Neu p_neu;
+		lu_size x;
+		lu_size y;
+		while (w > 0 && h > 0)
+		{
 
-		// 	self->v_layers[layer_ix] = s_layer_create(self, mem, self->cells_w, self->cells_h, true);
-		// 	lu_user_assert(self->v_layers[layer_ix], "Cannot create S_Layer");
+			if (w > 0) --w;
+			if (h > 0) --h;
 
-		// 	layer = self->v_layers[layer_ix];
-		// 	for (y = 0; y < h; y++)
-		// 		for (x = 0; x < w; x++)
-		// 		{
-		// 			neu = s_neu_create(mem, layer_ix, x, y);
-		// 			lu_user_assert(neu, "Cannot create S_Neu");
+			self->v_layers[layer_ix] = s_layer_create(self, mem, layer_ix, self->cells_w, self->cells_h);
+			lu_user_assert(self->v_layers[layer_ix], "Cannot create S_Layer");
 
-		// 			s_neu_connect(neu, self->v_layers);
+			self->p_layers[layer_ix] = s_layer_create(self, mem, layer_ix, self->cells_w, self->cells_h);
+			lu_user_assert(self->p_layers[layer_ix], "Cannot create S_Layer");
 
-		// 			self->neus[neu_ix] = neu;
-		// 			s_layer_neu_ix_set(layer, x, y, neu_ix);
+			v_layer = self->v_layers[layer_ix];
+			p_layer = self->p_layers[layer_ix];
 
-		// 			++neu_ix;
-		// 		}
+			for (y = 0; y < h; y++)
+				for (x = 0; x < w; x++)
+				{
+					v_neu = s_rec_neu_create(self, mem, v_layer, x, y);
 
+					// self->neus[neu_ix] = s_neu_create(mem, p_layer, x, y);
+					// lu_user_assert(self->neus[neu_ix], "Cannot create S_Neu");
 
-		// 	self->p_layers[layer_ix] = s_layer_create(self, mem, self->cells_w, self->cells_h, true);
-		// 	lu_user_assert(self->p_layers[layer_ix], "Cannot create S_Layer");
+					// s_layer_neu_ix_set(layer, x, y, neu_ix);
 
-		// 	layer = self->p_layers[layer_ix];
-		// 	for (y = 0; y < h; y++)
-		// 		for (x = 0; x < w; x++)
-		// 		{
-		// 			self->neus[neu_ix] = s_neu_create(mem, layer_ix, x, y);
-		// 			lu_user_assert(self->neus[neu_ix], "Cannot create S_Neu");
+					// ++neu_ix;
+				}
 
-		// 			s_layer_neu_ix_set(layer, x, y, neu_ix);
+			++layer_ix; 
 
-		// 			++neu_ix;
-		// 		}
-
-		// } 
+		} 
 
 		return self;
+	}
+
+
+	static S_Neu s_rec_neu_create(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y)
+	{
+		S_Neu neu = s_neu_create(mem, layer, x, y);
+		lu_user_assert(neu, "Cannot create S_Neu");
+		self->neus[self->neu_count] = neu;
+
+		s_neu_pc_connect(neu, self->v_layers);
+		s_layer_neu_ix_set(layer, x, y, self->neu_count);
+
+		++self->neu_count;
+
+		return neu;
 	}

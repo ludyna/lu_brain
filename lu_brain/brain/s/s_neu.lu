@@ -5,14 +5,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Neu s_neu_create(Mem mem, lu_size l, lu_size x, lu_size y)
+	static S_Neu s_neu_create(Mem mem, S_Layer layer, lu_size x, lu_size y)
 	{
 		lu_user_assert(mem, "Mem is NULL");
-		lu_user_assert(l > 0, "S_Neu on wrong layer");
+		lu_user_assert(layer, "S_Layer is NULL");
 
 		S_Neu self 		= (S_Neu) mem_alloc(mem, sizeof(struct s_neu));
 
-		s_base_init(&self->super, SNT_NEU, l, x, y);
+		s_base_init(&self->super, SNT_NEU, layer, x, y);
 
 		return self;
 	} 
@@ -22,19 +22,13 @@
 		l[y * 2 + x] = val;
 	}
 
-	static void s_neu_connect(S_Neu neu, S_Layer* layers)
+	static void s_neu_pc_connect(S_Neu neu, S_Layer* layers)
 	{
 		lu_user_assert_void(neu, "S_Neu is NULL");
-		lu_user_assert_void(layers, "S_Layer* is NULL");
-		lu_user_assert_void(neu->super.l > 0, "Wrong layer");
+		lu_user_assert_void(neu->super.layer, "S_Layer is NULL");
 
-		if (neu->super.l == 1)
-		{
-			neu->c_type = SNT_CELL;
-			//s_neu_lin_set(neu->c, 0, 0, 
-		}	
-		else 
-		{
+		//S_Layer prev 	= larers[neu->super.l - 1];
+		//neu->c_type 	= prev->l == 0 ? SNT_CELL : SNT_NEU;
 
-		}
+		
 	}

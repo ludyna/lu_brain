@@ -34,8 +34,8 @@
 
 		n_v_lin_ix 				c_l;
 
-		n_h_lin_ix 				p;
-		n_h_lin_ix 				c;
+		n_h_lin_ix 				tp;
+		n_h_lin_ix 				tc;
 
 		enum n_com_type			com_type;
 		n_com_ix 				com;		

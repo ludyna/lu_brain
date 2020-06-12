@@ -12,15 +12,15 @@
 	struct s_net_base {
 		enum s_net_type    		type;
 
-		lu_size 				l;
+		S_Layer 				layer;
 		lu_size 				x;
 		lu_size 				y;
 	};
 
-	static inline S_Net_Base s_base_init(S_Net_Base self, enum s_net_type type, lu_size l, lu_size x, lu_size y)
+	static inline S_Net_Base s_base_init(S_Net_Base self, enum s_net_type type, S_Layer layer, lu_size x, lu_size y)
 	{
 		self->type 				= type;
-		self->l 				= l;
+		self->layer 			= layer;
 		self->x 				= x;
 		self->y 				= y;
 
@@ -36,10 +36,16 @@
 
 		enum s_net_type 		c_type;
 		s_neu_ix 				c[4];
+
+		enum s_net_type 		t_type;
+		s_neu_ix 				t;			
+
+		// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
+		// mozhlyvo
 	}; 
 
-	static S_Neu s_neu_create(Mem mem, lu_size l, lu_size x, lu_size y);
-	static void s_neu_connect(S_Neu neu, S_Layer* layers);
+	static S_Neu s_neu_create(Mem mem, S_Layer, lu_size x, lu_size y);
+	static void s_neu_pc_connect(S_Neu neu, S_Layer* layers);
 
 	struct s_a_neu {
 		struct s_net_base 		super;
@@ -60,7 +66,7 @@
 		s_neu_ix 				c[4];
 	};
 
-	static S_Cell s_cell_create(Mem mem, S_Col_Conf conf, lu_size x, lu_size y);
+	static S_Cell s_cell_create(Mem mem, S_Layer, S_Col_Conf conf, lu_size x, lu_size y);
 	static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -102,13 +108,14 @@
 		// vlasnyk
 		S_Rec 					rec;
 
+		lu_size 				l;
 		lu_size 				w;
 		lu_size 				h;
 
 		s_neu_ix* 				neus;
 	};
 
-	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size w, lu_size h);
+	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size l, lu_size w, lu_size h);
 	static inline void s_layer_neu_ix_set(S_Layer self, lu_size x, lu_size y, s_neu_ix val) { self->neus[y * self->w + x] = val; }
 	static inline s_neu_ix s_layer_neu_ix_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
 	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf);
@@ -129,6 +136,7 @@
 		S_Cell* 				cells;	
 
 		lu_size 				neus_size;
+		lu_size 				neu_count;
 		S_Neu* 					neus;
 		lu_size 				layers_size;
 		
@@ -140,6 +148,7 @@
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
+	static S_Neu s_rec_neu_create(S_Rec, Mem mem, S_Layer, lu_size x, lu_size y);
  
  	// static inline s_neu_ix s_rec_cell_ix(S_Rec self, lu_size x, lu_size y) { return y * self->cells_w + x; }
 	//static inline void s_rec_v_cell_set(S_Rec self, lu_size x, lu_size y, S_Cell s_cell) {  s_layer_neus_cell; }

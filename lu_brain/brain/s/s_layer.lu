@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size w, lu_size h)
+	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size l, lu_size w, lu_size h)
 	{
 		lu_user_assert(rec, "Rec is NULL");
 		lu_user_assert(mem, "Mem is NULL");
@@ -16,6 +16,7 @@
 		lu_user_assert(self, "Cannot allocate S_Layer");
 
 		self->rec 		= rec;
+		self->l 		= l;
 		self->w 		= w;
 		self->h 		= h;
 
@@ -35,7 +36,7 @@
 		for (y = 0; y < self->h; y++)
 			for (x = 0; x < self->w; x++)
 			{
-				cell = s_cell_create(mem, conf, x, y);
+				cell = s_cell_create(mem, self, conf, x, y);
 				lu_user_assert_void(cell, "Cannot allocate cell");
 				
 				rec->cells[rec->cells_count] = cell;
