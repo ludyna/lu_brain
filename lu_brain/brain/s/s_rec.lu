@@ -105,14 +105,12 @@
 				for (x = 0; x < w; x++)
 				{
 					v_neu = s_rec_neu_create(self, mem, v_layer, x, y); 
+					s_neu_c_connect(v_neu);
+
 					p_neu = s_rec_neu_create(self, mem, p_layer, x, y);  	
+					s_neu_c_connect(p_neu);
 
-					// self->neus[neu_ix] = s_neu_create(mem, p_layer, x, y);
-					// lu_user_assert(self->neus[neu_ix], "Cannot create S_Neu");
-
-					// s_layer_neu_ix_set(layer, x, y, neu_ix);
-
-					// ++neu_ix;
+					s_neu_t_connect(v_neu, p_neu);
 				}
 
 			++layer_ix; 
@@ -128,7 +126,6 @@
 		lu_user_assert(neu, "Cannot create S_Neu");
 		self->neus[self->neu_count] = neu;
 
-		s_neu_pc_connect(neu, self->v_layers);
 		s_layer_neu_ix_set(layer, x, y, self->neu_count);
 
 		++self->neu_count;

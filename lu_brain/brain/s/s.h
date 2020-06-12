@@ -45,7 +45,8 @@
 	}; 
 
 	static S_Neu s_neu_create(Mem mem, S_Layer, lu_size x, lu_size y);
-	static void s_neu_pc_connect(S_Neu neu, S_Layer* layers);
+	static void s_neu_c_connect(S_Neu self);
+	static void s_neu_t_connect(S_Neu self, S_Neu dest);
 
 	struct s_a_neu {
 		struct s_net_base 		super;
