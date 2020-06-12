@@ -46,20 +46,39 @@
 		///////////////////////////////////////
 		// Cells
 
-		self->v_layers[0] = s_layer_create(self, mem, SLT_V, 0, self->cells_w, self->cells_h);
-		lu_user_assert(self->v_layers[0], "Cannot create S_Layer");
+		S_Layer v_layer;
+		S_Layer p_layer;
 
-		s_layer_cells_create(self->v_layers[0], mem, &self->v_conf);
+		v_layer = s_layer_create(self, mem, SLT_V, 0, self->cells_w, self->cells_h);
+		lu_user_assert(v_layer, "Cannot create S_Layer");
+		self->v_layers[0] = v_layer;
 
-		self->p_layers[0] = s_layer_create(self, mem, SLT_P, 0, self->cells_w, self->cells_h);
-		lu_user_assert(self->p_layers[0], "Cannot create S_Layer");
+		p_layer = s_layer_create(self, mem, SLT_P, 0, self->cells_w, self->cells_h);
+		lu_user_assert(p_layer, "Cannot create S_Layer");
+		self->p_layers[0] = p_layer;
 
-		s_layer_cells_create(self->p_layers[0], mem, &self->p_conf);
+		lu_size x;
+		lu_size y;
+		S_Cell v_cell;
+		S_Cell p_cell;
+		lu_size w;
+		lu_size h;
+		w = v_layer->w;
+		h = v_layer->h;
+
+		for (y = 0; y < h; y++)
+			for (x = 0; x < w; x++)
+			{
+				v_cell = s_rec_cell_create(self, mem, v_layer, &self->v_conf, x, y);
+				p_cell = s_rec_cell_create(self, mem, p_layer, &self->p_conf, x, y);
+
+				v_cell->t = p_cell;
+				p_cell->t = v_cell;
+			}
 
 		///////////////////////////////////////
 		// Neus
 
-		lu_size w, h;
 		w = self->cells_w - 1;
 		h = self->cells_h - 1;
 
@@ -76,17 +95,14 @@
 		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->neus_size);
 		lu_user_assert(self->neus, "Cannot allocate neus");
 
-		//lu_debug("\n YYYYYYYYYYYYYYYYYYYYYYYYYYY w = %d, h = %d, ns= %d", self->cells_w, self->cells_h, self->neus_size);
+		//lu_debug("\n NS w = %d, h = %d, ns= %d", self->cells_w, self->cells_h, self->neus_size);
 
 		w = self->cells_w - 1;
 		h = self->cells_h - 1;
 		lu_size layer_ix = 1;
-		S_Layer v_layer;
-		S_Layer p_layer;
 		S_Neu v_neu;
 		S_Neu p_neu;
-		lu_size x;
-		lu_size y;
+
 		while (w > 0 && h > 0)
 		{
 			if (w > 0) --w;
@@ -105,12 +121,13 @@
 				for (x = 0; x < w; x++)
 				{
 					v_neu = s_rec_neu_create(self, mem, v_layer, x, y); 
-					s_neu_c_connect(v_neu);
+					s_neu_p_connect(v_neu, self->v_layers);
 
 					p_neu = s_rec_neu_create(self, mem, p_layer, x, y);  	
-					s_neu_c_connect(p_neu);
+					s_neu_p_connect(p_neu, self->p_layers);
 
-					s_neu_t_connect(v_neu, p_neu);
+					v_neu->t = p_neu;
+					p_neu->t = v_neu;
 				}
 
 			++layer_ix; 
@@ -119,6 +136,19 @@
 		return self;
 	}
 
+	static S_Cell s_rec_cell_create(S_Rec self, Mem mem, S_Layer layer, S_Col_Conf conf, lu_size x, lu_size y)
+	{
+		S_Cell cell = s_cell_create(mem, layer, conf, x, y);
+		lu_user_assert(cell, "Cannot allocate cell");
+		
+		self->cells[self->cells_count] = cell;
+
+		s_layer_neu_ix_set(layer, x, y, self->cells_count);
+
+		++self->cells_count;
+
+		return cell;
+	}
 
 	static S_Neu s_rec_neu_create(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y)
 	{
