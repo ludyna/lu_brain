@@ -51,7 +51,6 @@
 		s_neu_ix 				c[2];
 	};
 
-	// p or v cell
 	struct s_cell {
 		struct s_net_base 		super;
 		
@@ -109,7 +108,7 @@
 		s_neu_ix* 				neus;
 	};
 
-	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size w, lu_size h, bool allocate_neus);
+	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size w, lu_size h);
 	static inline void s_layer_neu_ix_set(S_Layer self, lu_size x, lu_size y, s_neu_ix val) { self->neus[y * self->w + x] = val; }
 	static inline s_neu_ix s_layer_neu_ix_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
 	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf);

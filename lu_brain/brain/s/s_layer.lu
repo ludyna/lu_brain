@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size w, lu_size h, bool allocate_neus)
+	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size w, lu_size h)
 	{
 		lu_user_assert(rec, "Rec is NULL");
 		lu_user_assert(mem, "Mem is NULL");
@@ -19,13 +19,8 @@
 		self->w 		= w;
 		self->h 		= h;
 
-		if (allocate_neus)
-		{ 
-			self->neus = (s_neu_ix*) mem_alloc(mem, sizeof(s_neu_ix) * w * h);
-			lu_user_assert(self->neus, "Cannot allocate S_Layer neus");
-		}
-		else
-			self->neus = NULL;
+		self->neus = (s_neu_ix*) mem_alloc(mem, sizeof(s_neu_ix) * w * h);
+		lu_user_assert(self->neus, "Cannot allocate S_Layer neus");
 
 		return self;
 	}
