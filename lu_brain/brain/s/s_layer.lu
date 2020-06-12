@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static S_Layer s_layer_create(S_Rec rec, Mem mem, lu_size l, lu_size w, lu_size h)
+	static S_Layer s_layer_create(S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h)
 	{
 		lu_user_assert(rec, "Rec is NULL");
 		lu_user_assert(mem, "Mem is NULL");
@@ -16,6 +16,7 @@
 		lu_user_assert(self, "Cannot allocate S_Layer");
 
 		self->rec 		= rec;
+		self->type 		= type;
 		self->l 		= l;
 		self->w 		= w;
 		self->h 		= h;

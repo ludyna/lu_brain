@@ -28,6 +28,12 @@
 	typedef struct s_cell* 		S_Cell;
 	
 	// Helpers
+
+	enum s_layer_type {
+		SLT_V,
+		SLT_P
+	};
+	
 	typedef struct s_col_conf*	S_Col_Conf;
 	typedef struct s_col* 		S_Col; 
 	typedef struct s_layer* 	S_Layer;
