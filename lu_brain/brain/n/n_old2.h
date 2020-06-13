@@ -25,7 +25,7 @@
 	}
 
 	struct n_lin {
-		enum n_lin_type  c_type;
+		enum n_lin_type  d_type;
 		n_neu_ix 			 c;
 
 
@@ -47,7 +47,7 @@
 		// yaksho link vydalenyy to vin vydalenyy z dvoh neu  
 		// vydalenia linka potrebuvatyme lokania dvoh neu (abo prynaymi c_last i p_last v riznyh neu)
 
-		enum n_type 			p_type; 	// zavzhdy odyn typ dlia p
+		enum n_type 			b_type; 	// zavzhdy odyn typ dlia p
 		lin_ix 					tlp1;		
 		lin_ix					trp1;
 		lin_ix 					blp1;

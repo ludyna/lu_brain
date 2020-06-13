@@ -14,7 +14,7 @@
 
 		s_base_init(&self->super, SNT_NEU, layer, x, y);
 
-		self->p[0] = 0;
+		//self->p[0] = 0;
 
 		return self;
 	} 
@@ -35,28 +35,28 @@
 		S_Layer p_layer = layers[c_layer->l - 1];
 		lu_user_assert_void(p_layer, "S_Layer is NULL"); 
 
-		neu->p_type 	= p_layer->l == 0 ? SNT_CELL : SNT_NEU;
+		neu->b_type 	= p_layer->l == 0 ? SNT_CELL : SNT_NEU;
 		lu_size x 		= neu->super.x;
 		lu_size y 		= neu->super.y;
 
-		if (neu->p_type == SNT_CELL)
-		{
-			s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
-			neu->p[0] 		= ix;
+		// if (neu->b_type == SNT_CELL)
+		// {
+		// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
+		// 	neu->p[0] 		= ix;
 
-			neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
-			neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
-			neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
-		}
-		else 
-		{
-			s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
-			neu->p[0] 		= ix;
+		// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
+		// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
+		// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
+		// }
+		// else 
+		// {
+		// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
+		// 	neu->p[0] 		= ix;
 
-			neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
-			neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
-			neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
-		}
+		// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
+		// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
+		// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
+		// }
 
 	}
 

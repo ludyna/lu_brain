@@ -31,11 +31,17 @@
 	struct s_neu {
 		struct s_net_base 		super;
 
-		enum s_net_type			p_type;
-		s_neu_ix 				p[4];
+		enum s_net_type			b_type;
+		s_neu_ix 				bvl;
+		s_neu_ix 				bvp;
+		s_neu_ix 				bnl;
+		s_neu_ix 				bnp;
 
-		enum s_net_type 		c_type;
-		s_neu_ix 				c[4];
+		enum s_net_type 		d_type;
+		s_neu_ix 				dvl;
+		s_neu_ix 				dvp;
+		s_neu_ix 				dnl;
+		s_neu_ix 				dnp;
 
 		S_Neu  	 				t;			
 
@@ -49,11 +55,16 @@
 	struct s_a_neu {
 		struct s_net_base 		super;
 
-		enum s_net_type			p_type;
-		s_neu_ix 				p[2];
+		enum s_net_type 	 	b_type;
+		s_neu_ix 				bvl;
+		s_neu_ix 				bvp;
+		s_neu_ix 				bnl;
+		s_neu_ix 				bnp;
 
-		enum s_net_type 		c_type;
-		s_neu_ix 				c[2];
+		S_A_Neu 				dvl;
+		S_A_Neu 				dvp;
+
+		S_A_Neu 				t;
 	};
 
 	struct s_cell {
@@ -61,8 +72,12 @@
 		
 		Arr 					cols;    	
 
-		enum s_net_type 		c_type;
-		s_neu_ix 				c[4];
+		enum s_net_type 		d_type;
+		// s_neu_ix 				c[4];
+		s_neu_ix 				dvl;
+		s_neu_ix 				dvp;
+		s_neu_ix 				dnl;
+		s_neu_ix 				dnp;
 
 		S_Cell 					t;
 	};
