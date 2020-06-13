@@ -73,7 +73,6 @@
 		Arr 					cols;    	
 
 		enum s_net_type 		d_type;
-		// s_neu_ix 				c[4];
 		s_neu_ix 				dvl;
 		s_neu_ix 				dvp;
 		s_neu_ix 				dnl;
