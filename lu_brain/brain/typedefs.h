@@ -15,6 +15,7 @@
 // S
 
 	enum s_net_type {
+		SNT_UNKNOWN,
 		SNT_CELL, 
 		SNT_NEU,
 		SNT_A_NEU

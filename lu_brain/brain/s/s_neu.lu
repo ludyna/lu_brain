@@ -14,7 +14,19 @@
 
 		s_base_init(&self->super, SNT_NEU, layer, x, y);
 
-		//self->p[0] = 0;
+		self->b_type	= SNT_UNKNOWN;
+		self->bvl		= IX_NULL;
+		self->bvp		= IX_NULL;
+		self->bnl		= IX_NULL;
+		self->bnp		= IX_NULL;
+
+		self->d_type	= SNT_UNKNOWN;
+		self->dvl		= IX_NULL;
+		self->dvp		= IX_NULL;
+		self->dnl		= IX_NULL;
+		self->dnp		= IX_NULL;
+
+		self->t 		= NULL;		
 
 		return self;
 	} 

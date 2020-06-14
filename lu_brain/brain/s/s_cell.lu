@@ -30,5 +30,13 @@
 			arr_append(self->cols, s_col);
 		}
 
+		self->d_type		= SNT_CELL;
+		self->dvl			= IX_NULL;
+		self->dvp			= IX_NULL;
+		self->dnl			= IX_NULL;
+		self->dnp			= IX_NULL;
+
+		self->t 			= NULL;
+
 		return self;
 	}
