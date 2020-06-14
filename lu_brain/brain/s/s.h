@@ -153,7 +153,7 @@
 		S_Cell* 				cells;			
 
 		lu_size 				neus_size;
-		lu_size 				neu_count;
+		lu_size 				neus_count;
 		S_Neu* 					neus;
 		lu_size 				layers_size;
 		

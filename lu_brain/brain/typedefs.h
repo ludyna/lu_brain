@@ -43,7 +43,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N
 
-	#define IX_NULL LU_SIZE_MAX
+	#define IX_NULL 0
 
 	typedef lu_size n_h_lin_ix;
 	typedef lu_size n_v_lin_ix;

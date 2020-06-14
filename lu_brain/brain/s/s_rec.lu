@@ -28,11 +28,12 @@
 
 		self->cells_w 			= rec->width;
 		self->cells_h			= rec->height; 
-		self->cells_size 		= self->cells_w * self->cells_h * 2;  
-		self->cells_count 		= 0;
+		self->cells_size 		= self->cells_w * self->cells_h * 2 + 1;  
+		self->cells_count 		= 1;
 
 		self->cells = (S_Cell*) mem_alloc(mem, sizeof(S_Cell) * self->cells_size);
 		lu_user_assert(self->cells, "Cannot allocate cells");
+		self->cells[0] = NULL;
 
 		self->layers_size = self->cells_w > self->cells_h ? self->cells_w : self->cells_h;
 
@@ -91,9 +92,12 @@
 			if (h > 0) --h;
 		}
 
-		self->neus_size *= 2;
+		self->neus_size *= 2 + 1;
 		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->neus_size);
 		lu_user_assert(self->neus, "Cannot allocate neus");
+
+		self->neus[0] = NULL;
+		self->neus_count = 1;
 
 		//lu_debug("\n NS w = %d, h = %d, ns= %d", self->cells_w, self->cells_h, self->neus_size);
 
@@ -154,11 +158,11 @@
 	{
 		S_Neu neu = s_neu_create(mem, layer, x, y);
 		lu_user_assert(neu, "Cannot create S_Neu");
-		self->neus[self->neu_count] = neu;
+		self->neus[self->neus_count] = neu;
 
-		s_layer_neu_ix_set(layer, x, y, self->neu_count);
+		s_layer_neu_ix_set(layer, x, y, self->neus_count);
 
-		++self->neu_count;
+		++self->neus_count;
 
 		return neu;
 	}
