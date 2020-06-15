@@ -60,6 +60,7 @@
 		Lu_Brain_Opts lu_brain_opts, 
 		lu_size w, 
 		lu_size h, 
+		lu_size blocks_size,
 		lu_size component_size,
 		lu_value v_min, 
 		lu_value v_max, 

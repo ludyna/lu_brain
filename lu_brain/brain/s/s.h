@@ -7,41 +7,27 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // S Net
-//
+// 
 
-	struct s_net_base {
-		enum s_net_type    		type;
-
-		S_Layer 				layer;
-		lu_size 				x;
-		lu_size 				y;
+	struct s_v_link {
+		S_Neu 					vl;
+		S_Neu 					vp;
+		S_Neu 					nl;
+		S_Neu 					np;
 	};
 
-	static inline S_Net_Base s_base_init(S_Net_Base self, enum s_net_type type, S_Layer layer, lu_size x, lu_size y)
-	{
-		self->type 				= type;
-		self->layer 			= layer;
-		self->x 				= x;
-		self->y 				= y;
+	static S_V_Link s_v_link_init(S_V_Link);
 
-		return self;
-	}
-
-	// neu i a_neu
 	struct s_neu {
-		struct s_net_base 		super;
+		enum s_net_type    		type;			
 
-		enum s_net_type			b_type;
-		s_neu_ix 				bvl;
-		s_neu_ix 				bvp;
-		s_neu_ix 				bnl;
-		s_neu_ix 				bnp;
+		S_Layer 				layer;
+		lu_size 				x;    	// bude t dlia a neu
+		lu_size 				y;
 
-		enum s_net_type 		d_type;
-		s_neu_ix 				dvl;
-		s_neu_ix 				dvp;
-		s_neu_ix 				dnl;
-		s_neu_ix 				dnp;
+		S_V_Link				b;
+		S_V_Link				d;
+		Arr             		cols;
 
 		S_Neu  	 				t;			
 
@@ -49,40 +35,83 @@
 		// mozhlyvo
 	}; 
 
-	static S_Neu s_neu_create(Mem mem, S_Layer, lu_size x, lu_size y);
+	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer, lu_size x, lu_size y);
 	static void s_neu_p_connect(S_Neu self, S_Layer*);
 
-	struct s_a_neu {
-		struct s_net_base 		super;
+	// struct s_net_base {
+	// 	enum s_net_type    		type;
 
-		enum s_net_type 	 	b_type;
-		s_neu_ix 				bvl;
-		s_neu_ix 				bvp;
-		s_neu_ix 				bnl;
-		s_neu_ix 				bnp;
+	// 	S_Layer 				layer;
+	// 	lu_size 				x;
+	// 	lu_size 				y;
+	// };
 
-		S_A_Neu 				dvl;
-		S_A_Neu 				dvp;
+	// static inline S_Net_Base s_base_init(S_Net_Base self, enum s_net_type type, S_Layer layer, lu_size x, lu_size y)
+	// {
+	// 	self->type 				= type;
+	// 	self->layer 			= layer;
+	// 	self->x 				= x;
+	// 	self->y 				= y;
 
-		S_A_Neu 				t;
-	};
+	// 	return self;
+	// }
 
-	struct s_cell {
-		struct s_net_base 		super;
+	// // neu i a_neu
+	// struct s_neu {
+	// 	struct s_net_base 		super;
+
+	// 	enum s_net_type			b_type;
+	// 	s_neu_ix 				bvl;
+	// 	s_neu_ix 				bvp;
+	// 	s_neu_ix 				bnl;
+	// 	s_neu_ix 				bnp;
+
+	// 	enum s_net_type 		d_type;
+	// 	s_neu_ix 				dvl;
+	// 	s_neu_ix 				dvp;
+	// 	s_neu_ix 				dnl;
+	// 	s_neu_ix 				dnp;
+
+	// 	S_Neu  	 				t;			
+
+	// 	// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
+	// 	// mozhlyvo
+	// }; 
+
+	// static S_Neu s_neu_create(Mem mem, S_Layer, lu_size x, lu_size y);
+	// static void s_neu_p_connect(S_Neu self, S_Layer*);
+
+	// struct s_a_neu {
+	// 	struct s_net_base 		super;
+
+	// 	enum s_net_type 	 	b_type;
+	// 	s_neu_ix 				bvl;
+	// 	s_neu_ix 				bvp;
+	// 	s_neu_ix 				bnl;
+	// 	s_neu_ix 				bnp;
+
+	// 	S_A_Neu 				dvl;
+	// 	S_A_Neu 				dvp;
+
+	// 	S_A_Neu 				t;
+	// };
+
+	// struct s_cell {
+	// 	struct s_net_base 		super;
 		
-		Arr 					cols;    	
+	// 	Arr 					cols;    	
 
-		enum s_net_type 		d_type;
-		s_neu_ix 				dvl;
-		s_neu_ix 				dvp;
-		s_neu_ix 				dnl;
-		s_neu_ix 				dnp;
+	// 	enum s_net_type 		d_type;
+	// 	s_neu_ix 				dvl;
+	// 	s_neu_ix 				dvp;
+	// 	s_neu_ix 				dnl;
+	// 	s_neu_ix 				dnp;
 
-		S_Cell 					t;
-	};
+	// 	S_Cell 					t;
+	// };
 
-	static S_Cell s_cell_create(Mem mem, S_Layer, S_Col_Conf conf, lu_size x, lu_size y);
-	static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
+	// static S_Cell s_cell_create(Mem mem, S_Layer, S_Col_Conf conf, lu_size x, lu_size y);
+	// static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
 
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
@@ -108,7 +137,7 @@
 	static inline lu_value s_col_conf_step_norm_dist(S_Col_Conf self);
 
 	struct s_col {
-		S_Cell 					cell;
+		S_Neu 					cell;
 
 		// conf 
 		S_Col_Conf 				conf;
@@ -116,7 +145,7 @@
 		n_neu_ix*				neus; 	
 	};
 
-	static inline S_Col s_col_create(Mem mem, S_Cell s_cell, S_Col_Conf s_col_conf);
+	static inline S_Col s_col_create(Mem mem, S_Neu cell, S_Col_Conf s_col_conf);
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
 
 	struct s_layer {
@@ -129,12 +158,12 @@
 		lu_size 				w;
 		lu_size 				h;
 
-		s_neu_ix* 				neus;
+		S_Neu* 					neus;
 	};
 
 	static S_Layer s_layer_create(S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h);
-	static inline void s_layer_neu_ix_set(S_Layer self, lu_size x, lu_size y, s_neu_ix val) { self->neus[y * self->w + x] = val; }
-	static inline s_neu_ix s_layer_neu_ix_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
+	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, S_Neu val) { self->neus[y * self->w + x] = val; }
+	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
 	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf);
 
 	struct s_rec {
@@ -147,30 +176,34 @@
 		lu_size 				id;
 
 		lu_size 				cells_w;
-		lu_size 				cells_h; 
-		lu_size 				cells_size;
-		lu_size 				cells_count;
-		S_Cell* 				cells;			
+		lu_size 				cells_h; 		
 
 		lu_size 				neus_size;
 		lu_size 				neus_count;
-		S_Neu* 					neus;
-		lu_size 				layers_size;
-		
-		struct s_col_conf 		v_conf;	
-		S_Layer* 				v_layers;
+		struct s_neu* 			neus;
 
+		lu_size 				v_links_size;
+		lu_size 				v_links_count;
+		struct s_v_link* 		v_links;
+
+		lu_size 				vp_layers_size;
+		struct s_col_conf 		v_conf;	
+		struct s_layer* 		v_layers;
 		struct s_col_conf 		p_conf;
-		S_Layer* 				p_layers;
+		struct s_layer* 		p_layers;
+
+		lu_size 				a_layers_size;
+		struct s_layer* 		av_layers;
+		struct s_layer* 		ap_layers;
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
-	static S_Cell s_rec_cell_create(S_Rec, Mem, S_Layer, S_Col_Conf, lu_size x, lu_size y);
+	static S_Neu s_rec_cell_create(S_Rec, Mem, S_Layer, S_Col_Conf, lu_size x, lu_size y);
 	static S_Neu s_rec_neu_create(S_Rec, Mem mem, S_Layer, lu_size x, lu_size y);
  
-	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->v_layers[0], x, y)]; }
-	static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->p_layers[0], x, y)]; }
-	static inline S_Neu s_rec_neu_get(S_Rec self, s_neu_ix ix) { return self->neus[ix]; }
+	// static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->v_layers[0], x, y)]; }
+	// static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->p_layers[0], x, y)]; }
+	// static inline S_Neu s_rec_neu_get(S_Rec self, s_neu_ix ix) { return self->neus[ix]; }
 
 	struct s_mem {
 		Lu_Brain 				brain;

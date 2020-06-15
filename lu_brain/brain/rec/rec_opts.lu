@@ -9,6 +9,7 @@
 		Lu_Brain_Opts 	brain_opts, 
 		lu_size 		width, 
 		lu_size 		height, 
+		lu_size 		blocks_size,
 		lu_size 		component_size,
 		lu_value 		v_min, 
 		lu_value 		v_max, 
@@ -29,6 +30,7 @@
 		self->brain_opts 		= brain_opts;
 		self->width 			= width;
 		self->height			= height;
+		self->blocks_size		= blocks_size;
 		self->component_size 	= component_size;
 		
 		self->v_min 			= v_min;
@@ -36,7 +38,7 @@
 		self->v_neu_size		= v_neu_size;
 
 		self->p_neu_size		= p_neu_size;
-		self->p_nsc			= p_nsc;
+		self->p_nsc				= p_nsc;
 
 		arr_append(self->brain_opts->rec_opts, self);
 

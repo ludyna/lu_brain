@@ -21,30 +21,30 @@
 		self->w 		= w;
 		self->h 		= h;
 
-		self->neus = (s_neu_ix*) mem_alloc(mem, sizeof(s_neu_ix) * w * h);
+		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * w * h);
 		lu_user_assert(self->neus, "Cannot allocate S_Layer neus");
 
 		return self;
 	}
 
-	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf)
-	{
-		lu_size x;
-		lu_size y;
-		S_Cell cell;
-		S_Rec rec = self->rec;
-		lu_user_assert_void(rec, "Rec is NULL");
-		for (y = 0; y < self->h; y++)
-			for (x = 0; x < self->w; x++)
-			{
-				cell = s_cell_create(mem, self, conf, x, y);
-				lu_user_assert_void(cell, "Cannot allocate cell");
+	// static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf)
+	// {
+	// 	lu_size x;
+	// 	lu_size y;
+	// 	S_Cell cell;
+	// 	S_Rec rec = self->rec;
+	// 	lu_user_assert_void(rec, "Rec is NULL");
+	// 	for (y = 0; y < self->h; y++)
+	// 		for (x = 0; x < self->w; x++)
+	// 		{
+	// 			cell = s_cell_create(mem, self, conf, x, y);
+	// 			lu_user_assert_void(cell, "Cannot allocate cell");
 				
-				rec->cells[rec->cells_count] = cell;
+	// 			rec->cells[rec->cells_count] = cell;
 
-				s_layer_neu_ix_set(self, x, y, rec->cells_count);
+	// 			s_layer_neu_ix_set(self, x, y, rec->cells_count);
 
-				++rec->cells_count;
-			}
+	// 			++rec->cells_count;
+	// 		}
 
-	}
+	// }

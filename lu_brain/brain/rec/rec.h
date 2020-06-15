@@ -10,6 +10,7 @@
 
 		lu_size 		width;
 		lu_size 		height;
+		lu_size			blocks_size;
 		
 		lu_size 		component_size;
 
@@ -37,6 +38,8 @@
 
 		lu_size 		width;
 		lu_size 		height;
+		lu_size 		blocks_size;
+
 		lu_size 		component_size;
 
 		lu_value 		contrast;

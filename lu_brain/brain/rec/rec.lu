@@ -23,6 +23,8 @@
 
 		self->width 			= opts->width;
 		self->height 			= opts->height;
+		self->blocks_size 		= opts->blocks_size;
+
 		self->component_size	= opts->component_size;
 
 		self->v_min			= opts->v_min;

@@ -13,6 +13,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // S
+	#define IX_NULL 0
 
 	enum s_net_type {
 		SNT_UNKNOWN,
@@ -21,18 +22,21 @@
 		SNT_A_NEU
 	};
 
-	typedef lu_size s_neu_ix;
+	// typedef lu_size s_neu_ix;
 
- 	typedef struct s_net_base* 	S_Net_Base;
+ // 	typedef struct s_net_base* 	S_Net_Base;
  	typedef struct s_neu* 		S_Neu;
- 	typedef struct s_a_neu* 	S_A_Neu;
-	typedef struct s_cell* 		S_Cell;
+ 	typedef struct s_v_link* 	S_V_Link;
+ // 	typedef struct s_a_neu* 	S_A_Neu;
+	// typedef struct s_cell* 		S_Cell;
 	
 	// Helpers
 
 	enum s_layer_type {
 		SLT_V,
-		SLT_P
+		SLT_P,
+		SLT_AV,
+		SLT_AP
 	};
 	
 	typedef struct s_col_conf*	S_Col_Conf;
@@ -43,8 +47,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // N
-
-	#define IX_NULL 0
 
 	typedef lu_size n_h_lin_ix;
 	typedef lu_size n_v_lin_ix;
