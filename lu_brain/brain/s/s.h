@@ -161,7 +161,7 @@
 		S_Neu* 					neus;
 	};
 
-	static S_Layer s_layer_create(S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h);
+	static S_Layer s_layer_init(S_Layer self, S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h);
 	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, S_Neu val) { self->neus[y * self->w + x] = val; }
 	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
 	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf);
@@ -198,8 +198,10 @@
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
-	static S_Neu s_rec_cell_create(S_Rec, Mem, S_Layer, S_Col_Conf, lu_size x, lu_size y);
-	static S_Neu s_rec_neu_create(S_Rec, Mem mem, S_Layer, lu_size x, lu_size y);
+	static S_Neu s_rec_neu_init(S_Rec, enum s_net_type type, S_Layer, lu_size x, lu_size y);
+	static S_Neu s_rec_cell_init(S_Neu, S_Rec);
+	static S_Neu s_rec_full_neu_init(S_Neu, S_Rec);
+	static S_Neu s_rec_a_neu_init(S_Neu, S_Rec);
  
 	// static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->v_layers[0], x, y)]; }
 	// static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->p_layers[0], x, y)]; }

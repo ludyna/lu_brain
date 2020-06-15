@@ -61,9 +61,34 @@ lu_value			data_6[] 		= {
 void setUp(void)
 { 
 	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
-	rec_opts_1 			= lu_rec_opts_create(brain_opts, 3, 3, 10, 1, 0.0, 10.0, 10, 4, 1);
-	rec_opts_2			= lu_rec_opts_create(brain_opts, 3, 3, 10, 1, 0.0, 10.0, 10, 4, 1);
-
+	rec_opts_1 			= lu_rec_opts_create(
+		brain_opts, 
+		/*w*/				3, 
+		/*h*/				3, 
+		/*block_size*/		10, 
+		/*component_size*/	1,
+		/*v_min*/ 			0.0, 
+		/*v_max*/			10.0, 
+		/*v_neu_size*/		10, 
+		/*v_nsc*/ 			1,
+		/*p_neu_size*/		4, 
+		/*p_nsc*/			1
+	);
+			
+	rec_opts_2 			= lu_rec_opts_create(
+		brain_opts, 
+		/*w*/				3, 
+		/*h*/				3, 
+		/*block_size*/		10, 
+		/*component_size*/	1,
+		/*v_min*/ 			0.0, 
+		/*v_max*/			10.0, 
+		/*v_neu_size*/		10, 
+		/*v_nsc*/ 			1,
+		/*p_neu_size*/		4, 
+		/*p_nsc*/			1
+	);
+	
 	brain 				= lu_brain_create(brain_opts);
 
 	TEST_ASSERT(brain);

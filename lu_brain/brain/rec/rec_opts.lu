@@ -14,6 +14,7 @@
 		lu_value 		v_min, 
 		lu_value 		v_max, 
 		lu_size 		v_neu_size, 
+		lu_size 		v_nsc, 
 		lu_size 		p_neu_size, 
 		lu_size 		p_nsc
 	)
@@ -36,6 +37,7 @@
 		self->v_min 			= v_min;
 		self->v_max 			= v_max;
 		self->v_neu_size		= v_neu_size;
+		self->v_nsc				= v_nsc;	
 
 		self->p_neu_size		= p_neu_size;
 		self->p_nsc				= p_nsc;

@@ -5,15 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static S_Layer s_layer_create(S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h)
+	static S_Layer s_layer_init(S_Layer self, S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h)
 	{
+		lu_user_assert(self, "S_Layer is NULL");
 		lu_user_assert(rec, "Rec is NULL");
 		lu_user_assert(mem, "Mem is NULL");
 		lu_user_assert(w > 0, "Width should be greater than 0"); 
 		lu_user_assert(h > 0, "Height should be greater than 0");
-
-		S_Layer self 		= (S_Layer) mem_alloc(mem, sizeof(struct s_layer));
-		lu_user_assert(self, "Cannot allocate S_Layer");
 
 		self->rec 		= rec;
 		self->type 		= type;
@@ -21,7 +19,7 @@
 		self->w 		= w;
 		self->h 		= h;
 
-		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * w * h);
+		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->w * self->h);
 		lu_user_assert(self->neus, "Cannot allocate S_Layer neus");
 
 		return self;

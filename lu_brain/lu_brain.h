@@ -65,6 +65,7 @@
 		lu_value v_min, 
 		lu_value v_max, 
 		lu_size v_neu_size, 
+		lu_size v_nsc, 
 		lu_size p_neu_size,
 		lu_size p_nsc
 	);
