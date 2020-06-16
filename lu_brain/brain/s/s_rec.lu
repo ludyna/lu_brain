@@ -77,15 +77,18 @@
 
 		// a_neus (n(n+1))/2 * 2 for c i p
 		self->neus_size += rec->blocks_size * (rec->blocks_size + 1);
+		self->neus_count = 0;
 
 		self->neus = (struct s_neu*) mem_alloc(mem, sizeof(struct s_neu) * self->neus_size);
-		lu_user_assert(self->neus, "Cannot allocate neus");
+		lu_user_assert(self->neus, "Cannot allocate neus"); 
+
 
 		///////////////////////////////////////
 		// V links
 
 		// cherez cells dlia p i c 
 		self->v_links_size = self->neus_size - self->cells_w * self->cells_h * 2;
+		self->v_links_count = 0;
 
 		self->v_links = (struct s_v_link*) mem_alloc(mem, sizeof(struct s_v_link) * self->v_links_size);
 		lu_user_assert(self->v_links, "Cannot allocate v_links");
@@ -108,7 +111,7 @@
 			if (w > 0) --w;
 			if (h > 0) --h;
 
-			lu_debug("\n\nix=%d, vp_layers_size=%d\n\n", layer_ix, self->vp_layers_size);
+			//3lu_debug("\n\nix=%d, vp_layers_size=%d\n\n", layer_ix, self->vp_layers_size);
 
 			v_layer = &self->v_layers[layer_ix];
 			p_layer = &self->p_layers[layer_ix];
@@ -123,13 +126,16 @@
 				for (x = 0; x < w; x++)
 				{
 					v_neu = s_rec_neu_init(self, type, v_layer, x, y); 
-					// //s_neu_p_connect(v_neu, self->v_layers);
+					p_neu = s_rec_neu_init(self, type, p_layer, x, y); 
 
-					p_neu = s_rec_neu_init(self, type, p_layer, x, y);  	
-					// //s_neu_p_connect(p_neu, self->p_layers);
+					if (layer_ix > 0)
+					{
+						s_neu_b_connect(v_neu, self->v_layers); 	
+						s_neu_b_connect(p_neu, self->p_layers);
+					}
 
-					// v_neu->t = p_neu;
-					// p_neu->t = v_neu;
+					v_neu->t = p_neu;
+					p_neu->t = v_neu;
 				}
 
 			++layer_ix; 
@@ -236,10 +242,10 @@
 		// 		for (x = 0; x < w; x++)
 		// 		{
 		// 			v_neu = s_rec_neu_init(self, mem, v_layer, x, y); 
-		// 			s_neu_p_connect(v_neu, self->v_layers);
+		// 			s_neu_b_connect(v_neu, self->v_layers);
 
 		// 			p_neu = s_rec_neu_init(self, mem, p_layer, x, y);  	
-		// 			s_neu_p_connect(p_neu, self->p_layers);
+		// 			s_neu_b_connect(p_neu, self->p_layers);
 
 		// 			v_neu->t = p_neu;
 		// 			p_neu->t = v_neu;
@@ -273,7 +279,6 @@
 				lu_user_assert(false, "Unknown S_Neu type");
 		}
 
-
 		lu_user_assert(neu, "Cannot create S_Neu");
 
 		s_layer_neu_set(layer, x, y, neu);
@@ -281,6 +286,19 @@
 		++self->neus_count;
 
 		return neu;
+	}
+
+	static S_V_Link s_rec_v_link_init(S_Rec self)
+	{
+		lu_user_assert(self, "S_Rec is NULL");
+
+		S_V_Link link = &self->v_links[self->v_links_count];
+
+		s_v_link_init(link);
+
+		++self->v_links_count;
+
+		return link;
 	}
 
 	static S_Neu s_rec_cell_init(S_Neu self, S_Rec rec)

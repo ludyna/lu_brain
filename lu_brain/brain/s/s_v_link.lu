@@ -1,0 +1,14 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//
+
+	static inline S_V_Link s_v_link_init(S_V_Link self)
+	{
+		self->vl = NULL;
+		self->vp = NULL;
+		self->nl = NULL;
+		self->np = NULL;
+	}

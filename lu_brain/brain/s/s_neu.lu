@@ -53,41 +53,41 @@
 	// 	l[y * 2 + x] = val;
 	// }
 
-	// static void s_neu_p_connect(S_Neu neu, S_Layer* layers)
-	// {
-	// 	lu_user_assert_void(neu, "S_Neu is NULL");
+	static void s_neu_b_connect(S_Neu neu, struct s_layer* layers)
+	{
+		lu_user_assert_void(neu, "S_Neu is NULL");
 
-	// 	S_Layer c_layer = neu->super.layer;
-	// 	lu_user_assert_void(c_layer, "S_Layer is NULL");
-	// 	lu_user_assert_void(c_layer->l > 0, "Trying to connect to non existing layer");
+		S_Layer d_layer = neu->layer;
+		lu_user_assert_void(d_layer, "S_Layer is NULL");
+		lu_user_assert_void(d_layer->l > 0, "Trying to connect to -1 layer");
 
-	// 	S_Layer p_layer = layers[c_layer->l - 1];
-	// 	lu_user_assert_void(p_layer, "S_Layer is NULL"); 
+		S_Layer p_layer = &layers[d_layer->l - 1];
+		lu_user_assert_void(p_layer, "S_Layer is NULL"); 
 
-	// 	neu->b_type 	= p_layer->l == 0 ? SNT_CELL : SNT_NEU;
-	// 	lu_size x 		= neu->super.x;
-	// 	lu_size y 		= neu->super.y;
+		neu->type 	= p_layer->l == 0 ? SNT_CELL : SNT_NEU;
+		lu_size x 		= neu->x;
+		lu_size y 		= neu->y;
 
-	// 	// if (neu->b_type == SNT_CELL)
-	// 	// {
-	// 	// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
-	// 	// 	neu->p[0] 		= ix;
+		// if (neu->b_type == SNT_CELL)
+		// {
+		// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
+		// 	neu->p[0] 		= ix;
 
-	// 	// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
-	// 	// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
-	// 	// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
-	// 	// }
-	// 	// else 
-	// 	// {
-	// 	// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
-	// 	// 	neu->p[0] 		= ix;
+		// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
+		// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
+		// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
+		// }
+		// else 
+		// {
+		// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
+		// 	neu->p[0] 		= ix;
 
-	// 	// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
-	// 	// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
-	// 	// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
-	// 	// }
+		// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
+		// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
+		// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
+		// }
 
-	// }
+	}
 
 	// static void s_neu_c_connect_next()
 	// {

@@ -16,7 +16,7 @@
 		S_Neu 					np;
 	};
 
-	static S_V_Link s_v_link_init(S_V_Link);
+	static inline S_V_Link s_v_link_init(S_V_Link self);
 
 	struct s_neu {
 		enum s_net_type    		type;			
@@ -36,7 +36,7 @@
 	}; 
 
 	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer, lu_size x, lu_size y);
-	static void s_neu_p_connect(S_Neu self, S_Layer*);
+	static void s_neu_b_connect(S_Neu self, struct s_layer*);
 
 	// struct s_net_base {
 	// 	enum s_net_type    		type;
@@ -79,7 +79,7 @@
 	// }; 
 
 	// static S_Neu s_neu_create(Mem mem, S_Layer, lu_size x, lu_size y);
-	// static void s_neu_p_connect(S_Neu self, S_Layer*);
+	// static void s_neu_b_connect(S_Neu self, S_Layer*);
 
 	// struct s_a_neu {
 	// 	struct s_net_base 		super;
@@ -199,6 +199,7 @@
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
 	static S_Neu s_rec_neu_init(S_Rec, enum s_net_type type, S_Layer, lu_size x, lu_size y);
+	static S_V_Link s_rec_v_link_init(S_Rec);
 	static S_Neu s_rec_cell_init(S_Neu, S_Rec);
 	static S_Neu s_rec_full_neu_init(S_Neu, S_Rec);
 	static S_Neu s_rec_a_neu_init(S_Neu, S_Rec);
