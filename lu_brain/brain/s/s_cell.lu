@@ -3,40 +3,5 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Create and destroy
+// 
 
-	static S_Cell s_cell_create(
-		Mem mem, 
-		S_Layer layer, 
-		S_Col_Conf conf, 
-		lu_size x, 
-		lu_size y
-	)
-	{
-		lu_user_assert(conf, "S_Col_Conf is NULL");
-
-		S_Cell self 		= (S_Cell) mem_alloc(mem, sizeof(struct s_cell));
-		lu_user_assert(self, "Cannot allocate S_Cell");
-
-		s_base_init(&self->super, SNT_CELL, layer, x, y);
-
-		self->cols 			= arr_create(mem, conf->component_size);
-
-		S_Col s_col;
-		for (lu_size i = 0; i < arr_size(self->cols); i++)
-		{
-			s_col = s_col_create(mem, self, conf);
-
-			arr_append(self->cols, s_col);
-		}
-
-		self->d_type		= SNT_CELL;
-		self->dvl			= IX_NULL;
-		self->dvp			= IX_NULL;
-		self->dnl			= IX_NULL;
-		self->dnp			= IX_NULL;
-
-		self->t 			= NULL;
-
-		return self;
-	}

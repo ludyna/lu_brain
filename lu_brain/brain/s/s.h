@@ -27,7 +27,7 @@
 
 		S_V_Link				b;
 		S_V_Link				d;
-		Arr             		cols;
+		S_Col 		     		cols;
 
 		S_Neu  	 				t;			
 
@@ -38,80 +38,6 @@
 	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer, lu_size x, lu_size y);
 	static void s_neu_b_connect(S_Neu self, struct s_layer*);
 
-	// struct s_net_base {
-	// 	enum s_net_type    		type;
-
-	// 	S_Layer 				layer;
-	// 	lu_size 				x;
-	// 	lu_size 				y;
-	// };
-
-	// static inline S_Net_Base s_base_init(S_Net_Base self, enum s_net_type type, S_Layer layer, lu_size x, lu_size y)
-	// {
-	// 	self->type 				= type;
-	// 	self->layer 			= layer;
-	// 	self->x 				= x;
-	// 	self->y 				= y;
-
-	// 	return self;
-	// }
-
-	// // neu i a_neu
-	// struct s_neu {
-	// 	struct s_net_base 		super;
-
-	// 	enum s_net_type			b_type;
-	// 	s_neu_ix 				bvl;
-	// 	s_neu_ix 				bvp;
-	// 	s_neu_ix 				bnl;
-	// 	s_neu_ix 				bnp;
-
-	// 	enum s_net_type 		d_type;
-	// 	s_neu_ix 				dvl;
-	// 	s_neu_ix 				dvp;
-	// 	s_neu_ix 				dnl;
-	// 	s_neu_ix 				dnp;
-
-	// 	S_Neu  	 				t;			
-
-	// 	// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
-	// 	// mozhlyvo
-	// }; 
-
-	// static S_Neu s_neu_create(Mem mem, S_Layer, lu_size x, lu_size y);
-	// static void s_neu_b_connect(S_Neu self, S_Layer*);
-
-	// struct s_a_neu {
-	// 	struct s_net_base 		super;
-
-	// 	enum s_net_type 	 	b_type;
-	// 	s_neu_ix 				bvl;
-	// 	s_neu_ix 				bvp;
-	// 	s_neu_ix 				bnl;
-	// 	s_neu_ix 				bnp;
-
-	// 	S_A_Neu 				dvl;
-	// 	S_A_Neu 				dvp;
-
-	// 	S_A_Neu 				t;
-	// };
-
-	// struct s_cell {
-	// 	struct s_net_base 		super;
-		
-	// 	Arr 					cols;    	
-
-	// 	enum s_net_type 		d_type;
-	// 	s_neu_ix 				dvl;
-	// 	s_neu_ix 				dvp;
-	// 	s_neu_ix 				dnl;
-	// 	s_neu_ix 				dnp;
-
-	// 	S_Cell 					t;
-	// };
-
-	// static S_Cell s_cell_create(Mem mem, S_Layer, S_Col_Conf conf, lu_size x, lu_size y);
-	// static inline S_Col s_cell_col_get(S_Cell self, lu_size indx) { return (S_Col) arr_get(self->cols, indx); }
 
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
@@ -195,18 +121,19 @@
 		lu_size 				a_layers_size;
 		struct s_layer* 		av_layers;
 		struct s_layer* 		ap_layers;
+
+		lu_size 				cols_size;
+		lu_size 				cols_count;
+		struct s_col* 			cols;
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
 	static S_Neu s_rec_neu_init(S_Rec, enum s_net_type type, S_Layer, lu_size x, lu_size y);
 	static S_V_Link s_rec_v_link_init(S_Rec);
+	static S_Col s_rec_col_init(S_Rec self, S_Col col);
 	static S_Neu s_rec_cell_init(S_Rec self, S_Neu neu);
 	static S_Neu s_rec_full_neu_init(S_Rec self, S_Neu neu);
 	static S_Neu s_rec_a_neu_init(S_Rec self, S_Neu neu);
- 
-	// static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->v_layers[0], x, y)]; }
-	// static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->p_layers[0], x, y)]; }
-	// static inline S_Neu s_rec_neu_get(S_Rec self, s_neu_ix ix) { return self->neus[ix]; }
 
 	struct s_mem {
 		Lu_Brain 				brain;

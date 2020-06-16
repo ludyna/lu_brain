@@ -10,7 +10,6 @@
 	#include "s_layer.lu"
  	#include "s_col_conf.lu"
 	#include "s_col.lu"
-	// #include "s_cell.lu"
-	// #include "s_cb.lu"
+	#include "s_cell.lu"
 	#include "s_rec.lu"
 	#include "s_mem.lu"
