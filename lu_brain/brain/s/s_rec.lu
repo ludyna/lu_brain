@@ -234,12 +234,18 @@
 				lu_user_assert(false, "Wrong S_Layer type");
 		}
 
-		
-		// self->cell 		= cell;
-		// self->conf 		= conf;
-		// lu_user_assert(self->conf, "S_Col_Conf is NULL");
+		neu->cols = (S_Col) mem_alloc(mem, sizeof(struct s_col) * conf->component_size);
+		lu_user_assert(neu->cols, "Cannot allocate cols");
+		lu_size i;
+		S_Col col;
+		for(i = 0; i < conf->component_size; i++)
+		{
+			col = &neu->cols[i];
 
-		// self->neus 		= (n_neu_ix*) mem_alloc(mem, sizeof(n_neu_ix) * self->conf->neu_size);
+			s_col_init(col, mem, neu, conf);
+		}
+
+		neu->d = s_rec_v_link_init(self);
 
 		return neu;
 	}
