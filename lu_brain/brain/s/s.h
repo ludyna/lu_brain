@@ -200,9 +200,9 @@
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
 	static S_Neu s_rec_neu_init(S_Rec, enum s_net_type type, S_Layer, lu_size x, lu_size y);
 	static S_V_Link s_rec_v_link_init(S_Rec);
-	static S_Neu s_rec_cell_init(S_Neu, S_Rec);
-	static S_Neu s_rec_full_neu_init(S_Neu, S_Rec);
-	static S_Neu s_rec_a_neu_init(S_Neu, S_Rec);
+	static S_Neu s_rec_cell_init(S_Rec self, S_Neu neu);
+	static S_Neu s_rec_full_neu_init(S_Rec self, S_Neu neu);
+	static S_Neu s_rec_a_neu_init(S_Rec self, S_Neu neu);
  
 	// static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->v_layers[0], x, y)]; }
 	// static inline S_Cell s_rec_p_cell_get(S_Rec self, lu_size x, lu_size y) { return self->cells[s_layer_neu_ix_get(self->p_layers[0], x, y)]; }
