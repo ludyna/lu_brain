@@ -37,8 +37,7 @@
 
 	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer, lu_size x, lu_size y);
 	static void s_neu_b_connect(S_Neu self, struct s_layer*);
-
-
+	
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
 //
@@ -71,7 +70,7 @@
 		n_neu_ix*				neus; 	
 	};
 
-	static inline S_Col s_col_create(Mem mem, S_Neu cell, S_Col_Conf s_col_conf);
+	static inline S_Col s_col_init(S_Col self, Mem mem, S_Neu cell, S_Col_Conf conf);
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
 
 	struct s_layer {
@@ -92,6 +91,7 @@
 	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
 	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf);
 
+	// velyki masyvy v s_rec shob vykorystaty perevahu cpu keshuvania
 	struct s_rec {
 		// vlasnyk
 		S_Mem 					mem; 			
@@ -128,10 +128,10 @@
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
-	static S_Neu s_rec_neu_init(S_Rec, enum s_net_type type, S_Layer, lu_size x, lu_size y);
+	static S_Neu s_rec_neu_init(S_Rec, Mem mem, enum s_net_type type, S_Layer, lu_size x, lu_size y);
 	static S_V_Link s_rec_v_link_init(S_Rec);
-	static S_Col s_rec_col_init(S_Rec self, S_Col col);
-	static S_Neu s_rec_cell_init(S_Rec self, S_Neu neu);
+	static S_Col s_rec_col_init(S_Rec self, Mem mem, S_Neu cell, S_Col_Conf conf);
+	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu);
 	static S_Neu s_rec_full_neu_init(S_Rec self, S_Neu neu);
 	static S_Neu s_rec_a_neu_init(S_Rec self, S_Neu neu);
 

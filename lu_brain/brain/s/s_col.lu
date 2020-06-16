@@ -5,23 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create 
 
-	static inline S_Col s_col_create(
-		Mem mem, 
-		S_Neu cell, 
-		S_Col_Conf conf
-	)
+	static inline S_Col s_col_init(S_Col self, Mem mem, S_Neu cell, S_Col_Conf conf)
 	{
 		lu_user_assert(cell, "S_Cell is NULL");
 		lu_user_assert(conf, "S_Col_Conf is NULL");
 		lu_user_assert(cell->type == SNT_CELL, "Wrong S_Neu type");
-
-		S_Col self 		= (S_Col) mem_alloc(mem, sizeof(struct s_col));
 
 		self->cell 		= cell;
 		self->conf 		= conf;
 		lu_user_assert(self->conf, "S_Col_Conf is NULL");
 
 		self->neus 		= (n_neu_ix*) mem_alloc(mem, sizeof(n_neu_ix) * self->conf->neu_size);
+		lu_user_assert(self->neus, "Cannot allocate neus");
 
 		return self;
 	}
