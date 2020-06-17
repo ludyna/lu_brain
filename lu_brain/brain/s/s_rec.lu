@@ -79,16 +79,11 @@
 			if (h > 0) --h;
 		}
 
-		lu_debug("\nneus_size=%d", self->neus_size);
 		// dlia d i b 
 		self->neus_size *= 2;
 
-		lu_debug("\nneus_size=%d", self->neus_size);
-
 		// a_neus (n(n+1))/2 * 2 for d i b
 		self->neus_size += self->blocks_size * (self->blocks_size + 1);
-
-		lu_debug("\nneus_size=%d, blocks_size=%d", self->neus_size, self->blocks_size);
 		self->neus_count = 0;
 
 		self->neus = (struct s_neu*) mem_alloc(mem, sizeof(struct s_neu) * self->neus_size);
@@ -99,7 +94,6 @@
 
 		// cherez cells dlia p i c 
 		self->v_links_size = (self->neus_size) * 2 - wh * 2;
-		lu_debug("\nv_links_size=%d", self->v_links_size);
 		self->v_links_count = 0;
 
 		self->v_links = (struct s_v_link*) mem_alloc(mem, sizeof(struct s_v_link) * self->v_links_size);
@@ -233,9 +227,9 @@
 			--w;
 		}
 
-		lu_debug("\nneus_count = %d, neus_size = %d", self->neus_count, self->neus_size);
-		lu_debug("\nv_links_count = %d, v_links_size = %d", self->v_links_count, self->v_links_size);
-		lu_debug("\ncols_count = %d, cols_size = %d", self->cols_count, self->cols_size);
+		// lu_debug("\nneus_count = %d, neus_size = %d", self->neus_count, self->neus_size);
+		// lu_debug("\nv_links_count = %d, v_links_size = %d", self->v_links_count, self->v_links_size);
+		// lu_debug("\ncols_count = %d, cols_size = %d", self->cols_count, self->cols_size);
 
 		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
 		lu_user_assert(self->v_links_count == self->v_links_size, "Something wrong with v_links_count");
