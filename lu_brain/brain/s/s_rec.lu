@@ -142,8 +142,8 @@
 
 					if (layer_ix > 0)
 					{
-						s_neu_b_connect(v_neu, self->v_layers); 	
-						s_neu_b_connect(p_neu, self->p_layers);
+						s_neu_b_layer_connect(v_neu, self->v_layers); 	
+						s_neu_b_layer_connect(p_neu, self->p_layers);
 					}
 
 					s_neu_t_connect(v_neu, p_neu);

@@ -22,76 +22,51 @@
 		return self;
 	}
 
-	// static S_Neu s_neu_create(Mem mem, S_Layer layer, lu_size x, lu_size y)
-	// {
-	// 	lu_user_assert(mem, "Mem is NULL");
-	// 	lu_user_assert(layer, "S_Layer is NULL");
-
-	// 	S_Neu self 		= (S_Neu) mem_alloc(mem, sizeof(struct s_neu));
-
-	// 	s_base_init(&self->super, SNT_NEU, layer, x, y);
-
-	// 	self->b_type	= SNT_UNKNOWN;
-	// 	self->bvl		= IX_NULL;
-	// 	self->bvp		= IX_NULL;
-	// 	self->bnl		= IX_NULL;
-	// 	self->bnp		= IX_NULL;
-
-	// 	self->d_type	= SNT_UNKNOWN;
-	// 	self->dvl		= IX_NULL;
-	// 	self->dvp		= IX_NULL;
-	// 	self->dnl		= IX_NULL;
-	// 	self->dnp		= IX_NULL;
-
-	// 	self->t 		= NULL;		
-
-	// 	return self;
-	// } 
-
-	// static inline void s_neu_lin_set(s_neu_ix l[4], lu_size x, lu_size y, s_neu_ix val)
-	// {
-	// 	l[y * 2 + x] = val;
-	// }
-
-	static void s_neu_b_connect(S_Neu neu, struct s_layer* layers)
+	static void s_neu_b_layer_connect(S_Neu d, struct s_layer* layers)
 	{
-		lu_user_assert_void(neu, "S_Neu is NULL");
+		lu_user_assert_void(d, "S_Neu is NULL");
 
-		S_Layer d_layer = neu->layer;
+		S_Layer d_layer = d->layer;
 		lu_user_assert_void(d_layer, "S_Layer is NULL");
 		lu_user_assert_void(d_layer->l > 0, "Trying to connect to -1 layer");
 
-		S_Layer p_layer = &layers[d_layer->l - 1];
-		lu_user_assert_void(p_layer, "S_Layer is NULL"); 
+		S_Layer b_layer = &layers[d_layer->l - 1];
+		lu_user_assert_void(b_layer, "S_Layer is NULL"); 
 
-		neu->type 	= p_layer->l == 0 ? SNT_CELL : SNT_NEU;
-		lu_size x 		= neu->x;
-		lu_size y 		= neu->y;
+		lu_size x 		= d->x;
+		lu_size y 		= d->y;
 
-		// if (neu->b_type == SNT_CELL)
-		// {
-		// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
-		// 	neu->p[0] 		= ix;
+		// x, y				// np
+		// x + 1, y	  		// nl
+		// x + 1, y + 1 	// vl
+		// x, y + 1			// vp
 
-		// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
-		// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
-		// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
-		// }
-		// else 
-		// {
-		// 	s_neu_ix ix 	= s_layer_neu_ix_get(p_layer, x, y);
-		// 	neu->p[0] 		= ix;
+		S_Neu b = NULL;
 
-		// 	neu->p[1] 		= s_layer_neu_ix_get(p_layer, x + 1, y);
-		// 	neu->p[2] 		= s_layer_neu_ix_get(p_layer, x + 1, y + 1);
-		// 	neu->p[3] 		= s_layer_neu_ix_get(p_layer, x, y + 1);
-		// }
+		b = s_layer_neu_get(b_layer, x, y);
+		lu_user_assert_void(b, "S_Neu is NULL");
 
+		b->d->np = d;
+		d->b->vl = b;
+
+		b = s_layer_neu_get(b_layer, x + 1, y);
+		lu_user_assert_void(b, "S_Neu is NULL");
+
+		b->d->nl = d;
+		d->b->vp = b;
+
+		b = s_layer_neu_get(b_layer, x + 1, y + 1);
+		lu_user_assert_void(b, "S_Neu is NULL");
+
+		b->d->vl = d;
+		d->b->np = b;
+
+		b = s_layer_neu_get(b_layer, x, y + 1);
+		lu_user_assert_void(b, "S_Neu is NULL");
+
+		b->d->vp = d;
+		d->b->nl = b;
 	}
 
-	// static void s_neu_c_connect_next()
-	// {
-
-	// }
 
 
