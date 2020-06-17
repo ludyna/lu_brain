@@ -146,8 +146,7 @@
 						s_neu_b_connect(p_neu, self->p_layers);
 					}
 
-					v_neu->t = p_neu;
-					p_neu->t = v_neu;
+					s_neu_t_connect(v_neu, p_neu);
 				}
 
 			++layer_ix; 
@@ -252,12 +251,21 @@
 
 	static S_Neu s_rec_full_neu_init(S_Rec self, S_Neu neu)
 	{
+		lu_user_assert(neu->type == SNT_NEU, "Wrong neu type");
+
+		neu->b = s_rec_v_link_init(self);
+		neu->d = s_rec_v_link_init(self);
 
 		return neu;
 	}
 
 	static S_Neu s_rec_a_neu_init(S_Rec self, S_Neu neu)
 	{
+
+		lu_user_assert(neu->type == SNT_A_NEU, "Wrong neu type");
+
+		neu->b = s_rec_v_link_init(self);
+		neu->d = s_rec_v_link_init(self);
 
 		return neu;
 	}
