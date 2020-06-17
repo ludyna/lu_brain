@@ -22,16 +22,10 @@
 		return self;
 	}
 
-	static void s_neu_b_layer_connect(S_Neu d, struct s_layer* layers)
+	static void s_neu_b_layer_connect(S_Neu d, S_Layer b_layer)
 	{
 		lu_user_assert_void(d, "S_Neu is NULL");
-
-		S_Layer d_layer = d->layer;
-		lu_user_assert_void(d_layer, "S_Layer is NULL");
-		lu_user_assert_void(d_layer->l > 0, "Trying to connect to -1 layer");
-
-		S_Layer b_layer = &layers[d_layer->l - 1];
-		lu_user_assert_void(b_layer, "S_Layer is NULL"); 
+		lu_user_assert_void(b_layer, "S_Layer is NULL");
 
 		lu_size x 		= d->x;
 		lu_size y 		= d->y;
@@ -68,15 +62,9 @@
 		d->b->nl = b;
 	}
 
-	static void s_a_neu_b_layer_connect(S_Neu d, struct s_layer* layers)
+	static void s_a_neu_b_layer_connect(S_Neu d, S_Layer b_layer)
 	{
 		lu_user_assert_void(d, "S_Neu is NULL");
-
-		S_Layer d_layer = d->layer;
-		lu_user_assert_void(d_layer, "S_Layer is NULL");
-		lu_user_assert_void(d_layer->l > 0, "Trying to connect to -1 layer");
-
-		S_Layer b_layer = &layers[d_layer->l - 1];
 		lu_user_assert_void(b_layer, "S_Layer is NULL"); 
 
 		lu_size x 		= d->x;

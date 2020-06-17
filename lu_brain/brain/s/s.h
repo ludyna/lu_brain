@@ -36,8 +36,8 @@
 	}; 
 
 	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer, lu_size x, lu_size y);
-	static void s_neu_b_layer_connect(S_Neu self, struct s_layer*);
-	static void s_a_neu_b_layer_connect(S_Neu self, struct s_layer*);
+	static void s_neu_b_layer_connect(S_Neu self, S_Layer);
+	static void s_a_neu_b_layer_connect(S_Neu self, S_Layer);
 	static inline void s_neu_t_connect(S_Neu v_neu, S_Neu p_neu) 
 	{
 		v_neu->t = p_neu;

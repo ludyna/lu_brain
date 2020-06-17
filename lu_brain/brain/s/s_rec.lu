@@ -124,6 +124,9 @@
 		S_Neu p_neu;
 		S_Layer v_layer;
 		S_Layer p_layer;
+		S_Layer b_v_layer;
+		S_Layer b_p_layer;
+
 		enum s_net_type type;
 
 		while (w > 0 && h > 0)
@@ -138,8 +141,18 @@
 			s_layer_init(p_layer, self, mem, SLT_P, layer_ix, w, h);
 			lu_user_assert(p_layer, "Cannot init p_layer");
 
-			if (layer_ix == 0) type = SNT_CELL;
-			else type = SNT_NEU;
+			if (layer_ix == 0) 
+			{
+				type = SNT_CELL;
+				b_v_layer = NULL;
+				b_p_layer = NULL;
+			}
+			else 
+			{
+				type = SNT_NEU;
+				b_v_layer = &self->v_layers[layer_ix - 1];
+				b_p_layer = &self->p_layers[layer_ix - 1];
+			}
 
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
@@ -149,11 +162,12 @@
 					p_neu = s_rec_neu_init(self, mem, type, p_layer, x, y); 
 					lu_user_assert(p_neu, "Cannot init v_neu");
 
-					if (layer_ix > 0)
-					{
-						s_neu_b_layer_connect(v_neu, self->v_layers); 	
-						s_neu_b_layer_connect(p_neu, self->p_layers);
-					}
+					if (b_v_layer)
+						s_neu_b_layer_connect(v_neu, b_v_layer); 
+
+					if (b_p_layer)	
+						s_neu_b_layer_connect(p_neu, b_p_layer);
+					
 
 					s_neu_t_connect(v_neu, p_neu);
 				}
@@ -170,6 +184,8 @@
 		// Init A Layers 
 		S_Layer av_layer;
 		S_Layer ap_layer;
+		S_Layer b_av_layer = NULL;
+		S_Layer b_ap_layer = NULL;
 		layer_ix = 0;
 		w = self->blocks_size;
 		y = 0;
@@ -180,6 +196,17 @@
 
 			av_layer = &self->av_layers[layer_ix];
 			ap_layer = &self->ap_layers[layer_ix];
+
+			if (layer_ix > 0)
+			{
+				b_av_layer = &self->av_layers[layer_ix - 1];
+				b_ap_layer = &self->ap_layers[layer_ix - 1];
+			}
+			else
+			{
+				b_av_layer = NULL;
+				b_ap_layer = NULL;
+			}
 
 			s_layer_init(av_layer, self, mem, SLT_AV, layer_ix, w, y + 1);
 			lu_user_assert(av_layer, "Cannot init av_layer");
@@ -193,8 +220,11 @@
 				p_neu = s_rec_neu_init(self, mem, SNT_A_NEU, ap_layer, x, y); 
 				lu_user_assert(p_neu, "Cannot init p_neu");
 
-				s_a_neu_b_layer_connect(v_neu, self->av_layers); 	
-				s_a_neu_b_layer_connect(p_neu, self->ap_layers);
+				if (b_av_layer)
+					s_a_neu_b_layer_connect(v_neu, b_av_layer); 	
+
+				if (b_ap_layer)
+					s_a_neu_b_layer_connect(p_neu, b_ap_layer);
 
 				s_neu_t_connect(v_neu, p_neu);
 			}
@@ -210,7 +240,6 @@
 		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
 		lu_user_assert(self->v_links_count == self->v_links_size, "Something wrong with v_links_count");
 		lu_user_assert(self->cols_count == self->cols_size, "Something wrong with cols_count");
-
 
 		return self;
 	}
