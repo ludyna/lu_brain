@@ -37,6 +37,7 @@
 
 	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer, lu_size x, lu_size y);
 	static void s_neu_b_layer_connect(S_Neu self, struct s_layer*);
+	static void s_a_neu_b_layer_connect(S_Neu self, struct s_layer*);
 	static inline void s_neu_t_connect(S_Neu v_neu, S_Neu p_neu) 
 	{
 		v_neu->t = p_neu;
@@ -95,7 +96,7 @@
 	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, S_Neu val) { self->neus[y * self->w + x] = val; }
 	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y) { return self->neus[y * self->w + x]; }
 	static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf);
-	//static inline s_layer_b_neu_connect(S_Layer self, S_Neu d, lu_size x, lu_size
+	
 	// velyki masyvy v s_rec shob vykorystaty perevahu cpu keshuvania
 	struct s_rec {
 		// vlasnyk
@@ -123,6 +124,7 @@
 		struct s_col_conf 		p_conf;
 		struct s_layer* 		p_layers;
 
+		lu_size 				blocks_size;
 		lu_size 				a_layers_size;
 		struct s_layer* 		av_layers;
 		struct s_layer* 		ap_layers;
