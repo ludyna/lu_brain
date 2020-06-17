@@ -188,26 +188,28 @@
 
 			for(x = 0; x < w; x++)
 			{
-				// v_neu = s_rec_neu_init(self, mem, SNT_A_NEU, v_layer, x, y); 
-				// lu_user_assert(v_neu, "Cannot init v_neu");
-				// p_neu = s_rec_neu_init(self, mem, SNT_A_NEU, p_layer, x, y); 
-				// lu_user_assert(p_neu, "Cannot init p_neu");
+				v_neu = s_rec_neu_init(self, mem, SNT_A_NEU, av_layer, x, y); 
+				lu_user_assert(v_neu, "Cannot init v_neu");
+				p_neu = s_rec_neu_init(self, mem, SNT_A_NEU, ap_layer, x, y); 
+				lu_user_assert(p_neu, "Cannot init p_neu");
 
-				// s_a_neu_b_layer_connect(v_neu, self->av_layers); 	
-				// s_a_neu_b_layer_connect(p_neu, self->ap_layers);
+				s_a_neu_b_layer_connect(v_neu, self->av_layers); 	
+				s_a_neu_b_layer_connect(p_neu, self->ap_layers);
 
-				// s_neu_t_connect(v_neu, p_neu);
+				s_neu_t_connect(v_neu, p_neu);
 			}
 
 			++layer_ix;
 			--w;
 		}
 
-		lu_debug("\ncols_count = %d", self->cols_count);
+		lu_debug("\nneus_count = %d, neus_size = %d", self->neus_count, self->neus_size);
+		lu_debug("\nv_links_count = %d, v_links_size = %d", self->v_links_count, self->v_links_size);
+		lu_debug("\ncols_count = %d, cols_size = %d", self->cols_count, self->cols_size);
 
-		//lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
-		//lu_user_assert(self->v_links_count == self->v_links_size, "Something wrong with v_links_count");
-		//lu_user_assert(self->cols_count == self->cols_size, "Something wrong with cols_count");
+		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
+		lu_user_assert(self->v_links_count == self->v_links_size, "Something wrong with v_links_count");
+		lu_user_assert(self->cols_count == self->cols_size, "Something wrong with cols_count");
 
 
 		return self;
@@ -298,15 +300,13 @@
 				lu_user_assert(false, "Wrong S_Layer type");
 		}
 
-		neu->cols = (S_Col) mem_alloc(mem, sizeof(struct s_col) * conf->component_size);
+		neu->cols = (S_Col*) mem_alloc(mem, sizeof(S_Col) * conf->component_size);
 		lu_user_assert(neu->cols, "Cannot allocate cols");
 		lu_size i;
 		S_Col col;
 		for(i = 0; i < conf->component_size; i++)
 		{
-			col = &neu->cols[i];
-
-			s_col_init(col, mem, neu, conf);
+			neu->cols[i] = s_rec_col_init(self, mem, neu, conf);
 		}
 
 		return neu;

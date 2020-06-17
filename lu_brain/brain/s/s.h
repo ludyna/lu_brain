@@ -27,7 +27,7 @@
 
 		S_V_Link				b;
 		S_V_Link				d;
-		S_Col 		     		cols;
+		S_Col* 		     		cols;
 
 		S_Neu  	 				t;			
 
