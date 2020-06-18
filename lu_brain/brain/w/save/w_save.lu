@@ -50,7 +50,7 @@
 
 		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
 
-		//hwave_init(&self->super, gate);
+		// wave_init(&self->super, gate);
 
 		// lu_user_assert(self, "Unable to allocate W_Save");
 

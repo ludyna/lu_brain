@@ -142,6 +142,12 @@
 	static S_Neu s_rec_full_neu_init(S_Rec self, S_Neu neu);
 	static S_Neu s_rec_a_neu_init(S_Rec self, S_Neu neu);
 
+	static inline S_Neu s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y)
+	{
+		S_Layer layer = &self->v_layers[l];
+		return layer->neus[x + y * layer->w];
+	}
+
 	struct s_mem {
 		Lu_Brain 				brain;
 

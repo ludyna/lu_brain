@@ -118,10 +118,7 @@
 
 
 	Lu_Wave lu_story_save_async(Lu_Story self, Lu_Save_Opts opts)
-	{ 
-		lu_debug("\n\nreturn NULL; %s:%d\n\n", __FILE__, __LINE__);
-		return NULL;
-
+	{
 		lu_user_assert(self, "Lu_Story should not be NULL");
 		lu_user_assert(opts, "Lu_Save_Opts is NULL");
 
@@ -138,6 +135,8 @@
 
 		Gate gate = brain_gate(self->brain);
 
+		lu_debug("\n\nreturn NULL; %s:%d\n\n", __FILE__, __LINE__);
+		return NULL;
 		// my reset wave v gate_save_wave_wait
 		W_Save wave = gate_save_wave_wait(gate);
 
