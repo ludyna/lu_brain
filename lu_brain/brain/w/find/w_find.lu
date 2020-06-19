@@ -2,6 +2,9 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+#include "find_opts.lu"
+#include "find_resp.lu"
+
 ///////////////////////////////////////////////////////////////////////////////
 // W_Find_Create_Opts
 
