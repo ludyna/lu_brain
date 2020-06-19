@@ -18,22 +18,11 @@
 		if (opts)
 			self->save_opts = *opts;
 
-		self->super.story = story;
+		self->super.story 	= story; 
+		self->save_opts 	= *opts;
 	} 
 
-	static void w_save_reset(W_Save self)
-	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
-		lu_user_assert_void(self->super.gate, "Gate is NULL");
 
-		Lu_Brain brain = self->super.gate->brain;
-
-		lu_user_assert_void(brain, "Lu_Brain is NULL");
-		lu_user_assert_void(arr_count(brain->recs) > 0, "Lu_Brain has no recs");
-
-		for (lu_size rec_i = 0; rec_i < arr_count(brain->recs); rec_i++)
-			self->fill_data[rec_i] = NULL;
-	}
 
 	static W_Save w_save_create(Gate gate, W_Save_Create_Opts opts)
 	{
@@ -50,7 +39,7 @@
 
 		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
 
-		// wave_init(&self->super, gate);
+		//wave_init(&self->super, gate);
 
 		// lu_user_assert(self, "Unable to allocate W_Save");
 

@@ -70,7 +70,7 @@ void test_s_col1and2(void)
 		/*v_nsc*/ 			1,
 		/*p_neu_size*/		4, 
 		/*p_nsc*/			1
-	); 
+	);
 
 	TEST_ASSERT(rec_opts_2);
 
@@ -109,10 +109,7 @@ void test_s_col1and2(void)
 	// s_col1 tests
 
 	//N_Col n_col = s_col_n_get(s_col1, 5.0);
-
-
 	// s_col2 tests
-
 
 	lu_brain_opts_destroy(brain_opts);
 	lu_brain_destroy(brain);

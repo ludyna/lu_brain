@@ -42,9 +42,6 @@
 
 		lu_size 		component_size;
 
-		lu_value 		contrast;
-		lu_value 		color_influence;
-
 		lu_value 		v_min;
 		lu_value 		v_max;
 		lu_size			v_neu_size;
