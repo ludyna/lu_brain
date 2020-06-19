@@ -1,26 +1,6 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
-	static void w_rec_debug_print(W_Rec self)
-	{
-		lu_size i;
-		W_Col col;
-
-		lu_debug("\n---------------------");
-		lu_debug("\nW_Rec pers(count=%d, size=%d): ", arr_count(self->pers), arr_size(self->pers));
-
-		for(i = 0; i < arr_count(self->pers); i++)
-		{
-			col = (W_Col) arr_get(self->pers, i);
-
-			if (col == NULL)
-				lu_debug("NULL ");
-			else
-				lu_debug("(%d, %d) ", col->x, col->y);
-		}  
-
-		lu_debug("\n");
-	}
 
 	static W_Rec w_rec_create(Mem mem, S_Rec s_rec)
 	{
@@ -31,39 +11,8 @@
 		W_Rec self = (W_Rec) mem_alloc(mem, sizeof(struct w_rec));
 		lu_user_assert(self, "Cannot allocate W_Rec");
 
-		// self->component_size 	= s_rec->component_size;
-		// self->w_cols_w 			= s_rec->cells_w;
-		// self->w_cols_h 			= s_rec->cells_h;
-		// self->w_cols 			= (W_Col*) mem_alloc(mem, sizeof(W_Col) * self->w_cols_w * self->w_cols_h);
-		// lu_user_assert(self->w_cols, "Cannot allocate W_Rec w_cols");
 
-		// lu_size x, y;
-		// S_Col s_col;
-
-		// self->pers 		= arr_create(mem, s_rec->rec->width * s_rec->rec->height);
-
-		// lu_user_assert(self->pers, "Cannot allocate pers");
-
-		// for(y = 0; y < self->w_cols_h; y++)
-		// 	for(x = 0; x < self->w_cols_w; x++)
-		// 	{
-		// 		s_col = s_rec_v_cell_get(s_rec, x, y);
-		// 		if (!s_col) continue;
-
-		// 		W_Col col = w_col_create(mem, self, s_col);
-		// 		w_rec_w_cols_set(self, x, y, col);
-
-		// 		if (col && (col->type == SCT_PER_HOR || col->type == SCT_PER_VER))
-		// 			arr_append(self->pers, col);
-		// 	}
 
 		return self;
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// 
-
-	static void w_rec_sig_send(W_Rec self, lu_size x, lu_size y, lu_size n_ent)
-	{
-
-	}

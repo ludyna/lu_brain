@@ -40,7 +40,7 @@
 
 		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
 
-
+		
 
 		return self;
 	}

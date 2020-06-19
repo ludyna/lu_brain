@@ -5,40 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	static void wave_init(Lu_Wave self, Gate gate)
+	static Lu_Wave wave_init(Lu_Wave self, Gate gate, S_Mem s_mem, N_Mem n_mem)
 	{
-		lu_user_assert_void(gate, "Gate is NULL");
+		lu_user_assert(gate, "Gate is NULL");
+		lu_user_assert(s_mem, "S_Mem is NULL");
+		lu_user_assert(n_mem, "N_Mem is NULL");
 
-		self->gate = gate;
-
-		Lu_Brain brain = gate->brain;
-		lu_user_assert_void(brain, "Brain is NULL");
-		lu_user_assert_void(brain->s_mem, "Brain s_mem is NULL");
-
-		self->s_mem = brain->s_mem; // for easier access
-
-		lu_user_assert_void(brain->mem_perm, "Brain mem is NULL");
-
-		Arr recs = brain->s_mem->recs;
-
-		lu_user_assert_void(recs, "Brain s_mem recs is NULL");
-
-		self->w_recs = arr_create(brain->mem_perm, arr_size(self->s_mem->recs));
-
-		S_Rec s_rec;
-		W_Rec w_rec;
-
-		for(lu_size i = 0; i < arr_count(recs); i++)
-		{
-			s_rec = s_mem_s_rec_get(brain->s_mem, i);
-			lu_user_assert_void(s_rec, "S_Rec is NULL");
-
-			w_rec = w_rec_create(brain->mem_perm, s_rec);
-
-			arr_set(self->w_recs, i, w_rec);
-
-			w_rec_debug_print(w_rec);
-		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
