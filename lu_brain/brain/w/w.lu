@@ -11,6 +11,4 @@
 #include "restore/restore_resp.lu"
 #include "restore/w_restore.lu"
 
-#include "save/save_opts.lu"
-#include "save/save_resp.lu"
 #include "save/w_save.lu"

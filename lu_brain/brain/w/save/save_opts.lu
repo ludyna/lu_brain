@@ -6,12 +6,8 @@
 	Lu_Save_Opts lu_save_opts_create()
 	{
 		Lu_Save_Opts self = (Lu_Save_Opts) mem_alloc(g_mem_temp, sizeof(struct lu_save_opts));
-
-		self->cont_create_x_radius 	= 1;
-		self->cont_create_y_radius 	= 1;
-		self->cont_create_t_radius 	= 1;
  
- 		self->contrast 				= 0.2;
+ 		self->contrast 				= 0.5;
 
 		return self;
 	}

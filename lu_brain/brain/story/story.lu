@@ -138,7 +138,7 @@
 		// my reset wave v gate_save_wave_wait
 		W_Save wave = gate_save_wave_wait(gate);
 
-		w_save_init(wave, self, opts);
+		w_save_init_and_reset(wave, self, opts);
 
 		lu_size block_i, rec_i;
 		
