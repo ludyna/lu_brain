@@ -11,6 +11,11 @@
 		lu_user_assert(s_mem, "S_Mem is NULL");
 		lu_user_assert(n_mem, "N_Mem is NULL");
 
+		self->gate 		= gate;
+		self->s_mem 	= s_mem;
+		self->n_mem 	= n_mem;
+
+		return self;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

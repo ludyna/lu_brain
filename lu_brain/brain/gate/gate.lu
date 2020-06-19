@@ -49,7 +49,7 @@
 		lu_user_assert(self->save_waves, "Unable to create save waves array");
 		for(i = 0; i < opts->w_saves_size; i++)
       	{
-      		w_save = w_save_create(self, &opts->w_save_create_opts);
+      		w_save = w_save_create(self, brain->s_mem, brain->n_mem, &opts->w_save_create_opts);
       		lu_user_assert(w_save, "Unable to create save wave");
 			arr_set(self->save_waves, i, w_save);
 		}

@@ -53,7 +53,7 @@
 		Gate 			gate;
 
 		S_Mem 			s_mem;
-		N_Mem 			n_mem;
+		N_Mem 			n_mem;		// maye buty ostannim i zayniate vse vilne misce pid neurony
 	};	
 
 

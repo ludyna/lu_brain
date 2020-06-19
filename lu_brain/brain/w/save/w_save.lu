@@ -16,16 +16,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // W_Save
 
-	static void w_save_init_and_reset(W_Save self, Lu_Story story, Lu_Save_Opts opts)
-	{
-		if (opts)
-			self->save_opts = *opts;
-
-		self->super.story 	= story; 
-		self->save_opts 	= *opts;
-	} 
-
-	static W_Save w_save_create(Gate gate, W_Save_Create_Opts opts)
+	static W_Save w_save_create(Gate gate, S_Mem s_mem, N_Mem n_mem, W_Save_Create_Opts opts)
 	{
 		lu_user_assert(opts->blocks_max_size > 0, "Option blocks_max_size should be greater than 0");
 		lu_user_assert(gate, "Gate is NULL");
@@ -40,7 +31,17 @@
 
 		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
 
-		
+		wave_init(&self->super, gate, s_mem, n_mem);
 
 		return self;
 	}
+
+
+	static void w_save_init_and_reset(W_Save self, Lu_Story story, Lu_Save_Opts opts)
+	{
+		if (opts)
+			self->save_opts = *opts;
+
+		self->super.story 	= story; 
+		self->save_opts 	= *opts;
+	} 
