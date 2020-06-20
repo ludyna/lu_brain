@@ -29,6 +29,8 @@
 	};
 
 	struct n_neu {
+		lu_size 				sid;
+
 		n_v_lin_ix 				p_l; 		
 		lu_value 				p_count;
 

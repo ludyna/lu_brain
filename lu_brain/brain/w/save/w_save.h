@@ -14,6 +14,7 @@
 
 	struct lu_save_opts {	
 		lu_value 				contrast;
+		lu_bool 					ignore_color;
 	};
 
 	struct w_save {

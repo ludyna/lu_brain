@@ -21,7 +21,8 @@
 		lu_size 				color_exc_y_radius;
 		lu_size 				color_exc_val_radius;
 
-		lu_value 				color_influence; // ce maye znachenia pry find
+		lu_value 				color_influence; 	// ce maye znachenia pry find
+		lu_bool 				auto_save;		 	// auto save data if its new
 	};
 
 	struct w_find {

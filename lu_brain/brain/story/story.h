@@ -18,7 +18,7 @@
 
 		// Resetable
 		lu_size				y;
-		bool 				start_block_on_next_data;
+		lu_bool 				start_block_on_next_data;
 		lu_size 			block_count;
 
 		// Attached gate and wave

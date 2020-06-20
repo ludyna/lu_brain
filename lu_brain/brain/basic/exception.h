@@ -32,7 +32,7 @@ enum lu_e {
 #define LU_USER_ASSERT_DEFAULT 1
 #endif 
 
-extern bool g_user_assert;
+extern lu_bool g_user_assert;
 
 static inline void lu_user_assert_on() { g_user_assert = 1; }
 static inline void lu_user_assert_off() { g_user_assert = 0; }
