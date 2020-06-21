@@ -1,1 +1,0 @@
-Receiver specific non shareable code

@@ -147,8 +147,6 @@
 		Lu_Rec rec; 
 		Arr2 data = self->data;
 
-		// lu_debug("\n\nreturn NULL; %s:%d\n\n", __FILE__, __LINE__);
-		// return NULL;
 		S_Rec s_rec;
 
 		for(block_i = 0; block_i < self->block_count; block_i++)

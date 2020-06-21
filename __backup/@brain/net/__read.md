@@ -1,2 +1,0 @@
-Shared elements between components.
-===
