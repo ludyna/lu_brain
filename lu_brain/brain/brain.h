@@ -50,11 +50,11 @@
 		Mem 			mem_perm;
 
 		Arr				recs;		// receivers
-  
-		Gate 			gate;
+ 
+ 		Gate 			gate;
 
 		S_Mem 			s_mem;
-		N_Mem 			n_mem;		// maye buty ostannim i zayniate vse vilne misce pid neurony
+		N_Mem 			n_mem;		
 	};	
 
 

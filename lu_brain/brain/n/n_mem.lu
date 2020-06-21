@@ -5,20 +5,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static N_Mem n_mem_create(S_Mem s_mem)
+	static N_Mem n_mem_create(Lu_Brain brain)
 	{
-		lu_user_assert(s_mem, "S_Mem is NULL");
-
-		Lu_Brain brain = s_mem->brain;
 		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(brain->mem_perm, "Lu_Brain mem_perm is NULL");
 
-		Mem mem = brain->mem_perm;
-		lu_user_assert(mem, "Mem is NULL");
-
-		N_Mem self = (N_Mem) mem_alloc(mem, sizeof(struct n_mem));
+		N_Mem self 			= (N_Mem) mem_alloc(brain->mem_perm, sizeof(struct n_mem));
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
-		self->s_mem = s_mem;
+		self->brain 		= brain;
 
 		return self;
 	}

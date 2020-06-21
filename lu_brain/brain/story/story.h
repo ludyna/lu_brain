@@ -21,7 +21,7 @@
 
 
 		// Resetable
-		lu_size				y;
+		lu_size				y;  
 		lu_bool 			start_block_on_next_data;
 		lu_size 			blocks_count;
 

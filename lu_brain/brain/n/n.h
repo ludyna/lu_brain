@@ -66,21 +66,12 @@
 // N Dopomizhni
 	
 	struct n_mem {
-
 		// vlasnyk
-		S_Mem 					s_mem; 
+		Lu_Brain 				brain;
 
-		// n 
-		Mem_Table 				neus; 
-		Mem_Table 				h_lins;
-		Mem_Table				v_lins;
-
-		// komponenty
-		Mem_Table 				names;
-		Mem_Table 				values;
 	};
 
-	static N_Mem n_mem_create(S_Mem s_mem);
+	static N_Mem n_mem_create(Lu_Brain brain);
 	
 
 #endif // _LU_N_H
