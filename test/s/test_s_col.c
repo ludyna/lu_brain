@@ -13,7 +13,7 @@ Lu_Rec_Opts 		rec_opts_1;
 Lu_Rec_Opts 		rec_opts_2;
 
 lu_value			data_0[] 		= { 0 }; 
-lu_value			data_1[] 		= { 1.0 };
+lu_value			data_01[] 		= { 1.0 };
 lu_value			data_3[] 		= { 3.0 };
 lu_value			data_5[] 		= { 5.0 };
 lu_value			data_10[] 		= { 10.0 };

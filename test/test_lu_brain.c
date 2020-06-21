@@ -25,7 +25,7 @@ lu_value			data_0[] 		= {
 										1, 1, 1,
 										1, 1, 1
 									};
-lu_value			data_1[] 		= { 
+lu_value			data_01[] 		= { 
 										1, 0, 0, 
 										1, 1, 1,
 										1, 1, 1
@@ -130,7 +130,7 @@ void test_lu_story(void)
 	// 	TEST_ASSERT(d[0] == 0);
 	// 	TEST_ASSERT(story->y == 0);
 
-	// lu_story_push(story, rec_1, 0, data_1);
+	// lu_story_push(story, rec_1, 0, data_01);
 	// lu_story_push(story, rec_2, 0, data_2);
 
 	// 	TEST_ASSERT(story->y == 1);
@@ -187,7 +187,7 @@ void test_lu_brain_basics(void)
 		lu_story_push(story, rec_1, data_0);
 
 		lu_block_begin(story);
-		lu_story_push(story, rec_1, data_1);
+		lu_story_push(story, rec_1, data_01);
 		lu_story_push(story, rec_2, data_2);
 		lu_block_end(story);
 
@@ -222,7 +222,7 @@ void test_lu_brain_basics(void)
 			lu_story_push(story, rec_1, data_0);
 
 			lu_block_begin(story);
-			lu_story_push(story, rec_1, data_1);
+			lu_story_push(story, rec_1, data_01);
 			lu_story_push(story, rec_2, data_2);
 			lu_block_end(story);
 

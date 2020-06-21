@@ -48,7 +48,7 @@
 
 				lu_user_assert(data, "Something went wrong");
 
-				data_init(data, rec->width, rec->height, rec->components_size, NULL);
+				data_init(data, 0, 0, rec->components_size, NULL);
 			}
 		}
 
