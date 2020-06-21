@@ -10,7 +10,7 @@
 		lu_size 		width, 
 		lu_size 		height, 
 		lu_size 		blocks_size,
-		lu_size 		component_size,
+		lu_size 		components_size,
 		lu_value 		v_min, 
 		lu_value 		v_max, 
 		lu_size 		v_neu_size, 
@@ -21,7 +21,7 @@
 	{
 		lu_user_assert(width > 0, "Width should be greater than 0");
 		lu_user_assert(height > 0, "Height should be greater than 0");
-		lu_user_assert(component_size > 0, "component_size should be at least 1");
+		lu_user_assert(components_size > 0, "components_size should be at least 1");
 		lu_user_assert(v_max - v_min > 0, "v_max minus v_min should greater than 0");
 		lu_user_assert(v_neu_size > 0, "v_neu_size should be greater than 0");
 
@@ -32,7 +32,7 @@
 		self->width 			= width;
 		self->height			= height;
 		self->blocks_size		= blocks_size;
-		self->component_size 	= component_size;
+		self->components_size 	= components_size;
 		
 		self->v_min 			= v_min;
 		self->v_max 			= v_max;

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem (default)
 
-	static lu_p_byte mem_alloc_default(Mem self, lu_size size, const char* func, const char* file, int line)
+	lu_p_byte mem_alloc_default(Mem self, lu_size size, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
@@ -14,28 +14,28 @@
 		return (lu_p_byte) calloc(1, size);
 	}
 
-	static lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		return (lu_p_byte) realloc(p, size_in_bytes);
 	}
 
-	static void mem_free_default(Mem self, lu_p_byte p, const char* func, const char* file, int line)
+	void mem_free_default(Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		free((lu_p_void) p);
 	}
 
-	static void mem_destroy_default(Mem self, Mem parent_mem, const char* func, const char* file, int line)
+	void mem_destroy_default(Mem self, Mem parent_mem, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
 
 		free((lu_p_void) self);
 	}
 
-	static Mem_Table mem_table_create_default(
+	Mem_Table mem_table_create_default(
 		Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
@@ -62,7 +62,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	static void mem_init(Mem self)
+	void mem_init(Mem self)
 	{
 		self->alloc 		= g_mem_default_instance.alloc;
 		self->realloc 		= g_mem_default_instance.realloc;
@@ -71,7 +71,7 @@
 		self->table_create 	= g_mem_default_instance.table_create;
 	}
 
-	static Mem mem_create()
+	Mem mem_create()
 	{
 		Mem self 		= malloc(sizeof(struct mem));
 
@@ -83,7 +83,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Table
 
-    static void mem_table_realloc_default(
+    void mem_table_realloc_default(
 		Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
@@ -95,12 +95,12 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	static void mem_table_destroy_default(Mem_Table self, Mem mem, const char* func, const char* file, int line)
+	void mem_table_destroy_default(Mem_Table self, Mem mem, const char* func, const char* file, int line)
 	{
 		mem_free(mem, (lu_p_byte) self);
 	}
 	
-	static lu_p_byte mem_table_record_alloc_default(Mem_Table self, const char* func, const char* file, int line)
+	lu_p_byte mem_table_record_alloc_default(Mem_Table self, const char* func, const char* file, int line)
 	{
 		lu_p_byte res;
 		if (self->records_pos < self->records_end)
@@ -123,7 +123,7 @@
 		return res;
 	}
 
-	static void mem_table_record_free_default(Mem_Table self, lu_p_byte record, const char* func, const char* file, int line)
+	void mem_table_record_free_default(Mem_Table self, lu_p_byte record, const char* func, const char* file, int line)
 	{
 		if (record == NULL) return;  // should prob debug this
 
@@ -137,7 +137,7 @@
 		--self->records_count;
 	}
 
-	static Mem_Table mem_table_create_default(
+	Mem_Table mem_table_create_default(
 		Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 

@@ -30,11 +30,12 @@
 		lu_user_assert(mem, "Mem is NULL");
 
 		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
+		lu_user_assert(self, "Cannot allocate W_Save");
+
 		wave_init(&self->super, gate, s_mem, n_mem);
 
 		return self;
 	}
-
 
 	static void w_save_init_and_reset(W_Save self, Lu_Story story, Lu_Save_Opts opts)
 	{
@@ -45,11 +46,32 @@
 		self->save_opts 	= *opts;
 	} 
 
-	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i)
+	// static inline data_get(
+
+	// static void data_debug(lu_p_value data, S_Rec s_rec)
+	// {
+	// 	lu_size x;
+	// 	lu_size y;
+	// 	lu_value val;
+	// 	lu_size w = s_rec->cells_w;
+	// 	lu_size	h = s_rec->cells_h; 
+
+	// 	for(y = 0; y < h; y++)
+	// 		for(x = 0; w; x++)
+	// 		{
+	// 			val = lu_data_get(data, w, h, lu_size d, lu_size x, lu_size y, lu_size z)
+	// 		}
+	// }
+
+	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, Data data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(s_rec, "S_Rec is NULL");
 		lu_user_assert_void(s_rec->rec, "S_Rec rec is NULL");
 		lu_user_assert_void(data, "Data is NULL");
+
+		lu_user_assert_void(block_i < s_rec->blocks_size, "Reached block maximum");
+
+
 
 	}

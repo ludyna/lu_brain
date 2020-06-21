@@ -43,10 +43,6 @@
 		LU_NT_PERCEPTION
 	}; 
 
-
-	static inline void lu_data_set(lu_p_value data, lu_size w, lu_size h, lu_size d, lu_size x, lu_size y, lu_size z, lu_value value) { data[z * w * h + y * w + x] = value; }
-	static inline lu_value lu_data_get(lu_p_value data, lu_size w, lu_size h, lu_size d, lu_size x, lu_size y, lu_size z) { return data[z * w * h + y * w + x]; }
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain_Opts API
 
@@ -61,7 +57,7 @@
 		lu_size w, 
 		lu_size h, 
 		lu_size blocks_size,
-		lu_size component_size,
+		lu_size components_size,
 		lu_value v_min, 
 		lu_value v_max, 
 		lu_size v_neu_size, 

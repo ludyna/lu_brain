@@ -31,8 +31,8 @@
 		///////////////////////////////////////
 		// Confs
 
-		s_col_conf_init(&self->v_conf, mem, rec->component_size, rec->v_min, rec->v_max, rec->v_neu_size, rec->v_nsc);
-		s_col_conf_init(&self->p_conf, mem, rec->component_size, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
+		s_col_conf_init(&self->v_conf, mem, rec->components_size, rec->v_min, rec->v_max, rec->v_neu_size, rec->v_nsc);
+		s_col_conf_init(&self->p_conf, mem, rec->components_size, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
 
 		///////////////////////////////////////
 		// VP Layers
@@ -103,7 +103,7 @@
 		// Cols
 
 		self->cols_count = 0;
-		self->cols_size = wh * self->v_conf.component_size + wh * self->p_conf.component_size;
+		self->cols_size = wh * self->v_conf.components_size + wh * self->p_conf.components_size;
 
 		self->cols = (struct s_col*) mem_alloc(mem, sizeof(struct s_col) * self->cols_size);
 		lu_user_assert(self->cols, "Cannot allocate cols");		
@@ -323,11 +323,11 @@
 				lu_user_assert(false, "Wrong S_Layer type");
 		}
 
-		neu->cols = (S_Col*) mem_alloc(mem, sizeof(S_Col) * conf->component_size);
+		neu->cols = (S_Col*) mem_alloc(mem, sizeof(S_Col) * conf->components_size);
 		lu_user_assert(neu->cols, "Cannot allocate cols");
 		lu_size i;
 		S_Col col;
-		for(i = 0; i < conf->component_size; i++)
+		for(i = 0; i < conf->components_size; i++)
 		{
 			neu->cols[i] = s_rec_col_init(self, mem, neu, conf);
 		}

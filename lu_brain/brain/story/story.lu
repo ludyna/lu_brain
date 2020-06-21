@@ -23,14 +23,38 @@
 		// Initialize
 		self->brain 	= brain;
 
-		lu_size w 		= arr_count(self->brain->recs);
-		lu_size h 		= story_size_in_blocks == 0 ? STORY_INITIAL_BLOCKS_SIZE : story_size_in_blocks;
-		self->data 		= arr2_create(g_mem_temp, w, h);
+		self->datum_w	= arr_count(self->brain->recs);
+		self->datum_h 	= story_size_in_blocks == 0 ? STORY_INITIAL_BLOCKS_SIZE : story_size_in_blocks;
 
-		lu_size x, y;
+		lu_size w = self->datum_w;
+		lu_size h = self->datum_h;
+
+		self->datum 	= (struct data*) mem_alloc(g_mem_temp, sizeof(struct data) * w * h);
+		lu_user_assert(self->datum, "Cannot allocate space for data");
+
+		lu_size rec_i;
+		lu_size block_i;
 		Lu_Rec rec;
+		Data data;
 
-		story_reset(self);
+		for (rec_i = 0; rec_i < w; rec_i++)
+		{
+			rec = arr_get(self->brain->recs, rec_i);
+			lu_user_assert(rec, "Lu_Rec is NULL");
+
+			for (block_i = 0; block_i < h; block_i++)
+			{
+				data = story_data_get(self, rec_i, block_i);
+
+				lu_user_assert(data, "Something went wrong");
+
+				data_init(data, rec->width, rec->height, rec->components_size, NULL);
+			}
+		}
+
+		self->y = 0;
+		self->start_block_on_next_data = false; 
+		self->blocks_count = 0;
 
 		return self;
 	}
@@ -41,7 +65,7 @@
 
 		story_wave_detach(self);
 
-		arr2_destroy(self->data, g_mem_temp);
+		mem_free(g_mem_temp, (lu_p_byte) self->datum);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
@@ -52,21 +76,25 @@
 	{
 		lu_user_assert_void(self, "Lu_Story should be present");
 		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
-		lu_user_assert_void(self->data, "Lu_Story data should be present");
+		lu_user_assert_void(self->datum, "Lu_Story datum should be present");
 
 		lu_size block_i, rec_i;
-		Arr2 data = self->data;
 		Lu_Rec rec;
 		Lu_Brain brain = self->brain;
+		Data data;
 
 		for(block_i = 0; block_i <= self->y; block_i++)
-			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
-				arr2_set(data, rec_i, block_i, NULL);
+			for(rec_i = 0; rec_i < self->datum_w; rec_i++)
+			{
+				data = story_data_get(self, rec_i, block_i);
+				lu_user_assert_void(data, "Something went wrong");
 
+				data_reset(data);
+			}
 
 		self->y = 0;
 		self->start_block_on_next_data = false; 
-		self->block_count = 0;
+		self->blocks_count = 0;
 	}
 
 
@@ -85,35 +113,37 @@
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	void lu_story_push(Lu_Story self, Lu_Rec rec, lu_value* data)
+	void lu_story_push(Lu_Story self, Lu_Rec rec, lu_value* values)
 	{
 		lu_user_assert_void(self, "Lu_Story should not be NULL"); 
 		lu_user_assert_void(rec, "Lu_Rec should not be NULL"); 
-		lu_user_assert_void(data, "data should not be NULL");
-		lu_user_assert_void(rec->component_size, "Lu_Rec component_size is zero"); 
+		lu_user_assert_void(values, "values should not be NULL");
+		lu_user_assert_void(rec->components_size, "Lu_Rec components_size is zero"); 
 
 		if (self->start_block_on_next_data)
 		{ 
 			// yaksho my na nuliu, to ce itak pochatok bloka
-			if (self->block_count)
+			if (self->blocks_count)
 				++self->y;	
 			
 			self->start_block_on_next_data = false;
 		}
 	
-		lu_p_value v = arr2_get(self->data, rec->id, self->y);
+		Data data = story_data_get(self, rec->id, self->y);
+		lu_p_value v = data->values;
 		if (v) 
 			// new input to the same rec and channel advances story
 			++self->y;
 			
  		lu_user_assert_void(
- 			self->y < arr2_height(self->data), 
+ 			self->y < self->datum_h, 
  			"Out of available blocks in story."
  		); 
+ 
+ 		data = story_data_get(self, rec->id, self->y);
+ 		data_init(data, rec->width, rec->height, rec->components_size, values);
 
- 		arr2_set(self->data, rec->id, self->y, (lu_p_void) data);
-
- 		self->block_count = self->y + 1;
+ 		self->blocks_count = self->y + 1;
 	} 
 
 
@@ -122,7 +152,7 @@
 		lu_user_assert(self, "Lu_Story should not be NULL");
 		lu_user_assert(opts, "Lu_Save_Opts is NULL");
 
-		lu_debug("\nSAVE (block_count = %lu)\n", self->block_count);
+		lu_debug("\nSAVE (blocks_count = %lu)\n", self->blocks_count);
 
 		Lu_Brain brain = self->brain;
 		lu_user_assert(brain, "Lu_Story not linked to brain");
@@ -131,7 +161,7 @@
 
 		lu_user_assert(recs, "Lu_Brain has no recs");
 		lu_user_assert(arr_count(recs), "Lu_Brain has no recs1");
-		lu_user_assert(self->block_count, "Lu_Story without blocks");
+		lu_user_assert(self->blocks_count, "Lu_Story without blocks");
 
 		Gate gate = brain_gate(self->brain);
 
@@ -142,27 +172,25 @@
 
 		lu_size block_i;
 		lu_size rec_i;
-		lu_p_value curr_d;
+		Data data;
 
 		Lu_Rec rec; 
-		Arr2 data = self->data;
-
 		S_Rec s_rec;
 
-		for(block_i = 0; block_i < self->block_count; block_i++)
+		for(block_i = 0; block_i < self->blocks_count; block_i++)
 		{
-			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
+			for(rec_i = 0; rec_i < self->datum_w; rec_i++)
 			{
 				s_rec 	= (S_Rec) arr_get(brain->s_mem->recs, rec_i);
 
 				lu_user_assert(s_rec, "S_Rec is NULL");
 
-				curr_d 	= arr2_get(data, rec_i, block_i);
+				data 	= story_data_get(self, rec_i, block_i);
 
 				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
-				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
+				data->values ? lu_debug("%.0f ", data->values[0]) : lu_debug("NULL ");
 
-				w_save(wave, opts, s_rec, curr_d, block_i);
+				w_save(wave, opts, s_rec, data, block_i);
 			}
 		}
 

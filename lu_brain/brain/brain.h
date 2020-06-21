@@ -10,6 +10,7 @@
 #include "../lu_brain.h" // public interface
 
 #include "typedefs.h"
+#include "data/data.h"
 #include "n/n.h"
 #include "rec/rec.h"
 #include "net/net.h"

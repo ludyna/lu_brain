@@ -49,7 +49,7 @@
 //
 
 	struct s_col_conf {
-		lu_size 				component_size;
+		lu_size 				components_size;
 		lu_value 				orig_min;
 		lu_value 				orig_max;
 		lu_value 				max;
@@ -60,7 +60,7 @@
 		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
-	static S_Col_Conf s_col_conf_init(S_Col_Conf, Mem mem, lu_size component_size, lu_value min, lu_value max, lu_size neu_size, lu_size nsc);
+	static S_Col_Conf s_col_conf_init(S_Col_Conf, Mem mem, lu_size components_size, lu_value min, lu_value max, lu_size neu_size, lu_size nsc);
 	static inline lu_value s_col_conf_norm(S_Col_Conf self, lu_value request);
 	static inline lu_size s_col_conf_indx(S_Col_Conf self, lu_value val);
 	static inline struct lu_size_range s_col_conf_indx_range(S_Col_Conf self, lu_value val);

@@ -21,14 +21,12 @@
 		struct lu_wave 			super;
 		struct lu_save_opts 	save_opts;
 
-		// tymchasove zberezhenia linkiv na prev data 
-		// vidsutnist danyh oznachaye povtoruvanist danyh
-		lu_p_value* 			fill_data;
+
 	}; 
 	
 	static W_Save w_save_create(Gate gate, S_Mem s_mem, N_Mem n_mem, W_Save_Create_Opts opts);
 	static void w_save_init_and_reset(W_Save, Lu_Story, Lu_Save_Opts);
-	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i);
+	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, Data data, lu_size block_i);
 
 
 

@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Col_Conf s_col_conf_init(S_Col_Conf self, Mem mem, lu_size component_size, lu_value min, lu_value max, lu_size neu_size, lu_size nsc)
+	static S_Col_Conf s_col_conf_init(S_Col_Conf self, Mem mem, lu_size components_size, lu_value min, lu_value max, lu_size neu_size, lu_size nsc)
 	{
-		self->component_size 	= component_size;
+		self->components_size 	= components_size;
 		self->neu_size  		= neu_size; // value depth in indexes
 		self->orig_min 			= min;
 		self->orig_max 			= max;
