@@ -7,13 +7,7 @@
 	{
 		Lu_Find_Opts self = (Lu_Find_Opts) mem_alloc(g_mem_temp, sizeof(struct lu_find_opts));
 
-		self->cont_exc_x_radius		= 1;
-		self->cont_exc_y_radius 	= 1;
-		self->cont_exc_t_radius 	= 1;
 
-		self->color_exc_x_radius 	= 1;
-		self->color_exc_y_radius 	= 1;
-		self->color_exc_val_radius 	= 1;
 
 		return self;
 	}

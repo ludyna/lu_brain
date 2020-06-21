@@ -14,7 +14,7 @@
 
 	struct lu_save_opts {	
 		lu_value 				contrast;
-		lu_bool 					ignore_color;
+		lu_bool 				ignore_color;
 	};
 
 	struct w_save {
@@ -28,7 +28,7 @@
 	
 	static W_Save w_save_create(Gate gate, S_Mem s_mem, N_Mem n_mem, W_Save_Create_Opts opts);
 	static void w_save_init_and_reset(W_Save, Lu_Story, Lu_Save_Opts);
-	static void w_save_data_send(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i);
+	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i);
 
 
 

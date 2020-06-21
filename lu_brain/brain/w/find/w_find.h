@@ -13,16 +13,10 @@
 	static void w_find_create_opts_init(W_Find_Create_Opts);
 
 	struct lu_find_opts {
-		lu_size 				cont_exc_x_radius;
-		lu_size 				cont_exc_y_radius;
-		lu_size 				cont_exc_t_radius;
-
-		lu_size 				color_exc_x_radius;
-		lu_size 				color_exc_y_radius;
-		lu_size 				color_exc_val_radius;
-
 		lu_value 				color_influence; 	// ce maye znachenia pry find
 		lu_bool 				auto_save;		 	// auto save data if its new
+		lu_size					winner_count;
+		lu_value 				fire_breakpoint;	// [0,1]			
 	};
 
 	struct w_find {

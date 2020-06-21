@@ -1,0 +1,6 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+#include "wave_resp.lu"
+#include "wave.lu"

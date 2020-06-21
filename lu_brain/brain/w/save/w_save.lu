@@ -45,3 +45,12 @@
 		self->super.story 	= story; 
 		self->save_opts 	= *opts;
 	} 
+
+	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu_user_assert_void(s_rec, "S_Rec is NULL");
+		lu_user_assert_void(s_rec->rec, "S_Rec rec is NULL");
+		lu_user_assert_void(data, "Data is NULL");
+
+	}

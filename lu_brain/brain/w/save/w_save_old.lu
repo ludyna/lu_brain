@@ -55,7 +55,7 @@
 	// 	return x >= 0 && x < self->w_cols_w && y >= 0 && y < self->w_cols_h; 
 	// }
 
-	static void w_save_data_send(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i)
+	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, lu_p_value data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(s_rec, "S_Rec is NULL");

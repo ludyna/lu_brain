@@ -140,82 +140,33 @@
 
 		w_save_init_and_reset(wave, self, opts);
 
-		lu_size block_i, rec_i;
-		
+		lu_size block_i;
+		lu_size rec_i;
 		lu_p_value curr_d;
-		lu_p_value fill_d;
 
 		Lu_Rec rec; 
 		Arr2 data = self->data;
 
-
 		// lu_debug("\n\nreturn NULL; %s:%d\n\n", __FILE__, __LINE__);
 		// return NULL;
+		S_Rec s_rec;
 
-		// for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
-		// {
-		// 	rec 	= lu_brain_rec_get(brain, rec_i);
+		for(block_i = 0; block_i < self->block_count; block_i++)
+		{
+			for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
+			{
+				s_rec 	= (S_Rec) arr_get(brain->s_mem->recs, rec_i);
 
-		// 	for(block_i = 0; block_i < self->block_count; block_i++)
-		// 	{
-		// 		curr_d = arr2_get(data, rec_i, block_i);
+				lu_user_assert(s_rec, "S_Rec is NULL");
 
-		// 		if (curr_d) {
-		// 			wave->fill_data[rec_i] = curr_d;
-		// 			break; 
-		// 		}
-		// 	}
+				curr_d 	= arr2_get(data, rec_i, block_i);
 
-		// 	if (wave->fill_data[rec_i] == NULL)
-		// 		lu_user_debug_args("Lu_Story has no data for rec %lu", rec_i);
-		
-		// }
+				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
+				curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
 
-
-		// // for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
-		// // {
-		// // 	rec 	= lu_brain_rec_get(brain, rec_i);
-		// // 	last_ch = wave->fill_data[rec_i];
-
-		// // 	for (chan_i = 0; chan_i < rec->depth;  chan_i++)
-		// // 	{
-		// // 		curr_d = arr_get(last_ch, chan_i);
-
-		// // 		if (curr_d)
-		// // 			lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): %.0f", rec_i, chan_i, curr_d[0]);
-		// // 		else
-		// // 			lu_debug("\nLAST_CH(rec=%lu, chan_i=%lu): NULL", rec_i, chan_i);
-		// // 	}
-		// // }
-
-
-		// S_Rec s_rec;
-
-		// for(block_i = 0; block_i < self->block_count; block_i++)
-		// {
-		// 	for(rec_i = 0; rec_i < arr2_width(data); rec_i++)
-		// 	{
-		// 		s_rec 	= (S_Rec) arr_get(brain->s_mem->recs, rec_i);
-
-		// 		lu_user_assert(s_rec, "S_Rec is NULL");
-
-		// 		curr_d 	= arr2_get(data, rec_i, block_i);
-
-		// 		if (curr_d)
-		// 			wave->fill_data[rec_i] = curr_d;
-		// 		else 
-		// 			curr_d = wave->fill_data[rec_i];
-
-		// 		lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
-		// 		curr_d ? lu_debug("%.0f ", curr_d[0]) : lu_debug("NULL ");
-
-		// 		w_save_data_send(wave, opts, s_rec, curr_d, block_i);
-
-		// 		w_save_rec_progress(wave, s_rec, block_i);
-		// 	}
-
-		// 	w_save_block_progress(wave, block_i);
-		// }
+				w_save(wave, opts, s_rec, curr_d, block_i);
+			}
+		}
 
 		story_wave_attach(self, gate, (Lu_Wave) wave);
 

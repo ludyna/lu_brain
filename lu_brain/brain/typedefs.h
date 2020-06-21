@@ -70,9 +70,8 @@
 // W
 
 	typedef struct w_sig* 						W_Sig;
-
-	typedef struct w_col* 						W_Col;
-	typedef struct w_rec*						W_Rec;
+	typedef struct w_neu*						W_Neu;
+	typedef struct w_layer* 					W_Layer;
 
 	typedef struct w_save_create_opts* 			W_Save_Create_Opts;
 	typedef struct w_save* 						W_Save;

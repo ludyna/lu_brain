@@ -19,6 +19,5 @@
 #define lu_bool bool 
 
 
-
 #endif // _LU_TYPES_PUB_H
 

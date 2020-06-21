@@ -2,38 +2,21 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
  
-	
-///////////////////////////////////////////////////////////////////////////////
-// W_Sig
-
 	struct w_sig {
-		lu_size 	n_ent;
-		lu_value 	p;
+		lu_size 			n_ent;
+		lu_value 			p;
 	};
 
-///////////////////////////////////////////////////////////////////////////////
-// W_Col
-
-	struct w_col
-	{
+	struct w_neu {
 
 	};
 
-	static W_Col w_col_create(Mem mem, W_Rec w_rec, S_Col s_col);
+	struct w_layer {
+		lu_size 			w;
+		lu_size 			h;
 
-///////////////////////////////////////////////////////////////////////////////
-// W_Rec 
-
-	struct w_rec
-	{
-
+		W_Neu* 				neus;
 	};
-
-	static W_Rec w_rec_create(Mem mem, S_Rec s_rec);
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Wave
 
 	struct lu_wave {
 		Gate 				gate;

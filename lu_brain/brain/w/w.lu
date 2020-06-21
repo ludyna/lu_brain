@@ -1,7 +1,4 @@
-#include "basic/w_col.lu"
-#include "basic/w_rec.lu"
-#include "basic/wave.lu"
-#include "basic/wave_resp.lu"
+#include "basic/w_basic.lu"
 #include "find/w_find.lu"
 #include "restore/w_restore.lu"
 #include "save/w_save.lu"
