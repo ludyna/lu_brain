@@ -142,8 +142,6 @@
 					d2 = story_data_get(self, rec_i, block_i - 1);
 					data_shallow_copy(d1, d2);
 				}
-
-
 			}
 	}
 
@@ -243,7 +241,8 @@
 				data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
 				lu_debug("] SAVING ...");
 
-				w_save(wave, opts, s_rec, data, block_i);
+				if (data->values != NULL) 
+					w_save(wave, opts, s_rec, data, block_i);
 			}
 		}
 
