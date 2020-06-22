@@ -76,29 +76,39 @@
 		lu_size z;
 		lu_value v;
 		lu_value p;
-		lu_value contrast = self->opts.contrast;
+		lu_value contrast 		= self->opts.contrast;
+		lu_bool ignore_color 	= self->opts.ignore_color;
 
-		S_Neu s_cell;
-		S_Col s_col; 
+		S_Neu s_v_cell;
+		S_Neu s_p_cell;
+		S_Col s_v_col; 
+		S_Col s_p_col;
 		S_Layer v_layer = &s_rec->v_layers[0];
 		S_Layer p_layer = &s_rec->p_layers[0];
+
+		N_Mem n_mem 	= self->super.n_mem;
+		n_neu_ix 		p_neu_ix;
 
 		for (y = 0; y < data->h; y++)
 			for(x = 0; x < data->w; x++)
 			{
-				s_cell = s_layer_neu_get(v_layer, x, y);
-				lu_user_assert_void(s_cell, "S_Cell is NULL");
+				s_v_cell = s_layer_neu_get(v_layer, x, y);
+				lu_user_assert_void(s_v_cell, "S_Cell is NULL");
 
 				for(z = 0; z < data->d; z++)
 				{
 					v = data_get(data, x, y, z);
 
-					s_col = s_neu_col_get(s_cell, z);
+					s_v_col = s_neu_col_get(s_v_cell, z);
 
-					p = s_col_p_get(s_col, v);
+					p = s_col_p_get(s_v_col, v);
 
 					if (p >= contrast)
 					{
+						s_p_cell 	= s_layer_neu_get(p_layer, x, y);
+						s_p_col 	= s_neu_col_get(s_p_cell, z);
+
+						// p_neu_ix 	= s_col_get_or_create(s_p_col, n_mem, p);
 
 					}
 				}

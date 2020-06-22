@@ -69,6 +69,10 @@
 		// vlasnyk
 		Lu_Brain 				brain;
 
+		Mem_Table 				neus;
+		Mem_Table				lins; 
+		Mem_Table				names;
+		Mem_Table 				vals;
 	};
 
 	static N_Mem n_mem_create(Lu_Brain brain);
