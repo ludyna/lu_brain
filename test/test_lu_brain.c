@@ -10,8 +10,8 @@
 #include "brain/brain.h"
 
 Lu_Brain 			brain;
+Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
-Lu_Rec 				rec_2;
 
 Lu_Brain_Opts 		brain_opts;
 Lu_Rec_Opts 		rec_opts_1;
@@ -95,13 +95,13 @@ void setUp(void)
 	TEST_ASSERT(brain->recs);
 	TEST_ASSERT(brain->recs->count);
 
-	rec_1 				= lu_brain_rec_get(brain, 0);
+	rec_0 				= lu_brain_rec_get(brain, 0);
+
+	TEST_ASSERT(rec_0);
+
+	rec_1 				= lu_brain_rec_get(brain, 1);
 
 	TEST_ASSERT(rec_1);
-
-	rec_2 				= lu_brain_rec_get(brain, 1);
-
-	TEST_ASSERT(rec_2);
 
 	TEST_ASSERT(brain->recs->count);
 
@@ -115,59 +115,6 @@ void tearDown(void)
 	lu_brain_opts_destroy(brain_opts);
 	lu_brain_destroy(brain);
 }
-
-void test_lu_story(void)
-{ 
-	// lu_p_value d;
-	// Lu_Story story = lu_story_create(brain, 0); 
-
- // 		TEST_ASSERT(story->y == 0);
- // 		TEST_ASSERT(story_data_get(story, 0, 0, 0) == NULL);
-		
-	// lu_story_push(story, rec_1, 0, data_0);
-
-	// 	d = story_data_get(story, rec_1->id, story->y, 0);
-	// 	TEST_ASSERT(d[0] == 0);
-	// 	TEST_ASSERT(story->y == 0);
-
-	// lu_story_push(story, rec_1, 0, data_01);
-	// lu_story_push(story, rec_2, 0, data_2);
-
-	// 	TEST_ASSERT(story->y == 1);
-	// 	d = story_data_get(story, rec_1->id, story->y, 0);
-	// 	TEST_ASSERT(d[0] == 1);
-	// 	d = story_data_get(story, rec_2->id, story->y, 0);
-	// 	TEST_ASSERT(d[0] == 2);
-
-
-	// lu_block_begin(story);
-
-	// 	TEST_ASSERT(story->y == 2);
-
-	// lu_story_push(story, rec_1, 0, data_2);
-	// lu_story_push(story, rec_2, 0, data_3);
-		
-	// 	d = story_data_get(story, rec_2->id, story->y, 0);
-	// 	TEST_ASSERT(d[0] == 3);
-
-	// lu_block_end(story);
-		
-	// 	TEST_ASSERT(story->y == 3);
-
-	// lu_story_push(story, rec_1, 0, data_4);
-		
-	// 	TEST_ASSERT(story->y == 3);
-
-	// Lu_Save_Resp save_response = lu_story_save(story, save_opts); 
-
-	// 	lu_block_begin(story);
-	// 	lu_story_push(story, rec_1, 0, data_5);
-	// 	lu_story_push(story, rec_2, 0, data_6);
-	// 	lu_block_end(story);
-
-	// lu_story_destroy(story);
-}
-
 
 void test_lu_brain_basics(void) 
 { 
@@ -184,14 +131,14 @@ void test_lu_brain_basics(void)
 	Lu_Save_Resp save_response;
 	Lu_Story story = lu_story_create(brain, 0); 
 
-		lu_story_push(story, rec_1, data_0);
+		lu_story_push(story, rec_0, data_0);
 
 		lu_block_begin(story);
-		lu_story_push(story, rec_1, data_01);
-		lu_story_push(story, rec_2, data_2);
+		lu_story_push(story, rec_0, data_01);
+		lu_story_push(story, rec_1, data_2);
 		lu_block_end(story);
 
-		lu_story_push(story, rec_1, data_3);
+		lu_story_push(story, rec_0, data_3);
 
 	 save_response = lu_story_save(story, save_opts); 
 
@@ -201,8 +148,8 @@ void test_lu_brain_basics(void)
 		// lu_block count will be again 16 (this number is configurable)
 
 		lu_block_begin(story);
-		lu_story_push(story, rec_1, data_4);
-		lu_story_push(story, rec_2, data_5);
+		lu_story_push(story, rec_0, data_4);
+		lu_story_push(story, rec_1, data_5);
 		lu_block_end(story);
 
 		Lu_Wave lu_wave = lu_story_save_async(story, save_opts);
@@ -219,20 +166,20 @@ void test_lu_brain_basics(void)
 
 	story = lu_story_create(brain, 0);
 
-			lu_story_push(story, rec_1, data_0);
+			lu_story_push(story, rec_0, data_0);
 
 			lu_block_begin(story);
-			lu_story_push(story, rec_1, data_01);
-			lu_story_push(story, rec_2, data_2);
+			lu_story_push(story, rec_0, data_01);
+			lu_story_push(story, rec_1, data_2);
 			lu_block_end(story);
 
-			lu_story_push(story, rec_1, data_3);
+			lu_story_push(story, rec_0, data_3);
 
 	Lu_Find_Resp find_response = lu_story_find(story, find_opts); 
 
 			lu_block_begin(story);
-			lu_story_push(story, rec_1, data_4);
-			lu_story_push(story, rec_2, data_5);
+			lu_story_push(story, rec_0, data_4);
+			lu_story_push(story, rec_1, data_5);
 			lu_block_end(story);
 
 	lu_wave = lu_story_find_async(story, find_opts);

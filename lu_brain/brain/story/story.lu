@@ -70,7 +70,7 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Private
+// 
 
 	static void story_reset(Lu_Story self)
 	{
@@ -78,12 +78,11 @@
 		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
 		lu_user_assert_void(self->datum, "Lu_Story datum should be present");
 
-		lu_size block_i, rec_i;
-		Lu_Rec rec;
-		Lu_Brain brain = self->brain;
+		lu_size block_i;
+		lu_size rec_i;
 		Data data;
 
-		for(block_i = 0; block_i <= self->y; block_i++)
+		for(block_i = 0; block_i < self->blocks_count; block_i++)
 			for(rec_i = 0; rec_i < self->datum_w; rec_i++)
 			{
 				data = story_data_get(self, rec_i, block_i);
@@ -95,6 +94,57 @@
 		self->y = 0;
 		self->start_block_on_next_data = false; 
 		self->blocks_count = 0;
+	}
+
+	static Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
+	{
+		lu_user_assert(self, "Lu_Story is NULL");
+
+		lu_size block_i;
+		Data data;
+
+		for(block_i = 0; block_i < self->blocks_count; block_i++)
+		{
+			data = story_data_get(self, rec_i, block_i);
+			if (data && data->values) return data;
+		}
+
+		return NULL;
+	}
+
+	static void story_fill_gaps(Lu_Story self)
+	{
+		lu_user_assert_void(self, "Lu_Story is NULL");
+
+		lu_size block_i;
+		lu_size rec_i;
+		Data d1;
+		Data d2;
+
+		for(rec_i = 0; rec_i < self->datum_w; rec_i++)
+			for(block_i = 0; block_i < self->blocks_count; block_i++)
+			{
+				d1 = story_data_get(self, rec_i, block_i);
+				lu_user_assert_void(d1, "Something went wrong");
+
+				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
+
+				if (d1->values) continue;
+				
+				if (block_i == 0)
+				{
+					d2 = story_first_non_null_data(self, rec_i);
+					if (d2 == NULL) return; 						// nema danyh dlia rec_i vzahali
+					data_shallow_copy(d1, d2);
+				}
+				else
+				{
+					d2 = story_data_get(self, rec_i, block_i - 1);
+					data_shallow_copy(d1, d2);
+				}
+
+
+			}
 	}
 
 
@@ -176,6 +226,8 @@
 
 		Lu_Rec rec; 
 		S_Rec s_rec;
+
+		story_fill_gaps(self);
 
 		for(block_i = 0; block_i < self->blocks_count; block_i++)
 		{

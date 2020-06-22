@@ -22,10 +22,7 @@
 		Gate 				gate;
 		S_Mem 				s_mem; 
 		N_Mem 				n_mem;
-
 		Lu_Story 			story;
-
-		Arr 				recs;
 	};
 
 	static Lu_Wave wave_init(Lu_Wave self, Gate gate, S_Mem s_mem, N_Mem n_mem);
