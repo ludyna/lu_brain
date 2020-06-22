@@ -242,7 +242,7 @@
 				lu_debug("] SAVING ...");
 
 				if (data->values != NULL) 
-					w_save(wave, opts, s_rec, data, block_i);
+					w_save(wave, s_rec, data, block_i);
 			}
 		}
 

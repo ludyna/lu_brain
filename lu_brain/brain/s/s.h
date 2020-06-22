@@ -43,6 +43,7 @@
 		v_neu->t = p_neu;
 		p_neu->t = v_neu;
 	}
+	static inline S_Col s_neu_col_get(S_Neu self, lu_size z) { return self->cols[z]; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
@@ -78,6 +79,7 @@
 
 	static inline S_Col s_col_init(S_Col self, Mem mem, S_Neu cell, S_Col_Conf conf);
 	static inline N_Neu s_col_n_get(S_Col self, lu_value input_val);
+	static lu_value s_col_p_get(S_Col self, lu_value v);
 
 	struct s_layer {
 		// vlasnyk

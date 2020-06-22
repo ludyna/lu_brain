@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Create 
+//  
 
 	static inline S_Col s_col_init(S_Col self, Mem mem, S_Neu cell, S_Col_Conf conf)
 	{
@@ -21,6 +21,10 @@
 		return self;
 	}
 	
+	static lu_value s_col_p_get(S_Col self, lu_value v)
+	{
+		return 0.0;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Calculations

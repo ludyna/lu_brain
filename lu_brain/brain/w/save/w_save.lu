@@ -39,11 +39,11 @@
 
 	static void w_save_init_and_reset(W_Save self, Lu_Story story, Lu_Save_Opts opts)
 	{
-		if (opts)
-			self->save_opts = *opts;
+		lu_user_assert_void(story, "Lu_Story is NULL");
+		lu_user_assert_void(opts, "Lu_Save_Opts is NULL");
 
 		self->super.story 	= story; 
-		self->save_opts 	= *opts;
+		self->opts 			= *opts;
 	} 
 
 	// static inline data_get(
@@ -63,15 +63,44 @@
 	// 		}
 	// }
 
-	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, Data data, lu_size block_i)
+	static void w_save(W_Save self, S_Rec s_rec, Data data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(s_rec, "S_Rec is NULL");
 		lu_user_assert_void(s_rec->rec, "S_Rec rec is NULL");
 		lu_user_assert_void(data, "Data is NULL");
-
 		lu_user_assert_void(block_i < s_rec->blocks_size, "Reached block maximum");
 
+		lu_size x;
+		lu_size y;
+		lu_size z;
+		lu_value v;
+		lu_value p;
+		lu_value contrast = self->opts.contrast;
 
+		S_Neu s_cell;
+		S_Col s_col; 
+		S_Layer v_layer = &s_rec->v_layers[0];
+		S_Layer p_layer = &s_rec->p_layers[0];
 
+		for (y = 0; y < data->h; y++)
+			for(x = 0; x < data->w; x++)
+			{
+				s_cell = s_layer_neu_get(v_layer, x, y);
+				lu_user_assert_void(s_cell, "S_Cell is NULL");
+
+				for(z = 0; z < data->d; z++)
+				{
+					v = data_get(data, x, y, z);
+
+					s_col = s_neu_col_get(s_cell, z);
+
+					p = s_col_p_get(s_col, v);
+
+					if (p >= contrast)
+					{
+
+					}
+				}
+			}
 	}
