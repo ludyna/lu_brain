@@ -216,7 +216,6 @@ void test_lu_story_1(void)
 	lu_story_destroy(story);
 }
 
-
 void test_lu_story_2(void)
 { 
 	lu_p_value d;

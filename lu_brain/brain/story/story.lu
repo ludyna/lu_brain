@@ -187,8 +187,9 @@
 
 				data 	= story_data_get(self, rec_i, block_i);
 
-				lu_debug("\n DATA(lu_block=%lu, rec=%lu): ", block_i, rec_i);
-				data->values ? lu_debug("%.0f ", data->values[0]) : lu_debug("NULL ");
+				lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
+				data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
+				lu_debug("] SAVING ...");
 
 				w_save(wave, opts, s_rec, data, block_i);
 			}

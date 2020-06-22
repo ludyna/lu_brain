@@ -28,8 +28,6 @@
 	static void w_save_init_and_reset(W_Save, Lu_Story, Lu_Save_Opts);
 	static void w_save(W_Save self, Lu_Save_Opts opts, S_Rec s_rec, Data data, lu_size block_i);
 
-
-
 	struct lu_save_resp {
 
 	};
