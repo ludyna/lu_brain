@@ -148,9 +148,10 @@
 						switch (type)
 						{
 							case SNT_COMPONENT:
-
 								break;
 							case SNT_CELL:
+								s_cell_b_layer_connect(v_neu, b_v_layer);
+								s_cell_b_layer_connect(p_neu, b_p_layer);
 								break;
 							case SNT_NEU:
 								s_neu_b_layer_connect(v_neu, b_v_layer); 
@@ -195,11 +196,7 @@
 				b_av_layer = &self->av_layers[layer_ix - 1];
 				b_ap_layer = &self->ap_layers[layer_ix - 1];
 			}
-			else
-			{
-				b_av_layer = NULL;
-				b_ap_layer = NULL;
-			}
+
 
 			s_layer_init(av_layer, self, mem, SLT_AV, layer_ix, w, y, d);
 			lu_user_assert(av_layer, "Cannot init av_layer");
@@ -213,11 +210,11 @@
 				p_neu = s_rec_neu_init(self, mem, SNT_A_NEU, ap_layer, x, y - 1, d - 1); 
 				lu_user_assert(p_neu, "Cannot init p_neu");
 
-				if (b_av_layer)
+				if (layer_ix > 0)
+				{
 					s_a_neu_b_layer_connect(v_neu, b_av_layer); 	
-
-				if (b_ap_layer)
 					s_a_neu_b_layer_connect(p_neu, b_ap_layer);
+				}
 
 				s_neu_t_connect(v_neu, p_neu);
 			}
@@ -266,7 +263,7 @@
 
 		lu_user_assert(neu, "Cannot create S_Neu");
 
-		s_layer_neu_set(layer, x, y, neu);
+		s_layer_neu_set(layer, x, y, z, neu);
 
 		++self->neus_count;
 

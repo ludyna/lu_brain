@@ -92,7 +92,7 @@
 		for (y = 0; y < data->h; y++)
 			for(x = 0; x < data->w; x++)
 			{
-				s_v_cell = s_layer_neu_get(v_layer, x, y);
+				s_v_cell = s_layer_neu_get(v_layer, x, y, 0);
 				lu_user_assert_void(s_v_cell, "S_Cell is NULL");
 
 				for(z = 0; z < data->d; z++)
