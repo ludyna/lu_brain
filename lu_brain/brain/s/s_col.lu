@@ -15,7 +15,7 @@
 		self->conf 		= conf;
 		lu_user_assert(self->conf, "S_Col_Conf is NULL");
 
-		self->neus 		= (n_neu_ix*) mem_alloc(mem, sizeof(n_neu_ix) * self->conf->neu_size);
+		self->neus 		= (lu_size*) mem_alloc(mem, sizeof(lu_size) * self->conf->neu_size);
 		lu_user_assert(self->neus, "Cannot allocate neus");
 
 		return self;

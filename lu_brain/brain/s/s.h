@@ -74,7 +74,7 @@
 		// conf 
 		S_Col_Conf 				conf;
 
-		n_neu_ix*				neus; 	
+		lu_size*				neus; 	
 	};
 
 	static inline S_Col s_col_init(S_Col self, Mem mem, S_Neu cell, S_Col_Conf conf);

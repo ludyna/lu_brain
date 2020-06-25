@@ -14,51 +14,56 @@
 // vse reshtu perestvoruyetsia. Tak samo perevydilenia pamiati (z mozhlyvym peremishcheniam v inshe misce).
 
 	struct n_name {
-		n_neu_ix 				neu;
+		lu_size 				neu;
 		lu_char 				name[255];
 	};	
 
 	struct n_val {
-		n_neu_ix 				neu;
+		lu_size 				neu;
 		lu_value 				val;
 	};
 
 	struct n_time {
-		n_neu_ix				neu;
+		lu_size				neu;
 		lu_size 				val;
 	};
 
 	struct n_neu {
-		lu_size 				sid;
+		// layer num, s_neu num, sid
+		// lu_size 				layer_ix;
+		// lu_size				x;
+		// lu_size 				y;
 
-		n_v_lin_ix 				p_l; 		
+		lu_size 				s_ix;
+
+		lu_size 				p_l; 		
 		lu_value 				p_count;
 
-		n_v_lin_ix 				c_l;
+		lu_size 				c_l;
 
-		n_h_lin_ix 				tp;
-		n_h_lin_ix 				tc;
+		lu_size 				tp;
+		lu_size 				tc;
 
 		enum n_com_type			com_type;
-		n_com_ix 				com;		
+		lu_size 				com;		
 	};
 
 	struct n_h_lin {
-		n_neu_ix	 			p;			
-		n_neu_ix				c;
+		lu_size	 			p;			
+		lu_size				c;
 	};
 
 	struct n_v_lin {
-		n_neu_ix	 			p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
-		n_neu_ix				c;
+		lu_size	 			p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		lu_size				c;
 
 		// ce dva spysky
 		// odyn z storony p, inshyy z storony c
-		n_v_lin_ix	 			p_p;
-		n_v_lin_ix	 			p_n;
+		lu_size	 			p_p;
+		lu_size	 			p_n;
 
-		n_v_lin_ix	 			c_p; 		// p i n potribni u vypadku yakshou my vydaliayemo zviazok?
-		n_v_lin_ix				c_n; 		// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys p ale my neznayemo n
+		lu_size	 			c_p; 		// p i n potribni u vypadku yakshou my vydaliayemo zviazok?
+		lu_size				c_n; 		// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys p ale my neznayemo n
 		 		   							// tomu naspravdi i p i n potribni
 	};
 
