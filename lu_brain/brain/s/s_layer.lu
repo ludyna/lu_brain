@@ -5,7 +5,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	static S_Layer s_layer_init(S_Layer self, S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h)
+	static S_Layer s_layer_init
+	( 
+		S_Layer self, 
+		S_Rec rec, 
+		Mem mem, 
+		enum s_layer_type type, 
+		lu_size l, 
+		lu_size w, 
+		lu_size d, 
+		lu_size h
+	)
 	{
 		lu_user_assert(self, "S_Layer is NULL");
 		lu_user_assert(rec, "Rec is NULL");
@@ -18,14 +28,15 @@
 		self->l 		= l;
 		self->w 		= w;
 		self->h 		= h;
+		self->d 		= d;
 
-		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->w * self->h);
+		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->w * self->h * self->d);
 		lu_user_assert(self->neus, "Cannot allocate S_Layer neus");
 
 		return self;
 	}
 
-	// static void s_layer_cells_create(S_Layer self, Mem mem, S_Col_Conf conf)
+	// static void s_layer_cells_create(S_Layer self, Mem mem, S_Neu_Conf conf)
 	// {
 	// 	lu_size x;
 	// 	lu_size y;

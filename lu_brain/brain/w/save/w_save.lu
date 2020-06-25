@@ -81,8 +81,8 @@
 
 		S_Neu s_v_cell;
 		S_Neu s_p_cell;
-		S_Col s_v_col; 
-		S_Col s_p_col;
+		// S_Col s_v_col; 
+		// S_Col s_p_col;
 		S_Layer v_layer 	= &s_rec->v_layers[0];
 		S_Layer p_layer 	= &s_rec->p_layers[0];
 
@@ -99,19 +99,19 @@
 				{
 					v = data_get(data, x, y, z);
 
-					s_v_col = s_neu_col_get(s_v_cell, z);
+					// s_v_col = s_neu_col_get(s_v_cell, z);
 
-					p = s_col_p_get(s_v_col, v);
+					// p = s_col_p_get(s_v_col, v);
 
-					if (p >= contrast)
-					{
-						s_p_cell 	= s_layer_neu_get(p_layer, x, y);
-						s_p_col 	= s_neu_col_get(s_p_cell, z);
+					// if (p >= contrast)
+					// {
+					// 	s_p_cell 	= s_layer_neu_get(p_layer, x, y);
+					// 	s_p_col 	= s_neu_col_get(s_p_cell, z);
 
-						// p_neu_ix 	= s_col_get_or_create(s_p_col, n_mem, p);
+					// 	// p_neu_ix 	= s_col_get_or_create(s_p_col, n_mem, p);
 
 
-					}
+					// }
 				}
 			}
 	}

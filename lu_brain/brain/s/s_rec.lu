@@ -27,12 +27,13 @@
 
 		self->cells_w 			= rec->width;
 		self->cells_h			= rec->height; 
+		self->cells_d 			= rec->components_size;
 
 		///////////////////////////////////////
 		// Confs
 
-		s_col_conf_init(&self->v_conf, mem, rec->components_size, rec->v_min, rec->v_max, rec->v_neu_size, rec->v_nsc);
-		s_col_conf_init(&self->p_conf, mem, rec->components_size, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
+		s_neu_conf_init(&self->v_conf, mem, rec->v_min, rec->v_max, rec->v_neu_size, rec->v_nsc);
+		s_neu_conf_init(&self->p_conf, mem, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
 
 		///////////////////////////////////////
 		// VP Layers
@@ -62,21 +63,20 @@
 
 		lu_size x;
 		lu_size y;
-		lu_size w;
-		lu_size h;
-		lu_size wh;
-
-		w = self->cells_w;
-		h = self->cells_h;
-		wh = w * h;
+		lu_size z;
+		lu_size w 	= self->cells_w;
+		lu_size h 	= self->cells_h;
+		lu_size d	= self->cells_d;
+		lu_size wh 	= w * h;
 
 		self->neus_size = 0;
 
 		while (w > 0 && h > 0)
 		{
-			self->neus_size += w * h;
+			self->neus_size += w * h * d;
 			if (w > 0) --w;
 			if (h > 0) --h;
+			if (d > 1) d = 1; 
 		}
 
 		// dlia d i b 
@@ -84,6 +84,7 @@
 
 		// a_neus (n(n+1))/2 * 2 for d i b
 		self->neus_size += self->blocks_size * (self->blocks_size + 1);
+
 		self->neus_count = 0;
 
 		self->neus = (struct s_neu*) mem_alloc(mem, sizeof(struct s_neu) * self->neus_size);
@@ -97,22 +98,14 @@
 		self->v_links_count = 0;
 
 		self->v_links = (struct s_v_link*) mem_alloc(mem, sizeof(struct s_v_link) * self->v_links_size);
-		lu_user_assert(self->v_links, "Cannot allocate v_links");
-
-		///////////////////////////////////////
-		// Cols
-
-		self->cols_count = 0;
-		self->cols_size = wh * self->v_conf.components_size + wh * self->p_conf.components_size;
-
-		self->cols = (struct s_col*) mem_alloc(mem, sizeof(struct s_col) * self->cols_size);
-		lu_user_assert(self->cols, "Cannot allocate cols");		
+		lu_user_assert(self->v_links, "Cannot allocate v_links");	
 
 		///////////////////////////////////////
 		// Init Layers And Neus
 
 		w = self->cells_w;
 		h = self->cells_h;
+		d = self->cells_d;
 		lu_size layer_ix = 0;
 		S_Neu v_neu;
 		S_Neu p_neu;
@@ -130,9 +123,9 @@
 			v_layer = &self->v_layers[layer_ix];
 			p_layer = &self->p_layers[layer_ix];
 
-			s_layer_init(v_layer, self, mem, SLT_V, layer_ix, w, h);
+			s_layer_init(v_layer, self, mem, SLT_V, layer_ix, w, h, d);
 			lu_user_assert(v_layer, "Cannot init v_layer");
-			s_layer_init(p_layer, self, mem, SLT_P, layer_ix, w, h);
+			s_layer_init(p_layer, self, mem, SLT_P, layer_ix, w, h, d);
 			lu_user_assert(p_layer, "Cannot init p_layer");
 
 			if (layer_ix == 0) 
@@ -148,27 +141,29 @@
 				b_p_layer = &self->p_layers[layer_ix - 1];
 			}
 
-			for (y = 0; y < h; y++)
-				for (x = 0; x < w; x++)
-				{
-					v_neu = s_rec_neu_init(self, mem, type, v_layer, x, y); 
-					lu_user_assert(v_neu, "Cannot init v_neu");
-					p_neu = s_rec_neu_init(self, mem, type, p_layer, x, y); 
-					lu_user_assert(p_neu, "Cannot init v_neu");
+			for (z = 0; z < d; z++)
+				for (y = 0; y < h; y++)
+					for (x = 0; x < w; x++)
+					{
+						v_neu = s_rec_neu_init(self, mem, type, v_layer, x, y, z); 
+						lu_user_assert(v_neu, "Cannot init v_neu");
+						p_neu = s_rec_neu_init(self, mem, type, p_layer, x, y, z); 
+						lu_user_assert(p_neu, "Cannot init v_neu");
 
-					if (b_v_layer)
-						s_neu_b_layer_connect(v_neu, b_v_layer); 
+						if (b_v_layer)
+							s_neu_b_layer_connect(v_neu, b_v_layer); 
 
-					if (b_p_layer)	
-						s_neu_b_layer_connect(p_neu, b_p_layer);
-					
+						if (b_p_layer)	
+							s_neu_b_layer_connect(p_neu, b_p_layer);
+						
 
-					s_neu_t_connect(v_neu, p_neu);
-				}
+						s_neu_t_connect(v_neu, p_neu);
+					}
 
 			++layer_ix; 
 			if (w > 0) --w;
 			if (h > 0) --h;
+			if (d > 1) d = 1;
 		}
 
 		lu_user_assert(v_layer->w == 1 && v_layer->h == 1, "Something wrong with v_layer");
@@ -182,7 +177,8 @@
 		S_Layer b_ap_layer = NULL;
 		layer_ix = 0;
 		w = self->blocks_size;
-		y = 0;
+		y = 1;
+		d = 1;
 
 		while(w > 0)
 		{
@@ -202,16 +198,16 @@
 				b_ap_layer = NULL;
 			}
 
-			s_layer_init(av_layer, self, mem, SLT_AV, layer_ix, w, y + 1);
+			s_layer_init(av_layer, self, mem, SLT_AV, layer_ix, w, y, d);
 			lu_user_assert(av_layer, "Cannot init av_layer");
-			s_layer_init(ap_layer, self, mem, SLT_AP, layer_ix, w, y + 1);
+			s_layer_init(ap_layer, self, mem, SLT_AP, layer_ix, w, y, d);
 			lu_user_assert(ap_layer, "Cannot init ap_layer");
 
 			for(x = 0; x < w; x++)
 			{
-				v_neu = s_rec_neu_init(self, mem, SNT_A_NEU, av_layer, x, y); 
+				v_neu = s_rec_neu_init(self, mem, SNT_A_NEU, av_layer, x, y - 1, d - 1); 
 				lu_user_assert(v_neu, "Cannot init v_neu");
-				p_neu = s_rec_neu_init(self, mem, SNT_A_NEU, ap_layer, x, y); 
+				p_neu = s_rec_neu_init(self, mem, SNT_A_NEU, ap_layer, x, y - 1, d - 1); 
 				lu_user_assert(p_neu, "Cannot init p_neu");
 
 				if (b_av_layer)
@@ -229,21 +225,19 @@
 
 		// lu_debug("\nneus_count = %d, neus_size = %d", self->neus_count, self->neus_size);
 		// lu_debug("\nv_links_count = %d, v_links_size = %d", self->v_links_count, self->v_links_size);
-		// lu_debug("\ncols_count = %d, cols_size = %d", self->cols_count, self->cols_size);
 
 		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
 		lu_user_assert(self->v_links_count == self->v_links_size, "Something wrong with v_links_count");
-		lu_user_assert(self->cols_count == self->cols_size, "Something wrong with cols_count");
 
 		return self;
 	}
 
-	static S_Neu s_rec_neu_init(S_Rec self, Mem mem, enum s_net_type type, S_Layer layer, lu_size x, lu_size y)
+	static S_Neu s_rec_neu_init(S_Rec self, Mem mem, enum s_net_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(self->neus_count < self->neus_size, "Out of space for S_Neu");
 
 		S_Neu neu = &self->neus[self->neus_count];
-		s_neu_init(neu, type, layer, x, y);
+		s_neu_init(neu, type, layer, x, y, z);
 
 		char* t;  
 
@@ -289,19 +283,6 @@
 		return link;
 	}
 
-	static S_Col s_rec_col_init(S_Rec self, Mem mem,  S_Neu cell, S_Col_Conf conf)
-	{
-		lu_user_assert(self->cols_count < self->cols_size, "Out of space for S_Col");
-
-		S_Col col = &self->cols[self->cols_count];
-
-		s_col_init(col, mem, cell, conf);
-
-		++self->cols_count;
-
-		return col;
-	}
-
 	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu)
 	{
 		lu_user_assert(neu->type == SNT_CELL, "Wrong neu type");
@@ -310,7 +291,7 @@
 		S_Layer layer = neu->layer;
 		lu_user_assert(neu->layer, "S_Layer is NULL");
 
-		S_Col_Conf conf = NULL;
+		S_Neu_Conf conf = NULL;
 		switch (layer->type)
 		{
 			case SLT_V:
@@ -323,14 +304,14 @@
 				lu_user_assert(false, "Wrong S_Layer type");
 		}
 
-		neu->cols = (S_Col*) mem_alloc(mem, sizeof(S_Col) * conf->components_size);
-		lu_user_assert(neu->cols, "Cannot allocate cols");
-		lu_size i;
-		S_Col col;
-		for(i = 0; i < conf->components_size; i++)
-		{
-			neu->cols[i] = s_rec_col_init(self, mem, neu, conf);
-		}
+		// neu->cols = (S_Col*) mem_alloc(mem, sizeof(S_Col) * conf->components_size);
+		// lu_user_assert(neu->cols, "Cannot allocate cols");
+		// lu_size i;
+		// S_Col col;
+		// for(i = 0; i < conf->components_size; i++)
+		// {
+		// 	//neu->cols[i] = s_rec_col_init(self, mem, neu, conf);
+		// }
 
 		return neu;
 	}

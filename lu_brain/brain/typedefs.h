@@ -37,8 +37,7 @@
 		SLT_AP
 	};
 	
-	typedef struct s_col_conf*	S_Col_Conf;
-	typedef struct s_col* 		S_Col; 
+	typedef struct s_neu_conf*	S_Neu_Conf;
 	typedef struct s_layer* 	S_Layer;
 	typedef struct s_rec*		S_Rec;
 	typedef struct s_mem* 		S_Mem;

@@ -5,9 +5,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Col_Conf s_col_conf_init(S_Col_Conf self, Mem mem, lu_size components_size, lu_value min, lu_value max, lu_size neu_size, lu_size nsc)
+	static S_Neu_Conf s_neu_conf_init(S_Neu_Conf self, Mem mem, lu_value min, lu_value max, lu_size neu_size, lu_size nsc)
 	{
-		self->components_size 	= components_size;
 		self->neu_size  		= neu_size; // value depth in indexes
 		self->orig_min 			= min;
 		self->orig_max 			= max;
@@ -24,7 +23,7 @@
 			self->steps[i] = (lu_value)i * self->step;
 	}
 
-	static inline lu_value s_col_conf_norm(S_Col_Conf self, lu_value request)
+	static inline lu_value s_neu_conf_norm(S_Neu_Conf self, lu_value request)
 	{
 		lu_value val = request - self->orig_min;
 		if (val < 0) val = 0;
@@ -33,14 +32,14 @@
 		return val;
 	}
 
-	static inline lu_size s_col_conf_indx(S_Col_Conf self, lu_value val)
+	static inline lu_size s_neu_conf_ix(S_Neu_Conf self, lu_value val)
 	{
 		return (lu_size) lu_value_round(val / self->step);
 	}
 
-	static inline struct lu_size_range s_col_conf_indx_range(S_Col_Conf self, lu_value val)
+	static inline struct lu_size_range s_neu_conf_ix_range(S_Neu_Conf self, lu_value val)
 	{
-		lu_size orig_i = s_col_conf_indx(self, val);
+		lu_size orig_i = s_neu_conf_ix(self, val);
 
 		long begin, end;
 
@@ -56,12 +55,12 @@
 		return r;
 	}
 
-	static inline lu_value s_col_conf_calc_sig(S_Col_Conf self, lu_size val_step_i, lu_value val)
+	static inline lu_value s_neu_conf_calc_sig(S_Neu_Conf self, lu_size val_step_i, lu_value val)
 	{ 
 		return 1.0 - lu_value_abs(self->steps[val_step_i] - val) / self->max;
 	}
 
-	static inline lu_value s_col_conf_step_norm_dist(S_Col_Conf self)
+	static inline lu_value s_neu_conf_step_norm_dist(S_Neu_Conf self)
 	{
 		return 1.0 / self->neu_size;
 	}
