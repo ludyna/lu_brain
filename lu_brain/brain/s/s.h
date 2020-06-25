@@ -8,34 +8,39 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S Net
 // 
+ 	#define b_l(n) n->b[0]
+	#define b_p(n) n->b[0]
+	
+	#define d_l(n) n->d[0]
+	#define d_p(n) n->d[1]
 
-	struct s_v_link {
-		S_Neu 					vl;
-		S_Neu 					vp;
-		S_Neu 					nl;
-		S_Neu 					np;
-	};
+	#define b_vl(n) n->b[0]
+	#define b_vp(n) n->b[1]
+	#define b_np(n) n->b[2]
+	#define b_nl(n) n->b[3]
 
-	static inline S_V_Link s_v_link_init(S_V_Link self);
+	#define d_vl(n) n->d[0]
+	#define d_vp(n) n->d[1]
+	#define d_np(n) n->d[2]
+	#define d_nl(n) n->d[3]
 
 	struct s_neu {
 		enum s_net_type    		type;			
 
 		S_Layer 				layer;
-		lu_size 				x;    	// bude t index dlia a_neu
+		lu_size 				x;    		// bude t index dlia a_neu
 		lu_size 				y;
 		lu_size 				z;
 
-		S_V_Link				b;
-		S_V_Link				d;
-
-		S_Neu  	 				t;		// zviazok po t		
-
-		// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
-		// mozhlyvo
+		S_Neu*					b;
+		S_Neu*					d;
+		S_Neu  	 				t;			// zviazok po t		
 
 		S_Neu 					neus;
 		S_Neu_Conf 				conf;
+
+		// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
+		// mozhlyvo
 	}; 
 
 	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer, lu_size x, lu_size y, lu_size z);
@@ -106,10 +111,6 @@
 		lu_size 				neus_count;
 		struct s_neu* 			neus;
 
-		lu_size 				v_links_size;
-		lu_size 				v_links_count;
-		struct s_v_link* 		v_links;
-
 		lu_size 				vp_layers_size;
 		struct s_neu_conf 		v_conf;	
 		struct s_layer* 		v_layers;
@@ -124,10 +125,9 @@
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
 	static S_Neu s_rec_neu_init(S_Rec, Mem mem, enum s_net_type type, S_Layer, lu_size x, lu_size y, lu_size z);
-	static S_V_Link s_rec_v_link_init(S_Rec);
 	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu);
-	static S_Neu s_rec_full_neu_init(S_Rec self, S_Neu neu);
-	static S_Neu s_rec_a_neu_init(S_Rec self, S_Neu neu);
+	static S_Neu s_rec_full_neu_init(S_Rec self, Mem mem, S_Neu neu);
+	static S_Neu s_rec_a_neu_init(S_Rec self, Mem mem, S_Neu neu);
 
 	static inline S_Neu s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y)
 	{

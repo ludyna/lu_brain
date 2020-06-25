@@ -20,13 +20,13 @@
 
 	enum s_net_type {
 		SNT_UNKNOWN,
+		SNT_COMPONENT,
 		SNT_CELL, 
 		SNT_NEU,
 		SNT_A_NEU
 	};
 
  	typedef struct s_neu* 		S_Neu;
- 	typedef struct s_v_link* 	S_V_Link;
 	
 	// Helpers
 

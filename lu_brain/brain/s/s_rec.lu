@@ -91,16 +91,6 @@
 		lu_user_assert(self->neus, "Cannot allocate neus"); 
 
 		///////////////////////////////////////
-		// V links
-
-		// cherez cells dlia p i c 
-		self->v_links_size = (self->neus_size) * 2 - wh * 2;
-		self->v_links_count = 0;
-
-		self->v_links = (struct s_v_link*) mem_alloc(mem, sizeof(struct s_v_link) * self->v_links_size);
-		lu_user_assert(self->v_links, "Cannot allocate v_links");	
-
-		///////////////////////////////////////
 		// Init Layers And Neus
 
 		w = self->cells_w;
@@ -227,7 +217,6 @@
 		// lu_debug("\nv_links_count = %d, v_links_size = %d", self->v_links_count, self->v_links_size);
 
 		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
-		lu_user_assert(self->v_links_count == self->v_links_size, "Something wrong with v_links_count");
 
 		return self;
 	}
@@ -243,16 +232,19 @@
 
 		switch (type)
 		{
+			case SNT_COMPONENT:
+
+				break;
 			case SNT_CELL:
 				s_rec_cell_init(self, mem, neu);
 				t = "CELL";
 				break;
 			case SNT_NEU:
-				s_rec_full_neu_init(self, neu);
+				s_rec_full_neu_init(self, mem, neu);
 				t = "NEU";
 				break;
 			case SNT_A_NEU:
-				s_rec_a_neu_init(self, neu);
+				s_rec_a_neu_init(self, mem, neu);
 				t = "A_NEU";
 				break;
 			default:
@@ -270,23 +262,12 @@
 		return neu;
 	}
 
-	static S_V_Link s_rec_v_link_init(S_Rec self)
-	{
-		lu_user_assert(self->v_links_count < self->v_links_size, "Out of space for S_V_Link");
-
-		S_V_Link link = &self->v_links[self->v_links_count];
-
-		s_v_link_init(link);
-
-		++self->v_links_count;
-
-		return link;
-	}
-
 	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu)
 	{
 		lu_user_assert(neu->type == SNT_CELL, "Wrong neu type");
-		neu->d = s_rec_v_link_init(self);
+		
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
 
 		S_Layer layer = neu->layer;
 		lu_user_assert(neu->layer, "S_Layer is NULL");
@@ -316,23 +297,28 @@
 		return neu;
 	}
 
-	static S_Neu s_rec_full_neu_init(S_Rec self, S_Neu neu)
+	static S_Neu s_rec_full_neu_init(S_Rec self, Mem mem, S_Neu neu)
 	{
 		lu_user_assert(neu->type == SNT_NEU, "Wrong neu type");
 
-		neu->b = s_rec_v_link_init(self);
-		neu->d = s_rec_v_link_init(self);
+		neu->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->b, "Cannot allocate neu->b");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
 
 		return neu;
 	}
 
-	static S_Neu s_rec_a_neu_init(S_Rec self, S_Neu neu)
+	static S_Neu s_rec_a_neu_init(S_Rec self, Mem mem, S_Neu neu)
 	{
-
 		lu_user_assert(neu->type == SNT_A_NEU, "Wrong neu type");
 
-		neu->b = s_rec_v_link_init(self);
-		neu->d = s_rec_v_link_init(self);
+		neu->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		lu_user_assert(neu->b, "Cannot allocate neu->b");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
 
 		return neu;
 	}

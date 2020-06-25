@@ -10,6 +10,7 @@
 		lu_user_assert(layer, "S_Layer is NULL");
 
 		self->type 			= type;
+
 		self->layer 		= layer;
 		self->x				= x;
 		self->y 			= y;
@@ -19,9 +20,9 @@
 		self->d 			= NULL;
 		self->t 			= NULL;
 
+		self->neus 			= NULL;
 		self->conf			= NULL;
-		self->neus 			= NULL; 
-
+ 
 		return self;
 	}
 
@@ -43,26 +44,26 @@
 		b = s_layer_neu_get(b_layer, x, y);
 		lu_user_assert_void(b, "S_Neu is NULL");
 
-		b->d->np = d;
-		d->b->vl = b;
+		d_np(b) = d; // b->d->np = d; 
+		b_vl(d) = b; // d->b->vl = b; 
 
 		b = s_layer_neu_get(b_layer, x + 1, y);
 		lu_user_assert_void(b, "S_Neu is NULL");
 
-		b->d->nl = d;
-		d->b->vp = b;
+		d_nl(b) = d; // b->d->nl = d;
+		b_vp(d) = b; // d->b->vp = b;
 
 		b = s_layer_neu_get(b_layer, x + 1, y + 1);
 		lu_user_assert_void(b, "S_Neu is NULL");
 
-		b->d->vl = d;
-		d->b->np = b;
+		d_vl(b) = d; // b->d->vl = d;
+		b_np(d) = b; // d->b->np = b;
 
 		b = s_layer_neu_get(b_layer, x, y + 1);
 		lu_user_assert_void(b, "S_Neu is NULL");
 
-		b->d->vp = d;
-		d->b->nl = b;
+		d_vp(b) = d; // b->d->vp = d;
+		b_nl(d) = b; // d->b->nl = b;
 	}
 
 	static void s_a_neu_b_layer_connect(S_Neu d, S_Layer b_layer)
@@ -81,14 +82,14 @@
 		b = s_layer_neu_get(b_layer, x, y);
 		lu_user_assert_void(b, "S_Neu is NULL");
 
-		b->d->vp = d;
-		d->b->vl = b;
+		d_p(b) = d; // b->d->vp = d;
+		b_l(d) = b; // d->b->vl = b;
 
 		b = s_layer_neu_get(b_layer, x + 1, y);
 		lu_user_assert_void(b, "S_Neu is NULL");
 
-		b->d->vl = d;
-		d->b->vp = b;
+		d_l(b) = d; // b->d->vl = d;
+		b_p(d) = b; // d->b->vp = b;
 	}
 
 
