@@ -38,7 +38,7 @@
 		///////////////////////////////////////
 		// VP Layers
 
-		self->vp_layers_size = self->cells_w > self->cells_h ? self->cells_w : self->cells_h;
+		self->vp_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h) + 1; 	// odyn dlia component
 
 		self->v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->vp_layers_size);
 		lu_user_assert(self->v_layers, "Cannot allocate v layers"); 
@@ -118,19 +118,24 @@
 			s_layer_init(p_layer, self, mem, SLT_P, layer_ix, w, h, d);
 			lu_user_assert(p_layer, "Cannot init p_layer");
 
-			if (layer_ix == 0) 
+			switch(layer_ix)
 			{
-				type = SNT_CELL;
-				b_v_layer = NULL;
-				b_p_layer = NULL;
+				case 0:
+					type = SNT_COMPONENT;
+					break;
+				case 1:
+					type = SNT_CELL;
+					break;
+				default:
+					type = SNT_NEU;
 			}
-			else 
+
+			if (layer_ix > 0)
 			{
-				type = SNT_NEU;
 				b_v_layer = &self->v_layers[layer_ix - 1];
 				b_p_layer = &self->p_layers[layer_ix - 1];
 			}
-
+		
 			for (z = 0; z < d; z++)
 				for (y = 0; y < h; y++)
 					for (x = 0; x < w; x++)
@@ -140,12 +145,20 @@
 						p_neu = s_rec_neu_init(self, mem, type, p_layer, x, y, z); 
 						lu_user_assert(p_neu, "Cannot init v_neu");
 
-						if (b_v_layer)
-							s_neu_b_layer_connect(v_neu, b_v_layer); 
+						switch (type)
+						{
+							case SNT_COMPONENT:
 
-						if (b_p_layer)	
-							s_neu_b_layer_connect(p_neu, b_p_layer);
-						
+								break;
+							case SNT_CELL:
+								break;
+							case SNT_NEU:
+								s_neu_b_layer_connect(v_neu, b_v_layer); 
+								s_neu_b_layer_connect(p_neu, b_p_layer);
+								break;
+							default:
+								lu_user_assert(false, "Something went wrong");
+						}
 
 						s_neu_t_connect(v_neu, p_neu);
 					}
@@ -233,14 +246,14 @@
 		switch (type)
 		{
 			case SNT_COMPONENT:
-
+				s_rec_component_init(self, mem, neu);
 				break;
 			case SNT_CELL:
 				s_rec_cell_init(self, mem, neu);
 				t = "CELL";
 				break;
 			case SNT_NEU:
-				s_rec_full_neu_init(self, mem, neu);
+				s_rec_mid_tier_neu_init(self, mem, neu);
 				t = "NEU";
 				break;
 			case SNT_A_NEU:
@@ -262,16 +275,14 @@
 		return neu;
 	}
 
-	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu)
+	static S_Neu s_rec_component_init(S_Rec self, Mem mem, S_Neu neu)
 	{
-		lu_user_assert(neu->type == SNT_CELL, "Wrong neu type");
-		
-		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->type == SNT_COMPONENT, "Wrong neu type");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu));
 		lu_user_assert(neu->d, "Cannot allocate neu->d");
 
 		S_Layer layer = neu->layer;
-		lu_user_assert(neu->layer, "S_Layer is NULL");
-
 		S_Neu_Conf conf = NULL;
 		switch (layer->type)
 		{
@@ -285,19 +296,28 @@
 				lu_user_assert(false, "Wrong S_Layer type");
 		}
 
-		// neu->cols = (S_Col*) mem_alloc(mem, sizeof(S_Col) * conf->components_size);
-		// lu_user_assert(neu->cols, "Cannot allocate cols");
-		// lu_size i;
-		// S_Col col;
-		// for(i = 0; i < conf->components_size; i++)
-		// {
-		// 	//neu->cols[i] = s_rec_col_init(self, mem, neu, conf);
-		// }
+		neu->conf = conf;
 
 		return neu;
 	}
 
-	static S_Neu s_rec_full_neu_init(S_Rec self, Mem mem, S_Neu neu)
+	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu)
+	{
+		lu_user_assert(neu->type == SNT_CELL, "Wrong neu type");
+		
+		neu->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->cells_d);
+		lu_user_assert(neu->b, "Cannot allocate neu->b");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
+
+		S_Layer layer = neu->layer;
+		lu_user_assert(neu->layer, "S_Layer is NULL");
+
+		return neu;
+	}
+
+	static S_Neu s_rec_mid_tier_neu_init(S_Rec self, Mem mem, S_Neu neu)
 	{
 		lu_user_assert(neu->type == SNT_NEU, "Wrong neu type");
 
