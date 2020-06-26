@@ -14,7 +14,7 @@
 		lu_user_assert(rec->width > 0, "Lu_Rec width should be greater than 0");
 		lu_user_assert(rec->height > 0, "Lu_Rec height should be greater than 0");
 
-		Mem mem = s_mem->brain->header_mem;
+		Mem mem = s_mem->brain->app_mem;
 
 		lu_user_assert(mem, "Mem is NULL");
 

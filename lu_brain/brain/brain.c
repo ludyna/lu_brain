@@ -53,15 +53,15 @@
 		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
 			return lu_user_debug("lu_brain options should include information about recs (rec_opts)");
 
-		Mem header_mem		= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
+		Mem app_mem		= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
 
-		Lu_Brain self 		= (Lu_Brain) mem_alloc(header_mem, sizeof(struct lu_brain));
+		Lu_Brain self 		= (Lu_Brain) mem_alloc(app_mem, sizeof(struct lu_brain));
 		
 		self->id 			= opts->id;
-		self->header_mem  	= header_mem; 
+		self->app_mem  		= app_mem; 
 
 		// Recs
-		self->recs 			= arr_create(header_mem, opts->rec_opts->count);
+		self->recs 			= arr_create(app_mem, opts->rec_opts->count);
 
 		lu_user_assert(self->recs, "Cannot create recs. Not enough memory?");
 
@@ -78,22 +78,13 @@
 		self->gate 			= gate_create(self, &opts->gate_opts);
 		lu_user_assert(self->gate, "Cannot create Gate");
  
- 		// temporary calculations:
-		lu_size avail_size = mem_perm_avail((Mem_Perm) header_mem);
-		lu_size net_size = avail_size / 2;
-		lu_size waves_size = avail_size - net_size;
-
-		lu_debug("\n\n!!! av=%d, net=%d, waves=%d\n\n", avail_size, net_size, waves_size);
-
-		self->net_mem = (Mem) mem_perm_create(self->header_mem, net_size);
-		self->waves_mem = (Mem) mem_perm_create(self->header_mem, waves_size);
 
 		return self;
 	}
 
 	void lu_brain_destroy(Lu_Brain self)
 	{
-		mem_destroy(self->header_mem, g_mem_temp);
+		mem_destroy(self->app_mem, g_mem_temp);
 	}
 
 	Lu_Rec lu_brain_rec_get(Lu_Brain self, lu_size index)

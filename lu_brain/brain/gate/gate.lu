@@ -30,7 +30,7 @@
 		lu_assert(opts->w_restores_size > 0);
 		lu_assert(brain);
 
-		Mem mem = brain->header_mem;
+		Mem mem = brain->app_mem;
 
 		lu_assert(mem);
 

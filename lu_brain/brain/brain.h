@@ -47,9 +47,7 @@
 		lu_size			id;  		// useful for logs and debugging 
 									// in multi-lu_brain env
 
-		Mem 			header_mem;
-		Mem 			net_mem;
-		Mem 			waves_mem;
+		Mem 			app_mem;
 
 		Arr				recs;		// receivers
  

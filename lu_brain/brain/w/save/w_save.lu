@@ -25,7 +25,7 @@
 
 		lu_user_assert(brain, "Lu_Brain is NULL");
 
-		Mem mem = brain->header_mem;
+		Mem mem = brain->app_mem;
 
 		lu_user_assert(mem, "Mem is NULL");
 

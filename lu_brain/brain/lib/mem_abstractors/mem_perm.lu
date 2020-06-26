@@ -89,7 +89,7 @@
 
 		self->buff_start 			= (lu_p_byte) buff_start;
 		self->buff_end				= self->buff_start + size_in_bytes;
-		self->buff_pos 				= self->buff_start + sizeof(struct header_mem);
+		self->buff_pos 				= self->buff_start + sizeof(struct app_mem);
 		self->size_in_bytes 		= size_in_bytes;
 
 		if (mem_perm_is_out_of_mem(self))
@@ -118,7 +118,7 @@
 	}
 
 	Mem_Table_Perm mem_table_perm_create(
-		Mem_Perm 			header_mem, 
+		Mem_Perm 			app_mem, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,
@@ -140,7 +140,7 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = mem_perm_avail(header_mem) * percent  / 100.0;
+			lu_size a = mem_perm_avail(app_mem) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
 			if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
@@ -154,7 +154,7 @@
 		if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
-		Mem mem = (Mem) header_mem;
+		Mem mem = (Mem) app_mem;
 		lu_p_byte start = mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
@@ -179,7 +179,7 @@
 		self->super.free_count				= 0;
 
 		// own
-		self->header_mem 				= header_mem;
+		self->app_mem 				= app_mem;
 
 		return self;
 	}
