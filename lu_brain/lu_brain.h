@@ -60,15 +60,12 @@
 		lu_size blocks_size,
 		lu_value v_min, 
 		lu_value v_max, 
-		lu_size v_neu_size, 
-		lu_size v_nsc, 
-		lu_size p_neu_size,
-		lu_size p_nsc
+		lu_size v_neu_size
 	);
 
-	// lu_rec_opts_v_nsc_set
-	// lu_rec_opns_p_neu_size_set
-	// lu_rec_opts_p_nsc_set
+	void lu_rec_opts_v_nsc_set(Lu_Rec_Opts self, lu_size val);
+	void lu_rec_opns_p_neu_size_set(Lu_Rec_Opts self, lu_size val);
+	void lu_rec_opts_p_nsc_set(Lu_Rec_Opts self, lu_size val);
 
 	
 	void lu_rec_opts_destroy(Lu_Rec_Opts);

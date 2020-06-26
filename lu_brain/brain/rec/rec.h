@@ -12,7 +12,7 @@
 		lu_size 		height;
 		lu_size			blocks_size;
 		
-		lu_size 		components_size;
+		lu_size 		depth;
 
 		// (0, 1)
 		lu_value 		contrast;
@@ -40,7 +40,7 @@
 		lu_size 		height;
 		lu_size 		blocks_size;
 
-		lu_size 		components_size;
+		lu_size 		depth;
 
 		lu_value 		v_min;
 		lu_value 		v_max;

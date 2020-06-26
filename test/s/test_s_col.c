@@ -45,14 +45,11 @@ void test_s_col1and2(void)
 		brain_opts, 
 		/*w*/				3, 
 		/*h*/				3, 
-		/*components_size*/	1,
+		/*depth*/	1,
 		/*block_size*/		10, 
 		/*v_min*/ 			0.0, 
 		/*v_max*/			10.0, 
-		/*v_neu_size*/		10, 
-		/*v_nsc*/ 			1,
-		/*p_neu_size*/		4, 
-		/*p_nsc*/			1
+		/*v_neu_size*/		10
 	);
 	TEST_ASSERT(rec_opts_1);
 
@@ -60,14 +57,11 @@ void test_s_col1and2(void)
 		brain_opts, 
 		/*w*/				1, 
 		/*h*/				1, 
-		/*components_size*/	1,
+		/*depth*/	1,
 		/*block_size*/		10, 
 		/*v_min*/ 			0.0, 
 		/*v_max*/			10.0, 
-		/*v_neu_size*/		10, 
-		/*v_nsc*/ 			1,
-		/*p_neu_size*/		4, 
-		/*p_nsc*/			1
+		/*v_neu_size*/		10
 	);
 
 	TEST_ASSERT(rec_opts_2);

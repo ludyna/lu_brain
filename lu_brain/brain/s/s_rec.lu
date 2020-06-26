@@ -27,7 +27,7 @@
 
 		self->cells_w 			= rec->width;
 		self->cells_h			= rec->height; 
-		self->cells_d 			= rec->components_size;
+		self->cells_d 			= rec->depth;
 
 		///////////////////////////////////////
 		// Confs
