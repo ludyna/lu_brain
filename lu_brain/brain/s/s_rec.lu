@@ -14,7 +14,7 @@
 		lu_user_assert(rec->width > 0, "Lu_Rec width should be greater than 0");
 		lu_user_assert(rec->height > 0, "Lu_Rec height should be greater than 0");
 
-		Mem mem = s_mem->brain->mem_perm;
+		Mem mem = s_mem->brain->header_mem;
 
 		lu_user_assert(mem, "Mem is NULL");
 
@@ -84,9 +84,7 @@
 
 		// a_neus (n(n+1))/2 * 2 for d i b
 		self->neus_size += self->blocks_size * (self->blocks_size + 1);
-
 		self->neus_count = 0;
-
 		self->neus = (struct s_neu*) mem_alloc(mem, sizeof(struct s_neu) * self->neus_size);
 		lu_user_assert(self->neus, "Cannot allocate neus"); 
 
@@ -197,13 +195,12 @@
 				b_ap_layer = &self->ap_layers[layer_ix - 1];
 			}
 
-
 			s_layer_init(av_layer, self, mem, SLT_AV, layer_ix, w, y, d);
 			lu_user_assert(av_layer, "Cannot init av_layer");
 			s_layer_init(ap_layer, self, mem, SLT_AP, layer_ix, w, y, d);
 			lu_user_assert(ap_layer, "Cannot init ap_layer");
 
-			for(x = 0; x < w; x++)
+			for (x = 0; x < w; x++)
 			{
 				v_neu = s_rec_neu_init(self, mem, SNT_A_NEU, av_layer, x, y - 1, d - 1); 
 				lu_user_assert(v_neu, "Cannot init v_neu");
@@ -224,7 +221,6 @@
 		}
 
 		// lu_debug("\nneus_count = %d, neus_size = %d", self->neus_count, self->neus_size);
-		// lu_debug("\nv_links_count = %d, v_links_size = %d", self->v_links_count, self->v_links_size);
 
 		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
 

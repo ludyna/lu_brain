@@ -26,7 +26,7 @@ void test_mem_table1(void)
         /*flags*/                   MEM_TABLE_CAN_FREE_ITEMS
     );
 
-    TEST_ASSERT( ((Mem_Table_Perm)mt)->mem_perm == (Mem_Perm) mem );
+    TEST_ASSERT( ((Mem_Table_Perm)mt)->header_mem == (Mem_Perm) mem );
 
     TEST_ASSERT(mt->table_size_in_records == 3);
     TEST_ASSERT(mt->free_count == 0);

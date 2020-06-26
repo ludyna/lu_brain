@@ -23,9 +23,9 @@ lu_value			data_m1[] 		= { -1.0 };
 Mem 				mem;
 S_Mem				s_mem;
 S_Rec 				s_rec;
-S_Neu				s_cell;
-S_Col 				s_col1;
-S_Col 				s_col2;
+S_Neu				s_neu_com_0;
+S_Neu 				s_neu_com_1;
+
 
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
@@ -89,22 +89,16 @@ void test_s_col1and2(void)
 	s_rec = s_mem_s_rec_get(s_mem, 0);
 	TEST_ASSERT(s_rec);
 
-	s_cell = s_rec_v_cell_get(s_rec, 0, 0, 0);
-	TEST_ASSERT(s_cell);
-	TEST_ASSERT(s_cell->cols);
+	s_neu_com_0 = s_rec_v_cell_get(s_rec, 0, 0, 0, 0);
+	TEST_ASSERT(s_neu_com_0);
 
-	s_col1 = s_cell->cols[0];
-	TEST_ASSERT(s_col1);
 
 	s_rec = s_mem_s_rec_get(s_mem, 1);
 	TEST_ASSERT(s_rec);
 
-	s_cell = s_rec_v_cell_get(s_rec, 0, 0, 0);
-	TEST_ASSERT(s_cell);
-	TEST_ASSERT(s_cell->cols);
+	s_neu_com_1 = s_rec_v_cell_get(s_rec, 0, 0, 0, 0);
+	TEST_ASSERT(s_neu_com_1);
 
-	s_col2 = s_cell->cols[0];
-	TEST_ASSERT(s_col2);
 
 	// s_col1 tests
 

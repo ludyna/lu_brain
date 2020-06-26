@@ -8,9 +8,9 @@
 	static N_Mem n_mem_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(brain->mem_perm, "Lu_Brain mem_perm is NULL");
+		lu_user_assert(brain->header_mem, "Lu_Brain header_mem is NULL");
 
-		N_Mem self 			= (N_Mem) mem_alloc(brain->mem_perm, sizeof(struct n_mem));
+		N_Mem self 			= (N_Mem) mem_alloc(brain->header_mem, sizeof(struct n_mem));
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
 		self->brain 		= brain;

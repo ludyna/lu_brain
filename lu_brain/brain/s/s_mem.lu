@@ -8,11 +8,11 @@
 	static S_Mem s_mem_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(brain->mem_perm, "Lu_Brain mem_perm is NULL");
+		lu_user_assert(brain->header_mem, "Lu_Brain header_mem is NULL");
 		lu_user_assert(brain->recs, "Lu_Brain recs is NULL");
 		lu_user_assert(arr_count(brain->recs) > 0, "Lu_Brain without recs");
 
-		Mem mem = brain->mem_perm;
+		Mem mem = brain->header_mem;
 
 		S_Mem self 			= (S_Mem) mem_alloc(mem, sizeof(struct s_mem));
 		lu_user_assert(self, "Cannot allocate S_Mem");

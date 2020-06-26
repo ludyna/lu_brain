@@ -56,7 +56,6 @@
 		p_neu->t = v_neu;
 	}
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
 //
@@ -135,10 +134,10 @@
 	static S_Neu s_rec_mid_tier_neu_init(S_Rec self, Mem mem, S_Neu neu);
 	static S_Neu s_rec_a_neu_init(S_Rec self, Mem mem, S_Neu neu);
 
-	static inline S_Neu s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y)
+	static inline S_Neu s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
 		S_Layer layer = &self->v_layers[l];
-		return layer->neus[x + y * layer->w];
+		return s_layer_neu_get(layer, x, y, z);
 	}
 
 	struct s_mem {

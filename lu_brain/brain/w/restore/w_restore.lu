@@ -29,7 +29,7 @@
 		lu_assert(gate);
 		lu_assert(gate->brain);
 
-		Mem mem = gate->brain->mem_perm;
+		Mem mem = gate->brain->header_mem;
 
 		lu_assert(mem);
 
