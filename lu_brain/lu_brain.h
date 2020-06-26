@@ -54,10 +54,10 @@
 
 	Lu_Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts lu_brain_opts, 
-		lu_size w, 
-		lu_size h, 
+		lu_size width, 
+		lu_size height, 
+		lu_size depth,
 		lu_size blocks_size,
-		lu_size components_size,
 		lu_value v_min, 
 		lu_value v_max, 
 		lu_size v_neu_size, 
@@ -65,6 +65,11 @@
 		lu_size p_neu_size,
 		lu_size p_nsc
 	);
+
+	// lu_rec_opts_v_nsc_set
+	// lu_rec_opns_p_neu_size_set
+	// lu_rec_opts_p_nsc_set
+
 	
 	void lu_rec_opts_destroy(Lu_Rec_Opts);
 

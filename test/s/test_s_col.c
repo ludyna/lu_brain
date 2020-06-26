@@ -41,13 +41,12 @@ void tearDown(void)
 void test_s_col1and2(void)
 {
 	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
-	// rec_opts_1 			= lu_rec_opts_create(brain_opts, 1, 1, 1, 0.0, 10.0, 10, 4, 0);
 	rec_opts_1 			= lu_rec_opts_create(
 		brain_opts, 
 		/*w*/				3, 
 		/*h*/				3, 
-		/*block_size*/		10, 
 		/*components_size*/	1,
+		/*block_size*/		10, 
 		/*v_min*/ 			0.0, 
 		/*v_max*/			10.0, 
 		/*v_neu_size*/		10, 
@@ -57,13 +56,12 @@ void test_s_col1and2(void)
 	);
 	TEST_ASSERT(rec_opts_1);
 
-	//rec_opts_2			= lu_rec_opts_create(brain_opts, 1, 1, 2, -3.0, 4.0, 3, 2, 0);
 	rec_opts_2 			= lu_rec_opts_create(
 		brain_opts, 
 		/*w*/				1, 
 		/*h*/				1, 
-		/*block_size*/		10, 
 		/*components_size*/	1,
+		/*block_size*/		10, 
 		/*v_min*/ 			0.0, 
 		/*v_max*/			10.0, 
 		/*v_neu_size*/		10, 

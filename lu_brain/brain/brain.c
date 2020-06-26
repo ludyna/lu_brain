@@ -53,7 +53,7 @@
 		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
 			return lu_user_debug("lu_brain options should include information about recs (rec_opts)");
 
-		Mem app_mem		= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
+		Mem app_mem			= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
 
 		Lu_Brain self 		= (Lu_Brain) mem_alloc(app_mem, sizeof(struct lu_brain));
 		
@@ -78,6 +78,7 @@
 		self->gate 			= gate_create(self, &opts->gate_opts);
 		lu_user_assert(self->gate, "Cannot create Gate");
  
+ 		
 
 		return self;
 	}
