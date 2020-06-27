@@ -39,7 +39,8 @@
 		S_Neu*					d;
 		S_Neu  	 				t;			// zviazok po t		
 
-		S_Neu 					neus;
+		lu_size 				neus_count;
+		N_Neu* 					neus;		// dlia choho tut neus vzahali? Mozhe todi zrobyty list (z Mem_Table allocator)?
 		S_Neu_Conf 				conf;
 
 		// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
@@ -67,11 +68,11 @@
 
 		lu_value 				step;
 		lu_value*				steps;  		// preobchysleni kroky
-		lu_size 				neu_size;
+		lu_size 				neus_size;
 		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
-	static S_Neu_Conf s_neu_conf_init(S_Neu_Conf, Mem mem, lu_value min, lu_value max, lu_size neu_size, lu_size nsc);
+	static S_Neu_Conf s_neu_conf_init(S_Neu_Conf, Mem mem, lu_value min, lu_value max, lu_size neus_size, lu_size nsc);
 	static inline lu_value s_neu_conf_norm(S_Neu_Conf self, lu_value request);
 	static inline lu_size s_neu_conf_ix(S_Neu_Conf self, lu_value val);
 	static inline struct lu_size_range s_neu_conf_ix_range(S_Neu_Conf self, lu_value val);

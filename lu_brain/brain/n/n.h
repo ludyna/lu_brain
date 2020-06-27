@@ -64,7 +64,7 @@
 
 		lu_size	 			c_p; 		// p i n potribni u vypadku yakshou my vydaliayemo zviazok?
 		lu_size				c_n; 		// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys p ale my neznayemo n
-		 		   							// tomu naspravdi i p i n potribni
+		 		   						// tomu naspravdi i p i n potribni
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

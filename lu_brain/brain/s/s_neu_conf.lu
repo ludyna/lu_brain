@@ -5,21 +5,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Neu_Conf s_neu_conf_init(S_Neu_Conf self, Mem mem, lu_value min, lu_value max, lu_size neu_size, lu_size nsc)
+	static S_Neu_Conf s_neu_conf_init(S_Neu_Conf self, Mem mem, lu_value min, lu_value max, lu_size neus_size, lu_size nsc)
 	{
-		self->neu_size  		= neu_size; // value depth in indexes
+		self->neus_size  		= neus_size; // value depth in indexes
 		self->orig_min 			= min;
 		self->orig_max 			= max;
 		self->max 				= self->orig_max - self->orig_min;
-		self->step 				= self->max / (lu_value) self->neu_size;
+		self->step 				= self->max / (lu_value) self->neus_size;
 		self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
 
 	 	// Kroky preobchysleni
-		self->steps 		= (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->neu_size);
+		self->steps 		= (lu_value*) mem_alloc(mem, sizeof(lu_value) * self->neus_size);
 		lu_user_assert(self->steps, "Cannot allocate steps");
 	
 		lu_size i;
-		for (i = 0; i < self->neu_size; i++)
+		for (i = 0; i < self->neus_size; i++)
 			self->steps[i] = (lu_value)i * self->step;
 	}
 
@@ -47,7 +47,7 @@
 		if (begin < 0) begin = 0;
 
 		end = orig_i + self->nsc;
-		if (end > (self->neu_size - 1)) end = self->neu_size - 1; 
+		if (end > (self->neus_size - 1)) end = self->neus_size - 1; 
 
 		struct lu_size_range r;
 		r.begin = (lu_size) begin;
@@ -62,5 +62,5 @@
 
 	static inline lu_value s_neu_conf_step_norm_dist(S_Neu_Conf self)
 	{
-		return 1.0 / self->neu_size;
+		return 1.0 / self->neus_size;
 	}
