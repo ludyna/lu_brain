@@ -42,7 +42,6 @@
 
 	};
 
-
 	struct lu_brain {
 		lu_size			id;  		// useful for logs and debugging 
 									// in multi-lu_brain env

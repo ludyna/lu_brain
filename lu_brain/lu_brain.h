@@ -67,7 +67,6 @@
 	void lu_rec_opns_p_neu_size_set(Lu_Rec_Opts self, lu_size val);
 	void lu_rec_opts_p_nsc_set(Lu_Rec_Opts self, lu_size val);
 
-	
 	void lu_rec_opts_destroy(Lu_Rec_Opts);
 
 ///////////////////////////////////////////////////////////////////////////////

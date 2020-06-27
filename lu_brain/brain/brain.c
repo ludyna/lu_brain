@@ -78,8 +78,6 @@
 		self->gate 			= gate_create(self, &opts->gate_opts);
 		lu_user_assert(self->gate, "Cannot create Gate");
  
- 		
-
 		return self;
 	}
 
