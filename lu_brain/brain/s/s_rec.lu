@@ -32,8 +32,8 @@
 		///////////////////////////////////////
 		// Confs
 
-		s_neu_conf_init(&self->v_conf, mem, rec->v_min, rec->v_max, rec->v_neu_size, rec->v_nsc);
-		s_neu_conf_init(&self->p_conf, mem, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
+		s_layer_conf_init(&self->v_conf, mem, rec->v_min, rec->v_max, rec->v_neu_size, rec->v_nsc);
+		s_layer_conf_init(&self->p_conf, mem, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
 
 		///////////////////////////////////////
 		// VP Layers
@@ -102,7 +102,7 @@
 		S_Layer b_v_layer;
 		S_Layer b_p_layer;
 
-		enum s_net_type type;
+		enum s_neu_type type;
 
 		while (w > 0 && h > 0)
 		{
@@ -227,7 +227,7 @@
 		return self;
 	}
 
-	static S_Neu s_rec_neu_init(S_Rec self, Mem mem, enum s_net_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static S_Neu s_rec_neu_init(S_Rec self, Mem mem, enum s_neu_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(self->neus_count < self->neus_size, "Out of space for S_Neu");
 
@@ -275,21 +275,21 @@
 		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu));
 		lu_user_assert(neu->d, "Cannot allocate neu->d");
 
-		S_Layer layer = neu->layer;
-		S_Neu_Conf conf = NULL;
-		switch (layer->type)
-		{
-			case SLT_V:
-				conf = &self->v_conf;
-				break;
-			case SLT_P:
-				conf = &self->p_conf;
-				break;
-			default:
-				lu_user_assert(false, "Wrong S_Layer type");
-		}
+		// S_Layer layer = neu->layer;
+		// S_Layer_Conf conf = NULL;
+		// switch (layer->type)
+		// {
+		// 	case SLT_V:
+		// 		conf = &self->v_conf;
+		// 		break;
+		// 	case SLT_P:
+		// 		conf = &self->p_conf;
+		// 		break;
+		// 	default:
+		// 		lu_user_assert(false, "Wrong S_Layer type");
+		// }
 
-		neu->conf = conf;
+		// neu->conf = conf;
 
 		return neu;
 	}

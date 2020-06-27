@@ -36,7 +36,7 @@
 		return self;
 	}
 
-	// static void s_layer_cells_create(S_Layer self, Mem mem, S_Neu_Conf conf)
+	// static void s_layer_cells_create(S_Layer self, Mem mem, S_Layer_Conf conf)
 	// {
 	// 	lu_size x;
 	// 	lu_size y;

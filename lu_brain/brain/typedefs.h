@@ -18,8 +18,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
-	enum s_net_type {
-		SNT_UNKNOWN,
+	enum s_neu_type {
 		SNT_COMPONENT,
 		SNT_CELL, 
 		SNT_NEU,
@@ -37,10 +36,10 @@
 		SLT_AP
 	};
 	
-	typedef struct s_neu_conf*	S_Neu_Conf;
-	typedef struct s_layer* 	S_Layer;
-	typedef struct s_rec*		S_Rec;
-	typedef struct s_mem* 		S_Mem;
+	typedef struct s_layer_conf*	S_Layer_Conf;
+	typedef struct s_layer* 		S_Layer;
+	typedef struct s_rec*			S_Rec;
+	typedef struct s_mem* 			S_Mem;
 
 ///////////////////////////////////////////////////////////////////////////////
 // N

@@ -7,6 +7,6 @@
  
 	#include "s_neu.lu"
 	#include "s_layer.lu"
- 	#include "s_neu_conf.lu"
+ 	#include "s_layer_conf.lu"
 	#include "s_rec.lu"
 	#include "s_mem.lu"

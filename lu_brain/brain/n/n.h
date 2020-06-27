@@ -74,6 +74,7 @@
 		// vlasnyk
 		Lu_Brain 				brain;
 
+		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
 		Mem_Table 				neus;
 		Mem_Table				lins; 
 		Mem_Table				names;

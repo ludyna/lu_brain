@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Neu s_neu_init(S_Neu self, enum s_net_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static S_Neu s_neu_init(S_Neu self, enum s_neu_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(layer, "S_Layer is NULL");
 
@@ -21,7 +21,6 @@
 		self->t 			= NULL;
 
 		self->neus 			= NULL;
-		self->conf			= NULL;
  
 		return self;
 	}
