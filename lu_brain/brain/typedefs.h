@@ -19,6 +19,7 @@
 // S
 
 	enum s_neu_type {
+		SNT_VAL,
 		SNT_COMPONENT,
 		SNT_CELL, 
 		SNT_NEU,

@@ -1,0 +1,112 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+	static S_Neu s_rec_neu_init(S_Rec self, Mem mem, enum s_neu_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	{
+		lu_user_assert(self->neus_count < self->neus_size, "Out of space for S_Neu");
+
+		S_Neu neu = &self->neus[self->neus_count];
+		s_neu_init(neu, type, layer, x, y, z);
+
+		char* t;  
+
+		switch (type)
+		{
+			case SNT_COMPONENT:
+				s_rec_component_init(self, mem, neu);
+				break;
+			case SNT_CELL:
+				s_rec_cell_init(self, mem, neu);
+				t = "CELL";
+				break;
+			case SNT_NEU:
+				s_rec_mid_tier_neu_init(self, mem, neu);
+				t = "NEU";
+				break;
+			case SNT_A_NEU:
+				s_rec_a_neu_init(self, mem, neu);
+				t = "A_NEU";
+				break;
+			default:
+				lu_user_assert(false, "Unknown S_Neu type");
+		}
+
+		lu_user_assert(neu, "Cannot create S_Neu");
+
+		s_layer_neu_set(layer, x, y, z, neu);
+
+		++self->neus_count;
+
+		//lu_debug("\n%s b=%d, d=%d", t, neu->b != NULL, neu->d != NULL);
+
+		return neu;
+	}
+
+	static S_Neu s_rec_component_init(S_Rec self, Mem mem, S_Neu neu)
+	{
+		lu_user_assert(neu->type == SNT_COMPONENT, "Wrong neu type");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu));
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
+
+		// S_Layer layer = neu->layer;
+		// S_Layer_Conf conf = NULL;
+		// switch (layer->type)
+		// {
+		// 	case SLT_V:
+		// 		conf = &self->v_conf;
+		// 		break;
+		// 	case SLT_P:
+		// 		conf = &self->p_conf;
+		// 		break;
+		// 	default:
+		// 		lu_user_assert(false, "Wrong S_Layer type");
+		// }
+
+		// neu->conf = conf;
+
+		return neu;
+	}
+
+	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu)
+	{
+		lu_user_assert(neu->type == SNT_CELL, "Wrong neu type");
+		
+		neu->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->cells_d);
+		lu_user_assert(neu->b, "Cannot allocate neu->b");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
+
+		S_Layer layer = neu->layer;
+		lu_user_assert(neu->layer, "S_Layer is NULL");
+
+		return neu;
+	}
+
+	static S_Neu s_rec_mid_tier_neu_init(S_Rec self, Mem mem, S_Neu neu)
+	{
+		lu_user_assert(neu->type == SNT_NEU, "Wrong neu type");
+
+		neu->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->b, "Cannot allocate neu->b");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
+
+		return neu;
+	}
+
+	static S_Neu s_rec_a_neu_init(S_Rec self, Mem mem, S_Neu neu)
+	{
+		lu_user_assert(neu->type == SNT_A_NEU, "Wrong neu type");
+
+		neu->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		lu_user_assert(neu->b, "Cannot allocate neu->b");
+
+		neu->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		lu_user_assert(neu->d, "Cannot allocate neu->d");
+
+		return neu;
+	}

@@ -91,7 +91,7 @@
 		lu_size 				d;				// komponenty v pershomu layer
 
 		S_Neu* 					neus;
-		
+
 		S_Layer_Conf 			conf;		
 	};
 
@@ -131,17 +131,25 @@
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
-	static S_Neu s_rec_neu_init(S_Rec, Mem mem, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
-	static S_Neu s_rec_component_init(S_Rec, Mem mem, S_Neu neu);
-	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu);
-	static S_Neu s_rec_mid_tier_neu_init(S_Rec self, Mem mem, S_Neu neu);
-	static S_Neu s_rec_a_neu_init(S_Rec self, Mem mem, S_Neu neu);
 
 	static inline S_Neu s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
 		S_Layer layer = &self->v_layers[l];
 		return s_layer_neu_get(layer, x, y, z);
 	}
+
+	// Layers inits
+	static S_Layer s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
+	static S_Layer s_rec_comp_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
+	static S_Layer s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
+	static S_Layer s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
+
+	// Neu inits
+	static S_Neu s_rec_neu_init(S_Rec, Mem mem, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
+	static S_Neu s_rec_component_init(S_Rec, Mem mem, S_Neu neu);
+	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu);
+	static S_Neu s_rec_mid_tier_neu_init(S_Rec self, Mem mem, S_Neu neu);
+	static S_Neu s_rec_a_neu_init(S_Rec self, Mem mem, S_Neu neu);
 
 	struct s_mem {
 		Lu_Brain 				brain;
