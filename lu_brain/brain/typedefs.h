@@ -22,7 +22,7 @@
 		SNT_VAL,
 		SNT_COMPONENT,
 		SNT_CELL, 
-		SNT_NEU,
+		SNT_PYRA,
 		SNT_A_NEU
 	};
 

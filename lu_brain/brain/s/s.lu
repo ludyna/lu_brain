@@ -6,7 +6,7 @@
 // Includes
  
  	#include "s_neu_inits.lu"
-	#include "s_neu.lu"
+	#include "s_neu_connects.lu"
 	#include "s_layer.lu"
  	#include "s_layer_conf.lu"
 	#include "s_rec_layer_inits.lu"

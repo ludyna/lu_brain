@@ -192,8 +192,8 @@
 
 				if (layer_ix > 0)
 				{
-					s_a_neu_b_layer_connect(v_neu, b_av_layer); 	
-					s_a_neu_b_layer_connect(p_neu, b_ap_layer);
+					s_neu_a_connect(v_neu, b_av_layer); 	
+					s_neu_a_connect(p_neu, b_ap_layer);
 				}
 
 				s_neu_t_connect(v_neu, p_neu);
@@ -235,8 +235,8 @@
 		// 		s_neu_cell_init(self, mem, neu);
 		// 		t = "CELL";
 		// 		break;
-		// 	case SNT_NEU:
-		// 		s_neu_union_init(self, mem, neu);
+		// 	case SNT_PYRA:
+		// 		s_neu_pyra_init(self, mem, neu);
 		// 		t = "NEU";
 		// 		break;
 		// 	case SNT_A_NEU:

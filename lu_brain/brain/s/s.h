@@ -47,18 +47,19 @@
 		// mozhlyvo
 	}; 
 
-	// Neu inits
+	// s_neu_inits.lu
 	static S_Neu s_neu_init(S_Neu self, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
 	static S_Neu s_neu_val_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_component_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_cell_init(S_Neu neu, S_Rec, Mem mem);
-	static S_Neu s_neu_union_init(S_Neu neu, S_Rec, Mem mem);
+	static S_Neu s_neu_pyra_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_a_init(S_Neu neu, S_Rec, Mem mem);
 
-	static void s_component_b_layer_connect(S_Neu d, S_Layer b_layer);
-	static void s_cell_b_layer_connect(S_Neu self, S_Layer);
-	static void s_neu_b_layer_connect(S_Neu self, S_Layer);
-	static void s_a_neu_b_layer_connect(S_Neu self, S_Layer);
+	// s_neu_connects.lu
+	static void s_neu_component_connect(S_Neu d, S_Layer b_layer);
+	static void s_neu_cell_connect(S_Neu self, S_Layer);
+	static void s_neu_pyra_connect(S_Neu self, S_Layer);
+	static void s_neu_a_connect(S_Neu self, S_Layer);
 	static inline void s_neu_t_connect(S_Neu v_neu, S_Neu p_neu) 
 	{
 		v_neu->t = p_neu;
