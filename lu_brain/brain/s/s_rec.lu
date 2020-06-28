@@ -117,7 +117,7 @@
 		v_layer = &self->v_layers[layer_ix];
 		p_layer = &self->p_layers[layer_ix];
 
-		s_rec_comp_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem);
+		s_rec_component_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem);
 
 		b_v_layer = v_layer;
 		b_p_layer = p_layer;
@@ -155,6 +155,7 @@
 
 		///////////////////////////////////////
 		// Init A Layers 
+
 		S_Layer av_layer;
 		S_Layer ap_layer;
 		S_Layer b_av_layer = NULL;
@@ -184,9 +185,9 @@
 
 			for (x = 0; x < w; x++)
 			{
-				v_neu = s_rec_neu_init(self, mem, SNT_A_NEU, av_layer, x, y - 1, d - 1); 
+				v_neu = s_rec_neu_alloc(self, mem, SNT_A_NEU, av_layer, x, y - 1, d - 1); 
 				lu_user_assert(v_neu, "Cannot init v_neu");
-				p_neu = s_rec_neu_init(self, mem, SNT_A_NEU, ap_layer, x, y - 1, d - 1); 
+				p_neu = s_rec_neu_alloc(self, mem, SNT_A_NEU, ap_layer, x, y - 1, d - 1); 
 				lu_user_assert(p_neu, "Cannot init p_neu");
 
 				if (layer_ix > 0)
@@ -207,4 +208,50 @@
 		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
 
 		return self;
+	}
+
+
+	/*
+	** Allocate space for S_Neu
+	*/
+	static S_Neu s_rec_neu_alloc(S_Rec self, Mem mem, enum s_neu_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	{
+		lu_user_assert(self->neus_count < self->neus_size, "Out of space for S_Neu");
+
+		S_Neu neu = &self->neus[self->neus_count];
+		neu = s_neu_init(neu, type, layer, x, y, z);
+		lu_user_assert(neu, "Cannot init S_Neu");
+		// char* t;  
+
+		// switch (type)
+		// {
+		// 	case SNT_VAL:
+		// 		s_neu_val_init(self, mem, neu);
+		// 		break;
+		// 	case SNT_COMPONENT:
+		// 		s_neu_component_init(self, mem, neu);
+		// 		break;
+		// 	case SNT_CELL:
+		// 		s_neu_cell_init(self, mem, neu);
+		// 		t = "CELL";
+		// 		break;
+		// 	case SNT_NEU:
+		// 		s_neu_union_init(self, mem, neu);
+		// 		t = "NEU";
+		// 		break;
+		// 	case SNT_A_NEU:
+		// 		s_neu_a_init(self, mem, neu);
+		// 		t = "A_NEU";
+		// 		break;
+		// 	default:
+		// 		lu_user_assert(false, "Unknown S_Neu type");
+		// }
+		
+		s_layer_neu_set(layer, x, y, z, neu);
+
+		++self->neus_count;
+
+		//lu_debug("\n%s b=%d, d=%d", t, neu->b != NULL, neu->d != NULL);
+
+		return neu;
 	}

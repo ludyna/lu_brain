@@ -1,0 +1,98 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+	static S_Neu s_neu_init(S_Neu self, enum s_neu_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	{
+		lu_user_assert(layer, "S_Layer is NULL");
+
+		self->type 			= type;
+
+		self->layer 		= layer;
+		self->x				= x;
+		self->y 			= y;
+		self->z 			= z;
+
+		self->b 			= NULL;
+		self->d 			= NULL;
+		self->t 			= NULL;
+
+		self->neus 			= NULL;
+ 
+		return self;
+	}
+
+	static S_Neu s_neu_val_init(S_Neu self, S_Rec rec, Mem mem)
+	{
+		lu_user_assert(self->type == SNT_VAL, "Wrong self type");
+
+
+	}
+
+	static S_Neu s_neu_component_init(S_Neu self, S_Rec rec, Mem mem)
+	{
+		lu_user_assert(self->type == SNT_COMPONENT, "Wrong self type");
+
+		self->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu));
+		lu_user_assert(self->d, "Cannot allocate self->d");
+
+		// S_Layer layer = self->layer;
+		// S_Layer_Conf conf = NULL;
+		// switch (layer->type)
+		// {
+		// 	case SLT_V:
+		// 		conf = &rec->v_conf;
+		// 		break;
+		// 	case SLT_P:
+		// 		conf = &rec->p_conf;
+		// 		break;
+		// 	default:
+		// 		lu_user_assert(false, "Wrong S_Layer type");
+		// }
+
+		// self->conf = conf;
+
+		return self;
+	}
+
+	static S_Neu s_neu_cell_init(S_Neu self, S_Rec rec, Mem mem)
+	{
+		lu_user_assert(self->type == SNT_CELL, "Wrong self type");
+		
+		self->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * rec->cells_d);
+		lu_user_assert(self->b, "Cannot allocate self->b");
+
+		self->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(self->d, "Cannot allocate self->d");
+
+		S_Layer layer = self->layer;
+		lu_user_assert(self->layer, "S_Layer is NULL");
+
+		return self;
+	}
+
+	static S_Neu s_neu_union_init(S_Neu self, S_Rec rec, Mem mem)
+	{
+		lu_user_assert(self->type == SNT_NEU, "Wrong self type");
+
+		self->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(self->b, "Cannot allocate self->b");
+
+		self->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
+		lu_user_assert(self->d, "Cannot allocate self->d");
+
+		return self;
+	}
+
+	static S_Neu s_neu_a_init(S_Neu self, S_Rec rec, Mem mem)
+	{
+		lu_user_assert(self->type == SNT_A_NEU, "Wrong self type");
+
+		self->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		lu_user_assert(self->b, "Cannot allocate self->b");
+
+		self->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		lu_user_assert(self->d, "Cannot allocate self->d");
+
+		return self;
+	}

@@ -5,26 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Neu s_neu_init(S_Neu self, enum s_neu_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
-	{
-		lu_user_assert(layer, "S_Layer is NULL");
-
-		self->type 			= type;
-
-		self->layer 		= layer;
-		self->x				= x;
-		self->y 			= y;
-		self->z 			= z;
-
-		self->b 			= NULL;
-		self->d 			= NULL;
-		self->t 			= NULL;
-
-		self->neus 			= NULL;
- 
-		return self;
-	}
-
 	static void s_component_b_layer_connect(S_Neu d, S_Layer b_layer)
 	{
 		lu_size z;
