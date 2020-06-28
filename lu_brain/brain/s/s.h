@@ -48,6 +48,7 @@
 	}; 
 
 	static S_Neu s_neu_init(S_Neu self, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
+	static void s_component_b_layer_connect(S_Neu d, S_Layer b_layer);
 	static void s_cell_b_layer_connect(S_Neu self, S_Layer);
 	static void s_neu_b_layer_connect(S_Neu self, S_Layer);
 	static void s_a_neu_b_layer_connect(S_Neu self, S_Layer);
@@ -119,9 +120,9 @@
 		struct s_neu* 			neus;
 
 		lu_size 				vp_layers_size;
-		struct s_layer_conf 		v_conf;	
+		struct s_layer_conf 	v_conf;	
 		struct s_layer* 		v_layers;
-		struct s_layer_conf 		p_conf;
+		struct s_layer_conf 	p_conf;
 		struct s_layer* 		p_layers;
 
 		lu_size 				blocks_size;
@@ -140,12 +141,13 @@
 
 	// Layers inits
 	static void s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
-	static void s_rec_comp_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
-	static void s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
-	static void s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
+	static void s_rec_comp_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem);
+	static void s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem);
+	static void s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
 
 	// Neu inits
-	static S_Neu s_rec_neu_init(S_Rec, Mem mem, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
+	static S_Neu s_rec_neu_init(S_Rec, Mem mem, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z); 
+	static S_Neu s_rec_val_init(S_Rec, Mem mem, S_Neu neu);
 	static S_Neu s_rec_component_init(S_Rec, Mem mem, S_Neu neu);
 	static S_Neu s_rec_cell_init(S_Rec self, Mem mem, S_Neu neu);
 	static S_Neu s_rec_mid_tier_neu_init(S_Rec self, Mem mem, S_Neu neu);

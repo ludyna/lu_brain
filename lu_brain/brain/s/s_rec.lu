@@ -99,8 +99,8 @@
 		S_Neu p_neu;
 		S_Layer v_layer;
 		S_Layer p_layer;
-		S_Layer b_v_layer;
-		S_Layer b_p_layer;
+		S_Layer b_v_layer = NULL;
+		S_Layer b_p_layer = NULL;
 
 		enum s_neu_type type;
 
@@ -109,21 +109,26 @@
 
 		s_rec_val_layers_init(self, v_layer, p_layer, mem);
 
-		++layer_ix;
-
-		v_layer = &self->v_layers[layer_ix];
-		p_layer = &self->p_layers[layer_ix];
-
-		s_rec_comp_layers_init(self, v_layer, p_layer, mem);
+		b_v_layer = v_layer;
+		b_p_layer = p_layer;
 
 		++layer_ix;
 
 		v_layer = &self->v_layers[layer_ix];
 		p_layer = &self->p_layers[layer_ix];
 
-		s_rec_cell_layers_init(self, v_layer, p_layer, mem);
+		s_rec_comp_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem);
+
+		b_v_layer = v_layer;
+		b_p_layer = p_layer;
 
 		++layer_ix;
+
+		v_layer = &self->v_layers[layer_ix];
+		p_layer = &self->p_layers[layer_ix];
+
+		s_rec_cell_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem);
+
 		--w;
 		--h;
 
@@ -131,12 +136,16 @@
 		{
 			lu_user_assert(layer_ix < self->vp_layers_size, "Wrong layer index");
 
+			b_v_layer = v_layer;
+			b_p_layer = p_layer;
+
+			++layer_ix; 
+
 			v_layer = &self->v_layers[layer_ix];
 			p_layer = &self->p_layers[layer_ix];
 
-			s_rec_neu_layers_init(self, v_layer, p_layer, mem, w, h, layer_ix);
+			s_rec_neu_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem, w, h, layer_ix);
 
-			++layer_ix; 
 			if (w > 0) --w;
 			if (h > 0) --h;
 		}

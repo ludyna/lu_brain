@@ -46,6 +46,13 @@
 		return neu;
 	}
 
+	static S_Neu s_rec_val_init(S_Rec self, Mem mem, S_Neu neu)
+	{
+		lu_user_assert(neu->type == SNT_VAL, "Wrong neu type");
+
+
+	}
+
 	static S_Neu s_rec_component_init(S_Rec self, Mem mem, S_Neu neu)
 	{
 		lu_user_assert(neu->type == SNT_COMPONENT, "Wrong neu type");
