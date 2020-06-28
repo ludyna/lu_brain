@@ -13,6 +13,9 @@
 
 		switch (type)
 		{
+			case SNT_VAL:
+
+				break;
 			case SNT_COMPONENT:
 				s_rec_component_init(self, mem, neu);
 				break;

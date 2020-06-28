@@ -2,23 +2,52 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+	static void s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem)
+	{
+		lu_size w = self->cells_w;
+		lu_size h = self->cells_h;
+		lu_size d = self->cells_d;
 
-	static S_Layer s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem)
+		v_layer = s_layer_init(v_layer, self, mem, SLT_V, 0, w, h, d);
+		lu_user_assert_void(v_layer, "Cannot init v_layer");
+
+		p_layer = s_layer_init(p_layer, self, mem, SLT_P, 0, w, h, d);
+		lu_user_assert_void(p_layer, "Cannot init p_layer");
+
+		lu_size z;
+		lu_size y;
+		lu_size x;
+
+		S_Neu v_neu;
+		S_Neu p_neu;
+
+		for (z = 0; z < d; z++)
+			for (y = 0; y < h; y++)
+				for (x = 0; x < w; x++)
+				{
+					v_neu = s_rec_neu_init(self, mem, SNT_VAL, v_layer, x, y, z); 
+					lu_user_assert_void(v_neu, "Cannot init v_neu");
+					 
+					p_neu = s_rec_neu_init(self, mem, SNT_VAL, p_layer, x, y, z); 
+					lu_user_assert_void(p_neu, "Cannot init v_neu");
+
+					s_neu_t_connect(v_neu, p_neu);
+				}
+ 
+
+	}
+
+	static void s_rec_comp_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem)
 	{
 
 	}
 
-	static S_Layer s_rec_comp_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem)
+	static void s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem)
 	{
 
 	}
 
-	static S_Layer s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem)
-	{
-
-	}
-
-	static S_Layer s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix)
+	static void s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix)
 	{
 			// s_layer_init(v_layer, self, mem, SLT_V, layer_ix, w, h, d);
 			// lu_user_assert(v_layer, "Cannot init v_layer");

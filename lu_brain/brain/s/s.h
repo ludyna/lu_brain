@@ -139,10 +139,10 @@
 	}
 
 	// Layers inits
-	static S_Layer s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
-	static S_Layer s_rec_comp_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
-	static S_Layer s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
-	static S_Layer s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
+	static void s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
+	static void s_rec_comp_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
+	static void s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
+	static void s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
 
 	// Neu inits
 	static S_Neu s_rec_neu_init(S_Rec, Mem mem, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
