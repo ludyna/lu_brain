@@ -2,10 +2,10 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-///////////////////////////////////////////////////////////////////////////////
-// Includes
-
-	#include "block.lu"
+#include "block.lu"
+#include "story_save.lu"
+#include "story_find.lu"
+#include "story_restore.lu"
  
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
@@ -96,55 +96,6 @@
 		self->blocks_count = 0;
 	}
 
-	static Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
-	{
-		lu_user_assert(self, "Lu_Story is NULL");
-
-		lu_size block_i;
-		Data data;
-
-		for(block_i = 0; block_i < self->blocks_count; block_i++)
-		{
-			data = story_data_get(self, rec_i, block_i);
-			if (data && data->values) return data;
-		}
-
-		return NULL;
-	}
-
-	static void story_fill_gaps(Lu_Story self)
-	{
-		lu_user_assert_void(self, "Lu_Story is NULL");
-
-		lu_size block_i;
-		lu_size rec_i;
-		Data d1;
-		Data d2;
-
-		for(rec_i = 0; rec_i < self->datum_w; rec_i++)
-			for(block_i = 0; block_i < self->blocks_count; block_i++)
-			{
-				d1 = story_data_get(self, rec_i, block_i);
-				lu_user_assert_void(d1, "Something went wrong");
-
-				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
-
-				if (d1->values) continue;
-				
-				if (block_i == 0)
-				{
-					d2 = story_first_non_null_data(self, rec_i);
-					if (d2 == NULL) return; 						// nema danyh dlia rec_i vzahali
-					data_shallow_copy(d1, d2);
-				}
-				else
-				{
-					d2 = story_data_get(self, rec_i, block_i - 1);
-					data_shallow_copy(d1, d2);
-				}
-			}
-	}
-
 
 	static void story_wave_attach(Lu_Story self, Gate gate, Lu_Wave wave)
 	{
@@ -156,10 +107,6 @@
 	{
 
 	}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// API
 
 	void lu_story_push(Lu_Story self, Lu_Rec rec, lu_value* values)
 	{
@@ -193,133 +140,3 @@
 
  		self->blocks_count = self->y + 1;
 	} 
-
-
-	Lu_Wave lu_story_save_async(Lu_Story self, Lu_Save_Opts opts)
-	{
-		lu_user_assert(self, "Lu_Story should not be NULL");
-		lu_user_assert(opts, "Lu_Save_Opts is NULL");
-
-		lu_debug("\nSAVE (blocks_count = %lu)\n", self->blocks_count);
-
-		Lu_Brain brain = self->brain;
-		lu_user_assert(brain, "Lu_Story not linked to brain");
-
-		Arr recs = brain->recs;
-
-		lu_user_assert(recs, "Lu_Brain has no recs");
-		lu_user_assert(arr_count(recs), "Lu_Brain has no recs1");
-		lu_user_assert(self->blocks_count, "Lu_Story without blocks");
-
-		Gate gate = brain_gate(self->brain);
-
-		// my reset wave v gate_save_wave_wait
-		W_Save wave = gate_save_wave_wait(gate);
-
-		w_save_init_and_reset(wave, self, opts);
-
-		lu_size block_i;
-		lu_size rec_i;
-		Data data;
-
-		Lu_Rec rec; 
-		S_Rec s_rec;
-
-		story_fill_gaps(self);
-
-		for(block_i = 0; block_i < self->blocks_count; block_i++)
-		{
-			for(rec_i = 0; rec_i < self->datum_w; rec_i++)
-			{
-				s_rec 	= (S_Rec) arr_get(brain->s_mem->recs, rec_i);
-
-				lu_user_assert(s_rec, "S_Rec is NULL");
-
-				data 	= story_data_get(self, rec_i, block_i);
-
-				lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
-				data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
-				lu_debug("] SAVING ...");
-
-				if (data->values != NULL) 
-					w_save(wave, s_rec, data, block_i);
-			}
-		}
-
-		story_wave_attach(self, gate, (Lu_Wave) wave);
-
-		story_reset(self);
-
-		return (Lu_Wave) wave;
-	}
-
-	Lu_Save_Resp lu_story_save(Lu_Story self, Lu_Save_Opts opts)
-	{
-		lu_user_assert(self, "Lu_Story is NULL");
-		lu_user_assert(opts, "Lu_Save_Opts is NULL");
-
-		Lu_Wave wave = lu_story_save_async(self, opts);
-		
-		lu_wave_join(wave);
-
-		return (Lu_Save_Resp) lu_wave_response(wave);
-	}
-
-	Lu_Wave lu_story_find_async(Lu_Story self, Lu_Find_Opts opts)
-	{
-		lu_user_assert(self, "Lu_Story is NULL");
-		lu_user_assert(opts, "Lu_Find_Opts is NULL");
-
-		Gate gate = brain_gate(self->brain);
-
-		W_Find wave = gate_find_wave_wait(gate);
-
-		w_find_init(wave, self, opts);
-
-		w_find_progress(wave);
-
-		return (Lu_Wave) wave;
-	}
-
-	Lu_Find_Resp lu_story_find(Lu_Story self, Lu_Find_Opts opts)
-	{
-		lu_user_assert(self, "Lu_Story is NULL");
-		lu_user_assert(opts, "Lu_Find_Opts is NULL");
-
-		Lu_Wave wave = lu_story_find_async(self, opts);
-		
-		lu_wave_join(wave);
-
-		return (Lu_Find_Resp) lu_wave_response(wave);
-	}
-
-	Lu_Wave lu_story_restore_async(Lu_Brain brain, Lu_Neuron lu_neuron, Lu_Restore_Opts opts)
-	{ 
-		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(lu_neuron, "Lu_Neuron is NULL");
-		lu_user_assert(opts, "Lu_Restore_Opts is NULL");
-
-		Gate gate = brain_gate(brain);
-
-		W_Restore wave = gate_restore_wave_wait(gate);
-
-		w_restore_init(wave, brain, opts);
-
-		w_restore_process(wave);
-
-		return (Lu_Wave) wave;
-	}
-
-	Lu_Restore_Resp lu_story_restore(Lu_Brain brain, Lu_Neuron lu_neuron, Lu_Restore_Opts opts)
-	{
-		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(lu_neuron, "Lu_Neuron is NULL");
-		lu_user_assert(opts, "Lu_Restore_Opts is NULL");
-
-		Lu_Wave wave = lu_story_restore_async(brain, lu_neuron, opts);
-		
-		lu_wave_join(wave);
-
-		return (Lu_Restore_Resp) lu_wave_response(wave);
-	}
-
