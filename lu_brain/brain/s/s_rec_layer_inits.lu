@@ -78,10 +78,10 @@
 
 		while(w > 0)
 		{
-			lu_user_assert_void(ix < self->a_layers_size, "Wrong layer index");
+			lu_user_assert_void(ix < self->tria_layers_s, "Wrong layer index");
 
-			v_layer = &self->av_layers[ix];
-			p_layer = &self->ap_layers[ix];
+			v_layer = &self->tria_v_layers[ix];
+			p_layer = &self->tria_p_layers[ix];
 
 			v_layer = s_layer_init(v_layer, self, mem, SLT_AV, ix, w, h, d);
 			lu_user_assert_void(v_layer, "Cannot init v_layer");
@@ -242,20 +242,20 @@
 		S_Neu v_neu = NULL;
 		S_Neu p_neu = NULL;
 
-		for(ix = 0; ix < self->a_layers_size; ix++)
+		for(ix = 0; ix < self->tria_layers_s; ix++)
 		{
-			av_layer = &self->av_layers[ix];
-			ap_layer = &self->ap_layers[ix];
+			av_layer = &self->tria_v_layers[ix];
+			ap_layer = &self->tria_p_layers[ix];
 
 			if (ix > 0)
 			{
-				b_av_layer = &self->av_layers[ix - 1];
-				b_ap_layer = &self->ap_layers[ix - 1];
+				b_av_layer = &self->tria_v_layers[ix - 1];
+				b_ap_layer = &self->tria_p_layers[ix - 1];
 			}
 
 			w = av_layer->w;
 
-			lu_debug("\nw=%d, h=%d, d=%d", w, av_layer->h, av_layer->d);
+			//lu_debug("\nw=%d, h=%d, d=%d", w, av_layer->h, av_layer->d);
 
 			for (x = 0; x < w; x++)
 			{
@@ -270,7 +270,7 @@
 
 				p_neu = s_neu_tria_init(p_neu, self, mem); 
 				lu_user_assert_void(p_neu, "Cannot tria init p_neu");
-				
+
 				if (ix > 0)
 				{
 					s_neu_tria_connect(v_neu, b_av_layer); 	

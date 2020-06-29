@@ -153,9 +153,9 @@
 		struct s_layer* 		p_layers;
 
 		lu_size 				blocks_size;
-		lu_size 				a_layers_size;
-		struct s_layer* 		av_layers;
-		struct s_layer* 		ap_layers;
+		lu_size 				tria_layers_s;
+		struct s_layer* 		tria_v_layers;
+		struct s_layer* 		tria_p_layers;
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);

@@ -50,13 +50,13 @@
 		// Allocate Tria Layers
 
 		self->blocks_size		= rec->blocks_size;
-		self->a_layers_size 	= self->blocks_size;	// a_layers_size = blocks_size, but potentially they could be different
+		self->tria_layers_s 	= self->blocks_size;	// tria_layers_s = blocks_size, but potentially they could be different
 
-		self->av_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->a_layers_size);
-		lu_user_assert(self->av_layers, "Cannot allocate av layers"); 
+		self->tria_v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_s);
+		lu_user_assert(self->tria_v_layers, "Cannot allocate av layers"); 
 
-		self->ap_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->a_layers_size);
-		lu_user_assert(self->ap_layers, "Cannot allocate ap layers");
+		self->tria_p_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_s);
+		lu_user_assert(self->tria_p_layers, "Cannot allocate ap layers");
 
 		///////////////////////////////////////
 		// All layers init
@@ -77,9 +77,9 @@
 		s_rec_pyras_init(self, mem);
 		s_rec_trias_init(self, mem);
 
-		lu_debug("\nneus_count = %d, neus_size = %d, rw=%d, rh=%d, rd=%d", self->neus_count, self->neus_size, self->cells_w, self->cells_h, self->cells_d);
+		//lu_debug("\nneus_count = %d, neus_size = %d, rw=%d, rh=%d, rd=%d", self->neus_count, self->neus_size, self->cells_w, self->cells_h, self->cells_d);
 
-		// lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
+		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
 
 		return self;
 	}
