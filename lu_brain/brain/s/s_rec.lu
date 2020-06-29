@@ -91,9 +91,7 @@
 		///////////////////////////////////////
 		// Init Layers And Neus
 
-		w = self->cells_w;
-		h = self->cells_h;
-		d = self->cells_d;
+
 		lu_size layer_ix = 0;
 		S_Neu v_neu;
 		S_Neu p_neu;
@@ -102,52 +100,29 @@
 		S_Layer b_v_layer = NULL;
 		S_Layer b_p_layer = NULL;
 
-		enum s_neu_type type;
+		s_rec_val_layers_init(self,  mem);
+		s_rec_component_layers_init(self, mem);
+		s_rec_cell_layers_init(self, mem);
 
-		v_layer = &self->v_layers[layer_ix];
-		p_layer = &self->p_layers[layer_ix];
-
-		s_rec_val_layers_init(self, v_layer, p_layer, mem);
-
-		b_v_layer = v_layer;
-		b_p_layer = p_layer;
-
-		++layer_ix;
-
-		v_layer = &self->v_layers[layer_ix];
-		p_layer = &self->p_layers[layer_ix];
-
-		s_rec_component_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem);
-
-		b_v_layer = v_layer;
-		b_p_layer = p_layer;
-
-		++layer_ix;
-
-		v_layer = &self->v_layers[layer_ix];
-		p_layer = &self->p_layers[layer_ix];
-
-		s_rec_cell_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem);
-
-		--w;
-		--h;
+		w = self->cells_w - 1;
+		h = self->cells_h - 1;
+		layer_ix = 3;
 
 		while (w > 0 && h > 0)
 		{
-			lu_user_assert(layer_ix < self->vp_layers_size, "Wrong layer index");
+			lu_user_assert(layer_ix < self->vp_layers_size, "Index error");
 
-			b_v_layer = v_layer;
-			b_p_layer = p_layer;
-
-			++layer_ix; 
+			b_v_layer = &self->v_layers[layer_ix - 1];
+			b_p_layer = &self->p_layers[layer_ix - 1];
 
 			v_layer = &self->v_layers[layer_ix];
 			p_layer = &self->p_layers[layer_ix];
 
-			s_rec_neu_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem, w, h, layer_ix);
+			s_rec_pyra_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem, w, h, layer_ix);
 
 			if (w > 0) --w;
 			if (h > 0) --h;
+			++layer_ix; 
 		}
 
 		lu_user_assert(v_layer->w == 1 && v_layer->h == 1, "Something wrong with v_layer");

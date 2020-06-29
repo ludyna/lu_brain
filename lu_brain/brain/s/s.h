@@ -149,10 +149,10 @@
 	}
 
 	// Layers inits
-	static void s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem);
-	static void s_rec_component_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem);
-	static void s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem);
-	static void s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
+	static void s_rec_val_layers_init(S_Rec self, Mem mem);
+	static void s_rec_component_layers_init(S_Rec self, Mem mem);
+	static void s_rec_cell_layers_init(S_Rec self, Mem mem);
+	static void s_rec_pyra_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
 
 	struct s_mem {
 		Lu_Brain 				brain;

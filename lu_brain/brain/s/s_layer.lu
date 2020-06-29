@@ -22,6 +22,7 @@
 		lu_user_assert(mem, "Mem is NULL");
 		lu_user_assert(w > 0, "Width should be greater than 0"); 
 		lu_user_assert(h > 0, "Height should be greater than 0");
+		lu_user_assert(d > 0, "Depth should be greater than 0");
 
 		self->rec 		= rec;
 		self->type 		= type;

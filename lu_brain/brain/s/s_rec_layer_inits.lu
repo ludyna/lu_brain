@@ -2,16 +2,26 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static void s_rec_val_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, Mem mem)
+	static void s_rec_val_layers_init(S_Rec self, Mem mem)
 	{
+		lu_user_assert_void(self, "S_Rec is NULL");
+		lu_user_assert_void(self->v_layers, "self->v_layers is NULL");
+		lu_user_assert_void(self->p_layers, "self->p_layers is NULL");
+		lu_user_assert_void(self->vp_layers_size > 0, "self->vp_layers_size <= 0");
+
 		lu_size w = self->cells_w;
 		lu_size h = self->cells_h;
-		lu_size d = self->cells_d;
 
-		v_layer = s_layer_init(v_layer, self, mem, SLT_V, 0, w, h, d);
+		lu_size dv = self->v_conf.neus_size;
+		lu_size dp = self->p_conf.neus_size;
+
+		S_Layer v_layer = &self->v_layers[0];
+		S_Layer p_layer = &self->p_layers[0];
+
+		v_layer = s_layer_init(v_layer, self, mem, SLT_V, 0, w, h, dv);
 		lu_user_assert_void(v_layer, "Cannot init v_layer");
 
-		p_layer = s_layer_init(p_layer, self, mem, SLT_P, 0, w, h, d);
+		p_layer = s_layer_init(p_layer, self, mem, SLT_P, 0, w, h, dp);
 		lu_user_assert_void(p_layer, "Cannot init p_layer");
 
 		lu_size z;
@@ -19,9 +29,7 @@
 		lu_size x;
 
 		S_Neu v_neu = NULL;
-		S_Neu p_neu = NULL;
-
-		for (z = 0; z < d; z++)
+		for (z = 0; z < dv; z++)
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
@@ -30,28 +38,42 @@
 
 					v_neu = s_neu_val_init(v_neu, self, mem); 
 					lu_user_assert_void(v_neu, "Cannot val init v_neu");
-
-					p_neu = s_rec_neu_alloc(self, mem, SNT_VAL, p_layer, x, y, z); 
+				}
+ 
+ 		S_Neu p_neu = NULL;
+		for (z = 0; z < dp; z++)
+			for (y = 0; y < h; y++)
+				for (x = 0; x < w; x++)
+				{
+ 					p_neu = s_rec_neu_alloc(self, mem, SNT_VAL, p_layer, x, y, z); 
 					lu_user_assert_void(p_neu, "Cannot init v_neu");
 
 					p_neu = s_neu_val_init(p_neu, self, mem); 
 					lu_user_assert_void(p_neu, "Cannot val init p_neu");
-
-					s_neu_t_connect(v_neu, p_neu);
 				}
- 
 	}
 
-	static void s_rec_component_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem)
+	static void s_rec_component_layers_init(S_Rec self, Mem mem)
 	{
+		lu_user_assert_void(self, "S_Rec is NULL");
+		lu_user_assert_void(self->v_layers, "self->v_layers is NULL");
+		lu_user_assert_void(self->p_layers, "self->p_layers is NULL");
+		lu_user_assert_void(self->vp_layers_size > 1, "self->vp_layers_size <= 1");
+
 		lu_size w = self->cells_w;
 		lu_size h = self->cells_h;
 		lu_size d = self->cells_d;
 
-		v_layer = s_layer_init(v_layer, self, mem, SLT_V, 0, w, h, d);
+		S_Layer v_layer 	= &self->v_layers[1];
+		S_Layer b_v_layer 	= &self->v_layers[0];
+
+		S_Layer p_layer 	= &self->p_layers[1];
+		S_Layer b_p_layer	= &self->p_layers[0];
+
+		v_layer = s_layer_init(v_layer, self, mem, SLT_V, 1, w, h, d);
 		lu_user_assert_void(v_layer, "Cannot init v_layer");
 
-		p_layer = s_layer_init(p_layer, self, mem, SLT_P, 0, w, h, d);
+		p_layer = s_layer_init(p_layer, self, mem, SLT_P, 1, w, h, d);
 		lu_user_assert_void(p_layer, "Cannot init p_layer");
 
 		lu_size z;
@@ -84,13 +106,95 @@
 				}
 	}
 
-	static void s_rec_cell_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem)
+	static void s_rec_cell_layers_init(S_Rec self, Mem mem)
 	{
+		lu_user_assert_void(self, "S_Rec is NULL");
+		lu_user_assert_void(self->v_layers, "self->v_layers is NULL");
+		lu_user_assert_void(self->p_layers, "self->p_layers is NULL");
+		lu_user_assert_void(self->vp_layers_size > 2, "self->vp_layers_size <= 2");
 
+		lu_size w = self->cells_w;
+		lu_size h = self->cells_h;
+
+		S_Layer v_layer 	= &self->v_layers[2];
+		S_Layer b_v_layer 	= &self->v_layers[1];
+
+		S_Layer p_layer 	= &self->p_layers[2];
+		S_Layer b_p_layer	= &self->p_layers[1];
+
+		v_layer = s_layer_init(v_layer, self, mem, SLT_V, 2, w, h, 1);
+		lu_user_assert_void(v_layer, "Cannot init v_layer");
+
+		p_layer = s_layer_init(p_layer, self, mem, SLT_P, 2, w, h, 1);
+		lu_user_assert_void(p_layer, "Cannot init p_layer");
+
+		lu_size y;
+		lu_size x;
+
+		S_Neu v_neu = NULL;
+		S_Neu p_neu = NULL;
+
+		for (y = 0; y < h; y++)
+			for (x = 0; x < w; x++)
+			{
+				v_neu = s_rec_neu_alloc(self, mem, SNT_CELL, v_layer, x, y, 0); 
+				lu_user_assert_void(v_neu, "Cannot init v_neu");
+
+				v_neu = s_neu_cell_init(v_neu, self, mem); 
+				lu_user_assert_void(v_neu, "Cannot component init v_neu");
+
+				p_neu = s_rec_neu_alloc(self, mem, SNT_CELL, p_layer, x, y, 0); 
+				lu_user_assert_void(p_neu, "Cannot init v_neu");
+
+				p_neu = s_neu_cell_init(p_neu, self, mem); 
+				lu_user_assert_void(p_neu, "Cannot component init p_neu");
+
+				s_neu_cell_connect(v_neu, b_v_layer);
+				s_neu_cell_connect(p_neu, b_p_layer);
+
+				s_neu_t_connect(v_neu, p_neu);
+			}
 	}
 
-	static void s_rec_neu_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix)
+	static void s_rec_pyra_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix)
 	{
+		lu_debug("\n\nl%d, w%d, h%d \n\n", layer_ix, w, h);
+
+		lu_user_assert_void(layer_ix < self->vp_layers_size, "Index error: layer_ix >= self->vp_layers_size");
+
+		v_layer = s_layer_init(v_layer, self, mem, SLT_V, layer_ix, w, h, 1);
+		lu_user_assert_void(v_layer, "Cannot init v_layer");
+
+		p_layer = s_layer_init(p_layer, self, mem, SLT_P, layer_ix, w, h, 1);
+		lu_user_assert_void(p_layer, "Cannot init p_layer");
+
+		lu_size y;
+		lu_size x;
+
+		S_Neu v_neu = NULL;
+		S_Neu p_neu = NULL;
+
+		for (y = 0; y < h; y++)
+			for (x = 0; x < w; x++)
+			{
+				// v_neu = s_rec_neu_alloc(self, mem, SNT_PYRA, v_layer, x, y, 0); 
+				// lu_user_assert_void(v_neu, "Cannot init v_neu");
+
+				// v_neu = s_neu_pyra_init(v_neu, self, mem); 
+				// lu_user_assert_void(v_neu, "Cannot component init v_neu");
+
+				// p_neu = s_rec_neu_alloc(self, mem, SNT_PYRA, p_layer, x, y, 0); 
+				// lu_user_assert_void(p_neu, "Cannot init v_neu");
+
+				// p_neu = s_neu_pyra_init(p_neu, self, mem); 
+				// lu_user_assert_void(p_neu, "Cannot component init p_neu");
+
+				// s_neu_pyra_connect(v_neu, b_v_layer);
+				// s_neu_pyra_connect(p_neu, b_p_layer);
+
+				//s_neu_t_connect(v_neu, p_neu);
+			}
+
 			// s_layer_init(v_layer, self, mem, SLT_V, layer_ix, w, h, d);
 			// lu_user_assert(v_layer, "Cannot init v_layer");
 			// s_layer_init(p_layer, self, mem, SLT_P, layer_ix, w, h, d);
