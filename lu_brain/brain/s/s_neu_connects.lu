@@ -5,21 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void s_neu_component_connect(S_Neu d, S_Layer b_layer)
-	{
-		// Ne budemo pryviazuvaty componentu do vals. Nema zmistu poky sho
-
-		// lu_size z;
-		// S_Neu com = NULL;
-		// for (z = 0; z < b_layer->d; z++)
-		// {
-		// 	com = s_layer_neu_get(b_layer, d->x, d->y, z);
-
-		// 	com->d[0] 	= d;
-		// 	d->b[z] 	= com;
-		// }
-	}
-
 	static void s_neu_cell_connect(S_Neu d, S_Layer b_layer)
 	{
 		lu_size z;
@@ -73,7 +58,7 @@
 		b_nl(d) = b; // d->b->nl = b;
 	}
 
-	static void s_neu_a_connect(S_Neu d, S_Layer b_layer)
+	static void s_neu_tria_connect(S_Neu d, S_Layer b_layer)
 	{
 		lu_user_assert_void(d, "S_Neu is NULL");
 		lu_user_assert_void(b_layer, "S_Layer is NULL"); 

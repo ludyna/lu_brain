@@ -19,11 +19,10 @@
 // S
 
 	enum s_neu_type {
-		SNT_VAL,
 		SNT_COMPONENT,
 		SNT_CELL, 
 		SNT_PYRA,
-		SNT_A_NEU
+		SNT_TRIA
 	};
 
  	typedef struct s_neu* 		S_Neu;

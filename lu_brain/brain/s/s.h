@@ -49,17 +49,15 @@
 
 	// s_neu_inits.lu
 	static S_Neu s_neu_init(S_Neu self, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
-	static S_Neu s_neu_val_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_component_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_cell_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_pyra_init(S_Neu neu, S_Rec, Mem mem);
-	static S_Neu s_neu_a_init(S_Neu neu, S_Rec, Mem mem);
+	static S_Neu s_neu_tria_init(S_Neu neu, S_Rec, Mem mem);
 
 	// s_neu_connects.lu
-	static void s_neu_component_connect(S_Neu d, S_Layer b_layer);
 	static void s_neu_cell_connect(S_Neu self, S_Layer);
 	static void s_neu_pyra_connect(S_Neu self, S_Layer);
-	static void s_neu_a_connect(S_Neu self, S_Layer);
+	static void s_neu_tria_connect(S_Neu self, S_Layer);
 	static inline void s_neu_t_connect(S_Neu v_neu, S_Neu p_neu) 
 	{
 		v_neu->t = p_neu;
@@ -108,6 +106,7 @@
 	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Neu val) { self->neus[z * self->w * self->h + y * self->w + x] = val; }
 	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y, lu_size z) { return self->neus[z * self->w * self->h + y * self->w + x]; }
 	static void s_layer_cells_create(S_Layer self, Mem mem, S_Layer_Conf conf);
+	static inline lu_size s_layer_neus_size(S_Layer self) { return self->w * self->h * self->d; }
 
 	// velyki masyvy v s_rec shob vykorystaty perevahu cpu keshuvania
 	struct s_rec {
@@ -150,9 +149,9 @@
 
 	// Layers inits
 	static void s_rec_val_layers_init(S_Rec self, Mem mem);
-	static void s_rec_component_layers_init(S_Rec self, Mem mem);
-	static void s_rec_cell_layers_init(S_Rec self, Mem mem);
-	static void s_rec_pyra_layers_init(S_Rec self, S_Layer v_layer, S_Layer p_layer, S_Layer b_v_layer, S_Layer b_p_layer, Mem mem, lu_size w, lu_size h, lu_size layer_ix);
+	static void s_rec_components_init(S_Rec self, Mem mem);
+	static void s_rec_cells_init(S_Rec self, Mem mem);
+	static void s_rec_pyras_init(S_Rec self, Mem mem);
 
 	struct s_mem {
 		Lu_Brain 				brain;

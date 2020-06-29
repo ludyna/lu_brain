@@ -36,9 +36,9 @@
 		s_layer_conf_init(&self->p_conf, mem, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
 
 		///////////////////////////////////////
-		// VP Layers
+		// Allocate VP Layers
 
-		self->vp_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h) + 2; 	// odyn dlia component, odyn dlia val
+		self->vp_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h) + 1; 	// + odyn dlia component
 
 		self->v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->vp_layers_size);
 		lu_user_assert(self->v_layers, "Cannot allocate v layers"); 
@@ -47,7 +47,7 @@
 		lu_user_assert(self->v_layers, "Cannot allocate p layers");
 
 		///////////////////////////////////////
-		// A Layers
+		// Allocate Tria Layers
 
 		self->blocks_size		= rec->blocks_size;
 		self->a_layers_size 	= self->blocks_size;	// a_layers_size = blocks_size, but potentially they could be different
@@ -59,124 +59,23 @@
 		lu_user_assert(self->ap_layers, "Cannot allocate ap layers");
 
 		///////////////////////////////////////
-		// Neus
+		// All layers init
 
-		lu_size x;
-		lu_size y;
-		lu_size z;
-		lu_size w 	= self->cells_w;
-		lu_size h 	= self->cells_h;
-		lu_size d	= self->cells_d;
-		lu_size wh 	= w * h;
+		s_rec_layers_init(self, mem);
 
-		self->neus_size = 0;
+		///////////////////////////////////////
+		// Allocate neus
 
-		while (w > 0 && h > 0)
-		{
-			self->neus_size += w * h * d;
-			if (w > 0) --w;
-			if (h > 0) --h;
-			if (d > 1) d = 1; 
-		}
-
-		// dlia d i b 
-		self->neus_size *= 2;
-
-		// a_neus (n(n+1))/2 * 2 for d i b
-		self->neus_size += self->blocks_size * (self->blocks_size + 1);
-		self->neus_count = 0;
 		self->neus = (struct s_neu*) mem_alloc(mem, sizeof(struct s_neu) * self->neus_size);
 		lu_user_assert(self->neus, "Cannot allocate neus"); 
 
 		///////////////////////////////////////
-		// Init Layers And Neus
+		// Init neus
 
-
-		lu_size layer_ix = 0;
-		S_Neu v_neu;
-		S_Neu p_neu;
-		S_Layer v_layer;
-		S_Layer p_layer;
-		S_Layer b_v_layer = NULL;
-		S_Layer b_p_layer = NULL;
-
-		s_rec_val_layers_init(self,  mem);
-		s_rec_component_layers_init(self, mem);
-		s_rec_cell_layers_init(self, mem);
-
-		w = self->cells_w - 1;
-		h = self->cells_h - 1;
-		layer_ix = 3;
-
-		while (w > 0 && h > 0)
-		{
-			lu_user_assert(layer_ix < self->vp_layers_size, "Index error");
-
-			b_v_layer = &self->v_layers[layer_ix - 1];
-			b_p_layer = &self->p_layers[layer_ix - 1];
-
-			v_layer = &self->v_layers[layer_ix];
-			p_layer = &self->p_layers[layer_ix];
-
-			s_rec_pyra_layers_init(self, v_layer, p_layer, b_v_layer, b_p_layer, mem, w, h, layer_ix);
-
-			if (w > 0) --w;
-			if (h > 0) --h;
-			++layer_ix; 
-		}
-
-		lu_user_assert(v_layer->w == 1 && v_layer->h == 1, "Something wrong with v_layer");
-		lu_user_assert(p_layer->w == 1 && p_layer->h == 1, "Something wrong with p_layer");
-
-		///////////////////////////////////////
-		// Init A Layers 
-
-		S_Layer av_layer;
-		S_Layer ap_layer;
-		S_Layer b_av_layer = NULL;
-		S_Layer b_ap_layer = NULL;
-		layer_ix = 0;
-		w = self->blocks_size;
-		y = 1;
-		d = 1;
-
-		while(w > 0)
-		{
-			lu_user_assert(layer_ix < self->a_layers_size, "Wrong layer index");
-
-			av_layer = &self->av_layers[layer_ix];
-			ap_layer = &self->ap_layers[layer_ix];
-
-			if (layer_ix > 0)
-			{
-				b_av_layer = &self->av_layers[layer_ix - 1];
-				b_ap_layer = &self->ap_layers[layer_ix - 1];
-			}
-
-			s_layer_init(av_layer, self, mem, SLT_AV, layer_ix, w, y, d);
-			lu_user_assert(av_layer, "Cannot init av_layer");
-			s_layer_init(ap_layer, self, mem, SLT_AP, layer_ix, w, y, d);
-			lu_user_assert(ap_layer, "Cannot init ap_layer");
-
-			for (x = 0; x < w; x++)
-			{
-				v_neu = s_rec_neu_alloc(self, mem, SNT_A_NEU, av_layer, x, y - 1, d - 1); 
-				lu_user_assert(v_neu, "Cannot init v_neu");
-				p_neu = s_rec_neu_alloc(self, mem, SNT_A_NEU, ap_layer, x, y - 1, d - 1); 
-				lu_user_assert(p_neu, "Cannot init p_neu");
-
-				if (layer_ix > 0)
-				{
-					s_neu_a_connect(v_neu, b_av_layer); 	
-					s_neu_a_connect(p_neu, b_ap_layer);
-				}
-
-				s_neu_t_connect(v_neu, p_neu);
-			}
-
-			++layer_ix;
-			--w;
-		}
+		s_rec_components_init(self, mem);
+		s_rec_cells_init(self, mem);
+		s_rec_pyras_init(self, mem);
+		s_rec_trias_init(self, mem);
 
 		// lu_debug("\nneus_count = %d, neus_size = %d", self->neus_count, self->neus_size);
 
@@ -184,7 +83,6 @@
 
 		return self;
 	}
-
 
 	/*
 	** Allocate space for S_Neu
@@ -196,37 +94,10 @@
 		S_Neu neu = &self->neus[self->neus_count];
 		neu = s_neu_init(neu, type, layer, x, y, z);
 		lu_user_assert(neu, "Cannot init S_Neu");
-		// char* t;  
 
-		// switch (type)
-		// {
-		// 	case SNT_VAL:
-		// 		s_neu_val_init(self, mem, neu);
-		// 		break;
-		// 	case SNT_COMPONENT:
-		// 		s_neu_component_init(self, mem, neu);
-		// 		break;
-		// 	case SNT_CELL:
-		// 		s_neu_cell_init(self, mem, neu);
-		// 		t = "CELL";
-		// 		break;
-		// 	case SNT_PYRA:
-		// 		s_neu_pyra_init(self, mem, neu);
-		// 		t = "NEU";
-		// 		break;
-		// 	case SNT_A_NEU:
-		// 		s_neu_a_init(self, mem, neu);
-		// 		t = "A_NEU";
-		// 		break;
-		// 	default:
-		// 		lu_user_assert(false, "Unknown S_Neu type");
-		// }
-		
 		s_layer_neu_set(layer, x, y, z, neu);
 
 		++self->neus_count;
-
-		//lu_debug("\n%s b=%d, d=%d", t, neu->b != NULL, neu->d != NULL);
 
 		return neu;
 	}
