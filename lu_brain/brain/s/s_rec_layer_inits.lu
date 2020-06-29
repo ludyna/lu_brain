@@ -188,7 +188,7 @@
 		S_Layer b_v_layer = NULL;
 		S_Layer b_p_layer = NULL;
 
-		lu_size ix = 2;
+		lu_size ix;
 
 		lu_size w;
 		lu_size h;
@@ -255,6 +255,8 @@
 
 			w = av_layer->w;
 
+			lu_debug("\nw=%d, h=%d, d=%d", w, av_layer->h, av_layer->d);
+
 			for (x = 0; x < w; x++)
 			{
 				v_neu = s_rec_neu_alloc(self, mem, SNT_TRIA, av_layer, x, 0, 0); 
@@ -263,11 +265,11 @@
 				p_neu = s_rec_neu_alloc(self, mem, SNT_TRIA, ap_layer, x, 0, 0); 
 				lu_user_assert_void(p_neu, "Cannot init p_neu");
 
-				if (ix > 0)
-				{
-					s_neu_tria_connect(v_neu, b_av_layer); 	
-					s_neu_tria_connect(p_neu, b_ap_layer);
-				}
+				// if (ix > 0)
+				// {
+				// 	s_neu_tria_connect(v_neu, b_av_layer); 	
+				// 	s_neu_tria_connect(p_neu, b_ap_layer);
+				// }
 
 				s_neu_t_connect(v_neu, p_neu);
 			}

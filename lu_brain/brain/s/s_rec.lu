@@ -77,9 +77,9 @@
 		s_rec_pyras_init(self, mem);
 		s_rec_trias_init(self, mem);
 
-		// lu_debug("\nneus_count = %d, neus_size = %d", self->neus_count, self->neus_size);
+		lu_debug("\nneus_count = %d, neus_size = %d, rw=%d, rh=%d, rd=%d", self->neus_count, self->neus_size, self->cells_w, self->cells_h, self->cells_d);
 
-		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
+		// lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
 
 		return self;
 	}

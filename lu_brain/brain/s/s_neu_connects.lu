@@ -5,16 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void s_neu_cell_connect(S_Neu d, S_Layer b_layer)
+	static void s_neu_cell_connect(S_Neu self, S_Layer b_layer)
 	{
 		lu_size z;
 		S_Neu com = NULL;
-		for (z = 0; z < b_layer->d; z++)
+		lu_size d = b_layer->d;
+		for (z = 0; z < d; z++)
 		{
-			com = s_layer_neu_get(b_layer, d->x, d->y, z);
+			com = s_layer_neu_get(b_layer, self->x, self->y, z);  
 
-			com->d[0] 	= d;
-			d->b[z] 	= com;
+			lu_user_assert_void(com, "S_Component is NULL");
+
+			com->d[0] 	= self;
+			self->b[z] 	= com;
 		}
 	}
 
@@ -40,22 +43,26 @@
 		b_vl(d) = b; // d->b->vl = b; 
 
 		b = s_layer_neu_get(b_layer, x + 1, y, 0);
-		lu_user_assert_void(b, "S_Neu is NULL");
-
-		d_nl(b) = d; // b->d->nl = d;
-		b_vp(d) = b; // d->b->vp = b;
+		if (b) 
+		{
+			d_nl(b) = d; // b->d->nl = d;
+			b_vp(d) = b; // d->b->vp = b;
+		}
 
 		b = s_layer_neu_get(b_layer, x + 1, y + 1, 0);
-		lu_user_assert_void(b, "S_Neu is NULL");
-
-		d_vl(b) = d; // b->d->vl = d;
-		b_np(d) = b; // d->b->np = b;
+		if (b)
+		{
+			d_vl(b) = d; // b->d->vl = d;
+			b_np(d) = b; // d->b->np = b;
+		}
 
 		b = s_layer_neu_get(b_layer, x, y + 1, 0);
-		lu_user_assert_void(b, "S_Neu is NULL");
-
-		d_vp(b) = d; // b->d->vp = d;
-		b_nl(d) = b; // d->b->nl = b;
+		
+		if (b)
+		{
+			d_vp(b) = d; // b->d->vp = d;
+			b_nl(d) = b; // d->b->nl = b;
+		}
 	}
 
 	static void s_neu_tria_connect(S_Neu d, S_Layer b_layer)

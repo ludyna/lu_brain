@@ -103,10 +103,30 @@
 	};
 
 	static S_Layer s_layer_init(S_Layer self, S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
-	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Neu val) { self->neus[z * self->w * self->h + y * self->w + x] = val; }
-	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y, lu_size z) { return self->neus[z * self->w * self->h + y * self->w + x]; }
-	static void s_layer_cells_create(S_Layer self, Mem mem, S_Layer_Conf conf);
-	static inline lu_size s_layer_neus_size(S_Layer self) { return self->w * self->h * self->d; }
+	
+	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Neu val) 
+	{ 
+		lu_user_assert_void(val, "S_Neu is NULL");
+		lu_user_assert_void(x < self->w, "x index out of range");
+		lu_user_assert_void(y < self->h, "y index out of range");
+		lu_user_assert_void(z < self->d, "z index out of range");
+
+		self->neus[z * self->w * self->h + y * self->w + x] = val; 
+	}
+
+	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y, lu_size z) 
+	{ 
+		lu_user_assert(x < self->w, "x index out of range");
+		lu_user_assert(y < self->h, "y index out of range");
+		lu_user_assert(z < self->d, "z index out of range");
+
+		return self->neus[z * self->w * self->h + y * self->w + x]; 
+	}
+
+	static inline lu_size s_layer_neus_size(S_Layer self) 
+	{ 
+		return self->w * self->h * self->d; 
+	}
 
 	// velyki masyvy v s_rec shob vykorystaty perevahu cpu keshuvania
 	struct s_rec {

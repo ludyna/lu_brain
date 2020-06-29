@@ -13,8 +13,8 @@
 		enum s_layer_type type, 
 		lu_size l, 
 		lu_size w, 
-		lu_size d, 
-		lu_size h
+		lu_size h, 
+		lu_size d
 	)
 	{
 		lu_user_assert(self, "S_Layer is NULL");
@@ -36,25 +36,3 @@
 
 		return self;
 	}
-
-	// static void s_layer_cells_create(S_Layer self, Mem mem, S_Layer_Conf conf)
-	// {
-	// 	lu_size x;
-	// 	lu_size y;
-	// 	S_Cell cell;
-	// 	S_Rec rec = self->rec;
-	// 	lu_user_assert_void(rec, "Rec is NULL");
-	// 	for (y = 0; y < self->h; y++)
-	// 		for (x = 0; x < self->w; x++)
-	// 		{
-	// 			cell = s_cell_create(mem, self, conf, x, y);
-	// 			lu_user_assert_void(cell, "Cannot allocate cell");
-				
-	// 			rec->cells[rec->cells_count] = cell;
-
-	// 			s_layer_neu_ix_set(self, x, y, rec->cells_count);
-
-	// 			++rec->cells_count;
-	// 		}
-
-	// }
