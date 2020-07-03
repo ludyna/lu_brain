@@ -63,7 +63,7 @@
 	// 		}
 	// }
 
-	static void w_save(W_Save self, S_Rec s_rec, Data data, lu_size block_i)
+	static void w_save_process(W_Save self, S_Rec s_rec, Data data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(s_rec, "S_Rec is NULL");
@@ -81,8 +81,7 @@
 
 		S_Neu s_v_cell;
 		S_Neu s_p_cell;
-		// S_Col s_v_col; 
-		// S_Col s_p_col;
+
 		S_Layer v_layer 	= &s_rec->v_layers[0];
 		S_Layer p_layer 	= &s_rec->p_layers[0];
 

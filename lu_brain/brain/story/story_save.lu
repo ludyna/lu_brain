@@ -73,8 +73,6 @@
 		lu_user_assert(self, "Lu_Story should not be NULL");
 		lu_user_assert(opts, "Lu_Save_Opts is NULL");
 
-		lu_debug("\nSAVE (blocks_count = %lu)\n", self->blocks_count);
-
 		Lu_Brain brain = self->brain;
 		lu_user_assert(brain, "Lu_Story not linked to brain");
 
@@ -115,7 +113,7 @@
 				lu_debug("] SAVING ...");
 
 				if (data->values != NULL) 
-					w_save(wave, s_rec, data, block_i);
+					w_save_process(wave, s_rec, data, block_i);
 			}
 		}
 

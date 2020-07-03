@@ -3,7 +3,7 @@
 */
  
 	struct w_sig {
-		lu_size 			neu_ix;
+		N_Neu 				neu;
 		lu_value 			p;
 	};
 

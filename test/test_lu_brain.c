@@ -114,6 +114,8 @@ void test_lu_brain_basics(void)
 { 
 	lu_debug("\n n_neu: %lu", sizeof(struct n_neu));
 	lu_debug("\n n_v_lin: %lu", sizeof(struct n_v_lin));
+	lu_size ws = sizeof(struct w_sig);
+	lu_debug("\n w_sig: %lu, 1Kb=%'lu, 1Mb=%'lu, 1Gb=%'lu", ws, 1024 / ws, 1024 * 1024 / ws, 1024 * 1024 * 1024 / ws); 
 
 	/////////////////////////////////////////////////////////
 	// Save 

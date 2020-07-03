@@ -97,6 +97,9 @@
 
 		s_layer_neu_set(layer, x, y, z, neu);
 
+		// lock 
+		neu->lid = self->neus_count;
+		++layer->neus_count;
 		++self->neus_count;
 
 		return neu;

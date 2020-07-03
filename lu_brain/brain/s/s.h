@@ -30,6 +30,7 @@
 	// ce ne neu, ce lohichnyy prostir dlia neus (odnoho i bilshe neu)
 	struct s_neu {
 		enum s_neu_type    		type;			
+		lu_size 				lid;		// id in layer
 
 		S_Layer 				layer;
 		lu_size 				x;    		// bude t index dlia a_neu
@@ -38,11 +39,11 @@
 
 		S_Neu*					b;
 		S_Neu*					d;
-		S_Neu  	 				t;			// zviazok po t		
+		S_Neu  	 				t;			// zviazok po t (v -> p -> v)
 
 		lu_size 				neus_count; // neus_count potriben shob znayty n_sig dlia n_neu po yoho n_neu->sid v wave->w_neu->neus
 		N_Neu* 					neus;		// mozhe buty NULL abo odyn abo bilshe neu sho podiliayut prostir
-
+	
 		// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
 		// mozhlyvo
 	}; 
@@ -97,6 +98,7 @@
 		lu_size 				h;
 		lu_size 				d;				// komponenty v pershomu layer
 
+		lu_size 				neus_count;
 		S_Neu* 					neus;
 
 		S_Layer_Conf 			conf;		
@@ -110,7 +112,7 @@
 		lu_user_assert_void(x < self->w, "x index out of range");
 		lu_user_assert_void(y < self->h, "y index out of range");
 		lu_user_assert_void(z < self->d, "z index out of range");
-
+		
 		self->neus[z * self->w * self->h + y * self->w + x] = val; 
 	}
 

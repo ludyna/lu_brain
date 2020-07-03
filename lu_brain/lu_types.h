@@ -18,6 +18,5 @@
 #define lu_string const lu_char*
 #define lu_bool bool 
 
-
 #endif // _LU_TYPES_PUB_H
 
