@@ -1,15 +1,18 @@
 #include "unity.h"
 #include "brain/brain.h"
-
+  
 void setUp(void)
 {
+
 }
 
 void tearDown(void)
 {
+
 }
 
-struct test1 {
+struct test1 
+{ 
     lu_size size;
 };
 
@@ -19,20 +22,20 @@ void test_mem_perm_1(void)
 {
 	Mem mem = (Mem) mem_perm_create(g_mem_temp, 512);
 
-   	TEST_ASSERT(mem);
+    TEST_ASSERT(mem);
 
-  	lu_p_byte p;
-   	
-   	lu_user_assert_off();
+    lu_p_byte p;
+	
+	lu_user_assert_off();
 
-  	for (lu_size i = 0; i < 10; i++)
-  	{
+	for (lu_size i = 0; i < 10; i++)
+	{
 		p = mem_alloc(mem, 512);
 
 		TEST_ASSERT(p == NULL);
 	}
 
 	lu_user_assert_on();
-	
-   	mem_destroy(mem, g_mem_temp);
+
+	mem_destroy(mem, g_mem_temp);
 }

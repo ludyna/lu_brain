@@ -10,13 +10,13 @@
 	//
 	static void gate_opts_init(Gate_Opts self)
 	{
-		self->w_saves_size = 1;
+		self->w_saves_size = LU_SAVE_WAVES_SIZE;
 		save_wave_create_opts_init(&self->w_save_create_opts);
 
-		self->w_finds_size = 1;
+		self->w_finds_size = LU_FIND_WAVES_SIZE;
 		w_find_create_opts_init(&self->w_find_create_opts);
 
-		self->w_restores_size = 1;
+		self->w_restores_size = LU_RESTORE_WAVES_SIZE;
 		w_restore_create_opts_init(&self->w_restore_create_opts);
 	}
 

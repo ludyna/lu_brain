@@ -14,74 +14,72 @@
 // vse reshtu perestvoruyetsia. Tak samo perevydilenia pamiati (z mozhlyvym peremishcheniam v inshe misce).
 
 	struct n_name {
-		lu_size 				neu;
 		lu_char 				name[255];
 	};	
 
 	struct n_val {
-		lu_size 				neu;
 		lu_value 				val;
 	};
 
-	struct n_time {
-		lu_size				neu;
-		lu_size 				val;
+	struct n_com {
+		enum n_com_type type;
+
+		union {
+			struct n_name 	name;
+			struct n_val 	value;
+		} data;
 	};
 
 	struct n_neu {
-		// layer num, s_neu num, sid
-		// lu_size 				layer_ix;
-		// lu_size				x;
-		// lu_size 				y;
+		S_Neu 					s_neu;
 
-		lu_size 				s_ix;
+		N_Lin 					b_l; 		// v and h and other links
+		lu_value 				b_count;
 
-		lu_size 				p_l; 		
-		lu_value 				p_count;
+		N_Lin  					d_l;		// v and h and other links
 
-		lu_size 				c_l;
-
-		lu_size 				tp;
-		lu_size 				tc;
-
-		enum n_com_type			com_type;
-		lu_size 				com;		
+		N_Com 					com;		
 	};
 
-	struct n_h_lin {
-		lu_size	 			p;			
-		lu_size				c;
-	};
-
-	struct n_v_lin {
-		lu_size	 			p;			// p i c potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
-		lu_size				c;
+	struct n_lin {
+		N_Neu	 				b;			// b i d potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		N_Neu					d;
 
 		// ce dva spysky
-		// odyn z storony p, inshyy z storony c
-		lu_size	 			p_p;
-		lu_size	 			p_n;
+		// odyn z storony b, inshyy z storony d
+		N_Lin	 				b_p;
+		N_Lin	 				b_n;
 
-		lu_size	 			c_p; 		// p i n potribni u vypadku yakshou my vydaliayemo zviazok?
-		lu_size				c_n; 		// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys p ale my neznayemo n
-		 		   						// tomu naspravdi i p i n potribni
+		N_Lin	 				d_p; 		// p i n potribni u vypadku yakshou my vydaliayemo zviazok?
+		N_Lin					d_n; 		// yaksho my vydaliayemo zviazok, to my mozhemo podyvytys p ale my neznayemo n
+		 		   							// tomu naspravdi i p i n potribni
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // N Dopomizhni
+
+	struct n_mem_opts {
+		lu_size 				names_size;
+	};
+
+	static inline N_Mem_Opts n_mem_opts_init(N_Mem_Opts self)
+	{
+		self->names_size = LU_NAMES_SIZE;
+	}
 	
 	struct n_mem {
 		// vlasnyk
 		Lu_Brain 				brain;
 
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
+		Mem_Table				coms;
 		Mem_Table 				neus;
 		Mem_Table				lins; 
-		Mem_Table				names;
-		Mem_Table 				vals;
 	};
 
 	static N_Mem n_mem_create(Lu_Brain brain);
-	
+	static Mem_Table n_mem_coms_create(N_Mem self, Mem mem);
+	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem);
+	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
 
 #endif // _LU_N_H

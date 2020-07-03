@@ -30,7 +30,7 @@
 	// ce ne neu, ce lohichnyy prostir dlia neus (odnoho i bilshe neu)
 	struct s_neu {
 		enum s_neu_type    		type;			
-		lu_size 				lid;		// id in layer
+		lu_size 				l_ix;		// nomer v layer
 
 		S_Layer 				layer;
 		lu_size 				x;    		// bude t index dlia a_neu
@@ -112,7 +112,7 @@
 		lu_user_assert_void(x < self->w, "x index out of range");
 		lu_user_assert_void(y < self->h, "y index out of range");
 		lu_user_assert_void(z < self->d, "z index out of range");
-		
+
 		self->neus[z * self->w * self->h + y * self->w + x] = val; 
 	}
 

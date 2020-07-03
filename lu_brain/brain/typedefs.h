@@ -52,10 +52,11 @@
 
 		NCI_SIZE
 	};
-
+ 	
+ 	typedef struct n_com* 		N_Com;
+	typedef struct n_lin* 		N_Lin;
 	typedef struct n_neu*		N_Neu;
-	typedef struct n_v_lin* 	N_V_Lin;
-	typedef struct n_h_lin* 	N_H_Lin;
+	typedef struct n_mem_opts*  N_Mem_Opts;
 	typedef struct n_mem* 		N_Mem;
 
 

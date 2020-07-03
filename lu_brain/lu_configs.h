@@ -8,6 +8,13 @@
  
 #include "lu_types.h"
 
+// Gate
+#define LU_SAVE_WAVES_SIZE 1
+#define LU_FIND_WAVES_SIZE 1
+#define LU_RESTORE_WAVES_SIZE 1
+
+// N_Mem
+#define LU_NAMES_SIZE 1000
 
 
 

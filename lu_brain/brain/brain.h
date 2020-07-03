@@ -40,6 +40,10 @@
 		// Gate
 		struct gate_opts 	gate_opts;
 
+		////////////////////////////////////
+		// N_Mem
+		struct n_mem_opts 	n_mem_opts;
+		
 	};
 
 	struct lu_brain {

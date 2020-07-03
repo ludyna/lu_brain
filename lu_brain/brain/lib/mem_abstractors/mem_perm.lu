@@ -79,7 +79,7 @@
 
 		if (buff_start == NULL) return NULL;
 
-		Mem_Perm self 		= (Mem_Perm) buff_start;
+		Mem_Perm self 				= (Mem_Perm) buff_start;
 
 		self->super.alloc 			= mem_perm_alloc_internal;
 		self->super.realloc 		= mem_perm_realloc_internal;
@@ -89,7 +89,7 @@
 
 		self->buff_start 			= (lu_p_byte) buff_start;
 		self->buff_end				= self->buff_start + size_in_bytes;
-		self->buff_pos 				= self->buff_start + sizeof(struct app_mem);
+		self->buff_pos 				= self->buff_start + sizeof(struct mem_perm);
 		self->size_in_bytes 		= size_in_bytes;
 
 		if (mem_perm_is_out_of_mem(self))

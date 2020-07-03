@@ -17,6 +17,8 @@
 
 		self->rec_opts						= arr_temp_create(10);
 
+		n_mem_opts_init(&self->n_mem_opts);
+
 		return self;
 	}  
 

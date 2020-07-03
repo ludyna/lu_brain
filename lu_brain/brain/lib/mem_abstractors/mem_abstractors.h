@@ -7,7 +7,7 @@
 
 	typedef struct mem* 				Mem;
 	typedef struct mem_table* 			Mem_Table;
-	typedef struct app_mem* 			Mem_Perm;
+	typedef struct mem_perm* 			Mem_Perm;
 	typedef struct mem_table_perm* 		Mem_Table_Perm;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -92,7 +92,7 @@
 // Permanent memory means that allocations should stay until the end of life of 
 // brain.
 
-	struct app_mem {
+	struct mem_perm {
 		struct mem 			super;
 
 		lu_size 			size_in_bytes;
@@ -122,7 +122,7 @@
 
 	struct mem_table_perm {
 		struct mem_table 	super;
-		Mem_Perm 	app_mem;
+		Mem_Perm 			app_mem;
 	};
 
 	Mem_Table_Perm mem_table_perm_create(

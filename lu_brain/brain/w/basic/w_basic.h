@@ -12,13 +12,15 @@
 		W_Sig 	sigs; 	// velykyy masyv, de sigs[n_neu_1->sid] vidpovidaye za w_sig dlia n_neu_1
 						// kozhne vykorystania n_neu miniaye misciamy n_neu->sid z vyshchym n_neu->sid
 						// takym chynom my mozhemo vyddaliaty neu z sid sho perevyshchuye pevne znachennia (starinnia neuroniv)
+
+		W_Sig 	w;		// peremozhec
 	};
 
 	struct w_layer {
 		lu_size 			w;
 		lu_size 			h;
 
-		W_Neu* 				neus;  // peremozhci?
+		W_Neu* 				neus;  // asociyuyutsia z s_neu
 	};
 
 	struct lu_wave {

@@ -18,6 +18,23 @@
 		return self;
 	}
 
+	static Mem_Table n_mem_coms_create(N_Mem self, Mem mem)
+	{
+
+	}
+
+	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem)
+	{
+
+	}
+
+	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem)
+	{
+
+	}
+
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Neu creators
 
