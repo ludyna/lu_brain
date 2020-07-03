@@ -8,14 +8,27 @@
  
 #include "lu_types.h"
 
-// Gate
+///////////////////////////////////////////////////////////////////////////////
+// Gate 
+
+#ifndef LU_SAVE_WAVES_SIZE
 #define LU_SAVE_WAVES_SIZE 1
+#endif
+
+#ifndef LU_FIND_WAVES_SIZE
 #define LU_FIND_WAVES_SIZE 1
+#endif
+
+#ifndef LU_RESTORE_WAVES_SIZE
 #define LU_RESTORE_WAVES_SIZE 1
+#endif
 
+///////////////////////////////////////////////////////////////////////////////
 // N_Mem
-#define LU_NAMES_SIZE 1000
 
+#ifndef LU_NAMES_SIZE
+#define LU_NAMES_SIZE 1000
+#endif
 
 
 #endif // _LU_CONFIGS_PUB_H

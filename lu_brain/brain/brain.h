@@ -28,36 +28,36 @@
 // Brain API
 
 	struct lu_brain_opts {
-		lu_size				id;
-		lu_size 			size_in_bytes;			// lu_brain size in bytes including 
+		lu_size					id;
+		lu_size 				size_in_bytes;			// lu_brain size in bytes including 
 													// everything related
 
 		////////////////////////////////////
 		// Recs
-		Arr					rec_opts;				// recs options
+		Arr						rec_opts;				// recs options
 
 		////////////////////////////////////
 		// Gate
-		struct gate_opts 	gate_opts;
+		struct gate_opts 		gate_opts;
 
 		////////////////////////////////////
 		// N_Mem
-		struct n_mem_opts 	n_mem_opts;
+		struct n_mem_opts 		n_mem_opts;
 		
 	};
 
 	struct lu_brain {
-		lu_size			id;  		// useful for logs and debugging 
-									// in multi-lu_brain env
+		lu_size					id;  		// useful for logs and debugging 
+											// in multi-lu_brain env
 
-		Mem 			app_mem;
+		Mem 					app_mem;
 
-		Arr				recs;		// receivers
+		Arr						recs;		// receivers
  
- 		Gate 			gate;
+ 		Gate 					gate;
 
-		S_Mem 			s_mem;
-		N_Mem 			n_mem;		
+		S_Mem 					s_mem;
+		N_Mem 					n_mem;		
 	};	
 
 

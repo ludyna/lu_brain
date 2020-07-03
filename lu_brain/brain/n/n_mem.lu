@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static N_Mem n_mem_create(Lu_Brain brain)
+	static N_Mem n_mem_create(Lu_Brain brain, N_Mem_Opts opts)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->app_mem, "Lu_Brain app_mem is NULL");
@@ -14,6 +14,16 @@
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
 		self->brain 		= brain;
+		self->opts 			= *opts;
+
+		self->coms 			= n_mem_coms_create(self, brain->app_mem);
+		lu_user_assert(self->coms, "Cannot allocate N_Mem components");
+
+		self->neus 			= n_mem_neus_create(self, brain->app_mem);
+		lu_user_assert(self->neus, "Cannot allocate N_Mem neus");
+
+		self->lins 			= n_mem_lins_create(self, brain->app_mem);
+		lu_user_assert(self->lins, "Cannot allocate N_Mem lins");
 
 		return self;
 	}

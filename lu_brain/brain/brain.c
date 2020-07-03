@@ -72,7 +72,7 @@
 		self->s_mem 		= s_mem_create(self);
 		lu_user_assert(self->s_mem, "Cannot create S_Mem");
 
-		self->n_mem 		= n_mem_create(self);
+		self->n_mem 		= n_mem_create(self, &opts->n_mem_opts);
 		lu_user_assert(self->n_mem, "Cannot create N_Mem");
 
 		self->gate 			= gate_create(self, &opts->gate_opts);

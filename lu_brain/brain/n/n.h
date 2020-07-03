@@ -71,13 +71,15 @@
 		// vlasnyk
 		Lu_Brain 				brain;
 
+		struct n_mem_opts 		opts;
+
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
 		Mem_Table				coms;
 		Mem_Table 				neus;
 		Mem_Table				lins; 
 	};
 
-	static N_Mem n_mem_create(Lu_Brain brain);
+	static N_Mem n_mem_create(Lu_Brain brain, N_Mem_Opts opts);
 	static Mem_Table n_mem_coms_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
