@@ -91,5 +91,4 @@
 	static N_Lin n_mem_lin_alloc(N_Mem self);
 
 
-
 #endif // _LU_N_H
