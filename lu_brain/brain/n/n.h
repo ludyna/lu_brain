@@ -18,7 +18,7 @@
 		enum n_com_type type;
 
 		union {
-			lu_size 		name;			// unique id that represents some name
+			lu_size 		name;			// unique id that represents name from outside of this lib
 			lu_value 		value;
 		} data;
 	};
@@ -26,10 +26,10 @@
 	struct n_neu {
 		S_Neu 					s_neu;
 
-		N_Lin 					b_l; 		// v and h and other links
+		N_Lin 					b_l; 		// v and h and other links, 0 zavzhdy h
 		lu_value 				b_count;
 
-		N_Lin  					d_l;		// v and h and other links
+		N_Lin  					d_l;		// v and h and other links, 0 zavzhdy h
 
 		N_Com 					com;		
 	};
@@ -86,6 +86,10 @@
 	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
 	static void n_mem_print_info(N_Mem);
+	static N_Com n_mem_com_alloc(N_Mem self);
+	static N_Neu n_mem_neu_alloc(N_Mem self);
+	static N_Lin n_mem_lin_alloc(N_Mem self);
+
 
 
 #endif // _LU_N_H
