@@ -127,7 +127,7 @@
 	{
 		if (record == NULL) return;  // should prob debug this
 
-		if (!(self->flags & MEM_TABLE_CAN_FREE_ITEMS)) return;
+		if (!(self->flags & MTF_FREEABLE)) return;
 
 		lu_assert(self->records_count > 0);
 		lu_assert(self->free_count < self->table_size_in_records); 
@@ -156,7 +156,7 @@
 
 		lu_size full_size = sizeof(struct mem_table) + record_size_in_bytes * table_size_in_records;
 		
-		if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
+		if (flags & MTF_FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
 		lu_p_byte start = mem_alloc(mem, full_size);

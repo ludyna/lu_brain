@@ -13,20 +13,13 @@
 // treba prosto zberehty N Net ta parametry za yakymy buv stvorenyy brain
 // vse reshtu perestvoruyetsia. Tak samo perevydilenia pamiati (z mozhlyvym peremishcheniam v inshe misce).
 
-	struct n_name {
-		lu_char 				name[255];
-	};	
-
-	struct n_val {
-		lu_value 				val;
-	};
 
 	struct n_com {
 		enum n_com_type type;
 
 		union {
-			struct n_name 	name;
-			struct n_val 	value;
+			lu_size 		name;			// unique id that represents some name
+			lu_value 		value;
 		} data;
 	};
 
@@ -65,6 +58,14 @@
 	static inline N_Mem_Opts n_mem_opts_init(N_Mem_Opts self)
 	{
 		self->names_size = LU_NAMES_SIZE;
+	}
+
+	static inline N_Mem_Opts n_mem_opts_validate(N_Mem_Opts opts)
+	{
+		lu_user_assert(opts, "N_Mem_Opts is NULL");
+		lu_user_assert(opts->names_size > 0, "names_size should be greater than 0");
+
+		return opts;
 	}
 	
 	struct n_mem {

@@ -53,9 +53,11 @@
 		if (opts->rec_opts == NULL || opts->rec_opts->count < 1) 
 			return lu_user_debug("lu_brain options should include information about recs (rec_opts)");
 
-		Mem app_mem			= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes);
+		Mem app_mem			= (Mem) mem_perm_create(g_mem_temp, opts->size_in_bytes); 
+		lu_user_assert(app_mem, "Cannot create app_mem. Not enough memory?");
 
 		Lu_Brain self 		= (Lu_Brain) mem_alloc(app_mem, sizeof(struct lu_brain));
+		lu_user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->id 			= opts->id;
 		self->app_mem  		= app_mem; 
@@ -70,13 +72,13 @@
 		lu_user_assert(arr_count(self->recs) > 0, "Lu_Brain recs count is 0");
 
 		self->s_mem 		= s_mem_create(self);
-		lu_user_assert(self->s_mem, "Cannot create S_Mem");
+		lu_user_assert(self->s_mem, "Cannot create S_Mem. Not enough memory?");
 
 		self->n_mem 		= n_mem_create(self, &opts->n_mem_opts);
-		lu_user_assert(self->n_mem, "Cannot create N_Mem");
+		lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
 
 		self->gate 			= gate_create(self, &opts->gate_opts);
-		lu_user_assert(self->gate, "Cannot create Gate");
+		lu_user_assert(self->gate, "Cannot create Gate. Not enough memory?");
  
 		return self;
 	}

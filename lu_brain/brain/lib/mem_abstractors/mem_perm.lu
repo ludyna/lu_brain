@@ -143,7 +143,7 @@
 			lu_size a = mem_perm_avail(app_mem) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
-			if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
+			if (flags & MTF_FREEABLE) 
 				fis += sizeof(lu_p_byte);
 
 			table_size_in_records = (a - sizeof(struct mem_table_perm)) / fis;
@@ -151,7 +151,7 @@
 
 		lu_size full_size = sizeof(struct mem_table_perm) + record_size_in_bytes * table_size_in_records;
 		
-		if (flags & MEM_TABLE_CAN_FREE_ITEMS) 
+		if (flags & MTF_FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
 		Mem mem = (Mem) app_mem;

@@ -24,7 +24,7 @@ void test_mem_table1(void)
         /*record_size_in_bytes*/    sizeof(struct test1), 
         /*table_size_in_records*/   3, 
         /*percent*/                 0, 
-        /*flags*/                   MEM_TABLE_CAN_FREE_ITEMS
+        /*flags*/                   MTF_FREEABLE
     );
 
     TEST_ASSERT( ((Mem_Table_Perm)mt)->app_mem == (Mem_Perm) mem );

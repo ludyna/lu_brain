@@ -27,7 +27,7 @@
 // N_Mem
 
 #ifndef LU_NAMES_SIZE
-#define LU_NAMES_SIZE 1000
+#define LU_NAMES_SIZE 64
 #endif
 
 

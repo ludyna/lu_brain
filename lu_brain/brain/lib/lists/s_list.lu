@@ -68,7 +68,7 @@ S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_
 							sizeof(struct s_node), 
 							self->limit_size * 3 + self->level_size, 
 							0, 
-							MEM_TABLE_CAN_FREE_ITEMS
+							MTF_FREEABLE
 						);
 
 	lu_assert(self->mem_table != NULL);

@@ -29,7 +29,7 @@ List list_create(Mem mem, lu_size max_size_in_items)
 		sizeof(struct l_node),
 		max_size_in_items,
 		0,
-		MEM_TABLE_CAN_FREE_ITEMS
+		MTF_FREEABLE
 	);
 
 	lu_assert(mem_table != NULL);

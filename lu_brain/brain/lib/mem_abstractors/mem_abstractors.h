@@ -53,7 +53,7 @@
 // Mem_Table
 
 	enum mem_table_flags {
-		MEM_TABLE_CAN_FREE_ITEMS = 1
+		MTF_FREEABLE = 1
 	};
 
 	struct mem_table {
