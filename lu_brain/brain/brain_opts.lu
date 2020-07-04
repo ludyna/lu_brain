@@ -13,8 +13,6 @@
 		self->id							= id;
 		self->size_in_bytes					= size_in_bytes;
 
-		gate_opts_init(&self->gate_opts);
-
 		self->rec_opts						= arr_temp_create(10);
 
 		n_mem_opts_init(&self->n_mem_opts);
