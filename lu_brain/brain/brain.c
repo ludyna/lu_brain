@@ -11,19 +11,13 @@
 	#include "lib/lib.lu"
  
 ///////////////////////////////////////////////////////////////////////////////
-// Modules related to public nouns (with public and private methods)
-
+// 
 	#include "brain_opts.lu"
  
  	#include "n/n.lu"
-	#include "net/net.lu"
 	#include "rec/rec.lu"
 	#include "story/story.lu"
 	#include "w/w.lu" 
-
-///////////////////////////////////////////////////////////////////////////////
-//  Private modules
-	#include "gate/gate.lu"
 	#include "s/s.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -76,9 +70,6 @@
 
 		self->n_mem 		= n_mem_create(self, &opts->n_mem_opts);
 		lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
-
-		self->gate 			= gate_create(self, &opts->gate_opts);
-		lu_user_assert(self->gate, "Cannot create Gate. Not enough memory?");
 
 		n_mem_tables_alloc(self->n_mem, app_mem);
 

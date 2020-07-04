@@ -18,6 +18,36 @@
 		return self;
 	}
 
+	static W_Save wave_create(Gate gate, S_Mem s_mem, N_Mem n_mem, W_Save_Create_Opts opts)
+	{
+		lu_user_assert(opts->blocks_max_size > 0, "Option blocks_max_size should be greater than 0");
+		lu_user_assert(gate, "Gate is NULL");
+
+		Lu_Brain brain = gate->brain;
+
+		lu_user_assert(brain, "Lu_Brain is NULL");
+
+		Mem mem = brain->app_mem;
+
+		lu_user_assert(mem, "Mem is NULL");
+
+		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
+		lu_user_assert(self, "Cannot allocate W_Save");
+
+		wave_init(&self->super, gate, s_mem, n_mem);
+
+		return self;
+	}
+
+	static void w_save_init_and_reset(W_Save self, Lu_Story story, Lu_Save_Opts opts)
+	{
+		lu_user_assert_void(story, "Lu_Story is NULL");
+		lu_user_assert_void(opts, "Lu_Save_Opts is NULL");
+
+		self->super.story 	= story; 
+		self->opts 			= *opts;
+	} 
+
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
@@ -54,22 +84,6 @@
 	void wave_release(Lu_Wave self)
 	{
 
-	}
-
-	Lu_Wave_Resp lu_wave_response(Lu_Wave self)
-	{
-		lu_user_assert(self, "Lu_Wave is NULL");
-
-		Lu_Wave_Resp resp = NULL;
-
-		wave_release(self);
-
-		return resp;
-	}
-
-	void lu_wave_join(Lu_Wave self)
-	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
 	}
 
 

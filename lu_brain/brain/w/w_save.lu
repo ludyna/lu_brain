@@ -2,8 +2,6 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-#include "save/save_opts.lu"
-#include "save/save_resp.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Save_Create_Opts
@@ -16,35 +14,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // W_Save
 
-	static W_Save w_save_create(Gate gate, S_Mem s_mem, N_Mem n_mem, W_Save_Create_Opts opts)
-	{
-		lu_user_assert(opts->blocks_max_size > 0, "Option blocks_max_size should be greater than 0");
-		lu_user_assert(gate, "Gate is NULL");
 
-		Lu_Brain brain = gate->brain;
-
-		lu_user_assert(brain, "Lu_Brain is NULL");
-
-		Mem mem = brain->app_mem;
-
-		lu_user_assert(mem, "Mem is NULL");
-
-		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
-		lu_user_assert(self, "Cannot allocate W_Save");
-
-		wave_init(&self->super, gate, s_mem, n_mem);
-
-		return self;
-	}
-
-	static void w_save_init_and_reset(W_Save self, Lu_Story story, Lu_Save_Opts opts)
-	{
-		lu_user_assert_void(story, "Lu_Story is NULL");
-		lu_user_assert_void(opts, "Lu_Save_Opts is NULL");
-
-		self->super.story 	= story; 
-		self->opts 			= *opts;
-	} 
 
 	// static inline data_get(
 

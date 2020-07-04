@@ -13,9 +13,7 @@
 #include "data/data.h"
 #include "n/n.h"
 #include "rec/rec.h"
-#include "net/net.h"
 #include "w/w.h"
-#include "gate/gate.h"
 #include "story/story.h"
 #include "s/s.h"
 
@@ -30,15 +28,11 @@
 	struct lu_brain_opts {
 		lu_size					id;
 		lu_size 				size_in_bytes;			// lu_brain size in bytes including 
-													// everything related
+														// everything related
 
 		////////////////////////////////////
 		// Recs
 		Arr						rec_opts;				// recs options
-
-		////////////////////////////////////
-		// Gate
-		struct gate_opts 		gate_opts;
 
 		////////////////////////////////////
 		// N_Mem
@@ -53,18 +47,10 @@
 		Mem 					app_mem;
 
 		Arr						recs;		// receivers
- 
- 		Gate 					gate;
 
 		S_Mem 					s_mem;
 		N_Mem 					n_mem;		
 	};	
-
-
-	static inline Gate brain_gate(Lu_Brain self)
-	{
-		return self->gate;
-	}	 
 
 	static void brain_print_info(Lu_Brain self);
 
