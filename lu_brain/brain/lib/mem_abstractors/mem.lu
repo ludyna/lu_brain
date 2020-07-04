@@ -137,6 +137,11 @@
 		--self->records_count;
 	}
 
+	lu_size mem_table_size_in_bytes_default(Mem_Table self)
+	{
+		return self->full_size_in_bytes;
+	}
+
 	Mem_Table mem_table_create_default(
 		Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
@@ -169,6 +174,7 @@
 		self->destroy 				= mem_table_destroy_default;
 		self->record_alloc 			= mem_table_record_alloc_default;
 		self->record_free 			= mem_table_record_free_default;
+		self->size_in_bytes 		= mem_table_size_in_bytes_default;
 
 		self->record_size_in_bytes 	= record_size_in_bytes;
 		self->table_size_in_records = table_size_in_records;
@@ -179,6 +185,7 @@
 		self->free_start 			= (lu_p_byte*) self->records_end;
 		self->records_count 		= 0;
 		self->free_count			= 0;
+		self->full_size_in_bytes 	= full_size;
 
 		return self;
 	}

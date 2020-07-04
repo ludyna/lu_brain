@@ -63,6 +63,8 @@
 		lu_p_byte 	(*record_alloc)(Mem_Table, const char* func, const char* file, int line);
 		void 		(*record_free)(Mem_Table, lu_p_byte record, const char* func, const char* file, int line);
 
+		lu_size 	(*size_in_bytes)(Mem_Table);
+
 		lu_size 		record_size_in_bytes;
 		lu_size			table_size_in_records;
 		lu_flags		flags;
@@ -74,6 +76,8 @@
 
 		lu_p_byte* 		free_start;
 		lu_size 		free_count;
+
+		lu_size 		full_size_in_bytes;
 	};
 
 	#define mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
@@ -81,6 +85,8 @@
 
 	#define mem_record_alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
 	#define mem_record_free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 
+
+	#define mem_table_size_in_bytes(mt) mt->size_in_bytes(mt)
 
 	static inline lu_p_byte mem_table_get(Mem_Table self, lu_size index)
 	{
@@ -116,6 +122,9 @@
 	{
 		return self->buff_end - self->buff_pos;
 	}
+
+	static inline lu_size mem_perm_allocated(Mem_Perm self) { return self->size_in_bytes; }
+	static inline lu_size mem_perm_used(Mem_Perm self) { return self->buff_pos - self->buff_start; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Perm_Table

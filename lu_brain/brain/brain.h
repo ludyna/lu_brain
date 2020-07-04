@@ -64,7 +64,9 @@
 	static inline Gate brain_gate(Lu_Brain self)
 	{
 		return self->gate;
-	}	
+	}	 
+
+	static void brain_print_info(Lu_Brain self);
 
 
 #endif // _LU_SRC_BRAIN_H

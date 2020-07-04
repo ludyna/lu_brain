@@ -79,7 +79,11 @@
 
 		self->gate 			= gate_create(self, &opts->gate_opts);
 		lu_user_assert(self->gate, "Cannot create Gate. Not enough memory?");
- 
+
+		n_mem_tables_alloc(self->n_mem, app_mem);
+
+		brain_print_info(self);
+
 		return self;
 	}
 
@@ -93,4 +97,19 @@
 		lu_user_assert(index < arr_count(self->recs), "index is out of range");
 
 		return arr_get(self->recs, index);
+	}
+
+	static void brain_print_info(Lu_Brain self)
+	{
+		lu_user_assert_void(self, "Lu_Brain is NULL");
+		lu_user_assert_void(self->app_mem, "Mem is NULL");
+		Mem_Perm app_mem = (Mem_Perm) self->app_mem;
+
+		lu_debug("\n---------> Brain #%lu Info <---------", self->id);
+		lu_debug("\nMemory allocated (bytes): %lu", mem_perm_allocated(app_mem));
+		lu_debug("\nMemory used (bytes): %lu", mem_perm_used(app_mem));
+
+ 		n_mem_print_info(self->n_mem);
+
+		lu_debug("\n-----------------------------------\n");
 	}

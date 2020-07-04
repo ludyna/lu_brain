@@ -81,8 +81,11 @@
 	};
 
 	static N_Mem n_mem_create(Lu_Brain brain, N_Mem_Opts opts);
+	static N_Mem n_mem_tables_alloc(N_Mem self, Mem mem);
 	static Mem_Table n_mem_coms_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
+	static void n_mem_print_info(N_Mem);
+
 
 #endif // _LU_N_H

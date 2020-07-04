@@ -167,6 +167,7 @@
 		self->super.destroy 				= mem_table_destroy_default;
 		self->super.record_alloc 			= mem_table_record_alloc_default;
 		self->super.record_free 			= mem_table_record_free_default;
+		self->super.size_in_bytes 			= mem_table_size_in_bytes_default;
 
 		self->super.record_size_in_bytes 	= record_size_in_bytes;
 		self->super.table_size_in_records 	= table_size_in_records;
@@ -177,6 +178,7 @@
 		self->super.free_start 				= (lu_p_byte*) self->super.records_end;
 		self->super.records_count 			= 0;
 		self->super.free_count				= 0;
+		self->super.full_size_in_bytes 		= full_size;
 
 		// own
 		self->app_mem 				= app_mem;

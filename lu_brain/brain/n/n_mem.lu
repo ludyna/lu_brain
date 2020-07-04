@@ -19,13 +19,25 @@
 		self->brain 		= brain;
 		self->opts 			= *opts;
 
-		self->coms 			= n_mem_coms_create(self, brain->app_mem);
+		self->coms 			= NULL;
+		self->neus 			= NULL;
+		self->lins 			= NULL;
+
+		return self;
+	}
+
+	static N_Mem n_mem_tables_alloc(N_Mem self, Mem mem)
+	{
+		lu_user_assert(self, "N_Mem is NULL");
+		lu_user_assert(mem, "Mem is NULL");
+
+		self->coms 			= n_mem_coms_create(self, mem);
 		lu_user_assert(self->coms, "Cannot allocate N_Mem components");
 
-		self->neus 			= n_mem_neus_create(self, brain->app_mem);
+		self->neus 			= n_mem_neus_create(self, mem);
 		lu_user_assert(self->neus, "Cannot allocate N_Mem neus");
 
-		self->lins 			= n_mem_lins_create(self, brain->app_mem);
+		self->lins 			= n_mem_lins_create(self, mem);
 		lu_user_assert(self->lins, "Cannot allocate N_Mem lins");
 
 		return self;
@@ -58,11 +70,7 @@
 			lu_user_assert(layer, "S_Layer is NULL");
 
 			val_coms_size += s_layer_neus_size(layer);
-
-			lu_debug("\nval_coms_size=%lu", val_coms_size);
 		}
-
-
 
 		Mem_Table coms = mem_table_create(
 										mem, 
@@ -80,14 +88,43 @@
 
 	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem)
 	{
+		Mem_Table neus = mem_table_create(
+										mem, 
+			/*record_size_in_bytes*/ 	sizeof(struct n_neu), 
+			/*table_size_in_records*/	0, 
+			/*percent*/					50,
+			/*flags*/					MTF_FREEABLE
+		);
 
+		lu_user_assert(neus, "Cannot allocate neus Mem_Table");
+
+		return neus;
 	}
 
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem)
 	{
+		Mem_Table lins = mem_table_create(
+										mem, 
+			/*record_size_in_bytes*/ 	sizeof(struct n_neu), 
+			/*table_size_in_records*/	0, 
+			/*percent*/					100,
+			/*flags*/					MTF_FREEABLE
+		);
 
+		lu_user_assert(lins, "Cannot allocate lins Mem_Table");
+
+		return lins;
 	}
+ 	
+ 	static void n_mem_print_info(N_Mem self)
+ 	{
+ 		lu_user_assert_void(self, "N_Mem is NULL");
 
+ 		lu_debug("\n\n--- N_Mem info: ");
+ 		lu_debug("\n 	coms size (bytes): %lu", mem_table_size_in_bytes(self->coms));
+ 		lu_debug("\n 	neus size (bytes): %lu", mem_table_size_in_bytes(self->neus));
+ 		lu_debug("\n 	lins size (bytes): %lu", mem_table_size_in_bytes(self->lins));
+ 	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
