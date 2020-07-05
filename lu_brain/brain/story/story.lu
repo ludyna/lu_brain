@@ -4,9 +4,7 @@
 
 #include "block.lu"
 #include "story_save.lu"
-#include "story_find.lu"
-#include "story_restore.lu"
- 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 

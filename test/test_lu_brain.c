@@ -97,7 +97,7 @@ void setUp(void)
 
 	TEST_ASSERT(brain->recs->count);
 
-	wave = lu_wave_create(brain, 0, 0, 0.8, 0.8);
+	wave = lu_wave_create(brain);
 }
 
 void tearDown(void)
@@ -168,7 +168,6 @@ void test_lu_brain_basics(void)
 			lu_block_end(story);
 
 			lu_story_push(story, rec_0, data_3);
-
 
 	net = lu_wave_find(wave, story);
 

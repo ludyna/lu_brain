@@ -31,21 +31,49 @@
 	};
 
 	struct lu_wave {
-		Gate 					gate;
+		// Opts
+		lu_flags 				flags;
+		lu_value 				color;
+		lu_value 				contrast;
+		lu_value 				breakpoint;
+
+		// Refs
 		S_Mem 					s_mem; 
 		N_Mem 					n_mem;
 		Lu_Story 				story;
 
+		// Internal
 		Lu_Net 					net;
 	};
 
-	Lu_Wave lu_wave_create(Lu_Brain, lu_flags flags, lu_value color, lu_value contrast, lu_value breakpoint);
-	void lu_wave_destroy(Lu_Wave);
+	Lu_Wave lu_wave_create(Lu_Brain);
+	void lu_wave_destroy(Lu_Wave); 
+
+	// Sync
 	Lu_Net lu_wave_save(Lu_Wave, Lu_Story); 
-	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	Lu_Net lu_wave_find(Lu_Wave, Lu_Story);
 	Lu_Net lu_wave_restore(Lu_Wave, Lu_Neu);
+
+	// Async
+	void lu_wave_save_async(Lu_Wave, Lu_Story);
+	void lu_wave_find_async(Lu_Wave, Lu_Story);
+	void lu_wave_restore_async(Lu_Wave, Lu_Story);
 	Lu_Net lu_wave_join(Lu_Wave);
+
+	// Properties
+
+	lu_flags lu_wave_flags_get(Lu_Wave);
+	void lu_wave_flags_set(Lu_Wave, lu_flags);
+	void lu_wave_flags_remove(Lu_Wave self, lu_flags flags);
+
+	lu_value lu_wave_color_get(Lu_Wave);
+	void lu_wave_color_set(Lu_Wave, lu_value);
+
+	lu_value lu_wave_contrast_get(Lu_Wave);
+	void lu_wave_contrast_set(Lu_Wave, lu_value);
+
+	lu_value lu_wave_breakpoint_get(Lu_Wave);
+	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
 
 	// CE PIZDEC IDEA
 	// wave stvoruyutsia okremo vid brain v temp memory

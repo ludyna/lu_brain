@@ -16,13 +16,12 @@
 	typedef struct lu_rec_opts* 		Lu_Rec_Opts;
 	typedef struct lu_rec* 				Lu_Rec;
 
-	///////////////////////////////////////
 	// Lu_Brain_Opts
 
 	Lu_Brain_Opts lu_brain_opts_create(lu_size id, lu_size size_in_bytes);
 	void lu_brain_opts_destroy(Lu_Brain_Opts);
 
-	///////////////////////////////////////
+
 	// Lu_Rec_Opts
 
 	Lu_Rec_Opts lu_rec_opts_create(
@@ -42,8 +41,6 @@
 
 	void lu_rec_opts_destroy(Lu_Rec_Opts);
 
-
-	///////////////////////////////////////
 	// Lu_Brain
 
 	Lu_Brain lu_brain_create(Lu_Brain_Opts);
@@ -75,38 +72,43 @@
 	typedef struct lu_net*				Lu_Net;
 	typedef struct lu_wave* 			Lu_Wave;
 
-	///////////////////////////////////////
 	// Lu_Neu 
 
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-	///////////////////////////////////////
+
 	// Lu_Space
 
 	Lu_Neu lu_space_winner_get(Lu_Space);
 
-	///////////////////////////////////////
+
 	// Lu_Layer
 
 	Lu_Space lu_layer_space_get(Lu_Layer, lu_size x, lu_size y, lu_size z);
 
-	///////////////////////////////////////
+
 	// Lu_Wave
 
-	Lu_Wave lu_wave_create(Lu_Brain, lu_flags flags, lu_value color, lu_value contrast, lu_value breakpoint);
-	void lu_wave_destroy(Lu_Wave);
+	Lu_Wave lu_wave_create(Lu_Brain);
+	void lu_wave_destroy(Lu_Wave); 
 
+	// Lu_Wave Sync
 	Lu_Net lu_wave_save(Lu_Wave, Lu_Story); 
-	void lu_wave_save_async(Lu_Wave, Lu_Story);
-
 	Lu_Net lu_wave_find(Lu_Wave, Lu_Story);
-	void lu_wave_find_async(Lu_Wave, Lu_Story);
-
 	Lu_Net lu_wave_restore(Lu_Wave, Lu_Neu);
-	void lu_wave_restore_async(Lu_Wave, Lu_Story);
 
+	// Lu_Wave Async
+	void lu_wave_save_async(Lu_Wave, Lu_Story);
+	void lu_wave_find_async(Lu_Wave, Lu_Story);
+	void lu_wave_restore_async(Lu_Wave, Lu_Story);
 	Lu_Net lu_wave_join(Lu_Wave);
+
+	// Lu_Wave Properties
+
+	lu_flags lu_wave_flags_get(Lu_Wave);
+	void lu_wave_flags_set(Lu_Wave, lu_flags);
+	void lu_wave_flags_remove(Lu_Wave self, lu_flags flags);
 
 	lu_value lu_wave_color_get(Lu_Wave);
 	void lu_wave_color_set(Lu_Wave, lu_value);

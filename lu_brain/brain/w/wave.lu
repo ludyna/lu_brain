@@ -5,86 +5,69 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	static Lu_Wave wave_init(Lu_Wave self, Gate gate, S_Mem s_mem, N_Mem n_mem)
+
+	Lu_Wave lu_wave_create(Lu_Brain brain)
 	{
-		lu_user_assert(gate, "Gate is NULL");
-		lu_user_assert(s_mem, "S_Mem is NULL");
-		lu_user_assert(n_mem, "N_Mem is NULL");
-
-		self->gate 		= gate;
-		self->s_mem 	= s_mem;
-		self->n_mem 	= n_mem;
-
-		return self;
-	}
-
-	static W_Save wave_create(Gate gate, S_Mem s_mem, N_Mem n_mem, W_Save_Create_Opts opts)
-	{
-		lu_user_assert(opts->blocks_max_size > 0, "Option blocks_max_size should be greater than 0");
-		lu_user_assert(gate, "Gate is NULL");
-
-		Lu_Brain brain = gate->brain;
-
 		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(brain->s_mem, "S_Mem is NULL");
+		lu_user_assert(brain->n_mem, "N_Mem is NULL");
 
-		Mem mem = brain->app_mem;
+		Lu_Wave self 		= (Lu_Wave) mem_alloc(g_mem_temp, sizeof(struct lu_wave));
+		lu_user_assert(self, "Cannot allocate Lu_Wave");
 
-		lu_user_assert(mem, "Mem is NULL");
-
-		W_Save self 		= (W_Save) mem_alloc(mem, sizeof(struct w_save));
-		lu_user_assert(self, "Cannot allocate W_Save");
-
-		wave_init(&self->super, gate, s_mem, n_mem);
+		self->s_mem 		= brain->s_mem;
+		self->n_mem 		= brain->n_mem; 
+		self->story 		= NULL;
+		self->net 			= NULL;
 
 		return self;
 	}
 
-	static void w_save_init_and_reset(W_Save self, Lu_Story story, Lu_Save_Opts opts)
+	void lu_wave_destroy(Lu_Wave self)
 	{
-		lu_user_assert_void(story, "Lu_Story is NULL");
-		lu_user_assert_void(opts, "Lu_Save_Opts is NULL");
+		mem_free(g_mem_temp, (lu_p_byte) self);
+	}
 
-		self->super.story 	= story; 
-		self->opts 			= *opts;
-	} 
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // API
 
-	lu_bool lu_wave_is_working(Lu_Wave self)
-	{
-		return false;
-	}
+	// lu_bool lu_wave_is_working(Lu_Wave self)
+	// {
+	// 	return false;
+	// }
 
-	lu_bool lu_wave_cancel(Lu_Wave self)
-	{
+	// lu_bool lu_wave_cancel(Lu_Wave self)
+	// {
 
-	}
+	// }
 
-	lu_size lu_wave_time(Lu_Wave self)
-	{
+	// lu_size lu_wave_time(Lu_Wave self)
+	// {
 
-	}
+	// }
 
-	enum lu_wave_status lu_wave_status(Lu_Wave self)
-	{
+	// enum lu_wave_status lu_wave_status(Lu_Wave self)
+	// {
 
-	}
+	// }
 
-	lu_size lu_wave_touched_count(Lu_Wave self)
-	{
+	// lu_size lu_wave_touched_count(Lu_Wave self)
+	// {
 
-	}
+	// }
 
-	lu_size lu_wave_excited_count(Lu_Wave self)
-	{
+	// lu_size lu_wave_excited_count(Lu_Wave self)
+	// {
 
-	}
+	// }
 
-	void wave_release(Lu_Wave self)
-	{
+	// void wave_release(Lu_Wave self)
+	// {
 
-	}
+	// }
 
 
 ///////////////////////////////////////////////////////////////////////////////
