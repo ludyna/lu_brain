@@ -29,47 +29,40 @@
 	}
 
 
+	// Sync
+	Lu_Net lu_wave_save(Lu_Wave self, Lu_Story story) 
+	{
 
+	}
 
-///////////////////////////////////////////////////////////////////////////////
-// API
+	Lu_Net lu_wave_find(Lu_Wave self, Lu_Story story)
+	{
 
-	// lu_bool lu_wave_is_working(Lu_Wave self)
-	// {
-	// 	return false;
-	// }
+	}
 
-	// lu_bool lu_wave_cancel(Lu_Wave self)
-	// {
+	Lu_Net lu_wave_restore(Lu_Wave self, Lu_Neu neu)
+	{
 
-	// }
+	}
 
-	// lu_size lu_wave_time(Lu_Wave self)
-	// {
+	// Async
+	void lu_wave_save_async(Lu_Wave self, Lu_Story story)
+	{
 
-	// }
+	}
 
-	// enum lu_wave_status lu_wave_status(Lu_Wave self)
-	// {
+	void lu_wave_find_async(Lu_Wave self, Lu_Story story)
+	{
 
-	// }
+	}
 
-	// lu_size lu_wave_touched_count(Lu_Wave self)
-	// {
+	void lu_wave_restore_async(Lu_Wave self, Lu_Story story)
+	{
 
-	// }
+	}
 
-	// lu_size lu_wave_excited_count(Lu_Wave self)
-	// {
+	Lu_Net lu_wave_join(Lu_Wave self)
+	{
 
-	// }
-
-	// void wave_release(Lu_Wave self)
-	// {
-
-	// }
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Static
+	}
 
