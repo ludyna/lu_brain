@@ -1,0 +1,34 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	Lu_Net lu_wave_save(Lu_Wave self, Lu_Story story) 
+	{
+		lu_user_assert(self, "Lu_Wave is NULL");
+
+		story = story_validate(story);
+		lu_user_assert(story, "Lu_Story is invalid");
+
+		wave_save_async_internal(self, story);
+		lu_wave_join(self);
+
+		return self->net;
+	}
+
+	void lu_wave_save_async(Lu_Wave self, Lu_Story story)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+
+		story = story_validate(story);
+		lu_user_assert_void(story, "Lu_Story is invalid");
+
+		wave_save_async_internal(self, story);
+	}
+
+	void wave_save_async_internal(Lu_Wave self, Lu_Story story)
+	{
+
+	}

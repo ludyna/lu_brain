@@ -49,15 +49,20 @@
 	Lu_Wave lu_wave_create(Lu_Brain);
 	void lu_wave_destroy(Lu_Wave); 
 
-	// Sync
+	// Save
 	Lu_Net lu_wave_save(Lu_Wave, Lu_Story); 
-	Lu_Net lu_wave_find(Lu_Wave, Lu_Story);
-	Lu_Net lu_wave_restore(Lu_Wave, Lu_Neu);
-
-	// Async
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
+	void wave_save_async_internal(Lu_Wave self, Lu_Story story);
+
+	// Find 
+	Lu_Net lu_wave_find(Lu_Wave, Lu_Story);
 	void lu_wave_find_async(Lu_Wave, Lu_Story);
+
+	// Restore
+	Lu_Net lu_wave_restore(Lu_Wave, Lu_Neu);
 	void lu_wave_restore_async(Lu_Wave, Lu_Story);
+
+	// Other
 	Lu_Net lu_wave_join(Lu_Wave);
 
 	// Properties
@@ -75,10 +80,5 @@
 	lu_value lu_wave_breakpoint_get(Lu_Wave);
 	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
 
-	// CE PIZDEC IDEA
-	// wave stvoruyutsia okremo vid brain v temp memory
-	// wave posylayutsia na brain (save , find , restore)
-	// rezultatom wave ye nabir w_layers z peremozhnymy w_sig
-	// my mozhemo podyvytys de sho ye
 
 

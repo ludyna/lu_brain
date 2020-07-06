@@ -5,7 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-
 	Lu_Wave lu_wave_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
@@ -28,12 +27,7 @@
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
-
 	// Sync
-	Lu_Net lu_wave_save(Lu_Wave self, Lu_Story story) 
-	{
-
-	}
 
 	Lu_Net lu_wave_find(Lu_Wave self, Lu_Story story)
 	{
@@ -46,10 +40,7 @@
 	}
 
 	// Async
-	void lu_wave_save_async(Lu_Wave self, Lu_Story story)
-	{
 
-	}
 
 	void lu_wave_find_async(Lu_Wave self, Lu_Story story)
 	{

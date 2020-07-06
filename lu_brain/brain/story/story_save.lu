@@ -6,54 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
-	{
-		lu_user_assert(self, "Lu_Story is NULL");
 
-		lu_size block_i;
-		Data data;
-
-		for(block_i = 0; block_i < self->blocks_count; block_i++)
-		{
-			data = story_data_get(self, rec_i, block_i);
-			if (data && data->values) return data;
-		}
-
-		return NULL;
-	}
-
-	static void story_fill_gaps(Lu_Story self)
-	{
-		lu_user_assert_void(self, "Lu_Story is NULL");
-
-		lu_size block_i;
-		lu_size rec_i;
-		Data d1;
-		Data d2;
-
-		for(rec_i = 0; rec_i < self->datum_w; rec_i++)
-			for(block_i = 0; block_i < self->blocks_count; block_i++)
-			{
-				d1 = story_data_get(self, rec_i, block_i);
-				lu_user_assert_void(d1, "Something went wrong");
-
-				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
-
-				if (d1->values) continue;
-				
-				if (block_i == 0)
-				{
-					d2 = story_first_non_null_data(self, rec_i);
-					if (d2 == NULL) return; 						// nema danyh dlia rec_i vzahali
-					data_shallow_copy(d1, d2);
-				}
-				else
-				{
-					d2 = story_data_get(self, rec_i, block_i - 1);
-					data_shallow_copy(d1, d2);
-				}
-			}
-	}
 
 		// Lu_Save_Resp lu_story_save(Lu_Story self, Lu_Save_Opts opts)
 		// {
