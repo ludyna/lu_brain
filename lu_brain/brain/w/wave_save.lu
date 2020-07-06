@@ -39,124 +39,79 @@
 
 		wave_save_async_internal(self, story);
 	}
-
-	void wave_save_async_internal(Lu_Wave self, Lu_Story story)
+	
+	static void wave_save_async_internal(Lu_Wave self, Lu_Story story)
 	{
-		// 	lu_user_assert(self, "Lu_Story is NULL");
-		// 	lu_user_assert(opts, "Lu_Save_Opts is NULL");
+		Lu_Brain brain 	= story->brain;
+		Arr recs 		= brain->recs;
 
-		// 	Lu_Wave wave = lu_story_save_async(self, opts);
-			
-		// 	lu_wave_join(wave);
+		lu_size block_i;
+		lu_size rec_i;
+		Data data;
 
-		// 	return (Lu_Save_Resp) lu_wave_response(wave);
-		// }
+		Lu_Rec rec; 
+		S_Rec s_rec;
 
+		for(block_i = 0; block_i < story->blocks_count; block_i++)
+		{
+			for(rec_i = 0; rec_i < story->datum_w; rec_i++)
+			{
+				s_rec 	= (S_Rec) arr_get(brain->s_mem->recs, rec_i);
 
-		// Lu_Wave lu_story_save_async(Lu_Story self, Lu_Save_Opts opts)
-		// {
-		// 	lu_user_assert(self, "Lu_Story should not be NULL");
-		// 	lu_user_assert(opts, "Lu_Save_Opts is NULL");
+				lu_user_assert_void(s_rec, "S_Rec is NULL");
 
-		// 	Lu_Brain brain = self->brain;
-		// 	lu_user_assert(brain, "Lu_Story not linked to brain");
+				data 	= story_data_get(story, rec_i, block_i);
 
-		// 	Arr recs = brain->recs;
+				lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
+				data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
+				lu_debug("] SAVING ...");
 
-		// 	lu_user_assert(recs, "Lu_Brain has no recs");
-		// 	lu_user_assert(arr_count(recs), "Lu_Brain has no recs1");
-		// 	lu_user_assert(self->blocks_count, "Lu_Story without blocks");
-
-		// 	Gate gate = brain_gate(self->brain);
-
-		// 	// my reset wave v gate_save_wave_wait
-		// 	W_Save wave = gate_save_wave_wait(gate);
-
-		// 	w_save_init_and_reset(wave, self, opts);
-
-		// 	lu_size block_i;
-		// 	lu_size rec_i;
-		// 	Data data;
-
-		// 	Lu_Rec rec; 
-		// 	S_Rec s_rec;
-
-		// 	story_fill_gaps(self);
-
-		// 	for(block_i = 0; block_i < self->blocks_count; block_i++)
-		// 	{
-		// 		for(rec_i = 0; rec_i < self->datum_w; rec_i++)
-		// 		{
-		// 			s_rec 	= (S_Rec) arr_get(brain->s_mem->recs, rec_i);
-
-		// 			lu_user_assert(s_rec, "S_Rec is NULL");
-
-		// 			data 	= story_data_get(self, rec_i, block_i);
-
-		// 			lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
-		// 			data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
-		// 			lu_debug("] SAVING ...");
-
-		// 			if (data->values != NULL) 
-		// 				w_save_process(wave, s_rec, data, block_i);
-		// 		}
-		// 	}
-
-		// 	story_wave_attach(self, gate, (Lu_Wave) wave);
-
-		// 	story_reset(self);
-
-		// 	return (Lu_Wave) wave;2
+				if (data->values != NULL) 
+					wave_data_save(self, s_rec, data, block_i);
+			}
+		}
 	}
 
-	static void wave_data_save(W_Save self, S_Rec s_rec, Data data, lu_size block_i)
+	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i)
 	{
-		// lu_user_assert_void(self, "Lu_Wave is NULL");
-		// lu_user_assert_void(s_rec, "S_Rec is NULL");
-		// lu_user_assert_void(s_rec->rec, "S_Rec rec is NULL");
-		// lu_user_assert_void(data, "Data is NULL");
-		// lu_user_assert_void(block_i < s_rec->blocks_size, "Reached block maximum");
+		lu_size x;
+		lu_size y;
+		lu_size z;
+		lu_value v;
+		lu_value p;
 
-		// lu_size x;
-		// lu_size y;
-		// lu_size z;
-		// lu_value v;
-		// lu_value p;
-		// lu_value contrast 		= self->opts.contrast;
-		// lu_bool ignore_color 	= self->opts.ignore_color;
+		S_Neu s_v_cell;
+		S_Neu s_p_cell;
 
-		// S_Neu s_v_cell;
-		// S_Neu s_p_cell;
+		S_Layer v_layer 	= &s_rec->v_layers[0];
+		S_Layer p_layer 	= &s_rec->p_layers[0];
 
-		// S_Layer v_layer 	= &s_rec->v_layers[0];
-		// S_Layer p_layer 	= &s_rec->p_layers[0];
+		N_Mem n_mem 		= self->n_mem;
+		lu_size p_neu_ix;
 
-		// N_Mem n_mem 		= self->super.n_mem;
-		// lu_size p_neu_ix;
+		for (y = 0; y < data->h; y++)
+			for(x = 0; x < data->w; x++)
+			{
+				s_v_cell = s_layer_neu_get(v_layer, x, y, 0);
+				lu_user_assert_void(s_v_cell, "S_Cell is NULL");
 
-		// for (y = 0; y < data->h; y++)
-		// 	for(x = 0; x < data->w; x++)
-		// 	{
-		// 		s_v_cell = s_layer_neu_get(v_layer, x, y, 0);
-		// 		lu_user_assert_void(s_v_cell, "S_Cell is NULL");
+				for(z = 0; z < data->d; z++)
+				{
+					v = data_get(data, x, y, z);
 
-		// 		for(z = 0; z < data->d; z++)
-		// 		{
-		// 			v = data_get(data, x, y, z);
+					// s_v_col = s_neu_col_get(s_v_cell, z);
 
-		// 			// s_v_col = s_neu_col_get(s_v_cell, z);
+					// p = s_col_p_get(s_v_col, v);
 
-		// 			// p = s_col_p_get(s_v_col, v);
+					// if (p >= contrast)
+					// {
+					// 	s_p_cell 	= s_layer_neu_get(p_layer, x, y);
+					// 	s_p_col 	= s_neu_col_get(s_p_cell, z);
 
-		// 			// if (p >= contrast)
-		// 			// {
-		// 			// 	s_p_cell 	= s_layer_neu_get(p_layer, x, y);
-		// 			// 	s_p_col 	= s_neu_col_get(s_p_cell, z);
-
-		// 			// 	// p_neu_ix 	= s_col_get_or_create(s_p_col, n_mem, p);
+					// 	// p_neu_ix 	= s_col_get_or_create(s_p_col, n_mem, p);
 
 
-		// 			// }
-		// 		}
-		// 	}
+					// }
+				}
+			}
 	}

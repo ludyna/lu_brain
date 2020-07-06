@@ -144,7 +144,12 @@
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
 		lu_user_assert(self->blocks_count, "Lu_Story has no blocks");
-		
+		lu_user_assert(self->brain, "Lu_Story not linked to brain");
+
+		lu_user_assert(self->brain->recs, "Lu_Brain has no recs");
+		lu_user_assert(arr_count(self->brain->recs), "Lu_Brain has no recs");
+
+
 		return self;
 	}
 

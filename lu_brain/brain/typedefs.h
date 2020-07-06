@@ -47,10 +47,10 @@
 	#define IX_NULL 0
 
 	enum n_com_type {
-		NCI_VALUE = 0,
-		NCI_NAME = 1,
+		NCT_VALUE = 0,
+		NCT_NAME = 1,
 
-		NCI_SIZE
+		NCT_SIZE
 	};
  	
  	typedef struct n_com* 		N_Com;
@@ -60,18 +60,3 @@
 	typedef struct n_mem* 		N_Mem;
 
 
-///////////////////////////////////////////////////////////////////////////////
-// W
-
-	typedef struct w_sig* 						W_Sig;
-	typedef struct w_neu*						W_Neu;
-	typedef struct w_layer* 					W_Layer;
-
-	typedef struct w_save_create_opts* 			W_Save_Create_Opts;
-	typedef struct w_save* 						W_Save;
-
-	typedef struct w_find_create_opts*  		W_Find_Create_Opts;
-	typedef struct w_find* 						W_Find;
-
-	typedef struct w_restore_create_opts*		W_Restore_Create_Opts;
-	typedef struct w_restore* 					W_Restore; 

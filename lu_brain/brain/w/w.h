@@ -52,7 +52,8 @@
 	// Save
 	Lu_Net lu_wave_save(Lu_Wave, Lu_Story); 
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
-	void wave_save_async_internal(Lu_Wave self, Lu_Story story);
+	static void wave_save_async_internal(Lu_Wave self, Lu_Story story);
+	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i);
 
 	// Find 
 	Lu_Net lu_wave_find(Lu_Wave, Lu_Story);
@@ -64,7 +65,7 @@
 
 	// Other
 	Lu_Net lu_wave_join(Lu_Wave);
-	Lu_Wave wave_prepare(Lu_Wave);
+	static Lu_Wave wave_prepare(Lu_Wave);
 
 	// Properties
 
