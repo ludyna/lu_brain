@@ -64,6 +64,7 @@
 
 	// Other
 	Lu_Net lu_wave_join(Lu_Wave);
+	Lu_Wave wave_prepare(Lu_Wave);
 
 	// Properties
 

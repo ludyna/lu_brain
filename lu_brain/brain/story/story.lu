@@ -3,7 +3,6 @@
 */
 
 #include "block.lu"
-#include "story_save.lu"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
@@ -141,9 +140,17 @@
 		return NULL;
 	}
 
-	static void story_fill_gaps(Lu_Story self)
+	static Lu_Story story_validate(Lu_Story self)
 	{
-		lu_user_assert_void(self, "Lu_Story is NULL");
+		lu_user_assert(self, "Lu_Story is NULL");
+		lu_user_assert(self->blocks_count, "Lu_Story has no blocks");
+		
+		return self;
+	}
+
+	static Lu_Story story_prepare(Lu_Story self)
+	{
+		lu_user_assert(self, "Lu_Story is NULL");
 
 		lu_size block_i;
 		lu_size rec_i;
@@ -154,7 +161,7 @@
 			for(block_i = 0; block_i < self->blocks_count; block_i++)
 			{
 				d1 = story_data_get(self, rec_i, block_i);
-				lu_user_assert_void(d1, "Something went wrong");
+				lu_user_assert(d1, "Something went wrong");
 
 				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
 
@@ -163,7 +170,7 @@
 				if (block_i == 0)
 				{
 					d2 = story_first_non_null_data(self, rec_i);
-					if (d2 == NULL) return; 						// nema danyh dlia rec_i vzahali
+					if (d2 == NULL) return NULL; 					// nema danyh dlia rec_i vzahali
 					data_shallow_copy(d1, d2);
 				}
 				else
@@ -172,12 +179,6 @@
 					data_shallow_copy(d1, d2);
 				}
 			}
-	}
 
-	static Lu_Story story_validate(Lu_Story self)
-	{
-		lu_user_assert(self, "Lu_Story is NULL");
-		lu_user_assert(self->blocks_count, "Lu_Story has no blocks");
-		
 		return self;
 	}

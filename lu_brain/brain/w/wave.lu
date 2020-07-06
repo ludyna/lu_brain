@@ -27,33 +27,16 @@
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
-	// Sync
 
-	Lu_Net lu_wave_find(Lu_Wave self, Lu_Story story)
-	{
-
-	}
-
-	Lu_Net lu_wave_restore(Lu_Wave self, Lu_Neu neu)
-	{
-
-	}
-
-	// Async
-
-
-	void lu_wave_find_async(Lu_Wave self, Lu_Story story)
-	{
-
-	}
-
-	void lu_wave_restore_async(Lu_Wave self, Lu_Story story)
-	{
-
-	}
+///////////////////////////////////////////////////////////////////////////////
+// Other
 
 	Lu_Net lu_wave_join(Lu_Wave self)
 	{
 
 	}
 
+	Lu_Wave wave_prepare(Lu_Wave self)
+	{
+
+	}

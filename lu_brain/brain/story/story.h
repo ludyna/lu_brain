@@ -31,5 +31,5 @@
 
 	static inline Data story_data_get(Lu_Story self, lu_size rec_i, lu_size block_i) { return &self->datum[block_i * self->datum_w + rec_i]; }
 	static void story_reset(Lu_Story);
-	static void story_fill_gaps(Lu_Story);
 	static Lu_Story story_validate(Lu_Story);
+	static Lu_Story story_prepare(Lu_Story);
