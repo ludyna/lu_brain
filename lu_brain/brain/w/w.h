@@ -27,12 +27,37 @@
 	};
 
 	struct lu_wave_rec {
+		// vlasnyk
+		Lu_Wave_Mem 			mem; 			
 
+		// poviazanyy z rec
+		Lu_Rec 					rec;			
+
+		lu_size 				id;
+
+		lu_size 				cells_w;
+		lu_size 				cells_h; 
+		lu_size 				cells_d;		
+
+		lu_size 				spaces_size;
+		lu_size 				spaces_count;
+		struct lu_space* 		spaces;
+
+		lu_size 				vp_layers_size;
+		struct lu_layer* 		v_layers;
+		struct lu_layer* 		p_layers;
+
+		lu_size 				blocks_size;
+		lu_size 				tria_layers_s;
+		struct lu_layer* 		tria_v_layers;
+		struct lu_layer* 		tria_p_layers;
 	};
 
 	struct lu_wave_mem {
+		Lu_Brain 				brain;
 
-	};
+		Arr 					recs;
+	}; 
 
 	Lu_Wave_Mem wave_mem_create(Lu_Wave wave, S_Mem s_mem);
 
