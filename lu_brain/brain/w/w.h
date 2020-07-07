@@ -49,7 +49,7 @@
 		Lu_Story 				story;
 
 		// Internal
-		Lu_Wave_Mem 					net;
+		Lu_Wave_Mem 			w_mem;
 	};
 
 	Lu_Wave lu_wave_create(Lu_Brain);

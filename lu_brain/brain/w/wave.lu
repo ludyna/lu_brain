@@ -17,8 +17,8 @@
 		self->s_mem 		= brain->s_mem;
 		self->n_mem 		= brain->n_mem; 
 		self->story 		= NULL;
-		self->net 			= wave_mem_create(self, self->s_mem);
-		lu_user_assert(self->net, "Cannot create Lu_Wave_Mem");
+		self->w_mem 		= wave_mem_create(self, self->s_mem);
+		lu_user_assert(self->w_mem, "Cannot create Lu_Wave_Mem");
 
 		return self;
 	}

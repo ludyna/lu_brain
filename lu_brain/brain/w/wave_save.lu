@@ -21,7 +21,7 @@
 		wave_save_async_internal(self, story);
 		lu_wave_join(self);
 
-		return self->net;
+		return self->w_mem;
 	}
 
 	void lu_wave_save_async(Lu_Wave self, Lu_Story story)
