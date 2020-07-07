@@ -69,7 +69,7 @@
 	typedef struct lu_neu* 				Lu_Neu;
 	typedef struct lu_space* 			Lu_Space;
 	typedef struct lu_layer* 			Lu_Layer;
-	typedef struct lu_net*				Lu_Net;
+	typedef struct lu_wave_mem*				Lu_Wave_Mem;
 	typedef struct lu_wave* 			Lu_Wave;
 
 	// Lu_Neu 
@@ -94,15 +94,15 @@
 	void lu_wave_destroy(Lu_Wave); 
 
 	// Lu_Wave Sync
-	Lu_Net lu_wave_save(Lu_Wave, Lu_Story); 
-	Lu_Net lu_wave_find(Lu_Wave, Lu_Story);
-	Lu_Net lu_wave_restore(Lu_Wave, Lu_Neu);
+	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
+	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);
+	Lu_Wave_Mem lu_wave_restore(Lu_Wave, Lu_Neu);
 
 	// Lu_Wave Async
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	void lu_wave_find_async(Lu_Wave, Lu_Story);
 	void lu_wave_restore_async(Lu_Wave, Lu_Story);
-	Lu_Net lu_wave_join(Lu_Wave);
+	Lu_Wave_Mem lu_wave_join(Lu_Wave);
 
 	// Lu_Wave Properties
 

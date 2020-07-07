@@ -122,7 +122,7 @@ void test_lu_brain_basics(void)
 	TEST_ASSERT(brain->recs);
 	TEST_ASSERT(brain->recs->count);
 
-	Lu_Net net;
+	Lu_Wave_Mem wave_mem;
 
 	Lu_Story story = lu_story_create(brain, 0); 
 
@@ -135,7 +135,7 @@ void test_lu_brain_basics(void)
 
 		lu_story_push(story, rec_0, data_3);
  
- 	net = lu_wave_save(wave, story);
+ 	wave_mem = lu_wave_save(wave, story);
 
 		// Because we called save (or find or restore) - it automatically 
 		// reset number of available blocks inside story. If available lu_block count 
@@ -148,7 +148,7 @@ void test_lu_brain_basics(void)
 		lu_block_end(story);
 
 	lu_wave_save_async(wave, story);
-	net = lu_wave_join(wave);
+	wave_mem = lu_wave_join(wave);
 
 	// Destroy all temporary info associated with story. 
 	// Does not destroy created related neurons.
@@ -169,7 +169,7 @@ void test_lu_brain_basics(void)
 
 			lu_story_push(story, rec_0, data_3);
 
-	net = lu_wave_find(wave, story);
+	wave_mem = lu_wave_find(wave, story);
 
 			lu_block_begin(story);
 			lu_story_push(story, rec_0, data_4);
@@ -177,7 +177,7 @@ void test_lu_brain_basics(void)
 			lu_block_end(story);
 
 	lu_wave_find_async(wave, story);
-	net = lu_wave_join(wave);
+	wave_mem = lu_wave_join(wave);
 
 	lu_story_destroy(story); 
 

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Lu_Net lu_wave_save(Lu_Wave self, Lu_Story story) 
+	Lu_Wave_Mem lu_wave_save(Lu_Wave self, Lu_Story story) 
 	{
 		lu_user_assert(self, "Lu_Wave is NULL"); 
 
@@ -74,17 +74,16 @@
 
 	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i)
 	{
+		lu_user_assert_void(data, "Data is NULL");
+
 		lu_size x;
 		lu_size y;
 		lu_size z;
 		lu_value v;
 		lu_value p;
 
-		S_Neu s_v_cell;
-		S_Neu s_p_cell;
-
+		S_Neu s_cell;
 		S_Layer v_layer 	= &s_rec->v_layers[0];
-		S_Layer p_layer 	= &s_rec->p_layers[0];
 
 		N_Mem n_mem 		= self->n_mem;
 		lu_size p_neu_ix;
@@ -92,26 +91,14 @@
 		for (y = 0; y < data->h; y++)
 			for(x = 0; x < data->w; x++)
 			{
-				s_v_cell = s_layer_neu_get(v_layer, x, y, 0);
-				lu_user_assert_void(s_v_cell, "S_Cell is NULL");
-
 				for(z = 0; z < data->d; z++)
 				{
 					v = data_get(data, x, y, z);
 
-					// s_v_col = s_neu_col_get(s_v_cell, z);
+					s_cell = s_layer_neu_get(v_layer, x, y, z);
+					lu_user_assert_void(s_cell, "S_Cell is NULL");
 
-					// p = s_col_p_get(s_v_col, v);
-
-					// if (p >= contrast)
-					// {
-					// 	s_p_cell 	= s_layer_neu_get(p_layer, x, y);
-					// 	s_p_col 	= s_neu_col_get(s_p_cell, z);
-
-					// 	// p_neu_ix 	= s_col_get_or_create(s_p_col, n_mem, p);
-
-
-					// }
+					
 				}
 			}
 	}

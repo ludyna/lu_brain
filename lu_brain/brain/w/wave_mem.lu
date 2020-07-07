@@ -1,16 +1,11 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
-
+ 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+//
 
-	Lu_Wave_Mem lu_wave_find(Lu_Wave self, Lu_Story story)
+	Lu_Wave_Mem wave_mem_create(Lu_Wave wave, S_Mem s_mem)
 	{
-
-	}
-
-	void lu_wave_find_async(Lu_Wave self, Lu_Story story)
-	{
-
+		
 	}

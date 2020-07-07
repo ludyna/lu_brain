@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Lu_Net lu_wave_restore(Lu_Wave self, Lu_Neu neu)
+	Lu_Wave_Mem lu_wave_restore(Lu_Wave self, Lu_Neu neu)
 	{
 
 	}

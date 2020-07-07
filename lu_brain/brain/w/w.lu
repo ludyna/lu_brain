@@ -1,5 +1,6 @@
 
 #include "wave_properties.lu"
+#include "wave_mem.lu"
 #include "wave.lu"
 #include "wave_save.lu"
 #include "wave_find.lu"
