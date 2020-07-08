@@ -38,7 +38,8 @@
 		///////////////////////////////////////
 		// Allocate VP Layers
 
-		self->vp_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h) + 1; 	// + odyn dlia component
+		self->vp_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h) + 1; 	// + odyn dlia component 
+																											
 
 		self->v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->vp_layers_size);
 		lu_user_assert(self->v_layers, "Cannot allocate v layers"); 

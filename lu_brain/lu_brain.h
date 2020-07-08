@@ -7,14 +7,30 @@
  
 #include "lu_configs.h"
 
-
 ///////////////////////////////////////////////////////////////////////////////
-// Brain
+// Nouns
 
+	// Brain related 
+	
 	typedef struct lu_brain_opts* 		Lu_Brain_Opts;
 	typedef struct lu_brain* 			Lu_Brain;
 	typedef struct lu_rec_opts* 		Lu_Rec_Opts;
-	typedef struct lu_rec* 				Lu_Rec;
+	typedef struct lu_rec* 				Lu_Rec; 
+
+	// Story related
+
+	typedef struct lu_story* 			Lu_Story;
+
+	// Wave related
+
+	typedef struct lu_neu* 				Lu_Neu;
+	typedef struct lu_space* 			Lu_Space;
+	typedef struct lu_layer* 			Lu_Layer;
+	typedef struct lu_wave_mem*			Lu_Wave_Mem;
+	typedef struct lu_wave* 			Lu_Wave;
+
+///////////////////////////////////////////////////////////////////////////////
+// Brain related
 
 	// Lu_Brain_Opts
 
@@ -51,9 +67,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Story  
-
-	typedef struct lu_story* 			Lu_Story;
+// Story related  
 
 	Lu_Story lu_story_create(Lu_Brain, lu_size);
 	void lu_story_destroy(Lu_Story);
@@ -64,29 +78,20 @@
 	void lu_block_end(Lu_Story);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Wave 
-
-	typedef struct lu_neu* 				Lu_Neu;
-	typedef struct lu_space* 			Lu_Space;
-	typedef struct lu_layer* 			Lu_Layer;
-	typedef struct lu_wave_mem*				Lu_Wave_Mem;
-	typedef struct lu_wave* 			Lu_Wave;
+// Wave related 
 
 	// Lu_Neu 
 
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-
 	// Lu_Space
 
 	Lu_Neu lu_space_winner_get(Lu_Space);
 
-
 	// Lu_Layer
 
 	Lu_Space lu_layer_space_get(Lu_Layer, lu_size x, lu_size y, lu_size z);
-
 
 	// Lu_Wave
 
@@ -118,16 +123,5 @@
 
 	lu_value lu_wave_breakpoint_get(Lu_Wave);
 	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
-
-
-	// lu_bool lu_wave_is_working(Lu_Wave);
-	// lu_bool lu_wave_cancel(Lu_Wave);
-	// lu_size lu_wave_time(Lu_Wave);
-	// enum lu_wave_status lu_wave_status(Lu_Wave);
-	// lu_size lu_wave_touched_count(Lu_Wave);
-	// lu_size lu_wave_excited_count(Lu_Wave);
-	// Lu_Wave_Resp lu_wave_response(Lu_Wave);
-	// void lu_wave_join(Lu_Wave);
-
 
 #endif // _LU_BRAIN_API_H
