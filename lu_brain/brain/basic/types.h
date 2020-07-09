@@ -4,8 +4,6 @@
 #ifndef _LU_TYPES_H
 #define _LU_TYPES_H
 
-#include "lu_types.h"
-
 #define lu_p_void void*
 
 #define lu_byte uint8_t
@@ -27,7 +25,5 @@ struct lu_size_range {
 typedef lu_value (*lu_fp_compare)(lu_p_void x, lu_p_void y);
 typedef lu_bool (*lu_fp_is_value)(lu_p_void value);
 typedef lu_value(*lu_fp_get_value)(lu_p_void);
-
-#define lu_flags uint
 
 #endif // _LU_TYPES_H

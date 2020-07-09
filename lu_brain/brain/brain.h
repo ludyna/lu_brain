@@ -4,10 +4,20 @@
 #ifndef _LU_SRC_BRAIN_H
 #define _LU_SRC_BRAIN_H
 
+// Public interface
+
+#include "../lu_brain.h" 
+
+// Vendor
+
+#include "vendor/CException.h"
+
+// Basics
+
 #include "basic/basic.h"
 #include "lib/lib.h"
 
-#include "../lu_brain.h" // public interface
+// App
 
 #include "typedefs.h"
 #include "data/data.h"

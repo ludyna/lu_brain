@@ -4,7 +4,7 @@
 #ifndef _LU_EXCEPTION_H
 #define _LU_EXCEPTION_H
 
-#include "vendor/CException.h"
+#include "../vendor/CException.h"
 #include "debug.h"
 
 #define lu_exception CEXCEPTION_T

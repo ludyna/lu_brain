@@ -17,6 +17,7 @@
 #define lu_char	wchar_t  
 #define lu_string const lu_char*
 #define lu_bool bool 
+#define lu_flags unsigned int
 
 #endif // _LU_TYPES_PUB_H
 

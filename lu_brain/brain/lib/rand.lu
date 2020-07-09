@@ -1,5 +1,3 @@
-#include "../rand.h"
-
 lu_size g_rand_bits_indx = 0;
 
 // uniform

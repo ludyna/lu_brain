@@ -2,18 +2,20 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	#include "../brain.h"
+	#include "brain.h"
 
-///////////////////////////////////////////////////////////////////////////////
-// Fundamental modules
+	// Vendor
+
+	#include "vendor/CException.c"
+
+	// Basics
 
 	#include "basic/basic.lu"
 	#include "lib/lib.lu"
  
-///////////////////////////////////////////////////////////////////////////////
-// 
-	#include "brain_opts.lu"
- 
+	// App
+
+	#include "brain_opts.lu" 
  	#include "n/n.lu"
 	#include "rec/rec.lu"
 	#include "story/story.lu"
