@@ -1,7 +1,90 @@
 
-#include <stdio.h>
 #include "../lu_brain/brain/brain.h"
 #include "../lu_brain/brain/brain.c"
+
+#define PIXEL_COUNT 256
+#define VALUE_COUNT 10
+
+struct smn_digit {
+	int pixels[PIXEL_COUNT];
+	int value;
+};
+
+typedef struct smn_digit* Smn_Digit;
+
+void smn_digit_print(Smn_Digit self)
+{
+
+}
+
+char file_name[256] = "data/semeion.data";
+struct smn_digit* smn_data = NULL;
+
+void smn_data_read()
+{
+    FILE * fp;
+    char * line = NULL;
+    size_t len = 0;
+    ssize_t read;
+    size_t lines_count = 0;
+
+
+    fp = fopen(file_name, "r");
+    if (fp == NULL) 
+    { 
+        printf("Could not open file %s", file_name); 
+        exit(EXIT_FAILURE);
+    } 
+
+    while ((read = getline(&line, &len, fp)) != -1) {
+        // printf("Retrieved line of length %zu:\n", read);
+        // printf("%s", line);
+        ++lines_count;
+    }
+	printf("%lu", lines_count);
+	rewind(fp);
+
+	smn_data = (struct smn_digit*) malloc(sizeof(struct smn_digit) * lines_count);
+
+	Smn_Digit digit;
+	float val_f;
+	int val_i;
+	size_t i;
+    size_t j;
+    size_t non_zero_ix;
+
+	for (i = 0; i < lines_count; i++)
+	{
+		digit = &smn_data[i];
+		for (j = 0; j < PIXEL_COUNT; j++)
+		{
+			read = fscanf(fp, "%f", &val_f);
+			if (read == -1) goto exit;
+			digit->pixels[j] = val_f;
+		}
+
+		non_zero_ix = 100;
+		for (j = 0; j < VALUE_COUNT; j++)
+		{
+			read = fscanf(fp, "%d", &val_i);
+			if (read == -1) goto exit;
+			if (val_i != 0) non_zero_ix = j;
+		}
+
+		digit->value = non_zero_ix;
+
+	}
+  //   float val_f;
+  //   while((read = fscanf(fp, "%f", &val_f)) != -1) 
+  //   {
+		// printf("\n%f", val_f);
+  //   }
+    
+exit: 
+    fclose(fp);
+    if (line)
+        free(line);
+}
 
 // gcc -gsemeion.c -osemeion -lm; ./semeion
 int main()
@@ -10,10 +93,13 @@ int main()
 
 	Lu_Brain_Opts brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
 
+	smn_data_read();
 
 	lu_brain_opts_destroy(brain_opts);
 
-	return 0;
+	if (smn_data) free(smn_data);
+
+	exit(EXIT_SUCCESS);
 }
 
 // 0000001111111100
