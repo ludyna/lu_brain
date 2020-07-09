@@ -1,12 +1,17 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
 
 #include "../lu_brain/brain/brain.h"
 #include "../lu_brain/brain/brain.c"
 
-#define PIXEL_COUNT 256
-#define VALUE_COUNT 10
+#define SMN_DIGIT_W 16
+#define SMN_DIGIT_H 16
+#define SMN_DIGIT_PIXEL_COUNT (SMN_DIGIT_W*SMN_DIGIT_H)
+#define SMN_DIGIT_VALUE_COUNT 10
 
 struct smn_digit {
-	int pixels[PIXEL_COUNT];
+	int pixels[SMN_DIGIT_PIXEL_COUNT];
 	int value;
 };
 
@@ -14,13 +19,29 @@ typedef struct smn_digit* Smn_Digit;
 
 void smn_digit_print(Smn_Digit self)
 {
+	size_t x;
+	size_t y;
+	int val;
 
+	printf("\nDigit: %d\n", self->value);
+	for(y = 0; y < SMN_DIGIT_H; y++)
+	{
+		for(x = 0; x < SMN_DIGIT_W; x++)
+		{
+			val = self->pixels[y * SMN_DIGIT_W + x];
+			if (val > 0)
+				printf("X");
+			else 
+				printf(" ");
+		}
+		printf("\n");
+	}
 }
 
 char file_name[256] = "data/semeion.data";
 struct smn_digit* smn_data = NULL;
 
-void smn_data_read()
+size_t smn_data_read()
 {
     FILE * fp;
     char * line = NULL;
@@ -56,7 +77,7 @@ void smn_data_read()
 	for (i = 0; i < lines_count; i++)
 	{
 		digit = &smn_data[i];
-		for (j = 0; j < PIXEL_COUNT; j++)
+		for (j = 0; j < SMN_DIGIT_PIXEL_COUNT; j++)
 		{
 			read = fscanf(fp, "%f", &val_f);
 			if (read == -1) goto exit;
@@ -64,7 +85,7 @@ void smn_data_read()
 		}
 
 		non_zero_ix = 100;
-		for (j = 0; j < VALUE_COUNT; j++)
+		for (j = 0; j < SMN_DIGIT_VALUE_COUNT; j++)
 		{
 			read = fscanf(fp, "%d", &val_i);
 			if (read == -1) goto exit;
@@ -74,26 +95,35 @@ void smn_data_read()
 		digit->value = non_zero_ix;
 
 	}
-  //   float val_f;
-  //   while((read = fscanf(fp, "%f", &val_f)) != -1) 
-  //   {
-		// printf("\n%f", val_f);
-  //   }
     
 exit: 
     fclose(fp);
     if (line)
         free(line);
-}
 
-// gcc -gsemeion.c -osemeion -lm; ./semeion
+    return lines_count;
+} 
+
+static inline int rand_in_range(int lower, int upper) 
+{ 
+	return (rand() % (upper - lower + 1)) + lower;
+} 
+
+// gcc -g semeion.c -o semeion -lm; ./semeion
 int main()
 {
+	// Use current time as  
+    // seed for random generator 
+    srand(time(0));
+
 	printf("Hello SEMEION\n");
 
 	Lu_Brain_Opts brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
 
-	smn_data_read();
+	size_t lines_count = smn_data_read();
+
+	Smn_Digit digit = &smn_data[rand_in_range(0, (int) lines_count)];
+	smn_digit_print(digit);
 
 	lu_brain_opts_destroy(brain_opts);
 
