@@ -55,16 +55,17 @@ int main()
 	Smn_Digit d;
 	
 	printf("\n");
+	printf("\rTraining samples..");
 	for (i = 0; i < smn_training_samples_count; i++)
 	{
-		printf("\rTraining samples.. %lu trained.", i);
-		fflush(stdout);
-
 		d = smn_training_samples[i];
 
 		lu_story_push(story, rec_0, d->pixels);
 		lu_wave_save(wave, story);
 		lu_story_reset(story);
+
+		printf("\rTraining samples.. %lu trained.", i+1);
+		fflush(stdout);
 	}
 	printf("\n");
 
@@ -72,11 +73,9 @@ int main()
 	float failed_count = 0;
 	float success_count = 0;
 
+	printf("\rTesting samples.. ");
 	for (i = 0; i < smn_test_samples_count; i++)
 	{
-		printf("\rTesting samples.. %lu tested.", i);
-		fflush(stdout);
-
 		d = smn_test_samples[i];
 		lu_story_push(story, rec_0, d->pixels);
 		wave_mem = lu_wave_find(wave, story);
@@ -89,6 +88,9 @@ int main()
 			++failed_count;
 
 		lu_story_reset(story);
+
+		printf("\rTesting samples.. %lu tested.", i + 1);
+		fflush(stdout);
 	}
 	printf("\n");
 
