@@ -10,6 +10,9 @@
 		lu_value 				p;
 	};
 
+	lu_size lu_neu_name_get(Lu_Neu);
+	void lu_neu_name_set(Lu_Neu, lu_size);
+
 	// asociyuyetsia do s_neu, a ne n_neu
 	struct lu_space {
 		Lu_Neu 					sigs; 	// velykyy masyv, de sigs[n_neu_1->sid] vidpovidaye za w_sig dlia n_neu_1
@@ -59,7 +62,8 @@
 		Arr 					recs;
 	}; 
 
-	Lu_Wave_Mem wave_mem_create(Lu_Wave wave, S_Mem s_mem);
+	static Lu_Wave_Mem wave_mem_create(Lu_Wave wave, S_Mem s_mem);
+	Lu_Neu lu_wave_mem_top_name(Lu_Wave_Mem);
 
 	struct lu_wave {
 		// Opts

@@ -27,6 +27,8 @@
 
 	void lu_brain_opts_destroy(Lu_Brain_Opts self)
 	{
+		lu_user_assert_void(self, "Lu_Brain_Opts is NULL");
+
 		arr_each(self->rec_opts, each_rec_opts_destroy);
 
 		arr_temp_destroy(self->rec_opts);

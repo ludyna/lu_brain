@@ -1,0 +1,40 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	lu_size n_neu_name_get(N_Neu self)
+	{
+		if (self->com == NULL)
+		{
+			lu_debug("N_Neu doesn's have a component");
+			return 0;
+		}
+
+		if (self->com->type != NCT_NAME)
+		{
+			lu_debug("N_Neu doesn's have a name");
+			return 0;
+		}
+
+		return self->com->data.name;
+	}
+
+	lu_value n_neu_value_get(N_Neu self)
+	{
+		if (self->com == NULL)
+		{
+			lu_debug("N_Neu doesn's have a component");
+			return 0;
+		}
+
+		if (self->com->type != NCT_VALUE)
+		{
+			lu_debug("N_Neu doesn's have a value");
+			return 0;
+		}
+
+		return self->com->data.value;
+	}

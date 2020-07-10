@@ -34,6 +34,9 @@
 		N_Com 					com;		
 	};
 
+	lu_size n_neu_name_get(N_Neu self);
+	lu_value n_neu_value_get(N_Neu self);
+
 	struct n_lin {
 		N_Neu	 				b;			// b i d potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
 		N_Neu					d;

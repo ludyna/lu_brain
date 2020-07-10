@@ -77,6 +77,8 @@
 	void lu_block_begin(Lu_Story);
 	void lu_block_end(Lu_Story);
 
+	void lu_story_reset(Lu_Story);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Wave related 
 
@@ -99,11 +101,13 @@
 	void lu_wave_destroy(Lu_Wave); 
 
 	// Lu_Wave Sync
+
 	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
 	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);
 	Lu_Wave_Mem lu_wave_restore(Lu_Wave, Lu_Neu);
 
 	// Lu_Wave Async
+
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	void lu_wave_find_async(Lu_Wave, Lu_Story);
 	void lu_wave_restore_async(Lu_Wave, Lu_Story);
@@ -123,5 +127,9 @@
 
 	lu_value lu_wave_breakpoint_get(Lu_Wave);
 	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
+
+	// Lu_Wave_Mem
+
+	Lu_Neu lu_wave_mem_top_name(Lu_Wave_Mem);
 
 #endif // _LU_BRAIN_API_H

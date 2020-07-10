@@ -1,0 +1,22 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	lu_size lu_neu_name_get(Lu_Neu self)
+	{
+		if (self->neu == NULL)
+		{
+			lu_debug("Lu_Neu neu is NULL");
+			return 0;
+		}
+
+		return n_neu_name_get(self->neu);
+	}
+
+	void lu_neu_name_set(Lu_Neu self, lu_size name)
+	{
+
+	}

@@ -67,7 +67,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void story_reset(Lu_Story self)
+	void lu_story_reset(Lu_Story self)
 	{
 		lu_user_assert_void(self, "Lu_Story should be present");
 		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
