@@ -24,11 +24,27 @@
 	void smn_digit_print(Smn_Digit self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Smn_Digit
+// Smn_Data
 
-	extern Smn_Digit smn_data;
+	#define SMN_SAVE_SAMPLES_PERCENT 0.8
 
-	size_t smn_data_read();
+	extern Smn_Digit 		smn_data;
+	extern size_t 			smn_data_count;
+
+	extern Smn_Digit 		smn_save_samples;
+	extern size_t 			smn_save_samples_count;
+
+	extern Smn_Digit 		smn_find_samples;
+	extern size_t 			smn_find_samples_count;
+
+	void smn_data_load();
+	void smn_data_free();
+
+	void smn_data_save_samples_create();
+	void smn_data_save_samples_free();
+
+	void smn_data_find_samples_create();
+	void smn_data_find_samples_free();
 
 ///////////////////////////////////////////////////////////////////////////////
 // Utils

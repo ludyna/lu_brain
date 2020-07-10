@@ -27,18 +27,33 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Smn Data
+// Smn_Data
 
-	Smn_Digit smn_data;
+	Smn_Digit 		smn_data;
+	size_t 			smn_data_count;
 
-	size_t smn_data_read()
+	Smn_Digit 		smn_save_samples;
+	size_t 			smn_save_samples_count;
+
+	Smn_Digit 		smn_find_samples;
+	size_t 			smn_find_samples_count;
+
+	void smn_data_load()
 	{
+		smn_data 					= NULL;
+		smn_data_count				= 0;
+
+		smn_save_samples 			= NULL;
+		smn_save_samples_count		= 0;
+
+		smn_find_samples 			= NULL;
+		smn_find_samples_count 		= 0;
+
+
 	    FILE * fp;
 	    char * line = NULL;
 	    size_t len = 0;
 	    ssize_t read;
-	    size_t lines_count = 0;
-
 
 	    fp = fopen(SMN_FILE_NAME, "r");
 	    if (fp == NULL) 
@@ -48,14 +63,12 @@
 	    } 
 
 	    while ((read = getline(&line, &len, fp)) != -1) {
-	        // printf("Retrieved line of length %zu:\n", read);
-	        // printf("%s", line);
-	        ++lines_count;
+	        ++smn_data_count;
 	    }
-		printf("\nLoading %lu samples..", lines_count);
+		printf("\nLoading %lu samples..", smn_data_count);
 		rewind(fp);
 
-		smn_data = (struct smn_digit*) malloc(sizeof(struct smn_digit) * lines_count);
+		smn_data = (Smn_Digit) malloc(sizeof(struct smn_digit) * smn_data_count);
 
 		Smn_Digit digit;
 		float val_f;
@@ -64,7 +77,7 @@
 	    size_t j;
 	    size_t non_zero_ix;
 
-		for (i = 0; i < lines_count; i++)
+		for (i = 0; i < smn_data_count; i++)
 		{
 			digit = &smn_data[i];
 			for (j = 0; j < SMN_DIGIT_PIXEL_COUNT; j++)
@@ -91,6 +104,29 @@
 	    fclose(fp);
 	    if (line)
 	        free(line);
+	}
 
-	    return lines_count;
+	void smn_data_free()
+	{
+		if (smn_data) free(smn_data);
+	}
+
+	void smn_data_save_samples_create()
+	{
+
+	}
+
+	void smn_data_save_samples_free()
+	{
+
+	}
+
+	void smn_data_find_samples_create()
+	{
+
+	}
+
+	void smn_data_find_samples_free()
+	{
+
 	}

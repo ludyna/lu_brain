@@ -8,20 +8,32 @@
 // gcc -g main.c -o semeion -lm; ./semeion
 int main()
 {
-	// Use current time as  
-    // seed for random generator 
-    srand(time(0));
+	// Radomize rand() with time
+
+	srand(time(0));
+
+	// Load data into memory  
+
+	smn_data_load();
+
+    // Create brain and related
 
 	Lu_Brain_Opts brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
+ 
+	//
 
-	size_t lines_count = smn_data_read(smn_data);
-
-	Smn_Digit digit = &smn_data[rand_in_range(0, (int) lines_count)];
+	Smn_Digit digit = &smn_data[rand_in_range(0, (int) smn_data_count)];
 	smn_digit_print(digit);
+
+	// Destroy brain and related  
 
 	lu_brain_opts_destroy(brain_opts);
 
-	if (smn_data) free(smn_data);
+	// Clean up memory for data
+
+	smn_data_free();
+
+	// Exit app
 
 	exit(EXIT_SUCCESS);
 }
