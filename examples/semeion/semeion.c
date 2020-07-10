@@ -11,7 +11,24 @@
 		size_t y;
 		int val;
 
-		printf("\nDigit: %d\n", self->value);
+		char* type_string;
+
+		switch(self->type)
+		{
+			case SD_NONE:
+				type_string = "SD_NONE";
+				break;
+			case SD_SELECTED_FOR_FIND:
+				type_string = "SD_SELECTED_FOR_FIND";
+				break;
+			case SD_SELECTED_FOR_SAVE:
+				type_string = "SD_SELECTED_FOR_SAVE";
+				break;
+			default:
+				type_string = "UNKNOWN";
+		}
+		printf("\n--------------------------------------------------");
+		printf("\nDigit: %d, type: %s, id: %lu\n\n", self->value, type_string, self->id);
 		for(y = 0; y < SMN_DIGIT_H; y++)
 		{
 			for(x = 0; x < SMN_DIGIT_W; x++)
@@ -24,32 +41,23 @@
 			}
 			printf("\n");
 		}
+		printf("\n--------------------------------------------------\n");
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Data
 
-	Smn_Digit 		smn_data;
-	size_t 			smn_data_count;
+	Smn_Digit 		smn_data 				= NULL;
+	size_t 			smn_data_count			= 0;
 
-	Smn_Digit 		smn_save_samples;
-	size_t 			smn_save_samples_count;
+	Smn_Digit* 		smn_save_samples 		= NULL;
+	size_t 			smn_save_samples_count 	= 0;
 
-	Smn_Digit 		smn_find_samples;
-	size_t 			smn_find_samples_count;
+	Smn_Digit* 		smn_find_samples 		= NULL;
+	size_t 			smn_find_samples_count  = 0;
 
 	void smn_data_load()
 	{
-		smn_data 					= NULL;
-		smn_data_count				= 0;
-
-		smn_save_samples 			= NULL;
-		smn_save_samples_count		= 0;
-
-		smn_find_samples 			= NULL;
-		smn_find_samples_count 		= 0;
-
-
 	    FILE * fp;
 	    char * line = NULL;
 	    size_t len = 0;
@@ -58,7 +66,7 @@
 	    fp = fopen(SMN_FILE_NAME, "r");
 	    if (fp == NULL) 
 	    { 
-	        printf("Could not open file %s", SMN_FILE_NAME); 
+	        printf("\nCould not open file %s", SMN_FILE_NAME); 
 	        exit(EXIT_FAILURE);
 	    } 
 
@@ -68,7 +76,7 @@
 		printf("\nLoading %lu samples..", smn_data_count);
 		rewind(fp);
 
-		smn_data = (Smn_Digit) malloc(sizeof(struct smn_digit) * smn_data_count);
+		smn_data = (Smn_Digit) calloc(smn_data_count, sizeof(struct smn_digit));
 
 		Smn_Digit digit;
 		float val_f;
@@ -80,6 +88,9 @@
 		for (i = 0; i < smn_data_count; i++)
 		{
 			digit = &smn_data[i];
+			
+			digit->id = i;
+
 			for (j = 0; j < SMN_DIGIT_PIXEL_COUNT; j++)
 			{
 				read = fscanf(fp, "%f", &val_f);
@@ -96,6 +107,7 @@
 			}
 
 			digit->value = non_zero_ix;
+			digit->type = SD_NONE;
 		}
 
 		printf("\nLoading complete.");
@@ -111,22 +123,57 @@
 		if (smn_data) free(smn_data);
 	}
 
-	void smn_data_save_samples_create()
+	void smn_data_samples_create()
 	{
+		smn_user_assert_void(SMN_SAVE_SAMPLES_PERCENT < 0.99 && SMN_SAVE_SAMPLES_PERCENT >= 0.3, "SMN_SAVE_SAMPLES_PERCENT in bad range"); 
 
+		smn_save_samples_count = smn_data_count * SMN_SAVE_SAMPLES_PERCENT;
+		smn_find_samples_count = smn_data_count - smn_save_samples_count;
+
+		smn_find_samples = (Smn_Digit*) calloc(smn_find_samples_count, sizeof(Smn_Digit));
+		smn_user_assert_void(smn_find_samples, "Cannot allocate smn_find_samples");
+
+		smn_save_samples = (Smn_Digit*) calloc(smn_save_samples_count, sizeof(Smn_Digit));
+		smn_user_assert_void(smn_save_samples, "Cannot allocate smn_save_samples");
+
+		printf("\nSelecting %lu find samples", smn_find_samples_count);
+
+		size_t i = 0;
+		Smn_Digit d;
+		while (i < smn_find_samples_count)
+		{
+			d = &smn_data[rand_in_range(0, (int) smn_data_count)];
+			smn_user_assert_void(d, "d is NULL");
+
+			if (d->type == SD_NONE)
+			{
+ 				d->type = SD_SELECTED_FOR_FIND;
+ 				smn_find_samples[i] = d;
+ 				++i;
+			}
+		}
+
+		size_t j = 0;
+		i = 0;
+		while (i < smn_save_samples_count && j < smn_data_count)
+		{
+			d = &smn_data[j];
+			if (d->type == SD_NONE)
+			{
+				d->type = SD_SELECTED_FOR_SAVE;
+				smn_save_samples[i] = d;
+				++i;
+			}
+			++j;
+		}
+
+		smn_user_assert_void(i == smn_save_samples_count, "Sanity check failed: i != smn_save_samples_count");
+
+		printf("\nSelecting %lu save samples", smn_save_samples_count);
 	}
 
-	void smn_data_save_samples_free()
+	void smn_data_samples_free()
 	{
-
-	}
-
-	void smn_data_find_samples_create()
-	{
-
-	}
-
-	void smn_data_find_samples_free()
-	{
-
+		if (smn_find_samples) free(smn_find_samples);
+		if (smn_save_samples) free(smn_save_samples);
 	}

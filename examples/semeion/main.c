@@ -5,7 +5,10 @@
 #include "semeion.h"
 #include "semeion.c"
 
-// gcc -g main.c -o semeion -lm; ./semeion
+///////////////////////////////////////////////////////////////////////////////
+// Execute with 
+// $  clear && printf '\e[3J'; rm semeion; gcc -g main.c -o semeion -lm; ./semeion
+
 int main()
 {
 	// Radomize rand() with time
@@ -15,12 +18,13 @@ int main()
 	// Load data into memory  
 
 	smn_data_load();
+	smn_data_samples_create();
 
     // Create brain and related
 
 	Lu_Brain_Opts brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
  
-	//
+	// 
 
 	Smn_Digit digit = &smn_data[rand_in_range(0, (int) smn_data_count)];
 	smn_digit_print(digit);
@@ -31,6 +35,7 @@ int main()
 
 	// Clean up memory for data
 
+	smn_data_samples_free();
 	smn_data_free();
 
 	// Exit app
