@@ -1,5 +1,5 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad (Novossaad)
+	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 #ifndef _LU_LIB_H
 #define _LU_LIB_H
