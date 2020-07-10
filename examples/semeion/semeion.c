@@ -18,11 +18,11 @@
 			case SD_NONE:
 				type_string = "SD_NONE";
 				break;
-			case SD_SELECTED_FOR_FIND:
-				type_string = "SD_SELECTED_FOR_FIND";
+			case SD_SELECTED_FOR_TEST:
+				type_string = "SD_SELECTED_FOR_TEST";
 				break;
-			case SD_SELECTED_FOR_SAVE:
-				type_string = "SD_SELECTED_FOR_SAVE";
+			case SD_SELECTED_FOR_TRAINING:
+				type_string = "SD_SELECTED_FOR_TRAINING";
 				break;
 			default:
 				type_string = "UNKNOWN";
@@ -50,11 +50,11 @@
 	Smn_Digit 		smn_data 				= NULL;
 	size_t 			smn_data_count			= 0;
 
-	Smn_Digit* 		smn_save_samples 		= NULL;
-	size_t 			smn_save_samples_count 	= 0;
+	Smn_Digit* 		smn_training_samples 		= NULL;
+	size_t 			smn_training_samples_count 	= 0;
 
-	Smn_Digit* 		smn_find_samples 		= NULL;
-	size_t 			smn_find_samples_count  = 0;
+	Smn_Digit* 		smn_test_samples 		= NULL;
+	size_t 			smn_test_samples_count  = 0;
 
 	void smn_data_load()
 	{
@@ -127,53 +127,53 @@
 	{
 		smn_user_assert_void(SMN_SAVE_SAMPLES_PERCENT < 0.99 && SMN_SAVE_SAMPLES_PERCENT >= 0.3, "SMN_SAVE_SAMPLES_PERCENT in bad range"); 
 
-		smn_save_samples_count = smn_data_count * SMN_SAVE_SAMPLES_PERCENT;
-		smn_find_samples_count = smn_data_count - smn_save_samples_count;
+		smn_training_samples_count = smn_data_count * SMN_SAVE_SAMPLES_PERCENT;
+		smn_test_samples_count = smn_data_count - smn_training_samples_count;
 
-		smn_find_samples = (Smn_Digit*) calloc(smn_find_samples_count, sizeof(Smn_Digit));
-		smn_user_assert_void(smn_find_samples, "Cannot allocate smn_find_samples");
+		smn_test_samples = (Smn_Digit*) calloc(smn_test_samples_count, sizeof(Smn_Digit));
+		smn_user_assert_void(smn_test_samples, "Cannot allocate smn_test_samples");
 
-		smn_save_samples = (Smn_Digit*) calloc(smn_save_samples_count, sizeof(Smn_Digit));
-		smn_user_assert_void(smn_save_samples, "Cannot allocate smn_save_samples");
+		smn_training_samples = (Smn_Digit*) calloc(smn_training_samples_count, sizeof(Smn_Digit));
+		smn_user_assert_void(smn_training_samples, "Cannot allocate smn_training_samples");
 
-		printf("\nSelecting %lu random find samples", smn_find_samples_count);
+		printf("\nSelecting %lu random test samples", smn_test_samples_count);
 
 		size_t i = 0;
 		Smn_Digit d;
-		while (i < smn_find_samples_count)
+		while (i < smn_test_samples_count)
 		{
-			d = &smn_data[rand_in_range(0, (int) smn_data_count)];
+			d = &smn_data[rand_in_range(0, (int) smn_data_count - 1)];
 			smn_user_assert_void(d, "d is NULL");
 
 			if (d->type == SD_NONE)
 			{
- 				d->type = SD_SELECTED_FOR_FIND;
- 				smn_find_samples[i] = d;
+ 				d->type = SD_SELECTED_FOR_TEST;
+ 				smn_test_samples[i] = d;
  				++i;
 			}
 		}
 
-		printf("\nSelecting %lu random save samples", smn_save_samples_count);
+		printf("\nSelecting %lu random training samples", smn_training_samples_count);
 
 		size_t j = 0;
 		i = 0;
-		while (i < smn_save_samples_count && j < smn_data_count)
+		while (i < smn_training_samples_count && j < smn_data_count)
 		{
 			d = &smn_data[j];
 			if (d->type == SD_NONE)
 			{
-				d->type = SD_SELECTED_FOR_SAVE;
-				smn_save_samples[i] = d;
+				d->type = SD_SELECTED_FOR_TRAINING;
+				smn_training_samples[i] = d;
 				++i;
 			}
 			++j;
 		}
 
-		smn_user_assert_void(i == smn_save_samples_count, "Sanity check failed: i != smn_save_samples_count");
+		smn_user_assert_void(i == smn_training_samples_count, "Sanity check failed: i != smn_training_samples_count");
 	}
 
 	void smn_data_samples_free()
 	{
-		if (smn_find_samples) free(smn_find_samples);
-		if (smn_save_samples) free(smn_save_samples);
+		if (smn_test_samples) free(smn_test_samples);
+		if (smn_training_samples) free(smn_training_samples);
 	}

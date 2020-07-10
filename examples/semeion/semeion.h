@@ -18,13 +18,13 @@
 
 	enum sd_type {
 		SD_NONE = 0, 
-		SD_SELECTED_FOR_SAVE, 
-		SD_SELECTED_FOR_FIND
+		SD_SELECTED_FOR_TRAINING, 
+		SD_SELECTED_FOR_TEST
 	};
 
 	struct smn_digit {
 		size_t 		id;
-		int 		pixels[SMN_DIGIT_PIXEL_COUNT];
+		lu_value 	pixels[SMN_DIGIT_PIXEL_COUNT];
 		int 		value;
 		enum 		sd_type type;
 	};
@@ -39,11 +39,11 @@
 	extern Smn_Digit 		smn_data;
 	extern size_t 			smn_data_count;
 
-	extern Smn_Digit* 		smn_save_samples;
-	extern size_t 			smn_save_samples_count;
+	extern Smn_Digit* 		smn_training_samples;
+	extern size_t 			smn_training_samples_count;
 
-	extern Smn_Digit*		smn_find_samples;
-	extern size_t 			smn_find_samples_count;
+	extern Smn_Digit*		smn_test_samples;
+	extern size_t 			smn_test_samples_count;
 
 	void smn_data_load();
 	void smn_data_free();
