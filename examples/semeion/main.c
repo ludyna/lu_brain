@@ -18,6 +18,9 @@ int main()
 	// Load data into memory  
 
 	smn_data_load();
+
+	// Select random samples
+
 	smn_data_samples_create();
 
     // Create brain and related

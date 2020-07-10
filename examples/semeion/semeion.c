@@ -136,7 +136,7 @@
 		smn_save_samples = (Smn_Digit*) calloc(smn_save_samples_count, sizeof(Smn_Digit));
 		smn_user_assert_void(smn_save_samples, "Cannot allocate smn_save_samples");
 
-		printf("\nSelecting %lu find samples", smn_find_samples_count);
+		printf("\nSelecting %lu random find samples", smn_find_samples_count);
 
 		size_t i = 0;
 		Smn_Digit d;
@@ -153,6 +153,8 @@
 			}
 		}
 
+		printf("\nSelecting %lu random save samples", smn_save_samples_count);
+
 		size_t j = 0;
 		i = 0;
 		while (i < smn_save_samples_count && j < smn_data_count)
@@ -168,8 +170,6 @@
 		}
 
 		smn_user_assert_void(i == smn_save_samples_count, "Sanity check failed: i != smn_save_samples_count");
-
-		printf("\nSelecting %lu save samples", smn_save_samples_count);
 	}
 
 	void smn_data_samples_free()
