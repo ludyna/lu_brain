@@ -80,7 +80,7 @@ int main()
 		lu_story_push(story, rec_0, d->pixels);
 		wave_mem = lu_wave_find(wave, story);
 
-		name = lu_wave_mem_top_name(wave_mem);
+		name = lu_wave_mem_name_neu(wave_mem);
 
 		if (name && lu_neu_name_get(name) == d->name)
 			++success_count;

@@ -10,7 +10,18 @@
 		
 	}
 
-	Lu_Neu lu_wave_mem_top_name(Lu_Wave_Mem self)
+	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem self)
 	{
 		return NULL;
 	}
+
+	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem self)
+	{
+
+	}
+
+	Lu_Neu lu_wave_name_find_or_create(Lu_Wave_Mem self, lu_size name)
+	{
+
+	}
+

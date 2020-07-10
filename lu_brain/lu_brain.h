@@ -63,7 +63,7 @@
 	void lu_brain_destroy(Lu_Brain);
 
 	lu_size lu_brain_neuron_count(Lu_Brain);
-	Lu_Rec lu_brain_rec_get(Lu_Brain, lu_size index); 
+	Lu_Rec lu_brain_rec(Lu_Brain, lu_size index); 
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -84,16 +84,17 @@
 
 	// Lu_Neu 
 
-	lu_size lu_neu_name_get(Lu_Neu);
+	lu_size lu_neu_name(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
+	void lu_neu_connect(Lu_Neu, Lu_Neu);
 
 	// Lu_Space
 
-	Lu_Neu lu_space_winner_get(Lu_Space);
+	Lu_Neu lu_space_winner(Lu_Space);
 
 	// Lu_Layer
 
-	Lu_Space lu_layer_space_get(Lu_Layer, lu_size x, lu_size y, lu_size z);
+	Lu_Space lu_layer_space(Lu_Layer, lu_size x, lu_size y, lu_size z);
 
 	// Lu_Wave
 
@@ -116,21 +117,24 @@
 
 	// Lu_Wave Properties
 
-	lu_flags lu_wave_flags_get(Lu_Wave);
+	lu_flags lu_wave_flags(Lu_Wave);
 	void lu_wave_flags_set(Lu_Wave, lu_flags);
 	void lu_wave_flags_remove(Lu_Wave self, lu_flags flags);
 
-	lu_value lu_wave_color_get(Lu_Wave);
+	lu_value lu_wave_color(Lu_Wave);
 	void lu_wave_color_set(Lu_Wave, lu_value);
 
-	lu_value lu_wave_contrast_get(Lu_Wave);
+	lu_value lu_wave_contrast(Lu_Wave);
 	void lu_wave_contrast_set(Lu_Wave, lu_value);
 
-	lu_value lu_wave_breakpoint_get(Lu_Wave);
+	lu_value lu_wave_breakpoint(Lu_Wave);
 	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
 
 	// Lu_Wave_Mem
 
-	Lu_Neu lu_wave_mem_top_name(Lu_Wave_Mem);
+	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem);
+	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem);
+	Lu_Neu lu_wave_name_find_or_create(Lu_Wave_Mem, lu_size);
+
 
 #endif // _LU_BRAIN_API_H

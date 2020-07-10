@@ -63,7 +63,7 @@
 	}; 
 
 	static Lu_Wave_Mem wave_mem_create(Lu_Wave wave, S_Mem s_mem);
-	Lu_Neu lu_wave_mem_top_name(Lu_Wave_Mem);
+	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem);
 
 	struct lu_wave {
 		// Opts

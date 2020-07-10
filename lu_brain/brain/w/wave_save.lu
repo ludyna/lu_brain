@@ -26,7 +26,16 @@
 
 	Lu_Wave_Mem lu_wave_save_with_name(Lu_Wave self, Lu_Story story, lu_size name)
 	{
+		Lu_Wave_Mem wave_mem = lu_wave_save(self, story);
+		lu_user_assert(wave_mem, "Cannot save story");
 
+		Lu_Neu neu = lu_wave_mem_top_neu(wave_mem);
+
+		Lu_Neu name_neu = lu_wave_name_find_or_create(wave_mem, name);
+
+		lu_neu_connect(neu, name_neu);
+
+		return wave_mem;
 	}
 
 	void lu_wave_save_async(Lu_Wave self, Lu_Story story)
