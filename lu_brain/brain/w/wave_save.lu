@@ -22,6 +22,11 @@
 		lu_wave_join(self);
 
 		return self->w_mem;
+	} 
+
+	Lu_Wave_Mem lu_wave_save_with_name(Lu_Wave self, Lu_Story story, lu_size name)
+	{
+
 	}
 
 	void lu_wave_save_async(Lu_Wave self, Lu_Story story)

@@ -61,7 +61,7 @@ int main()
 		d = smn_training_samples[i];
 
 		lu_story_push(story, rec_0, d->pixels);
-		lu_wave_save(wave, story);
+		lu_wave_save_with_name(wave, story, d->name);
 		lu_story_reset(story);
 
 		printf("\rTraining samples.. %lu trained.", i+1);
@@ -82,7 +82,7 @@ int main()
 
 		name = lu_wave_mem_top_name(wave_mem);
 
-		if (name && lu_neu_name_get(name) == d->value)
+		if (name && lu_neu_name_get(name) == d->name)
 			++success_count;
 		else 
 			++failed_count;

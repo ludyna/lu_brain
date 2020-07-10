@@ -9,7 +9,7 @@
 	{
 		size_t x;
 		size_t y;
-		int val;
+		lu_value val;
 
 		char* type_string;
 
@@ -28,7 +28,7 @@
 				type_string = "UNKNOWN";
 		}
 		printf("\n--------------------------------------------------");
-		printf("\nDigit: %d, type: %s, id: %lu\n\n", self->value, type_string, self->id);
+		printf("\nDigit: %d, type: %s, id: %lu\n\n", self->name, type_string, self->id);
 		for(y = 0; y < SMN_DIGIT_H; y++)
 		{
 			for(x = 0; x < SMN_DIGIT_W; x++)
@@ -47,14 +47,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Data
 
-	Smn_Digit 		smn_data 				= NULL;
-	size_t 			smn_data_count			= 0;
+	Smn_Digit 		smn_data 					= NULL;
+	size_t 			smn_data_count				= 0;
 
 	Smn_Digit* 		smn_training_samples 		= NULL;
 	size_t 			smn_training_samples_count 	= 0;
 
-	Smn_Digit* 		smn_test_samples 		= NULL;
-	size_t 			smn_test_samples_count  = 0;
+	Smn_Digit* 		smn_test_samples 			= NULL;
+	size_t 			smn_test_samples_count  	= 0;
 
 	void smn_data_load()
 	{
@@ -106,7 +106,7 @@
 				if (val_i != 0) non_zero_ix = j;
 			}
 
-			digit->value = non_zero_ix;
+			digit->name = non_zero_ix;
 			digit->type = SD_NONE;
 		}
 

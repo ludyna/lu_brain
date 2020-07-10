@@ -25,7 +25,7 @@
 	struct smn_digit {
 		size_t 		id;
 		lu_value 	pixels[SMN_DIGIT_PIXEL_COUNT];
-		int 		value;
+		int 		name;
 		enum 		sd_type type;
 	};
 

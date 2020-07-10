@@ -103,6 +103,7 @@
 	// Lu_Wave Sync
 
 	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
+	Lu_Wave_Mem lu_wave_save_with_name(Lu_Wave, Lu_Story, lu_size name);
 	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);
 	Lu_Wave_Mem lu_wave_restore(Lu_Wave, Lu_Neu);
 
