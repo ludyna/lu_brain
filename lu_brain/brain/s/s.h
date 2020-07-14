@@ -130,6 +130,8 @@
 		return self->w * self->h * self->d; 
 	}
 
+	static void s_layer_print_info(S_Layer self);
+
 	// velyki masyvy v s_rec shob vykorystaty perevahu cpu keshuvania
 	struct s_rec {
 		// vlasnyk
@@ -155,7 +157,7 @@
 		struct s_layer* 		p_layers;
 
 		lu_size 				blocks_size;
-		lu_size 				tria_layers_s;
+		lu_size 				tria_layers_size;
 		struct s_layer* 		tria_v_layers;
 		struct s_layer* 		tria_p_layers;
 	};
@@ -175,6 +177,8 @@
 	static void s_rec_cells_init(S_Rec self, Mem mem);
 	static void s_rec_pyras_init(S_Rec self, Mem mem);
 
+	static void s_rec_print_info(S_Rec self);
+
 	struct s_mem {
 		Lu_Brain 				brain;
 
@@ -183,5 +187,6 @@
 	
 	static S_Mem s_mem_create(Lu_Brain brain);
 	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->recs, indx); }
+	static void s_mem_print_info(S_Mem self);
 
 #endif // _LU_S_H

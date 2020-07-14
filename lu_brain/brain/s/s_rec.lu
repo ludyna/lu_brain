@@ -51,12 +51,12 @@
 		// Allocate Tria Layers
 
 		self->blocks_size		= rec->blocks_size;
-		self->tria_layers_s 	= self->blocks_size;	// tria_layers_s = blocks_size, but potentially they could be different
+		self->tria_layers_size 	= self->blocks_size;	// tria_layers_size = blocks_size, but potentially they could be different
 
-		self->tria_v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_s);
+		self->tria_v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_size);
 		lu_user_assert(self->tria_v_layers, "Cannot allocate av layers"); 
 
-		self->tria_p_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_s);
+		self->tria_p_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_size);
 		lu_user_assert(self->tria_p_layers, "Cannot allocate ap layers");
 
 		///////////////////////////////////////
@@ -104,4 +104,63 @@
 		++self->neus_count;
 
 		return neu;
+	}  
+
+
+	static void s_rec_print_info(S_Rec self)
+	{
+		lu_user_assert_void(self, "S_Rec is NULL");
+
+		lu_debug("\n\n 	-- S_Rec #%lu info: ", self->id);
+ 		lu_debug("\n 	 	%-17s %lu", "cells_w:", self->cells_w);
+ 		lu_debug("\n 	 	%-17s %lu", "cells_h:", self->cells_h);
+ 		lu_debug("\n 	 	%-17s %lu", "cells_d:", self->cells_d);
+ 		lu_debug("\n 	 	");
+ 		lu_debug("\n 	 	%-17s %lu", "neus_size:", self->neus_size);
+ 		lu_debug("\n 	 	%-17s %lu", "neus_count:", self->neus_count);
+ 		lu_debug("\n 	 	%-17s %lu", "vp_layers_size:", self->vp_layers_size);
+ 		lu_debug("\n 	 	%-17s %lu", "blocks_size:", self->blocks_size);
+ 		lu_debug("\n 	 	%-17s %lu", "tria_layers_size:", self->tria_layers_size);
+ 		lu_debug("\n 	 	");
+
+
+ 		lu_size i;
+ 		S_Layer layer;
+ 		struct s_layer* layers;
+
+ 		// vp_layers
+ 		if (rand() % 2 == 0) 
+ 		{
+			layers = self->v_layers;
+ 		}
+ 		else
+ 		{
+			layers = self->p_layers;
+ 		}
+
+ 		for(i = 0; i < self->vp_layers_size; i++)
+ 		{
+ 			layer = &layers[i];
+
+ 			s_layer_print_info(layer);
+ 		}
+
+ 		// tria_layers
+ 		lu_debug("\n");
+ 		if (rand() % 2 == 0) 
+ 		{
+			layers = self->tria_v_layers;
+ 		}
+ 		else
+ 		{
+			layers = self->tria_p_layers;
+ 		}
+
+ 		for(i = 0; i < self->tria_layers_size; i++)
+ 		{
+ 			layer = &layers[i];
+
+ 			s_layer_print_info(layer);
+ 		}
+
 	}

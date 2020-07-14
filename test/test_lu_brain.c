@@ -134,9 +134,7 @@ void test_lu_brain_basics(void)
 		lu_block_end(story);
 
 		lu_story_push(story, rec_0, data_3);
- 
- 	wave_mem = lu_wave_save(wave, story);
-
+ 4z
 		// Because we called save (or find or restore) - it automatically 
 		// reset number of available blocks inside story. If available lu_block count 
 		// was 13 before save (we filled 3 blocks above), after save avalable 

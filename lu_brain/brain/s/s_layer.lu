@@ -36,3 +36,28 @@
 
 		return self;
 	}
+
+	static void s_layer_print_info(S_Layer self)
+	{
+		lu_user_assert_void(self, "S_Layer is NULL");
+
+		switch(self->type)
+		{
+			case SLT_V:
+				lu_debug("\n 	 	%-14s", "V Layer, ");
+				break;
+			case SLT_P:
+				lu_debug("\n 	 	%-14s", "P Layer, ");
+				break;
+			case SLT_AV:
+				lu_debug("\n 	 	%-14s", "TRIA_V Layer, ");
+				break;
+			case SLT_AP:
+				lu_debug("\n 	 	%-14s", "TRIA_P Layer, ");
+				break;
+			default:
+				lu_debug("\n 	 	%-14s", "UNKNOWN Layer, ");
+		}
+
+		lu_debug("l: %3lu, w: %3lu, h: %3lu, d: %3lu, neus_count: %3lu", self->l, self->w, self->h, self->d, self->neus_count);
+	}

@@ -98,11 +98,13 @@
 		lu_user_assert_void(self->app_mem, "Mem is NULL");
 		Mem_Perm app_mem = (Mem_Perm) self->app_mem;
 
-		lu_debug("\n---------> Brain #%lu Info <---------", self->id);
+		lu_debug("\n\n---------> Brain #%lu Info <---------", self->id);
 		lu_debug("\nMemory allocated (bytes): %lu", mem_perm_allocated(app_mem));
 		lu_debug("\nMemory used (bytes): %lu", mem_perm_used(app_mem));
 
  		n_mem_print_info(self->n_mem);
+
+ 		s_mem_print_info(self->s_mem);
 
 		lu_debug("\n-----------------------------------\n");
 	}

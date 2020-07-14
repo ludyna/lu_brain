@@ -78,7 +78,7 @@
 
 		while(w > 0)
 		{
-			lu_user_assert_void(ix < self->tria_layers_s, "Wrong layer index");
+			lu_user_assert_void(ix < self->tria_layers_size, "Wrong layer index");
 
 			v_layer = &self->tria_v_layers[ix];
 			p_layer = &self->tria_p_layers[ix];
@@ -242,7 +242,7 @@
 		S_Neu v_neu = NULL;
 		S_Neu p_neu = NULL;
 
-		for(ix = 0; ix < self->tria_layers_s; ix++)
+		for(ix = 0; ix < self->tria_layers_size; ix++)
 		{
 			av_layer = &self->tria_v_layers[ix];
 			ap_layer = &self->tria_p_layers[ix];
