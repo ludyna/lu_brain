@@ -18,20 +18,22 @@
 		S_Layer v_layer 	= &self->v_layers[ix];
 		S_Layer p_layer 	= &self->p_layers[ix];
 
-		// Components
-		v_layer = s_layer_init(v_layer, self, mem, SLT_V, ix, w, h, d);
-		lu_user_assert_void(v_layer, "Cannot init component v_layer");
-		self->neus_size += s_layer_neus_size(v_layer);
+		if (d > 1)
+		{
+			// Components
+			v_layer = s_layer_init(v_layer, self, mem, SLT_V, ix, w, h, d);
+			lu_user_assert_void(v_layer, "Cannot init component v_layer");
+			self->neus_size += s_layer_neus_size(v_layer);
 
-		p_layer = s_layer_init(p_layer, self, mem, SLT_P, ix, w, h, d);
-		lu_user_assert_void(p_layer, "Cannot init component p_layer");
-		self->neus_size += s_layer_neus_size(p_layer);
+			p_layer = s_layer_init(p_layer, self, mem, SLT_P, ix, w, h, d);
+			lu_user_assert_void(p_layer, "Cannot init component p_layer");
+			self->neus_size += s_layer_neus_size(p_layer);
+
+			++ix;
+			d = 1;
+		}
 
 		// Cells 
-
-		d = 1;
-		ix = 1;
-
 		v_layer 	= &self->v_layers[ix];
 		p_layer 	= &self->p_layers[ix];
 
@@ -44,10 +46,9 @@
 		self->neus_size += s_layer_neus_size(p_layer);
 
 		// Pyras
-
 		--w;
 		--h;
-		ix = 2;
+		++ix;
 
 		while (w > 0 && h > 0)
 		{
@@ -70,7 +71,6 @@
 		}
 
 		// Trias
-
 		ix = 0;
 		w = self->blocks_size;
 		h = 1;
