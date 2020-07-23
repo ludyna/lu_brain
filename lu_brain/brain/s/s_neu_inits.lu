@@ -65,7 +65,7 @@
 
 	static S_Neu s_neu_pyra_init(S_Neu self, S_Rec rec, Mem mem)
 	{
-		lu_user_assert(self->type == SNT_PYRA, "Wrong self type");
+		lu_user_assert(self->type == SNT_DATA, "Wrong self type");
 
 		self->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 4);
 		lu_user_assert(self->b, "Cannot allocate self->b");

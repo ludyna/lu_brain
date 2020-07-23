@@ -17,21 +17,18 @@
 
 		S_Layer layer 	= &self->data_layers[ix];
 
-		if (d > 1)
-		{
-			// Components
-			layer = s_layer_init(layer, self, mem, SLT_DATUM, ix, w, h, d);
-			lu_user_assert_void(layer, "Cannot init component layer");
-			self->neus_size += s_layer_neus_size(layer);
+		// Components
+		layer = s_layer_init(layer, self, mem, SLT_COMPONENTS, ix, w, h, d);
+		lu_user_assert_void(layer, "Cannot init component layer");
+		self->neus_size += s_layer_neus_size(layer);
 
-			++ix;
-			d = 1;
-		}
+		++ix;
+		d = 1;
 
 		// Cells 
 		layer 	= &self->data_layers[ix];
 
-		layer = s_layer_init(layer, self, mem, SLT_DATUM, ix, w, h, d);
+		layer = s_layer_init(layer, self, mem, SLT_CELLS, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init cell layer");
 		self->neus_size += s_layer_neus_size(layer);
 
@@ -134,7 +131,7 @@
 			}
 	}
 
-	static void s_rec_pyras_init(S_Rec self, Mem mem)
+	static void s_rec_datum_init(S_Rec self, Mem mem)
 	{
 		S_Neu neu;
 		S_Layer layer;
@@ -153,13 +150,13 @@
 			layer 		= &self->data_layers[ix];
 			b_layer 	= &self->data_layers[ix - 1];
 
-			w = layer->w;
-			h = layer->h; 
+			w 			= layer->w;
+			h 			= layer->h; 
 
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
-					neu = s_rec_neu_alloc(self, mem, SNT_PYRA, layer, x, y, 0); 
+					neu = s_rec_neu_alloc(self, mem, SNT_DATA, layer, x, y, 0); 
 					lu_user_assert_void(neu, "Cannot init neu");
 
 					neu = s_neu_pyra_init(neu, self, mem); 

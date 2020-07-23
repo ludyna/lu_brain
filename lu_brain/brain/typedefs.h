@@ -21,7 +21,7 @@
 	enum s_neu_type {
 		SNT_COMPONENT,
 		SNT_CELL, 
-		SNT_PYRA,
+		SNT_DATA,
 		SNT_BLOCK
 	};
 
@@ -30,6 +30,8 @@
 	// Helpers
 
 	enum s_layer_type {
+		SLT_COMPONENTS,
+		SLT_CELLS,
 		SLT_DATUM,
 		SLT_BLOCKS
 	};

@@ -165,7 +165,7 @@
 	// Layers inits
 	static void s_rec_components_init(S_Rec self, Mem mem);
 	static void s_rec_cells_init(S_Rec self, Mem mem);
-	static void s_rec_pyras_init(S_Rec self, Mem mem);
+	static void s_rec_datum_init(S_Rec self, Mem mem);
 
 	static void s_rec_print_info(S_Rec self);
 

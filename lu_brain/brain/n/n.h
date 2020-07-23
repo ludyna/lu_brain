@@ -23,6 +23,8 @@
 		} data;
 	};
 
+	// "nasliduvannia" ce yedynyy maksymalno effectyvnyy sposib optymizuvaty pamiat
+	// componenty potrebuyut bilshe pamiati.
 	struct n_neu {
 		S_Neu 					s_neu;
 		lu_size 				s_ix;   	// nomer v s_neu

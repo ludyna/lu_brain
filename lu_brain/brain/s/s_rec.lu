@@ -40,8 +40,7 @@
 
 		self->data_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
 		
-		if (self->cells_d > 1)
-			++self->data_layers_size; // + odyn dlia component 
+		++self->data_layers_size; // + odyn dlia component 
 																				
 		self->data_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->data_layers_size);
 		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
@@ -71,7 +70,7 @@
 
 		s_rec_components_init(self, mem);
 		s_rec_cells_init(self, mem);
-		s_rec_pyras_init(self, mem);
+		s_rec_datum_init(self, mem);
 		s_rec_blocks_init(self, mem);
 
 		//lu_debug("\nneus_count = %d, neus_size = %d, rw=%d, rh=%d, rd=%d", self->neus_count, self->neus_size, self->cells_w, self->cells_h, self->cells_d);

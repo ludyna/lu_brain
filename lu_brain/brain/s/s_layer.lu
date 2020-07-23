@@ -43,6 +43,12 @@
 
 		switch(self->type)
 		{
+			case SLT_COMPONENTS:
+				lu_debug("\n 	 	%-14s", "Comp. Layer, ");
+				break;
+			case SLT_CELLS:
+				lu_debug("\n 	 	%-14s", "Cells Layer, ");
+				break;
 			case SLT_DATUM:
 				lu_debug("\n 	 	%-14s", "Datum Layer, ");
 				break;
