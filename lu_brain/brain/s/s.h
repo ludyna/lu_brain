@@ -24,37 +24,53 @@
 	#define d_np(n) n->d[2]
 	#define d_nl(n) n->d[3]
 
-	// ce ne neu, ce lohichnyy prostir dlia neus (odnoho i bilshe neu)
-	struct s_neu {
-		enum s_neu_type    		type;			
+	// ce ne neu, ce lohichnyy prostir dlia cells (odnoho i bilshe neu)
+	struct s_cell {
+		enum s_cell_type    	type;			
 		lu_size 				l_ix;		// nomer v layer
 
 		S_Layer 				layer;
-		lu_size 				x;    		// bude t index dlia a_neu
 		lu_size 				y;
-		lu_size 				z;
+		lu_size 				x;   
+		lu_size 				z; 	
 
-		S_Neu*					b;
-		S_Neu*					d;
+		S_Cell*					b;
+		S_Cell*					d;
 
-		lu_size 				neus_count; // neus_count potriben shob znayty n_sig dlia n_neu po yoho n_neu->s_ix v wave->w_neu->neus
-		N_Neu* 					neus;		// mozhe buty NULL abo odyn abo bilshe neu sho podiliayut prostir
-	
-		// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
-		// mozhlyvo
+		lu_size 				n_cells_count; // cells_count potriben shob znayty n_sig dlia n_neu po yoho n_neu->s_ix v wave->w_neu->cells
 	}; 
 
 	// s_neu_inits.lu
-	static S_Neu s_neu_init(S_Neu self, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);
-	static S_Neu s_neu_component_init(S_Neu neu, S_Rec, Mem mem);
-	static S_Neu s_neu_cell_init(S_Neu neu, S_Rec, Mem mem);
-	static S_Neu s_neu_pyra_init(S_Neu neu, S_Rec, Mem mem);
-	static S_Neu s_neu_block_init(S_Neu neu, S_Rec, Mem mem);
+	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer, lu_size x, lu_size y, lu_size z);
+	
+	static S_Cell s_block_init(S_Cell neu, S_Rec, Mem mem); 
+	static S_Cell s_pixel_init(S_Cell neu, S_Rec, Mem mem);
+	static S_Cell s_pyra_init(S_Cell neu, S_Rec, Mem mem);
 
 	// s_neu_connects.lu
-	static void s_neu_cell_connect(S_Neu self, S_Layer);
-	static void s_neu_pyra_connect(S_Neu self, S_Layer);
-	static void s_neu_block_connect(S_Neu self, S_Layer);
+	static void s_pixel_connect(S_Cell self, S_Layer);
+	static void s_pyra_connect(S_Cell self, S_Layer);
+	static void s_block_connect(S_Cell self, S_Layer);
+
+	struct s_cell_2 {
+		struct s_cell 			super;
+
+		lu_size 				x;    		
+	};
+
+
+
+	struct s_cell_3 {
+		struct s_cell_2 		super;
+
+		lu_size 				z;
+
+		N_Neu* 					cells;
+		S_Layer_Conf 			v_conf;
+		S_Layer_Conf 			p_conf;
+	};
+
+	static S_Cell s_cell_3_init(S_Cell neu, S_Rec, Mem mem);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -68,11 +84,11 @@
 
 		lu_value 				step;
 		lu_value*				steps;  		// preobchysleni kroky
-		lu_size 				neus_size;
+		lu_size 				cells_size;
 		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
-	static S_Layer_Conf s_layer_conf_init(S_Layer_Conf, Mem mem, lu_value min, lu_value max, lu_size neus_size, lu_size nsc);
+	static S_Layer_Conf s_layer_conf_init(S_Layer_Conf, Mem mem, lu_value min, lu_value max, lu_size cells_size, lu_size nsc);
 	static inline lu_value s_layer_conf_norm(S_Layer_Conf self, lu_value request);
 	static inline lu_size s_layer_conf_ix(S_Layer_Conf self, lu_value val);
 	static inline struct lu_size_range s_layer_conf_ix_range(S_Layer_Conf self, lu_value val);
@@ -90,31 +106,31 @@
 		lu_size 				h;
 		lu_size 				d;				// komponenty v pershomu layer
 
-		lu_size 				neus_count;
-		S_Neu* 					neus;
+		lu_size 				cells_count;
+		S_Cell* 					cells;
 
 		S_Layer_Conf 			conf;		
 	};
 
 	static S_Layer s_layer_init(S_Layer self, S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
 	
-	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Neu val) 
+	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Cell val) 
 	{ 
-		lu_user_assert_void(val, "S_Neu is NULL");
+		lu_user_assert_void(val, "S_Cell is NULL");
 		lu_user_assert_void(x < self->w, "x index out of range");
 		lu_user_assert_void(y < self->h, "y index out of range");
 		lu_user_assert_void(z < self->d, "z index out of range");
 
-		self->neus[z * self->w * self->h + y * self->w + x] = val; 
+		self->cells[z * self->w * self->h + y * self->w + x] = val; 
 	}
 
-	static inline S_Neu s_layer_neu_get(S_Layer self, lu_size x, lu_size y, lu_size z) 
+	static inline S_Cell s_layer_neu_get(S_Layer self, lu_size x, lu_size y, lu_size z) 
 	{ 
 		lu_user_assert(x < self->w, "x index out of range");
 		lu_user_assert(y < self->h, "y index out of range");
 		lu_user_assert(z < self->d, "z index out of range");
 
-		return self->neus[z * self->w * self->h + y * self->w + x]; 
+		return self->cells[z * self->w * self->h + y * self->w + x]; 
 	}
 
 	static inline lu_size s_layer_neus_size(S_Layer self) 
@@ -138,9 +154,15 @@
 		lu_size 				cells_h; 
 		lu_size 				cells_d;		
 
-		lu_size 				neus_size;
-		lu_size 				neus_count;
-		struct s_neu* 			neus;
+		lu_size 				cells_size;
+		lu_size 				cells_count;
+		struct s_cell* 			cells;
+
+		lu_size 				cells_2_size;
+		struct s_cell_2*		cells_2;
+
+		lu_size 				cells_3_size;
+		struct s_cell_3* 		cells_3;
 
 		struct s_layer_conf 	v_conf;	
 		struct s_layer_conf 	p_conf;
@@ -154,9 +176,9 @@
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
-	static S_Neu s_rec_neu_alloc(S_Rec, Mem mem, enum s_neu_type type, S_Layer, lu_size x, lu_size y, lu_size z);  
+	static S_Cell s_rec_neu_alloc(S_Rec, Mem mem, enum s_cell_type type, S_Layer, lu_size x, lu_size y, lu_size z);  
 
-	static inline S_Neu s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
+	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
 		S_Layer layer = &self->data_layers[l];
 		return s_layer_neu_get(layer, x, y, z);

@@ -31,8 +31,8 @@
 		self->h 		= h;
 		self->d 		= d;
 
-		self->neus = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * self->w * self->h * self->d);
-		lu_user_assert(self->neus, "Cannot allocate S_Layer neus");
+		self->cells = (S_Cell*) mem_alloc(mem, sizeof(S_Cell) * self->w * self->h * self->d);
+		lu_user_assert(self->cells, "Cannot allocate S_Layer cells");
 
 		return self;
 	}
@@ -44,20 +44,20 @@
 		switch(self->type)
 		{
 			case SLT_COMPONENTS:
-				lu_debug("\n 	 	%-14s", "Comp. Layer, ");
+				lu_debug("\n 	 	%-15s", "Comps Layer, ");
 				break;
-			case SLT_CELLS:
-				lu_debug("\n 	 	%-14s", "Cells Layer, ");
+			case SLT_PIXELS:
+				lu_debug("\n 	 	%-15s", "Pixels Layer, ");
 				break;
-			case SLT_DATUM:
-				lu_debug("\n 	 	%-14s", "Datum Layer, ");
+			case SLT_PYRAS:
+				lu_debug("\n 	 	%-15s", "Pyras Layer, ");
 				break;
 			case SLT_BLOCKS:
-				lu_debug("\n 	 	%-14s", "Blocks Layer, ");
+				lu_debug("\n 	 	%-15s", "Blocks Layer, ");
 				break;
 			default:
-				lu_debug("\n 	 	%-14s", "UNKNOWN Layer, ");
+				lu_debug("\n 	 	%-15s", "UNKNOWN Layer, ");
 		}
 
-		lu_debug("l: %3lu, w: %3lu, h: %3lu, d: %3lu, neus_count: %3lu", self->l, self->w, self->h, self->d, self->neus_count);
+		lu_debug("l: %3lu, w: %3lu, h: %3lu, d: %3lu, cells_count: %3lu", self->l, self->w, self->h, self->d, self->cells_count);
 	}

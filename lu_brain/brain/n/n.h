@@ -26,8 +26,8 @@
 	// "nasliduvannia" ce yedynyy maksymalno effectyvnyy sposib optymizuvaty pamiat
 	// componenty potrebuyut bilshe pamiati.
 	struct n_neu {
-		S_Neu 					s_neu;
-		lu_size 				s_ix;   	// nomer v s_neu
+		S_Cell 					s_cell;
+		lu_size 				s_ix;   	// nomer v s_cell
 
 		N_Lin 					b_l; 		// v and h and other links, 0 zavzhdy h
 		lu_value 				b_count;
@@ -82,7 +82,7 @@
 
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
 		Mem_Table				coms;
-		Mem_Table 				neus;
+		Mem_Table 				cells;
 		Mem_Table				lins; 
 	};
 

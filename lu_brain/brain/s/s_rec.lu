@@ -60,43 +60,43 @@
 		s_rec_layers_init(self, mem);
 
 		///////////////////////////////////////
-		// Allocate neus
+		// Allocate cells
 
-		self->neus = (struct s_neu*) mem_alloc(mem, sizeof(struct s_neu) * self->neus_size);
-		lu_user_assert(self->neus, "Cannot allocate neus"); 
+		self->cells = (struct s_cell*) mem_alloc(mem, sizeof(struct s_cell) * self->cells_size);
+		lu_user_assert(self->cells, "Cannot allocate cells"); 
 
 		///////////////////////////////////////
-		// Init neus
+		// Init cells
 
 		s_rec_components_init(self, mem);
 		s_rec_cells_init(self, mem);
 		s_rec_datum_init(self, mem);
 		s_rec_blocks_init(self, mem);
 
-		//lu_debug("\nneus_count = %d, neus_size = %d, rw=%d, rh=%d, rd=%d", self->neus_count, self->neus_size, self->cells_w, self->cells_h, self->cells_d);
+		//lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
 
-		lu_user_assert(self->neus_count == self->neus_size, "Something wrong with neus_count");
+		lu_user_assert(self->cells_count == self->cells_size, "Something wrong with cells_count");
 
 		return self;
 	}
 
 	/*
-	** Allocate space for S_Neu
+	** Allocate space for S_Cell
 	*/
-	static S_Neu s_rec_neu_alloc(S_Rec self, Mem mem, enum s_neu_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static S_Cell s_rec_neu_alloc(S_Rec self, Mem mem, enum s_cell_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
 	{
-		lu_user_assert(self->neus_count < self->neus_size, "Out of space for S_Neu");
+		lu_user_assert(self->cells_count < self->cells_size, "Out of space for S_Cell");
 
-		S_Neu neu = &self->neus[self->neus_count];
-		neu = s_neu_init(neu, type, layer, x, y, z);
-		lu_user_assert(neu, "Cannot init S_Neu");
+		S_Cell neu = &self->cells[self->cells_count];
+		neu = s_cell_init(neu, type, layer, x, y, z);
+		lu_user_assert(neu, "Cannot init S_Cell");
 
 		s_layer_neu_set(layer, x, y, z, neu);
 
 		// lock 
-		neu->l_ix = self->neus_count;
-		++layer->neus_count;
-		++self->neus_count;
+		neu->l_ix = self->cells_count;
+		++layer->cells_count;
+		++self->cells_count;
 
 		return neu;
 	}  
@@ -111,8 +111,8 @@
  		lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
  		lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
  		lu_debug("\n 	 	");
- 		lu_debug("\n 	 	%-19s %lu", "neus_size:", self->neus_size);
- 		lu_debug("\n 	 	%-19s %lu", "neus_count:", self->neus_count);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_size:", self->cells_size);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_count:", self->cells_count);
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
  		lu_debug("\n 	 	%-19s %lu", "blocks_size:", self->blocks_size);
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);

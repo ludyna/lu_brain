@@ -13,7 +13,7 @@
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-	// asociyuyetsia do s_neu, a ne n_neu
+	// asociyuyetsia do s_cell, a ne n_neu
 	struct lu_space {
 		Lu_Neu 					sigs; 	// velykyy masyv, de sigs[n_neu_1->sid] vidpovidaye za w_sig dlia n_neu_1
 										// kozhne vykorystania n_neu miniaye misciamy n_neu->sid z vyshchym n_neu->sid
@@ -26,7 +26,7 @@
 		lu_size 				w;
 		lu_size 				h;
 
-		Lu_Space* 				neus;  // asociyuyutsia z s_neu
+		Lu_Space* 				cells;  // asociyuyutsia z s_cell
 	};
 
 	struct lu_wave_rec {

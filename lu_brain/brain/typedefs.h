@@ -18,21 +18,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
-	enum s_neu_type {
-		SNT_COMPONENT,
-		SNT_CELL, 
-		SNT_DATA,
-		SNT_BLOCK
+	enum s_cell_type {
+		SNT_CELL_3,
+		SNT_CELL_2, 
+		SNT_CELL
 	};
 
- 	typedef struct s_neu* 		S_Neu;
+ 	typedef struct s_cell* 			S_Cell;
+ 	typedef struct s_cell_2* 		S_Cell_2;
+ 	typedef struct s_cell_3* 		S_Cell_3;
 	
 	// Helpers
 
 	enum s_layer_type {
 		SLT_COMPONENTS,
-		SLT_CELLS,
-		SLT_DATUM,
+		SLT_PIXELS, 	
+		SLT_PYRAS,
 		SLT_BLOCKS
 	};
 	

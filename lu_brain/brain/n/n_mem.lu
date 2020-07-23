@@ -20,7 +20,7 @@
 		self->opts 			= *opts;
 
 		self->coms 			= NULL;
-		self->neus 			= NULL;
+		self->cells 			= NULL;
 		self->lins 			= NULL;
 
 		return self;
@@ -34,8 +34,8 @@
 		self->coms 			= n_mem_coms_create(self, mem);
 		lu_user_assert(self->coms, "Cannot allocate N_Mem components");
 
-		self->neus 			= n_mem_neus_create(self, mem);
-		lu_user_assert(self->neus, "Cannot allocate N_Mem neus");
+		self->cells 			= n_mem_neus_create(self, mem);
+		lu_user_assert(self->cells, "Cannot allocate N_Mem cells");
 
 		self->lins 			= n_mem_lins_create(self, mem);
 		lu_user_assert(self->lins, "Cannot allocate N_Mem lins");
@@ -88,7 +88,7 @@
 
 	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem)
 	{
-		Mem_Table neus = mem_table_create(
+		Mem_Table cells = mem_table_create(
 										mem, 
 			/*record_size_in_bytes*/ 	sizeof(struct n_neu), 
 			/*table_size_in_records*/	0, 
@@ -96,9 +96,9 @@
 			/*flags*/					MTF_FREEABLE
 		);
 
-		lu_user_assert(neus, "Cannot allocate neus Mem_Table");
+		lu_user_assert(cells, "Cannot allocate cells Mem_Table");
 
-		return neus;
+		return cells;
 	}
 
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem)
@@ -122,7 +122,7 @@
 
  		lu_debug("\n\n-- N_Mem info: ");
  		lu_debug("\n 	Coms size (bytes): %lu", mem_table_size_in_bytes(self->coms));
- 		lu_debug("\n 	Neus size (bytes): %lu", mem_table_size_in_bytes(self->neus));
+ 		lu_debug("\n 	Neus size (bytes): %lu", mem_table_size_in_bytes(self->cells));
  		lu_debug("\n 	Lins size (bytes): %lu", mem_table_size_in_bytes(self->lins));
  	}
 
@@ -142,7 +142,7 @@
 		lu_user_assert(self, "N_Mem is NULL");
 		lu_user_assert(self->coms, "N_Mem coms is NULL");
 
-		N_Neu neu = (N_Neu) mem_record_alloc(self->neus);
+		N_Neu neu = (N_Neu) mem_record_alloc(self->cells);
 		lu_user_assert(neu, "Cannot allocate N_Neu");
 
 		return neu;

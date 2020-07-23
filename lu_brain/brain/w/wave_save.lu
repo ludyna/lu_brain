@@ -96,7 +96,7 @@
 		lu_value v;
 		lu_value p;
 
-		S_Neu s_cell;
+		S_Cell s_cell;
 		S_Layer v_layer 	= &s_rec->data_layers[0];
 
 		N_Mem n_mem 		= self->n_mem;

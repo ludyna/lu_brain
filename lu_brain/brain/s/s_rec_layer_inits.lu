@@ -8,7 +8,7 @@
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
 		lu_user_assert_void(self->block_layers, "self->block_layers is NULL");
 
-		self->neus_size = 0;
+		self->cells_size = 0;
 
 		lu_size w = self->cells_w;
 		lu_size h = self->cells_h;
@@ -20,7 +20,7 @@
 		// Components
 		layer = s_layer_init(layer, self, mem, SLT_COMPONENTS, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init component layer");
-		self->neus_size += s_layer_neus_size(layer);
+		self->cells_size += s_layer_neus_size(layer);
 
 		++ix;
 		d = 1;
@@ -28,11 +28,11 @@
 		// Cells 
 		layer 	= &self->data_layers[ix];
 
-		layer = s_layer_init(layer, self, mem, SLT_CELLS, ix, w, h, d);
+		layer = s_layer_init(layer, self, mem, SLT_PIXELS, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init cell layer");
-		self->neus_size += s_layer_neus_size(layer);
+		self->cells_size += s_layer_neus_size(layer);
 
-		// Pyras
+		// Datum
 		--w;
 		--h;
 		++ix;
@@ -43,9 +43,9 @@
 
 			layer = &self->data_layers[ix];
 
-			layer = s_layer_init(layer, self, mem, SLT_DATUM, ix, w, h, d);
+			layer = s_layer_init(layer, self, mem, SLT_PYRAS, ix, w, h, d);
 			lu_user_assert_void(layer, "Cannot init pyra layer");
-			self->neus_size += s_layer_neus_size(layer);
+			self->cells_size += s_layer_neus_size(layer);
 
 			if (w > 0) --w;
 			if (h > 0) --h;
@@ -66,7 +66,7 @@
 
 			layer = s_layer_init(layer, self, mem, SLT_BLOCKS, ix, 1, h, d);
 			lu_user_assert_void(layer, "Cannot init layer");
-			self->neus_size += s_layer_neus_size(layer);
+			self->cells_size += s_layer_neus_size(layer);
 
 			++ix;
 			--w;
@@ -88,16 +88,16 @@
 		lu_size y;
 		lu_size x;
 
-		S_Neu neu = NULL;
+		S_Cell neu = NULL;
 
 		for (z = 0; z < d; z++)
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
-					neu = s_rec_neu_alloc(self, mem, SNT_COMPONENT, layer, x, y, z); 
+					neu = s_rec_neu_alloc(self, mem, SNT_CELL_3, layer, x, y, z); 
 					lu_user_assert_void(neu, "Cannot init neu");
 
-					neu = s_neu_component_init(neu, self, mem); 
+					neu = s_cell_3_init(neu, self, mem); 
 					lu_user_assert_void(neu, "Cannot component init neu");
 				}
 	}
@@ -116,24 +116,24 @@
 		lu_size y;
 		lu_size x;
 
-		S_Neu neu = NULL;
+		S_Cell neu = NULL;
 
 		for (y = 0; y < h; y++)
 			for (x = 0; x < w; x++)
 			{
-				neu = s_rec_neu_alloc(self, mem, SNT_CELL, layer, x, y, 0); 
+				neu = s_rec_neu_alloc(self, mem, SNT_CELL_2, layer, x, y, 0); 
 				lu_user_assert_void(neu, "Cannot init neu");
 
-				neu = s_neu_cell_init(neu, self, mem); 
+				neu = s_pixel_init(neu, self, mem); 
 				lu_user_assert_void(neu, "Cannot component init neu");
 
-				s_neu_cell_connect(neu, b_layer);
+				s_pixel_connect(neu, b_layer);
 			}
 	}
 
 	static void s_rec_datum_init(S_Rec self, Mem mem)
 	{
-		S_Neu neu;
+		S_Cell neu;
 		S_Layer layer;
 		S_Layer b_layer = NULL;
 
@@ -156,13 +156,13 @@
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
-					neu = s_rec_neu_alloc(self, mem, SNT_DATA, layer, x, y, 0); 
+					neu = s_rec_neu_alloc(self, mem, SNT_CELL_2, layer, x, y, 0); 
 					lu_user_assert_void(neu, "Cannot init neu");
 
-					neu = s_neu_pyra_init(neu, self, mem); 
+					neu = s_pyra_init(neu, self, mem); 
 					lu_user_assert_void(neu, "Cannot pyra init neu");
 
-					s_neu_pyra_connect(neu, b_layer);
+					s_pyra_connect(neu, b_layer);
 				}
 		}
 	}
@@ -174,7 +174,7 @@
 		lu_size w;
 		lu_size ix;
 		lu_size x;
-		S_Neu neu = NULL;
+		S_Cell neu = NULL;
 
 		for(ix = 0; ix < self->block_layers_size; ix++)
 		{
@@ -195,15 +195,15 @@
 			//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
 			for (x = 0; x < w; x++)
 			{
-				neu = s_rec_neu_alloc(self, mem, SNT_BLOCK, layer, x, 0, 0); 
+				neu = s_rec_neu_alloc(self, mem, SNT_CELL, layer, x, 0, 0); 
 				lu_user_assert_void(neu, "Cannot init neu");
 
-				neu = s_neu_block_init(neu, self, mem); 
+				neu = s_block_init(neu, self, mem); 
 				lu_user_assert_void(neu, "Cannot tria init neu");
 
 				if (ix > 0)
 				{
-					s_neu_block_connect(neu, b_layer);
+					s_block_connect(neu, b_layer);
 				}
 			}
 		}

@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void s_neu_cell_connect(S_Neu self, S_Layer b_layer)
+	static void s_pixel_connect(S_Cell self, S_Layer b_layer)
 	{
 		lu_size z;
-		S_Neu com = NULL;
+		S_Cell com = NULL;
 		lu_size d = b_layer->d;
 		for (z = 0; z < d; z++)
 		{
@@ -21,9 +21,9 @@
 		}
 	}
 
-	static void s_neu_pyra_connect(S_Neu d, S_Layer b_layer)
+	static void s_pyra_connect(S_Cell d, S_Layer b_layer)
 	{
-		lu_user_assert_void(d, "S_Neu is NULL");
+		lu_user_assert_void(d, "S_Cell is NULL");
 		lu_user_assert_void(b_layer, "S_Layer is NULL");
 
 		lu_size x 			= d->x;
@@ -34,10 +34,10 @@
 		// x + 1, y + 1 	// vl
 		// x, y + 1			// vp
 
-		S_Neu b 			= NULL;
+		S_Cell b 			= NULL;
 
 		b = s_layer_neu_get(b_layer, x, y, 0);
-		lu_user_assert_void(b, "S_Neu is NULL");
+		lu_user_assert_void(b, "S_Cell is NULL");
 
 		d_np(b) = d; // b->d->np = d; 
 		b_vl(d) = b; // d->b->vl = b; 
@@ -65,9 +65,9 @@
 		}
 	}
 
-	static void s_neu_block_connect(S_Neu d, S_Layer b_layer)
+	static void s_block_connect(S_Cell d, S_Layer b_layer)
 	{
-		lu_user_assert_void(d, "S_Neu is NULL");
+		lu_user_assert_void(d, "S_Cell is NULL");
 		lu_user_assert_void(b_layer, "S_Layer is NULL"); 
 
 		lu_size x 		= d->x;
@@ -76,10 +76,10 @@
 		// x, y				// p
 		// x + 1, y	  		// l
 
-		S_Neu b = NULL;
+		S_Cell b = NULL;
 
 		b = s_layer_neu_get(b_layer, x, y, 0);
-		lu_user_assert_void(b, "S_Neu is NULL");
+		lu_user_assert_void(b, "S_Cell is NULL");
 
 		d_d(b) = d; // b->d->vp = d;
 		b_b(d) = b; // d->b->vl = b;

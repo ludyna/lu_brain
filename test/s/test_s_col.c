@@ -23,8 +23,8 @@ lu_value			data_m1[] 		= { -1.0 };
 Mem 				mem;
 S_Mem				s_mem;
 S_Rec 				s_rec;
-S_Neu				s_neu_com_0;
-S_Neu 				s_neu_com_1;
+S_Cell				s_neu_com_0;
+S_Cell 				s_neu_com_1;
 
 
 // setUp is executed for each test, even if test does nothing
