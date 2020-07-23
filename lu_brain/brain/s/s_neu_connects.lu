@@ -65,7 +65,7 @@
 		}
 	}
 
-	static void s_neu_tria_connect(S_Neu d, S_Layer b_layer)
+	static void s_neu_story_connect(S_Neu d, S_Layer b_layer)
 	{
 		lu_user_assert_void(d, "S_Neu is NULL");
 		lu_user_assert_void(b_layer, "S_Layer is NULL"); 

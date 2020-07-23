@@ -15,7 +15,6 @@
 
 		self->b 			= NULL;
 		self->d 			= NULL;
-		self->t 			= NULL;
 
 		self->neus 			= NULL;
  
@@ -77,7 +76,7 @@
 		return self;
 	}
 
-	static S_Neu s_neu_tria_init(S_Neu self, S_Rec rec, Mem mem)
+	static S_Neu s_neu_story_init(S_Neu self, S_Rec rec, Mem mem)
 	{
 		lu_user_assert(self->type == SNT_TRIA, "Wrong self type");
 

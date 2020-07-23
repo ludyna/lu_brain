@@ -97,7 +97,7 @@
 		lu_value p;
 
 		S_Neu s_cell;
-		S_Layer v_layer 	= &s_rec->v_layers[0];
+		S_Layer v_layer 	= &s_rec->data_layers[0];
 
 		N_Mem n_mem 		= self->n_mem;
 		lu_size p_neu_ix;

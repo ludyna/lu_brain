@@ -66,7 +66,7 @@
 			rec = (S_Rec) arr_get(recs, i);
 			lu_user_assert(rec, "S_Rec is NULL");
 
-			layer = &rec->v_layers[0];
+			layer = &rec->data_layers[0];
 			lu_user_assert(layer, "S_Layer is NULL");
 
 			val_coms_size += s_layer_neus_size(layer);

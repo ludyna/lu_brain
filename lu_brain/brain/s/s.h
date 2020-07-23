@@ -39,9 +39,8 @@
 
 		S_Neu*					b;
 		S_Neu*					d;
-		S_Neu  	 				t;			// zviazok po t (v -> p -> v)
 
-		lu_size 				neus_count; // neus_count potriben shob znayty n_sig dlia n_neu po yoho n_neu->sid v wave->w_neu->neus
+		lu_size 				neus_count; // neus_count potriben shob znayty n_sig dlia n_neu po yoho n_neu->s_ix v wave->w_neu->neus
 		N_Neu* 					neus;		// mozhe buty NULL abo odyn abo bilshe neu sho podiliayut prostir
 	
 		// she maye buty zviazok z s_neu z inshyh s_rec na tyh rivniah de ce 
@@ -53,17 +52,13 @@
 	static S_Neu s_neu_component_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_cell_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_pyra_init(S_Neu neu, S_Rec, Mem mem);
-	static S_Neu s_neu_tria_init(S_Neu neu, S_Rec, Mem mem);
+	static S_Neu s_neu_story_init(S_Neu neu, S_Rec, Mem mem);
 
 	// s_neu_connects.lu
 	static void s_neu_cell_connect(S_Neu self, S_Layer);
 	static void s_neu_pyra_connect(S_Neu self, S_Layer);
-	static void s_neu_tria_connect(S_Neu self, S_Layer);
-	static inline void s_neu_t_connect(S_Neu v_neu, S_Neu p_neu) 
-	{
-		v_neu->t = p_neu;
-		p_neu->t = v_neu;
-	}
+	static void s_neu_story_connect(S_Neu self, S_Layer);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
@@ -150,16 +145,16 @@
 		lu_size 				neus_count;
 		struct s_neu* 			neus;
 
-		lu_size 				vp_layers_size;
 		struct s_layer_conf 	v_conf;	
-		struct s_layer* 		v_layers;
 		struct s_layer_conf 	p_conf;
-		struct s_layer* 		p_layers;
+
+		lu_size 				data_layers_size;
+		struct s_layer* 		data_layers;
 
 		lu_size 				blocks_size;
-		lu_size 				tria_layers_size;
-		struct s_layer* 		tria_v_layers;
-		struct s_layer* 		tria_p_layers;
+		
+		lu_size 				story_layers_size;
+		struct s_layer* 		story_layers;
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
@@ -167,7 +162,7 @@
 
 	static inline S_Neu s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
-		S_Layer layer = &self->v_layers[l];
+		S_Layer layer = &self->data_layers[l];
 		return s_layer_neu_get(layer, x, y, z);
 	}
 

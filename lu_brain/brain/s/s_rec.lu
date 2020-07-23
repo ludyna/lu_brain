@@ -38,29 +38,22 @@
 		///////////////////////////////////////
 		// Allocate VP Layers
 
-		self->vp_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
+		self->data_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
 		
 		if (self->cells_d > 1)
-			++self->vp_layers_size; // + odyn dlia component 
+			++self->data_layers_size; // + odyn dlia component 
 																				
-
-		self->v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->vp_layers_size);
-		lu_user_assert(self->v_layers, "Cannot allocate v layers"); 
-
-		self->p_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->vp_layers_size);
-		lu_user_assert(self->v_layers, "Cannot allocate p layers");
+		self->data_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->data_layers_size);
+		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
 
 		///////////////////////////////////////
 		// Allocate Tria Layers
 
-		self->blocks_size		= rec->blocks_size;
-		self->tria_layers_size 	= self->blocks_size;	// tria_layers_size = blocks_size, but potentially they could be different
+		self->blocks_size			= rec->blocks_size;
+		self->story_layers_size 	= self->blocks_size;	// story_layers_size = blocks_size, but potentially they could be different
 
-		self->tria_v_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_size);
-		lu_user_assert(self->tria_v_layers, "Cannot allocate av layers"); 
-
-		self->tria_p_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->tria_layers_size);
-		lu_user_assert(self->tria_p_layers, "Cannot allocate ap layers");
+		self->story_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->story_layers_size);
+		lu_user_assert(self->story_layers, "Cannot allocate av layers"); 
 
 		///////////////////////////////////////
 		// All layers init
@@ -121,49 +114,32 @@
  		lu_debug("\n 	 	");
  		lu_debug("\n 	 	%-17s %lu", "neus_size:", self->neus_size);
  		lu_debug("\n 	 	%-17s %lu", "neus_count:", self->neus_count);
- 		lu_debug("\n 	 	%-17s %lu", "vp_layers_size:", self->vp_layers_size);
+ 		lu_debug("\n 	 	%-17s %lu", "data_layers_size:", self->data_layers_size);
  		lu_debug("\n 	 	%-17s %lu", "blocks_size:", self->blocks_size);
- 		lu_debug("\n 	 	%-17s %lu", "tria_layers_size:", self->tria_layers_size);
+ 		lu_debug("\n 	 	%-17s %lu", "story_layers_size:", self->story_layers_size);
  		lu_debug("\n 	 	");
 
 
  		lu_size i;
  		S_Layer layer;
- 		struct s_layer* layers;
+ 		struct s_layer* layers = self->data_layers;
 
- 		// vp_layers
- 		if (rand() % 2 == 0) 
- 		{
-			layers = self->v_layers;
- 		}
- 		else
- 		{
-			layers = self->p_layers;
- 		}
-
- 		for(i = 0; i < self->vp_layers_size; i++)
+ 		for(i = 0; i < self->data_layers_size; i++)
  		{
  			layer = &layers[i];
 
  			s_layer_print_info(layer);
  		}
 
- 		// tria_layers
+ 		// story_layers
  		lu_debug("\n");
- 		if (rand() % 2 == 0) 
- 		{
-			layers = self->tria_v_layers;
- 		}
- 		else
- 		{
-			layers = self->tria_p_layers;
- 		}
-
- 		for(i = 0; i < self->tria_layers_size; i++)
+ 	
+		layers = self->story_layers;
+ 		
+ 		for(i = 0; i < self->story_layers_size; i++)
  		{
  			layer = &layers[i];
 
  			s_layer_print_info(layer);
  		}
-
 	}

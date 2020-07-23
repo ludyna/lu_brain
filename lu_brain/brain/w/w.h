@@ -46,14 +46,14 @@
 		lu_size 				spaces_count;
 		struct lu_space* 		spaces;
 
-		lu_size 				vp_layers_size;
-		struct lu_layer* 		v_layers;
+		lu_size 				data_layers_size;
+		struct lu_layer* 		data_layers;
 		struct lu_layer* 		p_layers;
 
 		lu_size 				blocks_size;
-		lu_size 				tria_layers_size;
-		struct lu_layer* 		tria_v_layers;
-		struct lu_layer* 		tria_p_layers;
+		lu_size 				story_layers_size;
+		struct lu_layer* 		story_layers;
+		struct lu_layer* 		story_p_layers;
 	};
 
 	struct lu_wave_mem {

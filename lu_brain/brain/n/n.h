@@ -25,6 +25,7 @@
 
 	struct n_neu {
 		S_Neu 					s_neu;
+		lu_size 				s_ix;   	// nomer v s_neu
 
 		N_Lin 					b_l; 		// v and h and other links, 0 zavzhdy h
 		lu_value 				b_count;
