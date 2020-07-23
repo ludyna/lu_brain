@@ -32,7 +32,7 @@
 		// S_Layer_Conf conf = NULL;
 		// switch (layer->type)
 		// {
-		// 	case SLT_V:
+		// 	case SLT_DATUM:
 		// 		conf = &rec->v_conf;
 		// 		break;
 		// 	case SLT_P:
@@ -76,14 +76,14 @@
 		return self;
 	}
 
-	static S_Neu s_neu_story_init(S_Neu self, S_Rec rec, Mem mem)
+	static S_Neu s_neu_block_init(S_Neu self, S_Rec rec, Mem mem)
 	{
-		lu_user_assert(self->type == SNT_TRIA, "Wrong self type");
+		lu_user_assert(self->type == SNT_BLOCK, "Wrong self type");
 
-		self->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		self->b = (S_Neu*) mem_alloc(mem, sizeof(S_Neu));
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu) * 2);
+		self->d = (S_Neu*) mem_alloc(mem, sizeof(S_Neu));
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;

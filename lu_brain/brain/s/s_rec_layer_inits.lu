@@ -6,7 +6,7 @@
 	{
 		lu_user_assert_void(self, "S_Rec is NULL");
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
-		lu_user_assert_void(self->story_layers, "self->story_layers is NULL");
+		lu_user_assert_void(self->block_layers, "self->block_layers is NULL");
 
 		self->neus_size = 0;
 
@@ -20,7 +20,7 @@
 		if (d > 1)
 		{
 			// Components
-			layer = s_layer_init(layer, self, mem, SLT_V, ix, w, h, d);
+			layer = s_layer_init(layer, self, mem, SLT_DATUM, ix, w, h, d);
 			lu_user_assert_void(layer, "Cannot init component layer");
 			self->neus_size += s_layer_neus_size(layer);
 
@@ -31,7 +31,7 @@
 		// Cells 
 		layer 	= &self->data_layers[ix];
 
-		layer = s_layer_init(layer, self, mem, SLT_V, ix, w, h, d);
+		layer = s_layer_init(layer, self, mem, SLT_DATUM, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init cell layer");
 		self->neus_size += s_layer_neus_size(layer);
 
@@ -46,7 +46,7 @@
 
 			layer = &self->data_layers[ix];
 
-			layer = s_layer_init(layer, self, mem, SLT_V, ix, w, h, d);
+			layer = s_layer_init(layer, self, mem, SLT_DATUM, ix, w, h, d);
 			lu_user_assert_void(layer, "Cannot init pyra layer");
 			self->neus_size += s_layer_neus_size(layer);
 
@@ -55,7 +55,7 @@
 			++ix; 
 		}
 
-		// Trias
+		// Blocks
 		ix = 0;
 		w = self->blocks_size;
 		h = 1;
@@ -63,11 +63,11 @@
 
 		while(w > 0)
 		{
-			lu_user_assert_void(ix < self->story_layers_size, "Wrong layer index");
+			lu_user_assert_void(ix < self->block_layers_size, "Wrong layer index");
 
-			layer = &self->story_layers[ix];
+			layer = &self->block_layers[ix];
 
-			layer = s_layer_init(layer, self, mem, SLT_AV, ix, w, h, d);
+			layer = s_layer_init(layer, self, mem, SLT_BLOCKS, ix, 1, h, d);
 			lu_user_assert_void(layer, "Cannot init layer");
 			self->neus_size += s_layer_neus_size(layer);
 
@@ -170,7 +170,7 @@
 		}
 	}
 
-	static void s_rec_trias_init(S_Rec self, Mem mem)
+	static void s_rec_blocks_init(S_Rec self, Mem mem)
 	{
 		S_Layer layer;
 		S_Layer b_layer = NULL;
@@ -179,30 +179,34 @@
 		lu_size x;
 		S_Neu neu = NULL;
 
-		for(ix = 0; ix < self->story_layers_size; ix++)
+		for(ix = 0; ix < self->block_layers_size; ix++)
 		{
-			layer = &self->story_layers[ix];
+			layer = &self->block_layers[ix];
 
 			if (ix > 0)
 			{
-				b_layer = &self->story_layers[ix - 1];
+				b_layer = &self->block_layers[ix - 1];
+			}
+			else
+			{
+				// last layer from data layers
+				b_layer = &self->data_layers[self->data_layers_size - 1];
 			}
 
 			w = layer->w;
 
 			//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
-
 			for (x = 0; x < w; x++)
 			{
-				neu = s_rec_neu_alloc(self, mem, SNT_TRIA, layer, x, 0, 0); 
+				neu = s_rec_neu_alloc(self, mem, SNT_BLOCK, layer, x, 0, 0); 
 				lu_user_assert_void(neu, "Cannot init neu");
 
-				neu = s_neu_story_init(neu, self, mem); 
+				neu = s_neu_block_init(neu, self, mem); 
 				lu_user_assert_void(neu, "Cannot tria init neu");
 
 				if (ix > 0)
 				{
-					s_neu_story_connect(neu, b_layer);
+					s_neu_block_connect(neu, b_layer);
 				}
 			}
 		}

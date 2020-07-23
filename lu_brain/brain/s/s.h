@@ -9,12 +9,9 @@
 // S Net
 // 
 
-	// a_neu
- 	#define b_l(n) n->b[0]
-	#define b_p(n) n->b[0]
-	
-	#define d_l(n) n->d[0]
-	#define d_p(n) n->d[1]
+	// block_neu
+ 	#define b_b(n) n->b[0]  
+	#define d_d(n) n->d[0]
 
 	// neu
 	#define b_vl(n) n->b[0]
@@ -52,12 +49,12 @@
 	static S_Neu s_neu_component_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_cell_init(S_Neu neu, S_Rec, Mem mem);
 	static S_Neu s_neu_pyra_init(S_Neu neu, S_Rec, Mem mem);
-	static S_Neu s_neu_story_init(S_Neu neu, S_Rec, Mem mem);
+	static S_Neu s_neu_block_init(S_Neu neu, S_Rec, Mem mem);
 
 	// s_neu_connects.lu
 	static void s_neu_cell_connect(S_Neu self, S_Layer);
 	static void s_neu_pyra_connect(S_Neu self, S_Layer);
-	static void s_neu_story_connect(S_Neu self, S_Layer);
+	static void s_neu_block_connect(S_Neu self, S_Layer);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -152,9 +149,8 @@
 		struct s_layer* 		data_layers;
 
 		lu_size 				blocks_size;
-		
-		lu_size 				story_layers_size;
-		struct s_layer* 		story_layers;
+		lu_size 				block_layers_size;
+		struct s_layer* 		block_layers;
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
@@ -167,7 +163,6 @@
 	}
 
 	// Layers inits
-	static void s_rec_val_layers_init(S_Rec self, Mem mem);
 	static void s_rec_components_init(S_Rec self, Mem mem);
 	static void s_rec_cells_init(S_Rec self, Mem mem);
 	static void s_rec_pyras_init(S_Rec self, Mem mem);

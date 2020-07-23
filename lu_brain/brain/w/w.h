@@ -51,8 +51,8 @@
 		struct lu_layer* 		p_layers;
 
 		lu_size 				blocks_size;
-		lu_size 				story_layers_size;
-		struct lu_layer* 		story_layers;
+		lu_size 				block_layers_size;
+		struct lu_layer* 		block_layers;
 		struct lu_layer* 		story_p_layers;
 	};
 

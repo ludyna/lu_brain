@@ -65,7 +65,7 @@
 		}
 	}
 
-	static void s_neu_story_connect(S_Neu d, S_Layer b_layer)
+	static void s_neu_block_connect(S_Neu d, S_Layer b_layer)
 	{
 		lu_user_assert_void(d, "S_Neu is NULL");
 		lu_user_assert_void(b_layer, "S_Layer is NULL"); 
@@ -81,14 +81,8 @@
 		b = s_layer_neu_get(b_layer, x, y, 0);
 		lu_user_assert_void(b, "S_Neu is NULL");
 
-		d_p(b) = d; // b->d->vp = d;
-		b_l(d) = b; // d->b->vl = b;
-
-		b = s_layer_neu_get(b_layer, x + 1, y, 0);
-		lu_user_assert_void(b, "S_Neu is NULL");
-
-		d_l(b) = d; // b->d->vl = d;
-		b_p(d) = b; // d->b->vp = b;
+		d_d(b) = d; // b->d->vp = d;
+		b_b(d) = b; // d->b->vl = b;
 	}
 
 

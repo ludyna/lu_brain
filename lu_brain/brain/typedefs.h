@@ -22,7 +22,7 @@
 		SNT_COMPONENT,
 		SNT_CELL, 
 		SNT_PYRA,
-		SNT_TRIA
+		SNT_BLOCK
 	};
 
  	typedef struct s_neu* 		S_Neu;
@@ -30,10 +30,8 @@
 	// Helpers
 
 	enum s_layer_type {
-		SLT_V,
-		SLT_P,
-		SLT_AV,
-		SLT_AP
+		SLT_DATUM,
+		SLT_BLOCKS
 	};
 	
 	typedef struct s_layer_conf*	S_Layer_Conf;

@@ -43,17 +43,11 @@
 
 		switch(self->type)
 		{
-			case SLT_V:
-				lu_debug("\n 	 	%-14s", "V Layer, ");
+			case SLT_DATUM:
+				lu_debug("\n 	 	%-14s", "Datum Layer, ");
 				break;
-			case SLT_P:
-				lu_debug("\n 	 	%-14s", "P Layer, ");
-				break;
-			case SLT_AV:
-				lu_debug("\n 	 	%-14s", "TRIA_V Layer, ");
-				break;
-			case SLT_AP:
-				lu_debug("\n 	 	%-14s", "TRIA_P Layer, ");
+			case SLT_BLOCKS:
+				lu_debug("\n 	 	%-14s", "Blocks Layer, ");
 				break;
 			default:
 				lu_debug("\n 	 	%-14s", "UNKNOWN Layer, ");

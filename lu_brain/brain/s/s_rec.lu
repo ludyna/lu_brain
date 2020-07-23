@@ -50,10 +50,10 @@
 		// Allocate Tria Layers
 
 		self->blocks_size			= rec->blocks_size;
-		self->story_layers_size 	= self->blocks_size;	// story_layers_size = blocks_size, but potentially they could be different
+		self->block_layers_size 	= self->blocks_size;	// block_layers_size = blocks_size, but potentially they could be different
 
-		self->story_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->story_layers_size);
-		lu_user_assert(self->story_layers, "Cannot allocate av layers"); 
+		self->block_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->block_layers_size);
+		lu_user_assert(self->block_layers, "Cannot allocate av layers"); 
 
 		///////////////////////////////////////
 		// All layers init
@@ -72,7 +72,7 @@
 		s_rec_components_init(self, mem);
 		s_rec_cells_init(self, mem);
 		s_rec_pyras_init(self, mem);
-		s_rec_trias_init(self, mem);
+		s_rec_blocks_init(self, mem);
 
 		//lu_debug("\nneus_count = %d, neus_size = %d, rw=%d, rh=%d, rd=%d", self->neus_count, self->neus_size, self->cells_w, self->cells_h, self->cells_d);
 
@@ -108,15 +108,15 @@
 		lu_user_assert_void(self, "S_Rec is NULL");
 
 		lu_debug("\n\n 	-- S_Rec #%lu info: ", self->id);
- 		lu_debug("\n 	 	%-17s %lu", "cells_w:", self->cells_w);
- 		lu_debug("\n 	 	%-17s %lu", "cells_h:", self->cells_h);
- 		lu_debug("\n 	 	%-17s %lu", "cells_d:", self->cells_d);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_w:", self->cells_w);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
  		lu_debug("\n 	 	");
- 		lu_debug("\n 	 	%-17s %lu", "neus_size:", self->neus_size);
- 		lu_debug("\n 	 	%-17s %lu", "neus_count:", self->neus_count);
- 		lu_debug("\n 	 	%-17s %lu", "data_layers_size:", self->data_layers_size);
- 		lu_debug("\n 	 	%-17s %lu", "blocks_size:", self->blocks_size);
- 		lu_debug("\n 	 	%-17s %lu", "story_layers_size:", self->story_layers_size);
+ 		lu_debug("\n 	 	%-19s %lu", "neus_size:", self->neus_size);
+ 		lu_debug("\n 	 	%-19s %lu", "neus_count:", self->neus_count);
+ 		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
+ 		lu_debug("\n 	 	%-19s %lu", "blocks_size:", self->blocks_size);
+ 		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
  		lu_debug("\n 	 	");
 
 
@@ -131,12 +131,12 @@
  			s_layer_print_info(layer);
  		}
 
- 		// story_layers
+ 		// block_layers
  		lu_debug("\n");
  	
-		layers = self->story_layers;
+		layers = self->block_layers;
  		
- 		for(i = 0; i < self->story_layers_size; i++)
+ 		for(i = 0; i < self->block_layers_size; i++)
  		{
  			layer = &layers[i];
 
