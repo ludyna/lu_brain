@@ -19,8 +19,7 @@
 		self->brain 		= brain;
 		self->opts 			= *opts;
 
-		self->coms 			= NULL;
-		self->cells 			= NULL;
+		self->cells 		= NULL;
 		self->lins 			= NULL;
 
 		return self;
@@ -30,9 +29,6 @@
 	{
 		lu_user_assert(self, "N_Mem is NULL");
 		lu_user_assert(mem, "Mem is NULL");
-
-		self->coms 			= n_mem_coms_create(self, mem);
-		lu_user_assert(self->coms, "Cannot allocate N_Mem components");
 
 		self->cells 			= n_mem_neus_create(self, mem);
 		lu_user_assert(self->cells, "Cannot allocate N_Mem cells");
@@ -45,52 +41,52 @@
 
 	static Mem_Table n_mem_coms_create(N_Mem self, Mem mem)
 	{
-		lu_user_assert(self, "N_Mem is NULL");
-		Lu_Brain brain = self->brain;
+		// lu_user_assert(self, "N_Mem is NULL");
+		// Lu_Brain brain = self->brain;
 
-		lu_user_assert(brain, "Brain is NULL");
-		lu_user_assert(brain->s_mem, "Brain s_mem is NULL");
-		lu_user_assert(brain->s_mem->recs, "Recs is NULL");
-		lu_user_assert(arr_size(brain->s_mem->recs) > 0, "No s_recs created");
+		// lu_user_assert(brain, "Brain is NULL");
+		// lu_user_assert(brain->s_mem, "Brain s_mem is NULL");
+		// lu_user_assert(brain->s_mem->recs, "Recs is NULL");
+		// lu_user_assert(arr_size(brain->s_mem->recs) > 0, "No s_recs created");
 
-		Arr recs = brain->s_mem->recs;
+		// Arr recs = brain->s_mem->recs;
 
-		// value components size
-		lu_size val_coms_size 	= 0;
-		S_Rec rec 				= NULL;
-		S_Layer layer 			= NULL;
-		lu_size i 				= 0;
+		// // value components size
+		// lu_size val_coms_size 	= 0;
+		// S_Rec rec 				= NULL;
+		// S_Layer layer 			= NULL;
+		// lu_size i 				= 0;
 
-		for (; i < arr_size(recs); i++)
-		{
-			rec = (S_Rec) arr_get(recs, i);
-			lu_user_assert(rec, "S_Rec is NULL");
+		// for (; i < arr_size(recs); i++)
+		// {
+		// 	rec = (S_Rec) arr_get(recs, i);
+		// 	lu_user_assert(rec, "S_Rec is NULL");
 
-			layer = &rec->data_layers[0];
-			lu_user_assert(layer, "S_Layer is NULL");
+		// 	layer = &rec->data_layers[0];
+		// 	lu_user_assert(layer, "S_Layer is NULL");
 
-			val_coms_size += s_layer_neus_size(layer);
-		}
+		// 	val_coms_size += s_layer_neus_size(layer);
+		// }
 
-		Mem_Table coms = mem_table_create(
-										mem, 
-			/*record_size_in_bytes*/ 	sizeof(struct n_com), 
-			/*table_size_in_records*/	val_coms_size + self->opts.names_size, 
-			/*percent*/					0,
-			/*flags*/					MTF_FREEABLE
-		);
+		// Mem_Table coms = mem_table_create(
+		// 								mem, 
+		// 	/*record_size_in_bytes*/ 	sizeof(struct n_com), 
+		// 	/*table_size_in_records*/	val_coms_size + self->opts.names_size, 
+		// 	/*percent*/					0,
+		// 	/*flags*/					MTF_FREEABLE
+		// );
 
-		lu_user_assert(coms, "Cannot allocate coms Mem_Table");
+		// lu_user_assert(coms, "Cannot allocate coms Mem_Table");
 
 
-		return coms;
+		// return coms;
 	}
 
 	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem)
 	{
 		Mem_Table cells = mem_table_create(
 										mem, 
-			/*record_size_in_bytes*/ 	sizeof(struct n_neu), 
+			/*record_size_in_bytes*/ 	sizeof(struct n_cell), 
 			/*table_size_in_records*/	0, 
 			/*percent*/					50,
 			/*flags*/					MTF_FREEABLE
@@ -105,7 +101,7 @@
 	{
 		Mem_Table lins = mem_table_create(
 										mem, 
-			/*record_size_in_bytes*/ 	sizeof(struct n_neu), 
+			/*record_size_in_bytes*/ 	sizeof(struct n_cell), 
 			/*table_size_in_records*/	0, 
 			/*percent*/					100,
 			/*flags*/					MTF_FREEABLE
@@ -121,29 +117,17 @@
  		lu_user_assert_void(self, "N_Mem is NULL");
 
  		lu_debug("\n\n-- N_Mem info: ");
- 		lu_debug("\n 	Coms size (bytes): %lu", mem_table_size_in_bytes(self->coms));
+ 		//lu_debug("\n 	Coms size (bytes): %lu", mem_table_size_in_bytes(self->coms));
  		lu_debug("\n 	Neus size (bytes): %lu", mem_table_size_in_bytes(self->cells));
  		lu_debug("\n 	Lins size (bytes): %lu", mem_table_size_in_bytes(self->lins));
  	}
 
-	static N_Com n_mem_com_alloc(N_Mem self)
+	static N_Cell n_mem_neu_alloc(N_Mem self)
 	{
 		lu_user_assert(self, "N_Mem is NULL");
-		lu_user_assert(self->coms, "N_Mem coms is NULL");
 
-		N_Com com = (N_Com) mem_record_alloc(self->coms);
-		lu_user_assert(com, "Cannot allocate N_Com");
-
-		return com;
-	}
-
-	static N_Neu n_mem_neu_alloc(N_Mem self)
-	{
-		lu_user_assert(self, "N_Mem is NULL");
-		lu_user_assert(self->coms, "N_Mem coms is NULL");
-
-		N_Neu neu = (N_Neu) mem_record_alloc(self->cells);
-		lu_user_assert(neu, "Cannot allocate N_Neu");
+		N_Cell neu = (N_Cell) mem_record_alloc(self->cells);
+		lu_user_assert(neu, "Cannot allocate N_Cell");
 
 		return neu;
 	}
@@ -151,9 +135,8 @@
 	static N_Lin n_mem_lin_alloc(N_Mem self)
 	{
 		lu_user_assert(self, "N_Mem is NULL");
-		lu_user_assert(self->coms, "N_Mem coms is NULL");
 
-		N_Lin lin = (N_Lin) mem_record_alloc(self->coms);
+		N_Lin lin = (N_Lin) mem_record_alloc(self->lins);
 		lu_user_assert(lin, "Cannot allocate N_Lin");
 
 		return lin;

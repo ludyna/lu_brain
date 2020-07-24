@@ -45,7 +45,7 @@
 		s_layer_conf_init(&self->p_conf, mem, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
 
 		///////////////////////////////////////
-		// Allocate VP Layers
+		// Allocate Data Layers
 
 		self->data_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
 		
@@ -55,7 +55,7 @@
 		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
 
 		///////////////////////////////////////
-		// Allocate Tria Layers
+		// Allocate Block Layers
 
 		self->blocks_size			= rec->blocks_size;
 		self->block_layers_size 	= self->blocks_size;	// block_layers_size = blocks_size, but potentially they could be different
@@ -139,7 +139,7 @@
 		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for S_Cell_3");
 
 		S_Cell_3 neu = &self->cells_3[self->cells_3_count];
-		neu = s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
+		neu = s_cell_3_init(neu, mem, layer, layer->cells_count, x, y, z);
 		lu_user_assert(neu, "Cannot init S_Cell_3");
 
 		s_layer_neu_set(layer, x, y, z, (S_Cell) neu);

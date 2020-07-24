@@ -53,10 +53,10 @@
 
 		NCT_SIZE
 	};
- 	
- 	typedef struct n_com* 		N_Com;
+
+	typedef struct n_cell*		N_Cell;
+	typedef struct n_cell_2* 	N_Cell_2;
 	typedef struct n_lin* 		N_Lin;
-	typedef struct n_neu*		N_Neu;
 	typedef struct n_mem_opts*  N_Mem_Opts;
 	typedef struct n_mem* 		N_Mem;
 

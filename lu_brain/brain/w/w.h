@@ -6,17 +6,17 @@
 // 
 
 	struct lu_neu {
-		N_Neu 					neu;
+		N_Cell 					neu;
 		lu_value 				p;
 	};
 
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-	// asociyuyetsia do s_cell, a ne n_neu
+	// asociyuyetsia do s_cell, a ne n_cell
 	struct lu_space {
 		Lu_Neu 					sigs; 	// velykyy masyv, de sigs[n_neu_1->sid] vidpovidaye za w_sig dlia n_neu_1
-										// kozhne vykorystania n_neu miniaye misciamy n_neu->sid z vyshchym n_neu->sid
+										// kozhne vykorystania n_cell miniaye misciamy n_cell->sid z vyshchym n_cell->sid
 										// takym chynom my mozhemo vyddaliaty neu z sid sho perevyshchuye pevne znachennia (starinnia neuroniv)
 
 		Lu_Neu 					w;		// peremozhec

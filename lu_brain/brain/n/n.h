@@ -14,35 +14,28 @@
 // vse reshtu perestvoruyetsia. Tak samo perevydilenia pamiati (z mozhlyvym peremishcheniam v inshe misce).
 
 
-	struct n_com {
-		enum n_com_type type;
-
-		union {
-			lu_size 		name;			// unique id that represents name from outside of this lib
-			lu_value 		value;
-		} data;
-	};
-
-	// "nasliduvannia" ce yedynyy maksymalno effectyvnyy sposib optymizuvaty pamiat
+	// "nasliduvannia" ce yedynyy maksymalno effectyvnyy sposib optymizuvaty pamiati
 	// componenty potrebuyut bilshe pamiati.
-	struct n_neu {
+	struct n_cell {
 		S_Cell 					s_cell;
-		lu_size 				s_ix;   	// nomer v s_cell
+		lu_size 				sl_ix;   	// nomer v s_layer
 
 		N_Lin 					b_l; 		// v and h and other links, 0 zavzhdy h
 		lu_value 				b_count;
 
 		N_Lin  					d_l;		// v and h and other links, 0 zavzhdy h
-
-		N_Com 					com;		
+	
 	};
 
-	lu_size n_neu_name_get(N_Neu self);
-	lu_value n_neu_value_get(N_Neu self);
+	struct n_cell_2 {
+		struct n_cell 			super;
+
+		lu_value 				value;
+	};
 
 	struct n_lin {
-		N_Neu	 				b;			// b i d potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
-		N_Neu					d;
+		N_Cell	 				b;			// b i d potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
+		N_Cell					d;
 
 		// ce dva spysky
 		// odyn z storony b, inshyy z storony d
@@ -81,7 +74,7 @@
 		struct n_mem_opts 		opts;
 
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
-		Mem_Table				coms;
+		//Mem_Table				coms;
 		Mem_Table 				cells;
 		Mem_Table				lins; 
 	};
@@ -92,8 +85,7 @@
 	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
 	static void n_mem_print_info(N_Mem);
-	static N_Com n_mem_com_alloc(N_Mem self);
-	static N_Neu n_mem_neu_alloc(N_Mem self);
+	static N_Cell n_mem_neu_alloc(N_Mem self);
 	static N_Lin n_mem_lin_alloc(N_Mem self);
 
 

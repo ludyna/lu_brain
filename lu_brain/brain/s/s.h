@@ -27,14 +27,12 @@
 	// ce ne neu, ce lohichnyy prostir dlia cells (odnoho i bilshe neu)
 	struct s_cell {
 		enum s_cell_type    	type;			
-		lu_size 				l_ix;		// nomer v layer
+		//lu_size 				l_ix;		// nomer v layer
 
 		S_Layer 				layer;
 	
 		S_Cell*					b;
 		S_Cell*					d;
-
-		lu_size 				n_cells_count; // cells_count potriben shob znayty n_sig dlia n_neu po yoho n_neu->s_ix v wave->w_neu->cells
 	}; 
 
 	struct s_cell_2 {
@@ -49,15 +47,17 @@
 
 		lu_size 				z;
 
-		N_Neu* 					cells;
 		S_Layer_Conf 			v_conf;
+		N_Cell* 					n_v_cells;
+
 		S_Layer_Conf 			p_conf;
+		N_Cell*					n_p_cells;
 	};
 
 	// s_neu_inits.lu
 	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer, lu_size l_ix);
 	static S_Cell_2 s_cell_2_init(S_Cell_2 self, enum s_cell_type type, S_Layer layer, lu_size l_ix, lu_size x, lu_size y);
-	static S_Cell_3 s_cell_3_init(S_Cell_3 self, S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z);
+	static S_Cell_3 s_cell_3_init(S_Cell_3 self, Mem mem, S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z);
 
 	static S_Cell s_component_links_alloc(S_Cell self, S_Rec, Mem mem);
 	static S_Cell s_pixel_links_alloc(S_Cell self, S_Rec, Mem mem);
@@ -68,6 +68,8 @@
 	static void s_pixel_connect(S_Cell_2 self, S_Layer);
 	static void s_pyra_connect(S_Cell_2 self, S_Layer);
 	static void s_block_connect(S_Cell self, S_Layer);
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
 //
@@ -102,9 +104,12 @@
 		lu_size 				d;				// komponenty v pershomu layer
 
 		lu_size 				cells_count;
-		S_Cell* 					cells;
+		S_Cell* 				cells;
 
 		S_Layer_Conf 			conf;		
+
+		
+		lu_size 				n_cells_count; // cells_count potriben shob znayty n_sig dlia n_cell po yoho n_cell->s_ix v wave->w_neu->cells
 	};
 
 	static S_Layer s_layer_init(S_Layer self, S_Rec rec, Mem mem, enum s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
