@@ -30,35 +30,19 @@
 		lu_size 				l_ix;		// nomer v layer
 
 		S_Layer 				layer;
-		lu_size 				y;
-		lu_size 				x;   
-		lu_size 				z; 	
-
+	
 		S_Cell*					b;
 		S_Cell*					d;
 
 		lu_size 				n_cells_count; // cells_count potriben shob znayty n_sig dlia n_neu po yoho n_neu->s_ix v wave->w_neu->cells
 	}; 
 
-	// s_neu_inits.lu
-	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer, lu_size x, lu_size y, lu_size z);
-	
-	static S_Cell s_block_init(S_Cell neu, S_Rec, Mem mem); 
-	static S_Cell s_pixel_init(S_Cell neu, S_Rec, Mem mem);
-	static S_Cell s_pyra_init(S_Cell neu, S_Rec, Mem mem);
-
-	// s_neu_connects.lu
-	static void s_pixel_connect(S_Cell self, S_Layer);
-	static void s_pyra_connect(S_Cell self, S_Layer);
-	static void s_block_connect(S_Cell self, S_Layer);
-
 	struct s_cell_2 {
 		struct s_cell 			super;
 
-		lu_size 				x;    		
+		lu_size 				x; 
+		lu_size 				y;   		
 	};
-
-
 
 	struct s_cell_3 {
 		struct s_cell_2 		super;
@@ -70,9 +54,20 @@
 		S_Layer_Conf 			p_conf;
 	};
 
-	static S_Cell s_cell_3_init(S_Cell neu, S_Rec, Mem mem);
+	// s_neu_inits.lu
+	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer, lu_size l_ix);
+	static S_Cell_2 s_cell_2_init(S_Cell_2 self, enum s_cell_type type, S_Layer layer, lu_size l_ix, lu_size x, lu_size y);
+	static S_Cell_3 s_cell_3_init(S_Cell_3 self, S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z);
 
+	static S_Cell s_component_links_alloc(S_Cell self, S_Rec, Mem mem);
+	static S_Cell s_pixel_links_alloc(S_Cell self, S_Rec, Mem mem);
+	static S_Cell s_pyra_links_alloc(S_Cell self, S_Rec, Mem mem);
+	static S_Cell s_block_links_alloc(S_Cell self, S_Rec, Mem mem); 
 
+	// s_neu_connects.lu
+	static void s_pixel_connect(S_Cell_2 self, S_Layer);
+	static void s_pyra_connect(S_Cell_2 self, S_Layer);
+	static void s_block_connect(S_Cell self, S_Layer);
 ///////////////////////////////////////////////////////////////////////////////
 // S Dopomizhni
 //
@@ -159,9 +154,11 @@
 		struct s_cell* 			cells;
 
 		lu_size 				cells_2_size;
+		lu_size 				cells_2_count;
 		struct s_cell_2*		cells_2;
 
 		lu_size 				cells_3_size;
+		lu_size 				cells_3_count;
 		struct s_cell_3* 		cells_3;
 
 		struct s_layer_conf 	v_conf;	
@@ -176,7 +173,10 @@
 	};
 
 	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
-	static S_Cell s_rec_neu_alloc(S_Rec, Mem mem, enum s_cell_type type, S_Layer, lu_size x, lu_size y, lu_size z);  
+	
+	static S_Cell s_rec_cell_alloc(S_Rec, Mem mem, S_Layer);  
+	static S_Cell_2 s_rec_cell_2_alloc(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y);
+	static S_Cell_3 s_rec_cell_3_alloc(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y, lu_size z);
 
 	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
@@ -187,7 +187,7 @@
 	// Layers inits
 	static void s_rec_components_init(S_Rec self, Mem mem);
 	static void s_rec_cells_init(S_Rec self, Mem mem);
-	static void s_rec_datum_init(S_Rec self, Mem mem);
+	static void s_rec_pyras_init(S_Rec self, Mem mem);
 
 	static void s_rec_print_info(S_Rec self);
 

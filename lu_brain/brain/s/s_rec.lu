@@ -29,6 +29,15 @@
 		self->cells_h			= rec->height; 
 		self->cells_d 			= rec->depth;
 
+		self->cells_count		= 0;
+		self->cells_size 		= 0;
+
+		self->cells_2_count 	= 0;
+		self->cells_2_size 		= 0;
+
+		self->cells_3_count 	= 0;
+		self->cells_3_size 		= 0;
+
 		///////////////////////////////////////
 		// Confs
 
@@ -65,17 +74,25 @@
 		self->cells = (struct s_cell*) mem_alloc(mem, sizeof(struct s_cell) * self->cells_size);
 		lu_user_assert(self->cells, "Cannot allocate cells"); 
 
+		self->cells_2 = (struct s_cell_2*) mem_alloc(mem, sizeof(struct s_cell_2) * self->cells_2_size);
+		lu_user_assert(self->cells_2, "Cannot allocate cells"); 
+
+		self->cells_3 = (struct s_cell_3*) mem_alloc(mem, sizeof(struct s_cell_3) * self->cells_3_size);
+		lu_user_assert(self->cells_3, "Cannot allocate cells"); 
+
 		///////////////////////////////////////
 		// Init cells
 
 		s_rec_components_init(self, mem);
 		s_rec_cells_init(self, mem);
-		s_rec_datum_init(self, mem);
+		s_rec_pyras_init(self, mem);
 		s_rec_blocks_init(self, mem);
 
 		//lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
 
 		lu_user_assert(self->cells_count == self->cells_size, "Something wrong with cells_count");
+		lu_user_assert(self->cells_2_count == self->cells_2_size, "Something wrong with cells_2_count");
+		lu_user_assert(self->cells_3_count == self->cells_3_size, "Something wrong with cells_3_count");
 
 		return self;
 	}
@@ -83,23 +100,56 @@
 	/*
 	** Allocate space for S_Cell
 	*/
-	static S_Cell s_rec_neu_alloc(S_Rec self, Mem mem, enum s_cell_type type, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static S_Cell s_rec_cell_alloc(S_Rec self, Mem mem, S_Layer layer)
 	{
 		lu_user_assert(self->cells_count < self->cells_size, "Out of space for S_Cell");
 
 		S_Cell neu = &self->cells[self->cells_count];
-		neu = s_cell_init(neu, type, layer, x, y, z);
+		neu = s_cell_init(neu, SCT_CELL, layer, layer->cells_count);
 		lu_user_assert(neu, "Cannot init S_Cell");
 
-		s_layer_neu_set(layer, x, y, z, neu);
+		s_layer_neu_set(layer, 0, 0, 0, neu);
 
-		// lock 
-		neu->l_ix = self->cells_count;
+		// no need for lock, they are created once in one thread
 		++layer->cells_count;
 		++self->cells_count;
 
 		return neu;
 	}  
+
+	static S_Cell_2 s_rec_cell_2_alloc(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y)
+	{
+		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for S_Cell_2");
+
+		S_Cell_2 neu = &self->cells_2[self->cells_2_count];
+		neu = s_cell_2_init(neu, SCT_CELL_2, layer, layer->cells_count, x, y);
+		lu_user_assert(neu, "Cannot init S_Cell_2");
+
+		s_layer_neu_set(layer, x, y, 0, (S_Cell) neu);
+
+		// no need for lock, they are created once in one thread
+		++layer->cells_count;
+		++self->cells_2_count;
+
+		return neu;
+	}
+
+	static S_Cell_3 s_rec_cell_3_alloc(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	{
+		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for S_Cell_3");
+
+		S_Cell_3 neu = &self->cells_3[self->cells_3_count];
+		neu = s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
+		lu_user_assert(neu, "Cannot init S_Cell_3");
+
+		s_layer_neu_set(layer, x, y, z, (S_Cell) neu);
+
+		// no need for lock, they are created once in one thread
+		++layer->cells_count;
+		++self->cells_3_count;
+
+		return neu;
+	}
 
 
 	static void s_rec_print_info(S_Rec self)
@@ -113,6 +163,10 @@
  		lu_debug("\n 	 	");
  		lu_debug("\n 	 	%-19s %lu", "cells_size:", self->cells_size);
  		lu_debug("\n 	 	%-19s %lu", "cells_count:", self->cells_count);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_2_count:", self->cells_2_count);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_3_count:", self->cells_3_count);
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
  		lu_debug("\n 	 	%-19s %lu", "blocks_size:", self->blocks_size);
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);

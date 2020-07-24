@@ -19,9 +19,9 @@
 // S
 
 	enum s_cell_type {
-		SNT_CELL_3,
-		SNT_CELL_2, 
-		SNT_CELL
+		SCT_CELL_3,
+		SCT_CELL_2, 
+		SCT_CELL
 	};
 
  	typedef struct s_cell* 			S_Cell;
