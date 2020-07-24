@@ -74,18 +74,18 @@
 		struct n_mem_opts 		opts;
 
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
-		//Mem_Table				coms;
+		Mem_Table				cells_2;
 		Mem_Table 				cells;
 		Mem_Table				lins; 
 	};
 
 	static N_Mem n_mem_create(Lu_Brain brain, N_Mem_Opts opts);
 	static N_Mem n_mem_tables_alloc(N_Mem self, Mem mem);
-	static Mem_Table n_mem_coms_create(N_Mem self, Mem mem);
-	static Mem_Table n_mem_neus_create(N_Mem self, Mem mem);
+	static Mem_Table n_mem_cells_2_create(N_Mem self, Mem mem);
+	static Mem_Table n_mem_cells_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
 	static void n_mem_print_info(N_Mem);
-	static N_Cell n_mem_neu_alloc(N_Mem self);
+	static N_Cell n_mem_cell_alloc(N_Mem self);
 	static N_Lin n_mem_lin_alloc(N_Mem self);
 
 
