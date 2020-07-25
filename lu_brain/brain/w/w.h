@@ -22,14 +22,12 @@
 		Lu_Neu 					w;		// peremozhec
 	};
 
-	struct lu_layer {
+	struct w_layer {
 		lu_size 				w;
 		lu_size 				h;
-
-		Lu_Space* 				cells;  // asociyuyutsia z s_cell
 	};
 
-	struct lu_wave_rec {
+	struct w_rec {
 		// vlasnyk
 		Lu_Wave_Mem 			mem; 			
 
@@ -41,19 +39,6 @@
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
 		lu_size 				cells_d;		
-
-		lu_size 				spaces_size;
-		lu_size 				spaces_count;
-		struct lu_space* 		spaces;
-
-		lu_size 				data_layers_size;
-		struct lu_layer* 		data_layers;
-		struct lu_layer* 		p_layers;
-
-		lu_size 				blocks_size;
-		lu_size 				block_layers_size;
-		struct lu_layer* 		block_layers;
-		struct lu_layer* 		story_p_layers;
 	};
 
 	struct lu_wave_mem {
@@ -88,7 +73,7 @@
 	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	static void wave_save_async_internal(Lu_Wave self, Lu_Story story);
-	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i);
+	static void wave_data_save(Lu_Wave self, lu_size s_rec_id, Data data, lu_size block_i);
 
 	// Find 
 	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);

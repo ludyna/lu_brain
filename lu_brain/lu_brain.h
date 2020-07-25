@@ -22,10 +22,7 @@
 	typedef struct lu_story* 			Lu_Story;
 
 	// Wave related
-
 	typedef struct lu_neu* 				Lu_Neu;
-	typedef struct lu_space* 			Lu_Space;
-	typedef struct lu_layer* 			Lu_Layer;
 	typedef struct lu_wave_mem*			Lu_Wave_Mem;
 	typedef struct lu_wave* 			Lu_Wave;
 
@@ -88,16 +85,8 @@
 	void lu_neu_name_set(Lu_Neu, lu_size);
 	void lu_neu_connect(Lu_Neu, Lu_Neu);
 
-	// Lu_Space
-
-	Lu_Neu lu_space_winner(Lu_Space);
-
-	// Lu_Layer
-
-	Lu_Space lu_layer_space(Lu_Layer, lu_size x, lu_size y, lu_size z);
 
 	// Lu_Wave
-
 	Lu_Wave lu_wave_create(Lu_Brain);
 	void lu_wave_destroy(Lu_Wave); 
 

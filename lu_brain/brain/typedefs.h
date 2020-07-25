@@ -55,4 +55,8 @@
 	typedef struct n_mem_opts*  N_Mem_Opts;
 	typedef struct n_mem* 		N_Mem;
 
+///////////////////////////////////////////////////////////////////////////////
+// W
 
+	typedef struct w_rec* 		W_Rec;
+	typedef struct w_layer* 	W_Layer;

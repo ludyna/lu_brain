@@ -81,12 +81,12 @@
 				// lu_debug("] SAVING ...");
 
 				if (data->values != NULL) 
-					wave_data_save(self, s_rec, data, block_i);
+					wave_data_save(self, s_rec->id, data, block_i);
 			}
 		}
 	}
 
-	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i)
+	static void wave_data_save(Lu_Wave self, lu_size s_rec_id, Data data, lu_size block_i)
 	{
 		lu_user_assert_void(data, "Data is NULL");
 
@@ -96,9 +96,11 @@
 		lu_value v;
 
 		S_Cell s_cell;
+		
 		S_Cell_3 s_cell_3;
+		//W_Cell_3 w_cell_3;
 
-		S_Layer v_layer 	= &s_rec->data_layers[0];
+		//W_Rec w_rec 		= lu_wave_rec_get(self, s_rec_id);
 
 		N_Mem n_mem 		= self->n_mem;
 		lu_size p_neu_ix;
@@ -110,13 +112,7 @@
 				{
 					v = data_get(data, x, y, z);
 
-					s_cell = s_layer_neu_get(v_layer, x, y, z);
-					lu_user_assert_void(s_cell, "S_Cell is NULL");
-
-					lu_user_assert_void(s_cell->type == SCT_CELL_3, "Wrong s_cell type");
-					s_cell_3 = (S_Cell_3) s_cell;
-
-
+					//lu_wave_rec_value_save(w_rec, x, y, z, v);
 				}
 			}
 	}
