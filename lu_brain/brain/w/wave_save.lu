@@ -94,9 +94,10 @@
 		lu_size y;
 		lu_size z;
 		lu_value v;
-		lu_value p;
 
 		S_Cell s_cell;
+		S_Cell_3 s_cell_3;
+
 		S_Layer v_layer 	= &s_rec->data_layers[0];
 
 		N_Mem n_mem 		= self->n_mem;
@@ -112,7 +113,10 @@
 					s_cell = s_layer_neu_get(v_layer, x, y, z);
 					lu_user_assert_void(s_cell, "S_Cell is NULL");
 
-					
+					lu_user_assert_void(s_cell->type == SCT_CELL_3, "Wrong s_cell type");
+					s_cell_3 = (S_Cell_3) s_cell;
+
+
 				}
 			}
 	}

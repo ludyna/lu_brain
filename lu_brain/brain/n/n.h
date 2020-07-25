@@ -22,6 +22,12 @@
 		lu_value 				value;
 	};
 
+	struct n_cell_3 {
+		struct n_cell 			super;
+
+		lu_size 				name;
+	};
+
 	struct n_lin {
 		N_Cell	 				b;			// b i d potribni bo po tomu samomu zviazku my mozhemo jty vverh abo vnyz
 		N_Cell					d;
@@ -65,6 +71,7 @@
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
 		Mem_Table				cells_2;
 		Mem_Table 				cells;
+		Mem_Table 				cells_3;
 		Mem_Table				lins;
 		Simple_Hash				names;
 	};
@@ -75,8 +82,11 @@
 
 	static Mem_Table n_mem_cells_2_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_cells_create(N_Mem self, Mem mem);
+	static Mem_Table n_mem_cells_3_create(N_Mem self, Mem mem);
+
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
 
 	static void n_mem_print_info(N_Mem);
+
 	static N_Cell n_mem_cell_alloc(N_Mem self);
 	static N_Lin n_mem_lin_alloc(N_Mem self);

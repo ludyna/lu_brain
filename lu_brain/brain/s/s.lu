@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Includes
  
+ 	#include "s_cell_3.lu"
  	#include "s_neu_inits.lu"
 	#include "s_neu_connects.lu"
 	#include "s_layer.lu"

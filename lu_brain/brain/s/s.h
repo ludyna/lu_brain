@@ -24,7 +24,6 @@
 	#define d_np(n) n->d[2]
 	#define d_nl(n) n->d[3]
 
-	// ce ne neu, ce lohichnyy prostir dlia cells (odnoho i bilshe neu)
 	struct s_cell {
 		enum s_cell_type    	type;			
 		//lu_size 				l_ix;		// nomer v layer
@@ -48,11 +47,13 @@
 		lu_size 				z;
 
 		S_Layer_Conf 			v_conf;
-		N_Cell* 					n_v_cells;
+		N_Cell* 				n_v_cells;
 
 		S_Layer_Conf 			p_conf;
 		N_Cell*					n_p_cells;
 	};
+
+	static void s_cell_3_save(S_Cell_3 self, lu_value value);
 
 	// s_neu_inits.lu
 	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer, lu_size l_ix);
