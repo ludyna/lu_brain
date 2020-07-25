@@ -6,6 +6,7 @@
 // N Net
 
 	struct n_cell {
+		enum n_cell_type 		type;
 		S_Cell 					s_cell;
 		lu_size 				sl_ix;   	// nomer v s_layer
 
@@ -69,24 +70,27 @@
 		struct n_mem_opts 		opts;
 
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
-		Mem_Table				cells_2;
 		Mem_Table 				cells;
+		Mem_Table				cells_2;
 		Mem_Table 				cells_3;
 		Mem_Table				lins;
+
 		Simple_Hash				names;
 	};
 
+	// n_mem_creates.lu
 	static N_Mem n_mem_create(Lu_Brain brain, N_Mem_Opts opts);
-	
-	static N_Mem n_mem_tables_alloc(N_Mem self, Mem mem);
-
+	static N_Mem n_mem_tables_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_cells_2_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_cells_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_cells_3_create(N_Mem self, Mem mem);
-
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
 
+	// n_mem.lu
 	static void n_mem_print_info(N_Mem);
 
+	// n_mem_allocs.lu
 	static N_Cell n_mem_cell_alloc(N_Mem self);
+	static N_Cell_2 n_mem_cell_2_alloc(N_Mem self);
+	static N_Cell_3 n_mem_cell_3_alloc(N_Mem self);
 	static N_Lin n_mem_lin_alloc(N_Mem self);

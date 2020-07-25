@@ -41,15 +41,16 @@
 
 	#define IX_NULL 0
 
-	enum n_com_type {
-		NCT_VALUE = 0,
-		NCT_NAME = 1,
-
+	enum n_cell_type {
+		NCT_NORMAL = 0, 
+		NCT_VALUE,
+		NCT_NAME,
 		NCT_SIZE
 	};
 
 	typedef struct n_cell*		N_Cell;
 	typedef struct n_cell_2* 	N_Cell_2;
+	typedef struct n_cell_3* 	N_Cell_3;
 	typedef struct n_lin* 		N_Lin;
 	typedef struct n_mem_opts*  N_Mem_Opts;
 	typedef struct n_mem* 		N_Mem;

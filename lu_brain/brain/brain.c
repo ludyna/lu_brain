@@ -73,7 +73,7 @@
 		self->n_mem 		= n_mem_create(self, &opts->n_mem_opts);
 		lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
 
-		n_mem_tables_alloc(self->n_mem, app_mem);
+		n_mem_tables_create(self->n_mem, app_mem);
 
 		brain_print_info(self);
 
