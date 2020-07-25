@@ -1,0 +1,47 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+	Simple_Hash simple_hash_create(Mem mem, lu_size table_size)
+	{
+		lu_user_assert(mem, "Mem is NULL");
+		lu_user_assert(table_size > 0, "table_size is 0");
+
+		Simple_Hash self = (Simple_Hash) mem_alloc(mem, sizeof(struct simple_hash));
+		lu_user_assert(self, "Cannot allocate Simple_Hash");
+
+		self->table_size = table_size;
+		self->table = (lu_p_void*) mem_alloc(mem, sizeof(lu_p_void) * table_size);
+		lu_user_assert(self->table, "Cannot allocate Simple_Hash table");
+
+		for(lu_size i = 0; i < self->table_size; i++)
+		{
+			self->table[i] = NULL;
+		}
+
+		return self;
+	}
+
+	void simple_hash_destroy(Simple_Hash self, Mem mem)
+	{
+		mem_free(mem, (lu_p_byte) self->table);
+		
+		self->table = NULL;
+
+		mem_free(mem, (lu_p_byte) self);
+	}
+
+
+	void simple_hash_set(Simple_Hash self, lu_size key, lu_p_void value)
+	{
+		lu_user_assert_void(key < self->table_size, "Key is outside of Simple_Hash range");
+
+		self->table[key] = value;
+	}
+
+	lu_p_void simple_hash_get(Simple_Hash self, lu_size key)
+	{		
+		lu_user_assert(key < self->table_size, "Key is outside of Simple_Hash range");
+
+		return self->table[key];
+	}

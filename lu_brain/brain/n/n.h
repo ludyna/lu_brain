@@ -2,28 +2,17 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-#ifndef _LU_N_H
-#define _LU_N_H
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // N Net
 
-// serializaciya bude duzhe prostoyu, 
-// treba prosto zberehty N Net ta parametry za yakymy buv stvorenyy brain
-// vse reshtu perestvoruyetsia. Tak samo perevydilenia pamiati (z mozhlyvym peremishcheniam v inshe misce).
-
-
-	// "nasliduvannia" ce yedynyy maksymalno effectyvnyy sposib optymizuvaty pamiati
-	// componenty potrebuyut bilshe pamiati.
 	struct n_cell {
 		S_Cell 					s_cell;
 		lu_size 				sl_ix;   	// nomer v s_layer
 
-		N_Lin 					b_l; 		// v and h and other links, 0 zavzhdy h
+		N_Lin 					b_l; 		
 		lu_value 				b_count;
 
-		N_Lin  					d_l;		// v and h and other links, 0 zavzhdy h
+		N_Lin  					d_l;		
 	
 	};
 
@@ -76,17 +65,18 @@
 		// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
 		Mem_Table				cells_2;
 		Mem_Table 				cells;
-		Mem_Table				lins; 
+		Mem_Table				lins;
+		Simple_Hash				names;
 	};
 
 	static N_Mem n_mem_create(Lu_Brain brain, N_Mem_Opts opts);
+	
 	static N_Mem n_mem_tables_alloc(N_Mem self, Mem mem);
+
 	static Mem_Table n_mem_cells_2_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_cells_create(N_Mem self, Mem mem);
 	static Mem_Table n_mem_lins_create(N_Mem self, Mem mem);
+
 	static void n_mem_print_info(N_Mem);
 	static N_Cell n_mem_cell_alloc(N_Mem self);
 	static N_Lin n_mem_lin_alloc(N_Mem self);
-
-
-#endif // _LU_N_H

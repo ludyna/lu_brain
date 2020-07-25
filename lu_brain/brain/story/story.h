@@ -23,10 +23,6 @@
 		lu_size				y;  
 		lu_bool 			start_block_on_next_data;
 		lu_size 			blocks_count;
-
-		// Attached gate and wave
-		Gate 				gate;
-		Lu_Wave 			wave;
 	};
 
 	static inline Data story_data_get(Lu_Story self, lu_size rec_i, lu_size block_i) { return &self->datum[block_i * self->datum_w + rec_i]; }
