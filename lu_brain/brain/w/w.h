@@ -9,22 +9,20 @@
 		N_Cell 					neu;
 		lu_value 				p;
 	};
+	#define w_cell lu_neu
+
+	struct w_cell_3 {
+		struct lu_neu 			super;
+
+
+	};
 
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-	// asociyuyetsia do s_cell, a ne n_cell
-	struct lu_space {
-		Lu_Neu 					sigs; 	// velykyy masyv, de sigs[n_neu_1->sid] vidpovidaye za w_sig dlia n_neu_1
-										// kozhne vykorystania n_cell miniaye misciamy n_cell->sid z vyshchym n_cell->sid
-										// takym chynom my mozhemo vyddaliaty neu z sid sho perevyshchuye pevne znachennia (starinnia neuroniv)
-
-		Lu_Neu 					w;		// peremozhec
-	};
-
 	struct w_layer {
-		lu_size 				w;
-		lu_size 				h;
+		lu_size 				cells_size;
+		W_Cell* 				cells;
 	};
 
 	struct w_rec {
@@ -45,10 +43,16 @@
 		Lu_Brain 				brain;
 
 		Arr 					recs;
-	}; 
+	};
+	#define w_mem lu_wave_mem
 
-	static Lu_Wave_Mem wave_mem_create(Lu_Wave wave, S_Mem s_mem);
+	// w_mem.lu
+	static W_Mem w_mem_create(Lu_Wave wave, S_Mem s_mem);
+	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id);
+
+	// wave_mem.lu
 	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem);
+	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem self);
 
 	struct lu_wave {
 		// Opts
@@ -63,32 +67,30 @@
 		Lu_Story 				story;
 
 		// Internal
-		Lu_Wave_Mem 			w_mem;
+		W_Mem 					w_mem;
 	};
 
+	// wave.lu
 	Lu_Wave lu_wave_create(Lu_Brain);
 	void lu_wave_destroy(Lu_Wave); 
+	Lu_Wave_Mem lu_wave_join(Lu_Wave);
+	static Lu_Wave wave_prepare(Lu_Wave);
 
-	// Save
+	// wave_save.lu
 	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	static void wave_save_async_internal(Lu_Wave self, Lu_Story story);
 	static void wave_data_save(Lu_Wave self, lu_size s_rec_id, Data data, lu_size block_i);
 
-	// Find 
+	// wave_find.lu 
 	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);
 	void lu_wave_find_async(Lu_Wave, Lu_Story);
 
-	// Restore
+	// wave_restore.lu
 	Lu_Wave_Mem lu_wave_restore(Lu_Wave, Lu_Neu);
 	void lu_wave_restore_async(Lu_Wave, Lu_Story);
 
-	// Other
-	Lu_Wave_Mem lu_wave_join(Lu_Wave);
-	static Lu_Wave wave_prepare(Lu_Wave);
-
-	// Properties
-
+	// wave_properties.lu
 	lu_flags lu_wave_flags_get(Lu_Wave);
 	void lu_wave_flags_set(Lu_Wave, lu_flags);
 	void lu_wave_flags_remove(Lu_Wave self, lu_flags flags);

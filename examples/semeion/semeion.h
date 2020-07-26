@@ -3,7 +3,6 @@
 */
 
 #include "../../lu_brain/brain/brain.h"
-#include "../../lu_brain/brain/brain.c"
  
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Digit

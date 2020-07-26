@@ -21,7 +21,7 @@
 		wave_save_async_internal(self, story);
 		lu_wave_join(self);
 
-		return self->w_mem;
+		return (Lu_Wave_Mem) self->w_mem;
 	} 
 
 	Lu_Wave_Mem lu_wave_save_with_name(Lu_Wave self, Lu_Story story, lu_size name)
@@ -35,7 +35,7 @@
 
 		lu_neu_connect(neu, name_neu);
 
-		return wave_mem;
+		return (Lu_Wave_Mem) wave_mem;
 	}
 
 	void lu_wave_save_async(Lu_Wave self, Lu_Story story)
@@ -88,6 +88,8 @@
 
 	static void wave_data_save(Lu_Wave self, lu_size s_rec_id, Data data, lu_size block_i)
 	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu_user_assert_void(self->w_mem, "W_Mem is NULL");
 		lu_user_assert_void(data, "Data is NULL");
 
 		lu_size x;
@@ -98,9 +100,9 @@
 		S_Cell s_cell;
 		
 		S_Cell_3 s_cell_3;
-		//W_Cell_3 w_cell_3;
+		W_Cell_3 w_cell_3;
 
-		//W_Rec w_rec 		= lu_wave_rec_get(self, s_rec_id);
+		W_Rec w_rec 		= w_mem_rec_get(self->w_mem, s_rec_id);
 
 		N_Mem n_mem 		= self->n_mem;
 		lu_size p_neu_ix;

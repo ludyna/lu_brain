@@ -1,7 +1,7 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
-//#include <unistd.h>
+
 #include "semeion.h"
 #include "semeion.c"
 
