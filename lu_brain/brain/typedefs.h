@@ -18,9 +18,9 @@
 		SCT_CELL
 	};
 
- 	typedef struct s_cell* 			S_Cell;
- 	typedef struct s_cell_2* 		S_Cell_2;
- 	typedef struct s_cell_3* 		S_Cell_3;
+ 	typedef struct s_cell* 				S_Cell;
+ 	typedef struct s_cell_2* 			S_Cell_2;
+ 	typedef struct s_cell_3* 			S_Cell_3;
 	
 	// Helpers
 
@@ -31,10 +31,10 @@
 		SLT_BLOCKS
 	};
 	
-	typedef struct s_layer_conf*	S_Layer_Conf;
-	typedef struct s_layer* 		S_Layer;
-	typedef struct s_rec*			S_Rec;
-	typedef struct s_mem* 			S_Mem;
+	typedef struct s_layer_conf*		S_Layer_Conf;
+	typedef struct s_layer* 			S_Layer;
+	typedef struct s_rec*				S_Rec;
+	typedef struct s_mem* 				S_Mem;
 
 ///////////////////////////////////////////////////////////////////////////////
 // N
@@ -48,20 +48,20 @@
 		NCT_SIZE
 	};
 
-	typedef struct n_cell*		N_Cell;
-	typedef struct n_cell_2* 	N_Cell_2;
-	typedef struct n_cell_3* 	N_Cell_3;
-	typedef struct n_lin* 		N_Lin;
-	typedef struct n_mem_opts*  N_Mem_Opts;
-	typedef struct n_mem* 		N_Mem;
+	typedef struct n_cell*				N_Cell;
+	typedef struct n_cell_2* 			N_Cell_2;
+	typedef struct n_cell_3* 			N_Cell_3;
+	typedef struct n_lin* 				N_Lin;
+	typedef struct n_mem_opts*  		N_Mem_Opts;
+	typedef struct n_mem* 				N_Mem;
 
 ///////////////////////////////////////////////////////////////////////////////
 // W
 
-	typedef struct w_cell* 		W_Cell;
- 	typedef struct w_cell_3* 	W_Cell_3;
-	typedef struct w_rec* 		W_Rec;
-	typedef struct w_layer* 	W_Layer;
-	typedef struct w_mem* 		W_Mem;
+	typedef struct w_cell* 				W_Cell;
+ 	typedef struct w_cell_3* 			W_Cell_3;
+	typedef struct w_rec* 				W_Rec;
+	typedef struct w_layer* 			W_Layer;
+	typedef struct lu_wave_mem* 		W_Mem;
 	
 ///////////////////////////////////////////////////////////////////////////////

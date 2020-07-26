@@ -5,19 +5,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Lu_Wave lu_wave_create(Lu_Brain brain)
+	Lu_Wave lu_wave_create(Lu_Brain brain, lu_size hold_blocks_size)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->s_mem, "S_Mem is NULL");
 		lu_user_assert(brain->n_mem, "N_Mem is NULL");
+		lu_user_assert(hold_blocks_size > 0, "hold_blocks_size should greater than zero");
 
 		Lu_Wave self 		= (Lu_Wave) mem_alloc(g_mem_temp, sizeof(struct lu_wave));
 		lu_user_assert(self, "Cannot allocate Lu_Wave");
 
-		self->s_mem 		= brain->s_mem;
-		self->n_mem 		= brain->n_mem; 
-		self->story 		= NULL;
-		self->w_mem 		= w_mem_create(self, self->s_mem);
+		self->hold_blocks_size 		= hold_blocks_size;
+		
+		self->brain 				= brain;
+		self->s_mem 				= brain->s_mem;
+		self->n_mem 				= brain->n_mem; 
+		self->story 				= NULL;
+
+		self->w_mem 				= w_mem_create(self, self->s_mem);
 		lu_user_assert(self->w_mem, "Cannot create Lu_Wave_Mem");
 
 		return self;
@@ -25,6 +30,7 @@
 
 	void lu_wave_destroy(Lu_Wave self)
 	{
+		w_mem_destroy(self->w_mem);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 

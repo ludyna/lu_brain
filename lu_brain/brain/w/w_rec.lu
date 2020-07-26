@@ -1,0 +1,11 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+//
+
+	static void w_rec_value_save(W_Rec self, lu_size x, lu_size y, lu_size z, lu_value value)
+	{
+
+	}

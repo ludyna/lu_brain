@@ -114,7 +114,7 @@
 				{
 					v = data_get(data, x, y, z);
 
-					//lu_wave_rec_value_save(w_rec, x, y, z, v);
+					w_rec_value_save(w_rec, x, y, z, v);
 				}
 			}
 	}

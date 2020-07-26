@@ -7,8 +7,25 @@
 
 	static W_Mem w_mem_create(Lu_Wave wave, S_Mem s_mem)
 	{
-		
+		lu_user_assert(wave, "Lu_Wave is NULL");
+		lu_user_assert(wave->brain, "Lu_Brain is NULL");
+		lu_user_assert(wave->hold_blocks_size, "hold_blocks_size should be greater than zero");
+
+		W_Mem self = (W_Mem) mem_alloc(g_mem_temp, sizeof(struct w_mem));
+		lu_user_assert(self, "Cannot allocate W_Mem");
+
+		self->wave 			= wave;
+		self->recs 			= arr_create(g_mem_temp, arr_count(wave->brain->recs));
+
+		return self;
 	}
+
+	static void w_mem_destroy(W_Mem self)
+	{
+		arr_destroy(self->recs, g_mem_temp);
+		mem_free(g_mem_temp, (lu_p_byte) self);
+	}
+
 
 	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id)
 	{

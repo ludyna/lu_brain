@@ -5,45 +5,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Properties 
 
-	lu_flags lu_wave_flags_get(Lu_Wave self)
+	lu_value lu_wave_contrast_vs_color_get(Lu_Wave self)
 	{
-		return self->flags;
+		return self->contrast_vs_color;
 	}
-	void lu_wave_flags_set(Lu_Wave self, lu_flags flags)
-	{
-		self->flags |= flags;
-	}	
-	void lu_wave_flags_remove(Lu_Wave self, lu_flags flags)
-	{
-		self->flags &= ~flags;
-	}
-
-	lu_value lu_wave_color_get(Lu_Wave self)
-	{
-		return self->color;
-	}
-	void lu_wave_color_set(Lu_Wave self, lu_value value)
+	void lu_wave_contrast_vs_color_set(Lu_Wave self, lu_value value)
 	{
 		lu_user_assert_void(value >= 0 && value <= 1, "Color should be in [0, 1]");
-		self->color = value;
+		self->contrast_vs_color = value;
 	}
 
-	lu_value lu_wave_contrast_get(Lu_Wave self)
+	lu_value lu_wave_fire_breakpoint_get(Lu_Wave self)
 	{
-		return self->contrast;
+		return self->fire_breakpoint;
 	}
-	void lu_wave_contrast_set(Lu_Wave self, lu_value value)
-	{
-		lu_user_assert_void(value > 0 && value < 1, "Contrast should be in (0, 1)");
-		self->contrast = value;
-	}
-
-	lu_value lu_wave_breakpoint_get(Lu_Wave self)
-	{
-		return self->breakpoint;
-	}
-	void lu_wave_breakpoint_set(Lu_Wave self, lu_value value)
+	void lu_wave_fire_breakpoint_set(Lu_Wave self, lu_value value)
 	{  
 		lu_user_assert_void(value > 0 && value < 1, "Breakpoint should be in (0, 1)");
-		self->breakpoint = value;
+		self->fire_breakpoint = value;
 	}

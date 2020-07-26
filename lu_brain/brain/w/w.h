@@ -39,15 +39,19 @@
 		lu_size 				cells_d;		
 	};
 
-	struct lu_wave_mem {
-		Lu_Brain 				brain;
+	static void w_rec_value_save(W_Rec self, lu_size x, lu_size y, lu_size z, lu_value value);
+
+	#define w_mem lu_wave_mem
+	struct w_mem {
+		// vlasnyk
+		Lu_Wave 				wave;
 
 		Arr 					recs;
 	};
-	#define w_mem lu_wave_mem
 
 	// w_mem.lu
 	static W_Mem w_mem_create(Lu_Wave wave, S_Mem s_mem);
+	static void w_mem_destroy(W_Mem self);
 	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id);
 
 	// wave_mem.lu
@@ -55,13 +59,15 @@
 	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem self);
 
 	struct lu_wave {
-		// Opts
-		lu_flags 				flags;
-		lu_value 				color;
-		lu_value 				contrast;
-		lu_value 				breakpoint;
+		// Creation opts
+		lu_size 				hold_blocks_size;
+
+		// Other opts
+		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
+		lu_value 				fire_breakpoint;
 
 		// Refs
+		Lu_Brain 				brain;
 		S_Mem 					s_mem; 
 		N_Mem 					n_mem;
 		Lu_Story 				story;
@@ -71,7 +77,7 @@
 	};
 
 	// wave.lu
-	Lu_Wave lu_wave_create(Lu_Brain);
+	Lu_Wave lu_wave_create(Lu_Brain brain, lu_size hold_blocks_size);
 	void lu_wave_destroy(Lu_Wave); 
 	Lu_Wave_Mem lu_wave_join(Lu_Wave);
 	static Lu_Wave wave_prepare(Lu_Wave);
@@ -91,18 +97,11 @@
 	void lu_wave_restore_async(Lu_Wave, Lu_Story);
 
 	// wave_properties.lu
-	lu_flags lu_wave_flags_get(Lu_Wave);
-	void lu_wave_flags_set(Lu_Wave, lu_flags);
-	void lu_wave_flags_remove(Lu_Wave self, lu_flags flags);
+	lu_value lu_wave_contrast_vs_color_get(Lu_Wave);
+	void lu_wave_contrast_vs_color_set(Lu_Wave, lu_value);
 
-	lu_value lu_wave_color_get(Lu_Wave);
-	void lu_wave_color_set(Lu_Wave, lu_value);
-
-	lu_value lu_wave_contrast_get(Lu_Wave);
-	void lu_wave_contrast_set(Lu_Wave, lu_value);
-
-	lu_value lu_wave_breakpoint_get(Lu_Wave);
-	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
+	lu_value lu_wave_fire_breakpoint_get(Lu_Wave);
+	void lu_wave_fire_breakpoint_set(Lu_Wave, lu_value);
 
 
 
