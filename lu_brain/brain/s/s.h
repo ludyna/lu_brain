@@ -173,7 +173,7 @@
 		lu_size 				data_layers_size;
 		struct s_layer* 		data_layers;
 
-		lu_size 				blocks_size;
+		lu_size 				hold_blocks_size;
 		lu_size 				block_layers_size;
 		struct s_layer* 		block_layers;
 	};

@@ -25,7 +25,7 @@
 		self->height 			= opts->height;
 		self->depth				= opts->depth;
 
-		self->blocks_size 		= opts->blocks_size;
+		self->hold_blocks_size 	= opts->hold_blocks_size;
 
 		self->v_min				= opts->v_min;
 		self->v_max 			= opts->v_max;

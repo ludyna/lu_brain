@@ -42,7 +42,7 @@
 		lu_size width, 
 		lu_size height, 
 		lu_size depth,
-		lu_size blocks_size,
+		lu_size hold_blocks_size,
 		lu_value v_min, 
 		lu_value v_max, 
 		lu_size v_neu_size
@@ -87,7 +87,7 @@
 
 
 	// Lu_Wave
-	Lu_Wave lu_wave_create(Lu_Brain brain, lu_size hold_blocks_size);
+	Lu_Wave lu_wave_create(Lu_Brain brain);
 	void lu_wave_destroy(Lu_Wave); 
 
 	// Lu_Wave Sync

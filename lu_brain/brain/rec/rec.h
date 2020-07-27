@@ -10,7 +10,8 @@
 
 		lu_size 		width;
 		lu_size 		height;
-		lu_size			blocks_size;
+		lu_size			hold_blocks_size;
+		lu_size 		max_blocks_size;
 		
 		lu_size 		depth;
 
@@ -32,7 +33,8 @@
 
 		lu_size 		width;
 		lu_size 		height;
-		lu_size 		blocks_size;
+		lu_size 		hold_blocks_size;
+		lu_size 		max_blocks_size;
 
 		lu_size 		depth;
 

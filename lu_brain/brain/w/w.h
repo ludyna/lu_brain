@@ -26,8 +26,6 @@
 
 	struct w_layer_2 {
 		struct w_layer 			super;
-
-
 	};
 
 	struct w_rec {
@@ -37,8 +35,9 @@
 		// poviazanyy z rec
 		S_Rec 					s_rec;		
 
-
-		
+		W_Layer_2 				layer_0;
+		W_Layer 				layer_1;
+		W_Layer 				layer_2;
 	};
 
 	// w_rec.lu
@@ -75,9 +74,6 @@
 	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem self);
 
 	struct lu_wave {
-		// Creation opts
-		lu_size 				hold_blocks_size;
-
 		// Other opts
 		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
 		lu_value 				fire_breakpoint;
@@ -93,7 +89,7 @@
 	};
 
 	// wave.lu
-	Lu_Wave lu_wave_create(Lu_Brain brain, lu_size hold_blocks_size);
+	Lu_Wave lu_wave_create(Lu_Brain brain);
 	void lu_wave_destroy(Lu_Wave); 
 	Lu_Wave_Mem lu_wave_join(Lu_Wave);
 	static Lu_Wave wave_prepare(Lu_Wave);

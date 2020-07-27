@@ -15,5 +15,8 @@
 #define LU_NAMES_SIZE 256
 #endif
 
+#ifndef LU_MAX_BLOCKS_SIZE 
+#define LU_MAX_BLOCKS_SIZE 16
+#endif
 
 #endif // _LU_CONFIGS_PUB_H

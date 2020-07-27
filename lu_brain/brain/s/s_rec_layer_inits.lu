@@ -54,7 +54,7 @@
 
 		// Blocks
 		ix = 0;
-		w = self->blocks_size;
+		w = self->block_layers_size;
 		h = 1;
 		d = 1;
 

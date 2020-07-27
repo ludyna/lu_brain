@@ -57,8 +57,8 @@
 		///////////////////////////////////////
 		// Allocate Block Layers
 
-		self->blocks_size			= rec->blocks_size;
-		self->block_layers_size 	= self->blocks_size;	// block_layers_size = blocks_size, but potentially they could be different
+		self->hold_blocks_size		= rec->hold_blocks_size;
+		self->block_layers_size 	= self->hold_blocks_size;	// block_layers_size = blocks_size, but potentially they could be different
 
 		self->block_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->block_layers_size);
 		lu_user_assert(self->block_layers, "Cannot allocate av layers"); 
@@ -168,7 +168,7 @@
  		lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
  		lu_debug("\n 	 	%-19s %lu", "cells_3_count:", self->cells_3_count);
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
- 		lu_debug("\n 	 	%-19s %lu", "blocks_size:", self->blocks_size);
+ 		lu_debug("\n 	 	%-19s %lu", "hold_blocks_size:", self->hold_blocks_size);
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
  		lu_debug("\n 	 	");
 
