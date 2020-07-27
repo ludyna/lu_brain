@@ -57,11 +57,13 @@
 		Smn_Group group;
 		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
 		{
-			group 			= &smn_groups[i];
-			group->name 	= i;
-			group->size 	= 0;
-			group->count 	= 0;
-			group->data 	= NULL;
+			group 					= &smn_groups[i];
+			group->name 			= i;
+			group->size 			= 0;
+			group->count 			= 0;
+			group->data 			= NULL;
+			group->training_size 	= 0;
+			group->test_size 		= 0;
 		}
 	}
 
@@ -193,12 +195,13 @@
 			++group->size;
 		}
 
-		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
-		{
-			group = &smn_groups[i];
-			printf("\nDigit %d: %lu samples", group->name, group->size);
-		}
-		
+		// printf("\n");
+		// for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		// {
+		// 	group = &smn_groups[i];
+		// 	printf(" %d (%lu samples)", group->name, group->size);
+		// 	if ((i + 1) % 5 == 0) printf("\n");
+		// }
 	    
 	exit: 
 	    fclose(fp);
@@ -215,8 +218,24 @@
 	{
 		smn_user_assert_void(SMN_SAVE_SAMPLES_PERCENT < 0.99 && SMN_SAVE_SAMPLES_PERCENT >= 0.3, "SMN_SAVE_SAMPLES_PERCENT in bad range"); 
 
-		smn_training_samples_count = smn_data_count * SMN_SAVE_SAMPLES_PERCENT;
-		smn_test_samples_count = smn_data_count - smn_training_samples_count;
+		smn_training_samples_count = 0;
+		smn_test_samples_count = 0;
+
+		size_t i;
+		Smn_Group group;
+		Smn_Digit digit;
+		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		{
+			group = &smn_groups[i];
+
+			group->training_size = group->count * SMN_SAVE_SAMPLES_PERCENT;
+			group->test_size = group->count - group->training_size;
+
+			smn_training_samples_count += group->training_size;
+			smn_test_samples_count += group->test_size;
+
+			printf("\n %d: test(%lu), training(%lu), total(%lu)", group->name, group->test_size, group->training_size, group->count);
+		}
 
 		smn_test_samples = (Smn_Digit*) calloc(smn_test_samples_count, sizeof(Smn_Digit));
 		smn_user_assert_void(smn_test_samples, "Cannot allocate smn_test_samples");
@@ -224,40 +243,53 @@
 		smn_training_samples = (Smn_Digit*) calloc(smn_training_samples_count, sizeof(Smn_Digit));
 		smn_user_assert_void(smn_training_samples, "Cannot allocate smn_training_samples");
 
-		printf("\nSelecting %lu random test samples", smn_test_samples_count);
-
-		size_t i = 0;
+		size_t j;
 		Smn_Digit d;
-		while (i < smn_test_samples_count)
+		size_t test_count = 0;
+		size_t training_count = 0;
+		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
 		{
-			d = &smn_data[rand_in_range(0, (int) smn_data_count - 1)];
-			smn_user_assert_void(d, "d is NULL");
+			group = &smn_groups[i];
 
-			if (d->type == SD_NONE)
+			j = 0;
+			while (j < group->test_size)
 			{
- 				d->type = SD_SELECTED_FOR_TEST;
- 				smn_test_samples[i] = d;
- 				++i;
+				d = group->data[rand_in_range(0, (int) group->count - 1)];
+				smn_user_assert_void(d, "d is NULL");
+
+				if (d->type == SD_NONE)
+				{
+	 				d->type = SD_SELECTED_FOR_TEST;
+	 				smn_test_samples[test_count] = d;
+	 				++test_count;
+	 				++j;
+				}
+			}
+		}
+		smn_user_assert_void(test_count == smn_test_samples_count, "Sanity check failed: test_count == smn_test_samples_count");
+
+		printf("\nSelected %lu random test samples", smn_test_samples_count);
+
+		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		{
+			group = &smn_groups[i];
+
+			for (j = 0; j < group->count; j++)
+			{
+				d = group->data[j];
+
+				if (d->type == SD_NONE)
+				{
+					d->type = SD_SELECTED_FOR_TRAINING;
+					smn_training_samples[training_count] = d;
+					++training_count;
+				}
 			}
 		}
 
-		printf("\nSelecting %lu random training samples", smn_training_samples_count);
+		smn_user_assert_void(training_count == smn_training_samples_count, "Sanity check failed: training_count == smn_training_samples_count");
 
-		size_t j = 0;
-		i = 0;
-		while (i < smn_training_samples_count && j < smn_data_count)
-		{
-			d = &smn_data[j];
-			if (d->type == SD_NONE)
-			{
-				d->type = SD_SELECTED_FOR_TRAINING;
-				smn_training_samples[i] = d;
-				++i;
-			}
-			++j;
-		}
-
-		smn_user_assert_void(i == smn_training_samples_count, "Sanity check failed: i != smn_training_samples_count");
+		printf("\nSelected %lu random training samples", smn_training_samples_count);
 	}
 
 	void smn_data_samples_free()

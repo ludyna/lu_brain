@@ -38,6 +38,8 @@
 		size_t 			size;
 		size_t 			count;
 		Smn_Digit* 		data;
+		size_t			training_size;
+		size_t 			test_size;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
