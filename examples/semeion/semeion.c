@@ -59,6 +59,7 @@
 		{
 			group 			= &smn_groups[i];
 			group->name 	= i;
+			group->size 	= 0;
 			group->count 	= 0;
 			group->data 	= NULL;
 		}
@@ -66,17 +67,52 @@
 
 	void smn_groups_data_alloc()
 	{
-
+		size_t i;
+		Smn_Group group;
+		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		{
+			group = &smn_groups[i];
+			if (group->size)
+			{
+				group->data = (Smn_Digit*) calloc(group->size, sizeof(Smn_Digit));
+			}
+		}
 	}
 
 	void smn_groups_data_fill()
 	{
+		Smn_Digit digit;
+		Smn_Group group;
 
+		size_t i;
+		for (i = 0; i < smn_data_count; i++)
+		{
+			digit = &smn_data[i];
+			group = &smn_groups[digit->name];
+
+			group->data[group->count] = digit;
+			++group->count;
+
+			if (group->count > group->size)
+			{
+				printf("\nSomething went wrong!!");
+				break;
+			}
+		}
 	}
 
 	void smn_groups_data_free()
 	{
-
+		size_t i;
+		Smn_Group group;
+		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		{
+			group 			= &smn_groups[i];
+			if (group->data)
+			{
+				free(group->data);
+			}
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -115,6 +151,7 @@
 		smn_data = (Smn_Digit) calloc(smn_data_count, sizeof(struct smn_digit));
 
 		Smn_Digit digit;
+		Smn_Group group;
 
 		float val_f;
 		int val_i;
@@ -152,10 +189,16 @@
 				goto exit;
 			}
 
-
+			group = &smn_groups[digit->name];
+			++group->size;
 		}
 
-		printf("\nLoading complete.");
+		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		{
+			group = &smn_groups[i];
+			printf("\nDigit %d: %lu samples", group->name, group->size);
+		}
+		
 	    
 	exit: 
 	    fclose(fp);

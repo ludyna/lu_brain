@@ -35,6 +35,7 @@
 	// Group digit samples with the same name 
 	struct smn_group {
 		int 			name;
+		size_t 			size;
 		size_t 			count;
 		Smn_Digit* 		data;
 	};
