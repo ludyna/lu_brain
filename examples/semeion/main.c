@@ -15,11 +15,20 @@ int main()
 
 	srand(time(0));
 
+	// Init samples
+
+	smn_groups_init();
+
 	// Load data into memory  
 
 	smn_data_load();
 
-	// Select random samples
+	// Allocate data for groups and fill groups with samples
+
+	smn_groups_data_alloc();
+	smn_groups_data_fill();
+
+	// Select random samples from groups
 
 	smn_data_samples_create();
 
@@ -111,6 +120,7 @@ int main()
 	// Clean up memory for data
 
 	smn_data_samples_free();
+	smn_groups_data_free();
 	smn_data_free();
 
 	// Exit app

@@ -47,6 +47,39 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Smn_Groups
+
+	struct smn_group smn_groups[SMN_DIGIT_VALUE_COUNT];
+
+	void smn_groups_init()
+	{
+		size_t i;
+		Smn_Group group;
+		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		{
+			group 			= &smn_groups[i];
+			group->name 	= i;
+			group->count 	= 0;
+			group->data 	= NULL;
+		}
+	}
+
+	void smn_groups_data_alloc()
+	{
+
+	}
+
+	void smn_groups_data_fill()
+	{
+
+	}
+
+	void smn_groups_data_free()
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Smn_Data
 
 	Smn_Digit 		smn_data 					= NULL;
@@ -57,6 +90,7 @@
 
 	Smn_Digit* 		smn_test_samples 			= NULL;
 	size_t 			smn_test_samples_count  	= 0;
+
 
 	void smn_data_load()
 	{
@@ -81,6 +115,7 @@
 		smn_data = (Smn_Digit) calloc(smn_data_count, sizeof(struct smn_digit));
 
 		Smn_Digit digit;
+
 		float val_f;
 		int val_i;
 		size_t i;
@@ -110,6 +145,14 @@
 
 			digit->name = non_zero_ix;
 			digit->type = SD_NONE;
+
+			if (digit->name >= SMN_DIGIT_VALUE_COUNT)
+			{
+				printf("\ndigit->name >= SMN_DIGIT_VALUE_COUNT!!!\n");
+				goto exit;
+			}
+
+
 		}
 
 		printf("\nLoading complete.");
