@@ -8,25 +8,24 @@
 	static W_Mem w_mem_create(Lu_Wave wave, S_Mem s_mem)
 	{
 		lu_user_assert(wave, "Lu_Wave is NULL");
-
-		Lu_Brain brain = wave->brain;
-
-		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(wave->brain, "Lu_Brain is NULL");
+		lu_user_assert(s_mem, "S_Mem is NULL");
+		lu_user_assert(s_mem->recs, "S_Mem recs is NULL");
 		lu_user_assert(wave->hold_blocks_size, "hold_blocks_size should be greater than zero");
 
 		W_Mem self = (W_Mem) mem_alloc(g_mem_temp, sizeof(struct w_mem));
 		lu_user_assert(self, "Cannot allocate W_Mem");
 
 		self->wave 			= wave;
-		self->recs 			= arr_create(g_mem_temp, arr_count(brain->recs));
+		self->recs 			= arr_create(g_mem_temp, arr_count(s_mem->recs));
  
- 		Lu_Rec lu_rec;
+ 		S_Rec s_rec;
  		W_Rec w_rec;
  		lu_size i;
 		for(i = 0; i < arr_size(self->recs); i++)
 		{
-			lu_rec = (Lu_Rec) arr_get(brain->recs, i);
-			w_rec = w_rec_create(self, lu_rec);
+			s_rec = (S_Rec) arr_get(s_mem->recs, i);
+			w_rec = w_rec_create(self, s_rec);
 			lu_user_assert(w_rec, "Cannot create W_Rec");
 			
 			arr_set(self->recs, i, (lu_p_void) w_rec);

@@ -5,13 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-	static W_Rec w_rec_create(W_Mem w_mem, Lu_Rec lu_rec)
+	static W_Rec w_rec_create(W_Mem w_mem, S_Rec s_rec)
 	{
 		 W_Rec self = (W_Rec) mem_alloc(g_mem_temp, sizeof(struct w_rec));
 		 lu_user_assert(self, "Cannot allocate W_Rec");
 
 		 self->w_mem 	= w_mem;
-		 self->lu_rec 	= lu_rec;
+		 self->s_rec 	= s_rec;
 
 		 return self;
 	}

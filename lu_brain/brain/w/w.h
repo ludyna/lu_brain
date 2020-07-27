@@ -24,18 +24,25 @@
 		W_Cell* 				cells;
 	};
 
+	struct w_layer_2 {
+		struct w_layer 			super;
+
+
+	};
+
 	struct w_rec {
 		// vlasnyk
 		W_Mem 					w_mem; 			
 
 		// poviazanyy z rec
-		Lu_Rec 					lu_rec;			
+		S_Rec 					s_rec;		
 
-			
+
+		
 	};
 
 	// w_rec.lu
-	static W_Rec w_rec_create(W_Mem mem, Lu_Rec rec);
+	static W_Rec w_rec_create(W_Mem mem, S_Rec s_rec);
 	static void w_rec_destroy(W_Rec self);
  	static W_Cell w_rec_cell_get(W_Rec w_rec, lu_size x, lu_size y, lu_size z);
 
