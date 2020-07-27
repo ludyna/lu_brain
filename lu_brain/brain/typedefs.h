@@ -62,6 +62,6 @@
  	typedef struct w_cell_3* 			W_Cell_3;
 	typedef struct w_rec* 				W_Rec;
 	typedef struct w_layer* 			W_Layer;
-	typedef struct lu_wave_mem* 		W_Mem;
+	typedef struct w_mem* 				W_Mem;
 	
 ///////////////////////////////////////////////////////////////////////////////

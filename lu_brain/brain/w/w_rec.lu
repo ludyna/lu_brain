@@ -5,7 +5,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-	static void w_rec_value_save(W_Rec self, lu_size x, lu_size y, lu_size z, lu_value value)
+	static W_Rec w_rec_create(W_Mem w_mem, Lu_Rec lu_rec)
+	{
+		 W_Rec self = (W_Rec) mem_alloc(g_mem_temp, sizeof(struct w_rec));
+		 lu_user_assert(self, "Cannot allocate W_Rec");
+
+		 self->w_mem 	= w_mem;
+		 self->lu_rec 	= lu_rec;
+
+		 return self;
+	}
+
+	static void w_rec_destroy(W_Rec self)
+	{
+		lu_user_assert_void(self, "W_Rec is NULL");
+		mem_free(g_mem_temp, (lu_p_byte) self);
+	}
+
+	static W_Cell w_rec_cell_get(W_Rec w_rec, lu_size x, lu_size y, lu_size z)
 	{
 
 	}

@@ -5,14 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	struct lu_neu {
+	struct w_cell {
 		N_Cell 					neu;
 		lu_value 				p;
 	};
-	#define w_cell lu_neu
 
 	struct w_cell_3 {
-		struct lu_neu 			super;
+		struct w_cell 			super;
 
 
 	};
@@ -27,32 +26,42 @@
 
 	struct w_rec {
 		// vlasnyk
-		Lu_Wave_Mem 			mem; 			
+		W_Mem 					w_mem; 			
 
 		// poviazanyy z rec
-		Lu_Rec 					rec;			
+		Lu_Rec 					lu_rec;			
 
-		lu_size 				id;
-
-		lu_size 				cells_w;
-		lu_size 				cells_h; 
-		lu_size 				cells_d;		
+			
 	};
 
-	static void w_rec_value_save(W_Rec self, lu_size x, lu_size y, lu_size z, lu_value value);
+	// w_rec.lu
+	static W_Rec w_rec_create(W_Mem mem, Lu_Rec rec);
+	static void w_rec_destroy(W_Rec self);
+ 	static W_Cell w_rec_cell_get(W_Rec w_rec, lu_size x, lu_size y, lu_size z);
 
-	#define w_mem lu_wave_mem
 	struct w_mem {
 		// vlasnyk
 		Lu_Wave 				wave;
 
 		Arr 					recs;
 	};
-
+	
 	// w_mem.lu
 	static W_Mem w_mem_create(Lu_Wave wave, S_Mem s_mem);
 	static void w_mem_destroy(W_Mem self);
 	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id);
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	struct lu_neu {
+		N_Cell 					neu;
+		lu_value 				p;
+	};
+
+	struct lu_wave_mem {
+
+	};
 
 	// wave_mem.lu
 	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem);
@@ -86,7 +95,7 @@
 	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	static void wave_save_async_internal(Lu_Wave self, Lu_Story story);
-	static void wave_data_save(Lu_Wave self, lu_size s_rec_id, Data data, lu_size block_i);
+	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i);
 
 	// wave_find.lu 
 	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);
