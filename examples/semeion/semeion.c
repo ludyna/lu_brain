@@ -194,14 +194,6 @@
 			group = &smn_groups[digit->name];
 			++group->size;
 		}
-
-		// printf("\n");
-		// for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
-		// {
-		// 	group = &smn_groups[i];
-		// 	printf(" %d (%lu samples)", group->name, group->size);
-		// 	if ((i + 1) % 5 == 0) printf("\n");
-		// }
 	    
 	exit: 
 	    fclose(fp);
@@ -216,7 +208,7 @@
 
 	void smn_data_samples_create()
 	{
-		smn_user_assert_void(SMN_SAVE_SAMPLES_PERCENT < 0.99 && SMN_SAVE_SAMPLES_PERCENT >= 0.3, "SMN_SAVE_SAMPLES_PERCENT in bad range"); 
+		smn_user_assert_void(SMN_TRAINING_SAMPLES_PERCENT < 0.99 && SMN_TRAINING_SAMPLES_PERCENT >= 0.3, "SMN_TRAINING_SAMPLES_PERCENT in bad range"); 
 
 		smn_training_samples_count = 0;
 		smn_test_samples_count = 0;
@@ -228,7 +220,7 @@
 		{
 			group = &smn_groups[i];
 
-			group->training_size = group->count * SMN_SAVE_SAMPLES_PERCENT;
+			group->training_size = group->count * SMN_TRAINING_SAMPLES_PERCENT;
 			group->test_size = group->count - group->training_size;
 
 			smn_training_samples_count += group->training_size;
@@ -266,6 +258,7 @@
 				}
 			}
 		}
+
 		smn_user_assert_void(test_count == smn_test_samples_count, "Sanity check failed: test_count == smn_test_samples_count");
 
 		printf("\nSelected %lu random test samples", smn_test_samples_count);

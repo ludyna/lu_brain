@@ -45,7 +45,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Data
 
-	#define SMN_SAVE_SAMPLES_PERCENT 0.9
+	#define SMN_TRAINING_SAMPLES_PERCENT 0.9
 
 	extern Smn_Digit 				smn_data;
 	extern size_t 					smn_data_count;
