@@ -58,7 +58,8 @@
 		// Allocate Block Layers
 
 		self->hold_blocks_size		= rec->hold_blocks_size;
-		self->block_layers_size 	= self->hold_blocks_size;	// block_layers_size = blocks_size, but potentially they could be different
+		self->max_blocks_size 		= rec->max_blocks_size;
+		self->block_layers_size 	= self->max_blocks_size + 1;	
 
 		self->block_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->block_layers_size);
 		lu_user_assert(self->block_layers, "Cannot allocate av layers"); 
@@ -151,6 +152,30 @@
 		return neu;
 	}
 
+	static void s_rec_print_layers_info(struct s_layer* layers, lu_size size, lu_size print_top_size)
+	{
+		if (size < 1) return;
+		if (size < print_top_size) print_top_size = size;
+		S_Layer layer;
+
+		for (lu_size i = 0; i < print_top_size; i++)
+		{
+			layer = layer = &layers[i];
+	 		s_layer_print_info(layer);
+		}
+ 		 
+		lu_size print_last = size > print_top_size ? 1 : 0;
+
+ 		if (size > print_top_size)
+ 			lu_debug("\n 	 	.. %lu .. (total: %lu)", size - print_top_size - print_last, size);	
+
+ 		if (print_last)
+ 		{
+			layer = &layers[size - 1];
+ 			s_layer_print_info(layer);
+ 		}
+	}
+
 
 	static void s_rec_print_info(S_Rec self)
 	{
@@ -172,27 +197,9 @@
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
  		lu_debug("\n 	 	");
 
+ 		s_rec_print_layers_info(self->data_layers, self->data_layers_size, 3);
 
- 		lu_size i;
- 		S_Layer layer;
- 		struct s_layer* layers = self->data_layers;
-
- 		for(i = 0; i < self->data_layers_size; i++)
- 		{
- 			layer = &layers[i];
-
- 			s_layer_print_info(layer);
- 		}
-
- 		// block_layers
- 		lu_debug("\n");
- 	
-		layers = self->block_layers;
- 		
- 		for(i = 0; i < self->block_layers_size; i++)
- 		{
- 			layer = &layers[i];
-
- 			s_layer_print_info(layer);
- 		}
+		lu_debug("\n"); 
+		
+ 		s_rec_print_layers_info(self->block_layers, self->block_layers_size, 1);
 	}
