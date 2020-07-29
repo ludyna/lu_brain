@@ -13,11 +13,9 @@
 	struct w_cell_3 {
 		struct w_cell 			super;
 
-
 	};
 
-	lu_size lu_neu_name_get(Lu_Neu);
-	void lu_neu_name_set(Lu_Neu, lu_size);
+	static void w_cell_3_save_value(W_Cell_3 w_cell_3, lu_value value);
 
 	struct w_layer {
 		lu_size 				cells_size;
@@ -26,7 +24,20 @@
 
 	struct w_layer_2 {
 		struct w_layer 			super;
+
+		lu_size 				w;
+		lu_size 				h;
+		lu_size 				d;
 	};
+
+	static inline W_Cell w_layer_cell_get(W_Layer_2 self, lu_size x, lu_size y, lu_size z)
+	{
+		lu_user_assert(x < self->w, "x index out of range");
+		lu_user_assert(y < self->h, "y index out of range");
+		lu_user_assert(z < self->d, "z index out of range");
+
+		return self->super.cells[z * self->w * self->h + y * self->w + x]; 
+	}
 
 	struct w_rec {
 		// vlasnyk
@@ -38,12 +49,14 @@
 		W_Layer_2 				layer_0;
 		W_Layer 				layer_1;
 		W_Layer 				layer_2;
+
+		lu_size 				hold_blocks_count;
 	};
 
 	// w_rec.lu
 	static W_Rec w_rec_create(W_Mem mem, S_Rec s_rec);
 	static void w_rec_destroy(W_Rec self);
- 	static W_Cell w_rec_cell_get(W_Rec w_rec, lu_size x, lu_size y, lu_size z);
+ 	static void w_rec_data_save(W_Rec self, Data data, lu_size block_i);
 
 	struct w_mem {
 		// vlasnyk
@@ -64,6 +77,9 @@
 		N_Cell 					neu;
 		lu_value 				p;
 	};
+
+	lu_size lu_neu_name_get(Lu_Neu);
+	void lu_neu_name_set(Lu_Neu, lu_size);
 
 	struct lu_wave_mem {
 

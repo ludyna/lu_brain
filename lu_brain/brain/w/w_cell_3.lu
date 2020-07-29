@@ -1,0 +1,11 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+//
+
+	static void w_cell_3_save_value(W_Cell_3 w_cell_3, lu_value value)
+	{
+
+	}

@@ -56,7 +56,11 @@
 	
 	static void wave_save_async_internal(Lu_Wave self, Lu_Story story)
 	{
-		Lu_Brain brain 	= story->brain;
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu_user_assert_void(story, "Lu_Story is NULL");
+		lu_user_assert_void(self->brain, "Lu_Wave brain is NULL");
+
+		Lu_Brain brain 	= self->brain;
 		Arr recs 		= brain->recs;
 
 		lu_size block_i;
@@ -64,15 +68,14 @@
 		Data data;
 
 		Lu_Rec rec; 
-		S_Rec s_rec;
+		W_Rec w_rec;
 
 		for(block_i = 0; block_i < story->blocks_count; block_i++)
 		{
 			for(rec_i = 0; rec_i < story->datum_w; rec_i++)
 			{
-				s_rec 	= (S_Rec) arr_get(brain->s_mem->recs, rec_i);
-
-				lu_user_assert_void(s_rec, "S_Rec is NULL");
+				w_rec 	= w_mem_rec_get(self->w_mem, rec_i);
+				lu_user_assert_void(w_rec, "W_Rec is NULL");
 
 				data 	= story_data_get(story, rec_i, block_i);
 
@@ -80,42 +83,9 @@
 				// data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
 				// lu_debug("] SAVING ...");
 
-				if (data->values != NULL) 
-					wave_data_save(self, s_rec, data, block_i);
+				if (data->values) 
+					w_rec_data_save(w_rec, data, block_i);
 			}
 		}
 	}
 
-	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i)
-	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
-		lu_user_assert_void(self->w_mem, "W_Mem is NULL");
-		lu_user_assert_void(s_rec, "S_Rec is NULL");
-		lu_user_assert_void(data, "Data is NULL");
-
-		lu_size x;
-		lu_size y;
-		lu_size z;
-		lu_value v;
-
-		S_Cell s_cell;
-		
-		S_Cell_3 s_cell_3;
-		W_Cell_3 w_cell_3;
-
-		W_Rec w_rec 		= w_mem_rec_get(self->w_mem, s_rec->id);
-
-		N_Mem n_mem 		= self->n_mem;
-		lu_size p_neu_ix;
-
-		for (y = 0; y < data->h; y++)
-			for(x = 0; x < data->w; x++)
-			{
-				for(z = 0; z < data->d; z++)
-				{
-					v = data_get(data, x, y, z);
-
-					w_cell_3 = (W_Cell_3) w_rec_cell_get(w_rec, x, y, z);
-				}
-			}
-	}

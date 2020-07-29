@@ -22,7 +22,27 @@
 		mem_temp_free((lu_p_byte) self);
 	}
 
-	static W_Cell w_rec_cell_get(W_Rec w_rec, lu_size x, lu_size y, lu_size z)
+	static void w_rec_data_save(W_Rec self, Data data, lu_size block_i)
 	{
+		lu_user_assert_void(self, "W_Rec is NULL");
+		lu_user_assert_void(data, "Data is NULL");
 
+		lu_size 	x;
+		lu_size 	y;
+		lu_size 	z;
+		lu_value 	v;
+		W_Cell_3 	w_cell_3;
+
+		for (y = 0; y < data->h; y++)
+			for(x = 0; x < data->w; x++)
+			{
+				for(z = 0; z < data->d; z++)
+				{
+					v = data_get(data, x, y, z);
+
+					//w_cell_3 = (W_Cell_3) w_layer_cell_get(self->layer_0, x, y, z);
+
+					//w_cell_3_save_value(w_cell_3, v);
+				}
+			}
 	}
