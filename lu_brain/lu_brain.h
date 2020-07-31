@@ -24,6 +24,7 @@
 	// Wave related
 	typedef struct lu_neu* 				Lu_Neu;
 	typedef struct lu_wave_mem*			Lu_Wave_Mem;
+	typedef struct lu_wave_opts* 		Lu_Wave_Opts;
 	typedef struct lu_wave* 			Lu_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -42,7 +43,6 @@
 		lu_size width, 
 		lu_size height, 
 		lu_size depth,
-		lu_size hold_blocks_size,
 		lu_value v_min, 
 		lu_value v_max, 
 		lu_size v_neu_size
@@ -87,7 +87,7 @@
 
 
 	// Lu_Wave
-	Lu_Wave lu_wave_create(Lu_Brain brain);
+	Lu_Wave lu_wave_create(Lu_Brain brain, Lu_Wave_Opts opts);
 	void lu_wave_destroy(Lu_Wave); 
 
 	// Lu_Wave Sync

@@ -1,0 +1,17 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+//
+
+
+	static W_Layer_2 w_layer_2_create(S_Layer s_layer)
+	{
+
+	}
+
+	static void w_layer_2_destroy(W_Layer_2 self)
+	{
+
+	}

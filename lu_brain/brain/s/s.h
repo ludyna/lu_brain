@@ -143,13 +143,17 @@
 
 	// velyki masyvy v s_rec shob vykorystaty perevahu cpu keshuvania
 	struct s_rec {
-		// vlasnyk
+		
+		// Vlasnyk
+
 		S_Mem 					mem; 			
 
-		// poviazanyy z rec
-		Lu_Rec 					rec;			
+		// Lu_Rec related
 
+		Lu_Rec 					rec;			
 		lu_size 				id;
+
+		// Cells
 
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
@@ -166,14 +170,15 @@
 		lu_size 				cells_3_size;
 		lu_size 				cells_3_count;
 		struct s_cell_3* 		cells_3;
+ 
+ 		// Layers
 
 		struct s_layer_conf 	v_conf;	
 		struct s_layer_conf 	p_conf;
 
 		lu_size 				data_layers_size;
 		struct s_layer* 		data_layers;
-
-		lu_size 				hold_blocks_size; 
+ 
 		lu_size 				max_blocks_size;
 		lu_size 				block_layers_size;
 		struct s_layer* 		block_layers;

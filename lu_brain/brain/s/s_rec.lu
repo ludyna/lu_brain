@@ -57,7 +57,6 @@
 		///////////////////////////////////////
 		// Allocate Block Layers
 
-		self->hold_blocks_size		= rec->hold_blocks_size;
 		self->max_blocks_size 		= rec->max_blocks_size;
 		self->block_layers_size 	= self->max_blocks_size + 1;	
 
@@ -193,7 +192,7 @@
  		lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
  		lu_debug("\n 	 	%-19s %lu", "cells_3_count:", self->cells_3_count);
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
- 		lu_debug("\n 	 	%-19s %lu", "hold_blocks_size:", self->hold_blocks_size);
+ 		lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
  		lu_debug("\n 	 	");
 

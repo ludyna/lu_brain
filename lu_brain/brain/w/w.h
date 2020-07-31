@@ -22,6 +22,9 @@
 		W_Cell* 				cells;
 	};
 
+	static W_Layer w_layer_create(S_Layer s_layer);
+	static void w_layer_destroy(W_Layer self);
+
 	struct w_layer_2 {
 		struct w_layer 			super;
 
@@ -29,6 +32,9 @@
 		lu_size 				h;
 		lu_size 				d;
 	};
+
+	static W_Layer_2 w_layer_2_create(S_Layer s_layer);
+	static void w_layer_2_destroy(W_Layer_2 self);
 
 	static inline W_Cell w_layer_cell_get(W_Layer_2 self, lu_size x, lu_size y, lu_size z)
 	{
@@ -51,6 +57,7 @@
 		W_Layer 				layer_2;
 
 		lu_size 				hold_blocks_count;
+		lu_size					hold_blocks_size;
 	};
 
 	// w_rec.lu
@@ -87,7 +94,11 @@
 
 	// wave_mem.lu
 	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem);
-	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem self);
+	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem self); 
+
+	struct lu_wave_opts {
+
+	};
 
 	struct lu_wave {
 		// Other opts
@@ -105,7 +116,7 @@
 	};
 
 	// wave.lu
-	Lu_Wave lu_wave_create(Lu_Brain brain);
+	Lu_Wave lu_wave_create(Lu_Brain brain, Lu_Wave_Opts opts);
 	void lu_wave_destroy(Lu_Wave); 
 	Lu_Wave_Mem lu_wave_join(Lu_Wave);
 	static Lu_Wave wave_prepare(Lu_Wave);

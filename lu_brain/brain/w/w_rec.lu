@@ -7,11 +7,22 @@
 
 	static W_Rec w_rec_create(W_Mem w_mem, S_Rec s_rec)
 	{
-		 W_Rec self = (W_Rec) mem_temp_alloc(sizeof(struct w_rec));
+		 W_Rec self 		= (W_Rec) mem_temp_alloc(sizeof(struct w_rec));
 		 lu_user_assert(self, "Cannot allocate W_Rec");
 
-		 self->w_mem 	= w_mem;
-		 self->s_rec 	= s_rec;
+		 self->w_mem 		= w_mem;
+		 self->s_rec 		= s_rec;
+
+		 lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
+
+		 S_Layer s_layer 	= &s_rec->data_layers[0];
+
+		 self->layer_0  	= w_layer_2_create(s_layer);
+
+		 s_layer 			= &s_rec->data_layers[1];
+
+		 self->layer_1 		= w_layer_create(s_layer);
+		 self->layer_2 		= w_layer_create(s_layer);
 
 		 return self;
 	}

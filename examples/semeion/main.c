@@ -40,13 +40,12 @@ int main()
 		16,
 		16,
 		1,
-		2,
 		0.0,
 		1.0,
 		2
 	);
 	Lu_Brain brain 				= lu_brain_create(brain_opts);
-	Lu_Wave wave 				= lu_wave_create(brain);
+	Lu_Wave wave 				= lu_wave_create(brain, NULL);
 	Lu_Story story 				= lu_story_create(brain, 1);
 	Lu_Rec rec_0 				= lu_brain_rec_get(brain, 0);
 	Lu_Wave_Mem	wave_mem 		= NULL;
