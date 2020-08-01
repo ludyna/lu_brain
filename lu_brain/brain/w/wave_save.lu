@@ -18,10 +18,10 @@
 		self = wave_prepare(self);
 		lu_user_assert(self, "Lu_Wave preparation failed");
 
-		wave_save_async_internal(self, story);
+		w_mem_save_async((W_Mem) self, story);
 		lu_wave_join(self);
 
-		return (Lu_Wave) self->w_mem;
+		return self;
 	} 
 
 	Lu_Wave lu_wave_save_with_name(Lu_Wave self, Lu_Story story, lu_size name)
@@ -35,7 +35,7 @@
 
 		lu_neu_connect(neu, name_neu);
 
-		return (Lu_Wave) wave_mem;
+		return self;
 	}
 
 	void lu_wave_save_async(Lu_Wave self, Lu_Story story)
@@ -51,10 +51,10 @@
 		self = wave_prepare(self);
 		lu_user_assert_void(self, "Lu_Wave preparation failed");
 
-		wave_save_async_internal(self, story);
+		w_mem_save_async((W_Mem) self, story);
 	}
 	
-	static void wave_save_async_internal(Lu_Wave self, Lu_Story story)
+	static void w_mem_save_async(W_Mem self, Lu_Story story)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(story, "Lu_Story is NULL");
@@ -74,7 +74,7 @@
 		{
 			for(rec_i = 0; rec_i < story->datum_w; rec_i++)
 			{
-				w_rec 	= w_mem_rec_get(self->w_mem, rec_i);
+				w_rec 	= w_mem_rec_get(self, rec_i);
 				lu_user_assert_void(w_rec, "W_Rec is NULL");
 
 				data 	= story_data_get(story, rec_i, block_i);
@@ -88,4 +88,3 @@
 			}
 		}
 	}
-

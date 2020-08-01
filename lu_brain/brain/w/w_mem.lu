@@ -5,22 +5,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-	static W_Mem w_mem_create(Lu_Wave wave, S_Mem s_mem)
+	static W_Mem w_mem_init(W_Mem self, Lu_Brain brain)
 	{
-		lu_user_assert(wave, "Lu_Wave is NULL");
-		lu_user_assert(wave->brain, "Lu_Brain is NULL");
-		lu_user_assert(s_mem, "S_Mem is NULL");
-		lu_user_assert(s_mem->recs, "S_Mem recs is NULL");
+		lu_user_assert(self, "W_Mem is NULL");
+		lu_user_assert(brain, "Lu_Brain is NULL");
+ 
+ 		self->brain 		= brain;
+ 		
+ 		S_Mem s_mem = brain->s_mem;
+ 		lu_user_assert(s_mem, "S_Mem is NULL");
 
-		W_Mem self = (W_Mem) mem_temp_alloc(sizeof(struct w_mem));
-		lu_user_assert(self, "Cannot allocate W_Mem");
-
-		self->wave 			= wave;
 		self->recs 			= arr_temp_create(arr_count(s_mem->recs));
  
  		S_Rec s_rec;
  		W_Rec w_rec;
  		lu_size i;
+
 		for(i = 0; i < arr_size(self->recs); i++)
 		{
 			s_rec = (S_Rec) arr_get(s_mem->recs, i);
@@ -48,8 +48,6 @@
 
 			arr_temp_destroy(self->recs);
 		}
-
-		mem_temp_free((lu_p_byte) self);
 	}
 
 
@@ -57,3 +55,5 @@
 	{
 		return (W_Rec) arr_get(self->recs, rec_id);
 	}
+
+

@@ -14,20 +14,14 @@
 		Lu_Wave self 		= (Lu_Wave) mem_alloc(g_mem_temp, sizeof(struct lu_wave));
 		lu_user_assert(self, "Cannot allocate Lu_Wave");
 
-		self->brain 				= brain;
-		self->s_mem 				= brain->s_mem;
-		self->n_mem 				= brain->n_mem; 
-		self->story 				= NULL;
-
-		self->w_mem 				= w_mem_create(self, self->s_mem);
-		lu_user_assert(self->w_mem, "Cannot create Lu_Wave");
+		w_mem_init((W_Mem) self, brain);
 
 		return self;
 	}
 
 	void lu_wave_destroy(Lu_Wave self)
 	{
-		w_mem_destroy(self->w_mem);
+		w_mem_destroy(&self->super);
 		mem_free(g_mem_temp, (lu_p_byte) self);
 	}
 
