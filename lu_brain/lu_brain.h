@@ -87,7 +87,7 @@
 
 
 	// Lu_Wave
-	Lu_Wave lu_wave_create(Lu_Brain brain, Lu_Wave_Opts opts);
+	Lu_Wave lu_wave_create(Lu_Brain brain);
 	void lu_wave_destroy(Lu_Wave); 
 
 	// Lu_Wave Sync

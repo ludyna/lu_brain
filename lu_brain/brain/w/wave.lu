@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Lu_Wave lu_wave_create(Lu_Brain brain, Lu_Wave_Opts opts)
+	Lu_Wave lu_wave_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->s_mem, "S_Mem is NULL");
