@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Lu_Wave_Mem lu_wave_find(Lu_Wave self, Lu_Story story)
+	Lu_Wave lu_wave_find(Lu_Wave self, Lu_Story story)
 	{
 
 	}

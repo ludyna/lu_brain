@@ -20,7 +20,7 @@
 		self->story 				= NULL;
 
 		self->w_mem 				= w_mem_create(self, self->s_mem);
-		lu_user_assert(self->w_mem, "Cannot create Lu_Wave_Mem");
+		lu_user_assert(self->w_mem, "Cannot create Lu_Wave");
 
 		return self;
 	}
@@ -35,12 +35,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Other
 
-	Lu_Wave_Mem lu_wave_join(Lu_Wave self)
+	Lu_Wave lu_wave_join(Lu_Wave self)
 	{
 
 	}
 
-	Lu_Neu lu_wave_name_find_or_create(Lu_Wave_Mem self, lu_size name)
+	Lu_Neu lu_wave_name_find_or_create(Lu_Wave self, lu_size name)
 	{
 
 	}

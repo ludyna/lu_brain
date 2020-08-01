@@ -122,7 +122,7 @@ void test_lu_brain_basics(void)
 	TEST_ASSERT(brain->recs);
 	TEST_ASSERT(brain->recs->count);
 
-	Lu_Wave_Mem wave_mem;
+	Lu_Wave wave_mem;
 
 	Lu_Story story = lu_story_create(brain, 0); 
 

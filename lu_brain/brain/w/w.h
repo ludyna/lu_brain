@@ -81,23 +81,19 @@
 // 
 
 	struct lu_neu {
-		N_Cell 					neu;
-		lu_value 				p;
+		struct w_cell 			super;
 	};
 
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-	struct lu_wave_mem {
-
-	};
-
 	// wave_mem.lu
-	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem);
-	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem self); 
-
+	Lu_Neu lu_wave_mem_name_neu(Lu_Wave);
+	Lu_Neu lu_wave_mem_top_neu(Lu_Wave self);
 
 	struct lu_wave {
+		struct w_mem 			super;
+
 		// Other opts
 		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
 		lu_value 				fire_breakpoint;
@@ -115,21 +111,21 @@
 	// wave.lu
 	Lu_Wave lu_wave_create(Lu_Brain brain);
 	void lu_wave_destroy(Lu_Wave); 
-	Lu_Wave_Mem lu_wave_join(Lu_Wave);
+	Lu_Wave lu_wave_join(Lu_Wave);
 	static Lu_Wave wave_prepare(Lu_Wave);
 
 	// wave_save.lu
-	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
+	Lu_Wave lu_wave_save(Lu_Wave, Lu_Story); 
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	static void wave_save_async_internal(Lu_Wave self, Lu_Story story);
 	static void wave_data_save(Lu_Wave self, S_Rec s_rec, Data data, lu_size block_i);
 
 	// wave_find.lu 
-	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);
+	Lu_Wave lu_wave_find(Lu_Wave, Lu_Story);
 	void lu_wave_find_async(Lu_Wave, Lu_Story);
 
 	// wave_restore.lu
-	Lu_Wave_Mem lu_wave_restore(Lu_Wave, Lu_Neu);
+	Lu_Wave lu_wave_restore(Lu_Wave, Lu_Neu);
 	void lu_wave_restore_async(Lu_Wave, Lu_Story);
 
 	// wave_properties.lu

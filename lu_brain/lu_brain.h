@@ -23,7 +23,6 @@
 
 	// Wave related
 	typedef struct lu_neu* 				Lu_Neu;
-	typedef struct lu_wave_mem*			Lu_Wave_Mem;
 	typedef struct lu_wave_opts* 		Lu_Wave_Opts;
 	typedef struct lu_wave* 			Lu_Wave;
 
@@ -92,17 +91,17 @@
 
 	// Lu_Wave Sync
 
-	Lu_Wave_Mem lu_wave_save(Lu_Wave, Lu_Story); 
-	Lu_Wave_Mem lu_wave_save_with_name(Lu_Wave, Lu_Story, lu_size name);
-	Lu_Wave_Mem lu_wave_find(Lu_Wave, Lu_Story);
-	Lu_Wave_Mem lu_wave_restore(Lu_Wave, Lu_Neu);
+	Lu_Wave lu_wave_save(Lu_Wave, Lu_Story); 
+	Lu_Wave lu_wave_save_with_name(Lu_Wave, Lu_Story, lu_size name);
+	Lu_Wave lu_wave_find(Lu_Wave, Lu_Story);
+	Lu_Wave lu_wave_restore(Lu_Wave, Lu_Neu);
 
 	// Lu_Wave Async
 
 	void lu_wave_save_async(Lu_Wave, Lu_Story);
 	void lu_wave_find_async(Lu_Wave, Lu_Story);
 	void lu_wave_restore_async(Lu_Wave, Lu_Story);
-	Lu_Wave_Mem lu_wave_join(Lu_Wave);
+	Lu_Wave lu_wave_join(Lu_Wave);
 
 	// Lu_Wave Properties
 
@@ -119,11 +118,11 @@
 	lu_value lu_wave_breakpoint(Lu_Wave);
 	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
 
-	// Lu_Wave_Mem
+	// Lu_Wave
 
-	Lu_Neu lu_wave_mem_name_neu(Lu_Wave_Mem);
-	Lu_Neu lu_wave_mem_top_neu(Lu_Wave_Mem);
-	Lu_Neu lu_wave_name_find_or_create(Lu_Wave_Mem, lu_size);
+	Lu_Neu lu_wave_mem_name_neu(Lu_Wave);
+	Lu_Neu lu_wave_mem_top_neu(Lu_Wave);
+	Lu_Neu lu_wave_name_find_or_create(Lu_Wave, lu_size);
 
 
 #endif // _LU_BRAIN_API_H
