@@ -22,14 +22,14 @@
 		lu_wave_join(self);
 
 		return self;
-	} 
+	}
 
 	Lu_Wave lu_wave_save_with_name(Lu_Wave self, Lu_Story story, lu_size name)
 	{
 		Lu_Wave wave_mem = lu_wave_save(self, story);
 		lu_user_assert(wave_mem, "Cannot save story");
 
-		Lu_Neu neu = lu_wave_mem_top_neu(wave_mem);
+		Lu_Neu neu = lu_wave_top_neu_get(wave_mem);
 
 		Lu_Neu name_neu = lu_wave_name_find_or_create(wave_mem, name);
 
@@ -54,37 +54,3 @@
 		w_mem_save_async((W_Mem) self, story);
 	}
 	
-	static void w_mem_save_async(W_Mem self, Lu_Story story)
-	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
-		lu_user_assert_void(story, "Lu_Story is NULL");
-		lu_user_assert_void(self->brain, "Lu_Wave brain is NULL");
-
-		Lu_Brain brain 	= self->brain;
-		Arr recs 		= brain->recs;
-
-		lu_size block_i;
-		lu_size rec_i;
-		Data data;
-
-		Lu_Rec rec; 
-		W_Rec w_rec;
-
-		for(block_i = 0; block_i < story->blocks_count; block_i++)
-		{
-			for(rec_i = 0; rec_i < story->datum_w; rec_i++)
-			{
-				w_rec 	= w_mem_rec_get(self, rec_i);
-				lu_user_assert_void(w_rec, "W_Rec is NULL");
-
-				data 	= story_data_get(story, rec_i, block_i);
-
-				// lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
-				// data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
-				// lu_debug("] SAVING ...");
-
-				if (data->values) 
-					w_rec_data_save(w_rec, data, block_i);
-			}
-		}
-	}

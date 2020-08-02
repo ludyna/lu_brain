@@ -23,6 +23,7 @@
 
 	// Wave related
 	typedef struct lu_neu* 				Lu_Neu;
+	typedef struct lu_w_rec* 			Lu_W_Rec;
 	typedef struct lu_wave_opts* 		Lu_Wave_Opts;
 	typedef struct lu_wave* 			Lu_Wave;
 
@@ -84,8 +85,13 @@
 	void lu_neu_name_set(Lu_Neu, lu_size);
 	void lu_neu_connect(Lu_Neu, Lu_Neu);
 
+	// Lu_W_Rec 
+
+	lu_size lu_w_rec_hold_blocks_get(Lu_W_Rec self);
+	void lu_w_rec_hold_blocks_set(Lu_W_Rec self, lu_size value);
 
 	// Lu_Wave
+
 	Lu_Wave lu_wave_create(Lu_Brain brain);
 	void lu_wave_destroy(Lu_Wave); 
 
@@ -118,11 +124,11 @@
 	lu_value lu_wave_breakpoint(Lu_Wave);
 	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
 
-	// Lu_Wave
-
-	Lu_Neu lu_wave_mem_name_neu(Lu_Wave);
-	Lu_Neu lu_wave_mem_top_neu(Lu_Wave);
+	Lu_Neu lu_wave_top_name_get(Lu_Wave);
+	Lu_Neu lu_wave_top_neu_get(Lu_Wave);
 	Lu_Neu lu_wave_name_find_or_create(Lu_Wave, lu_size);
+
+	Lu_W_Rec lu_wave_w_rec_get(Lu_Wave self, lu_size id);
 
 
 #endif // _LU_BRAIN_API_H

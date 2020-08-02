@@ -1,0 +1,22 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	lu_size lu_w_rec_hold_blocks_get(Lu_W_Rec self)
+	{
+		W_Rec w_rec = (W_Rec) self;
+
+		return w_rec->hold_blocks_size;
+	}
+
+	void lu_w_rec_hold_blocks_set(Lu_W_Rec self, lu_size value)
+	{
+		lu_user_assert_void(value >= 2, "hold_blocks_size should be >= 2");
+
+		W_Rec w_rec = (W_Rec) self;
+
+		w_rec->hold_blocks_size = value;
+	}

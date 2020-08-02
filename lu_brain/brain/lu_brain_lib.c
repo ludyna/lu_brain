@@ -2,7 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	#include "brain.h"
+	#include "lu_brain_lib.h"
 
 	// Vendor
 
@@ -15,7 +15,7 @@
  
 	// App
 
-	#include "brain_opts.lu" 
+	#include "lu_brain_opts.lu" 
  	#include "n/n.lu"
 	#include "rec/rec.lu"
 	#include "story/story.lu"

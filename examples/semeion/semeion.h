@@ -2,7 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-#include "../../lu_brain/brain/brain.h"
+#include "../../lu_brain/brain/lu_brain_lib.h"
  
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Digit

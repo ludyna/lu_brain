@@ -95,9 +95,12 @@
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-	// wave_mem.lu
-	Lu_Neu lu_wave_mem_name_neu(Lu_Wave);
-	Lu_Neu lu_wave_mem_top_neu(Lu_Wave self);
+	struct lu_w_rec {
+		struct w_rec 			super;
+	};
+
+	lu_size lu_w_rec_hold_blocks_get(Lu_W_Rec self);
+	void lu_w_rec_hold_blocks_set(Lu_W_Rec self, lu_size value);
 
 	struct lu_wave {
 		struct w_mem 			super;
@@ -128,6 +131,11 @@
 
 	lu_value lu_wave_fire_breakpoint_get(Lu_Wave);
 	void lu_wave_fire_breakpoint_set(Lu_Wave, lu_value);
+
+	Lu_Neu lu_wave_top_name_get(Lu_Wave);
+	Lu_Neu lu_wave_top_neu_get(Lu_Wave self);
+
+	Lu_W_Rec lu_wave_w_rec_get(Lu_Wave self, lu_size id);
 
 
 

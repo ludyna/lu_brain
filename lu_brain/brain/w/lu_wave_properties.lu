@@ -24,3 +24,22 @@
 		lu_user_assert_void(value > 0 && value < 1, "Breakpoint should be in (0, 1)");
 		self->super.fire_breakpoint = value;
 	}
+
+	Lu_Neu lu_wave_top_name_get(Lu_Wave self)
+	{
+		return NULL;
+	}
+
+	Lu_Neu lu_wave_top_neu_get(Lu_Wave self)
+	{
+		
+	}
+
+	Lu_W_Rec lu_wave_w_rec_get(Lu_Wave self, lu_size id)
+	{
+		lu_user_assert(self, "Lu_Wave is NULL");
+		W_Mem w_mem = (W_Mem) self;
+
+		lu_user_assert(id < arr_count(w_mem->recs), "id is out of range");
+		return (Lu_W_Rec) arr_get(w_mem->recs, id);
+	}

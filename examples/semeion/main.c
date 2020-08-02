@@ -48,8 +48,10 @@ int main()
 	Lu_Wave wave 				= lu_wave_create(brain);
 	Lu_Story story 				= lu_story_create(brain, 1);
 	Lu_Rec rec_0 				= lu_brain_rec_get(brain, 0);
-	Lu_Wave	wave_mem 		= NULL;
+	Lu_W_Rec w_rec_0			= lu_wave_w_rec_get(wave, 0);
 	Lu_Neu name 				= NULL;
+
+	lu_w_rec_hold_blocks_set(w_rec_0, 4);
  
 	// Show random digit
 
@@ -79,17 +81,17 @@ int main()
 
 	// Testing samples
 	
-	float failed_count = 0;
-	float success_count = 0;
+	float failed_count 		= 0;
+	float success_count 	= 0;
 
 	printf("\rTesting samples.. ");
 	for (i = 0; i < smn_test_samples_count; i++)
 	{
 		d = smn_test_samples[i];
 		lu_story_push(story, rec_0, d->pixels);
-		wave_mem = lu_wave_find(wave, story);
+		wave = lu_wave_find(wave, story);
 
-		name = lu_wave_mem_name_neu(wave_mem);
+		name = lu_wave_top_name_get(wave);
 
 		if (name && lu_neu_name_get(name) == d->name)
 			++success_count;
