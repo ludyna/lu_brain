@@ -31,12 +31,13 @@
 		lu_size 				w;
 		lu_size 				h;
 		lu_size 				d;
+
+		// istoriya prev and next
 	};
 
 	static W_Layer_2 w_layer_2_create(S_Layer s_layer);
 	static void w_layer_2_destroy(W_Layer_2 self);
-
-	static inline W_Cell w_layer_cell_get(W_Layer_2 self, lu_size x, lu_size y, lu_size z)
+	static inline W_Cell w_layer_2_cell_get(W_Layer_2 self, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(x < self->w, "x index out of range");
 		lu_user_assert(y < self->h, "y index out of range");
@@ -95,13 +96,6 @@
 	lu_size lu_neu_name_get(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 
-	struct lu_w_rec {
-		struct w_rec 			super;
-	};
-
-	lu_size lu_w_rec_hold_blocks_get(Lu_W_Rec self);
-	void lu_w_rec_hold_blocks_set(Lu_W_Rec self, lu_size value);
-
 	struct lu_wave {
 		struct w_mem 			super;
 
@@ -134,8 +128,3 @@
 
 	Lu_Neu lu_wave_top_name_get(Lu_Wave);
 	Lu_Neu lu_wave_top_neu_get(Lu_Wave self);
-
-	Lu_W_Rec lu_wave_w_rec_get(Lu_Wave self, lu_size id);
-
-
-

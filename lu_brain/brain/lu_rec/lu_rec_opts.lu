@@ -5,21 +5,32 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
+	Lu_Rec_Opts lu_rec_opts_create_from_predefined(
+		Lu_Brain_Opts 				brain_opts, 
+		lu_size 					width, 
+		lu_size 					height, 
+		lu_size 					predefined_config_id
+	)
+	{
+		lu_user_assert(predefined_config_id < LU_ROC_END, "rec_opts_predefined_id is out of range");
+		Lu_Rec_Opts_Config config = &lu_g_roc_predefinitions[predefined_config_id];
+		lu_user_assert(config, "Lu_Rec_Opts_Config is NULL");
+
+		return lu_rec_opts_create(brain_opts, width, height, config);
+	}
+
 	Lu_Rec_Opts lu_rec_opts_create(
-		Lu_Brain_Opts 	brain_opts, 
-		lu_size 		width, 
-		lu_size 		height, 
-		lu_size 		depth,
-		lu_value 		v_min, 
-		lu_value 		v_max, 
-		lu_size 		v_neu_size
+		Lu_Brain_Opts 				brain_opts, 
+		lu_size 					width, 
+		lu_size 					height, 
+		Lu_Rec_Opts_Config 			config
 	)
 	{
 		lu_user_assert(width > 0, "Width should be greater than 0");
 		lu_user_assert(height > 0, "Height should be greater than 0");
-		lu_user_assert(depth > 0, "Depth should be greater than 0");
-		lu_user_assert(v_max - v_min > 0, "v_max minus v_min should greater than 0");
-		lu_user_assert(v_neu_size > 1, "v_neu_size should be greater than 1");
+
+		config = lu_rec_opts_config_validate(config);
+		lu_user_assert(config, "Lu_Rec_Opts_Config validation failed");
 
 		Lu_Rec_Opts self = (Lu_Rec_Opts) mem_temp_alloc(sizeof(struct lu_rec_opts));
 
@@ -27,17 +38,18 @@
 		self->brain_opts 		= brain_opts;
 		self->width 			= width;
 		self->height			= height;
-		self->max_blocks_size 	= LU_MAX_BLOCKS_SIZE;
 
-		self->depth 			= depth;
+		self->max_blocks_size 	= config->max_blocks_size;
+
+		self->depth 			= config->depth;
 		
-		self->v_min 			= v_min;
-		self->v_max 			= v_max;
-		self->v_neu_size		= v_neu_size;
-		self->v_nsc				= 0;	
+		self->v_min 			= config->v_min;
+		self->v_max 			= config->v_max;
+		self->v_neu_size		= config->v_neu_size;
+		self->v_nsc				= config->v_nsc;	
 
-		self->p_neu_size		= 2;
-		self->p_nsc				= 0;
+		self->p_neu_size		= config->p_neu_size;
+		self->p_nsc				= config->p_nsc;
 
 		arr_append(self->brain_opts->rec_opts, self);
 

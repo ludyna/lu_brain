@@ -17,8 +17,8 @@
 
 	#include "lu_brain_opts.lu" 
  	#include "n/n.lu"
-	#include "rec/rec.lu"
-	#include "story/story.lu"
+	#include "lu_rec/lu_rec.lu"
+	#include "lu_story/lu_story.lu"
 	#include "w/w.lu" 
 	#include "s/s.lu"
 

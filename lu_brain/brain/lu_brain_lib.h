@@ -22,9 +22,9 @@
 #include "typedefs.h"
 #include "data/data.h"
 #include "n/n.h"
-#include "rec/rec.h"
+#include "lu_rec/lu_rec.h"
 #include "w/w.h"
-#include "story/story.h"
+#include "lu_story/lu_story.h"
 #include "s/s.h"
 
 ///////////////////////////////////////////////////////////////////////////////

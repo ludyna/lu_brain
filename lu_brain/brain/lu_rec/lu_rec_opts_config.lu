@@ -1,0 +1,22 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+//
+
+	Lu_Rec_Opts_Config lu_rec_opts_config_validate(Lu_Rec_Opts_Config self)
+	{
+		lu_user_assert(self, "Lu_Rec_Opts_Config is NULL");
+		
+		lu_user_assert(self->depth > 0, "Depth should be greater than 0");
+
+		lu_user_assert(self->max_blocks_size > 0, "max_block_size should be greater than 0");
+
+		lu_user_assert(self->v_max - self->v_min > 0, "v_max minus v_min should greater than 0");
+		lu_user_assert(self->v_neu_size > 1, "v_neu_size should be greater than 1");
+
+		lu_user_assert(self->p_neu_size > 1, "p_neu_size should be greater than 1");
+
+		return self;
+	}

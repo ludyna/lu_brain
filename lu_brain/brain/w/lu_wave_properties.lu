@@ -34,12 +34,3 @@
 	{
 		
 	}
-
-	Lu_W_Rec lu_wave_w_rec_get(Lu_Wave self, lu_size id)
-	{
-		lu_user_assert(self, "Lu_Wave is NULL");
-		W_Mem w_mem = (W_Mem) self;
-
-		lu_user_assert(id < arr_count(w_mem->recs), "id is out of range");
-		return (Lu_W_Rec) arr_get(w_mem->recs, id);
-	}

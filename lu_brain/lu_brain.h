@@ -13,17 +13,16 @@
 	// Brain related 
 	
 	typedef struct lu_brain_opts* 		Lu_Brain_Opts;
-	typedef struct lu_brain* 			Lu_Brain;
+	typedef struct lu_brain* 			Lu_Brain;	
+	typedef struct lu_rec_opts_config*	Lu_Rec_Opts_Config;
 	typedef struct lu_rec_opts* 		Lu_Rec_Opts;
 	typedef struct lu_rec* 				Lu_Rec; 
 
 	// Story related
-
 	typedef struct lu_story* 			Lu_Story;
 
 	// Wave related
 	typedef struct lu_neu* 				Lu_Neu;
-	typedef struct lu_w_rec* 			Lu_W_Rec;
 	typedef struct lu_wave_opts* 		Lu_Wave_Opts;
 	typedef struct lu_wave* 			Lu_Wave;
 
@@ -35,20 +34,30 @@
 	Lu_Brain_Opts lu_brain_opts_create(lu_size id, lu_size size_in_bytes);
 	void lu_brain_opts_destroy(Lu_Brain_Opts);
 
-
 	// Lu_Rec_Opts
+	Lu_Rec_Opts lu_rec_opts_create_from_predefined(
+		Lu_Brain_Opts lu_brain_opts, 
+		lu_size width, 
+		lu_size height, 
+		lu_size predefined_config_id
+	);		
 
 	Lu_Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts lu_brain_opts, 
 		lu_size width, 
 		lu_size height, 
-		lu_size depth,
-		lu_value v_min, 
-		lu_value v_max, 
-		lu_size v_neu_size
+		Lu_Rec_Opts_Config config
 	);
 
+	void lu_rec_opts_depth(Lu_Rec_Opts self, lu_size val);
+	
+	// v
+	void lu_rec_opts_v_min(Lu_Rec_Opts self, lu_size val);
+	void lu_rec_opts_v_max(Lu_Rec_Opts self, lu_size val);
+	void lu_rec_opts_v_neu_size(Lu_Rec_Opts self, lu_size val);
 	void lu_rec_opts_v_nsc_set(Lu_Rec_Opts self, lu_size val);
+
+	// p
 	void lu_rec_opns_p_neu_size_set(Lu_Rec_Opts self, lu_size val);
 	void lu_rec_opts_p_nsc_set(Lu_Rec_Opts self, lu_size val);
 
@@ -84,11 +93,6 @@
 	lu_size lu_neu_name(Lu_Neu);
 	void lu_neu_name_set(Lu_Neu, lu_size);
 	void lu_neu_connect(Lu_Neu, Lu_Neu);
-
-	// Lu_W_Rec 
-
-	lu_size lu_w_rec_hold_blocks_get(Lu_W_Rec self);
-	void lu_w_rec_hold_blocks_set(Lu_W_Rec self, lu_size value);
 
 	// Lu_Wave
 
@@ -127,8 +131,5 @@
 	Lu_Neu lu_wave_top_name_get(Lu_Wave);
 	Lu_Neu lu_wave_top_neu_get(Lu_Wave);
 	Lu_Neu lu_wave_name_find_or_create(Lu_Wave, lu_size);
-
-	Lu_W_Rec lu_wave_w_rec_get(Lu_Wave self, lu_size id);
-
 
 #endif // _LU_BRAIN_API_H

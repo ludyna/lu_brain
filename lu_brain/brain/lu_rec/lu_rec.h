@@ -10,10 +10,10 @@
 
 		lu_size 		width;
 		lu_size 		height;
-		lu_size 		max_blocks_size;
-		
 		lu_size 		depth;
 
+		lu_size 		max_blocks_size;
+	
 		lu_value 		v_min;
 		lu_value 		v_max;
 		lu_size			v_neu_size;
@@ -24,6 +24,12 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_Rec_Opts_Config
+
+	Lu_Rec_Opts_Config lu_rec_opts_config_validate(Lu_Rec_Opts_Config self);
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec
 
 	struct lu_rec {
@@ -32,9 +38,9 @@
 
 		lu_size 		width;
 		lu_size 		height;
-		lu_size 		max_blocks_size;
-
 		lu_size 		depth;
+
+		lu_size 		max_blocks_size;
 
 		lu_value 		v_min;
 		lu_value 		v_max;

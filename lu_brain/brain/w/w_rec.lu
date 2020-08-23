@@ -44,12 +44,19 @@
 		lu_value 	v;
 		W_Cell_3 	w_cell_3;
 
+		W_Layer_2 	layer_0 = self->layer_0;
+		lu_user_assert_void(layer_0, "W_Layer_2 is NULL");
+
 		for (y = 0; y < data->h; y++)
 			for(x = 0; x < data->w; x++)
 			{
 				for(z = 0; z < data->d; z++)
 				{
 					v = data_get(data, x, y, z);
+
+					
+
+					//lu_debug("%f", v);
 
 					//w_cell_3 = (W_Cell_3) w_layer_cell_get(self->layer_0, x, y, z);
 
