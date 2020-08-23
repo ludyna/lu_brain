@@ -35,23 +35,12 @@ int main()
     // Create brain and related
 
 	Lu_Brain_Opts brain_opts 	= lu_brain_opts_create(1, 1024 * 1024);
-	Lu_Rec_Opts rec_opts 		= lu_rec_opts_create(
-		brain_opts,
-		16,
-		16,
-		1,
-		0.0,
-		1.0,
-		2
-	);
+	Lu_Rec_Opts rec_opts 		= lu_rec_opts_create_from_predefined(brain_opts, 16, 16, LU_ROC_MONOCHROME1_IMAGE);
 	Lu_Brain brain 				= lu_brain_create(brain_opts);
 	Lu_Wave wave 				= lu_wave_create(brain);
 	Lu_Story story 				= lu_story_create(brain, 1);
 	Lu_Rec rec_0 				= lu_brain_rec_get(brain, 0);
-	Lu_W_Rec w_rec_0			= lu_wave_w_rec_get(wave, 0);
 	Lu_Neu name 				= NULL;
-
-	lu_w_rec_hold_blocks_set(w_rec_0, 4);
  
 	// Show random digit
 
