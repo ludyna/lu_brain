@@ -7,10 +7,7 @@
 		lu_user_assert(s_mem, "S_Mem is NULL");
 		lu_user_assert(s_mem->brain, "s_mem->brain is NULL");
 		lu_user_assert(rec, "Rec is NULL");
-		lu_user_assert(rec->v_max > rec->v_min, "Lu_Rec v_max should be greater than Lu_Rec v_min");
-		
-		lu_user_assert(rec->v_nsc >= 0 && rec->v_nsc <= rec->v_neu_size, "Lu_Rec v_nsc should be in [0, v_neu_size] range");
-		lu_user_assert(rec->p_nsc >= 0 && rec->p_nsc <= rec->p_neu_size, "Lu_Rec p_nsc should be in [0, p_neu_size] range");
+
 		lu_user_assert(rec->width > 0, "Lu_Rec width should be greater than 0");
 		lu_user_assert(rec->height > 0, "Lu_Rec height should be greater than 0");
 
@@ -27,7 +24,7 @@
 
 		self->cells_w 			= rec->width;
 		self->cells_h			= rec->height; 
-		self->cells_d 			= rec->depth;
+		self->cells_d 			= rec->config.depth;
 
 		self->cells_count		= 0;
 		self->cells_size 		= 0;
@@ -41,8 +38,8 @@
 		///////////////////////////////////////
 		// Confs
 
-		s_layer_conf_init(&self->v_conf, mem, rec->v_min, rec->v_max, rec->v_neu_size, rec->v_nsc);
-		s_layer_conf_init(&self->p_conf, mem, rec->v_min, rec->v_max, rec->p_neu_size, rec->p_nsc);
+		s_layer_conf_init(&self->v_conf, mem, rec->config.v_min, rec->config.v_max, rec->config.v_neu_size, rec->config.v_nsc);
+		s_layer_conf_init(&self->p_conf, mem, rec->config.v_min, rec->config.v_max, rec->config.p_neu_size, rec->config.p_nsc);
 
 		///////////////////////////////////////
 		// Allocate Data Layers
@@ -57,7 +54,7 @@
 		///////////////////////////////////////
 		// Allocate Block Layers
 
-		self->max_blocks_size 		= rec->max_blocks_size;
+		self->max_blocks_size 		= rec->config.max_blocks_size;
 		self->block_layers_size 	= self->max_blocks_size + 1;	
 
 		self->block_layers = (struct s_layer*) mem_alloc(mem, sizeof(struct s_layer) * self->block_layers_size);

@@ -6,49 +6,30 @@
 // Lu_Rec_Opts
 
 	struct lu_rec_opts {
-		Lu_Brain_Opts  	brain_opts;
+		Lu_Brain_Opts  				brain_opts;
 
-		lu_size 		width;
-		lu_size 		height;
-		lu_size 		depth;
+		lu_size 					width;
+		lu_size 					height;
 
-		lu_size 		max_blocks_size;
-	
-		lu_value 		v_min;
-		lu_value 		v_max;
-		lu_size			v_neu_size;
-		lu_size 		v_nsc;
-
-		lu_size 		p_neu_size;
-		lu_size 		p_nsc;  	// nei sim count		
+		struct lu_rec_opts_config 	config;	
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Opts_Config
 
-	Lu_Rec_Opts_Config lu_rec_opts_config_validate(Lu_Rec_Opts_Config self);
-
+	static Lu_Rec_Opts_Config lu_rec_opts_config_validate(Lu_Rec_Opts_Config self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec
 
 	struct lu_rec {
-		Lu_Brain 		brain;
-		lu_size 		id;
+		Lu_Brain 					brain;
+		lu_size 					id;
 
-		lu_size 		width;
-		lu_size 		height;
-		lu_size 		depth;
+		lu_size 					width;
+		lu_size 					height;
 
-		lu_size 		max_blocks_size;
-
-		lu_value 		v_min;
-		lu_value 		v_max;
-		lu_size			v_neu_size;
-		lu_size 		v_nsc;
-
-		lu_size 		p_neu_size;
-		lu_size 		p_nsc;  	// nei sim count
+		struct lu_rec_opts_config 	config;	
 	};
 
 	static inline lu_value rec_data_get(Lu_Rec rec, lu_p_value data, lu_size x, lu_size y, lu_size z)

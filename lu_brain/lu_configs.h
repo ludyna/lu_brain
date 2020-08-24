@@ -35,6 +35,7 @@
 		lu_size 		depth;
 
 		lu_size 		max_blocks_size;
+		lu_size 		hold_blocks_size;
 
 		lu_value 		v_min;
 		lu_value 		v_max;
@@ -51,6 +52,7 @@
 			// LU_ROC_MONOCHROME1_IMAGE
 			.depth 				= 1,
 			.max_blocks_size 	= LU_MAX_BLOCKS_SIZE,
+			.hold_blocks_size 	= 4, 
 			
 			.v_min 				= 0,
 			.v_max 				= 1,

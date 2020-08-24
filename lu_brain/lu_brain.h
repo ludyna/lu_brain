@@ -35,6 +35,7 @@
 	void lu_brain_opts_destroy(Lu_Brain_Opts);
 
 	// Lu_Rec_Opts
+	
 	Lu_Rec_Opts lu_rec_opts_create_from_predefined(
 		Lu_Brain_Opts lu_brain_opts, 
 		lu_size width, 
@@ -48,19 +49,6 @@
 		lu_size height, 
 		Lu_Rec_Opts_Config config
 	);
-
-	void lu_rec_opts_depth(Lu_Rec_Opts self, lu_size val);
-	
-	// v
-	void lu_rec_opts_v_min(Lu_Rec_Opts self, lu_size val);
-	void lu_rec_opts_v_max(Lu_Rec_Opts self, lu_size val);
-	void lu_rec_opts_v_neu_size(Lu_Rec_Opts self, lu_size val);
-	void lu_rec_opts_v_nsc_set(Lu_Rec_Opts self, lu_size val);
-
-	// p
-	void lu_rec_opns_p_neu_size_set(Lu_Rec_Opts self, lu_size val);
-	void lu_rec_opts_p_nsc_set(Lu_Rec_Opts self, lu_size val);
-
 	void lu_rec_opts_destroy(Lu_Rec_Opts);
 
 	// Lu_Brain

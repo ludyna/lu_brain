@@ -39,17 +39,7 @@
 		self->width 			= width;
 		self->height			= height;
 
-		self->max_blocks_size 	= config->max_blocks_size;
-
-		self->depth 			= config->depth;
-		
-		self->v_min 			= config->v_min;
-		self->v_max 			= config->v_max;
-		self->v_neu_size		= config->v_neu_size;
-		self->v_nsc				= config->v_nsc;	
-
-		self->p_neu_size		= config->p_neu_size;
-		self->p_nsc				= config->p_nsc;
+		self->config 			= *config;
 
 		arr_append(self->brain_opts->rec_opts, self);
 
@@ -60,38 +50,3 @@
 	{
 		mem_temp_free((lu_p_byte) self);
 	} 
-
-///////////////////////////////////////////////////////////////////////////////
-// Properties
-
-	void lu_rec_opts_v_nsc_set(Lu_Rec_Opts self, lu_size val)
-	{
-		lu_user_assert_void(val < self->v_neu_size / 2, "v_nsc should less than v_neu_size / 2");
-
-		self->v_nsc = val;
-	}
-
-	void lu_rec_opns_p_neu_size_set(Lu_Rec_Opts self, lu_size val)
-	{
-		lu_user_assert_void(val > 1, "p_neu_size should be greater than 1");
-
-		self->p_neu_size = val;
-	}
-
-	void lu_rec_opts_p_nsc_set(Lu_Rec_Opts self, lu_size val)
-	{
-		lu_user_assert_void(val < self->p_neu_size / 2, "p_nsc should less than p_neu_size / 2");
-
-		self->p_nsc = val;
-	}
-
-	void lu_rec_opts_max_blocks_size_set(Lu_Rec_Opts self, lu_size val)
-	{
-		lu_user_assert_void(val > 1, "max_blocks_size should be greater than 1");
-
-		self->max_blocks_size = val;
-	} 
-
-
-///////////////////////////////////////////////////////////////////////////////
-// 

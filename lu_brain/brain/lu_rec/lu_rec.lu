@@ -24,19 +24,9 @@
 
 		self->width 			= opts->width;
 		self->height 			= opts->height;
-		self->depth				= opts->depth;
-		
-		self->max_blocks_size 	= opts->max_blocks_size;
+		self->config 			= opts->config;
 
-		self->v_min				= opts->v_min;
-		self->v_max 			= opts->v_max;
-		self->v_neu_size 		= opts->v_neu_size; 
-		self->v_nsc 			= opts->v_nsc;
-
-		self->p_neu_size		= opts->p_neu_size;
-		self->p_nsc 			= opts->p_nsc;
-
-		//lu_debug("\n\nrec->v_nsc=%d\n\n", self->v_nsc);
+		//lu_debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);
 
 		return self;
 	}
