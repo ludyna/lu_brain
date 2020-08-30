@@ -119,7 +119,7 @@
  		); 
  
  		data = story_data_get(self, rec->id, self->y);
- 		data_init(data, rec->width, rec->height, rec->config.depth, values);
+ 		data_init(data, rec->config.width, rec->config.height, rec->config.depth, values);
 
  		self->blocks_count = self->y + 1;
 	} 

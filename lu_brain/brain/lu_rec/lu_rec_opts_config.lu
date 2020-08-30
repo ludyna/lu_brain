@@ -8,7 +8,9 @@
 	static Lu_Rec_Opts_Config lu_rec_opts_config_validate(Lu_Rec_Opts_Config self)
 	{
 		lu_user_assert(self, "Lu_Rec_Opts_Config is NULL");
-		
+	
+		lu_user_assert(self->width > 0, "Width should be greater than 0");
+		lu_user_assert(self->height > 0, "Height should be greater than 0");	
 		lu_user_assert(self->depth > 0, "Depth should be greater than 0");
 
 		lu_user_assert(self->max_blocks_size > 0, "max_block_size should be greater than 0");

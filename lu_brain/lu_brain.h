@@ -45,8 +45,6 @@
 
 	Lu_Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts lu_brain_opts, 
-		lu_size width, 
-		lu_size height, 
 		Lu_Rec_Opts_Config config
 	);
 	void lu_rec_opts_destroy(Lu_Rec_Opts);

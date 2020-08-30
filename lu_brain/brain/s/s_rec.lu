@@ -8,9 +8,6 @@
 		lu_user_assert(s_mem->brain, "s_mem->brain is NULL");
 		lu_user_assert(rec, "Rec is NULL");
 
-		lu_user_assert(rec->width > 0, "Lu_Rec width should be greater than 0");
-		lu_user_assert(rec->height > 0, "Lu_Rec height should be greater than 0");
-
 		Mem mem = s_mem->brain->app_mem;
 
 		lu_user_assert(mem, "Mem is NULL");
@@ -22,8 +19,8 @@
 		self->rec 				= rec;
 		self->id 				= rec->id;
 
-		self->cells_w 			= rec->width;
-		self->cells_h			= rec->height; 
+		self->cells_w 			= rec->config.width;
+		self->cells_h			= rec->config.height; 
 		self->cells_d 			= rec->config.depth;
 
 		self->cells_count		= 0;

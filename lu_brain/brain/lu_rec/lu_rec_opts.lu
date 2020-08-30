@@ -14,21 +14,22 @@
 	{
 		lu_user_assert(predefined_config_id < LU_ROC_END, "rec_opts_predefined_id is out of range");
 		Lu_Rec_Opts_Config config = &lu_g_roc_predefinitions[predefined_config_id];
-		lu_user_assert(config, "Lu_Rec_Opts_Config is NULL");
+		lu_user_assert(config, "Lu_Rec_Opts_Config is NULL"); 
 
-		return lu_rec_opts_create(brain_opts, width, height, config);
+		config->width 	= width;
+		config->height 	= height;
+
+		config = lu_rec_opts_config_validate(config);
+		lu_user_assert(config, "Lu_Rec_Opts_Config validation failed");
+
+		return lu_rec_opts_create(brain_opts, config);
 	}
 
 	Lu_Rec_Opts lu_rec_opts_create(
 		Lu_Brain_Opts 				brain_opts, 
-		lu_size 					width, 
-		lu_size 					height, 
 		Lu_Rec_Opts_Config 			config
 	)
 	{
-		lu_user_assert(width > 0, "Width should be greater than 0");
-		lu_user_assert(height > 0, "Height should be greater than 0");
-
 		config = lu_rec_opts_config_validate(config);
 		lu_user_assert(config, "Lu_Rec_Opts_Config validation failed");
 
@@ -36,9 +37,6 @@
 
 		// Initialize
 		self->brain_opts 		= brain_opts;
-		self->width 			= width;
-		self->height			= height;
-
 		self->config 			= *config;
 
 		arr_append(self->brain_opts->rec_opts, self);

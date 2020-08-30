@@ -22,7 +22,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem
 
-	enum lu_roc_predefinde_type {
+	enum lu_roc_predefined_type {
 		LU_ROC_MONOCHROME1_IMAGE = 0,
 		LU_ROC_MONOCHROME8_IMAGE,
 		LU_ROC_RBG8_IMAGE,
@@ -32,6 +32,8 @@
 	};
 
 	struct lu_rec_opts_config {
+		lu_size 		width;
+		lu_size 		height;
 		lu_size 		depth;
 
 		lu_size 		max_blocks_size;

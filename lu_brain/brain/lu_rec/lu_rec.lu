@@ -21,9 +21,6 @@
 
 		// Initialize
 		self->brain 			= brain;
-
-		self->width 			= opts->width;
-		self->height 			= opts->height;
 		self->config 			= opts->config;
 
 		//lu_debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);

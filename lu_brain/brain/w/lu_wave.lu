@@ -39,7 +39,6 @@
 
 	}
 
-
 	static Lu_Wave wave_prepare(Lu_Wave self)
 	{
 		// prepare and reset

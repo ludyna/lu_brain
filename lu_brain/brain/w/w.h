@@ -51,14 +51,13 @@
 		W_Mem 					w_mem; 			
 
 		// poviazanyy z rec
-		S_Rec 					s_rec;		
+		S_Rec 					s_rec;	
+
+			
 
 		W_Layer_2 				layer_0;
 		W_Layer 				layer_1;
 		W_Layer 				layer_2;
-
-		lu_size 				hold_blocks_count;
-		lu_size					hold_blocks_size;
 	};
 
 	// w_rec.lu
