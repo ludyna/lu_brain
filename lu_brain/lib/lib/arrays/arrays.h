@@ -1,6 +1,7 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
+
 #ifndef _LU_ARRAYS_H
 #define _LU_ARRAYS_H
 
@@ -17,14 +18,16 @@
 		lu_size 	size;
 		lu_size 	count;
 		lu_p_void* 	items;
+		lu_bool 	allow_realloc;
+		Mem 		mem;
 	};
 
 	// Create and destroy 
 
-	Arr arr_create(Mem mem, lu_size size);
-	static inline Arr arr_temp_create(lu_size size) { return arr_create(g_mem_temp, size); }
-	void arr_destroy(Arr, Mem);
-	static inline void arr_temp_destroy(Arr self) { arr_destroy(self, g_mem_temp); }
+	Arr arr_create(Mem mem, lu_size size, lu_bool allow_realloc);
+	static inline Arr arr_temp_create(lu_size size) { return arr_create(g_mem_temp, size, true); }
+	void arr_destroy(Arr);
+	static inline void arr_temp_destroy(Arr self) { arr_destroy(self); }
 
 	// Setters / getters
 
@@ -91,7 +94,7 @@
 
 	static inline void arr_reset(Arr self) { self->count = 0; }
 
-	void arr_realloc(Arr self, lu_size new_size, Mem mem);
+	void arr_realloc(Arr self, lu_size new_size);
 	Arr arr_merge(Arr self, Arr src);
 
 	lu_p_void arr_find_first_1p(Arr self, lu_bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1);
@@ -110,20 +113,25 @@
 
 	// Create and destroy
 
-	static inline Arr2 arr2_create(Mem mem, lu_size width, lu_size height)
+	static inline Arr2 arr2_create(Mem mem, lu_size width, lu_size height, lu_bool allow_realloc)
 	{
 		Arr2 self = (Arr2) mem_alloc(mem, sizeof(struct arr2));
 		
 		self->width 	= width;
 		self->height 	= height;
-		self->items 	= arr_create(mem, width * height);
+		self->items 	= arr_create(mem, width * height, allow_realloc);
 
 		return self;
 	} 
 
-	static inline void arr2_destroy(Arr2 self, Mem mem)
+	static inline void arr2_destroy(Arr2 self)
 	{
-		arr_destroy(self->items, mem);
+		lu_user_assert_void(self, "Arr2 is NULL");
+
+		Mem mem = self->items->mem;
+		lu_user_assert_void(mem, "Mem is NULL");
+
+		arr_destroy(self->items);
 		mem_free(mem, (lu_p_byte) self);
 	}
 
@@ -181,15 +189,15 @@
 
 	#endif
 
-	static inline void arr2_realloc(Arr2 self, lu_size w, lu_size h, Mem mem)  
+	static inline void arr2_realloc(Arr2 self, lu_size w, lu_size h)  
 	{ 
 		lu_assert(w + h > self->width + self->height);
 
 		self->width = w;
 		self->height = h;
 
-		arr_realloc(self->items, self->width * self->height, mem);
-	} 
+		arr_realloc(self->items, self->width * self->height);
+	}
 
 
 #endif // _LU_ARRAYS_H

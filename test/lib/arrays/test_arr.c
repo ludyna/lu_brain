@@ -12,8 +12,8 @@ void tearDown(void)
 void test_arr1(void)
 {
     Mem mem  = (Mem) mem_perm_create(g_mem_temp, 2048);
-    Arr arr1 = arr_create(mem, 5);
-    Arr arr2 = arr_create(mem, 2);
+    Arr arr1 = arr_create(mem, 5, true);
+    Arr arr2 = arr_create(mem, 2, true);
 
     int v1 = 1;
     int v2 = 2;
@@ -38,7 +38,7 @@ void test_arr1(void)
 void test_arr2(void)
 {
     Mem mem = (Mem) mem_perm_create(g_mem_temp, 2048);
-    Arr arr1 = arr_create(mem, 5);
+    Arr arr1 = arr_create(mem, 5, true);
 
     arr_set(arr1, 0, NULL);
     arr_set(arr1, 1, NULL);

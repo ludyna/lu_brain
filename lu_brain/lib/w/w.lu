@@ -5,7 +5,7 @@
 #include "w_rec.lu"
 #include "w_mem.lu"
 #include "lu_neu.lu"
-#include "lu_wave_properties.lu"
+#include "lu_wave_property.lu"
 #include "lu_wave_save.lu"
 #include "lu_wave_find.lu"
 #include "lu_wave_restore.lu"

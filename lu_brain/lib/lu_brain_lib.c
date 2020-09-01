@@ -35,52 +35,25 @@
 		return lu_brain_create(*config);
 	}
 
-	static void lu_brain_for_each_rec_opts_create_rec(void* item, void* p1)
-	{
-		Lu_Rec_Opts rec_opts 	= (Lu_Rec_Opts) item;
-		Lu_Brain brain 		= (Lu_Brain) p1;
-
-		Lu_Rec rec = rec_create(brain, rec_opts);
-
-		lu_user_assert_void(rec, "Cannot create Lu_Rec");
-
-		arr_append(brain->recs, rec);
-
-		lu_user_assert_void(arr_count(brain->recs) > 0, "Cannot append Lu_Rec");
-
-		rec->id = arr_count(brain->recs) - 1;
-	}
-
 	Lu_Brain lu_brain_create(struct lu_brain_config config)
 	{
-		if (config == NULL) 
-			return lu_user_debug("lu_brain options should not be NULL");
+		Lu_Brain_Config p_config = lu_brain_config_validate(&config);
+		lu_user_assert(p_config, "Lu_Brain_Config validation failed");
 
-		if (config->rec_opts == NULL || config->rec_opts->count < 1) 
-			return lu_user_debug("lu_brain options should include information about recs (rec_opts)");
-
-		Mem brain_mem			= (Mem) mem_perm_create(g_mem_temp, config->size_in_bytes); 
+		Mem brain_mem			= (Mem) mem_perm_create(g_mem_temp, p_config->size_in_bytes); 
 		lu_user_assert(brain_mem, "Cannot create brain_mem. Not enough memory?");
 
 		Lu_Brain self 		= (Lu_Brain) mem_alloc(brain_mem, sizeof(struct lu_brain));
 		lu_user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
-		self->id 			= config->id;
 		self->brain_mem  	= brain_mem; 
-
-		// Recs
-		self->recs 			= arr_create(brain_mem, config->rec_opts->count);
-
-		lu_user_assert(self->recs, "Cannot create recs. Not enough memory?");
-
-		arr_each_1p(config->rec_opts, lu_brain_for_each_rec_opts_create_rec, self);
-
-		lu_user_assert(arr_count(self->recs) > 0, "Lu_Brain recs count is 0");
+		self->config 		= *p_config;
+		self->recs 			= arr_create(brain_mem, p_config->recs_size, false);
 
 		self->s_mem 		= s_mem_create(self);
 		lu_user_assert(self->s_mem, "Cannot create S_Mem. Not enough memory?");
 
-		self->n_mem 		= n_mem_create(self, &config->n_mem_opts);
+		self->n_mem 		= n_mem_create(self, p_config->names_size);
 		lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
 
 		n_mem_tables_create(self->n_mem, brain_mem);
@@ -101,7 +74,7 @@
 		lu_user_assert_void(self->brain_mem, "Mem is NULL");
 		Mem_Perm brain_mem = (Mem_Perm) self->brain_mem;
 
-		lu_debug("\n\n---------> Brain #%lu Info <---------", self->id);
+		lu_debug("\n\n---------> Brain #%lu Info <---------", self->config.id);
 		lu_debug("\nMemory allocated (bytes): %lu", mem_perm_allocated(brain_mem));
 		lu_debug("\nMemory used (bytes): %lu", mem_perm_used(brain_mem));
 
@@ -110,4 +83,20 @@
  		s_mem_print_info(self->s_mem);
 
 		lu_debug("\n-----------------------------------\n");
+	}
+
+	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
+	{
+		if (self == NULL) 
+		{
+			lu_user_debug("Lu_Brain is NULL! Returning LU_BC_DEFAULT config");
+			return *lu_brain_config_predefined_get(LU_BC_DEFAULT);
+		}
+
+		return self->config;
+	}
+
+	Lu_Brain lu_brain_reconfigure(Lu_Brain self, struct lu_brain_config config)
+	{
+		lu_user_assert(NULL, "Not implemented yet");
 	}

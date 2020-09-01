@@ -32,8 +32,15 @@
 // Lu_Brain_Config
 	
 	struct lu_brain_config {
-		lu_size 		size_in_bytes;
+		lu_size 		size_in_bytes;		// brain size in bytes (not includes recs, stories or waves)
+											// optimal size depends on number of recs, rec sizes, 
+											// story sizes and amount of data to remember
 
+		lu_size 		recs_size;			// initial maximum number of recs 
+
+		lu_size 		names_size; 		// initial maximum number of names
+
+		lu_size 		id;					// optional, to identify brain by unique id
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,10 +57,9 @@
 // Lu_Brain 
 
 	struct lu_brain {
-		lu_size					id;  		// useful for logs and debugging 
-											// in multi-lu_brain env
-
 		Mem 					brain_mem;
+
+		struct lu_brain_config 	config;
 
 		Arr						recs;		// receivers
 
@@ -61,7 +67,6 @@
 		N_Mem 					n_mem;		
 	};	
 
-	
 
 
 #endif // _LU_SRC_BRAIN_H
