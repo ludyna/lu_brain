@@ -52,7 +52,7 @@
 
 	static inline N_Mem_Opts n_mem_opts_init(N_Mem_Opts self)
 	{
-		self->names_size = LU_NAMES_SIZE;
+		self->names_size = 255; // CHANGE!
 	}
 
 	static inline N_Mem_Opts n_mem_opts_validate(N_Mem_Opts opts)

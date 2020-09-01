@@ -7,24 +7,29 @@
 
 	static W_Rec w_rec_create(W_Mem w_mem, S_Rec s_rec)
 	{
-		 W_Rec self 		= (W_Rec) mem_temp_alloc(sizeof(struct w_rec));
-		 lu_user_assert(self, "Cannot allocate W_Rec");
+		lu_user_assert(w_mem, "W_Mem is NULL");
+		lu_user_assert(s_rec, "S_Rec is NULL");
+		lu_user_assert(s_rec->rec, "Lu_Rec is NULL");
 
-		 self->w_mem 		= w_mem;
-		 self->s_rec 		= s_rec;
+		W_Rec self 		= (W_Rec) mem_temp_alloc(sizeof(struct w_rec));
+		lu_user_assert(self, "Cannot allocate W_Rec");
+		 
+		self->w_mem 		= w_mem;
+		self->s_rec 		= s_rec;
+		self->config 		= s_rec->rec->config;		// pochatkovi znachennia
 
-		 lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
+		lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
 
-		 S_Layer s_layer 	= &s_rec->data_layers[0];
+		S_Layer s_layer 	= &s_rec->data_layers[0];
 
-		 self->layer_0  	= w_layer_2_create(s_layer);
+		self->layer_0  	= w_layer_2_create(s_layer);
 
-		 s_layer 			= &s_rec->data_layers[1];
+		s_layer 			= &s_rec->data_layers[1];
 
-		 self->layer_1 		= w_layer_create(s_layer);
-		 self->layer_2 		= w_layer_create(s_layer);
+		self->layer_1 		= w_layer_create(s_layer);
+		self->layer_2 		= w_layer_create(s_layer);
 
-		 return self;
+		return self;
 	}
 
 	static void w_rec_destroy(W_Rec self)

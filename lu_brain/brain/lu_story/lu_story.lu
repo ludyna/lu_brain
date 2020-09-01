@@ -41,7 +41,7 @@
 
 			for (block_i = 0; block_i < h; block_i++)
 			{
-				data = story_data_get(self, rec_i, block_i);
+				data = lu_story_data_get(self, rec_i, block_i);
 
 				lu_user_assert(data, "Something went wrong");
 
@@ -80,7 +80,7 @@
 		for(block_i = 0; block_i < self->blocks_count; block_i++)
 			for(rec_i = 0; rec_i < self->datum_w; rec_i++)
 			{
-				data = story_data_get(self, rec_i, block_i);
+				data = lu_story_data_get(self, rec_i, block_i);
 				lu_user_assert_void(data, "Something went wrong");
 
 				data_reset(data);
@@ -107,7 +107,7 @@
 			self->start_block_on_next_data = false;
 		}
 	
-		Data data = story_data_get(self, rec->id, self->y);
+		Data data = lu_story_data_get(self, rec->id, self->y);
 		lu_p_value v = data->values;
 		if (v) 
 			// new input to the same rec and channel advances story
@@ -118,7 +118,7 @@
  			"Out of available blocks in story."
  		); 
  
- 		data = story_data_get(self, rec->id, self->y);
+ 		data = lu_story_data_get(self, rec->id, self->y);
  		data_init(data, rec->config.width, rec->config.height, rec->config.depth, values);
 
  		self->blocks_count = self->y + 1;
@@ -133,14 +133,14 @@
 
 		for(block_i = 0; block_i < self->blocks_count; block_i++)
 		{
-			data = story_data_get(self, rec_i, block_i);
+			data = lu_story_data_get(self, rec_i, block_i);
 			if (data && data->values) return data;
 		}
 
 		return NULL;
 	}
 
-	static Lu_Story story_validate(Lu_Story self)
+	static Lu_Story lu_story_validate(Lu_Story self)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
 		lu_user_assert(self->blocks_count, "Lu_Story has no blocks");
@@ -153,7 +153,7 @@
 		return self;
 	}
 
-	static Lu_Story story_prepare(Lu_Story self)
+	static Lu_Story lu_story_prepare(Lu_Story self)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
 
@@ -165,7 +165,7 @@
 		for(rec_i = 0; rec_i < self->datum_w; rec_i++)
 			for(block_i = 0; block_i < self->blocks_count; block_i++)
 			{
-				d1 = story_data_get(self, rec_i, block_i);
+				d1 = lu_story_data_get(self, rec_i, block_i);
 				lu_user_assert(d1, "Something went wrong");
 
 				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
@@ -180,7 +180,7 @@
 				}
 				else
 				{
-					d2 = story_data_get(self, rec_i, block_i - 1);
+					d2 = lu_story_data_get(self, rec_i, block_i - 1);
 					data_shallow_copy(d1, d2);
 				}
 			}

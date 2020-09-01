@@ -131,7 +131,7 @@
 
 	struct mem_table_perm {
 		struct mem_table 	super;
-		Mem_Perm 			app_mem;
+		Mem_Perm 			brain_mem;
 	};
 
 	Mem_Table_Perm mem_table_perm_create(

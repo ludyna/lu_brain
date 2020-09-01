@@ -8,7 +8,7 @@
 Lu_Brain 			brain;
 Lu_Rec 				rec_1;
 
-Lu_Brain_Opts 		brain_opts;
+Lu_Brain_Config 		brain_config;
 Lu_Rec_Opts 		rec_opts_1;
 Lu_Rec_Opts 		rec_opts_2;
 
@@ -40,9 +40,9 @@ void tearDown(void)
 
 void test_s_col1and2(void)
 {
-	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
+	brain_config 			= lu_brain_opts_create(1, 200 * 1024);
 	rec_opts_1 			= lu_rec_opts_create(
-		brain_opts, 
+		brain_config, 
 		/*w*/				3, 
 		/*h*/				3, 
 		/*depth*/	1,
@@ -54,7 +54,7 @@ void test_s_col1and2(void)
 	TEST_ASSERT(rec_opts_1);
 
 	rec_opts_2 			= lu_rec_opts_create(
-		brain_opts, 
+		brain_config, 
 		/*w*/				1, 
 		/*h*/				1, 
 		/*depth*/	1,
@@ -66,7 +66,7 @@ void test_s_col1and2(void)
 
 	TEST_ASSERT(rec_opts_2);
 
-	brain 				= lu_brain_create(brain_opts);
+	brain 				= lu_brain_create(brain_config);
 
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
@@ -97,6 +97,6 @@ void test_s_col1and2(void)
 	//N_Col n_col = s_col_n_get(s_col1, 5.0);
 	// s_col2 tests
 
-	lu_brain_opts_destroy(brain_opts);
+	lu_brain_opts_destroy(brain_config);
 	lu_brain_destroy(brain);
 }

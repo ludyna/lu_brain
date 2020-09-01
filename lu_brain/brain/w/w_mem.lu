@@ -81,7 +81,7 @@
 				w_rec 	= w_mem_rec_get(self, rec_i);
 				lu_user_assert_void(w_rec, "W_Rec is NULL");
 
-				data 	= story_data_get(story, rec_i, block_i);
+				data 	= lu_story_data_get(story, rec_i, block_i);
 
 				// lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
 				// data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");

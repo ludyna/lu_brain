@@ -3,11 +3,38 @@
 */
  
 ///////////////////////////////////////////////////////////////////////////////
-//
+// Lu_Rec_Config predefined
 
-	static Lu_Rec_Opts_Config lu_rec_opts_config_validate(Lu_Rec_Opts_Config self)
+ 	struct lu_rec_config lu_g_rc_predefined[LU_RC_END] = {
+		{
+			// LU_RC_MONOCHROME1_IMAGE
+			.depth 				= 1,
+			.max_blocks_size 	= 16,
+			.hold_blocks_size 	= 4, 
+			
+			.v_min 				= 0,
+			.v_max 				= 1,
+			.v_neu_size			= 2,
+			.v_nsc				= 0,
+
+			.p_neu_size			= 2,
+			.p_nsc				= 0
+		},
+
+	};
+
+	Lu_Rec_Config lu_rec_config_predefined_get(lu_size id)
 	{
-		lu_user_assert(self, "Lu_Rec_Opts_Config is NULL");
+		lu_user_assert(id < LU_RC_END, "Predefined id is > LU_RC_END");
+		return &lu_g_rc_predefined[id];
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Rec_Config
+
+	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self)
+	{
+		lu_user_assert(self, "Lu_Rec_Config is NULL");
 	
 		lu_user_assert(self->width > 0, "Width should be greater than 0");
 		lu_user_assert(self->height > 0, "Height should be greater than 0");	

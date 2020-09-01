@@ -1,0 +1,27 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Brain_Config predefined 
+
+	struct lu_brain_config lu_g_bc_predefined[LU_BC_END] = {
+		{
+
+		},
+	};		
+
+	Lu_Brain_Config lu_brain_config_predefined_get(lu_size id)
+	{
+		lu_user_assert(id < LU_BC_END, "id value is out of scope");
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Brain_Config
+
+
+	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config)
+	{
+		return config;
+	}

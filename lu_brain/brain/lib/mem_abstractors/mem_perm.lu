@@ -118,7 +118,7 @@
 	}
 
 	Mem_Table_Perm mem_table_perm_create(
-		Mem_Perm 			app_mem, 
+		Mem_Perm 			brain_mem, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,
@@ -140,7 +140,7 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = mem_perm_avail(app_mem) * percent  / 100.0;
+			lu_size a = mem_perm_avail(brain_mem) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
 			if (flags & MTF_FREEABLE) 
@@ -154,7 +154,7 @@
 		if (flags & MTF_FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
-		Mem mem = (Mem) app_mem;
+		Mem mem = (Mem) brain_mem;
 		lu_p_byte start = mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
@@ -181,7 +181,7 @@
 		self->super.full_size_in_bytes 		= full_size;
 
 		// own
-		self->app_mem 				= app_mem;
+		self->brain_mem 				= brain_mem;
 
 		return self;
 	}

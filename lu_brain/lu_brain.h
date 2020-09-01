@@ -4,62 +4,72 @@
 */
 #ifndef _LU_BRAIN_PUB_H
 #define _LU_BRAIN_PUB_H
- 
-#include "lu_configs.h"
+
+#include "lu_types.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
 
-	// Brain related 
+	// Brain  
 	
-	typedef struct lu_brain_opts* 		Lu_Brain_Opts;
+	typedef struct lu_brain_config* 	Lu_Brain_Config;
 	typedef struct lu_brain* 			Lu_Brain;	
-	typedef struct lu_rec_opts_config*	Lu_Rec_Opts_Config;
-	typedef struct lu_rec_opts* 		Lu_Rec_Opts;
+	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
 
-	// Story related
+	// Story 
+
 	typedef struct lu_story* 			Lu_Story;
 
-	// Wave related
+	// Wave 
+	
 	typedef struct lu_neu* 				Lu_Neu;
-	typedef struct lu_wave_opts* 		Lu_Wave_Opts;
 	typedef struct lu_wave* 			Lu_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
-// Brain related
+// Brain 
 
-	// Lu_Brain_Opts
+	// Lu_Brain_Config predefined 
 
-	Lu_Brain_Opts lu_brain_opts_create(lu_size id, lu_size size_in_bytes);
-	void lu_brain_opts_destroy(Lu_Brain_Opts);
+	Lu_Brain_Config lu_brain_config_predefined_get(lu_size id);
 
-	// Lu_Rec_Opts
-	
-	Lu_Rec_Opts lu_rec_opts_create_from_predefined(
-		Lu_Brain_Opts lu_brain_opts, 
+	// Lu_Brain_Config 
+
+	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);
+
+	// Lu_Brain 
+
+	Lu_Brain lu_brain_create_from_predefined(lu_size size_in_bytes, lu_size predefined_config_id);
+	Lu_Brain lu_brain_create(struct lu_brain_config config);
+	void lu_brain_destroy(Lu_Brain);
+
+	void lu_brain_print_info(Lu_Brain self);
+
+///////////////////////////////////////////////////////////////////////////////
+// Rec  
+
+	// Lu_Rec_Config predefined 
+
+	Lu_Rec_Config lu_rec_config_predefined_get(lu_size id);
+
+	// Lu_Rec_Config 
+
+	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self);
+
+	// Lu_Rec 
+
+	Lu_Rec lu_rec_create_from_predefined(
+		Lu_Brain brain, 
 		lu_size width, 
 		lu_size height, 
 		lu_size predefined_config_id
 	);		
 
-	Lu_Rec_Opts lu_rec_opts_create(
-		Lu_Brain_Opts lu_brain_opts, 
-		Lu_Rec_Opts_Config config
-	);
-	void lu_rec_opts_destroy(Lu_Rec_Opts);
-
-	// Lu_Brain
-
-	Lu_Brain lu_brain_create(Lu_Brain_Opts);
-	void lu_brain_destroy(Lu_Brain);
-
-	lu_size lu_brain_neuron_count(Lu_Brain);
-	Lu_Rec lu_brain_rec(Lu_Brain, lu_size index); 
-
+	Lu_Rec lu_rec_create(Lu_Brain brain, struct lu_rec_config config);
+	void lu_rec_destory(Lu_Rec self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Story related  
+// Story   
 
 	Lu_Story lu_story_create(Lu_Brain, lu_size);
 	void lu_story_destroy(Lu_Story);
@@ -72,7 +82,7 @@
 	void lu_story_reset(Lu_Story);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Wave related 
+// Wave  
 
 	// Lu_Neu 
 

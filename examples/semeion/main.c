@@ -28,18 +28,27 @@ int main()
 	smn_groups_data_alloc();
 	smn_groups_data_fill();
 
-	// Select random samples from groups
+	// Select random samples from group
 
 	smn_data_samples_create();
 
     // Create brain and related
 
-	Lu_Brain_Opts brain_opts 	= lu_brain_opts_create(1, 1024 * 1024);
-	Lu_Rec_Opts rec_opts 		= lu_rec_opts_create_from_predefined(brain_opts, 16, 16, LU_ROC_MONOCHROME1_IMAGE);
-	Lu_Brain brain 				= lu_brain_create(brain_opts);
+	Lu_Brain brain 				= lu_brain_create_from_predefined(
+		/*memory in bytes*/ 	1024 * 1024, 
+		/*predefined config*/ 	LU_BC_DEFAULT
+	);  
+	
+	Lu_Rec image_rec 			= lu_rec_create_from_predefined(
+		/*belongs to*/			brain, 
+		/*width*/				16, 
+		/*height*/				16, 
+		/*predefined config*/ 	LU_RC_MONOCHROME1_IMAGE
+	);	
+
 	Lu_Wave wave 				= lu_wave_create(brain);
-	Lu_Story story 				= lu_story_create(brain, 1);
-	Lu_Rec rec_0 				= lu_brain_rec_get(brain, 0);
+	Lu_Story story 				= lu_story_create(brain);
+
 	Lu_Neu name 				= NULL;
  
 	// Show random digit
@@ -59,7 +68,7 @@ int main()
 	{
 		d = smn_training_samples[i];
 
-		lu_story_push(story, rec_0, d->pixels);
+		lu_story_push(story, image_rec, d->pixels);
 		lu_wave_save_with_name(wave, story, d->name);
 		lu_story_reset(story);
 
@@ -77,7 +86,7 @@ int main()
 	for (i = 0; i < smn_test_samples_count; i++)
 	{
 		d = smn_test_samples[i];
-		lu_story_push(story, rec_0, d->pixels);
+		lu_story_push(story, image_rec, d->pixels);
 		wave = lu_wave_find(wave, story);
 
 		name = lu_wave_top_name_get(wave);
@@ -104,8 +113,8 @@ int main()
 
 	lu_story_destroy(story);
 	lu_wave_destroy(wave);
+	lu_rec_destroy(image_rec);
 	lu_brain_destroy(brain);
-	lu_brain_opts_destroy(brain_opts);
 
 	// Clean up memory for data
 

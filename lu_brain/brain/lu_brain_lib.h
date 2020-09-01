@@ -27,34 +27,33 @@
 #include "lu_story/lu_story.h"
 #include "s/s.h"
 
-///////////////////////////////////////////////////////////////////////////////
-// Nouns
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
-// Brain API
+// Lu_Brain_Config
+	
+	struct lu_brain_config {
+		lu_size 		size_in_bytes;
 
-	struct lu_brain_opts {
-		lu_size					id;
-		lu_size 				size_in_bytes;			// lu_brain size in bytes including 
-														// everything related
-
-		////////////////////////////////////
-		// Recs
-		Arr						rec_opts;				// recs options
-
-		////////////////////////////////////
-		// N_Mem
-		struct n_mem_opts 		n_mem_opts;
-		
 	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Brain_Config predefined 
+
+	enum lu_bc_predefined_type {
+		LU_BC_DEFAULT = 0,
+		LU_BC_END 				
+	};
+
+	extern struct lu_brain_config lu_g_bc_predefined[LU_BC_END];
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Brain 
 
 	struct lu_brain {
 		lu_size					id;  		// useful for logs and debugging 
 											// in multi-lu_brain env
 
-		Mem 					app_mem;
+		Mem 					brain_mem;
 
 		Arr						recs;		// receivers
 
@@ -62,7 +61,7 @@
 		N_Mem 					n_mem;		
 	};	
 
-	static void brain_print_info(Lu_Brain self);
+	
 
 
 #endif // _LU_SRC_BRAIN_H

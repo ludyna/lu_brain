@@ -13,7 +13,7 @@ Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
 
-Lu_Brain_Opts 		brain_opts;
+Lu_Brain_Config 	brain_config;
 Lu_Rec_Opts 		rec_opts_1;
 Lu_Rec_Opts 		rec_opts_2;
 Lu_Save_Opts		save_opts 		= NULL;
@@ -89,9 +89,9 @@ lu_value			data_16[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
+	brain_config 			= lu_brain_opts_create(1, 200 * 1024);
 	rec_opts_1 			= lu_rec_opts_create(
-		brain_opts, 
+		brain_config, 
 		/*w*/				3, 
 		/*h*/				3, 
 		/*depth*/			1,
@@ -102,7 +102,7 @@ void setUp(void)
 	);
 			
 	rec_opts_2 			= lu_rec_opts_create(
-		brain_opts, 
+		brain_config, 
 		/*w*/				2, 
 		/*h*/				2, 
 		/*depth*/			1,
@@ -112,7 +112,7 @@ void setUp(void)
 		/*v_neu_size*/		10
 	);
 	
-	brain 				= lu_brain_create(brain_opts);
+	brain 				= lu_brain_create(brain_config);
 
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
@@ -135,7 +135,7 @@ void tearDown(void)
 {	
 	lu_save_opts_destroy(save_opts);
 
-	lu_brain_opts_destroy(brain_opts);
+	lu_brain_opts_destroy(brain_config);
 	lu_brain_destroy(brain);
 }
 
@@ -145,11 +145,11 @@ void test_lu_story_1(void)
 	Lu_Story story = lu_story_create(brain, 0); 
 
  		TEST_ASSERT(story->y == 0);
- 		TEST_ASSERT(story_data_get(story, 0, 0)->values == NULL);
+ 		TEST_ASSERT(lu_story_data_get(story, 0, 0)->values == NULL);
 		
 	lu_story_push(story, rec_0, data_00);
 
-		d = story_data_get(story, rec_0->id, 0)->values;
+		d = lu_story_data_get(story, rec_0->id, 0)->values;
 		TEST_ASSERT(d[0] == 0);
 		TEST_ASSERT(story->y == 0);
 
@@ -158,9 +158,9 @@ void test_lu_story_1(void)
 	lu_story_push(story, rec_1, data_12);
 
 		TEST_ASSERT(story->y == 1);
-		d = story_data_get(story, rec_0->id, story->y)->values;
+		d = lu_story_data_get(story, rec_0->id, story->y)->values;
 		TEST_ASSERT(d[0] == 1);
-		d = story_data_get(story, rec_1->id, story->y)->values;
+		d = lu_story_data_get(story, rec_1->id, story->y)->values;
 		TEST_ASSERT(d[0] == 2);
 
 	lu_block_begin(story);
@@ -173,7 +173,7 @@ void test_lu_story_1(void)
 
 	lu_story_push(story, rec_1, data_13);
 		
-		d = story_data_get(story, rec_1->id, story->y)->values;
+		d = lu_story_data_get(story, rec_1->id, story->y)->values;
 		TEST_ASSERT(d[0] == 3);
 
 	lu_block_end(story);
@@ -219,7 +219,7 @@ void test_lu_story_2(void)
 	lu_block_begin(story);
 
  		TEST_ASSERT(story->y == 0);
- 		TEST_ASSERT(story_data_get(story, 0, 0)->values == NULL);
+ 		TEST_ASSERT(lu_story_data_get(story, 0, 0)->values == NULL);
 	
 	lu_block_end(story);
 		TEST_ASSERT(story->y == 0);
@@ -228,7 +228,7 @@ void test_lu_story_2(void)
 	lu_block_begin(story);
 	lu_block_begin(story);
 
-		d = story_data_get(story, rec_0->id, 0)->values;
+		d = lu_story_data_get(story, rec_0->id, 0)->values;
 		TEST_ASSERT(d[0] == 0);
 		TEST_ASSERT(story->y == 0);
 
@@ -243,13 +243,13 @@ void test_lu_story_data(void)
 
  		TEST_ASSERT(story->y == 0);
 
- 		data = story_data_get(story, 0, 0);
+ 		data = lu_story_data_get(story, 0, 0);
 
  		TEST_ASSERT(data->values == NULL);
  		TEST_ASSERT(data->w == 0);
  		TEST_ASSERT(data->h == 0);
 
- 		 data = story_data_get(story, 0, 1);
+ 		 data = lu_story_data_get(story, 0, 1);
 
  		TEST_ASSERT(data->values == NULL);
  		TEST_ASSERT(data->w == 0);
@@ -258,7 +258,7 @@ void test_lu_story_data(void)
 	lu_story_push(story, rec_0, data_00);
  		TEST_ASSERT(story->y == 0);
 		
-		data = story_data_get(story, 0, 0);
+		data = lu_story_data_get(story, 0, 0);
 		
 		TEST_ASSERT(data->values);
 		TEST_ASSERT(data->values[0] == 0);
@@ -269,14 +269,14 @@ void test_lu_story_data(void)
  		
  		TEST_ASSERT(story->y == 0);
 		
-		data = story_data_get(story, 1, 0);
+		data = lu_story_data_get(story, 1, 0);
 		
 		TEST_ASSERT(data->values);
 		TEST_ASSERT(data->values[0] == 6);
 		TEST_ASSERT(data->w == 2);
  		TEST_ASSERT(data->h == 2);
 		
-	data = story_data_get(story, 0, 1);
+	data = lu_story_data_get(story, 0, 1);
 	TEST_ASSERT(data);
 	TEST_ASSERT(data->values == NULL);
 

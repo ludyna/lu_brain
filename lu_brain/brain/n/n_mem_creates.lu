@@ -8,12 +8,12 @@
 	static N_Mem n_mem_create(Lu_Brain brain, N_Mem_Opts opts)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(brain->app_mem, "Lu_Brain app_mem is NULL");
+		lu_user_assert(brain->brain_mem, "Lu_Brain brain_mem is NULL");
 
 		opts = n_mem_opts_validate(opts);
 		lu_user_assert(opts, "N_Mem_Opts invalid");
 
-		N_Mem self 			= (N_Mem) mem_alloc(brain->app_mem, sizeof(struct n_mem));
+		N_Mem self 			= (N_Mem) mem_alloc(brain->brain_mem, sizeof(struct n_mem));
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
 		self->brain 		= brain;
@@ -22,7 +22,7 @@
 		self->cells 		= NULL;
 		self->lins 			= NULL;
 
-		self->names 		= simple_hash_create(brain->app_mem, opts->names_size);
+		self->names 		= simple_hash_create(brain->brain_mem, opts->names_size);
 		lu_user_assert(self->names, "Cannot create names");
 
 		return self;

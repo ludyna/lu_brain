@@ -13,7 +13,7 @@ Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
 
-Lu_Brain_Opts 		brain_opts;
+Lu_Brain_Config 		brain_config;
 Lu_Rec_Opts 		rec_opts_1;
 Lu_Rec_Opts 		rec_opts_2;
 Lu_Wave 			wave;
@@ -58,9 +58,9 @@ lu_value			data_6[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	brain_opts 			= lu_brain_opts_create(1, 200 * 1024);
+	brain_config 			= lu_brain_opts_create(1, 200 * 1024);
 	rec_opts_1 			= lu_rec_opts_create(
-							brain_opts, 
+							brain_config, 
 		/*w*/				3, 
 		/*h*/				3, 
 		/*depth*/			1,
@@ -71,7 +71,7 @@ void setUp(void)
 	);
 			
 	rec_opts_2 			= lu_rec_opts_create(
-							brain_opts, 
+							brain_config, 
 		/*w*/				3, 
 		/*h*/				3, 
 		/*depth*/			1,
@@ -81,7 +81,7 @@ void setUp(void)
 		/*v_neu_size*/		10
 	);
 	
-	brain 				= lu_brain_create(brain_opts);
+	brain 				= lu_brain_create(brain_config);
 
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
@@ -104,7 +104,7 @@ void tearDown(void)
 {	
 	lu_wave_destroy(wave);
 
-	lu_brain_opts_destroy(brain_opts);
+	lu_brain_opts_destroy(brain_config);
 	lu_brain_destroy(brain);
 }
 

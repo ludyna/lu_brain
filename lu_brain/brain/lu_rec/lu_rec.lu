@@ -5,32 +5,35 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Includes
 
-	#include "lu_rec_opts.lu"
-	#include "lu_rec_opts_config.lu"
+ 	#include "lu_rec_config.lu"
  
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	static Lu_Rec rec_create(Lu_Brain brain, Lu_Rec_Opts opts)
+	
+
+	Lu_Rec lu_rec_create(Lu_Brain brain, struct lu_rec_config config)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(opts, "Opts is NULL");
+	 
+	 	Lu_Rec_Config p_config = lu_rec_config_validate(&config);
+	 	lu_user_assert(p_config, "Lu_Rec_Config validation failed");
 
-		Lu_Rec self 			= (Lu_Rec) mem_alloc(brain->app_mem, sizeof(struct lu_rec));
+		Lu_Rec self 			= (Lu_Rec) mem_temp_alloc(sizeof(struct lu_rec));
 		lu_user_assert(self, "Cannot allocate lu_rec");
 
 		// Initialize
 		self->brain 			= brain;
-		self->config 			= opts->config;
+		self->config 			= *p_config;
 
 		//lu_debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);
 
 		return self;
 	}
 
-	static void rec_destroy(Lu_Rec self)
+	void lu_rec_destroy(Lu_Rec self)
 	{
-		mem_free(self->brain->app_mem, (lu_p_byte) self);
+		mem_temp_free((lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

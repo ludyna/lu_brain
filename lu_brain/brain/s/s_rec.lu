@@ -8,7 +8,7 @@
 		lu_user_assert(s_mem->brain, "s_mem->brain is NULL");
 		lu_user_assert(rec, "Rec is NULL");
 
-		Mem mem = s_mem->brain->app_mem;
+		Mem mem = s_mem->brain->brain_mem;
 
 		lu_user_assert(mem, "Mem is NULL");
 
