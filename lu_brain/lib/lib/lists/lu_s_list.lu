@@ -3,33 +3,33 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// S_Node
+// Lu_S_Node
 
-S_Node s_node_create(Mem_Table mem_table, lu_size limit_size)
+Lu_S_Node s_node_create(Mem_Table mem_table, lu_size limit_size)
 {
-	S_Node node = (S_Node) mem_record_alloc(mem_table);
+	Lu_S_Node node = (Lu_S_Node) mem_record_alloc(mem_table);
 
 	s_node_init(node, mem_table, limit_size);
 
 	return node;
 }
 
-void s_node_destroy(Mem_Table mem_table, S_Node* s_node)
+void s_node_destroy(Mem_Table mem_table, Lu_S_Node* s_node)
 {
-	//list_destroy_all(&(*s_node)->values);
+	//lu_list_destroy_all(&(*s_node)->values);
 	mem_record_free(mem_table, (lu_p_byte) *s_node);
 	*s_node = NULL;
 }
 
  
 ///////////////////////////////////////////////////////////////////////////////
-// S_List
+// Lu_S_List
 
-static void build_header(S_List self)
+static void build_header(Lu_S_List self)
 {
-	S_Node above;  
+	Lu_S_Node above;  
 	
-	S_Node below 	= s_node_create(self->mem_table, self->limit_size); 
+	Lu_S_Node below 	= s_node_create(self->mem_table, self->limit_size); 
 	below->value 	= NULL; 
 
 	for (lu_size i = 1; i < self->level_size; i++)
@@ -47,10 +47,10 @@ static void build_header(S_List self)
 	self->header = below;
 }
 
-S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_side over_limit_remove_side)
+Lu_S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_side over_limit_remove_side)
 {
 	lu_assert(limit_size > 0);
-	S_List self = (S_List) mem_alloc(mem, sizeof(struct s_list));
+	Lu_S_List self = (Lu_S_List) mem_alloc(mem, sizeof(struct lu_s_list));
 	lu_assert(self != NULL);
 
 	// Initialize
@@ -65,7 +65,7 @@ S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_
 
 	self->mem_table 		= mem_table_create(
 							mem, 
-							sizeof(struct s_node), 
+							sizeof(struct lu_s_node), 
 							self->limit_size * 3 + self->level_size, 
 							0, 
 							MTF_FREEABLE
@@ -84,9 +84,9 @@ S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_
 ///////////////////////////////////////////////////////////////////////////////
 // Main public methods
 
-static void s_list_path_debug(S_List self, S_Node* path)
+static void s_list_path_debug(Lu_S_List self, Lu_S_Node* path)
 {
-	// S_Node node;
+	// Lu_S_Node node;
 	// lu_debug("\n\n~~~~~~~~~~ PATH count: %ld ~~~~~~~~~~", self->level_size);
 	// int i = (int) self->level_size - 1;
 
@@ -111,13 +111,13 @@ static void s_list_path_debug(S_List self, S_Node* path)
 	// lu_debug("\n");
 }
 
-static S_Node build_column(S_List self, S_Node* path, lu_p_void value)
+static Lu_S_Node build_column(Lu_S_List self, Lu_S_Node* path, lu_p_void value)
 { 
-	S_Node above;
+	Lu_S_Node above;
 
-	S_Node below 		= s_node_create(self->mem_table, self->limit_size); 
-	S_Node bottom		= below;
-	S_Node prev, next;
+	Lu_S_Node below 		= s_node_create(self->mem_table, self->limit_size); 
+	Lu_S_Node bottom		= below;
+	Lu_S_Node prev, next;
 
 	prev 			= path[0];
 	next 			= path[0]->next;
@@ -159,20 +159,20 @@ static S_Node build_column(S_List self, S_Node* path, lu_p_void value)
 	return bottom;
 }
 
-static void s_list_remove(S_List self, S_Node bottom)
+static void s_list_remove(Lu_S_List self, Lu_S_Node bottom)
 {
 	if (bottom == NULL) return;
 
-	List values = &bottom->values;
+	Lu_List values = &bottom->values;
 	if (values->count > 0)
 	{
 		lu_assert(values->last != NULL);
-		list_remove(values, values->last);
+		lu_list_remove(values, values->last);
 		goto end;
 	}
 
-	S_Node curr = bottom;
-	S_Node prev = bottom->prev, next = bottom->next, above;
+	Lu_S_Node curr = bottom;
+	Lu_S_Node prev = bottom->prev, next = bottom->next, above;
 
 	if (prev->value == NULL) 	self->first = next;
 	if (next == NULL) 			self->last = prev;
@@ -208,10 +208,10 @@ end:
 	--self->count;
 }
 
-void s_list_debug(S_List self)
+void s_list_debug(Lu_S_List self)
 {
-	S_Node head = self->header;
-	S_Node curr;
+	Lu_S_Node head = self->header;
+	Lu_S_Node curr;
 
 	lu_size i = self->level_size - 1;
 	lu_debug_message("======= SLIST ======");
@@ -238,15 +238,15 @@ void s_list_debug(S_List self)
 	
 }
 
-static S_Node s_list_insert(S_List self, lu_p_void value)
+static Lu_S_Node s_list_insert(Lu_S_List self, lu_p_void value)
 {
-	S_Node path[self->level_size];
+	Lu_S_Node path[self->level_size];
 
 	lu_bool eq	= false;
  	lu_size i 	= self->level_size - 1;
  	path[i] 	= self->header;
 
- 	S_Node curr, tmp;
+ 	Lu_S_Node curr, tmp;
 	while (1)
 	{
 		if (path[i] == NULL) break;
@@ -290,7 +290,7 @@ static S_Node s_list_insert(S_List self, lu_p_void value)
 
 	if (eq)
 	{
-		list_append(&path[0]->values, value);
+		lu_list_append(&path[0]->values, value);
 	}	
 	else 
 	{
@@ -306,7 +306,7 @@ static S_Node s_list_insert(S_List self, lu_p_void value)
 	return curr;
 }
 
-S_Node s_list_add(S_List self, lu_p_void value)
+Lu_S_Node s_list_add(Lu_S_List self, lu_p_void value)
 {
 	if (self->first == NULL) return s_list_insert(self, value);
 

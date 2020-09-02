@@ -1,0 +1,213 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad (Novossaad)
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+Lu_L_Node l_node_create(Mem_Table mem_table, lu_p_void value)
+{
+	Lu_L_Node node;
+
+	if (mem_table)
+		node = (Lu_L_Node) mem_record_alloc(mem_table);
+	else
+		node = (Lu_L_Node) mem_temp_alloc(sizeof(struct lu_l_node));
+	
+	lu_assert(node);
+	lu_l_node_init(node, value);
+
+	return node;
+}
+
+void l_node_destroy(Mem_Table mem_table, Lu_L_Node* l_node)
+{
+	//lu_list_destroy_all(&(*l_node)->values);
+	if (mem_table)
+		mem_record_free(mem_table, (lu_p_void) *l_node);
+	else 
+		mem_temp_free((lu_p_byte) *l_node);
+
+	*l_node = NULL;
+}
+
+Lu_List lu_list_create(Mem mem)
+{
+	Lu_List self 				= (Lu_List) mem_alloc(mem, sizeof(struct lu_list));
+	self->mem 	
+
+	if (max_size_in_items > 0)
+	{
+		Mem_Table mem_table 	= mem_table_create(
+			mem, 
+			sizeof(struct lu_l_node),
+			max_size_in_items,
+			0,
+			MTF_FREEABLE
+		);
+
+		lu_assert(mem_table != NULL);
+	} 
+	else
+	{
+		mem_table = NULL;
+	}
+
+	// Initialize
+	return lu_list_init(self, mem_table, max_size_in_items);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Main public methods
+
+Lu_L_Node lu_list_attach(Lu_List self, Lu_L_Node node)
+{
+	Lu_L_Node last = self->last;
+	
+	if (last) 
+	{
+		last->next = node;
+		node->prev = last;
+	}
+
+	self->last = node;
+	if (self->first == NULL) self->first = self->last;
+
+	++self->count;
+
+	return node;
+}
+
+Lu_L_Node lu_list_append(Lu_List self, lu_p_void value)
+{
+	Lu_L_Node node = l_node_create(self->mem_table, value);
+	
+	lu_list_attach(self, node);
+
+	return node;
+}
+
+Lu_L_Node lu_list_prepend(Lu_List self, lu_p_void value)
+{
+	Lu_L_Node node 	= l_node_create(self->mem_table, value);
+	Lu_L_Node first = self->first;
+	
+	if (first) 
+	{
+		first->prev = node;
+		node->next 	= first;
+	}
+
+	self->first = node;
+	if (self->last == NULL) self->last = self->first;
+
+	++self->count;
+
+	return node;
+}
+
+Lu_L_Node lu_list_detach(Lu_List self, Lu_L_Node node)
+{
+	lu_assert(node != NULL);
+
+ 	Lu_L_Node prev = node->prev;
+ 	Lu_L_Node next = node->next;
+
+ 	if (node == self->first) self->first = next;
+ 	if (node == self->last) self->last = prev;
+
+ 	if (next) next->prev = prev;
+ 	if (prev) prev->next = next;
+
+ 	--self->count;
+
+ 	return node;
+}
+
+void lu_list_remove(Lu_List self, Lu_L_Node node)
+{ 
+	lu_list_detach(self, node);
+
+ 	l_node_destroy(self->mem_table, &node);
+}
+
+Lu_L_Node lu_list_insert_after(Lu_List self, lu_p_void value, Lu_L_Node node)
+{
+	return NULL;	
+}
+ 
+Lu_L_Node lu_list_insert_before(Lu_List self, lu_p_void value, Lu_L_Node node)
+{ 
+	return NULL;
+}
+
+Lu_L_Node lu_list_replace(Lu_List self, lu_p_void value, Lu_L_Node node)
+{ 
+	return NULL;
+}
+
+Lu_L_Node lu_list_find_forward(Lu_List self, lu_fp_is_value block)
+{ 
+	Lu_L_Node current = self->first;
+
+	while (current)
+	{
+		if (block(current->value)) return current;
+
+		current = current->next;
+	}
+
+	return NULL;
+}
+
+Lu_L_Node lu_list_find_backward(Lu_List self, lu_fp_is_value block)
+{
+	Lu_L_Node current = self->last;
+
+	while (current)
+	{
+		if (block(current->value)) return current;
+
+		current = current->prev;
+	}
+
+	return NULL;
+}
+
+void lu_list_batch_append(Lu_List self, lu_p_void value, lu_size count)
+{
+	for (lu_size i = 0; i < count; i++)
+	{
+		lu_list_append(self, value);
+	}
+}
+
+void lu_list_destroy_all(Lu_List self)
+{
+	Lu_L_Node curr = self->first;
+	Lu_L_Node to_dest;
+	while (curr)
+	{
+		to_dest = curr;
+		curr 	= curr->next;
+
+		l_node_destroy(self->mem_table, &to_dest);
+	}			
+}
+
+void lu_list_each(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1)
+{
+	Lu_L_Node curr = self->first;
+	Lu_L_Node to_dest;
+	while (curr)
+	{
+		to_dest = curr;
+		curr 	= curr->next;
+
+		block(self, to_dest, p1);
+	}	
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Other public methods
+

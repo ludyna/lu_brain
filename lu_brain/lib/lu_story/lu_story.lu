@@ -7,7 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Lu_Story lu_story_create(Lu_Brain brain, lu_size story_size_in_blocks)
+	Lu_Story lu_story_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain should not be NULL");
 		lu_user_assert(
@@ -28,6 +28,8 @@
 
 		self->datum 	= (struct data*) mem_alloc(g_mem_temp, sizeof(struct data) * w * h);
 		lu_user_assert(self->datum, "Cannot allocate space for data");
+
+		self->blocks 	= lu_list_create(g_mem_temp, 
 
 		lu_size rec_i;
 		lu_size block_i;

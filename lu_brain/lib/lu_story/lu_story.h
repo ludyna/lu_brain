@@ -8,8 +8,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Story 
-	
-	#define STORY_INITIAL_BLOCKS_SIZE 8
 
 	struct lu_story {
 		// Not resetable
@@ -18,6 +16,8 @@
 		lu_size 			datum_w;  	// recs
 		lu_size 			datum_h;	// time
 		struct data* 		datum;
+
+		Lu_List 				blocks;
 
 		// Resetable
 		lu_size				y;  

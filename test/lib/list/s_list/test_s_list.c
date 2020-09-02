@@ -58,7 +58,7 @@ void test_s_list1(void)
     neu_p_set(n5, 5.0);
 
     srand(time(NULL));
-    S_List list = s_list_create(mem, 10, neu_compare, S_LIST_FIRST);
+    Lu_S_List list = s_list_create(mem, 10, neu_compare, S_LIST_FIRST);
 
     s_list_add(list, n4);
     TEST_ASSERT(((Neu)(list->first->value))->p == 4);
@@ -113,7 +113,7 @@ void test_s_list_limited(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    S_List list = s_list_create(mem, 2, neu_compare, S_LIST_FIRST);
+    Lu_S_List list = s_list_create(mem, 2, neu_compare, S_LIST_FIRST);
 
     s_list_add(list, n5);
 
@@ -180,7 +180,7 @@ void test_s_list_limited_reverse(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    S_List list = s_list_create(mem, 2, neu_compare_reverse, S_LIST_LAST);
+    Lu_S_List list = s_list_create(mem, 2, neu_compare_reverse, S_LIST_LAST);
 
     s_list_add(list, n5);
 
@@ -247,11 +247,11 @@ void test_s_list_eq(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    S_List list = s_list_create(mem, 3, neu_compare_reverse, S_LIST_LAST);
+    Lu_S_List list = s_list_create(mem, 3, neu_compare_reverse, S_LIST_LAST);
 
     s_list_add(list, n5);
     s_list_add(list, n2);
-    S_Node s1 = s_list_add(list, n22);
+    Lu_S_Node s1 = s_list_add(list, n22);
 
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
