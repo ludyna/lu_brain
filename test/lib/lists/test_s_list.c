@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "brain/brain.h"
+#include "lib/brain.h"
 
 struct neu 
 {
