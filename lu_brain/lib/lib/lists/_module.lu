@@ -1,0 +1,7 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+#include "list.lu"
+#include "table_list.lu"
+#include "s_list.lu"

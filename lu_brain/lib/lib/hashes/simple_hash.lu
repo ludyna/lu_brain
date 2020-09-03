@@ -2,6 +2,9 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// 
+
 	Simple_Hash simple_hash_create(Mem mem, lu_size table_size)
 	{
 		lu_user_assert(mem, "Mem is NULL");

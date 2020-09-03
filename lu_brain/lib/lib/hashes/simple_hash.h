@@ -1,8 +1,6 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
-#ifndef _LU_HASHES_H
-#define _LU_HASHES_H
 
 ///////////////////////////////////////////////////////////////////////////////
 // Nouns
@@ -24,4 +22,3 @@
 	void simple_hash_set(Simple_Hash self, lu_size key, lu_p_void value);
 	lu_p_void simple_hash_get(Simple_Hash self, lu_size key);
 
-#endif // _LU_HASHES_H

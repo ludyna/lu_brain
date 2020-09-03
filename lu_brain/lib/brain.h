@@ -14,18 +14,18 @@
 
 // Basics
 
-#include "basic/basic.h"
-#include "lib/lib.h"
+#include "basic/_module.h"
+#include "lib/_module.h"
 
 // App
 
 #include "typedefs.h"
-#include "data/data.h"
-#include "n/n.h"
-#include "lu_rec/lu_rec.h"
-#include "w/w.h"
-#include "lu_story/lu_story.h"
-#include "s/s.h"
+#include "data/_module.h"
+#include "n/_module.h"
+#include "rec/_module.h"
+#include "w/_module.h"
+#include "story/_module.h"
+#include "s/_module.h"
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@
 // Lu_Brain_Config predefined 
 
 	enum lu_bc_predefined_type {
-		LU_BC_DEFAULT = 0,
+		LU_BC_DEFAULT 	= 0,
 		LU_BC_END 				
 	};
 

@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "lib/lu_brain_lib.h"
+#include "lib/brain.h"
 
 void setUp(void)
 {
@@ -29,7 +29,6 @@ void test_list1(void)
     Lu_List list = lu_list_create(mem);
 
     TEST_ASSERT(list != NULL);
-    TEST_ASSERT(list->mem_table != NULL);
 
     Lu_L_Node node1 = lu_list_append(list, n1);
     
@@ -97,7 +96,7 @@ void test_list_fast_ma(void)
     Neu n4 = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n5 = (Neu) mem_alloc(mem, sizeof(struct neu));
 
-    Lu_List list = lu_list_create(mem, 10);
+    Lu_List list = lu_list_create(mem);
 
     Lu_L_Node node1 = lu_list_append(list, n1);
     Lu_L_Node node2 = lu_list_append(list, n2);

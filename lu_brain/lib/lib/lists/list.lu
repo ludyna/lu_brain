@@ -31,26 +31,29 @@ void l_node_destroy(Mem_Table mem_table, Lu_L_Node* l_node)
 	*l_node = NULL;
 }
 
-Lu_List lu_list_create(Mem mem, lu_size max_size_in_items)
+Lu_List lu_list_create(Mem mem)
 {
+	lu_assert(mem);
+	
 	Lu_List self 				= (Lu_List) mem_alloc(mem, sizeof(struct lu_list));
+	self->mem 					= mem;	
 
-	if (max_size_in_items > 0)
-	{
-		Mem_Table mem_table 	= mem_table_create(
-			mem, 
-			sizeof(struct lu_l_node),
-			max_size_in_items,
-			0,
-			MTF_FREEABLE
-		);
+	// if (max_size_in_items > 0)
+	// {
+	// 	Mem_Table mem_table 	= mem_table_create(
+	// 		mem, 
+	// 		sizeof(struct lu_l_node),
+	// 		max_size_in_items,
+	// 		0,
+	// 		MTF_FREEABLE
+	// 	);
 
-		lu_assert(mem_table != NULL);
-	} 
-	else
-	{
-		mem_table = NULL;
-	}
+	// 	lu_assert(mem_table != NULL);
+	// } 
+	// else
+	// {
+	// 	mem_table = NULL;
+	// }
 
 	// Initialize
 	return lu_list_init(self, mem_table, max_size_in_items);
