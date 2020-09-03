@@ -163,11 +163,11 @@ static void s_list_remove(Lu_S_List self, Lu_S_Node bottom)
 {
 	if (bottom == NULL) return;
 
-	Lu_List values = &bottom->values;
-	if (values->count > 0)
+	Lu_Table_List values = &bottom->values;
+	if (lu_table_list_count(values) > 0)
 	{
-		lu_assert(values->last != NULL);
-		lu_list_remove(values, values->last);
+		lu_assert(lu_table_list_last(values) != NULL);
+		lu_list_remove((Lu_List) values, lu_table_list_last(values));
 		goto end;
 	}
 
@@ -225,7 +225,7 @@ void s_list_debug(Lu_S_List self)
 			else 
 			{
 				//lu_debug("%.1f", (float)(*curr->value));	
-				if(curr->values.count > 0) lu_debug("(%ld)", curr->values.count + 1);
+				if(lu_table_list_count(&curr->values) > 0) lu_debug("(%ld)", lu_table_list_count(&curr->values) + 1);
 				lu_debug(", ");
 			}
 
@@ -290,7 +290,7 @@ static Lu_S_Node s_list_insert(Lu_S_List self, lu_p_void value)
 
 	if (eq)
 	{
-		lu_list_append(&path[0]->values, value);
+		lu_list_append((Lu_List)&path[0]->values, value);
 	}	
 	else 
 	{

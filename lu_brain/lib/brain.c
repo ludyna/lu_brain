@@ -4,10 +4,6 @@
 
 	#include "brain.h"
 
-	// Vendor
-
-	#include "vendor/CException.c"
-
 	// Basics
 
 	#include "basic/_module.lu"

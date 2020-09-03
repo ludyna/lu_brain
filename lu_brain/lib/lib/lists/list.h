@@ -23,11 +23,13 @@
 
 	// Init, create and destroy
 
-	static inline void lu_l_node_init(Lu_L_Node self, lu_p_void value)
+	static inline Lu_L_Node lu_l_node_init(Lu_L_Node self, lu_p_void value)
 	{
 		self->next 		= NULL;
 		self->prev 		= NULL;
 		self->value 	= value;
+
+		return self;
 	}	
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -48,6 +50,8 @@
 		self->last 			= NULL;
 		self->count 		= 0;
 		self->mem 			= mem;
+
+		return self;
 	}
 	Lu_List lu_list_create(Mem); 
 	void lu_list_destroy(Lu_List self);

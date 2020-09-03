@@ -28,4 +28,7 @@
 	void lu_table_list_destroy(Lu_Table_List self);
 
 
-
+	static inline lu_size lu_table_list_count(Lu_Table_List self) { return self->super.count; }
+	static inline Lu_L_Node lu_table_list_last(Lu_Table_List self) { return self->super.last; }
+	static inline Lu_L_Node lu_table_list_first(Lu_Table_List self) { return self->super.first; }
+	
