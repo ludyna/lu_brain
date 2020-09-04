@@ -55,6 +55,7 @@ Lu_S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_li
 
 	// Initialize
 
+	self->mem 						= mem;
 	self->limit_size 				= limit_size;
 	self->over_limit_remove_side 	= over_limit_remove_side;
 
@@ -63,7 +64,7 @@ Lu_S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_li
 	self->count 		= 0;
 	self->compare 		= compare;
 
-	self->mem_table 		= mem_table_create(
+	self->mem_table 	= mem_table_create(
 							mem, 
 							sizeof(struct lu_s_node), 
 							self->limit_size * 3 + self->level_size, 
@@ -79,6 +80,16 @@ Lu_S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_li
 	build_header(self);
 
 	return self;
+}
+
+void s_list_destroy(Lu_S_List self)
+{
+	lu_assert(self);
+
+	mem_table_destroy(self->mem_table);
+
+	mem_free(self->mem, (lu_p_byte) self);
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

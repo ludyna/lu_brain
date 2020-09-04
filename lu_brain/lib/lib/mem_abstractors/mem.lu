@@ -35,7 +35,7 @@
 		free((lu_p_void) self);
 	}
 
-	// declaration only
+	// declaration 
 	Mem_Table mem_table_create_default(
 		Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
@@ -46,6 +46,8 @@
 		const char* file,
 		int line
 	);
+
+	void mem_table_destory_default(Mem_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals

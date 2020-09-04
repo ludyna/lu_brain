@@ -3,12 +3,13 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Nouns
+// Typedefs
 
-	typedef struct mem* 				Mem;
-	typedef struct mem_table* 			Mem_Table;
-	typedef struct mem_perm* 			Mem_Perm;
-	typedef struct mem_table_perm* 		Mem_Table_Perm;
+	typedef struct mem_debugger_interface* 		Mem_Debugger_Interface;
+	typedef struct mem* 						Mem;
+	typedef struct mem_table* 					Mem_Table;
+	typedef struct mem_perm* 					Mem_Perm;
+	typedef struct mem_table_perm* 				Mem_Table_Perm;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
@@ -17,23 +18,31 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem
 
+	struct mem_debugger_interface
+	{
+		void (*register_alloc)(Mem_Debugger_Interface self, lu_p_byte address, const char* func, const char* file, int line);
+		void (*register_free)(Mem_Debugger_Interface self, lu_p_byte, const char* func, const char* file, int line);
+	};
+
 	struct mem {
 
-		lu_p_byte 	(*alloc)(Mem, lu_size size, const char* func, const char* file, int line);
-		lu_p_byte 	(*realloc)(Mem, lu_p_byte, lu_size, const char* func, const char* file, int line);
-		void 		(*free)(Mem, lu_p_byte, const char* func, const char* file, int line);
-		void 		(*destroy)(Mem, Mem, const char* func, const char* file, int line);
+		lu_p_byte 				(*alloc)(Mem, lu_size size, const char* func, const char* file, int line);
+		lu_p_byte 				(*realloc)(Mem, lu_p_byte, lu_size, const char* func, const char* file, int line);
+		void 					(*free)(Mem, lu_p_byte, const char* func, const char* file, int line);
+		void 					(*destroy)(Mem, Mem, const char* func, const char* file, int line);
 
-		Mem_Table 	(*table_create)(
-			Mem 		mem, 
-	 		lu_size 	record_size_in_bytes, 
-	 		lu_size 	table_size_in_records, 
-	 		lu_value 	percent,
-	 		lu_flags 	flags,
-	 		const char* func, 
-	 		const char* file,
-	 		int line
+		Mem_Table 				(*table_create)(
+			Mem 				mem, 
+	 		lu_size 			record_size_in_bytes, 
+	 		lu_size 			table_size_in_records, 
+	 		lu_value 			percent,
+	 		lu_flags 			flags,
+	 		const char* 		func, 
+	 		const char* 		file,
+	 		int 				line
 	 	);
+
+		Mem_Debugger_Interface 	debugger;
 	};
 
 	#define mem_alloc(mem, size) mem->alloc(mem, size, __func__, __FILE__, __LINE__)
@@ -82,7 +91,7 @@
 	};
 
 	#define mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
-	#define mem_table_destroy(mt, parent_mem) mt->destroy(mt, parent_mem, __func__, __FILE__, __LINE__)
+	#define mem_table_destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
 
 	#define mem_record_alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
 	#define mem_record_free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 

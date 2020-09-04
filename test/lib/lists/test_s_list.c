@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "lib/brain.h"
+#include "lib/_module.h"
 
 struct neu 
 {
@@ -88,6 +88,7 @@ void test_s_list1(void)
     TEST_ASSERT(list->level_size == 3);
 
     mem_destroy(mem, g_mem_temp);
+    s_list_desroy(list);
 }
 
 void test_s_list_limited(void)
@@ -155,6 +156,7 @@ void test_s_list_limited(void)
     s_list_debug(list);
 
     mem_destroy(mem, g_mem_temp);
+    s_list_desroy(list);
 }
 
 void test_s_list_limited_reverse(void)
@@ -222,6 +224,7 @@ void test_s_list_limited_reverse(void)
     s_list_debug(list);
 
     mem_destroy(mem, g_mem_temp);
+    s_list_desroy(list);
 }
 
 void test_s_list_eq(void)
@@ -289,4 +292,5 @@ void test_s_list_eq(void)
     s_list_debug(list);
 
     mem_destroy(mem, g_mem_temp);
+    s_list_desroy(list);
 }

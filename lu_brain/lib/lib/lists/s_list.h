@@ -48,6 +48,7 @@
 
 	struct lu_s_list  
 	{
+		Mem 				mem;
 		lu_size 			limit_size;
 		s_list_side 		over_limit_remove_side;
 		lu_size				level_size;
@@ -64,6 +65,7 @@
 	// Init, create and destroy
 
 	Lu_S_List s_list_create(Mem, lu_size limit, lu_fp_compare compare, s_list_side over_limit_remove_side);
+	void s_list_destroy(Lu_S_List self);
 
 	// Main public methods
 
