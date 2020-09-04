@@ -67,7 +67,7 @@
 
 	struct mem_table {
 		void 		(*realloc)(Mem_Table, lu_size new_size_in_bytes, lu_flags flags, const char* func, const char* file, int line);
-	 	void 		(*destroy)(Mem_Table, Mem, const char* func, const char* file, int line);
+	 	void 		(*destroy)(Mem_Table, const char* func, const char* file, int line);
 
 		lu_p_byte 	(*record_alloc)(Mem_Table, const char* func, const char* file, int line);
 		void 		(*record_free)(Mem_Table, lu_p_byte record, const char* func, const char* file, int line);

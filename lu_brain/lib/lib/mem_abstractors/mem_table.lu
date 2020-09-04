@@ -17,7 +17,7 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	void mem_table_destroy_default(Mem_Table self)
+	void mem_table_destroy_default(Mem_Table self, const char* func, const char* file, int line)
 	{
 		mem_free(mem_table_mem_get(self), (lu_p_byte) self);
 	}
