@@ -88,7 +88,7 @@ void test_s_list1(void)
     TEST_ASSERT(list->level_size == 3);
 
     mem_destroy(mem, g_mem_temp);
-    s_list_desroy(list);
+    s_list_destroy(list);
 }
 
 void test_s_list_limited(void)
@@ -156,7 +156,7 @@ void test_s_list_limited(void)
     s_list_debug(list);
 
     mem_destroy(mem, g_mem_temp);
-    s_list_desroy(list);
+    s_list_destroy(list);
 }
 
 void test_s_list_limited_reverse(void)
@@ -224,7 +224,7 @@ void test_s_list_limited_reverse(void)
     s_list_debug(list);
 
     mem_destroy(mem, g_mem_temp);
-    s_list_desroy(list);
+    s_list_destroy(list);
 }
 
 void test_s_list_eq(void)
@@ -258,7 +258,7 @@ void test_s_list_eq(void)
 
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
-    TEST_ASSERT(s1->values.count == 1);
+    TEST_ASSERT(lu_table_list_count(&s1->values) == 1);
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 2);
 
@@ -272,7 +272,7 @@ void test_s_list_eq(void)
 
     s1 = s_list_add(list, n33);
 
-    TEST_ASSERT(s1->values.count == 1);
+    TEST_ASSERT(lu_table_list_count(&s1->values) == 1);
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
@@ -292,5 +292,5 @@ void test_s_list_eq(void)
     s_list_debug(list);
 
     mem_destroy(mem, g_mem_temp);
-    s_list_desroy(list);
+    s_list_destroy(list);
 }

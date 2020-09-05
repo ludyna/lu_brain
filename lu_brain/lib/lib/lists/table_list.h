@@ -12,7 +12,6 @@
 		lu_size 		max_size;
 	};
 
-
 	static inline Lu_Table_List lu_table_list_init(Lu_Table_List self, Mem_Table mem_table, lu_size limit_size)
 	{
 		lu_assert(self);
@@ -32,3 +31,7 @@
 	static inline Lu_L_Node lu_table_list_last(Lu_Table_List self) { return self->super.last; }
 	static inline Lu_L_Node lu_table_list_first(Lu_Table_List self) { return self->super.first; }
 	
+	Lu_L_Node lu_table_list_append(Lu_Table_List, lu_p_void);
+	void lu_table_list_remove(Lu_Table_List, Lu_L_Node);
+
+	void lu_table_list_destroy_all(Lu_Table_List self);

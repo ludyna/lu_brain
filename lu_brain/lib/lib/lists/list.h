@@ -55,10 +55,12 @@
 	// Main public methods
 
 	Lu_L_Node lu_list_attach(Lu_List, Lu_L_Node);
+	Lu_L_Node lu_list_append_with_node_creator(Lu_List self, lu_p_void value, Lu_L_Node (*node_creator)(Lu_List));
 	Lu_L_Node lu_list_append(Lu_List, lu_p_void);
 	Lu_L_Node lu_list_prepend(Lu_List, lu_p_void);
 
 	Lu_L_Node lu_list_detach(Lu_List self, Lu_L_Node node);
+	void lu_list_remove_with_node_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node));
 	void lu_list_remove(Lu_List, Lu_L_Node);
 	static inline void lu_list_remove_first(Lu_List self) { lu_list_remove(self, self->first); }
 	static inline void lu_list_remove_last(Lu_List self) { lu_list_remove(self, self->last); }
