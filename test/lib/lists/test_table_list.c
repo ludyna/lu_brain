@@ -16,7 +16,7 @@ struct neu
 
 typedef struct neu* Neu;
 
-void test_list1(void)
+void test_table_list(void)
 {
     Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
 
@@ -71,11 +71,11 @@ void test_list1(void)
     TEST_ASSERT(list->super.first == NULL);
     TEST_ASSERT(list->super.last == NULL);
 
-    mem_destroy(mem, g_mem_temp);
     lu_table_list_destroy(list);
+    mem_destroy(mem, g_mem_temp);
 }
 
-void test_max_size(void)
+void test_table_list_max_size(void)
 {
     Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
 
@@ -100,6 +100,6 @@ void test_max_size(void)
     TEST_ASSERT(lu_table_list_count(list) == 3);
     TEST_ASSERT(list->super.first->value == n2);
 
-    mem_destroy(mem, g_mem_temp);
     lu_table_list_destroy(list);
+    mem_destroy(mem, g_mem_temp);
 }

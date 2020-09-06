@@ -5,15 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Debugger 
 
-	Mem_Debugger mem_debugger_create(Mem mem_to_observe)
+	Mem_Debugger mem_debugger_create()
 	{
-		lu_assert(mem_to_observe);
-		lu_assert(mem_to_observe->debugger == NULL);
-
-		Mem_Debugger self = (Mem_Debugger) calloc(1, sizeof(struct mem_debugger));
+		Mem_Debugger self = (Mem_Debugger) malloc(sizeof(struct mem_debugger));
 		lu_assert(self);
 
-		mem_to_observe->debugger = (Mem_Debugger_Interface) self;
+		// // self->super.register_alloc = 
+		// // self->super.register_free =
 
 		return self;
 	}
@@ -26,7 +24,7 @@
 
 	void mem_debugger_print(Mem_Debugger self)
 	{
-
+		
 	}
 
 	void mem_debugger_print_and_destroy(Mem_Debugger self)

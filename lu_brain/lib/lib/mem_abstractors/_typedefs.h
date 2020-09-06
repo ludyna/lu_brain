@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Typedefs
 
-	typedef struct mem_debugger_interface* 		Mem_Debugger_Interface;
+	typedef struct i_mem_debugger* 		I_Mem_Debugger;
 	typedef struct mem* 						Mem;
 	typedef struct mem_table* 					Mem_Table;
 	typedef struct mem_perm* 					Mem_Perm;

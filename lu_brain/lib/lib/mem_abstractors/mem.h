@@ -4,19 +4,23 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
+
 	extern Mem g_mem_temp;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem
 
-	struct mem_debugger_interface
+	// Debugger interface
+	struct i_mem_debugger
 	{
-		void (*register_alloc)(Mem_Debugger_Interface self, lu_p_byte address, const char* func, const char* file, int line);
-		void (*register_free)(Mem_Debugger_Interface self, lu_p_byte, const char* func, const char* file, int line);
+		void (*register_alloc)(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+								const char* func, const char* file, int line);
+		void (*register_free)(	I_Mem_Debugger self, lu_p_byte address, 
+								const char* func, const char* file, int line);
 	};
 
 	struct mem {
-
+		I_Mem_Debugger 			debugger;
 		lu_p_byte 				(*alloc)(Mem, lu_size size, const char* func, const char* file, int line);
 		lu_p_byte 				(*realloc)(Mem, lu_p_byte, lu_size, const char* func, const char* file, int line);
 		void 					(*free)(Mem, lu_p_byte, const char* func, const char* file, int line);
@@ -33,7 +37,7 @@
 	 		int 				line
 	 	);
 
-		Mem_Debugger_Interface 	debugger;
+		
 	};
 
 	#define mem_alloc(mem, size) mem->alloc(mem, size, __func__, __FILE__, __LINE__)

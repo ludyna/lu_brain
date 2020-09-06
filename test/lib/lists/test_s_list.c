@@ -89,8 +89,8 @@ void test_s_list1(void)
 
     TEST_ASSERT(list->level_size == 3);
 
-    mem_destroy(mem, g_mem_temp);
     s_list_destroy(list);
+    mem_destroy(mem, g_mem_temp);
 }
 
 // void test_s_list_limited(void)
@@ -157,8 +157,8 @@ void test_s_list1(void)
 
 //     s_list_debug(list);
 
-//     mem_destroy(mem, g_mem_temp);
 //     s_list_destroy(list);
+//     mem_destroy(mem, g_mem_temp);
 // }
 
 // void test_s_list_limited_reverse(void)
@@ -225,8 +225,8 @@ void test_s_list1(void)
 
 //     s_list_debug(list);
 
-//     mem_destroy(mem, g_mem_temp);
 //     s_list_destroy(list);
+//     mem_destroy(mem, g_mem_temp);
 // }
 
 // void test_s_list_eq(void)
@@ -293,6 +293,6 @@ void test_s_list1(void)
 
 //     s_list_debug(list);
 
-//     mem_destroy(mem, g_mem_temp);
 //     s_list_destroy(list);
+//     mem_destroy(mem, g_mem_temp);
 // }

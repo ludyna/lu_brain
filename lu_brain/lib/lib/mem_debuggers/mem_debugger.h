@@ -5,14 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Debugger 
 
+	struct md_item {
+		lu_p_byte 	address;
+		
+	};
+
 	struct mem_debugger {
-		struct mem_debugger_interface 	super;
+		struct i_mem_debugger 	super;
 
 		
 	};
 
-	// Mem_Debugger doesn't use Mem for it's own allocations, using standard library instead
-	Mem_Debugger mem_debugger_create(Mem mem_to_observe);
+	Mem_Debugger mem_debugger_create();
 	void mem_debugger_destroy(Mem_Debugger self);
 
 	void mem_debugger_print(Mem_Debugger self);

@@ -47,6 +47,12 @@
 
 	void mem_perm_destroy_internal(Mem self, Mem parent_mem, const char* func, const char* file, int line)
 	{
+		if (self->debugger)
+		{
+			mem_debugger_destroy((Mem_Debugger) self->debugger); 
+			self->debugger = NULL;
+		}
+
 		mem_free(parent_mem, (lu_p_byte) self);
 	}
 
@@ -75,12 +81,15 @@
 
 	Mem_Perm mem_perm_create(Mem parent_mem, lu_size size_in_bytes)
 	{
+		lu_assert(size_in_bytes > sizeof(struct mem_perm));
+
 		lu_p_void buff_start	= mem_alloc(parent_mem, size_in_bytes);
 
 		if (buff_start == NULL) return NULL;
 
 		Mem_Perm self 				= (Mem_Perm) buff_start;
 
+		self->super.debugger  		= (I_Mem_Debugger) mem_debugger_create();
 		self->super.alloc 			= mem_perm_alloc_internal;
 		self->super.realloc 		= mem_perm_realloc_internal;
 		self->super.free 			= mem_perm_free_internal;
@@ -92,12 +101,12 @@
 		self->buff_pos 				= self->buff_start + sizeof(struct mem_perm);
 		self->size_in_bytes 		= size_in_bytes;
 
-		if (mem_perm_is_out_of_mem(self))
-		{
-			Mem mem = (Mem) self;
-			mem_destroy(mem, parent_mem);
-			return NULL;
-		}
+		// #ifdef LU_DEBUG 
+			//Mem_Debugger mem_debugger 	= mem_debugger_create();
+			// lu_assert(mem_debugger);
+
+		// 	self->super.debugger 		= (I_Mem_Debugger) mem_debugger;
+		// #endif 
 
 		return self;
 	}
