@@ -57,7 +57,8 @@
 		.realloc 		= mem_realloc_default,
 		.free 			= mem_free_default,
 		.destroy 		= mem_destroy_default,
-		.table_create 	= mem_table_create_default
+		.table_create 	= mem_table_create_default,
+		.debugger 		= NULL
 	};
 
 	Mem g_mem_temp = &g_mem_default_instance;

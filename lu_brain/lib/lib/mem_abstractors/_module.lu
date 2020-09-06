@@ -2,7 +2,6 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-#include "mem_debugger.lu"
 #include "mem.lu"
 #include "mem_table.lu"
 #include "mem_perm.lu"

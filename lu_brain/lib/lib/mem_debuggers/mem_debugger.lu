@@ -1,3 +1,36 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
+
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Debugger 
+
+	Mem_Debugger mem_debugger_create(Mem mem_to_observe)
+	{
+		lu_assert(mem_to_observe);
+		lu_assert(mem_to_observe->debugger == NULL);
+
+		Mem_Debugger self = (Mem_Debugger) calloc(1, sizeof(struct mem_debugger));
+		lu_assert(self);
+
+		mem_to_observe->debugger = (Mem_Debugger_Interface) self;
+
+		return self;
+	}
+
+	void mem_debugger_destroy(Mem_Debugger self)
+	{
+		lu_assert(self);
+		free((lu_p_void) self);
+	}
+
+	void mem_debugger_print(Mem_Debugger self)
+	{
+
+	}
+
+	void mem_debugger_print_and_destroy(Mem_Debugger self)
+	{
+		mem_debugger_print(self);
+		mem_debugger_destroy(self);
+	}

@@ -1,0 +1,8 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Typedefs
+	
+	typedef struct mem_debugger* 		Mem_Debugger;

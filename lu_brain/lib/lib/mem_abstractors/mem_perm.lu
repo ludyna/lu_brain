@@ -36,13 +36,13 @@
 
 	lu_p_byte mem_perm_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
-		lu_debug_message_internal(file, line, "NOT IMPLEMENTED");
+		lu_debug_message_internal(file, line, "MEM PERM REALLOC NOT IMPLEMENTED");
 		return NULL;
 	}
 
 	void mem_perm_free_internal(Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
-		lu_debug_message_internal(file, line, "NOT IMPLEMENTED");
+		lu_debug_message_internal(file, line, "MEM PERM FREE NOT IMPLEMENTED");
 	}
 
 	void mem_perm_destroy_internal(Mem self, Mem parent_mem, const char* func, const char* file, int line)
