@@ -5,12 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Md_Item 
 
-	#define LU_MD_ITEM_FILE_SIZE 256
+	#define LU_MD_ITEM_FILE_SIZE 40
 
 	struct lu_md_item {
 		lu_p_byte 				address;
 		lu_size 				size;
-		char 					file[LU_MD_ITEM_FILE_SIZE];
+		char 					alloc_path[LU_MD_ITEM_FILE_SIZE];
+		char 					freed_path[LU_MD_ITEM_FILE_SIZE];
 		int 					line;
 
 		Lu_Md_Item 				prev;
@@ -55,7 +56,7 @@
 	void mem_debugger_destroy(Mem_Debugger self);
 
 
-	bool mem_debugger_print(Mem_Debugger self);
+	void mem_debugger_print(Mem_Debugger self);
 	void mem_debugger_print_and_destroy(Mem_Debugger self);
 
 

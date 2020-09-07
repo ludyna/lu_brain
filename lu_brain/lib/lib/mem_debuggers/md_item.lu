@@ -12,7 +12,8 @@
 
 		self->address			= NULL;
 		self->size 				= 0;
-		self->file[0]			= 0;
+		self->alloc_path[0]		= 0;
+		self->freed_path[0]		= 0;
 		self->line 				= 0;
 
 		self->prev				= NULL;

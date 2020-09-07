@@ -74,10 +74,11 @@ void test_table_list(void)
     TEST_ASSERT(list->super.first == NULL);
     TEST_ASSERT(list->super.last == NULL);
 
+    mem_debugger_print(md);
+
     lu_table_list_destroy(list);
     mem_destroy(mem, g_mem_temp);
 
-    mem_debugger_print(md);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
     mem_debugger_destroy(md);
