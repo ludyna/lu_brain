@@ -61,9 +61,13 @@
 	}
 
 	void mem_debugger_register_alloc(	I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
-								const char* func, const char* file, int line)
+										const char* func, const char* file, int line)
 	{
-		if (address == NULL) return; // alloc failed
+		if (address == NULL) 
+		{
+			lu_debug_message_internal(file, line, "\nMem_Debugger: Alloc failed!");
+			return;
+		} 
 
 		lu_debug("\nMEM DEBUGGER REGISTER ALLOC");
 		lu_assert(imd);
@@ -96,23 +100,70 @@
 			self->items[i] = item;
 		}
 
-		self->alloc_size += item->size;
+		self->alloc_size += item->size; 
+		++self->alloc_count;
 	}
 	
 	void mem_debugger_register_realloc(	I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
-									const char* func, const char* file, int line)
+										const char* func, const char* file, int line)
 	{
+		if (address == NULL) 
+		{
+			lu_debug_message_internal(file, line, "\nMem_Debugger: Realloc failed!");
+			return;
+		} 
+
 		lu_debug("\nMEM DEBUGGER REGISTER REALLOC");
+
+
 	}
 
 	void mem_debugger_register_free(	I_Mem_Debugger imd, lu_p_byte address, 
-								const char* func, const char* file, int line)
+										const char* func, const char* file, int line)
 	{
+		if (address == NULL) 
+		{
+			lu_debug_message_internal(file, line, "\nMem_Debugger: Trying to free NULL!");
+			return;
+		} 
+
 		lu_debug("\nMEM DEBUGGER REGISTER FREE");
+		lu_assert(imd);
+
+		Mem_Debugger self	= (Mem_Debugger) imd;
+		lu_size i 			= mem_debugger_index(address);
+		lu_assert(i < LU_MD_HASH_SIZE);
+
+		Lu_Md_Item item 	= self->items[i];
+		Lu_Md_Item temp;
+
+		if (item == NULL)
+		{
+			lu_debug_message_internal(file, line, "\nMem_Debugger: Double free?! Seems pointer was already freed.");
+			return;
+		} 
+
+		if (item->address == address)
+		{
+			temp = item->prev;
+			self->items[i] = temp;
+		}
+		else 
+		{
+			while(item && item->address != address)
+			{
+				item = item->prev;
+			}
+
+			if (item == NULL)
+			{
+				lu_debug_message_internal(file, line, "\nMem_Debugger: Double free?! Seems pointer was already freed.");
+				return;
+			}
+		}
+
+		self->freed_size -= item->size;
+		--self->freed_count;
+
+		lu_md_item_destroy(item);
 	}	
-
-
-	lu_bool mem_debugger_is_all_clear(Mem_Debugger self)
-	{
-		return true;
-	}

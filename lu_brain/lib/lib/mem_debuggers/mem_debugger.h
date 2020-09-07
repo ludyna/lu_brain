@@ -45,6 +45,11 @@
 		return addr & LU_MD_INDEX_MASK;
 	}
 
+	static inline lu_bool mem_debugger_is_all_clear(Mem_Debugger self)
+	{
+		return self->alloc_size == self->freed_size;
+	}
+
 	Mem_Debugger mem_debugger_create(Mem mem);
 	void mem_debugger_destroy(Mem_Debugger self);
 
@@ -62,4 +67,3 @@
 	void mem_debugger_register_free(	I_Mem_Debugger self, lu_p_byte address, 
 										const char* func, const char* file, int line);
 
-	lu_bool mem_debugger_is_all_clear(Mem_Debugger self);
