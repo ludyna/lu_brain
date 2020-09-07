@@ -37,6 +37,20 @@
 
 		if (self->mem->debugger) self->mem->debugger = NULL; // detach
 
+		Lu_Md_Item item;
+		Lu_Md_Item current;
+		for (lu_size i = 0; i < LU_MD_HASH_SIZE; i++)
+		{
+			item = self->items[i];
+
+			while(current = item)
+			{
+				item = item->prev;
+
+				lu_md_item_destroy(current);
+			}
+		}
+
 		free((lu_p_void) self->items);
 		free((lu_p_void) self);
 	}
@@ -46,19 +60,52 @@
 		
 	}
 
-	void mem_debugger_register_alloc(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_alloc(	I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
 								const char* func, const char* file, int line)
 	{
+		if (address == NULL) return; // alloc failed
+
 		lu_debug("\nMEM DEBUGGER REGISTER ALLOC");
+		lu_assert(imd);
+		lu_assert(size > 0);
+
+		Mem_Debugger self = (Mem_Debugger) imd;
+		lu_size i = mem_debugger_index(address);
+		lu_assert(i < LU_MD_HASH_SIZE);
+
+		Lu_Md_Item 				prev;
+		Lu_Md_Item item 		= lu_md_item_create();
+
+
+		item->address 			= address; 
+		item->size 				= size;
+		strncpy(item->file, file, LU_MD_ITEM_FILE_SIZE);
+		item->line  			= line;
+
+		if (self->items[i] == NULL)
+		{
+			self->items[i] = item;
+		}
+		else
+		{
+			prev = self->items[i];
+			lu_assert(item->prev == NULL);
+			item->prev = prev;
+			lu_assert(prev->next == NULL);
+			prev->next = item;
+			self->items[i] = item;
+		}
+
+		self->alloc_size += item->size;
 	}
 	
-	void mem_debugger_register_realloc(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_realloc(	I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
 									const char* func, const char* file, int line)
 	{
 		lu_debug("\nMEM DEBUGGER REGISTER REALLOC");
 	}
 
-	void mem_debugger_register_free(	I_Mem_Debugger self, lu_p_byte address, 
+	void mem_debugger_register_free(	I_Mem_Debugger imd, lu_p_byte address, 
 								const char* func, const char* file, int line)
 	{
 		lu_debug("\nMEM DEBUGGER REGISTER FREE");

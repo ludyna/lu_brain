@@ -7,10 +7,33 @@
 
 	Lu_Md_Item lu_md_item_create()
 	{
+		Lu_Md_Item self = (Lu_Md_Item) calloc(1, sizeof(struct lu_md_item));
+		lu_assert(self);
 
+		self->address			= NULL;
+		self->size 				= 0;
+		self->file[0]			= 0;
+		self->line 				= 0;
+
+		self->prev				= NULL;
+		self->next				= NULL;
+
+		return self;
 	}
 
 	void lu_md_item_destroy(Lu_Md_Item self)
 	{
+		lu_assert(self);
 
+		// unlink
+		if (self->next)
+			self->next->prev = self->prev;
+
+		if (self->prev)
+			self->prev->next = self->next;
+
+		self->prev = NULL;
+		self->next = NULL;
+
+		free((lu_p_void) self);
 	}

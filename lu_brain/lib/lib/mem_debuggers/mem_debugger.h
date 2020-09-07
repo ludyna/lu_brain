@@ -23,7 +23,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Debugger 
 
-	#define LU_MD_HASH_SIZE 	0xFFFF
+	#define LU_MD_INDEX_MASK 	0xFFFF
+	#define LU_MD_HASH_SIZE 	LU_MD_INDEX_MASK + 1
 
 	struct mem_debugger {
 		struct i_mem_debugger 	super;
@@ -37,6 +38,12 @@
 		lu_size 				freed_count;
 		lu_size 				realloc_count;
 	};
+
+	static inline lu_size mem_debugger_index(lu_p_byte address)
+	{
+		lu_size addr = (lu_size) address;
+		return addr & LU_MD_INDEX_MASK;
+	}
 
 	Mem_Debugger mem_debugger_create(Mem mem);
 	void mem_debugger_destroy(Mem_Debugger self);
