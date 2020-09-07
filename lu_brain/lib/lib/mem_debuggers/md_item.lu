@@ -3,7 +3,14 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Typedefs
-	
-	typedef struct mem_debugger* 		Mem_Debugger;
-	typedef struct lu_md_item* 			Lu_Md_Item;
+// Lu_Md_Item 
+
+	Lu_Md_Item lu_md_item_create()
+	{
+
+	}
+
+	void lu_md_item_destroy(Lu_Md_Item self)
+	{
+
+	}

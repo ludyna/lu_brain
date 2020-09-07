@@ -3,17 +3,39 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_Md_Item 
+
+	#define LU_MD_ITEM_FILE_SIZE 256
+
+	struct lu_md_item {
+		lu_p_byte 				address;
+		lu_size 				size;
+		char 					file[LU_MD_ITEM_FILE_SIZE];
+		int 					line;
+
+		Lu_Md_Item 				prev;
+		Lu_Md_Item 				next;
+	};
+
+	Lu_Md_Item lu_md_item_create();
+	void lu_md_item_destroy(Lu_Md_Item);
+
+///////////////////////////////////////////////////////////////////////////////
 // Mem_Debugger 
 
-	struct md_item {
-		lu_p_byte 	address;
-		
-	};
+	#define LU_MD_HASH_SIZE 	0xFFFF
 
 	struct mem_debugger {
 		struct i_mem_debugger 	super;
 
 		Mem 					mem;
+		Lu_Md_Item* 	 		items;
+
+		lu_size 				alloc_size;
+		lu_size 				alloc_count;
+		lu_size 				freed_size;
+		lu_size 				freed_count;
+		lu_size 				realloc_count;
 	};
 
 	Mem_Debugger mem_debugger_create(Mem mem);

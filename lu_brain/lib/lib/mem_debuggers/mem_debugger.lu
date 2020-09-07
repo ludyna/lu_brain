@@ -19,6 +19,14 @@
 		self->mem 						= mem;
 		self->mem->debugger 			= (I_Mem_Debugger) self;  // attach
 
+		self->items 					= calloc(LU_MD_HASH_SIZE, sizeof(Lu_Md_Item));
+
+		self->alloc_size				= 0;
+		self->alloc_count				= 0;
+		self->freed_size				= 0;
+		self->freed_count				= 0;
+		self->realloc_count 			= 0;
+
 		return self;
 	}
 
@@ -29,6 +37,7 @@
 
 		if (self->mem->debugger) self->mem->debugger = NULL; // detach
 
+		free((lu_p_void) self->items);
 		free((lu_p_void) self);
 	}
 
