@@ -7,37 +7,52 @@
 
 	lu_p_byte mem_alloc_default(Mem self, lu_size size, const char* func, const char* file, int line)
 	{
-		// Mem specific debug here
-
 		// I am using calloc instead of malloc here for easier debugging 
 		// changing to malloc should not change program behavior
-		return (lu_p_byte) calloc(1, size);
+		lu_p_byte address = (lu_p_byte) calloc(1, size);
+
+		// Mem specific debug here
+		#ifdef LU_DEBUG
+
+			if (self->debugger)
+				self->debugger->register_alloc(self->debugger, address, size, func, file, line);
+
+		#endif
+
+		return address;
 	}
 
 	lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
-		// Mem specific debug here
+		lu_p_byte address = (lu_p_byte) realloc(p, size_in_bytes);
 
-		return (lu_p_byte) realloc(p, size_in_bytes);
+		// Mem specific debug here
+		#ifdef LU_DEBUG
+
+			if (self->debugger)
+				self->debugger->register_realloc(self->debugger, address, size_in_bytes, func, file, line);
+
+		#endif
+
+		return address;
 	}
 
 	void mem_free_default(Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
-		// Mem specific debug here
-
 		free((lu_p_void) p);
+
+		// Mem specific debug here
+		#ifdef LU_DEBUG
+
+			if (self->debugger)
+				self->debugger->register_free(self->debugger, p, func, file, line);
+
+		#endif
 	}
 
 	void mem_destroy_default(Mem self, Mem parent_mem, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
-		#ifdef LU_DEBUG
-			if (self->debugger)
-			{
-				mem_debugger_destroy((Mem_Debugger) self->debugger); 
-				self->debugger = NULL;
-			}
-		#endif
 		free((lu_p_void) self);
 	}
 
@@ -59,12 +74,12 @@
 // Globals
 
 	struct mem g_mem_default_instance = {
-		.alloc 			= mem_alloc_default,
-		.realloc 		= mem_realloc_default,
-		.free 			= mem_free_default,
-		.destroy 		= mem_destroy_default,
-		.table_create 	= mem_table_create_default,
-		.debugger 		= NULL
+		.alloc 				= mem_alloc_default,
+		.realloc 			= mem_realloc_default,
+		.free 				= mem_free_default,
+		.destroy 			= mem_destroy_default,
+		.table_create 		= mem_table_create_default,
+		.debugger 			= NULL
 	};
 
 	Mem g_mem_temp = &g_mem_default_instance;
@@ -74,12 +89,9 @@
 
 	Mem mem_create()
 	{
-		Mem self 		= malloc(sizeof(struct mem));
+		Mem self 					= calloc(1, sizeof(struct mem));
 		
 		self->debugger 				= NULL;
-		#ifdef LU_DEBUG
-			self->debugger 			= (I_Mem_Debugger) mem_debugger_create();
-		#endif 
 		self->alloc 				= g_mem_default_instance.alloc;
 		self->realloc 				= g_mem_default_instance.realloc;
 		self->free 					= g_mem_default_instance.free;

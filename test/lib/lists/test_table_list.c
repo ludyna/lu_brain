@@ -3,6 +3,7 @@
 
 void setUp(void)
 {
+    
 }
 
 void tearDown(void)
@@ -18,6 +19,8 @@ typedef struct neu* Neu;
 
 void test_table_list(void)
 {
+    Mem_Debugger md = mem_debugger_create(g_mem_temp);
+
     Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
 
     Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -73,6 +76,11 @@ void test_table_list(void)
 
     lu_table_list_destroy(list);
     mem_destroy(mem, g_mem_temp);
+
+    mem_debugger_print(md);
+
+    TEST_ASSERT(mem_debugger_is_all_clear(md));
+    mem_debugger_destroy(md);
 }
 
 void test_table_list_max_size(void)

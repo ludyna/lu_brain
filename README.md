@@ -5,6 +5,6 @@
 
 - All public files should start with prefix `lu_`.
 
-- All NON pulblic files should not have prefix `lu_`.
+- All NON public files should not have prefix `lu_`.
 
 - There are special files: `__readme.md`, `_module.h`, `_module.lu` (or `_module.c`), and `_typedefs.h`

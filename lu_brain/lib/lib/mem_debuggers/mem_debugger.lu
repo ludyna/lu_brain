@@ -5,13 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Debugger 
 
-	Mem_Debugger mem_debugger_create()
+	Mem_Debugger mem_debugger_create(Mem mem)
 	{
+		lu_assert(mem);
+		lu_assert(!mem->debugger); // mem already has debugger
+
 		Mem_Debugger self = (Mem_Debugger) calloc(1, sizeof(struct mem_debugger));
 		lu_assert(self);
 
-		self->super.register_alloc 	= mem_debugger_register_alloc;
-		self->super.register_free 	= mem_debugger_register_free;
+		self->super.register_alloc 		= mem_debugger_register_alloc;
+		self->super.register_realloc 	= mem_debugger_register_realloc;
+		self->super.register_free 		= mem_debugger_register_free;
+		self->mem 						= mem;
+		self->mem->debugger 			= (I_Mem_Debugger) self;  // attach
 
 		return self;
 	}
@@ -19,6 +25,10 @@
 	void mem_debugger_destroy(Mem_Debugger self)
 	{
 		lu_assert(self);
+		lu_assert(self->mem); // not attached?
+
+		if (self->mem->debugger) self->mem->debugger = NULL; // detach
+
 		free((lu_p_void) self);
 	}
 
@@ -27,20 +37,26 @@
 		
 	}
 
-	void mem_debugger_print_and_destroy(Mem_Debugger self)
-	{
-		mem_debugger_print(self);
-		mem_debugger_destroy(self);
-	}
-
 	void mem_debugger_register_alloc(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  
 								const char* func, const char* file, int line)
 	{
-
+		lu_debug("\nMEM DEBUGGER REGISTER ALLOC");
+	}
+	
+	void mem_debugger_register_realloc(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+									const char* func, const char* file, int line)
+	{
+		lu_debug("\nMEM DEBUGGER REGISTER REALLOC");
 	}
 
 	void mem_debugger_register_free(	I_Mem_Debugger self, lu_p_byte address, 
 								const char* func, const char* file, int line)
 	{
+		lu_debug("\nMEM DEBUGGER REGISTER FREE");
+	}	
 
+
+	lu_bool mem_debugger_is_all_clear(Mem_Debugger self)
+	{
+		return true;
 	}
