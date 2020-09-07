@@ -31,7 +31,13 @@
 	void mem_destroy_default(Mem self, Mem parent_mem, const char* func, const char* file, int line)
 	{
 		// Mem specific debug here
-
+		#ifdef LU_DEBUG
+			if (self->debugger)
+			{
+				mem_debugger_destroy((Mem_Debugger) self->debugger); 
+				self->debugger = NULL;
+			}
+		#endif
 		free((lu_p_void) self);
 	}
 
@@ -66,20 +72,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	void mem_init(Mem self)
-	{
-		self->alloc 		= g_mem_default_instance.alloc;
-		self->realloc 		= g_mem_default_instance.realloc;
-		self->free 			= g_mem_default_instance.free;
-		self->destroy 		= g_mem_default_instance.destroy;
-		self->table_create 	= g_mem_default_instance.table_create;
-	}
-
 	Mem mem_create()
 	{
 		Mem self 		= malloc(sizeof(struct mem));
-
-		mem_init(self);
+		
+		self->debugger 				= NULL;
+		#ifdef LU_DEBUG
+			self->debugger 			= (I_Mem_Debugger) mem_debugger_create();
+		#endif 
+		self->alloc 				= g_mem_default_instance.alloc;
+		self->realloc 				= g_mem_default_instance.realloc;
+		self->free 					= g_mem_default_instance.free;
+		self->destroy 				= g_mem_default_instance.destroy;
+		self->table_create 			= g_mem_default_instance.table_create;
 
 		return self;
 	}
