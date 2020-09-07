@@ -20,6 +20,7 @@
 		self->mem->debugger 			= (I_Mem_Debugger) self;  // attach
 
 		self->items 					= calloc(LU_MD_HASH_SIZE, sizeof(Lu_Md_Item));
+		self->items_size 				= LU_MD_HASH_SIZE;
 
 		self->alloc_size				= 0;
 		self->alloc_count				= 0;
@@ -39,7 +40,7 @@
 
 		Lu_Md_Item item;
 		Lu_Md_Item current;
-		for (lu_size i = 0; i < LU_MD_HASH_SIZE; i++)
+		for (lu_size i = 0; i < self->items_size; i++)
 		{
 			item = self->items[i];
 
@@ -55,9 +56,27 @@
 		free((lu_p_void) self);
 	}
 
-	void mem_debugger_print(Mem_Debugger self)
+	bool mem_debugger_print(Mem_Debugger self)
 	{
+		lu_assert(self);
+
+		lu_debug("\n======= Mem_Debugger =======");
+		lu_debug("\n%-12s %lu", "alloc_size:", self->alloc_size);
+		lu_debug("\n%-12s %lu", "freed_size:", self->freed_size);
+		lu_debug("\n%-12s %lu", "alloc_count:", self->alloc_count);
+		lu_debug("\n%-12s %lu", "freed_count:", self->freed_count);
+
+		Lu_Md_Item item;
+		for (lu_size i = 0; i < self->items_size; i++)
+		{
+			item = self->items[i];
+
+			if (!item) continue;
 		
+			lu_debug("\n%-10s | %-10luB");
+		}
+
+		return false;
 	}
 
 	void mem_debugger_register_alloc(	I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
@@ -162,8 +181,8 @@
 			}
 		}
 
-		self->freed_size -= item->size;
-		--self->freed_count;
+		self->freed_size += item->size;
+		++self->freed_count;
 
 		lu_md_item_destroy(item);
 	}	

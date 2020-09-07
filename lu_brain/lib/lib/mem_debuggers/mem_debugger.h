@@ -31,6 +31,7 @@
 
 		Mem 					mem;
 		Lu_Md_Item* 	 		items;
+		lu_size 				items_size;
 
 		lu_size 				alloc_size;
 		lu_size 				alloc_count;
@@ -54,7 +55,7 @@
 	void mem_debugger_destroy(Mem_Debugger self);
 
 
-	void mem_debugger_print(Mem_Debugger self);
+	bool mem_debugger_print(Mem_Debugger self);
 	void mem_debugger_print_and_destroy(Mem_Debugger self);
 
 
