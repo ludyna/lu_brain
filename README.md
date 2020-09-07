@@ -7,4 +7,4 @@
 
 - All NON pulblic files should not have prefix `lu_`.
 
-- There are special files: `_readme.md`, `_module.h`, `_module.lu` (or .c), and `_typedefs.h`
+- There are special files: `__readme.md`, `_module.h`, `_module.lu` (or `_module.c`), and `_typedefs.h`
