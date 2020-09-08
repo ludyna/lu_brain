@@ -14,6 +14,8 @@
 	Lu_Brain_Config lu_brain_config_predefined_get(lu_size id)
 	{
 		lu_user_assert(id < LU_BC_END, "id value is out of scope");
+
+		return &lu_g_bc_predefined[id];
 	}
 
 
