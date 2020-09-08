@@ -7,15 +7,11 @@
 */
 
 #include "unity.h"
-#include "brain/brain.h"
+#include "lib/_module.h"
 
 Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
-
-Lu_Brain_Config 		brain_config;
-Lu_Rec_Opts 		rec_opts_1;
-Lu_Rec_Opts 		rec_opts_2;
 Lu_Wave 			wave;
 
 lu_value			data_0[] 		= { 
@@ -58,43 +54,26 @@ lu_value			data_6[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	brain_config 			= lu_brain_opts_create(1, 200 * 1024);
-	rec_opts_1 			= lu_rec_opts_create(
-							brain_config, 
-		/*w*/				3, 
-		/*h*/				3, 
-		/*depth*/			1,
-		/*block_size*/		10, 
-		/*v_min*/ 			0.0, 
-		/*v_max*/			10.0, 
-		/*v_neu_size*/		10
-	);
-			
-	rec_opts_2 			= lu_rec_opts_create(
-							brain_config, 
-		/*w*/				3, 
-		/*h*/				3, 
-		/*depth*/			1,
-		/*block_size*/		10, 
-		/*v_min*/ 			0.0, 
-		/*v_max*/			10.0, 
-		/*v_neu_size*/		10
-	);
-	
-	brain 				= lu_brain_create(brain_config);
-
+	brain 				= lu_brain_create_from_predefined(200 * 1024, LU_BC_DEFAULT);
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
-	TEST_ASSERT(brain->recs->count);
 
-	rec_0 				= lu_brain_rec_get(brain, 0);
-
+	rec_0 				= lu_rec_create_from_predefined(
+		/*belongs to*/			brain, 
+		/*width*/				3, 
+		/*height*/				3, 
+		/*predefined config*/ 	LU_RC_TEST1
+	);	
 	TEST_ASSERT(rec_0);
 
-	rec_1 				= lu_brain_rec_get(brain, 1);
-
+	rec_1 				= lu_rec_create_from_predefined(
+		/*belongs to*/			brain, 
+		/*width*/				3, 
+		/*height*/				3, 
+		/*predefined config*/ 	LU_RC_TEST1
+	);	
 	TEST_ASSERT(rec_1);
-
+	
 	TEST_ASSERT(brain->recs->count);
 
 	wave = lu_wave_create(brain);
@@ -104,7 +83,8 @@ void tearDown(void)
 {	
 	lu_wave_destroy(wave);
 
-	lu_brain_opts_destroy(brain_config);
+	lu_rec_destroy(rec_0);
+	lu_rec_destroy(rec_1);
 	lu_brain_destroy(brain);
 }
 
@@ -124,7 +104,7 @@ void test_lu_brain_basics(void)
 
 	Lu_Wave wave_mem;
 
-	Lu_Story story = lu_story_create(brain, 0); 
+	Lu_Story story = lu_story_create(brain); 
 
 		lu_story_push(story, rec_0, data_0);
 
@@ -134,7 +114,7 @@ void test_lu_brain_basics(void)
 		lu_block_end(story);
 
 		lu_story_push(story, rec_0, data_3);
- 4z
+ 
 		// Because we called save (or find or restore) - it automatically 
 		// reset number of available blocks inside story. If available lu_block count 
 		// was 13 before save (we filled 3 blocks above), after save avalable 
@@ -156,7 +136,7 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Find
 
-	story = lu_story_create(brain, 0);
+	story = lu_story_create(brain);
 
 			lu_story_push(story, rec_0, data_0);
 

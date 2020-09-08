@@ -57,7 +57,6 @@
 
 
 	void mem_debugger_print(Mem_Debugger self);
-	void mem_debugger_print_and_destroy(Mem_Debugger self);
 
 
 	void mem_debugger_register_alloc(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  

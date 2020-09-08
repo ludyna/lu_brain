@@ -4,7 +4,7 @@
  
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config predefined
-
+ 
  	struct lu_rec_config lu_g_rc_predefined[LU_RC_END] = {
 		{
 			// LU_RC_MONOCHROME1_IMAGE
@@ -20,7 +20,32 @@
 			.p_neu_size			= 2,
 			.p_nsc				= 0
 		},
+		{
+			// LU_RC_MONOCHROME8_IMAGE
+		},
+		{
+			// LU_RC_RBG8_IMAGE
+		},
+		{
+			// LU_RC_RBG16_IMAGE
+		},
+		{
+			// LU_RC_RBG32_IMAGE
+		},
+		{
+			// LU_RC_TEST1
+			.depth 				= 1,
+			.max_blocks_size 	= 16,
+			.hold_blocks_size 	= 4, 
+			
+			.v_min 				= 0,
+			.v_max 				= 10,
+			.v_neu_size			= 10,
+			.v_nsc				= 0,
 
+			.p_neu_size			= 2,
+			.p_nsc				= 0
+		}
 	};
 
 	Lu_Rec_Config lu_rec_config_predefined_get(lu_size id)

@@ -69,7 +69,7 @@
 	);		
 
 	Lu_Rec lu_rec_create(Lu_Brain brain, struct lu_rec_config config);
-	void lu_rec_destory(Lu_Rec self);
+	void lu_rec_destroy(Lu_Rec self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Story   

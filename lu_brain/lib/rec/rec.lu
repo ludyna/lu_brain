@@ -1,0 +1,49 @@
+ /**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Lu_Rec lu_rec_create(Lu_Brain brain, struct lu_rec_config config)
+	{
+		lu_user_assert(brain, "Lu_Brain is NULL");
+	 
+	 	Lu_Rec_Config p_config = lu_rec_config_validate(&config);
+	 	lu_user_assert(p_config, "Lu_Rec_Config validation failed");
+
+		Lu_Rec self 			= (Lu_Rec) mem_temp_alloc(sizeof(struct lu_rec));
+		lu_user_assert(self, "Cannot allocate lu_rec");
+
+		// Initialize
+		self->brain 			= brain;
+		self->config 			= *p_config;
+
+		//lu_debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);
+
+		return self;
+	}
+
+	Lu_Rec lu_rec_create_from_predefined(
+		Lu_Brain brain, 
+		lu_size width, 
+		lu_size height, 
+		lu_size predefined_config_id
+	)
+	{
+		Lu_Rec_Config config = lu_rec_config_predefined_get(predefined_config_id);
+		lu_user_assert(config, "Cannot get Lu_Rec_Config");
+
+		config->width 	= width;
+		config->height 	= height;
+
+		return lu_rec_create(brain, *config);
+	}
+
+	void lu_rec_destroy(Lu_Rec self)
+	{
+		mem_temp_free((lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
