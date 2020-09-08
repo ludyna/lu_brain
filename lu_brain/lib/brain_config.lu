@@ -7,7 +7,10 @@
 
 	struct lu_brain_config lu_g_bc_predefined[LU_BC_END] = {
 		{
-
+			.id						= 0,					
+			.size_in_bytes			= 0,
+			.recs_size				= 128,
+			.names_size				= 128
 		},
 	};		
 

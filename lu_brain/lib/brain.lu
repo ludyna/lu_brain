@@ -7,12 +7,13 @@
 
 	Lu_Brain lu_brain_create_from_predefined(lu_size size_in_bytes, lu_size predefined_config_id)
 	{
-		Lu_Brain_Config config = lu_brain_config_predefined_get(predefined_config_id);
-		lu_user_assert(config, "Cannot get Lu_Brain_Config");
+		Lu_Brain_Config p_config = lu_brain_config_predefined_get(predefined_config_id);
+		lu_user_assert(p_config, "Cannot get Lu_Brain_Config");
+		
+		struct lu_brain_config config = *p_config;
+		config.size_in_bytes = size_in_bytes;
 
-		config->size_in_bytes = size_in_bytes;
-
-		return lu_brain_create(*config);
+		return lu_brain_create(config);
 	}
 
 	Lu_Brain lu_brain_create(struct lu_brain_config config)
