@@ -15,7 +15,7 @@
  		S_Mem s_mem = brain->s_mem;
  		lu_user_assert(s_mem, "S_Mem is NULL");
 
-		self->recs 			= arr_temp_create(arr_count(s_mem->recs));
+		self->recs 			= arr_temp_create(arr_size(s_mem->recs), false);
  
  		S_Rec s_rec;
  		W_Rec w_rec;

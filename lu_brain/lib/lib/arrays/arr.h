@@ -21,7 +21,7 @@
 	// Create and destroy 
 
 	Arr arr_create(Mem mem, lu_size size, lu_bool allow_realloc);
-	static inline Arr arr_temp_create(lu_size size) { return arr_create(g_mem_temp, size, true); }
+	static inline Arr arr_temp_create(lu_size size, lu_bool allow_realloc) { return arr_create(g_mem_temp, size, allow_realloc); }
 	void arr_destroy(Arr);
 	static inline void arr_temp_destroy(Arr self) { arr_destroy(self); }
 

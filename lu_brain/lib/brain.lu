@@ -46,6 +46,7 @@
 
 	void lu_brain_destroy(Lu_Brain self)
 	{
+		s_mem_destroy(self->s_mem);
 		mem_destroy(self->brain_mem, g_mem_temp);
 	}
 
