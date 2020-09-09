@@ -17,6 +17,12 @@
 		return self;
 	}
 
+	static void s_cell_deinit(S_Cell self)
+	{
+		lu_user_assert_void(self, "S_Cell is NULL");
+
+	}
+
 	static S_Cell_2 s_cell_2_init(S_Cell_2 self, enum s_cell_type type, S_Layer layer, lu_size l_ix, lu_size x, lu_size y)
 	{
 		s_cell_init((S_Cell) self, type, layer, l_ix);
@@ -25,6 +31,12 @@
 		self->y = y;
 
 		return self;
+	}
+
+	static void s_cell_2_deinit(S_Cell_2 self)
+	{
+		lu_user_assert_void(self, "S_Cell_2 is NULL");
+		
 	}
 
 	static S_Cell_3 s_cell_3_init(S_Cell_3 self, S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z)
@@ -48,11 +60,18 @@
 	static void s_cell_3_deinit(S_Cell_3 self)
 	{
 		lu_user_assert_void(self, "S_Cell3 is NULL");
-		mem_temp_free((lu_p_byte) self->n_v_cells);
-		self->n_v_cells = NULL;
 
-		mem_temp_free((lu_p_byte) self->n_p_cells);
-		self->n_p_cells = NULL;
+		if (self->n_v_cells)
+		{
+			mem_temp_free((lu_p_byte) self->n_v_cells);
+			self->n_v_cells = NULL;
+		}
+
+		if (self->n_p_cells)
+		{
+			mem_temp_free((lu_p_byte) self->n_p_cells);
+			self->n_p_cells = NULL;
+		}
 	}
 
 	static S_Cell s_component_links_alloc(S_Cell self, S_Rec rec)

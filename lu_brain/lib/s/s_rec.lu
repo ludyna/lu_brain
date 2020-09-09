@@ -72,10 +72,10 @@
 		///////////////////////////////////////
 		// Init cells
 
-		s_rec_components_init(self, mem);
-		s_rec_cells_init(self, mem);
-		s_rec_pyras_init(self, mem);
-		s_rec_blocks_init(self, mem);
+		s_rec_components_init(self);
+		s_rec_cells_init(self);
+		s_rec_pyras_init(self);
+		s_rec_blocks_init(self);
 
 		//lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
 
@@ -112,7 +112,7 @@
 	/*
 	** Allocate space for S_Cell
 	*/
-	static S_Cell s_rec_cell_alloc(S_Rec self, Mem mem, S_Layer layer)
+	static S_Cell s_rec_cell_alloc(S_Rec self, S_Layer layer)
 	{
 		lu_user_assert(self->cells_count < self->cells_size, "Out of space for S_Cell");
 
@@ -129,7 +129,7 @@
 		return neu;
 	}  
 
-	static S_Cell_2 s_rec_cell_2_alloc(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y)
+	static S_Cell_2 s_rec_cell_2_alloc(S_Rec self, S_Layer layer, lu_size x, lu_size y)
 	{
 		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for S_Cell_2");
 
@@ -146,12 +146,12 @@
 		return neu;
 	}
 
-	static S_Cell_3 s_rec_cell_3_alloc(S_Rec self, Mem mem, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static S_Cell_3 s_rec_cell_3_alloc(S_Rec self, S_Layer layer, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for S_Cell_3");
 
 		S_Cell_3 neu = &self->cells_3[self->cells_3_count];
-		neu = s_cell_3_init(neu, mem, layer, layer->cells_count, x, y, z);
+		neu = s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
 		lu_user_assert(neu, "Cannot init S_Cell_3");
 
 		s_layer_neu_set(layer, x, y, z, (S_Cell) neu);

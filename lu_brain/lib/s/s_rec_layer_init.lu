@@ -144,7 +144,7 @@
 		for (y = 0; y < h; y++)
 			for (x = 0; x < w; x++)
 			{
-				neu = s_rec_cell_2_alloc(self, mem, layer, x, y); 
+				neu = s_rec_cell_2_alloc(self, layer, x, y); 
 				lu_user_assert_void(neu, "Cannot init neu");
 
 				neu = (S_Cell_2) s_pixel_links_alloc((S_Cell) neu, self); 
@@ -156,7 +156,20 @@
 
 	static void s_rec_cells_deinit(S_Rec self)
 	{
-		
+		lu_user_assert_void(self, "S_Rec is NULL");
+	
+		S_Layer	layer = &self->data_layers[1];
+
+		S_Cell neu = NULL;
+		for (lu_size j = 0; j < layer->cells_size; j++)
+		{
+			neu = layer->cells[j];
+			if (neu)
+			{
+				s_cell_links_free(neu);
+				s_cell2_deinit((S_Cell_2) neu);
+			}
+		}
 	}
 
 	static void s_rec_pyras_init(S_Rec self)
@@ -197,7 +210,23 @@
 
 	static void s_rec_pyras_deinit(S_Rec self)
 	{
-		
+		S_Layer layer;
+		S_Cell neu = NULL;
+		lu_size j;
+		for(lu_size i = 0; i < self->block_layers_size; i++)
+		{
+			layer = &self->block_layers[i];
+
+			for (j = 0; j < layer->cells_size; j++)
+			{
+				neu = layer->cells[j];
+				if (neu)
+				{
+					s_cell_links_free(neu);
+					s_cell2_deinit((S_Cell_2) neu);
+				}
+			}
+		}
 	}
 
 	static void s_rec_blocks_init(S_Rec self)
@@ -244,5 +273,21 @@
 
 	static void s_rec_blocks_deinit(S_Rec self)
 	{
-		
+		S_Layer layer;
+		S_Cell neu = NULL;
+		lu_size j;
+		for(lu_size i = 0; i < self->block_layers_size; i++)
+		{
+			layer = &self->block_layers[i];
+
+			for (j = 0; j < layer->cells_size; j++)
+			{
+				neu = layer->cells[j];
+				if (neu)
+				{
+					s_cell_links_free(neu);
+					s_cell_deinit(neu);
+				}
+			}
+		}
 	}

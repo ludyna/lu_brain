@@ -34,10 +34,12 @@
 		self->s_mem 		= s_mem_create(self);
 		lu_user_assert(self->s_mem, "Cannot create S_Mem. Not enough memory?");
 
-		self->n_mem 		= n_mem_create(self, p_config->names_size);
-		lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
 
-		n_mem_tables_create(self->n_mem, brain_mem);
+		self->n_mem 	 	= NULL;
+		// self->n_mem 		= n_mem_create(self, p_config->names_size);
+		// lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
+
+		// n_mem_tables_create(self->n_mem, brain_mem);
 
 		lu_brain_print_info(self);
 
@@ -60,9 +62,11 @@
 		lu_debug("\nMemory allocated (bytes): %lu", mem_perm_allocated(brain_mem));
 		lu_debug("\nMemory used (bytes): %lu", mem_perm_used(brain_mem));
 
- 		n_mem_print_info(self->n_mem);
+		if (self->n_mem)
+ 			n_mem_print_info(self->n_mem);
 
- 		s_mem_print_info(self->s_mem);
+ 		if (self->s_mem)
+ 			s_mem_print_info(self->s_mem);
 
 		lu_debug("\n-----------------------------------\n");
 	}
