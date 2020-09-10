@@ -122,10 +122,10 @@
 
 	static void s_rec_components_deinit(S_Rec self)
 	{
-		// no real mem allocations in init
+		lu_user_assert_void(self, "S_Rec is NULL");
 	}
 
-	static void s_rec_cells_init(S_Rec self)
+	static void s_rec_pixels_init(S_Rec self)
 	{
 		lu_user_assert_void(self, "S_Rec is NULL");
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
@@ -133,28 +133,10 @@
 		S_Layer layer 		= &self->data_layers[1];
 		S_Layer b_layer 	= &self->data_layers[0];
 
-		lu_size w = layer->w;
-		lu_size h = layer->h;
-
-		lu_size y;
-		lu_size x;
-
-		S_Cell_2 neu = NULL;
-
-		for (y = 0; y < h; y++)
-			for (x = 0; x < w; x++)
-			{
-				neu = s_rec_cell_2_assign(self, layer, x, y); 
-				lu_user_assert_void(neu, "Cannot init neu");
-
-				neu = (S_Cell_2) s_pixel_links_alloc((S_Cell) neu, self); 
-				lu_user_assert_void(neu, "Cannot component init neu");
-
-				s_pixel_connect(neu, b_layer);
-			}
+		s_layer_pixel_cells_init(layer, b_layer);
 	}
 
-	static void s_rec_cells_deinit(S_Rec self)
+	static void s_rec_pixels_deinit(S_Rec self)
 	{
 		lu_user_assert_void(self, "S_Rec is NULL");
 	
@@ -174,69 +156,37 @@
 
 	static void s_rec_pyras_init(S_Rec self)
 	{
-		S_Cell_2 neu = NULL;
+		lu_user_assert_void(self, "S_Rec is NULL");
+
 		S_Layer layer;
 		S_Layer b_layer = NULL;
 
-		lu_size ix;
-
-		lu_size w;
-		lu_size h;
-		lu_size x;
-		lu_size y;
-
-		for(ix = 2; ix < self->data_layers_size; ix++)
+		for(lu_size ix = 2; ix < self->data_layers_size; ix++)
 		{
-
 			layer 		= &self->data_layers[ix];
 			b_layer 	= &self->data_layers[ix - 1];
 
-			w 			= layer->w;
-			h 			= layer->h; 
-
-			for (y = 0; y < h; y++)
-				for (x = 0; x < w; x++)
-				{
-					neu = s_rec_cell_2_assign(self, layer, x, y); 
-					lu_user_assert_void(neu, "Cannot init neu");
-
-					neu = (S_Cell_2) s_pyra_links_alloc((S_Cell) neu, self); 
-					lu_user_assert_void(neu, "Cannot pyra init neu");
-
-					s_pyra_connect(neu, b_layer);
-				}
+			s_layer_pyra_cells_init(layer, b_layer);
 		}
 	}
 
 	static void s_rec_pyras_deinit(S_Rec self)
 	{
-		S_Layer layer;
-		S_Cell neu = NULL;
-		lu_size j;
+		lu_user_assert_void(self, "S_Rec is NULL");
+
 		for(lu_size i = 0; i < self->data_layers_size; i++)
 		{
-			layer = &self->data_layers[i];
-
-			for (j = 0; j < layer->cells_size; j++)
-			{
-				neu = layer->cells[j];
-				if (neu)
-				{
-					s_cell_links_free(neu);
-					s_rec_cell_2_retract(self, (S_Cell_2) neu);
-				}
-			}
+			s_layer_pyra_cells_deinit(&self->data_layers[i]);
 		}
 	}
 
 	static void s_rec_blocks_init(S_Rec self)
 	{
+		lu_user_assert_void(self, "S_Rec is NULL");
+
 		S_Layer layer;
 		S_Layer b_layer = NULL;
-		lu_size w;
 		lu_size ix;
-		lu_size x;
-		S_Cell neu = NULL;
 
 		for(ix = 0; ix < self->block_layers_size; ix++)
 		{
@@ -252,44 +202,16 @@
 				b_layer = &self->data_layers[self->data_layers_size - 1];
 			}
 
-			s_block_layer_init(layer, b_layer);
-
-			w = layer->w;
-
-			//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
-			for (x = 0; x < w; x++)
-			{
-				neu = s_rec_cell_assign(self, layer); 
-				lu_user_assert_void(neu, "Cannot init neu");
-
-				neu = s_block_links_alloc((S_Cell) neu, self); 
-				lu_user_assert_void(neu, "Cannot tria init neu");
-
-				if (ix > 0)
-				{
-					s_block_connect(neu, b_layer);
-				}
-			}
+			s_layer_block_cells_init(layer, b_layer);
 		}
 	}
 
 	static void s_rec_blocks_deinit(S_Rec self)
 	{
-		S_Layer layer;
-		S_Cell neu = NULL;
-		lu_size j;
+		lu_user_assert_void(self, "S_Rec is NULL");
+
 		for(lu_size i = 0; i < self->block_layers_size; i++)
 		{
-			layer = &self->block_layers[i];
-
-			for (j = 0; j < layer->cells_size; j++)
-			{
-				neu = layer->cells[j];
-				if (neu)
-				{
-					s_cell_links_free(neu);
-					s_rec_cell_retract(self, neu);
-				}
-			}
+			s_layer_block_cells_deinit(&self->block_layers[i]);
 		}
 	}

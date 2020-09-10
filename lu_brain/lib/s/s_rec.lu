@@ -73,7 +73,7 @@
 		// Init cells
 
 		s_rec_components_init(self);
-		s_rec_cells_init(self);
+		s_rec_pixels_init(self);
 		s_rec_pyras_init(self);
 		s_rec_blocks_init(self);
 
@@ -92,7 +92,7 @@
 
 		s_rec_blocks_deinit(self);
 		s_rec_pyras_deinit(self);
-		s_rec_cells_deinit(self);
+		s_rec_pixels_deinit(self);
 		s_rec_components_deinit(self);
 
 		s_rec_layers_deinit(self);

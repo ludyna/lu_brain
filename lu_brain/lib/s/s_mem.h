@@ -30,7 +30,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S_Layer
 //
-	
+
 	struct s_layer {
 		// vlasnyk
 		S_Rec 					rec;
@@ -78,20 +78,19 @@
 	static S_Layer s_layer_base_init(S_Layer self, S_Rec rec, enum s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
 	static void s_layer_base_deinit(S_Layer self);
 
+	static void s_layer_component_cells_init(S_Layer self, S_Layer b_layer);
+	static void s_layer_component_cells_deinit(S_Layer self);
+
+	static void s_layer_pixel_cells_init(S_Layer self, S_Layer b_layer);
+	static void s_layer_pixel_cells_deinit(S_Layer self);
+
+	static void s_layer_pyra_cells_init(S_Layer self, S_Layer b_layer);
+	static void s_layer_pyra_cells_deinit(S_Layer self);
+
+	static void s_layer_block_cells_init(S_Layer self, S_Layer b_layer);
+	static void s_layer_block_cells_deinit(S_Layer self);
+
 	static void s_layer_print_info(S_Layer self);
-
-	// s_layer_subtypes.lu
-	static void s_component_layer_init(S_Layer self, S_Layer b_layer);
-	static void s_component_layer_deinit(S_Layer self);
-
-	static void s_pixel_layer_init(S_Layer self, S_Layer b_layer);
-	static void s_pixel_layer_deinit(S_Layer self);
-
-	static void s_pyra_layer_init(S_Layer self, S_Layer b_layer);
-	static void s_pyra_layer_deinit(S_Layer self);
-
-	static void s_block_layer_init(S_Layer self, S_Layer b_layer);
-	static void s_block_layer_deinit(S_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // S_Rec
@@ -166,11 +165,14 @@
 	static void s_rec_components_init(S_Rec self);
 	static void s_rec_components_deinit(S_Rec self);
 	
-	static void s_rec_cells_init(S_Rec self); 
-	static void s_rec_cells_deinit(S_Rec self);
+	static void s_rec_pixels_init(S_Rec self); 
+	static void s_rec_pixels_deinit(S_Rec self); 
 
-	static void s_rec_cells_init(S_Rec self);
-	static void s_rec_cells_deinit(S_Rec self);
+	static void s_rec_pyras_init(S_Rec self); 
+	static void s_rec_pyras_deinit(S_Rec self);
+
+	static void s_rec_blocks_init(S_Rec self);
+	static void s_rec_blocks_deinit(S_Rec self);
 
 	static void s_rec_print_info(S_Rec self);
 
