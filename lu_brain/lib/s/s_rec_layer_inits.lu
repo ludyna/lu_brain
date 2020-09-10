@@ -96,33 +96,14 @@
 		lu_user_assert_void(self, "S_Rec is NULL");
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
 
-		lu_size w = self->cells_w;
-		lu_size h = self->cells_h;
-		lu_size d = self->cells_d;
-
-		S_Layer layer 	= &self->data_layers[0];
-
-		lu_size z;
-		lu_size y;
-		lu_size x;
-
-		S_Cell_3 neu = NULL;
-
-		for (z = 0; z < d; z++)
-			for (y = 0; y < h; y++)
-				for (x = 0; x < w; x++)
-				{
-					neu = s_rec_cell_3_assign(self, layer, x, y, z); 
-					lu_user_assert_void(neu, "Cannot init neu");
-
-					neu = (S_Cell_3) s_component_links_alloc((S_Cell) neu, self); 
-					lu_user_assert_void(neu, "Cannot component init neu");
-				}
+		s_layer_component_cells_init(&self->data_layers[0]);
 	}
 
 	static void s_rec_components_deinit(S_Rec self)
 	{
 		lu_user_assert_void(self, "S_Rec is NULL");
+
+		s_layer_component_cells_deinit(&self->data_layers[0]);
 	}
 
 	static void s_rec_pixels_init(S_Rec self)
@@ -140,18 +121,7 @@
 	{
 		lu_user_assert_void(self, "S_Rec is NULL");
 	
-		S_Layer	layer = &self->data_layers[1];
-
-		S_Cell neu = NULL;
-		for (lu_size j = 0; j < layer->cells_size; j++)
-		{
-			neu = layer->cells[j];
-			if (neu)
-			{
-				s_cell_links_free(neu);
-				s_rect_cell_2_retract((S_Cell_2) neu);
-			}
-		}
+		s_layer_pixel_cells_deinit(&self->data_layers[1]);
 	}
 
 	static void s_rec_pyras_init(S_Rec self)

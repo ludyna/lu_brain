@@ -78,7 +78,7 @@
 	static S_Layer s_layer_base_init(S_Layer self, S_Rec rec, enum s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
 	static void s_layer_base_deinit(S_Layer self);
 
-	static void s_layer_component_cells_init(S_Layer self, S_Layer b_layer);
+	static void s_layer_component_cells_init(S_Layer self);
 	static void s_layer_component_cells_deinit(S_Layer self);
 
 	static void s_layer_pixel_cells_init(S_Layer self, S_Layer b_layer);
