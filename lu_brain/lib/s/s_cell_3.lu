@@ -1,8 +1,0 @@
-/**
-	Copyright © 2020 Oleh Ihorovych Novosad 
-*/  
-
-	static void s_cell_3_save(S_Cell_3 self, lu_value value)
-	{
-		
-	}
