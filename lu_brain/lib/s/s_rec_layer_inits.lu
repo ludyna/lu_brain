@@ -20,7 +20,7 @@
 		// Components
 		layer = s_layer_base_init(layer, self, SLT_COMPONENTS, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init component layer");
-		self->cells_3_size += s_layer_neus_size(layer);
+		self->cells_3_size += s_layer_cells_size(layer);
 
 		++ix;
 		d = 1;
@@ -30,7 +30,7 @@
 
 		layer = s_layer_base_init(layer, self, SLT_PIXELS, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init cell layer");
-		self->cells_2_size += s_layer_neus_size(layer);
+		self->cells_2_size += s_layer_cells_size(layer);
 
 		// Datum
 		--w;
@@ -45,7 +45,7 @@
 
 			layer = s_layer_base_init(layer, self, SLT_PYRAS, ix, w, h, d);
 			lu_user_assert_void(layer, "Cannot init pyra layer");
-			self->cells_2_size += s_layer_neus_size(layer);
+			self->cells_2_size += s_layer_cells_size(layer);
 
 			if (w > 0) --w;
 			if (h > 0) --h;
@@ -66,7 +66,7 @@
 
 			layer = s_layer_base_init(layer, self, SLT_BLOCKS, ix, 1, h, d);
 			lu_user_assert_void(layer, "Cannot init layer");
-			self->cells_size += s_layer_neus_size(layer);
+			self->cells_size += s_layer_cells_size(layer);
 
 			++ix;
 			--w;

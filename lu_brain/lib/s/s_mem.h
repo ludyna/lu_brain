@@ -50,7 +50,7 @@
 		lu_size 				n_cells_count; // cells_count potriben shob znayty n_sig dlia n_cell po yoho n_cell->s_ix v wave->w_neu->cells
 	};
 
-	static inline void s_layer_neu_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Cell val) 
+	static inline void s_layer_cell_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Cell val) 
 	{
 		lu_user_assert_void(val, "S_Cell is NULL");
 		lu_user_assert_void(x < self->w, "x index out of range");
@@ -60,7 +60,7 @@
 		self->cells[z * self->w * self->h + y * self->w + x] = val; 
 	}
 
-	static inline S_Cell s_layer_neu_get(S_Layer self, lu_size x, lu_size y, lu_size z) 
+	static inline S_Cell s_layer_cell_get(S_Layer self, lu_size x, lu_size y, lu_size z) 
 	{ 
 		lu_user_assert(x < self->w, "x index out of range");
 		lu_user_assert(y < self->h, "y index out of range");
@@ -69,7 +69,7 @@
 		return self->cells[z * self->w * self->h + y * self->w + x]; 
 	}
 
-	static inline lu_size s_layer_neus_size(S_Layer self) 
+	static inline lu_size s_layer_cells_size(S_Layer self) 
 	{ 
 		return self->w * self->h * self->d; 
 	}
@@ -142,7 +142,7 @@
 	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
 		S_Layer layer = &self->data_layers[l];
-		return s_layer_neu_get(layer, x, y, z);
+		return s_layer_cell_get(layer, x, y, z);
 	}
 
 	// s_rec.lu
@@ -150,13 +150,13 @@
 	static void s_rec_destroy(S_Rec self);
 	
 	static S_Cell s_rec_cell_assign(S_Rec, S_Layer);   
-	static void s_rec_cell_retract(S_Rec, S_Cell); 
+	static void s_rec_cell_retract(S_Rec self, S_Cell cell); 
 
 	static S_Cell_2 s_rec_cell_2_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y);
-	static void s_rec_cell_2_retract(S_Rec, S_Cell_2);
+	static void s_rec_cell_2_retract(S_Rec self, S_Cell_2 cell);
 
 	static S_Cell_3 s_rec_cell_3_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y, lu_size z);
-	static void s_rec_cell_3_retract(S_Rec, S_Cell_3);
+	static void s_rec_cell_3_retract(S_Rec self, S_Cell_3 cell);
 
 	// s_rec_layer_inits.lu
 	static void s_rec_layers_init(S_Rec self);

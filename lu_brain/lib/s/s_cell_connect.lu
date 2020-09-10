@@ -13,7 +13,7 @@
 		lu_size d = b_layer->d;
 		for (z = 0; z < d; z++)
 		{
-			com = s_layer_neu_get(b_layer, self->x, self->y, z);  
+			com = s_layer_cell_get(b_layer, self->x, self->y, z);  
 
 			lu_user_assert_void(com, "S_Component is NULL");
 
@@ -38,27 +38,27 @@
 		S_Cell b 			= NULL;
 		S_Cell d 			= (S_Cell) self;
 
-		b = s_layer_neu_get(b_layer, x, y, 0);
+		b = s_layer_cell_get(b_layer, x, y, 0);
 		lu_user_assert_void(b, "S_Cell is NULL");
 
 		d_np(b) = d; // b->d->np = d; 
 		b_vl(d) = b; // d->b->vl = b; 
 
-		b = s_layer_neu_get(b_layer, x + 1, y, 0);
+		b = s_layer_cell_get(b_layer, x + 1, y, 0);
 		if (b) 
 		{
 			d_nl(b) = d; // b->d->nl = d;
 			b_vp(d) = b; // d->b->vp = b;
 		}
 
-		b = s_layer_neu_get(b_layer, x + 1, y + 1, 0);
+		b = s_layer_cell_get(b_layer, x + 1, y + 1, 0);
 		if (b)
 		{
 			d_vl(b) = d; // b->d->vl = d;
 			b_np(d) = b; // d->b->np = b;
 		}
 
-		b = s_layer_neu_get(b_layer, x, y + 1, 0);
+		b = s_layer_cell_get(b_layer, x, y + 1, 0);
 		
 		if (b)
 		{
@@ -77,7 +77,7 @@
 
 		S_Cell b = NULL;
 
-		b = s_layer_neu_get(b_layer, x, y, 0);
+		b = s_layer_cell_get(b_layer, x, y, 0);
 		lu_user_assert_void(b, "S_Cell is NULL");
 
 		d_d(b) = d; 

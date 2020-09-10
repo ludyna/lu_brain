@@ -48,55 +48,59 @@
 	static void s_layer_component_cells_init(S_Layer self)
 	{
 		lu_user_assert_void(self, "S_Layer is NULL");
+		lu_user_assert_void(self->rec, "S_Rec is NULL");
 
-		lu_size w = self->cells_w;
-		lu_size h = self->cells_h;
-		lu_size d = self->cells_d;
+		lu_size w = self->w;
+		lu_size h = self->h;
+		lu_size d = self->d;
 
 		lu_size z;
 		lu_size y;
 		lu_size x;
 
-		S_Cell_3 neu = NULL;
+		S_Cell_3 cell = NULL;
 
 		for (z = 0; z < d; z++)
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
-					neu = s_rec_cell_3_assign(self->rec, self, x, y, z); 
-					lu_user_assert_void(neu, "Cannot init neu");
+					cell = s_rec_cell_3_assign(self->rec, self, x, y, z); 
+					lu_user_assert_void(cell, "Cannot init cell");
 
-					neu = (S_Cell_3) s_component_links_alloc((S_Cell) neu, self->rec); 
-					lu_user_assert_void(neu, "Cannot component init neu");
+					cell = (S_Cell_3) s_component_links_alloc((S_Cell) cell, self->rec); 
+					lu_user_assert_void(cell, "Cannot component init cell");
 				}
 	}
 
 	static void s_layer_component_cells_deinit(S_Layer self)
 	{
 		lu_user_assert_void(self, "S_Layer is NULL");
+		lu_user_assert_void(self->rec, "S_Rec is NULL");
 
-		lu_size w = self->cells_w;
-		lu_size h = self->cells_h;
-		lu_size d = self->cells_d;
+		lu_size w = self->w;
+		lu_size h = self->h;
+		lu_size d = self->d;
 
 		lu_size z;
 		lu_size y;
 		lu_size x;
 
-		S_Cell_3 neu = NULL;
+		S_Cell cell = NULL;
 
 		for (z = 0; z < d; z++)
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
-					s_cell_links_free(neu);
-					s_rect_cell_3_retract((S_Cell_2) neu);
+					cell = s_layer_cell_get(self, x, y, z);
+					s_cell_links_free(cell);
+					s_rec_cell_3_retract(self->rec, (S_Cell_3) cell);
 				}
 	}
 
 	static void s_layer_pixel_cells_init(S_Layer self, S_Layer b_layer)
 	{
-		lu_user_assert_void(self, "S_Layer is NULL");
+		lu_user_assert_void(self, "S_Layer is NULL");  
+		lu_user_assert_void(self->rec, "S_Rec is NULL");
 
 		lu_size w = self->w;
 		lu_size h = self->h;
@@ -104,18 +108,18 @@
 		lu_size y;
 		lu_size x;
 
-		S_Cell_2 neu = NULL;
+		S_Cell_2 cell = NULL;
 
 		for (y = 0; y < h; y++)
 			for (x = 0; x < w; x++)
 			{
-				neu = s_rec_cell_2_assign(self->rec, self, x, y); 
-				lu_user_assert_void(neu, "Cannot init neu");
+				cell = s_rec_cell_2_assign(self->rec, self, x, y); 
+				lu_user_assert_void(cell, "Cannot init cell");
 
-				neu = (S_Cell_2) s_pixel_links_alloc((S_Cell) neu, self); 
-				lu_user_assert_void(neu, "Cannot component init neu");
+				cell = (S_Cell_2) s_pixel_links_alloc((S_Cell) cell, self->rec); 
+				lu_user_assert_void(cell, "Cannot component init cell");
 
-				s_pixel_connect(neu, b_layer);
+				s_pixel_connect(cell, b_layer);
 			}
 
 	}
@@ -123,37 +127,41 @@
 	static void s_layer_pixel_cells_deinit(S_Layer self)
 	{
 		lu_user_assert_void(self, "S_Layer is NULL");
+		lu_user_assert_void(self->rec, "S_Rec is NULL");
 
-		S_Cell neu = NULL;
-		for (lu_size j = 0; j < self->cells_size; j++)
+		S_Cell cell = NULL;
+		for (lu_size j = 0; j < self->cells_count; j++)
 		{
-			neu = self->cells[j];
-			if (neu)
+			cell = self->cells[j];
+			if (cell)
 			{
-				s_cell_links_free(neu);
-				s_rect_cell_2_retract((S_Cell_2) neu);
+				s_cell_links_free(cell);
+				s_rec_cell_2_retract(self->rec, (S_Cell_2) cell);
 			}
 		}
 	}
 
 	static void s_layer_pyra_cells_init(S_Layer self, S_Layer b_layer)
-	{
+	{ 
+		lu_user_assert_void(self, "S_Layer is NULL");  
+		lu_user_assert_void(self->rec, "S_Rec is NULL");
+
 		lu_size w 			= self->w;
 		lu_size h 			= self->h; 
  
- 		S_Cell_2 neu = NULL;
+ 		S_Cell_2 cell = NULL;
  		lu_size x;
 		for (lu_size y = 0; y < h; y++)
 			for (x = 0; x < w; x++)
 			{
-				neu = s_rec_cell_2_assign(self->rec, self, x, y); 
-				lu_user_assert_void(neu, "Cannot init neu");
+				cell = s_rec_cell_2_assign(self->rec, self, x, y); 
+				lu_user_assert_void(cell, "Cannot init cell");
 
-				neu = (S_Cell_2) s_pyra_links_alloc((S_Cell) neu, self->rec); 
-				lu_user_assert_void(neu, "Cannot pyra init neu");
+				cell = (S_Cell_2) s_pyra_links_alloc((S_Cell) cell, self->rec); 
+				lu_user_assert_void(cell, "Cannot pyra init cell");
 
 				if (b_layer)
-					s_pyra_connect(neu, b_layer);
+					s_pyra_connect(cell, b_layer);
 			}
 	}
 
@@ -161,37 +169,38 @@
 	{
 		lu_user_assert_void(self, "S_Layer is NULL");
 
-		S_Cell neu = NULL;
-		for (lu_size j = 0; j < self->cells_size; j++)
+		S_Cell cell = NULL;
+		for (lu_size j = 0; j < self->cells_count; j++)
 		{
-			neu = self->cells[j];
-			if (neu)
+			cell = self->cells[j];
+			if (cell)
 			{
-				s_cell_links_free(neu);
-				s_rec_cell_2_retract(self->rec, (S_Cell_2) neu);
+				s_cell_links_free(cell);
+				s_rec_cell_2_retract(self->rec, (S_Cell_2) cell);
 			}
 		}
 	}
 
 	static void s_layer_block_cells_init(S_Layer self, S_Layer b_layer)
 	{
-		lu_user_assert_void(self, "S_Layer is NULL");
+		lu_user_assert_void(self, "S_Layer is NULL"); 
+		lu_user_assert_void(self->rec, "S_Rec is NULL");
 
 		lu_size w 	= self->w;
-		S_Cell neu 	= NULL;
+		S_Cell cell 	= NULL;
 
 		//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
 		for (lu_size x = 0; x < w; x++)
 		{
-			neu = s_rec_cell_assign(self->rec, self); 
-			lu_user_assert_void(neu, "Cannot init neu");
+			cell = s_rec_cell_assign(self->rec, self); 
+			lu_user_assert_void(cell, "Cannot init cell");
 
-			neu = s_block_links_alloc((S_Cell) neu, self->rec); 
-			lu_user_assert_void(neu, "Cannot alloc block links");
+			cell = s_block_links_alloc((S_Cell) cell, self->rec); 
+			lu_user_assert_void(cell, "Cannot alloc block links");
 
 			if (b_layer)
 			{
-				s_block_connect(neu, b_layer);
+				s_block_connect(cell, b_layer);
 			}
 		}
 	}
@@ -200,14 +209,14 @@
 	{ 
 		lu_user_assert_void(self, "S_Layer is NULL");
 
-		S_Cell neu = NULL;
-		for (lu_size j = 0; j < layer->cells_size; j++)
+		S_Cell cell = NULL;
+		for (lu_size j = 0; j < self->cells_count; j++)
 		{
-			neu = layer->cells[j];
-			if (neu)
+			cell = self->cells[j];
+			if (cell)
 			{
-				s_cell_links_free(neu);
-				s_rec_cell_retract(self->rec, neu);
+				s_cell_links_free(cell);
+				s_rec_cell_retract(self->rec, cell);
 			}
 		}
 	}

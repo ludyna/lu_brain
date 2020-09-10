@@ -120,7 +120,7 @@
 		neu = s_cell_init(neu, SCT_CELL, layer, layer->cells_count);
 		lu_user_assert(neu, "Cannot init S_Cell");
 
-		s_layer_neu_set(layer, 0, 0, 0, neu);
+		s_layer_cell_set(layer, 0, 0, 0, neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
@@ -128,6 +128,11 @@
 
 		return neu;
 	}  
+
+	static void s_rec_cell_retract(S_Rec self, S_Cell cell)
+	{
+		s_cell_deinit(cell);
+	}
 
 	static S_Cell_2 s_rec_cell_2_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y)
 	{
@@ -137,13 +142,18 @@
 		neu = s_cell_2_init(neu, SCT_CELL_2, layer, layer->cells_count, x, y);
 		lu_user_assert(neu, "Cannot init S_Cell_2");
 
-		s_layer_neu_set(layer, x, y, 0, (S_Cell) neu);
+		s_layer_cell_set(layer, x, y, 0, (S_Cell) neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
 		++self->cells_2_count;
 
 		return neu;
+	}
+
+	static void s_rec_cell_2_retract(S_Rec self, S_Cell_2 cell)
+	{
+		s_cell_2_deinit(cell);
 	}
 
 	static S_Cell_3 s_rec_cell_3_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y, lu_size z)
@@ -154,13 +164,18 @@
 		neu = s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
 		lu_user_assert(neu, "Cannot init S_Cell_3");
 
-		s_layer_neu_set(layer, x, y, z, (S_Cell) neu);
+		s_layer_cell_set(layer, x, y, z, (S_Cell) neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
 		++self->cells_3_count;
 
 		return neu;
+	}
+
+	static void s_rec_cell_3_retract(S_Rec self, S_Cell_3 cell)
+	{
+		s_cell_3_deinit(cell);
 	}
 
 	static void s_rec_print_layers_info(struct s_layer* layers, lu_size size, lu_size print_top_size)
