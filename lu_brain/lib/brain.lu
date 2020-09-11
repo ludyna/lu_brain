@@ -89,3 +89,34 @@
 	{
 		lu_user_assert(NULL, "Not implemented yet");
 	}
+
+	static void lu_brain_rec_attach(Lu_Brain self, Lu_Rec rec)
+	{
+		lu_assert(self);
+		lu_assert(rec);
+		lu_assert(self->recs);
+		lu_assert(!rec->brain);
+
+		rec->brain = self;
+
+		// find empty slot
+		lu_size i;
+		for(i = 0; i < arr_count(self->recs); i++)
+		{
+			if (arr_get(self->recs, i) == NULL) break;
+		}
+		
+		rec->id = i;
+		arr_set(self->recs, rec->id, rec);
+		
+	}
+
+	static void lu_brain_rec_detach(Lu_Brain self, Lu_Rec rec)
+	{
+		lu_assert(self);
+		lu_assert(rec->brain);
+
+		arr_set(self->recs, rec->id, NULL);
+		
+		rec->brain = NULL;
+	}

@@ -41,4 +41,5 @@
 		N_Mem 					n_mem;		
 	};	
 
-
+	static void lu_brain_rec_attach(Lu_Brain self, Lu_Rec rec);
+	static void lu_brain_rec_detach(Lu_Brain self, Lu_Rec rec);

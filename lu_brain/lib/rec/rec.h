@@ -48,6 +48,3 @@
 
 		struct lu_rec_config 	config;	
 	};
-
-	static void lu_rec_attach_to_brain(Lu_Rec self, Lu_Brain brain);
-	static void lu_rec_detach_from_brain(Lu_Rec self);

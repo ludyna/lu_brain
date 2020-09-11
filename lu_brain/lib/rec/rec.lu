@@ -38,7 +38,7 @@
 
 		//lu_debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);
 
-		lu_rec_attach_to_brain(self, brain);
+		lu_brain_rec_attach(brain, self);
 
 		return self;
 	}
@@ -46,42 +46,14 @@
 	void lu_rec_destroy(Lu_Rec self)
 	{
 		lu_user_assert_void(self, "Lu_Rec is NULL");
-		lu_rec_detach_from_brain(self);
+
+		if (self->brain)
+			lu_brain_rec_detach(self->brain, self);
 
 		mem_temp_free((lu_p_byte) self);
 	}
 
-	static void lu_rec_attach_to_brain(Lu_Rec self, Lu_Brain brain)
-	{
-		lu_assert(self);
-		lu_assert(brain);
-		lu_assert(brain->recs);
-		lu_assert(!self->brain);
 
-		self->brain = brain;
-
-		// find empty slot
-		lu_size i;
-		for(i = 0; i < arr_count(brain->recs); i++)
-		{
-			if (arr_get(brain->recs, i) == NULL) break;
-		}
-		
-		self->id = i;
-		arr_set(brain->recs, self->id, self);
-		
-	}
-
-	static void lu_rec_detach_from_brain(Lu_Rec self)
-	{
-		lu_assert(self);
-
-		if(self->brain == NULL) return;
-
-		arr_set(self->brain->recs, self->id, NULL);
-		
-		self->brain = NULL;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
