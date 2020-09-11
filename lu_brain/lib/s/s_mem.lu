@@ -85,8 +85,8 @@
 		for (i = 0; i < arr_count(self->recs); i++)
 		{
 			s_rec = (S_Rec) arr_get(self->recs, i);
-			if (s_rec == NULL) continue;
-			if (s_rec && s_rec->rec->id == rec->id)
+	
+			if (s_rec && s_rec->rec && s_rec->rec->id == rec->id)
 			{
 				s_rec_destroy(s_rec);
 				arr_set(self->recs, i, NULL);
