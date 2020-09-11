@@ -40,7 +40,9 @@
 		for(lu_size i = 0; i < arr_count(self->recs); i++)
 		{
 			s_rec = (S_Rec) arr_get(self->recs, i);
-			s_rec_destroy(s_rec);
+
+			if (s_rec) 
+				s_rec_destroy(s_rec);
 		}
 
 		arr_temp_destroy(self->recs);
@@ -62,4 +64,33 @@
  			rec = (S_Rec) arr_get(self->recs, i);
  			s_rec_print_info(rec);
  		}
+	}
+
+	static void s_mem_rec_create(S_Mem self, Lu_Rec rec)
+	{
+		lu_size i;
+		for (i = 0; i < arr_count(self->recs); i++)
+		{
+			if (arr_get(self->recs, i) == NULL) return;
+		}
+
+		S_Rec s_rec = s_rec_create(self, rec);
+		arr_set(self->recs, i, s_rec);
+	}
+
+	static void s_mem_rec_destroy(S_Mem self, Lu_Rec rec)
+	{
+		lu_size i;
+		S_Rec s_rec;
+		for (i = 0; i < arr_count(self->recs); i++)
+		{
+			s_rec = (S_Rec) arr_get(self->recs, i);
+			if (s_rec == NULL) continue;
+			if (s_rec && s_rec->rec->id == rec->id)
+			{
+				s_rec_destroy(s_rec);
+				arr_set(self->recs, i, NULL);
+				break;
+			}
+		}
 	}

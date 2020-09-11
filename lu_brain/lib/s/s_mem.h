@@ -193,3 +193,6 @@
 	static void s_mem_destroy(S_Mem self);
 
 	static void s_mem_print_info(S_Mem self);
+
+	static void s_mem_rec_create(S_Mem self, Lu_Rec rec);
+	static void s_mem_rec_destroy(S_Mem self, Lu_Rec rec);
