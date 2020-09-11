@@ -96,7 +96,8 @@
 		lu_user_assert_void(self, "S_Rec is NULL");
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
 
-		s_layer_component_cells_init(&self->data_layers[0]);
+		if (self->data_layers_size > 0)
+			s_layer_component_cells_init(&self->data_layers[0]);
 	}
 
 	static void s_rec_components_deinit(S_Rec self)
@@ -121,7 +122,8 @@
 	{
 		lu_user_assert_void(self, "S_Rec is NULL");
 	
-		s_layer_pixel_cells_deinit(&self->data_layers[1]);
+		if (self->data_layers_size > 1)
+			s_layer_pixel_cells_deinit(&self->data_layers[1]);
 	}
 
 	static void s_rec_pyras_init(S_Rec self)

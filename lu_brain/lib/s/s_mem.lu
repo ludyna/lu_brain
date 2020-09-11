@@ -16,19 +16,6 @@
 		self->brain 		= brain;
 		self->recs 			= arr_temp_create(arr_size(brain->recs), false);
 
-		// Lu_Rec rec;	
-		// S_Rec s_rec;
-		// for(lu_size i = 0; i < arr_size(self->recs); i++)
-		// {
-		// 	rec = (Lu_Rec) arr_get(brain->recs, i);
-
-		// 	s_rec = s_rec_create(self, rec);
-
-		// 	lu_user_assert(s_rec, "Cannot create s_rec");
-
-		// 	arr_set(self->recs, i, s_rec);
-		// }
-
 		return self;
 	}
 
