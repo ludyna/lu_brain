@@ -29,26 +29,29 @@
 		
 		self->brain_mem  	= brain_mem; 
 		self->config 		= *p_config;
-		self->recs 			= arr_create(brain_mem, p_config->recs_size, false);
+		self->recs 			= arr_temp_create(p_config->recs_size, false);
 
-		self->s_mem 		= s_mem_create(self);
-		lu_user_assert(self->s_mem, "Cannot create S_Mem. Not enough memory?");
+		// self->s_mem 		= s_mem_create(self);
+		// lu_user_assert(self->s_mem, "Cannot create S_Mem. Not enough memory?");
 
 
-		self->n_mem 	 	= NULL;
+		//self->n_mem 	 	= NULL;
 		// self->n_mem 		= n_mem_create(self, p_config->names_size);
 		// lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
 
 		// n_mem_tables_create(self->n_mem, brain_mem);
 
-		lu_brain_print_info(self);
+		//lu_brain_print_info(self);
 
 		return self;
 	}
 
 	void lu_brain_destroy(Lu_Brain self)
 	{
-		s_mem_destroy(self->s_mem);
+		lu_user_assert_void(self, "Lu_Brain is NULL");
+
+		arr_destroy(self->recs);
+		//s_mem_destroy(self->s_mem);
 		mem_destroy(self->brain_mem, g_mem_temp);
 	}
 

@@ -9,6 +9,7 @@
 #include "unity.h"
 #include "lib/_module.h"
 
+Mem_Debugger 		md;
 Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
@@ -54,6 +55,8 @@ lu_value			data_6[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
+	md = mem_debugger_create(g_mem_temp);
+
 	brain 				= lu_brain_create_from_predefined(200 * 1024, LU_BC_DEFAULT);
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
@@ -76,16 +79,21 @@ void setUp(void)
 	
 	TEST_ASSERT(brain->recs->count);
 
-	wave = lu_wave_create(brain);
+	// wave = lu_wave_create(brain);
 }
 
 void tearDown(void)
 {	
-	lu_wave_destroy(wave);
+	// lu_wave_destroy(wave);
 
 	lu_rec_destroy(rec_0);
 	lu_rec_destroy(rec_1);
 	lu_brain_destroy(brain);
+
+	mem_debugger_print(md);
+
+	TEST_ASSERT(mem_debugger_is_all_clear(md));
+    mem_debugger_destroy(md);
 }
 
 void test_lu_brain_basics(void) 
@@ -100,64 +108,63 @@ void test_lu_brain_basics(void)
 
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
-	TEST_ASSERT(brain->recs->count);
 
-	Lu_Wave wave_mem;
+	// Lu_Wave wave_mem;
 
-	Lu_Story story = lu_story_create(brain); 
+	// Lu_Story story = lu_story_create(brain); 
 
-		lu_story_push(story, rec_0, data_0);
+	// 	lu_story_push(story, rec_0, data_0);
 
-		lu_block_begin(story);
-		lu_story_push(story, rec_0, data_01);
-		lu_story_push(story, rec_1, data_2);
-		lu_block_end(story);
+	// 	lu_block_begin(story);
+	// 	lu_story_push(story, rec_0, data_01);
+	// 	lu_story_push(story, rec_1, data_2);
+	// 	lu_block_end(story);
 
-		lu_story_push(story, rec_0, data_3);
+	// 	lu_story_push(story, rec_0, data_3);
  
-		// Because we called save (or find or restore) - it automatically 
-		// reset number of available blocks inside story. If available lu_block count 
-		// was 13 before save (we filled 3 blocks above), after save avalable 
-		// lu_block count will be again 16 (this number is configurable)
+	// 	// Because we called save (or find or restore) - it automatically 
+	// 	// reset number of available blocks inside story. If available lu_block count 
+	// 	// was 13 before save (we filled 3 blocks above), after save avalable 
+	// 	// lu_block count will be again 16 (this number is configurable)
 
-		lu_block_begin(story);
-		lu_story_push(story, rec_0, data_4);
-		lu_story_push(story, rec_1, data_5);
-		lu_block_end(story);
+	// 	lu_block_begin(story);
+	// 	lu_story_push(story, rec_0, data_4);
+	// 	lu_story_push(story, rec_1, data_5);
+	// 	lu_block_end(story);
 
-	lu_wave_save_async(wave, story);
-	wave_mem = lu_wave_join(wave);
+	// lu_wave_save_async(wave, story);
+	// wave_mem = lu_wave_join(wave);
 
-	// Destroy all temporary info associated with story. 
-	// Does not destroy created related neurons.
+	// // Destroy all temporary info associated with story. 
+	// // Does not destroy created related neurons.
 
-	lu_story_destroy(story);  
+	// lu_story_destroy(story);  
 
-	/////////////////////////////////////////////////////////
-	// Find
+	// /////////////////////////////////////////////////////////
+	// // Find
 
-	story = lu_story_create(brain);
+	// story = lu_story_create(brain);
 
-			lu_story_push(story, rec_0, data_0);
+	// 		lu_story_push(story, rec_0, data_0);
 
-			lu_block_begin(story);
-			lu_story_push(story, rec_0, data_01);
-			lu_story_push(story, rec_1, data_2);
-			lu_block_end(story);
+	// 		lu_block_begin(story);
+	// 		lu_story_push(story, rec_0, data_01);
+	// 		lu_story_push(story, rec_1, data_2);
+	// 		lu_block_end(story);
 
-			lu_story_push(story, rec_0, data_3);
+	// 		lu_story_push(story, rec_0, data_3);
 
-	wave_mem = lu_wave_find(wave, story);
+	// wave_mem = lu_wave_find(wave, story);
 
-			lu_block_begin(story);
-			lu_story_push(story, rec_0, data_4);
-			lu_story_push(story, rec_1, data_5);
-			lu_block_end(story);
+	// 		lu_block_begin(story);
+	// 		lu_story_push(story, rec_0, data_4);
+	// 		lu_story_push(story, rec_1, data_5);
+	// 		lu_block_end(story);
 
-	lu_wave_find_async(wave, story);
-	wave_mem = lu_wave_join(wave);
+	// lu_wave_find_async(wave, story);
+	// wave_mem = lu_wave_join(wave);
 
-	lu_story_destroy(story); 
+	// lu_story_destroy(story); 
 
 	/////////////////////////////////////////////////////////
 	// Lu_Name
