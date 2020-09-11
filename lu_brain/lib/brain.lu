@@ -41,8 +41,6 @@
 
 		// n_mem_tables_create(self->n_mem, brain_mem);
 
-		lu_brain_print_info(self);
-
 		return self;
 	}
 

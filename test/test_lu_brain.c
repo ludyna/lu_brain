@@ -79,12 +79,12 @@ void setUp(void)
 	
 	TEST_ASSERT(brain->recs->count);
 
-	//wave = lu_wave_create(brain);
+	wave = lu_wave_create(brain);
 }
 
 void tearDown(void)
 {	
-	//lu_wave_destroy(wave);
+	lu_wave_destroy(wave);
 
 	lu_rec_destroy(rec_0);
 	lu_rec_destroy(rec_1);
@@ -108,6 +108,8 @@ void test_lu_brain_basics(void)
 
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
+
+	lu_brain_print_info(brain);
 
 	// Lu_Wave wave_mem;
 
