@@ -60,7 +60,7 @@
 	{
 		lu_assert(self);
 
-		lu_debug("\n======= Mem_Debugger =======");
+		lu_debug("\n=========> Mem_Debugger <=========");
 		lu_debug("\n%-12s %lu", "alloc_size:", self->alloc_size);
 		lu_debug("\n%-12s %lu", "freed_size:", self->freed_size);
 		lu_debug("\n%-12s %lu", "alloc_count:", self->alloc_count);
@@ -90,7 +90,7 @@
 			return;
 		} 
 
-		lu_debug("\nMEM DEBUGGER REGISTER ALLOC");
+		//lu_debug("\nMEM DEBUGGER REGISTER ALLOC");
 		lu_assert(imd);
 		lu_assert(size > 0);
 
@@ -149,9 +149,7 @@
 			return;
 		} 
 
-		lu_debug("\nMEM DEBUGGER REGISTER REALLOC");
-
-
+		lu_debug("\n!!! MEM DEBUGGER REGISTER REALLOC !!!");
 	}
 
 	void mem_debugger_register_free(	I_Mem_Debugger imd, lu_p_byte address, 
@@ -163,7 +161,7 @@
 			return;
 		} 
 
-		lu_debug("\nMEM DEBUGGER REGISTER FREE");
+		//lu_debug("\nMEM DEBUGGER REGISTER FREE");
 		lu_assert(imd);
 
 		Mem_Debugger self	= (Mem_Debugger) imd;
