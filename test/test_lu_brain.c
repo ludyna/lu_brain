@@ -93,7 +93,7 @@ void tearDown(void)
 	mem_debugger_print(md);
 
 	TEST_ASSERT(mem_debugger_is_all_clear(md));
-    mem_debugger_destroy(md);
+    mem_debugger_destroy(md, true);
 }
 
 void test_lu_brain_basics(void) 

@@ -19,7 +19,7 @@
 	};
 
 	Lu_Md_Item lu_md_item_create();
-	void lu_md_item_destroy(Lu_Md_Item);
+	void lu_md_item_destroy(Lu_Md_Item, lu_bool deallocate_address);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Debugger 
@@ -53,7 +53,7 @@
 	}
 
 	Mem_Debugger mem_debugger_create(Mem mem);
-	void mem_debugger_destroy(Mem_Debugger self);
+	void mem_debugger_destroy(Mem_Debugger self, lu_bool deallocate_leaks);
 
 
 	void mem_debugger_print(Mem_Debugger self);

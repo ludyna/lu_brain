@@ -31,7 +31,7 @@
 		return self;
 	}
 
-	void mem_debugger_destroy(Mem_Debugger self)
+	void mem_debugger_destroy(Mem_Debugger self, lu_bool deallocate_leaks)
 	{
 		lu_assert(self);
 		lu_assert(self->mem); // not attached?
@@ -48,7 +48,7 @@
 			{
 				item = item->prev;
 
-				lu_md_item_destroy(current);
+				lu_md_item_destroy(current, deallocate_leaks);
 			}
 		}
 
@@ -76,6 +76,11 @@
 			if (!item) continue;
 		
 			lu_debug("\n%7lu | %10lu | %-40s | %-40s", i, item->size, item->alloc_path, "");
+
+			while(item = item->prev)
+			{
+				lu_debug("\n%7lu | %10lu | %-40s | %-40s", i, item->size, item->alloc_path, "");
+			}
 		}
 
 		lu_debug("\n");
@@ -199,5 +204,5 @@
 		self->freed_size += item->size;
 		++self->freed_count;
 
-		lu_md_item_destroy(item);
+		lu_md_item_destroy(item, false);
 	}	

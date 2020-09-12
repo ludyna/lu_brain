@@ -72,7 +72,7 @@ int main()
 		lu_wave_save_with_name(wave, story, d->name);
 		lu_story_reset(story);
 
-		printf("\rTraining samples.. %lu trained.", i+1);
+		printf("\rTraining samples.. %lu trained.", i + 1);
 		fflush(stdout);
 	}
 	printf("\n");

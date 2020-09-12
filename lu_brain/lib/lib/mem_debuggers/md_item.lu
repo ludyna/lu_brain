@@ -22,7 +22,7 @@
 		return self;
 	}
 
-	void lu_md_item_destroy(Lu_Md_Item self)
+	void lu_md_item_destroy(Lu_Md_Item self, lu_bool deallocate_address)
 	{
 		lu_assert(self);
 
@@ -35,6 +35,9 @@
 
 		self->prev = NULL;
 		self->next = NULL;
+
+		if (deallocate_address && self->address)
+			free((lu_p_void) self->address);
 
 		free((lu_p_void) self);
 	}
