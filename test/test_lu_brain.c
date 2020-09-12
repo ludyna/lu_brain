@@ -111,62 +111,62 @@ void test_lu_brain_basics(void)
 
 	lu_brain_print_info(brain);
 
-	// Lu_Wave wave_mem;
+	Lu_Wave wave_mem;
 
-	// Lu_Story story = lu_story_create(brain); 
+	Lu_Story story = lu_story_create(brain); 
 
-	// 	lu_story_push(story, rec_0, data_0);
+		lu_story_push(story, rec_0, data_0);
 
-	// 	lu_block_begin(story);
-	// 	lu_story_push(story, rec_0, data_01);
-	// 	lu_story_push(story, rec_1, data_2);
-	// 	lu_block_end(story);
+		lu_block_begin(story);
+		lu_story_push(story, rec_0, data_01);
+		lu_story_push(story, rec_1, data_2);
+		lu_block_end(story);
 
-	// 	lu_story_push(story, rec_0, data_3);
+		lu_story_push(story, rec_0, data_3);
  
-	// 	// Because we called save (or find or restore) - it automatically 
-	// 	// reset number of available blocks inside story. If available lu_block count 
-	// 	// was 13 before save (we filled 3 blocks above), after save avalable 
-	// 	// lu_block count will be again 16 (this number is configurable)
+		// Because we called save (or find or restore) - it automatically 
+		// reset number of available blocks inside story. If available lu_block count 
+		// was 13 before save (we filled 3 blocks above), after save avalable 
+		// lu_block count will be again 16 (this number is configurable)
 
-	// 	lu_block_begin(story);
-	// 	lu_story_push(story, rec_0, data_4);
-	// 	lu_story_push(story, rec_1, data_5);
-	// 	lu_block_end(story);
+		lu_block_begin(story);
+		lu_story_push(story, rec_0, data_4);
+		lu_story_push(story, rec_1, data_5);
+		lu_block_end(story);
 
-	// lu_wave_save_async(wave, story);
-	// wave_mem = lu_wave_join(wave);
+	lu_wave_save_async(wave, story);
+	wave_mem = lu_wave_join(wave);
 
-	// // Destroy all temporary info associated with story. 
-	// // Does not destroy created related neurons.
+	// Destroy all temporary info associated with story. 
+	// Does not destroy created related neurons.
 
-	// lu_story_destroy(story);  
+	lu_story_destroy(story);  
 
 	// /////////////////////////////////////////////////////////
 	// // Find
 
-	// story = lu_story_create(brain);
+	story = lu_story_create(brain);
 
-	// 		lu_story_push(story, rec_0, data_0);
+			lu_story_push(story, rec_0, data_0);
 
-	// 		lu_block_begin(story);
-	// 		lu_story_push(story, rec_0, data_01);
-	// 		lu_story_push(story, rec_1, data_2);
-	// 		lu_block_end(story);
+			lu_block_begin(story);
+			lu_story_push(story, rec_0, data_01);
+			lu_story_push(story, rec_1, data_2);
+			lu_block_end(story);
 
-	// 		lu_story_push(story, rec_0, data_3);
+			lu_story_push(story, rec_0, data_3);
 
-	// wave_mem = lu_wave_find(wave, story);
+	wave_mem = lu_wave_find(wave, story);
 
-	// 		lu_block_begin(story);
-	// 		lu_story_push(story, rec_0, data_4);
-	// 		lu_story_push(story, rec_1, data_5);
-	// 		lu_block_end(story);
+			lu_block_begin(story);
+			lu_story_push(story, rec_0, data_4);
+			lu_story_push(story, rec_1, data_5);
+			lu_block_end(story);
 
-	// lu_wave_find_async(wave, story);
-	// wave_mem = lu_wave_join(wave);
+	lu_wave_find_async(wave, story);
+	wave_mem = lu_wave_join(wave);
 
-	// lu_story_destroy(story); 
+	lu_story_destroy(story); 
 
 	/////////////////////////////////////////////////////////
 	// Lu_Name

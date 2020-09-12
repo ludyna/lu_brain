@@ -15,6 +15,8 @@
 #include <unistd.h> 
 #include <pthread.h>
 
+#include "../vendor/CException.h"
+
 #include "types.h"
 #include "debug.h"
 #include "version.h"

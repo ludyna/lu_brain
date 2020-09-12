@@ -9,10 +9,6 @@
 
 #include "../lu_brain.h" 
 
-// Vendor
-
-#include "vendor/CException.h"
-
 // Basics
 
 #include "basic/_module.h"

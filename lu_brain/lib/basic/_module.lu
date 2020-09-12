@@ -2,6 +2,8 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+#include "../vendor/CException.c"
+
 #include "exception.lu"
 #include "debug.lu"
 #include "util.lu"
