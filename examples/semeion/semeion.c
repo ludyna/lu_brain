@@ -2,6 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+#include "../../lu_brain/lib/vendor/CException.c"
 #include "../../lu_brain/lib/_module.c"
 
 ///////////////////////////////////////////////////////////////////////////////
