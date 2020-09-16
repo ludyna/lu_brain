@@ -7,7 +7,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Execute with 
-// $  clear && printf '\e[3J'; rm ./build/semeion; gcc -g main.c -o ./build/semeion -lm; ./build/semeion
+// $  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Werror main.c -o ./build/semeion -lm; ./build/semeion
 
 int main()
 {

@@ -63,15 +63,10 @@
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(story, "Lu_Story is NULL");
 		lu_user_assert_void(self->brain, "Lu_Wave brain is NULL");
-
-		Lu_Brain brain 	= self->brain;
-		Arr recs 		= brain->recs;
-
+	
 		lu_size block_i;
 		lu_size rec_i;
 		Data data;
-
-		Lu_Rec rec; 
 		W_Rec w_rec;
 
 		for(block_i = 0; block_i < story->blocks_count; block_i++)

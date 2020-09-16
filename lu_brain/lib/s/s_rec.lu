@@ -186,7 +186,7 @@
 
 		for (lu_size i = 0; i < print_top_size; i++)
 		{
-			layer = layer = &layers[i];
+			layer = &layers[i];
 	 		s_layer_print_info(layer);
 		}
  		 

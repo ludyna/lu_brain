@@ -21,6 +21,8 @@
 		lu_size i;
 		for (i = 0; i < self->cells_size; i++)
 			self->steps[i] = (lu_value)i * self->step;
+
+		return self;
 	}
 
 	static void s_layer_conf_deinit(S_Layer_Conf self)

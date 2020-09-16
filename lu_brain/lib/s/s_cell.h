@@ -49,8 +49,6 @@
 		N_Cell*					n_p_cells;
 	};
 
-	static void s_cell_3_save(S_Cell_3 self, lu_value value);
-
 	// s_neu_inits.lu
 	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer, lu_size l_ix);
 	static S_Cell_2 s_cell_2_init(S_Cell_2 self, enum s_cell_type type, S_Layer layer, lu_size l_ix, lu_size x, lu_size y);

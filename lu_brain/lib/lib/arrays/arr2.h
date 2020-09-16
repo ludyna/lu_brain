@@ -67,8 +67,6 @@
 
 	static inline void arr2_set_internal(Arr2 self, lu_size x, lu_size y, lu_p_void value)
 	{
-		lu_size index = (y * self->width) + x;
-
 		arr_set(self->items, (y * self->width) + x, value);
 	}
 
@@ -80,8 +78,6 @@
 
 	static inline void arr2_set_internal_debug(Arr2 self, lu_size x, lu_size y, lu_p_void value, const char* func, const char* file, int line)
 	{
-		lu_size index = (y * self->width) + x;
-
 		arr_set_internal_debug(self->items, (y * self->width) + x, value, func, file, line);
 	}
 

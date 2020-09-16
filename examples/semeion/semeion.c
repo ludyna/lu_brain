@@ -216,7 +216,6 @@
 
 		size_t i;
 		Smn_Group group;
-		Smn_Digit digit;
 		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
 		{
 			group = &smn_groups[i];

@@ -106,6 +106,8 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Save 
 
+	//lu_p_byte ttt = mem_temp_alloc(10);
+
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 

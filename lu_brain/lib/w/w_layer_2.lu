@@ -8,7 +8,7 @@
 
 	static W_Layer_2 w_layer_2_create(S_Layer s_layer)
 	{
-
+		return NULL;
 	}
 
 	static void w_layer_2_destroy(W_Layer_2 self)

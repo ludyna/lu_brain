@@ -22,7 +22,10 @@
 
 		self->mem_table = mem_table;
 		self->max_size 	= limit_size;
+
+		return self;
 	}
+	
 	Lu_Table_List lu_table_list_create(Mem, lu_size);
 	void lu_table_list_destroy(Lu_Table_List self);
 

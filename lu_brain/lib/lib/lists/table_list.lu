@@ -25,6 +25,8 @@
 		lu_assert(self->mem_table);
 
 		self->max_size 		= max_size_in_items;
+
+		return self;
 	}
 
 

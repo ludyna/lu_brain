@@ -44,7 +44,7 @@
 		{
 			item = self->items[i];
 
-			while(current = item)
+			while((current = item))
 			{
 				item = item->prev;
 
@@ -77,7 +77,7 @@
 		
 			lu_debug("\n%7lu | %10lu | %-40s | %-40s", i, item->size, item->alloc_path, "");
 
-			while(item = item->prev)
+			while((item = item->prev))
 			{
 				lu_debug("\n%7lu | %10lu | %-40s | %-40s", i, item->size, item->alloc_path, "");
 			}

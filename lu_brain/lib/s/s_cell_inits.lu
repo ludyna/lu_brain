@@ -55,6 +55,8 @@
 		
 		self->p_conf 		= &rec->p_conf;
 		self->n_p_cells 	= (N_Cell*) mem_temp_alloc(sizeof(N_Cell) * self->p_conf->cells_size);
+
+		return self;
 	}
 
 	static void s_cell_3_deinit(S_Cell_3 self)
