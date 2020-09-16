@@ -7,7 +7,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Execute with 
-// $  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Werror main.c -o ./build/semeion -lm; ./build/semeion
+// $  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Werror -Wno-unused-function main.c -o ./build/semeion -lm; ./build/semeion   
 
 int main()
 {
