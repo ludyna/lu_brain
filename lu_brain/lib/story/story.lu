@@ -93,7 +93,7 @@
 	}
 
 	void lu_story_push(Lu_Story self, Lu_Rec rec, lu_value* values)
-	{
+	{ 
 		lu_user_assert_void(self, "Lu_Story should not be NULL"); 
 		lu_user_assert_void(rec, "Lu_Rec should not be NULL"); 
 		lu_user_assert_void(values, "values should not be NULL");
