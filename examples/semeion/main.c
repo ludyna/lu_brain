@@ -7,7 +7,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Execute with 
-// $  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Werror -Wno-unused-function main.c -o ./build/semeion -lm; ./build/semeion   
+// $  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function main.c -o ./build/semeion -lm; ./build/semeion   
 
 int main()
 {
@@ -40,18 +40,23 @@ int main()
 		/*memory in bytes*/ 	1024 * 1024, 
 		/*predefined config*/ 	LU_BC_DEFAULT
 	);  
+	lu_assert(brain);
 	
 	Lu_Rec image_rec 			= lu_rec_create_from_predefined(
 		/*belongs to*/			brain, 
 		/*width*/				16, 
 		/*height*/				16, 
-		/*predefined config*/ 	LU_RC_MONOCHROME1_IMAGE
+		/*predefined config */ 	LU_RC_MONOCHROME1_IMAGE
 	);	
+	lu_assert(image_rec);
 
 	Lu_Wave wave 				= lu_wave_create(brain);
-	Lu_Story story 				= lu_story_create(brain);
+	lu_assert(wave);
 
-	// Lu_Neu name 				= NULL;
+	Lu_Story story 				= lu_story_create(brain);
+	lu_assert(story);
+
+	Lu_Neu name 				= NULL;
  
 	// Show random digit
 
@@ -61,22 +66,22 @@ int main()
 
 	// Training samples
 
-	// size_t i;
-	// Smn_Digit d;
+	size_t i;
+	Smn_Digit d;
 	
 	printf("\n");
 	printf("\rTraining samples..");
-	// for (i = 0; i < smn_training_samples_count; i++)
-	// {
-	// 	d = smn_training_samples[i];
+	for (i = 0; i < smn_training_samples_count; i++)
+	{
+		d = smn_training_samples[i];
 
-	// 	lu_story_push(story, image_rec, d->pixels);
-	// 	lu_wave_save_with_name(wave, story, d->name);
-	// 	lu_story_reset(story);
+		lu_story_push(story, image_rec, d->pixels);
+		lu_wave_save_with_name(wave, story, d->name);
+		lu_story_reset(story);
 
-	// 	printf("\rTraining samples.. %lu trained.", i + 1);
-	// 	fflush(stdout);
-	// }
+		printf("\rTraining samples.. %lu trained.", i + 1);
+		fflush(stdout);
+	}
 	printf("\n");
 
 	// Testing samples
@@ -113,8 +118,8 @@ int main()
 
 	// Destroy brain and related  
 
-	// lu_story_destroy(story);
-	// lu_wave_destroy(wave);
+	lu_story_destroy(story);
+	lu_wave_destroy(wave);
 	lu_rec_destroy(image_rec);
 	lu_brain_destroy(brain);
 
