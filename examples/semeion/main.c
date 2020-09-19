@@ -90,24 +90,24 @@ int main()
 	float success_count 	= 0;
 
 	printf("\rTesting samples.. ");
-	// for (i = 0; i < smn_test_samples_count; i++)
-	// {
-	// 	d = smn_test_samples[i];
-	// 	lu_story_push(story, image_rec, d->pixels);
-	// 	wave = lu_wave_find(wave, story);
+	for (i = 0; i < smn_test_samples_count; i++)
+	{
+		d = smn_test_samples[i];
+		lu_story_push(story, image_rec, d->pixels);
+		wave = lu_wave_find(wave, story);
 
-	// 	name = lu_wave_top_name_get(wave);
+		name = lu_wave_top_name_get(wave);
 
-	// 	if (name && lu_neu_name_get(name) == d->name)
-	// 		++success_count;
-	// 	else 
-	// 		++failed_count;
+		if (name && lu_neu_name_get(name) == d->name)
+			++success_count;
+		else 
+			++failed_count;
 
-	// 	lu_story_reset(story);
+		lu_story_reset(story);
 
-	// 	printf("\rTesting samples.. %lu tested.", i + 1);
-	// 	fflush(stdout);
-	// }
+		printf("\rTesting samples.. %lu tested.", i + 1);
+		fflush(stdout);
+	}
 	printf("\n");
 
 	printf("\nReport:");
