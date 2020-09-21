@@ -123,9 +123,9 @@
  		data_init(data, rec->config.width, rec->config.height, rec->config.depth, values);
 
  		self->blocks_count = self->y + 1;
-	} 
+	}
 
-		static Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
+	static Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
 
