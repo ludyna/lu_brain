@@ -72,7 +72,7 @@ int main()
 	printf("\n");
 	printf("\rTraining samples..");
 	//for (i = 0; i < smn_training_samples_count; i++)
-	for (i = 0; i < 3; i++)
+	for (i = 0; i < 1; i++)
 	{
 		d = smn_training_samples[i];
 
