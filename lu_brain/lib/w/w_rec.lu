@@ -20,14 +20,14 @@
 
 		lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
 
-		S_Layer s_layer 	= &s_rec->data_layers[0];
+		// S_Layer s_layer 	= &s_rec->data_layers[0];
 
-		self->layer_0  	= w_layer_2_create(s_layer);
+		// self->layer_0  	= w_layer_2_create(s_layer);
 
-		s_layer 			= &s_rec->data_layers[1];
+		// s_layer 			= &s_rec->data_layers[1];
 
-		self->layer_1 		= w_layer_create(s_layer);
-		self->layer_2 		= w_layer_create(s_layer);
+		// self->layer_1 		= w_layer_create(s_layer);
+		// self->layer_2 		= w_layer_create(s_layer);
 
 		return self;
 	}

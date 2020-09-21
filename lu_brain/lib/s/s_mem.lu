@@ -49,7 +49,8 @@
  		for(i = 0; i < arr_count(self->recs); i++)
  		{
  			rec = (S_Rec) arr_get(self->recs, i);
- 			s_rec_print_info(rec);
+ 			if (rec) 
+ 				s_rec_print_info(rec);
  		}
 	}
 

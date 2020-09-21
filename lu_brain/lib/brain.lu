@@ -66,11 +66,11 @@
 		lu_debug("\nMemory allocated (bytes): %lu", mem_perm_allocated(brain_mem));
 		lu_debug("\nMemory used (bytes): %lu", mem_perm_used(brain_mem));
 
-		if (self->n_mem)
- 			n_mem_print_info(self->n_mem);
-
  		if (self->s_mem)
  			s_mem_print_info(self->s_mem);
+
+ 		// if (self->n_mem)
+ 		// 		n_mem_print_info(self->n_mem);
 	}
 
 	struct lu_brain_config lu_brain_config_get(Lu_Brain self)

@@ -57,6 +57,8 @@ int main()
 	lu_assert(story);
 
 	Lu_Neu name 				= NULL;
+
+	lu_brain_print_info(brain);
  
 	// Show random digit
 
