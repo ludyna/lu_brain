@@ -79,7 +79,8 @@ int main()
 		d = smn_training_samples[i];
 
 		lu_story_push(story, image_rec, d->pixels);
-		lu_wave_save_with_name(wave, story, d->name);
+		lu_wave_save_with_name(wave, story, d->name); 
+		lu_wave_reset(wave);
 		lu_story_reset(story);
 
 		printf("\rTraining samples.. %lu trained.", i + 1);
@@ -107,6 +108,7 @@ int main()
 		else 
 			++failed_count;
 
+		lu_wave_reset(wave);
 		lu_story_reset(story);
 
 		printf("\rTesting samples.. %lu tested.", i + 1);

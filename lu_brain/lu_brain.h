@@ -98,6 +98,12 @@
 
 	Lu_Wave lu_wave_create(Lu_Brain brain);
 	void lu_wave_destroy(Lu_Wave); 
+	Lu_Wave lu_wave_reset(Lu_Wave);
+
+	// Lu_Wave Config 
+
+	Lu_Wave lu_wave_config_set(Lu_Wave, struct lu_wave_config);
+	Lu_Wave lu_wave_predefined_config_set(Lu_Wave, lu_size id);
 
 	// Lu_Wave Sync
 

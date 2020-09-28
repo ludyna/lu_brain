@@ -21,10 +21,27 @@
 
 	void lu_wave_destroy(Lu_Wave self)
 	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
 		w_mem_deinit(&self->super);
 		mem_temp_free((lu_p_byte) self);
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Other
+
+ 	Lu_Wave lu_wave_config_set(Lu_Wave self, struct lu_wave_config config)
+ 	{
+ 		lu_user_assert(self, "Lu_Wave is NULL");
+
+ 		return self;
+ 	}
+
+	Lu_Wave lu_wave_predefined_config_set(Lu_Wave self, lu_size id)
+	{
+		lu_user_assert(self, "Lu_Wave is NULL");
+
+		return self;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Other
@@ -39,8 +56,12 @@
 		return NULL;
 	}
 
-	static Lu_Wave wave_prepare(Lu_Wave self)
+	Lu_Wave lu_wave_reset(Lu_Wave self)
 	{
-		// prepare and reset
+		lu_user_assert(self, "Lu_Wave is NULL");
+		
+		w_mem_reset(&self->super);
+
 		return self;
 	}
+

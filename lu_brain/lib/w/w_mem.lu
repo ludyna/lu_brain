@@ -57,6 +57,11 @@
 		}
 	}
 
+	static void w_mem_reset(W_Mem self)
+	{
+
+	}
+
 	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id)
 	{
 		return (W_Rec) arr_get(self->recs, rec_id);

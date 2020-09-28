@@ -15,7 +15,7 @@
 		story = lu_story_prepare(story);
 		lu_user_assert(story, "Lu_Story preparation failed");
 
-		self = wave_prepare(self);
+		self = lu_wave_reset(self);
 		lu_user_assert(self, "Lu_Wave preparation failed");
 
 		w_mem_save_async((W_Mem) self, story);
@@ -48,7 +48,7 @@
 		story = lu_story_prepare(story); 
 		lu_user_assert_void(story, "Lu_Story preparation failed");
 
-		self = wave_prepare(self);
+		self = lu_wave_reset(self);
 		lu_user_assert_void(self, "Lu_Wave preparation failed");
 
 		w_mem_save_async((W_Mem) self, story);

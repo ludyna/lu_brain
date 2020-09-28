@@ -117,6 +117,8 @@
 	// w_mem.lu
 	static W_Mem w_mem_init(W_Mem self, Lu_Brain brain);
 	static void w_mem_deinit(W_Mem self);
+	static void w_mem_reset(W_Mem self);
+
 	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id);
 
 	static void w_mem_save_async(W_Mem self, Lu_Story story);
@@ -140,7 +142,6 @@
 	Lu_Wave lu_wave_create(Lu_Brain brain);
 	void lu_wave_destroy(Lu_Wave); 
 	Lu_Wave lu_wave_join(Lu_Wave);
-	static Lu_Wave wave_prepare(Lu_Wave);
 
 	// wave_save.lu
 	Lu_Wave lu_wave_save(Lu_Wave, Lu_Story); 
