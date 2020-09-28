@@ -1,0 +1,46 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// Init, create and destroy
+
+	Lu_Wave lu_wave_create(Lu_Brain brain)
+	{
+		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(brain->s_mem, "S_Mem is NULL");
+		lu_user_assert(brain->n_mem, "N_Mem is NULL");
+
+		Lu_Wave self 		= (Lu_Wave) mem_temp_alloc(sizeof(struct lu_wave));
+		lu_user_assert(self, "Cannot allocate Lu_Wave");
+
+		w_mem_init((W_Mem) self, brain);
+
+		return self;
+	}
+
+	void lu_wave_destroy(Lu_Wave self)
+	{
+		w_mem_deinit(&self->super);
+		mem_temp_free((lu_p_byte) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Other
+
+	Lu_Wave lu_wave_join(Lu_Wave self)
+	{
+		return NULL;
+	}
+
+	Lu_Neu lu_wave_name_find_or_create(Lu_Wave self, lu_size name)
+	{
+		return NULL;
+	}
+
+	static Lu_Wave wave_prepare(Lu_Wave self)
+	{
+		// prepare and reset
+		return self;
+	}

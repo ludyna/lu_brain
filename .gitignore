@@ -16,5 +16,5 @@ notes.md
 
 /examples/semeion/build
 
-/lu_brain/lib/n
-/lu_brain/lib/w
+#/lu_brain/lib/n
+#/lu_brain/lib/w

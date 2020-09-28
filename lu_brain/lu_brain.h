@@ -130,6 +130,7 @@
 
 	Lu_Neu lu_wave_top_name_get(Lu_Wave);
 	Lu_Neu lu_wave_top_neu_get(Lu_Wave);
+
 	Lu_Neu lu_wave_name_find_or_create(Lu_Wave, lu_size);
 
 #endif // _LU_BRAIN_API_H

@@ -1,8 +1,6 @@
 /**
 	Copyright © 2020 Oleh Ihorovych Novosad (Novossaad)
 */
-#ifndef _LU_RAND_H
-#define _LU_RAND_H
 
 #define LU_RAND_BITS_SIZE 2048
 
@@ -15,4 +13,4 @@ static inline lu_bool toss_coin()
 	return g_rand_bits[g_rand_bits_indx++]; // rand()%2; 
 }	
 
-#endif // _LU_RAND_H
+
