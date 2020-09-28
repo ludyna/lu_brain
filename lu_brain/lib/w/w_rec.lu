@@ -20,21 +20,23 @@
 
 		lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
 
-		// S_Layer s_layer 	= &s_rec->data_layers[0];
+		S_Layer s_layer 	= &s_rec->data_layers[0];
 
-		// self->layer_0  	= w_layer_2_create(s_layer);
+		self->layer_0  		= w_layer_2_create(s_layer);
 
-		// s_layer 			= &s_rec->data_layers[1];
+		s_layer 			= &s_rec->data_layers[1];
 
-		// self->layer_1 		= w_layer_create(s_layer);
-		// self->layer_2 		= w_layer_create(s_layer);
+		self->layer_1 		= w_layer_create(s_layer);
+		self->layer_2 		= w_layer_create(s_layer);
 
 		return self;
 	}
 
 	static void w_rec_destroy(W_Rec self)
 	{
-		lu_user_assert_void(self, "W_Rec is NULL");
+		lu_assert(self);
+
+		w_layer_2_destroy(self->layer_0);
 		mem_temp_free((lu_p_byte) self);
 	}
 
@@ -46,7 +48,7 @@
 		lu_size 	x;
 		lu_size 	y;
 		lu_size 	z;
-		//lu_value 	v;
+		lu_value 	v;
 
 		W_Layer_2 	layer_0 = self->layer_0;
 		lu_user_assert_void(layer_0, "W_Layer_2 is NULL");
@@ -56,9 +58,8 @@
 			{
 				for(z = 0; z < data->d; z++)
 				{
-					//v = data_get(data, x, y, z);
+					v = data_get(data, x, y, z);
 
-				
 					// lu_debug("%f", v);
 
 					//w_cell_3 = (W_Cell_3) w_layer_cell_get(self->layer_0, x, y, z);

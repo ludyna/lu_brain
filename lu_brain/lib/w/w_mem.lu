@@ -57,7 +57,6 @@
 		}
 	}
 
-
 	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id)
 	{
 		return (W_Rec) arr_get(self->recs, rec_id);
@@ -87,8 +86,8 @@
 				// data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
 				// lu_debug("] SAVING ...");
 
-				// if (data->values) 
-				// 	w_rec_data_save(w_rec, data, block_i);
+				if (data->values) 
+					w_rec_data_save(w_rec, data, block_i);
 			}
 		}
 	}

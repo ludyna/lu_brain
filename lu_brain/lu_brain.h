@@ -24,6 +24,7 @@
 	// Wave 
 	
 	typedef struct lu_neu* 				Lu_Neu;
+	typedef struct lu_wave_config*		Lu_Wave_Config;
 	typedef struct lu_wave* 			Lu_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
