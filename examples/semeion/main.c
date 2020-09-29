@@ -74,8 +74,6 @@ int main()
 	printf("\n");
 	printf("\rTraining samples..");
 
-	lu_wave_config_predefined_set(wave, LU_WC_SAVE_DEFAULT);
-
 	//for (i = 0; i < smn_training_samples_count; i++)
 	for (i = 0; i < 1; i++)
 	{
@@ -96,8 +94,6 @@ int main()
 	float success_count 	= 0;
 
 	printf("\rTesting samples.. ");
-
-	lu_wave_config_predefined_set(wave, LU_WC_FIND_FULL_CONTRAST);
 
 	//for (i = 0; i < smn_test_samples_count; i++)
 	for (i = 0; i < 1; i++)
