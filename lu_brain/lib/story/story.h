@@ -15,7 +15,7 @@
 
 		lu_size 			datum_w;  	// recs
 		lu_size 			datum_h;	// time
-		struct data* 		datum;
+		struct lu_data* 	datum;
 
 		Lu_List 				blocks;
 
@@ -25,6 +25,6 @@
 		lu_size 			blocks_count;
 	};
 
-	static inline Data lu_story_data_get(Lu_Story self, lu_size rec_i, lu_size block_i) { return &self->datum[block_i * self->datum_w + rec_i]; }
+	static inline Lu_Data lu_story_data_get(Lu_Story self, lu_size rec_i, lu_size block_i) { return &self->datum[block_i * self->datum_w + rec_i]; }
 	static Lu_Story lu_story_validate(Lu_Story);
 	static Lu_Story lu_story_prepare(Lu_Story);

@@ -75,8 +75,10 @@
 	
 		lu_size block_i;
 		lu_size rec_i;
-		Data data;
+		Lu_Data data;
 		W_Rec w_rec;
+		
+		w_mem_reset(self);
 
 		for(block_i = 0; block_i < story->blocks_count; block_i++)
 		{

@@ -24,7 +24,7 @@
 		lu_size w = self->datum_w;
 		lu_size h = self->datum_h;
 
-		self->datum 	= (struct data*) mem_alloc(g_mem_temp, sizeof(struct data) * w * h);
+		self->datum 	= (struct lu_data*) mem_alloc(g_mem_temp, sizeof(struct lu_data) * w * h);
 		lu_user_assert(self->datum, "Cannot allocate space for data");
 
 		self->blocks 	= lu_list_create(g_mem_temp);
@@ -32,7 +32,7 @@
 		lu_size rec_i;
 		lu_size block_i;
 		Lu_Rec rec;
-		Data data;
+		Lu_Data data;
 
 		for (rec_i = 0; rec_i < w; rec_i++)
 		{
@@ -76,7 +76,7 @@
 
 		lu_size block_i;
 		lu_size rec_i;
-		Data data;
+		Lu_Data data;
 
 		for(block_i = 0; block_i < self->blocks_count; block_i++)
 			for(rec_i = 0; rec_i < self->datum_w; rec_i++)
@@ -108,7 +108,7 @@
 			self->start_block_on_next_data = false;
 		}
 	
-		Data data = lu_story_data_get(self, rec->id, self->y);
+		Lu_Data data = lu_story_data_get(self, rec->id, self->y);
 		lu_p_value v = data->values;
 		if (v) 
 			// new input to the same rec and channel advances story
@@ -125,12 +125,12 @@
  		self->blocks_count = self->y + 1;
 	}
 
-	static Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
+	static Lu_Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
 
 		lu_size block_i;
-		Data data;
+		Lu_Data data;
 
 		for(block_i = 0; block_i < self->blocks_count; block_i++)
 		{
@@ -160,8 +160,8 @@
 
 		lu_size block_i;
 		lu_size rec_i;
-		Data d1;
-		Data d2;
+		Lu_Data d1;
+		Lu_Data d2;
 
 		for(rec_i = 0; rec_i < self->datum_w; rec_i++)
 			for(block_i = 0; block_i < self->blocks_count; block_i++)

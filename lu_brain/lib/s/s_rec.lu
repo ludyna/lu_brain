@@ -34,7 +34,7 @@
 		s_layer_conf_init(&self->p_conf, rec->config.v_min, rec->config.v_max, rec->config.p_neu_size, rec->config.p_nsc);
 
 		///////////////////////////////////////
-		// Allocate Data Layers
+		// Allocate Lu_Data Layers
 
 		self->data_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
 		

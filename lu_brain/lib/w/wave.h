@@ -41,7 +41,7 @@
 		lu_size 				h;
 		lu_size 				d;
 
-		// istoriya prev and next
+		 
 	};
 
 	static W_Layer_2 w_layer_2_create(S_Layer s_layer);
@@ -74,7 +74,7 @@
 	// w_rec.lu
 	static W_Rec w_rec_create(W_Mem mem, S_Rec s_rec);
 	static void w_rec_destroy(W_Rec self);
- 	static void w_rec_data_save(W_Rec self, Data data, lu_size block_i);
+ 	static void w_rec_data_save(W_Rec self, Lu_Data data, lu_size block_i);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config

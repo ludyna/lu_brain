@@ -238,7 +238,7 @@ void test_lu_story_2(void)
 void test_lu_story_data(void)
 {
 	lu_p_value d;
-	Data data;
+	Lu_Data data;
 	Lu_Story story = lu_story_create(brain, 0); 
 
  		TEST_ASSERT(story->y == 0);

@@ -40,10 +40,10 @@
 		mem_temp_free((lu_p_byte) self);
 	}
 
-	static void w_rec_data_save(W_Rec self, Data data, lu_size block_i)
+	static void w_rec_data_save(W_Rec self, Lu_Data data, lu_size block_i)
 	{
 		lu_user_assert_void(self, "W_Rec is NULL");
-		lu_user_assert_void(data, "Data is NULL");
+		lu_user_assert_void(data, "Lu_Data is NULL");
 
 		lu_size 	x;
 		lu_size 	y;
