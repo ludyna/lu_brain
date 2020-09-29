@@ -76,26 +76,10 @@
 	static void w_rec_destroy(W_Rec self);
  	static void w_rec_data_save(W_Rec self, Data data, lu_size block_i);
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Wave_Config
-
-	struct lu_wave_config {
-		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
-		lu_value 				fire_breakpoint;
-	};
-
-	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Rec_Config predefined 
-
-	enum lu_wc_predefined_type {
-		LU_WC_SAVE_DEFAULT = 0,
-		LU_WC_FIND_FULL_CONTRAST, 
-		LU_WC_FIND_FULL_COLOR,
-		LU_WC_END			
-	};
+// Lu_Rec_Config Predefined 
 
 	extern struct lu_wave_config lu_g_wc_predefined[LU_WC_END];
 

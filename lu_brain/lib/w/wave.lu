@@ -36,7 +36,7 @@
  		return self;
  	}
 
-	Lu_Wave lu_wave_predefined_config_set(Lu_Wave self, lu_size id)
+	Lu_Wave lu_wave_config_predefined_set(Lu_Wave self, lu_size id)
 	{
 		lu_user_assert(self, "Lu_Wave is NULL");
 

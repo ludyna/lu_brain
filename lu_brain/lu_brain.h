@@ -30,13 +30,30 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain 
 
-	// Lu_Brain_Config predefined 
+	// Lu_Brain_Config
+	
+	struct lu_brain_config {
+		lu_size 		id;					// optional, to identify brain by unique id
 
-	Lu_Brain_Config lu_brain_config_predefined_get(lu_size id);
+		lu_size 		size_in_bytes;		// brain size in bytes (not includes recs, stories or waves)
+											// optimal size depends on number of recs, rec sizes, 
+											// story sizes and amount of data to remember
 
-	// Lu_Brain_Config 
+		lu_size 		recs_size;			// initial maximum number of recs 
+
+		lu_size 		names_size; 		// initial maximum number of names
+	};
 
 	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);
+
+	// Lu_Brain_Config predefined 
+
+	enum lu_bc_predefined_type {
+		LU_BC_DEFAULT 	= 0,
+		LU_BC_END 				
+	};
+
+	Lu_Brain_Config lu_brain_config_predefined_get(lu_size id);
 
 	// Lu_Brain 
 
@@ -52,13 +69,40 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Rec  
 
-	// Lu_Rec_Config predefined 
-
-	Lu_Rec_Config lu_rec_config_predefined_get(lu_size id);
-
 	// Lu_Rec_Config 
 
+	struct lu_rec_config {
+		lu_size 		width;
+		lu_size 		height;
+		lu_size 		depth;
+
+		lu_size 		max_blocks_size;
+		lu_size 		hold_blocks_size;
+
+		lu_value 		v_min;
+		lu_value 		v_max;
+		lu_size			v_neu_size;
+		lu_size 		v_nsc;
+
+		lu_size 		p_neu_size;
+		lu_size 		p_nsc;  	// nei sim count	
+	};
+
 	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self);
+
+	// Lu_Rec_Config predefined 
+
+	enum lu_rc_predefined_type {
+		LU_RC_MONOCHROME1_IMAGE = 0,
+		LU_RC_MONOCHROME8_IMAGE,
+		LU_RC_RBG8_IMAGE,
+		LU_RC_RBG16_IMAGE, 
+		LU_RC_RBG32_IMAGE,
+		LU_RC_TEST1,
+		LU_RC_END 				
+	};
+
+	Lu_Rec_Config lu_rec_config_predefined_get(lu_size id);
 
 	// Lu_Rec 
 
@@ -100,10 +144,27 @@
 	void lu_wave_destroy(Lu_Wave); 
 	Lu_Wave lu_wave_reset(Lu_Wave);
 
-	// Lu_Wave Config 
+	// Lu_Wave_Config 
+
+	struct lu_wave_config {
+		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
+		lu_value 				fire_breakpoint;
+	};
+
+	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);
 
 	Lu_Wave lu_wave_config_set(Lu_Wave, struct lu_wave_config);
-	Lu_Wave lu_wave_predefined_config_set(Lu_Wave, lu_size id);
+
+	// Lu_Wave_Config Predefined
+
+	enum lu_wc_predefined_type {
+		LU_WC_SAVE_DEFAULT = 0,
+		LU_WC_FIND_FULL_CONTRAST, 
+		LU_WC_FIND_FULL_COLOR,
+		LU_WC_END			
+	};
+	
+	Lu_Wave lu_wave_config_predefined_set(Lu_Wave, lu_size id);
 
 	// Lu_Wave Sync
 
