@@ -17,7 +17,7 @@
 		lu_size 			datum_h;	// time
 		struct lu_data* 	datum;
 
-		Lu_List 				blocks;
+		Lu_List 			blocks;
 
 		// Resetable
 		lu_size				y;  

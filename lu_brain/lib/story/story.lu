@@ -45,7 +45,7 @@
 
 				lu_user_assert(data, "Something went wrong");
 
-				data_init(data, 0, 0, rec->config.depth, NULL);
+				lu_data_init(data, 0, 0, rec->config.depth, NULL);
 			}
 		}
 
@@ -84,7 +84,7 @@
 				data = lu_story_data_get(self, rec_i, block_i);
 				lu_user_assert_void(data, "Something went wrong");
 
-				data_reset(data);
+				lu_data_reset(data);
 			}
 
 		self->y = 0;
@@ -120,7 +120,7 @@
  		); 
  
  		data = lu_story_data_get(self, rec->id, self->y);
- 		data_init(data, rec->config.width, rec->config.height, rec->config.depth, values);
+ 		lu_data_init(data, rec->config.width, rec->config.height, rec->config.depth, values);
 
  		self->blocks_count = self->y + 1;
 	}
@@ -177,12 +177,12 @@
 				{
 					d2 = story_first_non_null_data(self, rec_i);
 					if (d2 == NULL) return NULL; 					// nema danyh dlia rec_i vzahali
-					data_shallow_copy(d1, d2);
+					lu_data_shallow_copy(d1, d2);
 				}
 				else
 				{
 					d2 = lu_story_data_get(self, rec_i, block_i - 1);
-					data_shallow_copy(d1, d2);
+					lu_data_shallow_copy(d1, d2);
 				}
 			}
 

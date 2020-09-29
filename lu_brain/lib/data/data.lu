@@ -2,12 +2,12 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
-	static void data_debug(Lu_Data d)
+	static void lu_data_debug(Lu_Data d)
 	{
 
 	}
 
-	static Lu_Data data_deep_copy(Lu_Data dest, Lu_Data src)
+	static Lu_Data lu_data_deep_copy(Lu_Data dest, Lu_Data src)
 	{
 
 		return dest;
