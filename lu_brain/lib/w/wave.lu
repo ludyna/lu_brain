@@ -36,7 +36,7 @@
  		Lu_Wave_Config p_config = lu_wave_config_validate(&config);
  		lu_user_assert(p_config, "Lu_Wave_Config validation failed");
 
- 		self->config = *p_config;
+ 		self->super.config = *p_config;
 
  		return self;
  	}
@@ -48,7 +48,7 @@
 		Lu_Wave_Config p_config = lu_wave_config_predefined_get(id);
 		lu_user_assert(p_config, "Cannot get Lu_Wave_Config");
 
-		lu_wave_config_set(*p_config);
+		lu_wave_config_set(self, *p_config);
 
 		return self;
 	}
