@@ -41,6 +41,13 @@
  		return self;
  	}
 
+ 	struct lu_wave_config lu_wave_config_get(Lu_Wave self)
+ 	{
+ 		lu_assert(self);
+
+ 		return self->super.config;
+ 	}
+
 	Lu_Wave lu_wave_config_predefined_set(Lu_Wave self, lu_size id)
 	{
 		lu_user_assert(self, "Lu_Wave is NULL");

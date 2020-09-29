@@ -76,7 +76,11 @@
 	static void w_rec_destroy(W_Rec self);
  	static void w_rec_data_save(W_Rec self, Data data, lu_size block_i);
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Rec_Config
 
+ 	static Lu_Wave_Config lu_wave_config_init(Lu_Wave_Config self);
+ 	static inline lu_bool lu_wave_config_is_set(Lu_Wave_Config self) { return self->flags != 0; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config Predefined 

@@ -147,6 +147,7 @@
 	// Lu_Wave_Config 
 
 	struct lu_wave_config {
+		lu_flags 				flags;						// 0 oznachaye not set
 		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
 		lu_value 				fire_breakpoint;
 	};
@@ -154,7 +155,8 @@
 	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);
 
 	Lu_Wave lu_wave_config_set(Lu_Wave, struct lu_wave_config);
-
+	struct lu_wave_config lu_wave_config_get(Lu_Wave);
+	
 	// Lu_Wave_Config Predefined
 
 	enum lu_wc_predefined_type {
