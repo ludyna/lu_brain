@@ -5,13 +5,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-
-	static W_Layer_2 w_layer_2_create(S_Layer s_layer)
+	static W_Layer_2 w_layer_2_init(W_Layer_2 self, W_Rec w_rec)
 	{
-		return NULL;
+		lu_assert(self);
+		lu_assert(w_rec);
+
+		self->w 	= w_rec->config.width;
+		self->h		= w_rec->config.height;
+		self->d 	= w_rec->config.depth;
+		
+		self->datum = (struct lu_data*) mem_temp_alloc(sizeof(struct lu_data) * w_rec->config.hold_blocks_size);
+
+		w_layer_init(&self->super, w_rec);
+
+		return self;
 	}
 
-	static void w_layer_2_destroy(W_Layer_2 self)
+	static void w_layer_2_deinit(W_Layer_2 self)
 	{
+		lu_assert(self);
 
+		w_layer_deinit(&self->super);
+
+		mem_temp_free((lu_p_byte) self->datum);
 	}

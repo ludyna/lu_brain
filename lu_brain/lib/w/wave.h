@@ -24,28 +24,33 @@
 // W_Layer
 
 	struct w_layer {
+		// vlasnyk
+		W_Rec 					rec;
+
 		lu_size 				cells_size;
 		W_Cell* 				cells;
 	};
 
-	static W_Layer w_layer_create(S_Layer s_layer);
-	static void w_layer_destroy(W_Layer self);
+	static W_Layer w_layer_init(W_Layer, W_Rec);
+	static void w_layer_deinit(W_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Layer_2
 
 	struct w_layer_2 {
+		// nasliduvania potribne shob my mohly vykorystovuvaty w_layer_2 yak w_layer
 		struct w_layer 			super;
 
 		lu_size 				w;
 		lu_size 				h;
 		lu_size 				d;
 
-		 
+		struct lu_data* 		datum; 
 	};
 
-	static W_Layer_2 w_layer_2_create(S_Layer s_layer);
-	static void w_layer_2_destroy(W_Layer_2 self);
+	static W_Layer_2 w_layer_2_init(W_Layer_2, W_Rec);
+	static void w_layer_2_deinit(W_Layer_2 self); 
+	
 	static inline W_Cell w_layer_2_cell_get(W_Layer_2 self, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(x < self->w, "x index out of range");
@@ -66,9 +71,9 @@
 		S_Rec 							s_rec;	
 		struct lu_rec_config 			config;  
 		
-		W_Layer_2 						layer_0;
-		W_Layer 						layer_1;
-		W_Layer 						layer_2;
+		struct w_layer_2 				layer_0;
+		struct w_layer 					layer_1;
+		struct w_layer 					layer_2;
 	};
 
 	// w_rec.lu

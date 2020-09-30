@@ -6,12 +6,12 @@
 //
 
 
-	static W_Layer w_layer_create(S_Layer s_layer)
+	static W_Layer w_layer_init(W_Layer self, W_Rec w_rec)
 	{
 		return NULL;
 	}
 
-	static void w_layer_destroy(W_Layer self)
+	static void w_layer_deinit(W_Layer self)
 	{
 
 	}

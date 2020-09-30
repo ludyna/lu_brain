@@ -20,14 +20,9 @@
 
 		lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
 
-		S_Layer s_layer 	= &s_rec->data_layers[0];
-
-		self->layer_0  		= w_layer_2_create(s_layer);
-
-		s_layer 			= &s_rec->data_layers[1];
-
-		self->layer_1 		= w_layer_create(s_layer);
-		self->layer_2 		= w_layer_create(s_layer);
+		w_layer_2_init(&self->layer_0, self);
+		w_layer_init(&self->layer_1, self);
+		w_layer_init(&self->layer_2, self);
 
 		return self;
 	}
@@ -36,7 +31,10 @@
 	{
 		lu_assert(self);
 
-		w_layer_2_destroy(self->layer_0);
+		w_layer_deinit(&self->layer_2);
+		w_layer_deinit(&self->layer_1);
+		w_layer_2_deinit(&self->layer_0);
+
 		mem_temp_free((lu_p_byte) self);
 	}
 
@@ -50,8 +48,7 @@
 		lu_size 	z;
 		lu_value 	v;
 
-		W_Layer_2 	layer_0 = self->layer_0;
-		lu_user_assert_void(layer_0, "W_Layer_2 is NULL");
+		W_Layer_2 	layer_0 = &self->layer_0;
 
 		for (y = 0; y < data->h; y++)
 			for(x = 0; x < data->w; x++)
