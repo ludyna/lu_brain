@@ -3,7 +3,37 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// API
+// 
+
+	static Lu_Block lu_block_create(Lu_Story story)
+	{	
+		lu_assert(story);
+
+		Lu_Brain brain = story->brain;
+		lu_assert(brain);
+
+		Lu_Block self = (Lu_Block) mem_temp_alloc(sizeof(struct lu_block));
+ 
+ 		self->datum_size = arr_size(brain->recs);
+ 		self->datum = (struct lu_data*) mem_temp_alloc(sizeof(struct lu_data) * self->datum_size);
+
+ 		Lu_Data data;
+ 		for(lu_size i = 0; i < self->datum_size; i++)
+ 		{
+ 			data = &self->datum[i];
+ 			lu_data_init_default(data);
+ 		}
+
+		return self;
+	}
+
+	static void lu_block_destroy(Lu_Block self)
+	{
+		lu_assert(self);
+
+		mem_temp_free((lu_p_byte) self->datum);
+		mem_temp_free((lu_p_byte) self);
+	}
 
 	void lu_block_begin(Lu_Story story)
 	{

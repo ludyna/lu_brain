@@ -10,13 +10,22 @@
 		lu_p_value values;
 	};
 
-	
 	static inline Lu_Data lu_data_init(Lu_Data self, lu_size w, lu_size h, lu_size d, lu_p_value values)
 	{
 		self->w 		= w;
 		self->h 		= h;
 		self->d 		= d;
 		self->values 	= values;
+
+		return self;
+	}
+
+	static inline Lu_Data lu_data_init_default(Lu_Data self)
+	{
+		self->w 		= 0;
+		self->h 		= 0;
+		self->d 		= 0;
+		self->values 	= NULL;
 
 		return self;
 	}

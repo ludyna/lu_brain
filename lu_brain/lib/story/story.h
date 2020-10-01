@@ -3,8 +3,16 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Typedefs
+// Lu_Block 
 
+	struct lu_block {
+		Lu_Story 			story;
+		lu_size 			datum_size;
+		struct lu_data* 	datum;
+	};
+
+	static Lu_Block lu_block_create(Lu_Story story);
+	static void lu_block_destroy(Lu_Block self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Story 

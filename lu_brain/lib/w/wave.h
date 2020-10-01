@@ -46,11 +46,13 @@
 		lu_size 				d;
 
 		struct lu_data* 		datum; 
+		lu_size 				datum_count;
+		lu_size 				datum_size;
 	};
 
 	static W_Layer_2 w_layer_2_init(W_Layer_2, W_Rec);
 	static void w_layer_2_deinit(W_Layer_2 self); 
-	
+
 	static inline W_Cell w_layer_2_cell_get(W_Layer_2 self, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(x < self->w, "x index out of range");
@@ -59,6 +61,8 @@
 
 		return self->super.cells[z * self->w * self->h + y * self->w + x]; 
 	}
+
+	static void w_layer_2_hold(W_Layer_2 self, Lu_Data data);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Rec
