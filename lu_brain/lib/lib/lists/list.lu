@@ -197,7 +197,7 @@ void lu_list_destroy_all(Lu_List self)
 	}			
 }
 
-void lu_list_each(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1)
+void lu_list_each_node(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1)
 {
 	Lu_L_Node curr = self->first;
 	Lu_L_Node to_dest;
@@ -208,6 +208,25 @@ void lu_list_each(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1),
 
 		block(self, to_dest, p1);
 	}	
+}
+
+void lu_list_each_value(Lu_List self, void (*block)(Lu_List, lu_p_void, lu_p_void p1), lu_p_void p1)
+{
+	Lu_L_Node curr = self->first;
+	Lu_L_Node to_dest;
+	while (curr)
+	{
+		to_dest = curr;
+		curr 	= curr->next;
+
+		block(self, to_dest->value, p1);
+	}	
+}
+ 
+void lu_list_clear(Lu_List self)
+{
+	lu_list_destroy_all(self);
+	lu_list_init(self, self->mem);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

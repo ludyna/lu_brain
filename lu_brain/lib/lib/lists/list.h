@@ -76,4 +76,7 @@
 
 	void lu_list_destroy_all(Lu_List self);		//	Call alloc->node_destroy() on each node.
 
-	void lu_list_each(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1);
+	void lu_list_each_node(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1);
+	void lu_list_each_value(Lu_List self, void (*block)(Lu_List, lu_p_void, lu_p_void p1), lu_p_void p1);
+
+	void lu_list_clear(Lu_List self);

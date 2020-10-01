@@ -14,6 +14,7 @@
 	static Lu_Block lu_block_create(Lu_Story story);
 	static void lu_block_destroy(Lu_Block self);
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Story 
 
