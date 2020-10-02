@@ -13,45 +13,13 @@
 			"Lu_Brain recs should be created first"
 		);
 
-		Lu_Story self 		= (Lu_Story) mem_alloc(g_mem_temp, sizeof(struct lu_story));
+		Lu_Story self 					= (Lu_Story) mem_alloc(g_mem_temp, sizeof(struct lu_story));
 
 		// Initialize
-		self->brain 		= brain;
+		self->brain 					= brain;
+		self->blocks 					= lu_list_create(g_mem_temp);
+		self->start_block_on_next_data 	= false; 
 
-		self->datum_w		= arr_count(self->brain->recs);
-		self->datum_h 		= 16;  // TODO: REWORK
-
-		lu_size w 			= self->datum_w;
-		lu_size h 			= self->datum_h;
-
-		self->datum 		= (struct lu_data*) mem_alloc(g_mem_temp, sizeof(struct lu_data) * w * h);
-		lu_user_assert(self->datum, "Cannot allocate space for data");
-
-		self->blocks 		= lu_list_create(g_mem_temp);
-
-		// lu_size rec_i;
-		// lu_size block_i;
-		// Lu_Rec rec;
-		// Lu_Data data;
-
-		// for (rec_i = 0; rec_i < w; rec_i++)
-		// {
-		// 	rec = arr_get(self->brain->recs, rec_i);
-		// 	lu_user_assert(rec, "Lu_Rec is NULL");
-
-		// 	for (block_i = 0; block_i < h; block_i++)
-		// 	{
-		// 		data = lu_story_data_get(self, rec_i, block_i);
-
-		// 		lu_user_assert(data, "Something went wrong");
-
-		// 		lu_data_set(data, 0, 0, rec->config.depth, NULL);
-		// 	}
-		// }
-
-		self->y = 0;
-		self->start_block_on_next_data = false; 
-		self->blocks_count = 0;
 
 		return self;
 	}
@@ -60,51 +28,55 @@
 	{
 		lu_assert(blocks);
 		lu_assert(value);
-		Lu_Block block = (Lu_Block) value;
-
-		lu_assert(block);
-
-		mem_temp_free((lu_p_byte) block);
+		lu_block_destroy((Lu_Block) value);
 	}
 
 	void lu_story_destroy(Lu_Story self)
 	{
 		lu_user_assert_void(self, "Lu_Story is NULL");
 
-		lu_list_each_value(self->blocks, lu_story_destroy_blocks, NULL);
+		lu_list_each_1p(self->blocks, lu_story_destroy_blocks, NULL);
 		lu_list_destroy(self->blocks);
-		mem_free(g_mem_temp, (lu_p_byte) self->datum);
 		mem_temp_free((lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	static Lu_Data lu_story_data_get(Lu_Story self, lu_size rec_i, Lu_L_Node node) 
+	{ 
+		lu_assert(self);
+		lu_assert(node);
+		lu_assert(node->value);
+
+		Lu_Block block = (Lu_Block) node->value;
+
+		lu_assert(rec_i < block->datum_size);
+		return &block->datum[rec_i]; 
+	}
+
+	static Lu_Block lu_story_block_add(Lu_Story self)
+	{
+		lu_assert(self);
+
+		Lu_Block block = lu_block_create(self);
+		lu_assert(block);
+
+		lu_list_append(self->blocks, (lu_p_void) block);
+
+		return block;
+	}
+
 	void lu_story_reset(Lu_Story self)
 	{
 		lu_user_assert_void(self, "Lu_Story should be present");
 		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
-		lu_user_assert_void(self->datum, "Lu_Story datum should be present");
+		lu_user_assert_void(self->blocks, "Lu_Story blocks should be present");
 
-		// lu_size block_i;
-		// lu_size rec_i;
-		// Lu_Data data;
+		lu_list_each_1p(self->blocks, lu_story_destroy_blocks, NULL);
+		lu_list_clear(self->blocks); 
 
-		// for(block_i = 0; block_i < self->blocks_count; block_i++)
-		// 	for(rec_i = 0; rec_i < self->datum_w; rec_i++)
-		// 	{
-		// 		data = lu_story_data_get(self, rec_i, block_i);
-		// 		lu_user_assert_void(data, "Something went wrong");
-
-		// 		lu_data_reset(data);
-		// 	}  
-
-		lu_list_each_value(self->blocks, lu_story_destroy_blocks, NULL);
-		lu_list_clear(self->blocks);
-
-		self->y = 0;
-		self->start_block_on_next_data = false; 
-		self->blocks_count = 0;
+		self->start_block_on_next_data = false;
 	}
 
 	void lu_story_push(Lu_Story self, Lu_Rec rec, lu_value* values)
@@ -114,57 +86,101 @@
 		lu_user_assert_void(values, "values should not be NULL");
 		lu_user_assert_void(rec->config.depth, "Lu_Rec depth is zero"); 
 
-		if (self->start_block_on_next_data)
+		// if (self->start_block_on_next_data)
+		// { 
+		// 	// yaksho my na nuliu, to ce itak pochatok bloka
+		// 	if (self->blocks_count)
+		// 		++self->y;	
+			
+		// 	self->start_block_on_next_data = false;
+		// }
+	
+		// Lu_Data data = lu_story_data_get(self, rec->id, self->y);
+		// lu_p_value v = data->values;
+		// if (v)
+		// 	// new input to the same rec and channel advances story
+		// 	++self->y;
+			
+	 	// 	lu_user_assert_void(
+	 	// 		self->y < self->datum_h, 
+	 	// 		"Out of available blocks in story."
+	 	// 	); 
+	 
+	 	// 	data = lu_story_data_get(self, rec->id, self->y);
+	 	// 	lu_data_set(data, rec->config.width, rec->config.height, rec->config.depth, values);
+
+	 	// 	self->blocks_count = self->y + 1;
+
+	 	if (self->start_block_on_next_data)
 		{ 
 			// yaksho my na nuliu, to ce itak pochatok bloka
-			if (self->blocks_count)
-				++self->y;	
+			lu_story_block_add(self);
 			
 			self->start_block_on_next_data = false;
 		}
-	
-		Lu_Data data = lu_story_data_get(self, rec->id, self->y);
-		lu_p_value v = data->values;
-		if (v) 
-			// new input to the same rec and channel advances story
-			++self->y;
-			
- 		lu_user_assert_void(
- 			self->y < self->datum_h, 
- 			"Out of available blocks in story."
- 		); 
- 
- 		data = lu_story_data_get(self, rec->id, self->y);
- 		lu_data_set(data, rec->config.width, rec->config.height, rec->config.depth, values);
 
- 		self->blocks_count = self->y + 1;
+		if (lu_list_is_empty(self->blocks))
+			lu_story_block_add(self);
+
+		Lu_Data data = lu_story_data_get(self, rec->id, lu_list_last_node(self->blocks));
+		lu_p_value v = data->values;
+		if (v)
+			// new input to the same rec and channel advances story
+			lu_story_block_add(self);
+
+		data = lu_story_data_get(self, rec->id, lu_list_last_node(self->blocks));
+		lu_assert(data);
+		lu_assert(data->values == NULL);
+
+	 	lu_data_set(data, rec->config.width, rec->config.height, rec->config.depth, values);
 	}
 
-	static Lu_Data story_first_non_null_data(Lu_Story self, lu_size rec_i)
+	static lu_bool lu_story_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)
+	{
+		if (value == NULL) return false;
+		lu_assert(p1);
+
+		lu_size* p_rec_i = (lu_size*) p1;
+
+		Lu_Block block = (Lu_Block) value;
+
+		lu_assert(*p_rec_i < block->datum_size);
+
+		Lu_Data data = &block->datum[*p_rec_i];
+
+		return data->values != NULL;
+	}
+
+	static Lu_Data lu_story_first_non_null_data(Lu_Story self, lu_size rec_i)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
 
-		lu_size block_i;
-		Lu_Data data;
+		// lu_size block_i;
+		// Lu_Data data;
 
-		for(block_i = 0; block_i < self->blocks_count; block_i++)
-		{
-			data = lu_story_data_get(self, rec_i, block_i);
-			if (data && data->values) return data;
-		}
+		// for(block_i = 0; block_i < self->blocks_count; block_i++)
+		// {
+		// 	data = lu_story_data_get(self, rec_i, block_i);
+		// 	if (data && data->values) return data;
+		// }
 
-		return NULL;
+		Lu_Block block = (Lu_Block) lu_list_find_forward_1p(self->blocks, lu_story_blocks_non_empty_values_block, &rec_i);
+
+		if (block == NULL) return NULL;
+
+		lu_assert(rec_i < block->datum_size);
+
+		return &block->datum[rec_i];
 	}
 
 	static Lu_Story lu_story_validate(Lu_Story self)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
-		lu_user_assert(self->blocks_count, "Lu_Story has no blocks");
+		lu_user_assert(!lu_story_is_empty(self), "Lu_Story is empty");
 		lu_user_assert(self->brain, "Lu_Story not linked to brain");
 
 		lu_user_assert(self->brain->recs, "Lu_Brain has no recs");
 		lu_user_assert(arr_count(self->brain->recs), "Lu_Brain has no recs");
-
 
 		return self;
 	}
@@ -172,34 +188,67 @@
 	static Lu_Story lu_story_prepare(Lu_Story self)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
+		lu_assert(self->blocks);
 
 		lu_size block_i;
 		lu_size rec_i;
 		Lu_Data d1;
 		Lu_Data d2;
 
-		for(rec_i = 0; rec_i < self->datum_w; rec_i++)
-			for(block_i = 0; block_i < self->blocks_count; block_i++)
+		// for(rec_i = 0; rec_i < self->datum_w; rec_i++)
+		// 	for(block_i = 0; block_i < self->blocks_count; block_i++)
+		// 	{
+		// 		d1 = lu_story_data_get(self, rec_i, block_i);
+		// 		lu_user_assert(d1, "Something went wrong");
+
+		// 		//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
+
+		// 		if (d1->values) continue;
+				
+		// 		if (block_i == 0)
+		// 		{
+		// 			d2 = lu_story_first_non_null_data(self, rec_i);
+		// 			if (d2 == NULL) return NULL; 					// nema danyh dlia rec_i vzahali
+		// 			lu_data_shallow_copy(d1, d2);
+		// 		}
+		// 		else
+		// 		{
+		// 			d2 = lu_story_data_get(self, rec_i, block_i - 1);
+		// 			lu_data_shallow_copy(d1, d2);
+		// 		}
+		// 	}
+
+		lu_size recs_size = arr_size(self->brain->recs);
+
+		for(rec_i = 0; rec_i < recs_size; rec_i++)
+		{
+			Lu_L_Node curr = lu_list_first_node(self->blocks);
+
+			while(curr)
 			{
-				d1 = lu_story_data_get(self, rec_i, block_i);
-				lu_user_assert(d1, "Something went wrong");
+				d1 = lu_story_data_get(self, rec_i, curr);
+				lu_assert(d1);
 
 				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
 
-				if (d1->values) continue;
+				if (d1->values) goto end;
 				
-				if (block_i == 0)
+				if (curr == lu_list_first_node(self->blocks))
 				{
-					d2 = story_first_non_null_data(self, rec_i);
+					d2 = lu_story_first_non_null_data(self, rec_i);
 					if (d2 == NULL) return NULL; 					// nema danyh dlia rec_i vzahali
 					lu_data_shallow_copy(d1, d2);
 				}
 				else
 				{
-					d2 = lu_story_data_get(self, rec_i, block_i - 1);
+					d2 = lu_story_data_get(self, rec_i, lu_l_node_prev(curr));
 					lu_data_shallow_copy(d1, d2);
 				}
+
+				end:
+				curr = lu_l_node_next(curr);
 			}
+		}
 
 		return self;
 	}

@@ -22,6 +22,10 @@
 		return self;
 	}	
 
+	static inline Lu_L_Node lu_l_node_next(Lu_L_Node self) { return self->next; }
+	static inline Lu_L_Node lu_l_node_prev(Lu_L_Node self) { return self->prev; }
+	static inline Lu_L_Node lu_l_node_value(Lu_L_Node self) { return self->value; }
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_List
 
@@ -49,8 +53,12 @@
 	// Getters / Setters
 
 	static inline lu_size lu_list_count(Lu_List self) { return self->count; }
-	static inline Lu_L_Node lu_list_first(Lu_List self) { return self->first; }
-	static inline Lu_L_Node lu_list_last(Lu_List self) { return self->last; }
+	static inline Lu_L_Node lu_list_first_node(Lu_List self) { return self->first; }
+	static inline Lu_L_Node lu_list_last_node(Lu_List self) { return self->last; }
+
+	// State checks
+
+	static inline lu_bool lu_list_is_empty(Lu_List self) { return self->first == NULL; }
 
 	// Main public methods
 
@@ -69,14 +77,16 @@
 	Lu_L_Node lu_list_insert_before(Lu_List, lu_p_void, Lu_L_Node);
 	Lu_L_Node lu_list_replace(Lu_List, lu_p_void, Lu_L_Node);
 
-	Lu_L_Node lu_list_find_forward(Lu_List, lu_fp_is_value);
-	Lu_L_Node lu_list_find_backward(Lu_List, lu_fp_is_value);
+	Lu_L_Node lu_list_find_node_forward(Lu_List, lu_fp_is_value);
+	Lu_L_Node lu_list_find_node_backward(Lu_List, lu_fp_is_value);
 
 	void lu_list_batch_append(Lu_List, lu_p_void, lu_size);
 
 	void lu_list_destroy_all(Lu_List self);		//	Call alloc->node_destroy() on each node.
 
-	void lu_list_each_node(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1);
-	void lu_list_each_value(Lu_List self, void (*block)(Lu_List, lu_p_void, lu_p_void p1), lu_p_void p1);
+	void lu_list_each_node_1p(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1);
+	void lu_list_each_1p(Lu_List self, void (*block)(Lu_List, lu_p_void, lu_p_void p1), lu_p_void p1);
+
+	lu_p_void lu_list_find_forward_1p(Lu_List self, lu_bool (*block)(lu_p_void value, lu_p_void p1), lu_p_void p1);
 
 	void lu_list_clear(Lu_List self);
