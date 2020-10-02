@@ -45,7 +45,7 @@
 
 		// 		lu_user_assert(data, "Something went wrong");
 
-		// 		lu_data_init(data, 0, 0, rec->config.depth, NULL);
+		// 		lu_data_set(data, 0, 0, rec->config.depth, NULL);
 		// 	}
 		// }
 
@@ -135,7 +135,7 @@
  		); 
  
  		data = lu_story_data_get(self, rec->id, self->y);
- 		lu_data_init(data, rec->config.width, rec->config.height, rec->config.depth, values);
+ 		lu_data_set(data, rec->config.width, rec->config.height, rec->config.depth, values);
 
  		self->blocks_count = self->y + 1;
 	}

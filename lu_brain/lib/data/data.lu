@@ -22,7 +22,7 @@
 		// 	{
 		// 		for(z = 0; z < data->d; z++)
 		// 		{
-		// 			v = lu_data_get(data, x, y, z);
+		// 			v = lu_data_value_get(data, x, y, z);
 
 		// 			// lu_debug("%f", v);
 
