@@ -261,7 +261,7 @@
 				if (curr == lu_list_first_node(self->blocks))
 				{
 					d2 = lu_story_first_non_null_data(self, rec_i);
-					if (d2 == NULL) return NULL; 					// nema danyh dlia rec_i vzahali
+					if (d2 == NULL) break; 	// nema danyh dlia rec_i vzahali
 					lu_data_shallow_copy(d1, d2);
 				}
 				else

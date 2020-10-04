@@ -281,7 +281,10 @@ void test_lu_story_prepare(void)
 	Lu_Data data;
 	Lu_Story story = lu_story_create(brain);
 
-	
+	lu_story_push(story, rec_0, data_00);
+
+	story = lu_story_prepare(story);
+	TEST_ASSERT(story);
 
 	lu_story_destroy(story);
 }
