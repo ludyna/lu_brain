@@ -259,3 +259,29 @@ void test_lu_story_data(void)
 
 	lu_story_destroy(story);
 }
+
+void test_lu_story_validate(void)
+{
+	Lu_Story story = lu_story_create(brain);
+
+	lu_user_assert_off();
+	TEST_ASSERT(lu_story_validate(story) == NULL); 
+	lu_user_assert_on();
+
+	lu_story_push(story, rec_0, data_00);
+
+	TEST_ASSERT(lu_story_validate(story) != NULL); 
+
+	lu_story_destroy(story);
+}
+
+void test_lu_story_prepare(void)
+{
+	lu_p_value d;
+	Lu_Data data;
+	Lu_Story story = lu_story_create(brain);
+
+	
+
+	lu_story_destroy(story);
+}
