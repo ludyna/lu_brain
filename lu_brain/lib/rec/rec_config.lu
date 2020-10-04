@@ -25,6 +25,17 @@
 		},
 		{
 			// LU_RC_RBG8_IMAGE
+			.depth 				= 1,
+			.max_blocks_size 	= 16,
+			.hold_blocks_size 	= 4, 
+			
+			.v_min 				= 0,
+			.v_max 				= 255,
+			.v_neu_size			= 256,
+			.v_nsc				= 0,
+
+			.p_neu_size			= 128,
+			.p_nsc				= 0
 		},
 		{
 			// LU_RC_RBG16_IMAGE
