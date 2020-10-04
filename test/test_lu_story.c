@@ -218,44 +218,43 @@ void test_lu_story_data(void)
 	Lu_Data data;
 	Lu_Story story = lu_story_create(brain); 
 
-//  		TEST_ASSERT(story->y == 0);
+		TEST_ASSERT(lu_story_blocks_count(story) == 0);
 
-//  		data = lu_story_data_get(story, 0, 0);
+  		data = lu_story_last_data(story, 0);
 
-//  		TEST_ASSERT(data->values == NULL);
-//  		TEST_ASSERT(data->w == 0);
-//  		TEST_ASSERT(data->h == 0);
+  			TEST_ASSERT(data == NULL);
 
-//  		 data = lu_story_data_get(story, 0, 1);
+		data = lu_story_last_data(story, 0);
 
-//  		TEST_ASSERT(data->values == NULL);
-//  		TEST_ASSERT(data->w == 0);
-//  		TEST_ASSERT(data->h == 0);
-		
-// 	lu_story_push(story, rec_0, data_00);
-//  		TEST_ASSERT(story->y == 0);
-		
-// 		data = lu_story_data_get(story, 0, 0);
-		
-// 		TEST_ASSERT(data->values);
-// 		TEST_ASSERT(data->values[0] == 0);
-// 		TEST_ASSERT(data->w == 3);
-//  		TEST_ASSERT(data->h == 3);
-		
-// 	lu_story_push(story, rec_1, data_16);
+			TEST_ASSERT(data == NULL);
+
+	lu_story_push(story, rec_0, data_00);
  		
-//  		TEST_ASSERT(story->y == 0);
+ 		TEST_ASSERT(lu_story_blocks_count(story) == 1);
 		
-// 		data = lu_story_data_get(story, 1, 0);
+		data = lu_story_last_data(story, 0);
 		
-// 		TEST_ASSERT(data->values);
-// 		TEST_ASSERT(data->values[0] == 6);
-// 		TEST_ASSERT(data->w == 2);
-//  		TEST_ASSERT(data->h == 2);
+		TEST_ASSERT(data->values);
+		TEST_ASSERT(data->values[0] == 0);
+		TEST_ASSERT(data->w == 3);
+ 		TEST_ASSERT(data->h == 3);
 		
-// 	data = lu_story_data_get(story, 0, 1);
-// 	TEST_ASSERT(data);
-// 	TEST_ASSERT(data->values == NULL);
+	lu_story_push(story, rec_1, data_16);
+ 		
+ 		TEST_ASSERT(lu_story_blocks_count(story) == 1);
+		
+		data = lu_story_last_data(story, 1);
+		
+		TEST_ASSERT(data->values);
+		TEST_ASSERT(data->values[0] == 6);
+		TEST_ASSERT(data->w == 2);
+ 		TEST_ASSERT(data->h == 2);
+		
+		data = lu_story_last_data(story, 0);
+		TEST_ASSERT(data);
+		TEST_ASSERT(data->values[0] == 0);
+		TEST_ASSERT(data->w == 3);
+ 		TEST_ASSERT(data->h == 3);
 
 
 	lu_story_destroy(story);

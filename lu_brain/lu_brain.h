@@ -18,7 +18,7 @@
 	typedef struct lu_rec* 				Lu_Rec; 
 
 	// Story 
-
+	typedef struct lu_data* 			Lu_Data;
 	typedef struct lu_story* 			Lu_Story;
 
 	// Wave 
@@ -130,6 +130,7 @@
 	void lu_story_reset(Lu_Story); 
 	lu_size lu_story_blocks_count(Lu_Story self);
 	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i);
+	Lu_Data lu_story_last_data(Lu_Story self, lu_size rec_i);
 
 
 ///////////////////////////////////////////////////////////////////////////////

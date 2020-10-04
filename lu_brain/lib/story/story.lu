@@ -59,17 +59,26 @@
 	}
 
 	lu_size lu_story_blocks_count(Lu_Story self)
-	{
+	{ 
+		lu_assert(self);
 		return lu_list_count(self->blocks);
 	}
 
 	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i)
 	{
+		lu_user_assert(self, "Lu_Story is NULL");
 		Lu_Data data = lu_story_data_get(self, rec_i, lu_list_last_node(self->blocks));
 		if (data == NULL) return NULL;
 
 		return data->values;
 	}
+
+	Lu_Data lu_story_last_data(Lu_Story self, lu_size rec_i)
+	{
+		lu_user_assert(self, "Lu_Story is NULL");
+		return lu_story_data_get(self, rec_i, lu_list_last_node(self->blocks));
+	}
+
 
 	static Lu_Block lu_story_block_add(Lu_Story self)
 	{
