@@ -127,7 +127,10 @@
 	void lu_block_begin(Lu_Story);
 	void lu_block_end(Lu_Story);
 
-	void lu_story_reset(Lu_Story);
+	void lu_story_reset(Lu_Story); 
+	lu_size lu_story_blocks_count(Lu_Story self);
+	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave  

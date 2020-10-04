@@ -54,8 +54,21 @@
 		Lu_Block block = (Lu_Block) node->value;
 
 		lu_assert(rec_i < block->datum_size);
-		
+
 		return &block->datum[rec_i]; 
+	}
+
+	lu_size lu_story_blocks_count(Lu_Story self)
+	{
+		return lu_list_count(self->blocks);
+	}
+
+	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i)
+	{
+		Lu_Data data = lu_story_data_get(self, rec_i, lu_list_last_node(self->blocks));
+		if (data == NULL) return NULL;
+
+		return data->values;
 	}
 
 	static Lu_Block lu_story_block_add(Lu_Story self)
