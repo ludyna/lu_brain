@@ -27,6 +27,9 @@
 		return self;
 	}
 
+	static Lu_Data lu_data_create(Mem);
+	static void lu_data_destroy(Lu_Data, Mem);
+
 	static inline void lu_data_reset(Lu_Data self)
 	{
 		lu_data_set(self, 0, 0, 0, NULL);

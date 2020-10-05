@@ -2,6 +2,24 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+	static Lu_Data lu_data_create(Mem mem)
+	{
+		Lu_Data self = (Lu_Data) mem_alloc(mem, sizeof(struct lu_data));
+		lu_assert(self);
+
+		lu_data_init_default(self);
+
+		return self;
+	}
+
+	static void lu_data_destroy(Lu_Data self, Mem mem)
+	{
+		lu_assert(self);
+		lu_assert(mem);
+
+		mem_free(mem, (lu_p_byte) self);
+	}
+
 	static void lu_data_debug(Lu_Data d)
 	{
 
