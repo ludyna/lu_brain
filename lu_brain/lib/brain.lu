@@ -125,3 +125,5 @@
 		
 		rec->brain = NULL;
 	}
+
+	lu_size lu_brain_recs_size(Lu_Brain self) { return arr_size(self->recs); }

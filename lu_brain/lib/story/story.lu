@@ -111,31 +111,6 @@
 		lu_user_assert_void(values, "values should not be NULL");
 		lu_user_assert_void(rec->config.depth, "Lu_Rec depth is zero"); 
 
-		// if (self->start_block_on_next_data)
-		// { 
-		// 	// yaksho my na nuliu, to ce itak pochatok bloka
-		// 	if (self->blocks_count)
-		// 		++self->y;	
-			
-		// 	self->start_block_on_next_data = false;
-		// }
-	
-		// Lu_Data data = lu_story_data_get(self, rec->id, self->y);
-		// lu_p_value v = data->values;
-		// if (v)
-		// 	// new input to the same rec and channel advances story
-		// 	++self->y;
-			
-	 	// 	lu_user_assert_void(
-	 	// 		self->y < self->datum_h, 
-	 	// 		"Out of available blocks in story."
-	 	// 	); 
-	 
-	 	// 	data = lu_story_data_get(self, rec->id, self->y);
-	 	// 	lu_data_set(data, rec->config.width, rec->config.height, rec->config.depth, values);
-
-	 	// 	self->blocks_count = self->y + 1;
-
 	 	if (self->start_block_on_next_data)
 		{ 
 			// yaksho my na nuliu, to ce itak pochatok bloka
@@ -180,15 +155,6 @@
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
 
-		// lu_size block_i;
-		// Lu_Data data;
-
-		// for(block_i = 0; block_i < self->blocks_count; block_i++)
-		// {
-		// 	data = lu_story_data_get(self, rec_i, block_i);
-		// 	if (data && data->values) return data;
-		// }
-
 		Lu_Block block = (Lu_Block) lu_list_find_forward_1p(self->blocks, lu_story_blocks_non_empty_values_block, &rec_i);
 
 		if (block == NULL) return NULL;
@@ -215,33 +181,9 @@
 		lu_user_assert(self, "Lu_Story is NULL");
 		lu_assert(self->blocks);
 
-		lu_size block_i;
 		lu_size rec_i;
 		Lu_Data d1;
 		Lu_Data d2;
-
-		// for(rec_i = 0; rec_i < self->datum_w; rec_i++)
-		// 	for(block_i = 0; block_i < self->blocks_count; block_i++)
-		// 	{
-		// 		d1 = lu_story_data_get(self, rec_i, block_i);
-		// 		lu_user_assert(d1, "Something went wrong");
-
-		// 		//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
-
-		// 		if (d1->values) continue;
-				
-		// 		if (block_i == 0)
-		// 		{
-		// 			d2 = lu_story_first_non_null_data(self, rec_i);
-		// 			if (d2 == NULL) return NULL; 					// nema danyh dlia rec_i vzahali
-		// 			lu_data_shallow_copy(d1, d2);
-		// 		}
-		// 		else
-		// 		{
-		// 			d2 = lu_story_data_get(self, rec_i, block_i - 1);
-		// 			lu_data_shallow_copy(d1, d2);
-		// 		}
-		// 	}
 
 		lu_size recs_size = arr_size(self->brain->recs);
 

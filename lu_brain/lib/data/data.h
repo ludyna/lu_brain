@@ -39,6 +39,8 @@
 		return dest;
 	}
 
+	static inline lu_bool lu_data_is_empty(Lu_Data self) { return self->values == NULL; }
+
 	static Lu_Data lu_data_deep_copy(Lu_Data dest, Lu_Data src);
 
 	static inline void lu_data_value_set(Lu_Data d, lu_size x, lu_size y, lu_size z, lu_value value) { d->values[z * d->w * d->h + y * d->w + x] = value; }

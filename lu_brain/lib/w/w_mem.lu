@@ -69,11 +69,10 @@
 
 	static void w_mem_save_async(W_Mem self, Lu_Story story)
 	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
-		lu_user_assert_void(story, "Lu_Story is NULL");
-		lu_user_assert_void(self->brain, "Lu_Wave brain is NULL");
+		lu_assert(self);
+		lu_assert(story);
+		lu_assert(self->brain);
 	
-
 		lu_size rec_i;
 		Lu_Data data;
 		W_Rec w_rec;
@@ -82,23 +81,25 @@
 
 		Lu_L_Node curr = lu_list_first_node(story->blocks);
 
-		// while (curr)
-		// {
-		// 	for(rec_i = 0; rec_i < story->datum_w; rec_i++)
-		// 	{
-		// 		w_rec 	= w_mem_rec_get(self, rec_i);
-		// 		lu_user_assert_void(w_rec, "W_Rec is NULL");
+		lu_size recs_count = lu_story_recs_count(story);
 
-		// 		data 	= lu_story_data_get(story, rec_i, curr);
+		while (curr)
+		{
+			for(rec_i = 0; rec_i < recs_count; rec_i++)
+			{
+				w_rec 	= w_mem_rec_get(self, rec_i);
+				if (w_rec == NULL) continue;
 
-		// 		// lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
-		// 		// data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
-		// 		// lu_debug("] SAVING ...");
+				data 	= lu_story_data_get(story, rec_i, curr);
 
-		// 		if (data->values) 
-		// 			w_rec_data_save(w_rec, data, 0);
-		// 	}
+				// lu_debug("\n[block=%lu, rec=%lu, (0,0)=", block_i, rec_i);
+				// data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
+				// lu_debug("] SAVING ...");
 
-		// 	curr = lu_l_node_next(curr);
-		// }
+				if (lu_data_is_empty(data)) 
+					w_rec_data_save(w_rec, data, 0);
+			}
+
+			curr = lu_l_node_next(curr);
+		}
 	}

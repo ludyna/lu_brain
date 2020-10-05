@@ -34,3 +34,4 @@
 	Lu_Story lu_story_prepare(Lu_Story);
 	static Lu_Block lu_story_block_add(Lu_Story self);
 	static inline lu_bool lu_story_is_empty(Lu_Story self) { return lu_list_is_empty(self->blocks); }
+	static inline lu_size lu_story_recs_count(Lu_Story self) { return lu_brain_recs_size(self->brain); }

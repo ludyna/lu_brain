@@ -43,11 +43,6 @@
 		lu_user_assert_void(self, "W_Rec is NULL");
 		lu_user_assert_void(data, "Lu_Data is NULL");
 
-		lu_size 	x;
-		lu_size 	y;
-		lu_size 	z;
-		lu_value 	v;
-
 		W_Layer_2 	layer_0 = &self->layer_0;
 
 		w_layer_2_hold(layer_0, data);

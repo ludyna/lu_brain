@@ -66,6 +66,8 @@
 	struct lu_brain_config lu_brain_config_get(Lu_Brain self);
 	Lu_Brain lu_brain_reconfigure(Lu_Brain self, struct lu_brain_config config);
 
+	lu_size lu_brain_recs_size(Lu_Brain self);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Rec  
 

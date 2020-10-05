@@ -9,7 +9,7 @@
 		{
 			.id						= 0,					
 			.size_in_bytes			= 0,
-			.recs_size				= 128,
+			.recs_size				= 16,
 			.names_size				= 128
 		},
 	};		
