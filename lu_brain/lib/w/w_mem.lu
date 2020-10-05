@@ -19,7 +19,7 @@
 
  		// here we use arr_size (not arr_count) and this is correct
  		// because recs could be potentionaly removed from brain
-		self->recs 			= arr_temp_create(arr_size(s_mem->recs), false);
+		self->recs = arr_temp_create(arr_size(s_mem->recs), false);
  
  		S_Rec s_rec;
  		W_Rec w_rec;
@@ -83,7 +83,7 @@
 
 		lu_size recs_count = lu_story_recs_count(story);
 
-		while (curr)
+		while(curr)
 		{
 			for(rec_i = 0; rec_i < recs_count; rec_i++)
 			{

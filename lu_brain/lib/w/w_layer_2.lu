@@ -13,18 +13,8 @@
 		self->w 			= w_rec->config.width;
 		self->h				= w_rec->config.height;
 		self->d 			= w_rec->config.depth;
-		self->datum_size 	= w_rec->config.hold_blocks_size;
-		self->datum_count 	= 0;
-		
-		self->datum = (struct lu_data*) mem_temp_alloc(sizeof(struct lu_data) * self->datum_size); 
-
-		Lu_Data data;
-		for(lu_size i = 0; i < self->datum_size; i++)
-		{
-			data = &self->datum[i];
-
-			lu_data_init_default(data);
-		}
+		self->hold_size 	= w_rec->config.hold_blocks_size;
+		self->datum 		= lu_list_create(g_mem_temp);
 
 		w_layer_init(&self->super, w_rec);
 
@@ -37,18 +27,18 @@
 
 		w_layer_deinit(&self->super);
 
-		mem_temp_free((lu_p_byte) self->datum);
+		lu_list_destroy(self->datum);
 	}
 
 	static void w_layer_2_hold(W_Layer_2 self, Lu_Data data)
 	{
-		lu_assert(self);
-		lu_assert(data);
+		// lu_assert(self);
+		// lu_assert(data);
 
-		lu_user_assert_void(self->datum_count < self->datum_size, "W_Layer_2 cannot hold more data."); 
+		// lu_user_assert_void(self->datum_count < self->datum_size, "W_Layer_2 cannot hold more data."); 
 
-		Lu_Data dest = &self->datum[self->datum_count];
-		++self->datum_count;
+		// Lu_Data dest = &self->datum[self->datum_count];
+		// ++self->datum_count;
 
-		lu_data_deep_copy(dest, data);
+		// lu_data_deep_copy(dest, data);
 	}
