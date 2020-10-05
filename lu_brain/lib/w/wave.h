@@ -49,7 +49,7 @@
 		// lu_size 				datum_count;
 		// lu_size 				datum_size;
 
-		lu_size 				hold_size;
+		lu_size 				hold_blocks_size;
 		Lu_List 				datum;
 	};
 
