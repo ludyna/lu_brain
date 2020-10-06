@@ -56,28 +56,28 @@ void test_list1(void)
     TEST_ASSERT(list->last->value == n5);
     TEST_ASSERT(list->last->prev->value == n2);
 
-    lu_list_remove(list, node2);
+    lu_list_node_remove(list, node2);
 
     TEST_ASSERT(lu_list_count(list) == 3);
     TEST_ASSERT(list->first->value == n3);
     TEST_ASSERT(list->last->value == n5);
     TEST_ASSERT(list->last->prev->value == n1);
 
-    lu_list_remove(list, node3);
+    lu_list_node_remove(list, node3);
 
     TEST_ASSERT(lu_list_count(list) == 2);
     TEST_ASSERT(list->first->value == n1);
     TEST_ASSERT(list->last->value == n5);
     TEST_ASSERT(list->last->prev->value == n1);
 
-    lu_list_remove(list, node1);
+    lu_list_node_remove(list, node1);
 
     TEST_ASSERT(lu_list_count(list) == 1);
     TEST_ASSERT(list->first->value == n5);
     TEST_ASSERT(list->last->value == n5);
     TEST_ASSERT(list->last->prev == NULL);
 
-    lu_list_remove(list, node5);
+    lu_list_node_remove(list, node5);
 
     TEST_ASSERT(lu_list_count(list) == 0);
     TEST_ASSERT(list->first == NULL);
@@ -112,7 +112,7 @@ void test_list_fast_ma(void)
     TEST_ASSERT(lu_list_count(list) == 4);
     TEST_ASSERT(list->first->value == n4);
 
-    lu_list_remove(list, node2);
+    lu_list_node_remove(list, node2);
 
     TEST_ASSERT(list->count == 3);
 

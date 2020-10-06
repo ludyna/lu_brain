@@ -16,7 +16,8 @@
 		self->h					= w_rec->config.height;
 		self->d 				= w_rec->config.depth;
 		self->hold_blocks_size 	= w_rec->config.hold_blocks_size;
-		self->datum 			= lu_list_create(g_mem_temp);
+		self->datum 			= lu_list_create(g_mem_temp); 
+		self->data_lost_count	= 0;
 
 		return self;
 	}
@@ -39,8 +40,19 @@
 
 	static void w_layer_2_hold(W_Layer_2 self, Lu_Data data)
 	{
-		// lu_assert(self);
-		// lu_assert(data);
+		lu_assert(self);
+		lu_assert(data);
+
+		// if we cannot hold anymore dispose oldest data (FIFO)
+		if (lu_list_count(self->datum) > self->hold_blocks_size && !lu_list_is_empty(self->datum))
+		{
+			// WARNING: data is getting lost here
+
+			// Lu_Date date = lu_list_node_first(self->datum);
+			// lu_list_node_remove_first(self->datum);
+
+			++self->data_lost_count;
+		}
 
 		// lu_user_assert_void(self->datum_count < self->datum_size, "W_Layer_2 cannot hold more data."); 
 

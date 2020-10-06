@@ -36,7 +36,7 @@
 	{
 		Mem mem = self->mem;
 
-		lu_list_destroy_all(self);
+		lu_list_node_destroy_all(self);
 		lu_list_init(self, NULL); 			// reset for safety
 		mem_free(mem, (lu_p_byte) self);
 	}
@@ -44,7 +44,7 @@
 	///////////////////////////////////////////////////////////////////////////////
 	// Main public methods
 
-	Lu_L_Node lu_list_attach(Lu_List self, Lu_L_Node node)
+	Lu_L_Node lu_list_node_attach(Lu_List self, Lu_L_Node node)
 	{
 		Lu_L_Node last = self->last;
 		
@@ -62,19 +62,19 @@
 		return node;
 	}
 
-	Lu_L_Node lu_list_append_with_node_creator(Lu_List self, lu_p_void value, Lu_L_Node (*node_creator)(Lu_List))
+	Lu_L_Node lu_list_node_append_with_creator(Lu_List self, lu_p_void value, Lu_L_Node (*node_creator)(Lu_List))
 	{
 		Lu_L_Node node = node_creator(self);
 		lu_l_node_init(node, value);
 		
-		lu_list_attach(self, node);
+		lu_list_node_attach(self, node);
 
 		return node;
 	}
 
 	Lu_L_Node lu_list_append(Lu_List self, lu_p_void value)
 	{
-		return lu_list_append_with_node_creator(self, value, lu_l_node_create);
+		return lu_list_node_append_with_creator(self, value, lu_l_node_create);
 	}
 
 	Lu_L_Node lu_list_prepend_with_node_creator(Lu_List self, lu_p_void value, Lu_L_Node (*node_creator)(Lu_List))
@@ -103,7 +103,7 @@
 		return lu_list_prepend_with_node_creator(self, value, lu_l_node_create);
 	}
 
-	Lu_L_Node lu_list_detach(Lu_List self, Lu_L_Node node)
+	Lu_L_Node lu_list_node_detach(Lu_List self, Lu_L_Node node)
 	{
 		lu_assert(node != NULL);
 
@@ -121,16 +121,16 @@
 	 	return node;
 	}
 
-	void lu_list_remove_with_node_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node))
+	void lu_list_node_remove_with_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node))
 	{
-		lu_list_detach(self, node);
+		lu_list_node_detach(self, node);
 
 	 	node_destroyer(self, &node);
 	}
 
-	void lu_list_remove(Lu_List self, Lu_L_Node node)
+	void lu_list_node_remove(Lu_List self, Lu_L_Node node)
 	{ 
-		lu_list_remove_with_node_destroyer(self, node, lu_l_node_destroy);
+		lu_list_node_remove_with_destroyer(self, node, lu_l_node_destroy);
 	}
 
 	Lu_L_Node lu_list_insert_after(Lu_List self, lu_p_void value, Lu_L_Node node)
@@ -184,7 +184,7 @@
 		}
 	}
 
-	void lu_list_destroy_all(Lu_List self)
+	void lu_list_node_destroy_all(Lu_List self)
 	{
 		Lu_L_Node curr = self->first;
 		Lu_L_Node to_dest;
@@ -197,7 +197,7 @@
 		}			
 	}
 
-	void lu_list_each_node_1p(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1)
+	void lu_list_node_each_1p(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1)
 	{
 		Lu_L_Node curr = self->first;
 		Lu_L_Node to_dest;
@@ -239,7 +239,7 @@
 	 
 	void lu_list_clear(Lu_List self)
 	{
-		lu_list_destroy_all(self);
+		lu_list_node_destroy_all(self);
 		lu_list_init(self, self->mem);
 	}
 

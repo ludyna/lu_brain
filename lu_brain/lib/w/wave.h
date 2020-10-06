@@ -45,12 +45,9 @@
 		lu_size 				h;
 		lu_size 				d;
 
-		// struct lu_data* 		datum; 
-		// lu_size 				datum_count;
-		// lu_size 				datum_size;
-
 		lu_size 				hold_blocks_size;
 		Lu_List 				datum;
+		lu_size 				data_lost_count;
 	};
 
 	static W_Layer_2 w_layer_2_init(W_Layer_2, W_Rec);

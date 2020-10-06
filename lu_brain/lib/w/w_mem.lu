@@ -79,7 +79,7 @@
 		
 		w_mem_reset(self);
 
-		Lu_L_Node curr = lu_list_first_node(story->blocks);
+		Lu_L_Node curr = lu_list_node_first(story->blocks);
 
 		lu_size recs_count = lu_story_recs_count(story);
 
