@@ -39,7 +39,7 @@
 		if (lu_table_list_count(self->datum) >= lu_table_list_size(self->datum))
 			++self->datum_lost_count;
 	
-
+		
 		// lu_user_assert_void(self->datum_count < self->datum_size, "W_Layer_2 cannot hold more data."); 
 
 		// Lu_Data dest = &self->datum[self->datum_count];

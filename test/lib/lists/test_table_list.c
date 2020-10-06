@@ -53,7 +53,7 @@ void test_table_list(void)
     TEST_ASSERT(list->super.last->value == n5);
     TEST_ASSERT(list->super.last->prev->value == n2);
 
-    lu_table_list_remove(list, node2);
+    lu_table_list_node_remove(list, node2);
 
     TEST_ASSERT(lu_table_list_count(list) == 2);
     TEST_ASSERT(list->super.first->value == n1);
@@ -61,14 +61,14 @@ void test_table_list(void)
     TEST_ASSERT(list->super.last->prev->value == n1);
  
 
-    lu_table_list_remove(list, node1);
+    lu_table_list_node_remove(list, node1);
 
     TEST_ASSERT(lu_table_list_count(list) == 1);
     TEST_ASSERT(list->super.first->value == n5);
     TEST_ASSERT(list->super.last->value == n5);
     TEST_ASSERT(list->super.last->prev == NULL);
 
-    lu_table_list_remove(list, node5);
+    lu_table_list_node_remove(list, node5);
 
     TEST_ASSERT(lu_table_list_count(list) == 0);
     TEST_ASSERT(list->super.first == NULL);
