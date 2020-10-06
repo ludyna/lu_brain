@@ -12,6 +12,9 @@
 		lu_size 		max_size;
 	};
 
+	static inline lu_table_list_count(Lu_Table_List self) { return lu_list_count(&self.super); }
+	static inline lu_table_list_size(Lu_Table_List self) { return self->max_size; }
+
 	static inline Lu_Table_List lu_table_list_init(Lu_Table_List self, Mem_Table mem_table, lu_size limit_size)
 	{
 		lu_assert(self);

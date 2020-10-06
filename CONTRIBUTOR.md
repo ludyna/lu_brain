@@ -1,15 +1,21 @@
-FOR CONTRIBUTORS
-===
+# lu_brain dev guide
 
-TYPES
----
+## Modules and folder structures
 
-Any type or method that is visible to END users should start with "lu_" prefix. 
-Typedefs of pointers for END users should be prefixed with "Lu_" (Lu_Brain, Lu_Neuron).
+TBD
 
-Prefixes "lu_", "Lu_" should be avoided in internal code. 
-Exception are shared types defined in basic/lu_types.h). 
-"LU_" is used in internal code as prefix to macroses (LU_NEU_H, LU_MEM_ALLOC_H).
+## Prefixes
+
+- All public or potentially public identifiers should start with prefixes `lu_` (methods, globals, structs), 
+`LU_` (constants) or `Lu_` (pointers to public structs).
+
+- All public files should start with prefix `lu_`.
+
+- All NON public files should not have prefix `lu_`.
+
+- There are special files: `__readme.md`, `_module.h`, `_module.lu` (or `_module.c`), and `_typedefs.h`
+
+- `I_`, `Lu_I`, `i_`, `lu_i` prefixes are used for identifiers related to interface structures.
 
 For data received from or passed to methods that are from outside libraries use types appropriate for 
 these libraries. Don't assume lu_size is uint. "Wrap" these methods with our own methods when possible:
@@ -17,7 +23,8 @@ these libraries. Don't assume lu_size is uint. "Wrap" these methods with our own
 	#define lu_value_round round 
 	#define lu_value_abs fabs
 
-NAMING 
+
+## NAMING 
 ---
 
 Structs are named always lower case:
@@ -46,10 +53,17 @@ Opposite to "create" is "destroy".
 	mem_table_create()
 	mem_table_destroy()
 
+Initialiazators (initialize data structure but not allocate) look like this:
 
+	mem_table_init()
+	mem_table_deinit()
 
-FOLDER STRUCTURE
----
+## Assertions
+
+- Use `lu_user_assert(expression, message)` and `lu_user_assert_void(expression, message)` to validate/assert in bublic API methods.
+
+- Use `lu_assert(expression)` to validate/assert in internal methods.
+
 
 
 
