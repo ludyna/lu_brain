@@ -123,13 +123,17 @@
 
 	void lu_list_node_remove_with_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node))
 	{
+		if (node == NULL) return;
+
 		lu_list_node_detach(self, node);
 
-	 	node_destroyer(self, &node);
+		if (node_destroyer) 
+	 		node_destroyer(self, &node);
 	}
 
 	void lu_list_node_remove(Lu_List self, Lu_L_Node node)
 	{ 
+		if (node == NULL) return;
 		lu_list_node_remove_with_destroyer(self, node, lu_l_node_destroy);
 	}
 

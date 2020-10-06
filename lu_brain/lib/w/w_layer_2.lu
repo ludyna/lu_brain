@@ -48,8 +48,9 @@
 		{
 			// WARNING: data is getting lost here
 
-			// Lu_Date date = lu_list_node_first(self->datum);
-			// lu_list_node_remove_first(self->datum);
+			Lu_Data data = lu_list_first(self->datum);
+			lu_list_node_remove_first(self->datum);
+			if (data) lu_data_destroy(data, g_mem_temp);
 
 			++self->data_lost_count;
 		}

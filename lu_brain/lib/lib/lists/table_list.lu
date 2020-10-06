@@ -10,7 +10,7 @@
 		lu_assert(mem);
 		lu_assert(max_size_in_items > 0);
 	
-		Lu_Table_List self 				= (Lu_Table_List) mem_alloc(mem, sizeof(struct lu_table_list));
+		Lu_Table_List self 	= (Lu_Table_List) mem_alloc(mem, sizeof(struct lu_table_list));
 		lu_assert(self);
 
 		lu_list_init(&self->super, mem);
@@ -28,7 +28,6 @@
 
 		return self;
 	}
-
 
 	void lu_table_list_destroy(Lu_Table_List self)
 	{
