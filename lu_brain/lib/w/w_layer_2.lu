@@ -5,6 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 
+	static void w_layer_2_datum_node_before_destroy(Lu_Table_List table_list, Lu_L_Node node)
+	{
+		lu_assert(node);
+
+		Lu_Data data = (Lu_Data) lu_l_node_value(node);
+		lu_assert(data);
+
+		lu_data_destroy(data, g_mem_temp);
+
+		lu_l_node_value_set(node, NULL);
+	}
+
 	static W_Layer_2 w_layer_2_init(W_Layer_2 self, W_Rec w_rec)
 	{
 		lu_assert(self);
@@ -18,6 +30,8 @@
 
 		self->datum 			= lu_table_list_create(g_mem_temp, w_rec->config.hold_blocks_size); 
 		lu_user_assert(self->datum, "Cannot allocate Lu_Table_List");
+
+		self->datum->node_before_destroy = w_layer_2_datum_node_before_destroy;
 
 		self->datum_lost_count	= 0;
 
@@ -41,8 +55,9 @@
 		if (lu_table_list_count(self->datum) >= lu_table_list_size(self->datum))
 			++self->datum_lost_count;
 
-		// Lu_Data dest = &self->datum[self->datum_count];
-		// ++self->datum_count;
+		Lu_Data dest = lu_data_create(g_mem_temp);
 
-		// lu_data_deep_copy(dest, data);
+		lu_data_deep_copy(dest, data);
+
+		lu_table_list_append(self->datum, (lu_p_void) data);
 	}

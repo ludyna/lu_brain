@@ -37,9 +37,6 @@
 		Mem mem = self->mem;
 
 		lu_list_node_destroy_all(self);
-		
-		if (self->observer)
-			lu_list_l_observer_detach(self);
 
 		lu_list_init(self, NULL); 			// reset for safety
 		mem_free(mem, (lu_p_byte) self);
@@ -250,26 +247,3 @@
 		lu_list_node_destroy_all(self);
 		lu_list_init(self, self->mem);
 	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_L_Observer
-
-	static void lu_list_l_observer_attach(Lu_List self, Lu_L_Observer obs)
-	{
-		lu_assert(self);
-		lu_assert(obs);
-		lu_assert(self->observer == NULL);
-		lu_assert(obs->list == NULL);
-
-		self->observer = obs;
-
-	}
-
-	static void lu_list_l_observer_detach(Lu_List self)
-	{
-		lu_assert(self);
-
-		self->observer->list = NULL;
-		self->observer = NULL;
-	}
-

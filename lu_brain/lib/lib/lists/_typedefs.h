@@ -7,7 +7,7 @@
 // Typedefs
 
 	typedef struct lu_l_node* 			Lu_L_Node;
-	typedef struct lu_list_observer*	Lu_L_Observer;
+	typedef struct lu_list_observer*	Lu_TL_Observer;
 	typedef struct lu_list* 			Lu_List;
 	typedef struct lu_table_list* 		Lu_Table_List;
 

@@ -24,7 +24,9 @@
 		);
 		lu_assert(self->mem_table);
 
-		self->max_size 		= max_size_in_items;
+		self->max_size 				= max_size_in_items;
+		self->node_after_create 	= NULL;
+		self->node_before_destroy 	= NULL;
 
 		return self;
 	}
@@ -46,6 +48,8 @@
 		Lu_L_Node node = (Lu_L_Node) mem_record_alloc(self->mem_table);
 		lu_assert(node);
 
+		if (self->node_after_create) self->node_after_create(self, node);
+
 		return node;
 	}
 
@@ -56,6 +60,8 @@
 
 		Lu_Table_List self = (Lu_Table_List) list;
  		lu_assert(self->mem_table);
+
+ 		if (self->node_before_destroy) self->node_before_destroy(self, *l_node);
 
 		mem_record_free(self->mem_table, (lu_p_byte) *l_node);
 		*l_node = NULL;

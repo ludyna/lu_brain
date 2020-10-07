@@ -2,6 +2,7 @@
 	Copyright © 2020 Oleh Ihorovych Novosad 
 */
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Table_List
 
@@ -11,7 +12,11 @@
 		Mem_Table 		mem_table;
 		lu_size 		max_size;
 
-		void 			(node_destroy_callback)(Lu_Table_List self, Lu_L_Node node);
+		// We need callbacks feature for this data structure because this data structure 
+		// "randomly" destroys its nodes while in lu_list, for example, we 
+		// fully control when nodes are created or destroyed
+		void 			(*node_after_create)(Lu_Table_List, Lu_L_Node);
+		void 			(*node_before_destroy)(Lu_Table_List, Lu_L_Node);
 	};
 
 	static inline lu_size lu_table_list_count(Lu_Table_List self) { return lu_list_count(&self->super); }
