@@ -27,6 +27,19 @@
 	static inline Lu_L_Node lu_l_node_value(Lu_L_Node self) { return self->value; }
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_L_Observer
+
+	struct lu_l_observer {
+		Lu_List 			list; 
+		Mem 				mem;
+		void 				(*node_after_create)(Lu_List, Lu_L_Node);
+		void 				(*node_before_destroy)(Lu_List, Lu_L_Node);
+	};
+
+	Lu_L_Observer lu_l_observer_create(List);
+	void lu_l_observer_destroy(Lu_L_Observer self);
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_List
 
 	struct lu_list {
@@ -34,6 +47,7 @@
 		Lu_L_Node 			last;
 		lu_size 			count;
 		Mem 				mem;
+		Lu_L_Observer    	observer;
 	};
 
 	// Init, create and destroy
@@ -56,7 +70,11 @@
 	static inline Lu_L_Node lu_list_node_first(Lu_List self) { return self->first; }
 	static inline lu_p_void lu_list_first(Lu_List self) { if (!self->first) return NULL; return self->first->value; }
 	static inline Lu_L_Node lu_list_node_last(Lu_List self) { return self->last; }
-	static inline lu_p_void lu_list_last(Lu_List self) { if (!self->last) return NULL; return self->last->value; }
+	static inline lu_p_void lu_list_last(Lu_List self) { if (!self->last) return NULL; return self->last->value; } 
+
+	static void lu_list_l_observer_attach(Lu_List self, Lu_L_Observer obs);
+	static void lu_list_l_observer_detach(Lu_List self);
+	static inline Lu_L_Observer lu_list_l_observer(Lu_List self) { return self->observer; }
 
 	// State checks
 
@@ -96,3 +114,4 @@
 	lu_p_void lu_list_find_forward_1p(Lu_List self, lu_bool (*block)(lu_p_void value, lu_p_void p1), lu_p_void p1);
 
 	void lu_list_clear(Lu_List self);
+

@@ -17,6 +17,8 @@
 		self->d 				= w_rec->config.depth; 
 
 		self->datum 			= lu_table_list_create(g_mem_temp, w_rec->config.hold_blocks_size); 
+		lu_user_assert(self->datum, "Cannot allocate Lu_Table_List");
+
 		self->datum_lost_count	= 0;
 
 		return self;
@@ -38,9 +40,6 @@
 		// if we cannot hold anymore we dispose oldest data (FIFO)
 		if (lu_table_list_count(self->datum) >= lu_table_list_size(self->datum))
 			++self->datum_lost_count;
-	
-		
-		// lu_user_assert_void(self->datum_count < self->datum_size, "W_Layer_2 cannot hold more data."); 
 
 		// Lu_Data dest = &self->datum[self->datum_count];
 		// ++self->datum_count;

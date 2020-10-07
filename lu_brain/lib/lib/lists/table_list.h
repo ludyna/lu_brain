@@ -10,6 +10,8 @@
 
 		Mem_Table 		mem_table;
 		lu_size 		max_size;
+
+		void 			(node_destroy_callback)(Lu_Table_List self, Lu_L_Node node);
 	};
 
 	static inline lu_size lu_table_list_count(Lu_Table_List self) { return lu_list_count(&self->super); }
