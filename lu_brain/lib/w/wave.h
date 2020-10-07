@@ -46,7 +46,7 @@
 		lu_size 				d;
 
 		lu_size 				datum_lost_count;
-		Lu_Table_List 			datum;
+		Lu_Lim_List 			datum;
 	};
 
 	static W_Layer_2 w_layer_2_init(W_Layer_2, W_Rec);

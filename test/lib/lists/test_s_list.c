@@ -260,7 +260,7 @@ void test_s_list_eq(void)
 
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
-    TEST_ASSERT(lu_table_list_count(&s1->values) == 1);
+    TEST_ASSERT(lu_lim_list_count(&s1->values) == 1);
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 2);
 
@@ -274,7 +274,7 @@ void test_s_list_eq(void)
 
     s1 = s_list_add(list, n33);
 
-    TEST_ASSERT(lu_table_list_count(&s1->values) == 1);
+    TEST_ASSERT(lu_lim_list_count(&s1->values) == 1);
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-	static void w_layer_2_datum_node_before_destroy(Lu_Table_List table_list, Lu_L_Node node)
+	static void w_layer_2_datum_node_before_destroy(Lu_Lim_List lim_list, Lu_L_Node node)
 	{
 		lu_assert(node);
 
@@ -28,8 +28,8 @@
 		self->h					= w_rec->config.height;
 		self->d 				= w_rec->config.depth; 
 
-		self->datum 			= lu_table_list_create(g_mem_temp, w_rec->config.hold_blocks_size); 
-		lu_user_assert(self->datum, "Cannot allocate Lu_Table_List");
+		self->datum 			= lu_lim_list_create(g_mem_temp, w_rec->config.hold_blocks_size); 
+		lu_user_assert(self->datum, "Cannot allocate Lu_Lim_List");
 
 		self->datum->node_before_destroy = w_layer_2_datum_node_before_destroy;
 
@@ -42,7 +42,7 @@
 	{
 		lu_assert(self);
 
-		lu_table_list_destroy(self->datum);
+		lu_lim_list_destroy(self->datum);
 		w_layer_deinit(&self->super);
 	}
 
@@ -52,12 +52,12 @@
 		lu_assert(data);
 
 		// if we cannot hold anymore we dispose oldest data (FIFO)
-		if (lu_table_list_count(self->datum) >= lu_table_list_size(self->datum))
+		if (lu_lim_list_count(self->datum) >= lu_lim_list_size(self->datum))
 			++self->datum_lost_count;
 
 		Lu_Data dest = lu_data_create(g_mem_temp);
 
 		lu_data_deep_copy(dest, data);
 
-		lu_table_list_append(self->datum, (lu_p_void) data);
+		lu_lim_list_append(self->datum, (lu_p_void) data);
 	}

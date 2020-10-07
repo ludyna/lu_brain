@@ -16,7 +16,7 @@ Lu_S_Node s_node_create(Mem_Table mem_table, lu_size limit_size)
 
 void s_node_destroy(Mem_Table mem_table, Lu_S_Node* s_node)
 {
-	lu_table_list_node_destroy_all(&(*s_node)->values);
+	lu_lim_list_node_destroy_all(&(*s_node)->values);
 	mem_record_free(mem_table, (lu_p_byte) *s_node);
 	*s_node = NULL;
 }
@@ -174,11 +174,11 @@ static void s_list_remove(Lu_S_List self, Lu_S_Node bottom)
 {
 	if (bottom == NULL) return;
 
-	Lu_Table_List values = &bottom->values;
-	if (lu_table_list_count(values) > 0)
+	Lu_Lim_List values = &bottom->values;
+	if (lu_lim_list_count(values) > 0)
 	{
-		lu_assert(lu_table_list_node_last(values) != NULL);
-		lu_table_list_node_remove(values, lu_table_list_node_last(values));
+		lu_assert(lu_lim_list_node_last(values) != NULL);
+		lu_lim_list_node_remove(values, lu_lim_list_node_last(values));
 		goto end;
 	}
 
@@ -236,7 +236,7 @@ void s_list_debug(Lu_S_List self)
 			else 
 			{
 				//lu_debug("%.1f", (float)(*curr->value));	
-				if(lu_table_list_count(&curr->values) > 0) lu_debug("(%ld)", lu_table_list_count(&curr->values) + 1);
+				if(lu_lim_list_count(&curr->values) > 0) lu_debug("(%ld)", lu_lim_list_count(&curr->values) + 1);
 				lu_debug(", ");
 			}
 
@@ -301,7 +301,7 @@ static Lu_S_Node s_list_insert(Lu_S_List self, lu_p_void value)
 
 	if (eq)
 	{
-		lu_table_list_append(&path[0]->values, value);
+		lu_lim_list_append(&path[0]->values, value);
 	}	
 	else 
 	{

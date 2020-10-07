@@ -7,7 +7,7 @@
 
 	struct lu_s_node
 	{
-		struct lu_table_list 	values;
+		struct lu_lim_list 	values;
 
 		Lu_S_Node 				next;
 		Lu_S_Node 				prev;
@@ -21,7 +21,7 @@
 
 	static inline void s_node_init(Lu_S_Node self, Mem_Table mem_table, lu_size limit_size)
 	{
-		lu_table_list_init(&self->values, mem_table, limit_size);
+		lu_lim_list_init(&self->values, mem_table, limit_size);
 
 		self->next 				= NULL;
 		self->prev				= NULL;
