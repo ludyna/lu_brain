@@ -38,7 +38,7 @@
 		mem_free(self->super.mem, (lu_p_byte) self);
 	}
 
-	Lu_L_Node lu_table_l_node_create(Lu_List list)
+	Lu_L_Node lu_lim_list_l_node_create(Lu_List list)
 	{
 		lu_assert(list);
 
@@ -53,7 +53,7 @@
 		return node;
 	}
 
-	void lu_table_l_node_destroy(Lu_List list, Lu_L_Node* l_node)
+	void lu_lim_list_l_node_destroy(Lu_List list, Lu_L_Node* l_node)
 	{
 		lu_assert(list);
 		lu_assert(*l_node);
@@ -73,12 +73,12 @@
 		if (lu_lim_list_count(self) >= self->max_size)
 			lu_lim_list_node_remove(self, lu_list_node_first(&self->super));
 
-		return lu_list_node_append_with_creator((Lu_List) self, value, lu_table_l_node_create);
+		return lu_list_node_append_with_creator((Lu_List) self, value, lu_lim_list_l_node_create);
 	}
 	
 	void lu_lim_list_node_remove(Lu_Lim_List self, Lu_L_Node node)
 	{
-		lu_list_node_remove_with_destroyer((Lu_List) self, node, lu_table_l_node_destroy);
+		lu_list_node_remove_with_destroyer((Lu_List) self, node, lu_lim_list_l_node_destroy);
 	}
 
 	void lu_lim_list_node_destroy_all(Lu_Lim_List self)
