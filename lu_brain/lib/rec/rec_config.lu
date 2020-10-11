@@ -11,7 +11,7 @@
 			.depth 				= 1,
 			.max_blocks_size 	= 16,
 			.hold_blocks_size 	= 4, 
-			.transf_algorithm 	= 1,
+			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
 			.v_min 				= 0,
 			.v_max 				= 1,
@@ -29,6 +29,7 @@
 			.depth 				= 1,
 			.max_blocks_size 	= 16,
 			.hold_blocks_size 	= 4, 
+			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
 			.v_min 				= 0,
 			.v_max 				= 255,
@@ -49,6 +50,7 @@
 			.depth 				= 1,
 			.max_blocks_size 	= 16,
 			.hold_blocks_size 	= 4, 
+			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
 			.v_min 				= 0,
 			.v_max 				= 10,

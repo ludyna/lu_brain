@@ -73,6 +73,11 @@
 
 	// Lu_Rec_Config 
 
+	enum lu_trans_algorithm {
+		LU_TA_NONE = 0,
+		LU_TA_STATIC_IMAGE = 1
+	};
+
 	struct lu_rec_config {
 		lu_size 		width;
 		lu_size 		height;
