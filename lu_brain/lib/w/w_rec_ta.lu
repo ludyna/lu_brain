@@ -5,7 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // W_Rec (Data) Transformation Algorithms
 
+	static void w_ret_ta_none(W_Rec self, Lu_Data data)
+	{
+		w_layer_2_hold(&self->layer_0, data);
+	}
+
+
 	static void w_rec_ta_static_image(W_Rec self, Lu_Data data)
 	{
-		
+
 	} 

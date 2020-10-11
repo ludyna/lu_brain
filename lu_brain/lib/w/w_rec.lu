@@ -43,13 +43,10 @@
 		lu_user_assert_void(self, "W_Rec is NULL");
 		lu_user_assert_void(data, "Lu_Data is NULL");
 
-		W_Layer_2 	layer_0 = &self->layer_0;
-
-
 		switch (self->config.transf_algorithm)
 		{
 			case LU_TA_NONE:
-				w_layer_2_hold(layer_0, data);
+				
 				break;
 			case LU_TA_STATIC_IMAGE:
 				w_rec_ta_static_image(self, data);
