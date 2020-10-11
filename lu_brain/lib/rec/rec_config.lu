@@ -11,6 +11,7 @@
 			.depth 				= 1,
 			.max_blocks_size 	= 16,
 			.hold_blocks_size 	= 4, 
+			.transf_algorithm 	= 1,
 			
 			.v_min 				= 0,
 			.v_max 				= 1,

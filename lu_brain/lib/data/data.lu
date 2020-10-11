@@ -29,25 +29,25 @@
 	{
 		lu_assert(dest);
 		lu_assert(src);
+
 		lu_assert(dest->w == 0 || dest->w == src->w);
 		lu_assert(dest->h == 0 || dest->h == src->h);
 		lu_assert(dest->d == 0 || dest->d == src->d);
+		lu_assert(dest->values == NULL);
 
-		
+		lu_size x;
+		lu_size y;
+		lu_size z;
 
-		// for (y = 0; y < data->h; y++)
-		// 	for(x = 0; x < data->w; x++)
-		// 	{
-		// 		for(z = 0; z < data->d; z++)
-		// 		{
-		// 			v = lu_data_value_get(data, x, y, z);
+		dest->w = src->w;
+		dest->h = src->h;
+		dest->d = src->d;
 
-		// 			// lu_debug("%f", v);
+		if (src->values)
+			for(z = 0; z < src->d; z++)
+				for (y = 0; y < src->h; y++)
+					for(x = 0; x < src->w; x++)
+						lu_data_value_set(dest, x, y, z, lu_data_value_get(src, x, y, z));
 
-		// 			//w_cell_3 = (W_Cell_3) w_layer_cell_get(self->layer_0, x, y, z);
-
-		// 			//w_cell_3_save_value(w_cell_3, v);
-		// 		}
-		// 	}
 		return dest;
 	}

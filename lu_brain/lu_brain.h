@@ -80,6 +80,7 @@
 
 		lu_size 		max_blocks_size;
 		lu_size 		hold_blocks_size;
+		lu_size 		transf_algorithm;
 
 		lu_value 		v_min;
 		lu_value 		v_max;
