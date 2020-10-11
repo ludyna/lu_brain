@@ -1,0 +1,11 @@
+/**
+	Copyright © 2020 Oleh Ihorovych Novosad 
+*/
+ 
+///////////////////////////////////////////////////////////////////////////////
+// W_Rec (Data) Transformation Algorithms
+
+	static void w_rec_ta_static_image(W_Rec self, Lu_Data data)
+	{
+		
+	} 
