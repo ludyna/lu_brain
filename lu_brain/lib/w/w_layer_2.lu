@@ -55,9 +55,7 @@
 		if (lu_lim_list_count(self->datum) >= lu_lim_list_size(self->datum))
 			++self->datum_lost_count;
 
-		Lu_Data dest = lu_data_create(g_mem_temp);
+		Lu_Data dest = lu_data_create_via_deep_copy(g_mem_temp, data);
 
-		lu_data_deep_copy(dest, data);
-
-		lu_lim_list_append(self->datum, (lu_p_void) data);
+		lu_lim_list_append(self->datum, (lu_p_void) dest);
 	}

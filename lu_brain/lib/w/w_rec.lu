@@ -46,7 +46,7 @@
 		switch (self->config.transf_algorithm)
 		{
 			case LU_TA_NONE:
-				
+				w_rec_ta_none(self, data);
 				break;
 			case LU_TA_STATIC_IMAGE:
 				w_rec_ta_static_image(self, data);
