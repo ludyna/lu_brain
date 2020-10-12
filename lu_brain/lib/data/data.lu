@@ -29,13 +29,17 @@
 		return self;
 	}
 
-	static Lu_Data lu_data_create_via_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift) 
+	Lu_Data lu_data_create_via_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift) 
 	{
 		lu_assert(mem);
 		lu_data_validate_exists(src);
 
-		lu_assert(x_shift < src->w);
-		lu_assert(y_shift < src->h);
+		lu_int w = (lu_int) src->w;
+		lu_int h = (lu_int) src->h;
+		lu_int d = (lu_int) src->d;
+
+		lu_assert(x_shift < w);
+		lu_assert(y_shift < h);
 
 		Lu_Data self = (Lu_Data) mem_alloc(mem, sizeof(struct lu_data));
 		lu_assert(self);
@@ -45,21 +49,53 @@
 		self->d 		= src->d;
 		self->values 	= (lu_p_value) mem_alloc(mem, sizeof(lu_value) * self->w * self->h * self->d);
 
-		lu_size x;
-		lu_size y;
-		lu_size z;
-		for(z = 0; z < src->d; z++)
-			for (y = 0; y < src->h; y++)
-				for(x = 0; x < src->w; x++)
-					lu_data_value_set(self, x, y, z, lu_data_value_get(src, x, y, z));
+		lu_int x;
+		lu_int y;
+		lu_int z;
+		lu_int sx;
+		lu_int sy;
+		lu_int tx; 
+		lu_int ty;
+
+		lu_int x_start 	= x_shift;
+		lu_int x_end 	= w + x_shift;
+
+		lu_int y_start 	= y_shift;
+		lu_int y_end 	= h + y_shift;
+
+		for(z = 0; z < d; z++)
+			for (y = y_start; y < y_end; y++)
+				for(x = x_start; x < x_end; x++)
+				{
+					sx = x;
+					sy = y;
+
+					if (sx < 0) sx = 0; 
+					if (sx >= self->w) sx = self->w - 1;
+					if (sy < 0) sy = 0;
+					if (sy >= self->h) sy = self->h - 1;
+
+					tx = x - x_shift;
+					ty = y - y_shift;
+
+					lu_debug("\n %d - %d = %d", x, x_shift, tx);
+
+					lu_assert(tx >= 0);
+					lu_assert(tx < self->w);
+					lu_assert(ty >= 0);
+					lu_assert(ty < self->h);
+
+					lu_data_value_set(self, tx, ty, z, lu_data_value_get(src, sx, sy, z));
+				}
+					
 
 
-		return NULL;
+		return self;
 	}
 
 
 
-	static void lu_data_destroy(Lu_Data self, Mem mem)
+	void lu_data_destroy(Lu_Data self, Mem mem)
 	{
 		lu_assert(self);
 		lu_assert(mem);
@@ -77,7 +113,32 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Debug
 
-	static void lu_data_debug(Lu_Data d)
+	void lu_data_debug(Lu_Data self)
 	{
+		lu_assert(self);
 
+		lu_debug("\nData: ");
+		lu_debug("\n\tw: %d", self->w); 
+		lu_debug("\n\th: %d", self->h);
+		lu_debug("\n\td: %d", self->d);
+
+		if (self->values)
+		{
+			lu_size x;
+			lu_size y;
+			lu_size z;
+			for (z = 0; z < self->d; z++)
+				for (y = 0; y < self->h; y++)
+				{
+					lu_debug("\n\t");
+					for (x = 0; x < self->w; x++)
+					{
+						lu_debug("%.2f, ", lu_data_value_get(self, x, y, z));
+					}
+				}
+		}
+		else
+		{
+			lu_debug("\tvalues: NULL");
+		}
 	}

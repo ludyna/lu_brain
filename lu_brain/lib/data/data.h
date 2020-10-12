@@ -45,14 +45,14 @@
 	{
 		lu_data_set(self, 0, 0, 0, NULL);
 	}
-	
+
 ///////////////////////////////////////////////////////////////////////////////
 // Create, detsroy
 
 	static Lu_Data lu_data_create_via_deep_copy(Mem, Lu_Data src);
-	static Lu_Data lu_data_create_via_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift);
+	Lu_Data lu_data_create_via_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift);
 
-	static void lu_data_destroy(Lu_Data, Mem);
+	void lu_data_destroy(Lu_Data, Mem);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Validators
@@ -82,4 +82,4 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Debug
 
-	static void lu_data_debug(Lu_Data);
+	void lu_data_debug(Lu_Data);
