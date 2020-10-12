@@ -78,7 +78,7 @@
 					tx = x - x_shift;
 					ty = y - y_shift;
 
-					lu_debug("\n %d - %d = %d", x, x_shift, tx);
+					// lu_debug("\n %d - %d = %d", x, x_shift, tx);
 
 					lu_assert(tx >= 0);
 					lu_assert(tx < self->w);
@@ -87,9 +87,7 @@
 
 					lu_data_value_set(self, tx, ty, z, lu_data_value_get(src, sx, sy, z));
 				}
-					
-
-
+			
 		return self;
 	}
 
