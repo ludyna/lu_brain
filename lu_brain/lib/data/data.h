@@ -22,7 +22,7 @@
 	static inline lu_bool lu_data_is_empty(Lu_Data self) { return self->values == NULL; }
  
 ///////////////////////////////////////////////////////////////////////////////
-// Init, create, detsroy
+// Init
 
 	static inline Lu_Data lu_data_set(Lu_Data self, lu_size w, lu_size h, lu_size d, lu_p_value values)
 	{
@@ -41,13 +41,18 @@
 		return self;
 	}
 
-	static Lu_Data lu_data_create_via_deep_copy(Mem, Lu_Data src);
-	static void lu_data_destroy(Lu_Data, Mem);
-
 	static inline void lu_data_reset(Lu_Data self)
 	{
 		lu_data_set(self, 0, 0, 0, NULL);
 	}
+	
+///////////////////////////////////////////////////////////////////////////////
+// Create, detsroy
+
+	static Lu_Data lu_data_create_via_deep_copy(Mem, Lu_Data src);
+	static Lu_Data lu_data_create_via_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift);
+
+	static void lu_data_destroy(Lu_Data, Mem);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Validators
@@ -72,11 +77,6 @@
 
 		return dest;
 	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Transformations
-
-	static Lu_Data lu_data_create_by_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift);
 
 
 ///////////////////////////////////////////////////////////////////////////////

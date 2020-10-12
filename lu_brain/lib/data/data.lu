@@ -13,15 +13,14 @@
 		Lu_Data self = (Lu_Data) mem_alloc(mem, sizeof(struct lu_data));
 		lu_assert(self);
 
-		lu_size x;
-		lu_size y;
-		lu_size z;
-
 		self->w 		= src->w;
 		self->h 		= src->h;
 		self->d 		= src->d;
 		self->values 	= (lu_p_value) mem_alloc(mem, sizeof(lu_value) * self->w * self->h * self->d);
 
+		lu_size x;
+		lu_size y;
+		lu_size z;
 		for(z = 0; z < src->d; z++)
 			for (y = 0; y < src->h; y++)
 				for(x = 0; x < src->w; x++)
@@ -29,6 +28,36 @@
 
 		return self;
 	}
+
+	static Lu_Data lu_data_create_via_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift) 
+	{
+		lu_assert(mem);
+		lu_data_validate_exists(src);
+
+		lu_assert(x_shift < src->w);
+		lu_assert(y_shift < src->h);
+
+		Lu_Data self = (Lu_Data) mem_alloc(mem, sizeof(struct lu_data));
+		lu_assert(self);
+
+		self->w 		= src->w;
+		self->h 		= src->h;
+		self->d 		= src->d;
+		self->values 	= (lu_p_value) mem_alloc(mem, sizeof(lu_value) * self->w * self->h * self->d);
+
+		lu_size x;
+		lu_size y;
+		lu_size z;
+		for(z = 0; z < src->d; z++)
+			for (y = 0; y < src->h; y++)
+				for(x = 0; x < src->w; x++)
+					lu_data_value_set(self, x, y, z, lu_data_value_get(src, x, y, z));
+
+
+		return NULL;
+	}
+
+
 
 	static void lu_data_destroy(Lu_Data self, Mem mem)
 	{
@@ -44,22 +73,6 @@
 		mem_free(mem, (lu_p_byte) self);
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Copy
-
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Transformations
-
-	static Lu_Data lu_data_create_by_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift) 
-	{
-		lu_assert(mem);
-		lu_data_validate_exists(src);
-
-
-		return NULL;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Debug
