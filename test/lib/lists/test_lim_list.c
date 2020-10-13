@@ -81,7 +81,7 @@ void test_lim_list(void)
 
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
-    mem_debugger_destroy(md);
+    mem_debugger_destroy(md, true);
 }
 
 void test_lim_list_max_size(void)

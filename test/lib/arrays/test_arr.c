@@ -1,5 +1,5 @@
 #include "unity.h"
-#include "brain/brain.h"
+#include "lib/_module.h"
 
 void setUp(void)
 {
@@ -31,8 +31,8 @@ void test_arr1(void)
     TEST_ASSERT( *((int*)(arr1->items[1])) == v2);
     TEST_ASSERT( *((int*)(arr1->items[2])) == v3);
 
-    arr_destroy(arr1, mem);
-    arr_destroy(arr2, mem);
+    arr_destroy(arr1);
+    arr_destroy(arr2);
 }
 
 void test_arr2(void)
@@ -48,5 +48,5 @@ void test_arr2(void)
 
     TEST_ASSERT(arr_get(arr1, 2) == NULL);
 
-    arr_destroy(arr1, mem);
+    arr_destroy(arr1);
 }
