@@ -74,11 +74,10 @@ void test_lim_list(void)
     TEST_ASSERT(list->super.first == NULL);
     TEST_ASSERT(list->super.last == NULL);
 
-    mem_debugger_print(md);
-
     lu_lim_list_destroy(list);
     mem_destroy(mem, g_mem_temp);
 
+    //mem_debugger_print(md);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
     mem_debugger_destroy(md, true);
@@ -86,6 +85,7 @@ void test_lim_list(void)
 
 void test_lim_list_max_size(void)
 {
+    Mem_Debugger md = mem_debugger_create(g_mem_temp);
     Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
 
     Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -111,4 +111,7 @@ void test_lim_list_max_size(void)
 
     lu_lim_list_destroy(list);
     mem_destroy(mem, g_mem_temp);
+
+    TEST_ASSERT(mem_debugger_is_all_clear(md));
+    mem_debugger_destroy(md, true);
 }

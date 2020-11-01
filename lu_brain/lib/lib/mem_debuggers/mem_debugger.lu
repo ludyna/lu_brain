@@ -164,7 +164,7 @@
 		{
 			lu_debug_message_internal(file, line, "\nMem_Debugger: Trying to free NULL!");
 			return;
-		} 
+		}
 
 		//lu_debug("\nMEM DEBUGGER REGISTER FREE");
 		lu_assert(imd);
@@ -203,6 +203,5 @@
 
 		self->freed_size += item->size;
 		++self->freed_count;
-
 		lu_md_item_destroy(item, false);
 	}	
