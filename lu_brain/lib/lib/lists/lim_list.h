@@ -21,6 +21,7 @@
 
 	static inline lu_size lu_lim_list_count(Lu_Lim_List self) { return lu_list_count(&self->super); }
 	static inline lu_size lu_lim_list_size(Lu_Lim_List self) { return self->max_size; }
+	static inline lu_bool lu_lim_list_is_empty(Lu_Lim_List self) { return lu_list_count(&self->super) == 0; }
 
 	static inline Lu_Lim_List lu_lim_list_init(Lu_Lim_List self, Mem_Table mem_table, lu_size limit_size)
 	{

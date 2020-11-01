@@ -62,6 +62,11 @@
 	}
 
 	static void w_layer_2_hold(W_Layer_2 self, Lu_Data data);
+	static inline lu_bool w_layer_2_is_empty(W_Layer_2 self) { return lu_lim_list_is_empty(self->datum); }
+	static inline lu_bool w_layer_2_is_full(W_Layer_2 self) { return lu_lim_list_count(self->datum) >= lu_lim_list_size(self->datum); }
+
+	static void w_layer_2_fire_save(W_Layer_2 self);
+	static void w_layer_2_reset(W_Layer_2 self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Rec

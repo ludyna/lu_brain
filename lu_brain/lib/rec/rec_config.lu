@@ -10,7 +10,7 @@
 			// LU_RC_MONOCHROME1_IMAGE
 			.depth 				= 1,
 			.max_blocks_size 	= 16,
-			.hold_blocks_size 	= 4, 
+			.hold_blocks_size 	= 2, 
 			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
 			.v_min 				= 0,
