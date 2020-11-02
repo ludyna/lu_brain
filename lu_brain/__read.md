@@ -1,2 +1,2 @@
 
-In this folder is public interface for library users.
+This folder contains public interface for library users.
