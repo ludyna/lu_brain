@@ -8,13 +8,7 @@
 /build
 sub.sublime-project
 
-test/test_con.c
-test/test_con3d.c
-test/test_con_t.c
-
 notes.md
 
 /examples/semeion/build
 
-#/lu_brain/lib/n
-#/lu_brain/lib/w
