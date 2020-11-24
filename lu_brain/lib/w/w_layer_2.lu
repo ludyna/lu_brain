@@ -38,9 +38,21 @@
 		return self;
 	}
 
+ 	static void w_layer_2_datum_destroy_values(Lu_List self, lu_p_void value, lu_p_void p1)
+ 	{
+ 		if (value == NULL) return;
+
+ 		Lu_Data data = (Lu_Data) value;
+
+ 		
+ 	}
+
 	static void w_layer_2_deinit(W_Layer_2 self)
 	{
 		lu_assert(self);
+
+		if (!lu_list_is_empty((Lu_List) self->datum))
+			lu_list_each_1p((Lu_List) self->datum, w_layer_2_datum_destroy_values, NULL);
 
 		lu_lim_list_destroy(self->datum);
 		w_layer_deinit(&self->super);

@@ -34,6 +34,7 @@
 	void lu_lim_list_destroy(Lu_Lim_List self)
 	{
 		lu_assert(self);
+
 		mem_table_destroy(self->mem_table);
 		mem_free(self->super.mem, (lu_p_byte) self);
 	}
@@ -81,7 +82,3 @@
 		lu_list_node_remove_with_destroyer((Lu_List) self, node, lu_lim_list_l_node_destroy);
 	}
 
-	void lu_lim_list_node_destroy_all(Lu_Lim_List self)
-	{
-		lu_debug_message("NOT IMPLEMENTED");
-	}

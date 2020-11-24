@@ -45,5 +45,3 @@
 	
 	Lu_L_Node lu_lim_list_append(Lu_Lim_List, lu_p_void);
 	void lu_lim_list_node_remove(Lu_Lim_List, Lu_L_Node);
-
-	void lu_lim_list_node_destroy_all(Lu_Lim_List self);
