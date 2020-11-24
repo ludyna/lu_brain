@@ -5,18 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create, destroy
 
-	static Lu_Data lu_data_create_via_deep_copy(Mem mem, Lu_Data src)
+	static Lu_Data lu_data_create_via_deep_copy_internal(Mem mem, Lu_Data src, const char* func, const char* file, int line)
 	{
 		lu_assert(mem);
 		lu_data_validate_exists(src);
 
-		Lu_Data self = (Lu_Data) mem_alloc(mem, sizeof(struct lu_data));
+		Lu_Data self = (Lu_Data) mem->alloc(mem, sizeof(struct lu_data), func, file, line);
 		lu_assert(self);
 
 		self->w 		= src->w;
 		self->h 		= src->h;
 		self->d 		= src->d;
-		self->values 	= (lu_p_value) mem_alloc(mem, sizeof(lu_value) * self->w * self->h * self->d);
+		self->values 	= (lu_p_value) mem->alloc(mem, sizeof(lu_value) * self->w * self->h * self->d, func, file, line);
 
 		lu_size x;
 		lu_size y;
@@ -29,7 +29,7 @@
 		return self;
 	}
 
-	Lu_Data lu_data_create_via_shift(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift) 
+	Lu_Data lu_data_create_via_shift_internal(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line) 
 	{
 		lu_assert(mem);
 		lu_data_validate_exists(src);
@@ -41,13 +41,13 @@
 		lu_assert(x_shift < w);
 		lu_assert(y_shift < h);
 
-		Lu_Data self = (Lu_Data) mem_alloc(mem, sizeof(struct lu_data));
+		Lu_Data self = (Lu_Data) mem->alloc(mem, sizeof(struct lu_data), func, file, line);
 		lu_assert(self);
 
 		self->w 		= src->w;
 		self->h 		= src->h;
 		self->d 		= src->d;
-		self->values 	= (lu_p_value) mem_alloc(mem, sizeof(lu_value) * self->w * self->h * self->d);
+		self->values 	= (lu_p_value) mem->alloc(mem, sizeof(lu_value) * self->w * self->h * self->d, func, file, line);
 
 		lu_int x;
 		lu_int y;

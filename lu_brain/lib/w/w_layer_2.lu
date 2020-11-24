@@ -44,7 +44,7 @@
 
  		Lu_Data data = (Lu_Data) value;
 
- 		
+ 		lu_data_destroy(data, g_mem_temp);
  	}
 
 	static void w_layer_2_deinit(W_Layer_2 self)
