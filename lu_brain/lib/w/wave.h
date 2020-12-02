@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// W_Cell 
+// W_Cell - w_
 
 	struct w_cell {
 		N_Cell 					neu;
@@ -11,7 +11,7 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// W_Cell_3
+// W_Cell_3 w_receptor_cell (c1, p, c2)
 
 	struct w_cell_3 {
 		struct w_cell 			super;
@@ -20,8 +20,8 @@
 
 	static void w_cell_3_save_value(W_Cell_3 w_cell_3, lu_value value);
  
- ///////////////////////////////////////////////////////////////////////////////
-// W_Layer
+///////////////////////////////////////////////////////////////////////////////
+// W_Layer active w_list_layer
 
 	struct w_layer {
 		// vlasnyk
@@ -35,7 +35,7 @@
 	static void w_layer_deinit(W_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// W_Layer_2
+// W_Layer_2 datum layer
 
 	struct w_layer_2 {
 		// nasliduvania potribne shob my mohly vykorystovuvaty w_layer_2 yak w_layer
@@ -65,7 +65,7 @@
 	static inline lu_bool w_layer_2_is_empty(W_Layer_2 self) { return lu_lim_list_is_empty(self->datum); }
 	static inline lu_bool w_layer_2_is_full(W_Layer_2 self) { return lu_lim_list_count(self->datum) >= lu_lim_list_size(self->datum); }
 
-	static void w_layer_2_fire_save(W_Layer_2 self);
+	static void w_layer_2_save(W_Layer_2 self);
 	static void w_layer_2_reset(W_Layer_2 self);
 
 ///////////////////////////////////////////////////////////////////////////////

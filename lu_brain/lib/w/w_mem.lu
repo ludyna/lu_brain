@@ -83,6 +83,7 @@
 
 		lu_size recs_count = lu_story_recs_count(story);
 
+		// TBD: paralelize here
 		while(curr)
 		{
 			for(rec_i = 0; rec_i < recs_count; rec_i++)

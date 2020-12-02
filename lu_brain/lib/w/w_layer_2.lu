@@ -70,7 +70,7 @@
 		lu_lim_list_append(self->datum, (lu_p_void) data);
 	}
 
-	static void w_layer_2_fire_save(W_Layer_2 self)
+	static void w_layer_2_save(W_Layer_2 self)
 	{
 
 	}

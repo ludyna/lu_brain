@@ -58,7 +58,7 @@
 
 		if (w_layer_2_is_full(&self->layer_0))
 		{
-			w_layer_2_fire_save(&self->layer_0);
+			w_layer_2_save(&self->layer_0);
 
 			w_layer_2_reset(&self->layer_0);
 		}
