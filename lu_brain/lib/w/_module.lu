@@ -1,7 +1,6 @@
 
 #include "w_cell_3.lu"
 #include "w_layer.lu"
-#include "w_layer_2.lu"
 #include "w_rec_ta.lu"
 #include "w_rec.lu"
 #include "wave_config.lu"

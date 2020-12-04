@@ -35,40 +35,6 @@
 	static void w_layer_deinit(W_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// W_Layer_2 datum layer
-
-	struct w_layer_2 {
-		// nasliduvania potribne shob my mohly vykorystovuvaty w_layer_2 yak w_layer
-		struct w_layer 			super;
-
-		lu_size 				w;
-		lu_size 				h;
-		lu_size 				d;
-
-		lu_size 				datum_lost_count;
-		Lu_Lim_List 			datum;
-	};
-
-	static W_Layer_2 w_layer_2_init(W_Layer_2, W_Rec);
-	static void w_layer_2_deinit(W_Layer_2 self); 
-
-	static inline W_Cell w_layer_2_cell_get(W_Layer_2 self, lu_size x, lu_size y, lu_size z)
-	{
-		lu_user_assert(x < self->w, "x index out of range");
-		lu_user_assert(y < self->h, "y index out of range");
-		lu_user_assert(z < self->d, "z index out of range");
-
-		return self->super.cells[z * self->w * self->h + y * self->w + x]; 
-	}
-
-	static void w_layer_2_hold(W_Layer_2 self, Lu_Data data);
-	static inline lu_bool w_layer_2_is_empty(W_Layer_2 self) { return lu_lim_list_is_empty(self->datum); }
-	static inline lu_bool w_layer_2_is_full(W_Layer_2 self) { return lu_lim_list_count(self->datum) >= lu_lim_list_size(self->datum); }
-
-	static void w_layer_2_save(W_Layer_2 self);
-	static void w_layer_2_reset(W_Layer_2 self);
-
-///////////////////////////////////////////////////////////////////////////////
 // W_Rec
 
 	struct w_rec {
@@ -79,7 +45,10 @@
 		S_Rec 							s_rec;	
 		struct lu_rec_config 			config;  
 		
-		struct w_layer_2 				layer_0;
+		lu_size 						datum_lost_count;
+		Lu_Lim_List 					datum;
+
+		// struct w_layer_2 				layer_0;
 		struct w_layer 					layer_1;
 		struct w_layer 					layer_2;
 	};
@@ -88,6 +57,13 @@
 	static W_Rec w_rec_create(W_Mem mem, S_Rec s_rec);
 	static void w_rec_destroy(W_Rec self);
  	static void w_rec_data_save(W_Rec self, Lu_Data data, lu_size block_i);
+
+ 	static void w_rec_hold(W_Rec self, Lu_Data data);
+	static inline lu_bool w_rec_is_empty(W_Rec self) { return lu_lim_list_is_empty(self->datum); }
+	static inline lu_bool w_rec_is_full(W_Rec self) { return lu_lim_list_count(self->datum) >= lu_lim_list_size(self->datum); }
+
+	static void w_rec_save(W_Rec self);
+	static void w_rec_reset(W_Rec self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config
@@ -113,6 +89,9 @@
 
 		// Internal
 		Arr 					recs;
+
+		// BH
+		Mem_Table 				cells;				
 	};
 	
 	// w_mem.lu

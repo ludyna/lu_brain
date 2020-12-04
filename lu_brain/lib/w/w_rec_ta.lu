@@ -9,7 +9,7 @@
 	{
 		Lu_Data dest = lu_data_create_via_deep_copy(g_mem_temp, data);
 
-		w_layer_2_hold(&self->layer_0, dest);
+		w_rec_hold(self, dest);
 	}
 
 
@@ -17,13 +17,13 @@
 	{
 		lu_assert(self);
 		lu_assert(data);
-		lu_assert(w_layer_2_is_empty(&self->layer_0)); 	// if not empty, something is probably wrong
+		lu_assert(w_rec_is_empty(self)); 	// if not empty, something is probably wrong
 
 		Lu_Data dest = lu_data_create_via_deep_copy(g_mem_temp, data);
 
-		w_layer_2_hold(&self->layer_0, dest);
+		w_rec_hold(self, dest);
 
 		dest = lu_data_create_via_shift(g_mem_temp, data, 1, 1);
 
-		w_layer_2_hold(&self->layer_0, dest);
+		w_rec_hold(self, dest);
 	} 
