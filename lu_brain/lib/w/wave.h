@@ -103,6 +103,8 @@
 
 	static void w_mem_save_async(W_Mem self, Lu_Story story);
 
+	// static void w_mem_propagate(W_Mem self, 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Wave 
 
