@@ -1,5 +1,5 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad 
+	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
 	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec rec)

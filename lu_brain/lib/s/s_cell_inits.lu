@@ -1,5 +1,5 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad 
+	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
 	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer layer, lu_size l_ix)

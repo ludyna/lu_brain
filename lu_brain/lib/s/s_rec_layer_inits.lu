@@ -1,5 +1,5 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad 
+	Copyright © 2021 Oleh Ihorovych Novosad 
 */  
 
 	static void s_rec_layers_init(S_Rec self)

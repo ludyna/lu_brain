@@ -1,7 +1,6 @@
 /**
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
- 
 
-#include "md_item.lu"
-#include "mem_debugger.lu"
+#include "_typedefs.h"
+#include "hnn_table.h"

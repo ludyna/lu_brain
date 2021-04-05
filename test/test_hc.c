@@ -1,16 +1,10 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad 
+	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
 #include "unity.h"
 
-// #include <limits.h> 
 #include <stdio.h>
-// #include <stdint.h>
-// #include <stdlib.h>
-// #include <math.h>
-// #include <float.h>
-// #include <stdarg.h>
 #include <string.h>
 
 #include "lib/_module.h"

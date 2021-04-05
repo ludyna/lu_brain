@@ -1,5 +1,5 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad 
+	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
 lu_bool g_user_assert = LU_USER_ASSERT_DEFAULT;

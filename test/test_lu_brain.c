@@ -1,5 +1,5 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad 
+	Copyright © 2021 Oleh Ihorovych Novosad 
 
 	test_lu_brain tests public interfaces (from library user point of view) and includes 
 	general integration tests. It uses nouns with Lu_ prefix only and methods with lu_ prefixes 

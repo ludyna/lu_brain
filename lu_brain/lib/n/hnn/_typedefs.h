@@ -1,7 +1,5 @@
 /**
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
- 
 
-#include "md_item.lu"
-#include "mem_debugger.lu"
+typedef struct hnn_table* Hnn_Table;

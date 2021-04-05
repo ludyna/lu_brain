@@ -1,5 +1,5 @@
 /**
-	Copyright © 2020 Oleh Ihorovych Novosad
+	Copyright © 2021 Oleh Ihorovych Novosad
 	Ludyna Brain API
 */
 #ifndef _LU_BRAIN_PUB_H
