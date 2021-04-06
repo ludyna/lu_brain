@@ -2,4 +2,6 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
+#include "hnn_cell.lu"
+#include "hnn_cell_allocator.lu"
 #include "hnn_table.lu"
