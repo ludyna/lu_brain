@@ -25,13 +25,6 @@ void tearDown(void)
 	lu_debug("\ntearDown");
 }
 
-struct hnn_cell {
-	lu_size i;
-};
-
-typedef struct hnn_cell* Hnn_Cell;
-
-
 void test_1(void) 
 {
 	Mem_Debugger md = mem_debugger_create(g_mem_temp);
