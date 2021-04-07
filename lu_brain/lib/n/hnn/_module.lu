@@ -3,5 +3,5 @@
 */
 
 #include "hnn_cell.lu"
-#include "hnn_cell_allocator.lu"
 #include "hnn_table.lu"
+#include "hnn_cell_allocator.lu"
