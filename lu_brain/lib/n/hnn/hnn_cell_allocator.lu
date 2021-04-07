@@ -5,19 +5,73 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Hnn_Cell_Allocator hnn_cell_allocator_create(
+	Hnn_Cell_Allocator hnn_cell_allocator_create(
 		lu_size size_in_cell_1,
 		lu_size size_in_cell_2,
 		lu_size size_in_cell_3, 
 		lu_size size_in_cell_4
 	)
 	{
-		
+		lu_assert(g_mem_temp); 
+		Mem mem = g_mem_temp;
+
+		Hnn_Cell_Allocator self = (Hnn_Cell_Allocator) mem_alloc(mem, sizeof(struct hnn_cell_allocator));
+		lu_assert(self);
+
+		self->mem = mem;
+		self->mt_cell = NULL;
+		self->mt_cell_2 = NULL;
+		self->mt_cell_3 = NULL;
+		self->mt_cell_4 = NULL;
+
+		if (size_in_cell_1 > 0)
+			self->mt_cell = mem_table_create(self->mem, sizeof(struct hnn_cell), size_in_cell_1, 0, MTF_FREEABLE);
+
+		if (size_in_cell_2 > 0)
+			self->mt_cell_2 = mem_table_create(self->mem, sizeof(struct hnn_cell_2), size_in_cell_2, 0, MTF_FREEABLE);
+
+		if (size_in_cell_3 > 0)
+			self->mt_cell_3 = mem_table_create(self->mem, sizeof(struct hnn_cell_3), size_in_cell_3, 0, MTF_FREEABLE);
+
+		if (size_in_cell_4 > 0)
+			self->mt_cell_4 = mem_table_create(self->mem, sizeof(struct hnn_cell_4), size_in_cell_4, 0, MTF_FREEABLE);
+
+
+		return self;
 	}
 
-	static void hnn_cell_allocator_destroy(Hnn_Cell_Allocator self)
+	void hnn_cell_allocator_destroy(Hnn_Cell_Allocator self)
 	{
+		lu_assert(self);
 
+		if (self->mt_cell)
+		{
+			mem_table_destroy(self->mt_cell);
+			self->mt_cell = NULL;
+		}
+
+		if (self->mt_cell_2)
+		{
+			mem_table_destroy(self->mt_cell_2);
+			self->mt_cell_2 = NULL;
+		}
+
+		if (self->mt_cell_3)
+		{
+			mem_table_destroy(self->mt_cell_3);
+			self->mt_cell_3 = NULL;
+		}
+
+		if (self->mt_cell_4)
+		{
+			mem_table_destroy(self->mt_cell_4);
+			self->mt_cell_4 = NULL;
+		}
+
+		Mem mem = self->mem;
+		self->mem = NULL;
+
+		mem_free(mem, (lu_p_byte) self);
 	}
 
 
