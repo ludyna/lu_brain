@@ -17,3 +17,5 @@ static Hnn_Cell_Allocator hnn_cell_allocator_create(
 	lu_size size_in_cell_3, 
 	lu_size size_in_cell_4
 );
+
+static void hnn_cell_allocator_destroy(Hnn_Cell_Allocator self);

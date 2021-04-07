@@ -1,11 +1,9 @@
 /**
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
-#ifndef _LU_NAME_H
-#define _LU_NAME_H
 
 ///////////////////////////////////////////////////////////////////////////////
-// Typedefs
+// 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
@@ -13,4 +11,3 @@
 	static Name name_create();
 	static void name_destroy(Name self);
 
-#endif // _LU_NAME_H
