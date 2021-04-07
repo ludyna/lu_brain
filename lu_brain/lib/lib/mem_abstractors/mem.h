@@ -100,3 +100,11 @@
 	{
 		return (self->records_start + index * self->record_size_in_bytes); 
 	} 
+
+	static inline lu_size mem_table_record_shift(Mem_Table self, lu_p_byte record_addr)
+	{
+		lu_assert(self);
+		lu_assert(record_addr);
+
+		return (lu_size) (record_addr - self->records_start);
+	}

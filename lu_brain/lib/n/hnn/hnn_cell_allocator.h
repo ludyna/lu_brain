@@ -42,3 +42,38 @@
 
 	Hnn_Cell_4 hnn_cell_4_alloc(Hnn_Cell_Allocator self);
 	void hnn_cell_4_free(Hnn_Cell_Allocator self, Hnn_Cell_4 cell);
+
+///////////////////////////////////////////////////////////////////////////////
+// Shifts
+
+	static inline lu_size hnn_cell_shift(Hnn_Cell_Allocator self, Hnn_Cell cell)
+	{
+		lu_assert(self);
+		lu_assert(cell);
+
+		return mem_table_record_shift(self->mt_cell, (lu_p_byte) cell);
+	}
+
+	static inline lu_size hnn_cell_2_shift(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)
+	{
+		lu_assert(self);
+		lu_assert(cell);
+
+		return mem_table_record_shift(self->mt_cell_2, (lu_p_byte) cell);
+	}
+
+	static inline lu_size hnn_cell_3_shift(Hnn_Cell_Allocator self, Hnn_Cell_3 cell)
+	{
+		lu_assert(self);
+		lu_assert(cell);
+
+		return mem_table_record_shift(self->mt_cell_3, (lu_p_byte) cell);
+	}
+
+	static inline lu_size hnn_cell_4_shift(Hnn_Cell_Allocator self, Hnn_Cell_4 cell)
+	{
+		lu_assert(self);
+		lu_assert(cell);
+
+		return mem_table_record_shift(self->mt_cell_4, (lu_p_byte) cell);
+	}
