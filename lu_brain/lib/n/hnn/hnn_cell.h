@@ -5,6 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell
 
+	enum hnn_cell_type {
+		HNN_CT_1,
+		HNN_CT_2,
+		HNN_CT_3,
+		HNN_CT_4
+	};
+
 	struct hnn_cell {
 		lu_byte type;
 
@@ -19,8 +26,6 @@
 
 		return self;
 	}
-
-	static lu_bool hnn_cell_equal(Hnn_Cell self, Hnn_Cell other);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_2
@@ -39,8 +44,6 @@
 
 		return self;
 	}
-
-	static lu_bool hnn_cell_2_equal(Hnn_Cell_2 self, Hnn_Cell_2 other);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_3
@@ -61,8 +64,6 @@
 		return self;
 	}
 
-	static lu_bool hnn_cell_3_equal(Hnn_Cell_3 self, Hnn_Cell_3 other);
-
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_4
 
@@ -81,8 +82,6 @@
 
 		return self;
 	}
-
-	static lu_bool hnn_cell_4_equal(Hnn_Cell_4 self, Hnn_Cell_4 other);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Macro
