@@ -7,6 +7,8 @@
 	struct hnn_table {
 
 		Hnn_Cell* table;
+		lu_size size_in_cells;
+		
 
 	};
  
