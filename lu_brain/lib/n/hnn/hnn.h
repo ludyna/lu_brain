@@ -6,19 +6,28 @@
 // 
 
 	struct hnn_config {
-
+		lu_size size_in_cell_1;
+		lu_size size_in_cell_2;
+		lu_size size_in_cell_3; 
+		lu_size size_in_cell_4;
+		lu_size t1_size;
+		lu_size t2_size;
+		lu_size t3_size;
+		lu_size t4_size;
 	};
 
 	struct hnn {
 
+		Mem mem;
 		Hnn_Cell_Allocator cell_allocator;
+		Hnn_Links links;
 
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn hnn_create(struct hnn_config config);
+	Hnn hnn_create(Mem mem, struct hnn_config config);
 	void hnn_destroy(Hnn self);
 
 

@@ -6,14 +6,14 @@
 // Create/Destroy
 
 	Hnn_Cell_Allocator hnn_cell_allocator_create(
+		Mem mem, 
 		lu_size size_in_cell_1,
 		lu_size size_in_cell_2,
 		lu_size size_in_cell_3, 
 		lu_size size_in_cell_4
 	)
 	{
-		lu_assert(g_mem_temp); 
-		Mem mem = g_mem_temp;
+		lu_assert(mem); 
 
 		Hnn_Cell_Allocator self = (Hnn_Cell_Allocator) mem_alloc(mem, sizeof(struct hnn_cell_allocator));
 		lu_assert(self);

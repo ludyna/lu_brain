@@ -15,8 +15,18 @@ lu_size boost_combine(lu_size seed, lu_size value)
     return seed;
 }
 
-Hnn_Cell_Allocator g_hnn_cell_allocator = NULL;
+Hnn g_hnn = NULL;
 Mem_Debugger g_md = NULL;
+struct hnn_config g_config = {
+        .size_in_cell_1 = 1,
+        .size_in_cell_2 = 2, 
+        .size_in_cell_3 = 3, 
+        .size_in_cell_4 = 4,
+        .t1_size = 0, 
+        .t2_size = 0,
+        .t3_size = 0,
+        .t4_size = 0
+    };
 
 void setUp(void)
 { 
@@ -25,14 +35,14 @@ void setUp(void)
     g_md = mem_debugger_create(g_mem_temp);
     TEST_ASSERT(g_md);
 
-    g_hnn_cell_allocator = hnn_cell_allocator_create(1, 2, 3, 4);
-    TEST_ASSERT(g_hnn_cell_allocator);
+    g_hnn = hnn_create(g_mem_temp, g_config);
+    TEST_ASSERT(g_hnn);
 }
 
 void tearDown(void)
 {	
 	lu_debug("\ntearDown");
-    hnn_cell_allocator_destroy(g_hnn_cell_allocator);
+    hnn_destroy(g_hnn);
 
     if(!mem_debugger_is_all_clear(g_md))
     {

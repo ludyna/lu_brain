@@ -20,6 +20,7 @@
 // 
 
 	Hnn_Cell_Allocator hnn_cell_allocator_create(
+		Mem mem, 
 		lu_size size_in_cell_1,
 		lu_size size_in_cell_2,
 		lu_size size_in_cell_3, 

@@ -5,8 +5,56 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	Hnn hnn_create(Mem mem, struct hnn_config config)
+	{
+		lu_assert(mem);
+
+		Hnn self = (Hnn) mem_alloc(mem, sizeof(struct hnn));
+		lu_assert(self);
+
+		self->mem = mem;
+
+		self->cell_allocator = hnn_cell_allocator_create(
+			mem, 
+			config.size_in_cell_1, 
+			config.size_in_cell_2, 
+			config.size_in_cell_3, 
+			config.size_in_cell_4
+		);
+		lu_assert(self->cell_allocator);
+
+		self->links = hnn_links_create(
+			mem, 
+			config.t1_size,
+			config.t2_size,
+			config.t3_size, 
+			config.t4_size
+		);
+		lu_assert(self->links);
+
+		return self;
+	}
+
+	void hnn_destroy(Hnn self)
+	{
+		lu_assert(self);
+
+		hnn_cell_allocator_destroy(self->cell_allocator);
+		hnn_links_destroy(self->links);
+
+		Mem mem = self->mem;
+		self->mem = NULL;
+
+		mem_free(mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
 	Hnn_Cell hnn_cell_spawn(Hnn self, lu_byte type)
 	{
+		lu_assert(self);
+
 
 	}
 
