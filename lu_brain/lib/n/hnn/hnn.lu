@@ -55,28 +55,76 @@
 	{
 		lu_assert(self);
 
+		switch(type)
+		{
+			case HNN_CT_1:
+				return hnn_cell_alloc(self->cell_allocator);
+			case HNN_CT_2:
+				return (Hnn_Cell) hnn_cell_2_alloc(self->cell_allocator);
+			case HNN_CT_3:
+				return (Hnn_Cell) hnn_cell_3_alloc(self->cell_allocator);
+			case HNN_CT_4:
+				return (Hnn_Cell) hnn_cell_4_alloc(self->cell_allocator);
+			default:
+				return NULL;
+		}
 
+		return NULL;
 	}
 
 	void hnn_cell_die(Hnn self, Hnn_Cell cell)
 	{
+		lu_assert(self);
+		lu_assert(cell);
 
+		switch(cell->type)
+		{
+			case HNN_CT_1:
+				hnn_cell_free(self->cell_allocator, cell);
+			case HNN_CT_2:
+				hnn_cell_2_free(self->cell_allocator, (Hnn_Cell_2) cell);
+			case HNN_CT_3:
+				hnn_cell_3_free(self->cell_allocator, (Hnn_Cell_3) cell);
+			case HNN_CT_4:
+				hnn_cell_4_free(self->cell_allocator, (Hnn_Cell_4) cell);
+			default:
+				lu_assert(false);
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	Hnn_Cell hnn_connect(Hnn self, Hnn_Cell c1)
+	{
+		lu_assert(self);
+		lu_assert(c1);
+
+	}
+
 	Hnn_Cell hnn_connect_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2)
 	{
+		lu_assert(self);
+		lu_assert(c1);
+		lu_assert(c2);
+
 
 	}
 
 	Hnn_Cell hnn_connect_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3)
 	{
-
+		lu_assert(self);
+		lu_assert(c1);
+		lu_assert(c2);
+		lu_assert(c3);
 	}
 
 	Hnn_Cell hnn_connect_4(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4)
 	{
-
+		lu_assert(self);
+		lu_assert(c1);
+		lu_assert(c2);
+		lu_assert(c3);
+		lu_assert(c4);
+		
 	}

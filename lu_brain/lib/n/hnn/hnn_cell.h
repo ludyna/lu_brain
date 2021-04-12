@@ -73,7 +73,6 @@
 		Hnn_Cell bottom_right;
 	}; 
 
-
 	static inline Hnn_Cell_4 hnn_cell_4_init(Hnn_Cell_4 self, lu_byte type)
 	{
 		hnn_cell_3_init((Hnn_Cell_3) self, type);
