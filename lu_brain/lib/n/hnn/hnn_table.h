@@ -5,12 +5,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 	struct hnn_table_unit {
-
+		Hnn_Table_Unit next;
+		Hnn_Cell cell;
 	};
+
+	static inline Hnn_Table_Unit hnn_table_unit_init(Hnn_Table_Unit self)
+	{
+		lu_assert(self);
+
+		self->next = NULL;
+		self->cell = NULL;
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
 
 	struct hnn_table {
 		Mem mem;
-		Hnn_Table_Unit* table;
+		Hnn_Table_Unit* units;
 		lu_size size_in_cells;
 	};
  

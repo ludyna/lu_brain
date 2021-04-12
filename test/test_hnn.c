@@ -46,6 +46,7 @@ void tearDown(void)
 
     if(!mem_debugger_is_all_clear(g_md))
     {
+        mem_debugger_print(g_md);
         mem_debugger_destroy(g_md, true);
         TEST_ASSERT(false);
     }
