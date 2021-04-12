@@ -108,7 +108,6 @@
 		lu_assert(c1);
 		lu_assert(c2);
 
-
 	}
 
 	Hnn_Cell hnn_connect_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3)
@@ -126,5 +125,5 @@
 		lu_assert(c2);
 		lu_assert(c3);
 		lu_assert(c4);
-		
+
 	}

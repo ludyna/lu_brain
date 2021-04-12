@@ -24,7 +24,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Hnn_Cell* hnn_links_connect(Hnn_Links self, Hnn_Cell c1);
-	static Hnn_Cell* hnn_links_connect_2(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2);
-	static Hnn_Cell* hnn_links_connect_3(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3);
-	static Hnn_Cell* hnn_links_connect_4(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4);
+	static Hnn_Cell* hnn_links_cell_get(Hnn_Links self, Hnn_Cell c1);
+	static Hnn_Cell* hnn_links_cell_get_2(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2);
+	static Hnn_Cell* hnn_links_cell_get_3(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3);
+	static Hnn_Cell* hnn_links_cell_get_4(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4);
