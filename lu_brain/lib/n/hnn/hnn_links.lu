@@ -59,22 +59,56 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Hnn_Cell* hnn_links_cell_get(Hnn_Links self, Hnn_Cell c1)
+	static Hnn_Table_Unit hnn_links_cell_add_1(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
-
+		lu_assert(self);
+		return hnn_table_cell_add(self->table_1, cell, hash);
 	}
 
-	static Hnn_Cell* hnn_links_cell_get_2(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2)
+	static void hnn_links_cell_remove_1(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
-
+		lu_assert(self);
+		hnn_table_cell_remove(self->table_1, cell, hash);
 	}
 
-	static Hnn_Cell* hnn_links_cell_get_3(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3)
-	{
+	// table_2
 
+	static Hnn_Table_Unit hnn_links_cell_add_2(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	{
+		lu_assert(self);
+		return hnn_table_cell_add(self->table_2, cell, hash);
 	}
 
-	static Hnn_Cell* hnn_links_cell_get_4(Hnn_Links self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4)
+	static void hnn_links_cell_remove_2(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
+		lu_assert(self);
+		hnn_table_cell_remove(self->table_2, cell, hash);
+	}
 
+	// table_3
+
+	static Hnn_Table_Unit hnn_links_cell_add_3(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	{
+		lu_assert(self);
+		return hnn_table_cell_add(self->table_3, cell, hash);
+	}
+
+	static void hnn_links_cell_remove_3(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	{
+		lu_assert(self);
+		hnn_table_cell_remove(self->table_3, cell, hash);
+	}
+
+	// table_4
+
+	static Hnn_Table_Unit hnn_links_cell_add_4(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	{
+		lu_assert(self);
+		return hnn_table_cell_add(self->table_4, cell, hash);
+	}
+
+	static void hnn_links_cell_remove_4(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	{
+		lu_assert(self);
+		hnn_table_cell_remove(self->table_4, cell, hash);
 	}

@@ -34,7 +34,7 @@ int main()
 
 	smn_data_samples_create();
 
-    // Create brain and related
+	// Create brain and related
 
 	Lu_Brain brain 				= lu_brain_create_from_predefined(
 		/*memory in bytes*/ 	1024 * 1024, 

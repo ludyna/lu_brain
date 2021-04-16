@@ -13,7 +13,7 @@
 	#define SMN_DIGIT_VALUE_COUNT 10
 	#define SMN_FILE_NAME "data/semeion.data"
 
-	typedef struct smn_digit* 		Smn_Digit;
+	typedef struct smn_digit* Smn_Digit;
 	typedef struct smn_group* Smn_Group;
 
 	enum sd_type {

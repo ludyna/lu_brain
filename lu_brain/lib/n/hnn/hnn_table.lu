@@ -3,7 +3,27 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//  Hnn_Table_Unit
+
+	static void hnn_table_unit_destroy(Hnn_Table_Unit self, Mem mem)
+	{
+		Hnn_Table_Unit prev;
+		while (self)
+		{
+			prev = self->prev;
+
+			// we don't care about destroying sefl->cell here because they all are 
+			// destroyed (freed) in hnn_cell_allocator
+
+			mem_free(mem, (lu_p_byte) self);
+
+			self = prev;
+		}
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//  Hnn_Table
 
 	static Hnn_Table hnn_table_create(Mem mem, lu_size size_in_cells)
 	{
@@ -46,14 +66,7 @@
 
 				if (unit == NULL) continue;
 				
-				while (unit)
-				{
-					next = unit->next;
-
-					mem_free(mem, (lu_p_byte) unit);
-
-					unit = next;
-				}
+				hnn_table_unit_destroy(unit, mem);
 			}
 			
 			mem_free(mem, (lu_p_byte) self->units);
@@ -68,23 +81,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
-	static Hnn_Table_Unit hnn_table_get_1(Hnn_Table self, lu_size sh_1)
+	static void hnn_table_cell_remove(Hnn_Table self, Hnn_Cell cell, lu_size hash)
 	{
-
+		lu_assert(self);
+		lu_assert(cell);
+		
 	}
-
-	static Hnn_Table_Unit hnn_table_get_2(Hnn_Table self, lu_size shift_1, lu_size shift_2)
-	{
-
-	}
-
-	static Hnn_Table_Unit hnn_table_get_3(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3)
-	{
-
-	}
-
-	static Hnn_Table_Unit hnn_table_get_4(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3, lu_size sh_4)
-	{
-
-	}
-
