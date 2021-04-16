@@ -36,8 +36,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
-	static Hnn_Table_Unit hnn_table_get_1(Hnn_Table self, lu_size sh_1);
-	static Hnn_Table_Unit hnn_table_get_2(Hnn_Table self, lu_size shift_1, lu_size shift_2);
-	static Hnn_Table_Unit hnn_table_get_3(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3);
-	static Hnn_Table_Unit hnn_table_get_4(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3, lu_size sh_4);
+	// static Hnn_Table_Unit hnn_table_get_1(Hnn_Table self, lu_size sh_1);
+	// static Hnn_Table_Unit hnn_table_get_2(Hnn_Table self, lu_size shift_1, lu_size shift_2);
+	// static Hnn_Table_Unit hnn_table_get_3(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3);
+	// static Hnn_Table_Unit hnn_table_get_4(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3, lu_size sh_4);
+
+	// 	static Hnn_Table_Unit hnn_table_get_1(Hnn_Table self, lu_size sh_1);
+	// static Hnn_Table_Unit hnn_table_get_2(Hnn_Table self, lu_size shift_1, lu_size shift_2);
+	// static Hnn_Table_Unit hnn_table_get_3(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3);
+	// static Hnn_Table_Unit hnn_table_get_4(Hnn_Table self, lu_size sh_1, lu_size sh_2, lu_size sh_3, lu_size sh_4);
 

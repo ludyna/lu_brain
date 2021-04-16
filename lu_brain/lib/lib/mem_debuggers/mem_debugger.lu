@@ -66,20 +66,23 @@
 		lu_debug("\n%-12s %lu", "alloc_count:", self->alloc_count);
 		lu_debug("\n%-12s %lu", "freed_count:", self->freed_count);
 
-		Lu_Md_Item item;
-		lu_debug("\n%7s | %10s | %-40s | %-40s", "#", "Size", "Alloc", "Free");
-		lu_debug("\n----------------------------------------------------------------------------------------------------------");
-		for (lu_size i = 0; i < self->items_size; i++)
+		if (!mem_debugger_is_all_clear(self))
 		{
-			item = self->items[i];
-
-			if (!item) continue;
-		
-			lu_debug("\n%7lu | %10lu | %-40s | %-40s", i, item->size, item->alloc_path, "");
-
-			while((item = item->prev))
+			Lu_Md_Item item;
+			lu_debug("\n%7s | %10s | %-40s | %-40s", "#", "Size", "Alloc", "Free");
+			lu_debug("\n----------------------------------------------------------------------------------------------------------");
+			for (lu_size i = 0; i < self->items_size; i++)
 			{
+				item = self->items[i];
+
+				if (!item) continue;
+			
 				lu_debug("\n%7lu | %10lu | %-40s | %-40s", i, item->size, item->alloc_path, "");
+
+				while((item = item->prev))
+				{
+					lu_debug("\n%7lu | %10lu | %-40s | %-40s", i, item->size, item->alloc_path, "");
+				}
 			}
 		}
 
