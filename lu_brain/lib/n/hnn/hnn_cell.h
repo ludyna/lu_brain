@@ -52,7 +52,6 @@
 		struct hnn_cell_2 super;
 
 		Hnn_Cell bottom_left;
-
 	};
 
 	static inline Hnn_Cell_3 hnn_cell_3_init(Hnn_Cell_3 self, lu_byte type)

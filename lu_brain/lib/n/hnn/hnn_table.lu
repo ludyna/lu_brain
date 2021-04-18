@@ -14,6 +14,8 @@
 
 			// we don't care about destroying sefl->cell here because they all are 
 			// destroyed (freed) in hnn_cell_allocator
+			// vydaliaty komirky ce skladna tema (bo ye zviazky z inshymy i td)
+			// ye inshi sposoby robyty "defragmentaciyu" komirok
 
 			mem_free(mem, (lu_p_byte) self);
 
