@@ -85,7 +85,8 @@
 
 		Hnn_Cell cell = (Hnn_Cell) mem_record_alloc(self->mt_cell);
 		
-		hnn_cell_init(cell, HNN_CT_1);
+		if (cell) 
+			hnn_cell_init(cell, HNN_CT_1);
 
 		return cell;
 	}
@@ -106,7 +107,8 @@
 
 		Hnn_Cell_2 cell = (Hnn_Cell_2) mem_record_alloc(self->mt_cell_2);
 
-		hnn_cell_2_init(cell, HNN_CT_2);
+		if (cell)
+			hnn_cell_2_init(cell, HNN_CT_2);
 
 		return cell;
 	}
@@ -127,7 +129,8 @@
 
 		Hnn_Cell_3 cell = (Hnn_Cell_3) mem_record_alloc(self->mt_cell_3);
 
-		hnn_cell_3_init(cell, HNN_CT_3);
+		if (cell)
+			hnn_cell_3_init(cell, HNN_CT_3);
 
 		return cell;
 	}
@@ -148,7 +151,8 @@
 
 		Hnn_Cell_4 cell = (Hnn_Cell_4) mem_record_alloc(self->mt_cell_4);
 
-		hnn_cell_4_init(cell, HNN_CT_4);
+		if (cell)
+			hnn_cell_4_init(cell, HNN_CT_4);
 
 		return cell;
 	}

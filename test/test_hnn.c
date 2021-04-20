@@ -18,10 +18,10 @@ lu_size boost_combine(lu_size seed, lu_size value)
 Hnn g_hnn = NULL;
 Mem_Debugger g_md = NULL;
 struct hnn_config g_config = {
-        .size_in_cell_1 = 1,
-        .size_in_cell_2 = 2, 
-        .size_in_cell_3 = 3, 
-        .size_in_cell_4 = 4,
+        .size_in_cell_1 = 5,
+        .size_in_cell_2 = 5, 
+        .size_in_cell_3 = 5, 
+        .size_in_cell_4 = 5,
         .t1_size = 0, 
         .t2_size = 0,
         .t3_size = 0,
@@ -56,18 +56,26 @@ void tearDown(void)
 void test_1(void) 
 {
 	
+    Hnn_Cell c1 = hnn_cell_spawn(g_hnn, HNN_CT_1);
+    TEST_ASSERT(c1);
+    TEST_ASSERT(c1->type == HNN_CT_1); 
 
-    // Mem mem        = (Mem) mem_perm_create(g_mem_temp, 512);
-    // Mem_Table mt   = mem_table_create(
-    //     /*Mem*/                     mem, 
-    //     /*record_size_in_bytes*/    sizeof(struct hnn_cell), 
-    //     /*table_size_in_records*/   3, 
-    //     /*percent*/                 0, 
-    //     /*flags*/                   MTF_FREEABLE
-    // );
+    Hnn_Cell c2 = hnn_cell_spawn(g_hnn, HNN_CT_2);
+    TEST_ASSERT(c2);
+    TEST_ASSERT(c2->type == HNN_CT_2);
 
-    // mem_destroy(mem, g_mem_temp);
+    Hnn_Cell c3 = hnn_cell_spawn(g_hnn, HNN_CT_3);
+    TEST_ASSERT(c3);
+    TEST_ASSERT(c3->type == HNN_CT_3);
 
+    Hnn_Cell c4 = hnn_cell_spawn(g_hnn, HNN_CT_4);
+    TEST_ASSERT(c4);
+    TEST_ASSERT(c4->type == HNN_CT_4);
+
+    hnn_cell_die(g_hnn, c1);
+    hnn_cell_die(g_hnn, c2);
+    hnn_cell_die(g_hnn, c3);
+    hnn_cell_die(g_hnn, c4);
 
 }
 

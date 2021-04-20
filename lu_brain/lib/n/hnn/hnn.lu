@@ -95,12 +95,16 @@
 		{
 			case HNN_CT_1:
 				hnn_cell_free(self->cell_allocator, cell);
+				break;
 			case HNN_CT_2:
 				hnn_cell_2_free(self->cell_allocator, (Hnn_Cell_2) cell);
+				break;
 			case HNN_CT_3:
 				hnn_cell_3_free(self->cell_allocator, (Hnn_Cell_3) cell);
+				break;
 			case HNN_CT_4:
 				hnn_cell_4_free(self->cell_allocator, (Hnn_Cell_4) cell);
+				break;
 			default:
 				lu_assert(false);
 		}
@@ -113,6 +117,8 @@
 	{
 		lu_assert(self);
 		lu_assert(c1);
+
+		
 
 	}
 
