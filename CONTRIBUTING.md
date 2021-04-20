@@ -1,10 +1,7 @@
 # lu_brain dev guide
 
-## Modules and folder structures
 
-TBD
-
-## Prefixes
+## PREFIXES
 
 - All public or potentially public identifiers should start with prefixes `lu_` (methods, globals, structs), 
 `LU_` (constants) or `Lu_` (pointers to public structs).
@@ -23,9 +20,10 @@ these libraries. Don't assume lu_size is uint. "Wrap" these methods with our own
 	#define lu_value_round round 
 	#define lu_value_abs fabs
 
-
 ## NAMING 
 ---
+
+We use most readable and the best naming convention I know which is "snake". 
 
 Structs are named always lower case:
 
@@ -39,7 +37,13 @@ Pointers to struct always have first letter of every word capitalized and have u
 	
 	Lu_Brain
 
-We always know that Lu_Brain is actualy struct lu_brain* (pointer to struct lu_brain).
+We always know that Lu_Brain is actualy "struct lu_brain* " (pointer to struct lu_brain).
+
+We always typedef pointers to structs to avoid using * (star) :
+
+typedef struct lu_brain* Lu_Brain;
+
+This makes code much more readable.
 
 When method allocates memory and return lu_p_byte or lu_p_void pointer its name should end with "alloc". Opposite
 to "alloc" is "free". 
@@ -50,13 +54,22 @@ to "alloc" is "free".
 When method allocates memory, potentially initiaze it and returns pointer to a struct its name should end with "create". 
 Opposite to "create" is "destroy".
 
-	mem_table_create()
-	mem_table_destroy()
+	Mem_Table mem_table_create(...);
+	void mem_table_destroy(Mem_Table self);
+
+When creation of object(struct) is "controlled" by other object (other than Mem) you can also use spawn() and die():
+
+	Hnn_Cell hnn_cell_spawn(Hnn self, lu_size type); // here Hnn_Cell creation is controlled by Hnn object
+	void hnn_cell_die(Hnn_self, Hnn_Cell cell);
 
 Initialiazators (initialize data structure but not allocate) look like this:
 
 	mem_table_init()
 	mem_table_deinit()
+
+## OBJECTS
+
+
 
 ## Assertions
 
@@ -65,7 +78,10 @@ Initialiazators (initialize data structure but not allocate) look like this:
 - Use `lu_assert(expression)` to validate/assert in internal methods.
 
 
+## COMMENTS
 
 
 
+## MODULES
 
+TBD

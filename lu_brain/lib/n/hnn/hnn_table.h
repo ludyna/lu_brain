@@ -4,14 +4,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-	struct hnn_table_unit {
-		Hnn_Table_Unit prev;
+	struct hnn_table_node {
+		Hnn_Table_Node prev;
 		Hnn_Cell cell;
 	};
 
-	static inline Hnn_Table_Unit hnn_table_unit_create(Mem mem, Hnn_Cell cell, Hnn_Table_Unit prev)
+	static inline Hnn_Table_Node hnn_table_unit_create(Mem mem, Hnn_Cell cell, Hnn_Table_Node prev)
 	{
-		Hnn_Table_Unit self = (Hnn_Table_Unit) mem_alloc(mem, sizeof(struct hnn_table_unit));
+		Hnn_Table_Node self = (Hnn_Table_Node) mem_alloc(mem, sizeof(struct hnn_table_node));
 
 		self->prev = prev;
 		self->cell = cell;
@@ -19,7 +19,7 @@
 		return self;
 	}
 
-	static void hnn_table_unit_destroy(Hnn_Table_Unit self, Mem mem);
+	static void hnn_table_unit_destroy(Hnn_Table_Node self, Mem mem);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -27,7 +27,7 @@
 
 	struct hnn_table {
 		Mem mem;
-		Hnn_Table_Unit* units;
+		Hnn_Table_Node* units;
 		lu_size size_in_cells;
 	};
  
@@ -44,7 +44,7 @@
 		return hash % self->size_in_cells;
 	}
 
-	static inline Hnn_Table_Unit hnn_table_cell_add(Hnn_Table self, Hnn_Cell cell, lu_size hash)
+	static inline Hnn_Table_Node hnn_table_cell_add(Hnn_Table self, Hnn_Cell cell, lu_size hash)
 	{
 		lu_assert(self);
 		lu_assert(cell);
@@ -53,7 +53,7 @@
 		lu_assert(self->mem);
 
 		lu_size index = hnn_table_hash_to_index(self, hash);
-		Hnn_Table_Unit unit;
+		Hnn_Table_Node unit;
 
 		unit = hnn_table_unit_create(self->mem, cell, self->units[index]);
 		self->units[index] = unit;
@@ -61,8 +61,11 @@
 		return unit;
 	}
 
-	static Hnn_Table_Unit hnn_table_unit_find(Hnn_Table self, Hnn_Cell cell, lu_size hash);
+	static Hnn_Table_Node hnn_table_node_find(Hnn_Table self, Hnn_Cell cell, lu_size hash);
 
 	static void hnn_table_cell_remove(Hnn_Table self, Hnn_Cell cell, lu_size hash);
  
- 	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, Hnn_Cell source, lu_size hash);
+ 	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, lu_size hash, Hnn_Cell s1);
+ 	static Hnn_Cell hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2);
+ 	static Hnn_Cell hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2, Hnn_Cell s3);
+ 	static Hnn_Cell hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2, Hnn_Cell s3, Hnn_Cell s4);

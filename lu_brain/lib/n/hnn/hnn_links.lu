@@ -61,7 +61,7 @@
 
 	// table_1
 
-	static Hnn_Table_Unit hnn_links_cell_add_1(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_1(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
 		lu_assert(self);
 		return hnn_table_cell_add(self->table_1, cell, hash);
@@ -81,10 +81,9 @@
 		return hnn_table_cell_get(self->table_1, source, hash);
 	}
 
-
 	// table_2
 
-	static Hnn_Table_Unit hnn_links_cell_add_2(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_2(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
 		lu_assert(self);
 		return hnn_table_cell_add(self->table_2, cell, hash);
@@ -98,7 +97,7 @@
 
 	// table_3
 
-	static Hnn_Table_Unit hnn_links_cell_add_3(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_3(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
 		lu_assert(self);
 		return hnn_table_cell_add(self->table_3, cell, hash);
@@ -112,7 +111,7 @@
 
 	// table_4
 
-	static Hnn_Table_Unit hnn_links_cell_add_4(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_4(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
 		lu_assert(self);
 		return hnn_table_cell_add(self->table_4, cell, hash);
