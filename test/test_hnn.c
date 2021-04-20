@@ -53,7 +53,7 @@ void tearDown(void)
     mem_debugger_destroy(g_md, true);
 }
 
-void test_1(void) 
+void test_spawn_and_die(void) 
 {
 	
     Hnn_Cell c1 = hnn_cell_spawn(g_hnn, HNN_CT_1);

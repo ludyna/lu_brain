@@ -112,8 +112,26 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
+	static inline lu_size hash_comb(lu_size seed, lu_size value)
+	{
+	    seed ^= value + 0x9e3779b9 + (seed<<6) + (seed>>2);
+	    return seed;
+	}
 
-	Hnn_Cell hnn_connect(Hnn self, Hnn_Cell c1)
+	// cell_1
+
+	Hnn_Cell hnn_cell_get(Hnn self, Hnn_Cell c1)
+	{
+		lu_assert(self);
+		lu_assert(c1);
+		lu_assert(self->links);
+
+		lu_size hash = 0;
+		hash = hash_comb(hash, (lu_size) c1);
+
+	}
+
+	Hnn_Cell hnn_spawn_connect(Hnn self, Hnn_Cell c1)
 	{
 		lu_assert(self);
 		lu_assert(c1);
@@ -122,7 +140,14 @@
 
 	}
 
-	Hnn_Cell hnn_connect_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2)
+	// cell_2
+
+	Hnn_Cell hnn_cell_get_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2)
+	{
+
+	}
+
+	Hnn_Cell hnn_spawn_connect_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2)
 	{
 		lu_assert(self);
 		lu_assert(c1);
@@ -130,7 +155,14 @@
 
 	}
 
-	Hnn_Cell hnn_connect_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3)
+	// cell_3
+
+	Hnn_Cell hnn_cell_get_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3)
+	{
+
+	}
+
+	Hnn_Cell hnn_spawn_connect_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3)
 	{
 		lu_assert(self);
 		lu_assert(c1);
@@ -138,7 +170,14 @@
 		lu_assert(c3);
 	}
 
-	Hnn_Cell hnn_connect_4(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4)
+	// cell_4
+
+	Hnn_Cell hnn_cell_get_4(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4)
+	{
+
+	}
+
+	Hnn_Cell hnn_spawn_connect_4(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4)
 	{
 		lu_assert(self);
 		lu_assert(c1);

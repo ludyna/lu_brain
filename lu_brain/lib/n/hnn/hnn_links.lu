@@ -59,6 +59,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	// table_1
+
 	static Hnn_Table_Unit hnn_links_cell_add_1(Hnn_Links self, Hnn_Cell cell, lu_size hash)
 	{
 		lu_assert(self);
@@ -70,6 +72,15 @@
 		lu_assert(self);
 		hnn_table_cell_remove(self->table_1, cell, hash);
 	}
+
+	static Hnn_Cell hnn_links_cell_get_1(Hnn_Links self, Hnn_Cell source, lu_size hash)
+	{
+		lu_assert(self);
+		lu_assert(source);
+
+		return hnn_table_cell_get(self->table_1, source, hash);
+	}
+
 
 	// table_2
 

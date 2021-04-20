@@ -83,9 +83,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
+	static Hnn_Table_Unit hnn_table_unit_find(Hnn_Table self, Hnn_Cell cell, lu_size hash)
+	{
+		lu_assert(self);
+		lu_assert(cell);
+
+		
+	}	
+
 	static void hnn_table_cell_remove(Hnn_Table self, Hnn_Cell cell, lu_size hash)
 	{
 		lu_assert(self);
 		lu_assert(cell);
 		
+	}
+
+	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, Hnn_Cell source, lu_size hash)
+	{
+
 	}

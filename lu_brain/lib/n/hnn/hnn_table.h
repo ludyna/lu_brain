@@ -37,7 +37,12 @@
 	static void hnn_table_destroy(Hnn_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+//   
+
+	static inline lu_size hnn_table_hash_to_index(Hnn_Table self, lu_size hash)
+	{
+		return hash % self->size_in_cells;
+	}
 
 	static inline Hnn_Table_Unit hnn_table_cell_add(Hnn_Table self, Hnn_Cell cell, lu_size hash)
 	{
@@ -47,7 +52,7 @@
 		lu_assert(self->units);
 		lu_assert(self->mem);
 
-		lu_size index = hash % self->size_in_cells;
+		lu_size index = hnn_table_hash_to_index(self, hash);
 		Hnn_Table_Unit unit;
 
 		unit = hnn_table_unit_create(self->mem, cell, self->units[index]);
@@ -56,4 +61,8 @@
 		return unit;
 	}
 
+	static Hnn_Table_Unit hnn_table_unit_find(Hnn_Table self, Hnn_Cell cell, lu_size hash);
+
 	static void hnn_table_cell_remove(Hnn_Table self, Hnn_Cell cell, lu_size hash);
+ 
+ 	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, Hnn_Cell source, lu_size hash);

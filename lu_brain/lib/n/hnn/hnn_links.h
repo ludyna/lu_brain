@@ -30,11 +30,15 @@
 
 	static void hnn_links_cell_remove_1(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
+	static Hnn_Cell hnn_links_cell_get_1(Hnn_Links self, Hnn_Cell source, lu_size hash);
+
 	// table_2
 
 	static Hnn_Table_Unit hnn_links_cell_add_2(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
 	static void hnn_links_cell_remove_2(Hnn_Links self, Hnn_Cell cell, lu_size hash);
+
+	static Hnn_Cell hnn_links_cell_get_2(Hnn_Links self, Hnn_Cell source, lu_size hash);
 
 	// table_3
 
@@ -42,8 +46,12 @@
 
 	static void hnn_links_cell_remove_3(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
+	static Hnn_Cell hnn_links_cell_get_3(Hnn_Links self, Hnn_Cell source, lu_size hash);
+
 	// table_4
 
 	static Hnn_Table_Unit hnn_links_cell_add_4(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
 	static void hnn_links_cell_remove_4(Hnn_Links self, Hnn_Cell cell, lu_size hash);
+
+	static Hnn_Cell hnn_links_cell_get_4(Hnn_Links self, Hnn_Cell source, lu_size hash);

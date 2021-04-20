@@ -40,9 +40,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn_Cell hnn_connect(Hnn self, Hnn_Cell c1);
-	Hnn_Cell hnn_connect_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2);
-	Hnn_Cell hnn_connect_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3);
-	Hnn_Cell hnn_connect_4(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4);
+	Hnn_Cell hnn_cell_get(Hnn self, Hnn_Cell c1);
+	Hnn_Cell hnn_spawn_connect(Hnn self, Hnn_Cell c1);
+
+	Hnn_Cell hnn_cell_get_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2);
+	Hnn_Cell hnn_spawn_connect_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2);
+
+	Hnn_Cell hnn_cell_get_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3);
+	Hnn_Cell hnn_spawn_connect_3(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3);
+
+	Hnn_Cell hnn_cell_get_4(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4);
+	Hnn_Cell hnn_spawn_connect_4(Hnn self, Hnn_Cell c1, Hnn_Cell c2, Hnn_Cell c3, Hnn_Cell c4);
+
 
 
