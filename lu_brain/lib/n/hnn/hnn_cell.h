@@ -6,6 +6,7 @@
 // Hnn_Cell
 
 	enum hnn_cell_type {
+		HNN_CT_0,
 		HNN_CT_1,
 		HNN_CT_2,
 		HNN_CT_3,

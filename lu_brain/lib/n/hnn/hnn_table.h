@@ -29,11 +29,12 @@
 		Mem mem;
 		Hnn_Table_Node* units;
 		lu_size size_in_cells;
+		lu_byte cell_type;
 	};
  
 ///////////////////////////////////////////////////////////////////////////////
 // 
-	static Hnn_Table hnn_table_create(Mem mem, lu_size size_in_cells);
+	static Hnn_Table hnn_table_create(Mem mem, lu_size size_in_cells, lu_byte cell_type);
 	static void hnn_table_destroy(Hnn_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -51,6 +52,7 @@
 		lu_assert(self->size_in_cells > 0);
 		lu_assert(self->units);
 		lu_assert(self->mem);
+		lu_assert(self->cell_type == cell->type);
 
 		lu_size index = hnn_table_hash_to_index(self, hash);
 		Hnn_Table_Node unit;

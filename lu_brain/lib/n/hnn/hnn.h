@@ -6,6 +6,7 @@
 // 
 
 	struct hnn_config {
+		lu_size size_in_cell_0;
 		lu_size size_in_cell_1;
 		lu_size size_in_cell_2;
 		lu_size size_in_cell_3; 

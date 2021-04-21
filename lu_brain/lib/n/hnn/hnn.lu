@@ -16,6 +16,7 @@
 
 		self->cell_allocator = hnn_cell_allocator_create(
 			mem, 
+			config.size_in_cell_0, 
 			config.size_in_cell_1, 
 			config.size_in_cell_2, 
 			config.size_in_cell_3, 
@@ -24,7 +25,7 @@
 		lu_assert(self->cell_allocator);
 
 		lu_size T_SIZE_MOD = 2;
-
+		
 		if (config.t1_size == 0)
 			config.t1_size = config.size_in_cell_1 * T_SIZE_MOD;
 
@@ -72,7 +73,7 @@
 		switch(type)
 		{
 			case HNN_CT_1:
-				return hnn_cell_alloc(self->cell_allocator);
+				return hnn_cell_alloc_1(self->cell_allocator);
 			case HNN_CT_2:
 				return (Hnn_Cell) hnn_cell_2_alloc(self->cell_allocator);
 			case HNN_CT_3:
@@ -94,7 +95,7 @@
 		switch(cell->type)
 		{
 			case HNN_CT_1:
-				hnn_cell_free(self->cell_allocator, cell);
+				hnn_cell_free_1(self->cell_allocator, cell);
 				break;
 			case HNN_CT_2:
 				hnn_cell_2_free(self->cell_allocator, (Hnn_Cell_2) cell);

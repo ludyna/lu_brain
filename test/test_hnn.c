@@ -18,6 +18,7 @@ lu_size boost_combine(lu_size seed, lu_size value)
 Hnn g_hnn = NULL;
 Mem_Debugger g_md = NULL;
 struct hnn_config g_config = {
+        .size_in_cell_0 = 5, 
         .size_in_cell_1 = 5,
         .size_in_cell_2 = 5, 
         .size_in_cell_3 = 5, 

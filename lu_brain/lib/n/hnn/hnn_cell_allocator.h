@@ -8,8 +8,8 @@
 	struct hnn_cell_allocator {
 
 		Mem mem;
-
-		Mem_Table 	mt_cell;
+		Mem_Table 	mt_cell_0;
+		Mem_Table 	mt_cell_1;
 		Mem_Table	mt_cell_2;
 		Mem_Table 	mt_cell_3;
 		Mem_Table 	mt_cell_4;
@@ -21,6 +21,7 @@
 
 	Hnn_Cell_Allocator hnn_cell_allocator_create(
 		Mem mem, 
+		lu_size size_in_cell_0,
 		lu_size size_in_cell_1,
 		lu_size size_in_cell_2,
 		lu_size size_in_cell_3, 
@@ -32,8 +33,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Allocators
 
-	Hnn_Cell hnn_cell_alloc(Hnn_Cell_Allocator self);
-	void hnn_cell_free(Hnn_Cell_Allocator self, Hnn_Cell cell);
+	Hnn_Cell hnn_cell_alloc_1(Hnn_Cell_Allocator self);
+	void hnn_cell_free_1(Hnn_Cell_Allocator self, Hnn_Cell cell);
 
 	Hnn_Cell_2 hnn_cell_2_alloc(Hnn_Cell_Allocator self);
 	void hnn_cell_2_free(Hnn_Cell_Allocator self, Hnn_Cell_2 cell);
@@ -47,12 +48,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Shifts
 
-	static inline lu_size hnn_cell_shift(Hnn_Cell_Allocator self, Hnn_Cell cell)
+	static inline lu_size hnn_cell_shift_0(Hnn_Cell_Allocator self, Hnn_Cell cell)
 	{
 		lu_assert(self);
 		lu_assert(cell);
 
-		return mem_table_record_shift(self->mt_cell, (lu_p_byte) cell);
+		return mem_table_record_shift(self->mt_cell_0, (lu_p_byte) cell);
+	}
+
+	static inline lu_size hnn_cell_shift_1(Hnn_Cell_Allocator self, Hnn_Cell cell)
+	{
+		lu_assert(self);
+		lu_assert(cell);
+
+		return mem_table_record_shift(self->mt_cell_1, (lu_p_byte) cell);
 	}
 
 	static inline lu_size hnn_cell_2_shift(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)

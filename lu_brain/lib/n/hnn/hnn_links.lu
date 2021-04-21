@@ -14,10 +14,10 @@
 
 		self->mem = mem;
 
-		self->table_1 =	hnn_table_create(mem, t1_size);
-		self->table_2 = hnn_table_create(mem, t2_size);
-		self->table_3 = hnn_table_create(mem, t3_size);
-		self->table_4 = hnn_table_create(mem, t4_size);
+		self->table_1 =	hnn_table_create(mem, t1_size, HNN_CT_1);
+		self->table_2 = hnn_table_create(mem, t2_size, HNN_CT_2);
+		self->table_3 = hnn_table_create(mem, t3_size, HNN_CT_3);
+		self->table_4 = hnn_table_create(mem, t4_size, HNN_CT_4);
 
 		return self;
 	}
@@ -78,7 +78,7 @@
 		lu_assert(self);
 		lu_assert(source);
 
-		return hnn_table_cell_get(self->table_1, source, hash);
+		return hnn_table_cell_get(self->table_1, hash, source);
 	}
 
 	// table_2
