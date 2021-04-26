@@ -33,6 +33,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Allocators
 
+	Hnn_Cell hnn_cell_alloc_0(Hnn_Cell_Allocator self);
+	void hnn_cell_free_0(Hnn_Cell_Allocator self, Hnn_Cell cell);
+
 	Hnn_Cell hnn_cell_alloc_1(Hnn_Cell_Allocator self);
 	void hnn_cell_free_1(Hnn_Cell_Allocator self, Hnn_Cell cell);
 

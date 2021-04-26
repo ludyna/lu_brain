@@ -67,7 +67,7 @@
 
 	static void hnn_table_cell_remove(Hnn_Table self, Hnn_Cell cell, lu_size hash);
  
- 	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, lu_size hash, Hnn_Cell s1);
- 	static Hnn_Cell hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2);
- 	static Hnn_Cell hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2, Hnn_Cell s3);
- 	static Hnn_Cell hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2, Hnn_Cell s3, Hnn_Cell s4);
+ 	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, lu_size hash, Hnn_Cell top_left);
+ 	static Hnn_Cell hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right);
+ 	static Hnn_Cell hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left);
+ 	static Hnn_Cell hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left, Hnn_Cell bottom_right);

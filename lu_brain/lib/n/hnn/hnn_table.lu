@@ -104,52 +104,75 @@
 		
 	}
 
-	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, lu_size hash, Hnn_Cell s1)
+	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, lu_size hash, Hnn_Cell top_left)
 	{
 		lu_assert(self);
-		lu_assert(s1);
+		lu_assert(top_left);
+		lu_assert(self->cell_type == HNN_CT_1);
 
 		lu_size index = hnn_table_hash_to_index(self, hash);
 
 		Hnn_Table_Node node = self->units[index];
 
-		while (node && node->cell && node->cell->top_left != s1) node = node->prev;
+		while (node && node->cell && hnn_cell_parent_eq_1(node->cell, top_left)) node = node->prev;
 
 		if (node) return node->cell;
 
 		return NULL;
 	}
 
- 	static Hnn_Cell hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2)
+ 	static Hnn_Cell hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right)
  	{
 		lu_assert(self);
-		lu_assert(s1);
-		lu_assert(s2);
+		lu_assert(top_left);
+		lu_assert(top_right);
 		lu_assert(self->cell_type == HNN_CT_2);
 
 		lu_size index = hnn_table_hash_to_index(self, hash);
 
 		Hnn_Table_Node node = self->units[index];
 
-		if (!node) return NULL;
+		while (node && node->cell && hnn_cell_parent_eq_2((Hnn_Cell_2) node->cell, top_left, top_right)) node = node->prev;
 
-		Hnn_Cell_2 cell = (Hnn_Cell_2) node->cell;
+		if (node) return node->cell;
 
-		while (cell && cell->super.top_left != s1 && cell->top_right != s2) 
-		{
-			node = node->prev;
-			cell = node ? (Hnn_Cell_2) node->cell : NULL;
-		}
-
-		return (Hnn_Cell) cell;
+		return NULL;
  	}
 
- 	static Hnn_Cell hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2, Hnn_Cell s3)
+ 	static Hnn_Cell hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left)
  	{
+		lu_assert(self);
+		lu_assert(top_left);
+		lu_assert(top_right);
+		lu_assert(bottom_left);
+		lu_assert(self->cell_type == HNN_CT_3);
 
+		lu_size index = hnn_table_hash_to_index(self, hash);
+
+		Hnn_Table_Node node = self->units[index];
+
+		while (node && node->cell && hnn_cell_parent_eq_3((Hnn_Cell_3) node->cell, top_left, top_right, bottom_left)) node = node->prev;
+
+		if (node) return node->cell;
+
+		return NULL;
  	}
 
- 	static Hnn_Cell hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell s1, Hnn_Cell s2, Hnn_Cell s3, Hnn_Cell s4)
+ 	static Hnn_Cell hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left, Hnn_Cell bottom_right)
  	{
+		lu_assert(self);
+		lu_assert(top_left);
+		lu_assert(top_right);
+		lu_assert(bottom_left);
+		lu_assert(self->cell_type == HNN_CT_4);
 
+		lu_size index = hnn_table_hash_to_index(self, hash);
+
+		Hnn_Table_Node node = self->units[index];
+
+		while (node && node->cell && hnn_cell_parent_eq_4((Hnn_Cell_4) node->cell, top_left, top_right, bottom_left, bottom_right)) node = node->prev;
+
+		if (node) return node->cell;
+
+		return NULL;
  	}
