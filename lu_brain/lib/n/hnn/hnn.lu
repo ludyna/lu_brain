@@ -124,7 +124,7 @@
 
 	// cell_1
 
-	Hnn_Cell hnn_cell_get(Hnn self, Hnn_Cell top_left)
+	Hnn_Cell hnn_cell_get_1(Hnn self, Hnn_Cell top_left)
 	{
 		lu_assert(self);
 		lu_assert(top_left);
@@ -137,7 +137,7 @@
 		return hnn_links_cell_get_1(self->links, top_left, hash);
 	}
 
-	Hnn_Cell hnn_spawn_connect(Hnn self, Hnn_Cell top_left)
+	Hnn_Cell hnn_cell_spawn_connect(Hnn self, Hnn_Cell top_left)
 	{
 		lu_assert(self);
 		lu_assert(self->cell_allocator);

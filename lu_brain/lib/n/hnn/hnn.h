@@ -41,8 +41,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn_Cell hnn_cell_get(Hnn self, Hnn_Cell c1);
-	Hnn_Cell hnn_spawn_connect(Hnn self, Hnn_Cell c1);
+	Hnn_Cell hnn_cell_get_1(Hnn self, Hnn_Cell c1);
+	Hnn_Cell hnn_cell_spawn_connect(Hnn self, Hnn_Cell c1);
 
 	Hnn_Cell hnn_cell_get_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2);
 	Hnn_Cell hnn_spawn_connect_2(Hnn self, Hnn_Cell c1, Hnn_Cell c2);
