@@ -9,7 +9,7 @@
 		Hnn_Cell cell;
 	};
 
-	static inline Hnn_Table_Node hnn_table_unit_create(Mem mem, Hnn_Cell cell, Hnn_Table_Node prev)
+	static inline Hnn_Table_Node hnn_table_node_create(Mem mem, Hnn_Cell cell, Hnn_Table_Node prev)
 	{
 		Hnn_Table_Node self = (Hnn_Table_Node) mem_alloc(mem, sizeof(struct hnn_table_node));
 
@@ -55,12 +55,12 @@
 		lu_assert(self->cell_type == cell->type);
 
 		lu_size index = hnn_table_hash_to_index(self, hash);
-		Hnn_Table_Node unit;
+		Hnn_Table_Node node;
 
-		unit = hnn_table_unit_create(self->mem, cell, self->units[index]);
-		self->units[index] = unit;
+		node = hnn_table_node_create(self->mem, cell, self->units[index]);
+		self->units[index] = node;
 
-		return unit;
+		return node;
 	}
 
 	static Hnn_Table_Node hnn_table_node_find(Hnn_Table self, Hnn_Cell cell, lu_size hash);

@@ -67,7 +67,7 @@
 		return mem_table_record_shift(self->mt_cell_1, (lu_p_byte) cell);
 	}
 
-	static inline lu_size hnn_cell_2_shift(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)
+	static inline lu_size hnn_cell_shift_2(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)
 	{
 		lu_assert(self);
 		lu_assert(cell);
@@ -75,7 +75,7 @@
 		return mem_table_record_shift(self->mt_cell_2, (lu_p_byte) cell);
 	}
 
-	static inline lu_size hnn_cell_3_shift(Hnn_Cell_Allocator self, Hnn_Cell_3 cell)
+	static inline lu_size hnn_cell_shift_3(Hnn_Cell_Allocator self, Hnn_Cell_3 cell)
 	{
 		lu_assert(self);
 		lu_assert(cell);
@@ -83,10 +83,36 @@
 		return mem_table_record_shift(self->mt_cell_3, (lu_p_byte) cell);
 	}
 
-	static inline lu_size hnn_cell_4_shift(Hnn_Cell_Allocator self, Hnn_Cell_4 cell)
+	static inline lu_size hnn_cell_shift_4(Hnn_Cell_Allocator self, Hnn_Cell_4 cell)
 	{
 		lu_assert(self);
 		lu_assert(cell);
 
 		return mem_table_record_shift(self->mt_cell_4, (lu_p_byte) cell);
+	}
+
+	static inline lu_size hnn_cell_shift(Hnn_Cell_Allocator self, Hnn_Cell cell)
+	{
+		lu_assert(self);
+		lu_assert(cell);
+
+		switch(cell->type)
+		{
+			case HNN_CT_0:
+				return hnn_cell_shift_0(self, cell);
+			case HNN_CT_1:
+				return hnn_cell_shift_1(self, cell);
+			case HNN_CT_2:
+				return hnn_cell_shift_2(self, (Hnn_Cell_2) cell);
+			case HNN_CT_3:
+				return hnn_cell_shift_3(self, (Hnn_Cell_3) cell);
+			case HNN_CT_4:
+				return hnn_cell_shift_4(self, (Hnn_Cell_4) cell);			
+			default:
+				lu_assert(false);
+		}
+
+		lu_assert(false);
+
+		return 0;
 	}

@@ -26,7 +26,7 @@
 
 	// table_1
 
-	static Hnn_Table_Node hnn_links_cell_add_1(Hnn_Links self, Hnn_Cell cell, lu_size hash);
+	static Hnn_Table_Node hnn_links_cell_add_1(Hnn_Links self, Hnn_Cell new_cell, lu_size hash);
 
 	static void hnn_links_cell_remove_1(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
@@ -34,7 +34,7 @@
 
 	// table_2
 
-	static Hnn_Table_Node hnn_links_cell_add_2(Hnn_Links self, Hnn_Cell cell, lu_size hash);
+	static Hnn_Table_Node hnn_links_cell_add_2(Hnn_Links self, Hnn_Cell new_cell, lu_size hash);
 
 	static void hnn_links_cell_remove_2(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
@@ -42,7 +42,7 @@
 
 	// table_3
 
-	static Hnn_Table_Node hnn_links_cell_add_3(Hnn_Links self, Hnn_Cell cell, lu_size hash);
+	static Hnn_Table_Node hnn_links_cell_add_3(Hnn_Links self, Hnn_Cell new_cell, lu_size hash);
 
 	static void hnn_links_cell_remove_3(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
@@ -50,7 +50,7 @@
 
 	// table_4
 
-	static Hnn_Table_Node hnn_links_cell_add_4(Hnn_Links self, Hnn_Cell cell, lu_size hash);
+	static Hnn_Table_Node hnn_links_cell_add_4(Hnn_Links self, Hnn_Cell new_cell, lu_size hash);
 
 	static void hnn_links_cell_remove_4(Hnn_Links self, Hnn_Cell cell, lu_size hash);
 
