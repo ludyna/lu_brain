@@ -27,20 +27,34 @@
 		self->mt_cell_4 = NULL;
 
 		if (size_in_cell_0 > 0)
+		{
 			self->mt_cell_0 = mem_table_create(self->mem, sizeof(struct hnn_cell), size_in_cell_0, 0, MTF_FREEABLE);
+			lu_assert(self->mt_cell_0);
+		}
 
 		if (size_in_cell_1 > 0)
+		{
 			self->mt_cell_1 = mem_table_create(self->mem, sizeof(struct hnn_cell), size_in_cell_1, 0, MTF_FREEABLE);
+			lu_assert(self->mt_cell_1);
+		}
 
 		if (size_in_cell_2 > 0)
+		{
 			self->mt_cell_2 = mem_table_create(self->mem, sizeof(struct hnn_cell_2), size_in_cell_2, 0, MTF_FREEABLE);
+			lu_assert(self->mt_cell_2);
+		}
 
 		if (size_in_cell_3 > 0)
+		{
 			self->mt_cell_3 = mem_table_create(self->mem, sizeof(struct hnn_cell_3), size_in_cell_3, 0, MTF_FREEABLE);
+			lu_assert(self->mt_cell_3);
+		}
 
 		if (size_in_cell_4 > 0)
+		{
 			self->mt_cell_4 = mem_table_create(self->mem, sizeof(struct hnn_cell_4), size_in_cell_4, 0, MTF_FREEABLE);
-
+			lu_assert(self->mt_cell_4);
+		}
 
 		return self;
 	}
@@ -110,6 +124,7 @@
 		lu_assert(self->mt_cell_0);
 		lu_assert(cell);
 
+		lu_debug("ototot");
 		mem_record_free(self->mt_cell_0, (lu_p_byte) cell);
 	}
 
@@ -139,7 +154,7 @@
 
 	// 2
 
-	Hnn_Cell_2 hnn_cell_2_alloc(Hnn_Cell_Allocator self)
+	Hnn_Cell_2 hnn_cell_alloc_2(Hnn_Cell_Allocator self)
 	{
 		lu_assert(self);
 		lu_assert(self->mt_cell_2);
@@ -152,7 +167,7 @@
 		return cell;
 	}
 
-	void hnn_cell_2_free(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)
+	void hnn_cell_free_2(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)
 	{
 		lu_assert(self);
 		lu_assert(self->mt_cell_2);
@@ -163,7 +178,7 @@
 
 	// 3
 
-	Hnn_Cell_3 hnn_cell_3_alloc(Hnn_Cell_Allocator self)
+	Hnn_Cell_3 hnn_cell_alloc_3(Hnn_Cell_Allocator self)
 	{
 		lu_assert(self);
 		lu_assert(self->mt_cell_3);
@@ -176,7 +191,7 @@
 		return cell;
 	}
 
-	void hnn_cell_3_free(Hnn_Cell_Allocator self, Hnn_Cell_3 cell)
+	void hnn_cell_free_3(Hnn_Cell_Allocator self, Hnn_Cell_3 cell)
 	{
 		lu_assert(self);
 		lu_assert(self->mt_cell_3);
@@ -187,7 +202,7 @@
 
 	// 4
 
-	Hnn_Cell_4 hnn_cell_4_alloc(Hnn_Cell_Allocator self)
+	Hnn_Cell_4 hnn_cell_alloc_4(Hnn_Cell_Allocator self)
 	{
 		lu_assert(self);
 		lu_assert(self->mt_cell_4);
@@ -200,7 +215,7 @@
 		return cell;
 	}
 
-	void hnn_cell_4_free(Hnn_Cell_Allocator self, Hnn_Cell_4 cell)
+	void hnn_cell_free_4(Hnn_Cell_Allocator self, Hnn_Cell_4 cell)
 	{
 		lu_assert(self);
 		lu_assert(self->mt_cell_4);

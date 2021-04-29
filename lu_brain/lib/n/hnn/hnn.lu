@@ -72,14 +72,16 @@
 
 		switch(type)
 		{
+			case HNN_CT_0:
+				return hnn_cell_alloc_0(self->cell_allocator);
 			case HNN_CT_1:
 				return hnn_cell_alloc_1(self->cell_allocator);
 			case HNN_CT_2:
-				return (Hnn_Cell) hnn_cell_2_alloc(self->cell_allocator);
+				return (Hnn_Cell) hnn_cell_alloc_2(self->cell_allocator);
 			case HNN_CT_3:
-				return (Hnn_Cell) hnn_cell_3_alloc(self->cell_allocator);
+				return (Hnn_Cell) hnn_cell_alloc_3(self->cell_allocator);
 			case HNN_CT_4:
-				return (Hnn_Cell) hnn_cell_4_alloc(self->cell_allocator);
+				return (Hnn_Cell) hnn_cell_alloc_4(self->cell_allocator);
 			default:
 				return NULL;
 		}
@@ -94,24 +96,27 @@
 
 		switch(cell->type)
 		{
+			case HNN_CT_0:
+				hnn_cell_free_0(self->cell_allocator, cell);
+				break;
 			case HNN_CT_1:
 				hnn_cell_free_1(self->cell_allocator, cell);
 				break;
 			case HNN_CT_2:
-				hnn_cell_2_free(self->cell_allocator, (Hnn_Cell_2) cell);
+				hnn_cell_free_2(self->cell_allocator, (Hnn_Cell_2) cell);
 				break;
 			case HNN_CT_3:
-				hnn_cell_3_free(self->cell_allocator, (Hnn_Cell_3) cell);
+				hnn_cell_free_3(self->cell_allocator, (Hnn_Cell_3) cell);
 				break;
 			case HNN_CT_4:
-				hnn_cell_4_free(self->cell_allocator, (Hnn_Cell_4) cell);
+				hnn_cell_free_4(self->cell_allocator, (Hnn_Cell_4) cell);
 				break;
 			default:
 				lu_assert(false);
 		}
 	}
 // 
-	static inline lu_size hash_comb(lu_size seed, lu_size value)
+	static inline lu_size hnn_hash_comb(lu_size seed, lu_size value)
 	{
 	    seed ^= value + 0x9e3779b9 + (seed<<6) + (seed>>2);
 	    return seed;
@@ -127,7 +132,7 @@
 		lu_assert(self->cell_allocator);
 
 		lu_size hash = 0;
-		hash = hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_left));
+		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_left));
 
 		return hnn_links_cell_get_1(self->links, top_left, hash);
 	}
@@ -140,7 +145,7 @@
 		lu_assert(top_left);
 
 		lu_size hash = 0;
-		hash = hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_left));
+		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_left));
 
 		Hnn_Cell cell = hnn_cell_alloc_1(self->cell_allocator);
 

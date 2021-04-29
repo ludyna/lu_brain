@@ -39,14 +39,14 @@
 	Hnn_Cell hnn_cell_alloc_1(Hnn_Cell_Allocator self);
 	void hnn_cell_free_1(Hnn_Cell_Allocator self, Hnn_Cell cell);
 
-	Hnn_Cell_2 hnn_cell_2_alloc(Hnn_Cell_Allocator self);
-	void hnn_cell_2_free(Hnn_Cell_Allocator self, Hnn_Cell_2 cell);
+	Hnn_Cell_2 hnn_cell_alloc_2(Hnn_Cell_Allocator self);
+	void hnn_cell_free_2(Hnn_Cell_Allocator self, Hnn_Cell_2 cell);
 
-	Hnn_Cell_3 hnn_cell_3_alloc(Hnn_Cell_Allocator self);
-	void hnn_cell_3_free(Hnn_Cell_Allocator self, Hnn_Cell_3 cell);
+	Hnn_Cell_3 hnn_cell_alloc_3(Hnn_Cell_Allocator self);
+	void hnn_cell_free_3(Hnn_Cell_Allocator self, Hnn_Cell_3 cell);
 
-	Hnn_Cell_4 hnn_cell_4_alloc(Hnn_Cell_Allocator self);
-	void hnn_cell_4_free(Hnn_Cell_Allocator self, Hnn_Cell_4 cell);
+	Hnn_Cell_4 hnn_cell_alloc_4(Hnn_Cell_Allocator self);
+	void hnn_cell_free_4(Hnn_Cell_Allocator self, Hnn_Cell_4 cell);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Shifts

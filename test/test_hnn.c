@@ -9,6 +9,9 @@
 
 #include "lib/_module.h"
 
+///////////////////////////////////////////////////////////////////////////////
+// Globals
+
 lu_size boost_combine(lu_size seed, lu_size value)
 {
     seed ^= value + 0x9e3779b9 + (seed<<6) + (seed>>2);
@@ -28,6 +31,9 @@ struct hnn_config g_config = {
         .t3_size = 0,
         .t4_size = 0
     };
+
+///////////////////////////////////////////////////////////////////////////////
+// Setup
 
 void setUp(void)
 { 
@@ -54,6 +60,9 @@ void tearDown(void)
     mem_debugger_destroy(g_md, true);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Tests
+
 void test_spawn_and_die(void) 
 {
 	
@@ -77,11 +86,17 @@ void test_spawn_and_die(void)
     hnn_cell_die(g_hnn, c2);
     hnn_cell_die(g_hnn, c3);
     hnn_cell_die(g_hnn, c4);
-
 }
 
 void test_2(void)
 {
+    Hnn_Cell top_left = hnn_cell_spawn(g_hnn, HNN_CT_0);
+    TEST_ASSERT(top_left);
+    TEST_ASSERT(top_left->type == HNN_CT_0); 
 
+  
+
+    hnn_cell_die(g_hnn, top_left);
+    //hnn_cell_die(g_hnn, c2);
 }
 
