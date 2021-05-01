@@ -57,68 +57,75 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Cell Add 
 
-	// table_1
-
-	static Hnn_Table_Node hnn_links_cell_add_1(Hnn_Links self, Hnn_Cell new_cell, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_1(Hnn_Links self, lu_size hash, Hnn_Cell new_cell)
 	{
 		lu_assert(self);
-		return hnn_table_cell_add(self->table_1, new_cell, hash);
+		return hnn_table_cell_add(self->table_1, hash, new_cell);
 	}
 
-	static void hnn_links_cell_remove_1(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_2(Hnn_Links self, lu_size hash, Hnn_Cell new_cell)
 	{
 		lu_assert(self);
-		hnn_table_cell_remove(self->table_1, cell, hash);
+		return hnn_table_cell_add(self->table_2, hash, new_cell);
 	}
 
-	static Hnn_Cell hnn_links_cell_get_1(Hnn_Links self, Hnn_Cell source, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_3(Hnn_Links self, lu_size hash, Hnn_Cell new_cell)
 	{
 		lu_assert(self);
-		lu_assert(source);
-
-		return hnn_table_cell_get(self->table_1, hash, source);
+		return hnn_table_cell_add(self->table_3, hash, new_cell);
 	}
 
-	// table_2
-
-	static Hnn_Table_Node hnn_links_cell_add_2(Hnn_Links self, Hnn_Cell new_cell, lu_size hash)
+	static Hnn_Table_Node hnn_links_cell_add_4(Hnn_Links self, lu_size hash, Hnn_Cell new_cell)
 	{
 		lu_assert(self);
-		return hnn_table_cell_add(self->table_2, new_cell, hash);
+		return hnn_table_cell_add(self->table_4, hash, new_cell);
 	}
 
-	static void hnn_links_cell_remove_2(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+///////////////////////////////////////////////////////////////////////////////
+// Cell Remove  
+
+	static void hnn_links_cell_remove_1(Hnn_Links self, lu_size hash, Hnn_Cell cell)
 	{
 		lu_assert(self);
-		hnn_table_cell_remove(self->table_2, cell, hash);
+		hnn_table_cell_remove(self->table_1, hash, cell);
 	}
 
-	// table_3
-
-	static Hnn_Table_Node hnn_links_cell_add_3(Hnn_Links self, Hnn_Cell new_cell, lu_size hash)
+	static void hnn_links_cell_remove_2(Hnn_Links self, lu_size hash, Hnn_Cell cell)
 	{
 		lu_assert(self);
-		return hnn_table_cell_add(self->table_3, new_cell, hash);
+		hnn_table_cell_remove(self->table_2, hash, cell);
 	}
 
-	static void hnn_links_cell_remove_3(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+	static void hnn_links_cell_remove_3(Hnn_Links self, lu_size hash, Hnn_Cell cell)
 	{
 		lu_assert(self);
-		hnn_table_cell_remove(self->table_3, cell, hash);
+		hnn_table_cell_remove(self->table_3, hash, cell);
 	}
 
-	// table_4
-
-	static Hnn_Table_Node hnn_links_cell_add_4(Hnn_Links self, Hnn_Cell new_cell, lu_size hash)
+	static void hnn_links_cell_remove_4(Hnn_Links self, lu_size hash, Hnn_Cell cell)
 	{
 		lu_assert(self);
-		return hnn_table_cell_add(self->table_4, new_cell, hash);
+		hnn_table_cell_remove(self->table_4, hash, cell);
 	}
 
-	static void hnn_links_cell_remove_4(Hnn_Links self, Hnn_Cell cell, lu_size hash)
+///////////////////////////////////////////////////////////////////////////////
+// Cell Get  
+
+	static Hnn_Cell hnn_links_cell_get_1(Hnn_Links self, lu_size hash, Hnn_Cell top_left)
 	{
 		lu_assert(self);
-		hnn_table_cell_remove(self->table_4, cell, hash);
+		lu_assert(top_left);
+
+		return hnn_table_cell_get_1(self->table_1, hash, top_left);
+	}
+
+	static Hnn_Cell hnn_links_cell_get_2(Hnn_Links self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right)
+	{
+		lu_assert(self);
+		lu_assert(top_left);
+		lu_assert(top_right);
+
+		return hnn_table_cell_get_2(self->table_1, hash, top_left, top_right);
 	}

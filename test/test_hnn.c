@@ -88,17 +88,34 @@ void test_spawn_and_die(void)
     hnn_cell_die(g_hnn, c4);
 }
 
-void test_spawn_connect_and_get_1(void)
+void test_spawn_connect_and_get(void)
 {
     Hnn_Cell top_left = hnn_cell_spawn(g_hnn, HNN_CT_0);
     TEST_ASSERT(top_left);
     TEST_ASSERT(top_left->type == HNN_CT_0); 
 
-    Hnn_Cell child = hnn_cell_spawn_connect(g_hnn, top_left);
-    TEST_ASSERT(child != NULL);
-    TEST_ASSERT(child == hnn_cell_get_1(g_hnn, top_left));
+    Hnn_Cell top_right = hnn_cell_spawn(g_hnn, HNN_CT_0);
+    TEST_ASSERT(top_right);
+    TEST_ASSERT(top_right->type == HNN_CT_0);
+
+    Hnn_Cell bottom_left = hnn_cell_spawn(g_hnn, HNN_CT_0);
+    TEST_ASSERT(bottom_left);
+    TEST_ASSERT(bottom_left->type == HNN_CT_0);
+
+    Hnn_Cell bottom_right = hnn_cell_spawn(g_hnn, HNN_CT_0);
+    TEST_ASSERT(bottom_right);
+    TEST_ASSERT(bottom_right->type == HNN_CT_0);
+
+    Hnn_Cell child_1 = hnn_cell_spawn_connect_1(g_hnn, top_left);
+    TEST_ASSERT(child_1 != NULL);
+    TEST_ASSERT(child_1 == hnn_cell_get_1(g_hnn, top_left));
+
+    Hnn_Cell child_2 = hnn_cell_spawn_connect_1(g_hnn, top_left);
+    TEST_ASSERT(child_2 != NULL);
+    TEST_ASSERT(child_2 == hnn_cell_get_1(g_hnn, top_left));
+
   
     hnn_cell_die(g_hnn, top_left);
-    hnn_cell_die(g_hnn, child);
+    hnn_cell_die(g_hnn, child_1);
 }
 

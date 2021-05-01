@@ -97,14 +97,15 @@
 		return node;
 	}
 
-	static void hnn_table_cell_remove(Hnn_Table self, Hnn_Cell dest, lu_size hash)
+	static void hnn_table_cell_remove(Hnn_Table self, lu_size hash, Hnn_Cell dest)
 	{
 		lu_assert(self);
 		lu_assert(dest);
 		
+		lu_user_assert_void(false, "NOT IMPLEMENTED");
 	}
 
-	static Hnn_Cell hnn_table_cell_get(Hnn_Table self, lu_size hash, Hnn_Cell top_left)
+	static Hnn_Cell hnn_table_cell_get_1(Hnn_Table self, lu_size hash, Hnn_Cell top_left)
 	{
 		lu_assert(self);
 		lu_assert(top_left);

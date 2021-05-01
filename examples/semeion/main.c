@@ -138,7 +138,7 @@ int main()
 	// Exit app
 
 	mem_debugger_print(md);
-    mem_debugger_destroy(md, true);
+	mem_debugger_destroy(md, true);
 
 	exit(EXIT_SUCCESS);
 }
