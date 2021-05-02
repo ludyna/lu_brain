@@ -129,3 +129,24 @@
 
 		return hnn_table_cell_get_2(self->table_1, hash, top_left, top_right);
 	}
+
+	static Hnn_Cell hnn_links_cell_get_3(Hnn_Links self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left)
+	{
+		lu_assert(self);
+		lu_assert(top_left);
+		lu_assert(top_right);
+		lu_assert(bottom_left);
+
+		return hnn_table_cell_get_3(self->table_1, hash, top_left, top_right, bottom_left);
+	}
+
+	static Hnn_Cell hnn_links_cell_get_4(Hnn_Links self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left, Hnn_Cell bottom_right)
+	{
+		lu_assert(self);
+		lu_assert(top_left);
+		lu_assert(top_right);
+		lu_assert(bottom_left);
+		lu_assert(bottom_right);
+
+		return hnn_table_cell_get_4(self->table_1, hash, top_left, top_right, bottom_left, bottom_right);
+	}
