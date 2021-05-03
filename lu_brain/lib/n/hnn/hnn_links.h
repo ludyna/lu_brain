@@ -6,13 +6,11 @@
 // 
 
 	struct hnn_links {
-
 		Mem mem;
 		Hnn_Table table_1;
 		Hnn_Table table_2;
 		Hnn_Table table_3;
 		Hnn_Table table_4;
-
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

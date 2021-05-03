@@ -205,6 +205,9 @@
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_left));
 
 		Hnn_Cell new_cell = hnn_cell_alloc_1(self->cell_allocator);
+ 
+ 		// Important
+		new_cell->top_left = top_left;
 
 		Hnn_Table_Node node = hnn_links_cell_add_1(self->links, hash, new_cell);
 		lu_assert(node);

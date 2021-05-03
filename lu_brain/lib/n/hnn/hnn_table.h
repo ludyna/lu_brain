@@ -49,15 +49,15 @@
 	{
 		lu_assert(self);
 		lu_assert(new_cell);
+		lu_assert(new_cell->top_left);
 		lu_assert(self->size_in_cells > 0);
 		lu_assert(self->units);
 		lu_assert(self->mem);
 		lu_assert(self->cell_type == new_cell->type);
 
 		lu_size index = hnn_table_hash_to_index(self, hash);
-		Hnn_Table_Node node;
 
-		node = hnn_table_node_create(self->mem, new_cell, self->units[index]);
+		Hnn_Table_Node node = hnn_table_node_create(self->mem, new_cell, self->units[index]);
 		self->units[index] = node;
 
 		return node;

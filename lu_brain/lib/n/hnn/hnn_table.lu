@@ -115,7 +115,7 @@
 
 		Hnn_Table_Node node = self->units[index];
 
-		while (node && node->cell && hnn_cell_parent_eq_1(node->cell, top_left)) node = node->prev;
+		while (node && node->cell && !hnn_cell_parent_eq_1(node->cell, top_left)) node = node->prev;
 
 		if (node) return node->cell;
 
@@ -133,7 +133,7 @@
 
 		Hnn_Table_Node node = self->units[index];
 
-		while (node && node->cell && hnn_cell_parent_eq_2((Hnn_Cell_2) node->cell, top_left, top_right)) node = node->prev;
+		while (node && node->cell && !hnn_cell_parent_eq_2((Hnn_Cell_2) node->cell, top_left, top_right)) node = node->prev;
 
 		if (node) return node->cell;
 
@@ -152,7 +152,7 @@
 
 		Hnn_Table_Node node = self->units[index];
 
-		while (node && node->cell && hnn_cell_parent_eq_3((Hnn_Cell_3) node->cell, top_left, top_right, bottom_left)) node = node->prev;
+		while (node && node->cell && !hnn_cell_parent_eq_3((Hnn_Cell_3) node->cell, top_left, top_right, bottom_left)) node = node->prev;
 
 		if (node) return node->cell;
 
@@ -171,7 +171,7 @@
 
 		Hnn_Table_Node node = self->units[index];
 
-		while (node && node->cell && hnn_cell_parent_eq_4((Hnn_Cell_4) node->cell, top_left, top_right, bottom_left, bottom_right)) node = node->prev;
+		while (node && node->cell && !hnn_cell_parent_eq_4((Hnn_Cell_4) node->cell, top_left, top_right, bottom_left, bottom_right)) node = node->prev;
 
 		if (node) return node->cell;
 
