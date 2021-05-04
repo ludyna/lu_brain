@@ -83,7 +83,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
-	static Hnn_Table_Node hnn_table_node_find(Hnn_Table self, Hnn_Cell cell, lu_size hash)
+	static Hnn_Table_Node hnn_table_node_find(Hnn_Table self, Hnn_Cell_0 cell, lu_size hash)
 	{
 		lu_assert(self);
 		lu_assert(cell);
@@ -97,7 +97,7 @@
 		return node;
 	}
 
-	static void hnn_table_cell_remove(Hnn_Table self, lu_size hash, Hnn_Cell dest)
+	static void hnn_table_cell_remove(Hnn_Table self, lu_size hash, Hnn_Cell_0 dest)
 	{
 		lu_assert(self);
 		lu_assert(dest);
@@ -105,7 +105,7 @@
 		lu_user_assert_void(false, "NOT IMPLEMENTED");
 	}
 
-	static Hnn_Cell hnn_table_cell_get_1(Hnn_Table self, lu_size hash, Hnn_Cell top_left)
+	static Hnn_Cell_0 hnn_table_cell_get_1(Hnn_Table self, lu_size hash, Hnn_Cell_0 top_left)
 	{
 		lu_assert(self);
 		lu_assert(top_left);
@@ -115,14 +115,14 @@
 
 		Hnn_Table_Node node = self->units[index];
 
-		while (node && node->cell && !hnn_cell_parent_eq_1(node->cell, top_left)) node = node->prev;
+		while (node && node->cell && !hnn_cell_parent_eq_1((Hnn_Cell_1) node->cell, top_left)) node = node->prev;
 
 		if (node) return node->cell;
 
 		return NULL;
 	}
 
- 	static Hnn_Cell hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right)
+ 	static Hnn_Cell_0 hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right)
  	{
 		lu_assert(self);
 		lu_assert(top_left);
@@ -140,7 +140,7 @@
 		return NULL;
  	}
 
- 	static Hnn_Cell hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left)
+ 	static Hnn_Cell_0 hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left)
  	{
 		lu_assert(self);
 		lu_assert(top_left);
@@ -159,7 +159,7 @@
 		return NULL;
  	}
 
- 	static Hnn_Cell hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell top_left, Hnn_Cell top_right, Hnn_Cell bottom_left, Hnn_Cell bottom_right)
+ 	static Hnn_Cell_0 hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left, Hnn_Cell_0 bottom_right)
  	{
 		lu_assert(self);
 		lu_assert(top_left);
