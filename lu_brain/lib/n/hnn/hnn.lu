@@ -259,7 +259,7 @@
 		new_cell->super.top_right = top_right;
 		new_cell->bottom_left = bottom_left;
 
-		Hnn_Table_Node node = hnn_links_cell_add_2(self->links, hash, (Hnn_Cell_0) new_cell);
+		Hnn_Table_Node node = hnn_links_cell_add_3(self->links, hash, (Hnn_Cell_0) new_cell);
 		lu_assert(node);
 
 		return node->cell;
