@@ -130,11 +130,11 @@ void test_spawn_connect_and_get(void)
     TEST_ASSERT(t);
     TEST_ASSERT(child_3 == t);
 
-    // Hnn_Cell_0 child_4 = hnn_cell_spawn_connect_4(g_hnn, top_left, top_right, bottom_left, bottom_right);
-    // TEST_ASSERT(child_4 != NULL);
-    // t = hnn_cell_get_4(g_hnn, top_left, top_right, bottom_left, bottom_right);
-    // TEST_ASSERT(t);
-    // TEST_ASSERT(child_4 == t);
+    Hnn_Cell_0 child_4 = hnn_cell_spawn_connect_4(g_hnn, top_left, top_right, bottom_left, bottom_right);
+    TEST_ASSERT(child_4);
+    t = hnn_cell_get_4(g_hnn, top_left, top_right, bottom_left, bottom_right);
+    TEST_ASSERT(t);
+    TEST_ASSERT(child_4 == t);
   
     hnn_cell_die(g_hnn, top_left);
     hnn_cell_die(g_hnn, child_1);
