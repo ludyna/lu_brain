@@ -12,12 +12,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
 
-lu_size boost_combine(lu_size seed, lu_size value)
-{
-    seed ^= value + 0x9e3779b9 + (seed<<6) + (seed>>2);
-    return seed;
-}
-
 Hnn g_hnn = NULL;
 Mem_Debugger g_md = NULL;
 struct hnn_config g_config = {
