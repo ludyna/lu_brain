@@ -18,11 +18,9 @@
 	};
 
 	struct hnn {
-
 		Mem mem;
 		Hnn_Cell_Allocator cell_allocator;
 		Hnn_Links links;
-
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -30,7 +28,6 @@
 
 	Hnn hnn_create(Mem mem, struct hnn_config config);
 	void hnn_destroy(Hnn self);
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Spawn & Die 
@@ -41,7 +38,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Get 
 
-
 	Hnn_Cell_0 hnn_cell_get_1(Hnn self, Hnn_Cell_0 c1);
 	Hnn_Cell_0 hnn_cell_get_2(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2);
 	Hnn_Cell_0 hnn_cell_get_3(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2, Hnn_Cell_0 c3);
@@ -50,10 +46,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Spawn Connect 
 
-	Hnn_Cell_0 hnn_cell_spawn_connect_1(Hnn self, Hnn_Cell_0 c1);
-	Hnn_Cell_0 hnn_cell_spawn_connect_2(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2);
-	Hnn_Cell_0 hnn_cell_spawn_connect_3(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2, Hnn_Cell_0 c3);
-	Hnn_Cell_0 hnn_cell_spawn_connect_4(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2, Hnn_Cell_0 c3, Hnn_Cell_0 c4);
+	Hnn_Cell_1 hnn_cell_spawn_connect_1(Hnn self, Hnn_Cell_0 c1);
+	Hnn_Cell_2 hnn_cell_spawn_connect_2(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2);
+	Hnn_Cell_3 hnn_cell_spawn_connect_3(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2, Hnn_Cell_0 c3);
+	Hnn_Cell_4 hnn_cell_spawn_connect_4(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2, Hnn_Cell_0 c3, Hnn_Cell_0 c4);
 
 
 
