@@ -3,10 +3,8 @@
 */
 
 #include "unity.h"
-
 #include <stdio.h>
 #include <string.h>
-
 #include "lib/_module.h"
 
 lu_size boost_combine(lu_size seed, lu_size value)
