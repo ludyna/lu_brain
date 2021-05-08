@@ -3,43 +3,43 @@
 */
 
 
-	static N_Cell n_mem_cell_alloc(N_Mem self)
-	{
-		lu_user_assert(self, "N_Mem is NULL");
+	// static N_Cell n_mem_cell_alloc(N_Mem self)
+	// {
+	// 	lu_user_assert(self, "N_Mem is NULL");
 
-		N_Cell neu = (N_Cell) mem_record_alloc(self->cells);
-		lu_user_assert(neu, "Cannot allocate N_Cell");
+	// 	N_Cell neu = (N_Cell) mem_record_alloc(self->cells);
+	// 	lu_user_assert(neu, "Cannot allocate N_Cell");
 
-		return neu;
-	}
+	// 	return neu;
+	// }
 
-	static N_Cell_2 n_mem_cell_2_alloc(N_Mem self)
-	{
-		lu_user_assert(self, "N_Mem is NULL");
+	// static N_Cell_2 n_mem_cell_2_alloc(N_Mem self)
+	// {
+	// 	lu_user_assert(self, "N_Mem is NULL");
 
-		N_Cell_2 neu = (N_Cell_2) mem_record_alloc(self->cells_2);
-		lu_user_assert(neu, "Cannot allocate N_Cell_2");
+	// 	N_Cell_2 neu = (N_Cell_2) mem_record_alloc(self->cells_2);
+	// 	lu_user_assert(neu, "Cannot allocate N_Cell_2");
 
-		return neu;
-	}
+	// 	return neu;
+	// }
 
-	static N_Cell_3 n_mem_cell_3_alloc(N_Mem self)
-	{
-		lu_user_assert(self, "N_Mem is NULL");
+	// static N_Cell_3 n_mem_cell_3_alloc(N_Mem self)
+	// {
+	// 	lu_user_assert(self, "N_Mem is NULL");
 
-		N_Cell_3 neu = (N_Cell_3) mem_record_alloc(self->cells_3);
-		lu_user_assert(neu, "Cannot allocate N_Cell_3");
+	// 	N_Cell_3 neu = (N_Cell_3) mem_record_alloc(self->cells_3);
+	// 	lu_user_assert(neu, "Cannot allocate N_Cell_3");
 
-		return neu;
-	}
+	// 	return neu;
+	// }
 
-	static N_Lin n_mem_lin_alloc(N_Mem self)
-	{
-		lu_user_assert(self, "N_Mem is NULL");
+	// static N_Lin n_mem_lin_alloc(N_Mem self)
+	// {
+	// 	lu_user_assert(self, "N_Mem is NULL");
 
-		N_Lin lin = (N_Lin) mem_record_alloc(self->lins);
-		lu_user_assert(lin, "Cannot allocate N_Lin");
+	// 	N_Lin lin = (N_Lin) mem_record_alloc(self->lins);
+	// 	lu_user_assert(lin, "Cannot allocate N_Lin");
 
-		return lin;
-	}
+	// 	return lin;
+	// }
 

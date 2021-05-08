@@ -1,6 +1,8 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
 
 #include "hnn/_module.lu"
-#include "n_cell.lu"
 #include "n_mem_create.lu"
 #include "n_mem_alloc.lu"
 #include "n_mem.lu"
