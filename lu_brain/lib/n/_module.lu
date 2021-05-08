@@ -4,5 +4,4 @@
 
 #include "hnn/_module.lu"
 #include "n_mem_create.lu"
-#include "n_mem_alloc.lu"
 #include "n_mem.lu"
