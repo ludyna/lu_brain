@@ -3,7 +3,8 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Hnn_Table_Node
+
 	struct hnn_table_node {
 		Hnn_Table_Node prev;
 		Hnn_Cell_0 cell;
@@ -23,22 +24,23 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Hnn_Table 
 
 	struct hnn_table {
 		Mem mem;
-		Hnn_Table_Node* units;
+		Hnn_Table_Node* units; // unit might contain more than one cell 
 		lu_size size_in_cells;
 		lu_byte cell_type;
 	};
  
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Hnn_Table Create And Destroy
+
 	static Hnn_Table hnn_table_create(Mem mem, lu_size size_in_cells, lu_byte cell_type);
 	static void hnn_table_destroy(Hnn_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
-//   
+// Hnn_Table Main Methods
 
 	static inline lu_size hnn_table_hash_to_index(Hnn_Table self, lu_size hash)
 	{
@@ -70,3 +72,8 @@
  	static Hnn_Cell_0 hnn_table_cell_get_2(Hnn_Table self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right);
  	static Hnn_Cell_0 hnn_table_cell_get_3(Hnn_Table self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left);
  	static Hnn_Cell_0 hnn_table_cell_get_4(Hnn_Table self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left, Hnn_Cell_0 bottom_right);
+
+///////////////////////////////////////////////////////////////////////////////
+// Hnn_Table Utility    
+
+	static void hnn_table_print_distribution(Hnn_Table self);

@@ -150,3 +150,32 @@
 
 		return hnn_table_cell_get_4(self->table_4, hash, top_left, top_right, bottom_left, bottom_right);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Utility
+
+	static void hnn_links_print_distribution(Hnn_Links self, lu_size type)
+	{
+		lu_assert(self);
+
+		switch(type)
+		{
+			case HNN_CT_1:
+				hnn_table_print_distribution(self->table_1);
+				break;
+			case HNN_CT_2:
+				hnn_table_print_distribution(self->table_2);
+				break;
+
+			case HNN_CT_3:
+				hnn_table_print_distribution(self->table_3);
+				break;
+
+			case HNN_CT_4:
+				hnn_table_print_distribution(self->table_4);
+				break;
+
+			default:
+				lu_assert(false);
+		}
+	}

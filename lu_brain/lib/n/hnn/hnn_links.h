@@ -42,3 +42,8 @@
 	static Hnn_Cell_0 hnn_links_cell_get_2(Hnn_Links self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right);
 	static Hnn_Cell_0 hnn_links_cell_get_3(Hnn_Links self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left);
 	static Hnn_Cell_0 hnn_links_cell_get_4(Hnn_Links self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left, Hnn_Cell_0 bottom_right);
+
+///////////////////////////////////////////////////////////////////////////////
+// Utility
+
+	static void hnn_links_print_distribution(Hnn_Links self, lu_size type);

@@ -23,7 +23,7 @@ struct hnn_config g_config = {
         .size_in_cell_1 = 5,
         .size_in_cell_2 = 5, 
         .size_in_cell_3 = 5, 
-        .size_in_cell_4 = 1000,
+        .size_in_cell_4 = INPUT_WIDTH * INPUT_HEIGHT * INPUT_DEAPTH,
         .t1_size = 0, 
         .t2_size = 0,
         .t3_size = 0,
@@ -61,10 +61,23 @@ void tearDown(void)
 ///////////////////////////////////////////////////////////////////////////////
 // Tests
 
+Hnn_Cell_4 spawn_4(Hnn_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH], lu_size x, lu_size y, lu_size d)
+{
+    if (x + 1 >= INPUT_WIDTH) return NULL;
+    if (y + 1 >= INPUT_HEIGHT) return NULL;
+    if (d + 1 >= INPUT_DEAPTH) return NULL;
+
+    return hnn_cell_spawn_connect_4(
+        g_hnn, 
+        inputs[x][y][d], 
+        inputs[x + 1][y][d], 
+        inputs[x][y + 1][d], 
+        inputs[x + 1][y + 1][d]
+    );
+}
+
 void test_distribution(void) 
 {
-
-
 	Hnn_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH];
 
     lu_size y;
@@ -76,6 +89,16 @@ void test_distribution(void)
             {
                 inputs[x][y][d] = hnn_cell_spawn(g_hnn, HNN_CT_0);
             }
+
+    Hnn_Cell_4 cell;
+    for(d = 0; d < INPUT_DEAPTH; d++) 
+        for(y = 0; y < INPUT_HEIGHT; y++)
+            for(x = 0; x < INPUT_WIDTH; x++)
+            {
+                cell = spawn_4(inputs, x, y, d);
+            }
+
+    hnn_print_distribution(g_hnn, HNN_CT_4);
 }
 
 // void test_spawn_connect_and_get(void)

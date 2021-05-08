@@ -51,5 +51,7 @@
 	Hnn_Cell_3 hnn_cell_spawn_connect_3(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2, Hnn_Cell_0 c3);
 	Hnn_Cell_4 hnn_cell_spawn_connect_4(Hnn self, Hnn_Cell_0 c1, Hnn_Cell_0 c2, Hnn_Cell_0 c3, Hnn_Cell_0 c4);
 
+///////////////////////////////////////////////////////////////////////////////
+// Utility
 
-
+	void hnn_print_distribution(Hnn self, lu_size type);
