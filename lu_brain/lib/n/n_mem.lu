@@ -3,6 +3,42 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// N_Mem create methods
+
+	static N_Mem n_mem_create(Lu_Brain brain, lu_size names_size)
+	{
+		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(brain->brain_mem, "Lu_Brain brain_mem is NULL");
+		lu_user_assert(names_size > 0, "names_size should be greater than 0");
+
+		N_Mem self 			= (N_Mem) mem_alloc(brain->brain_mem, sizeof(struct n_mem));
+		lu_user_assert(self, "Cannot allocate N_Mem");
+
+		self->brain 		= brain;
+
+		self->names_size 	= names_size;
+
+		self->names 		= simple_hash_create(brain->brain_mem, self->names_size);
+		lu_user_assert(self->names, "Cannot create names");
+
+		return self;
+	}
+
+	static void n_mem_destroy(N_Mem self)
+	{
+		lu_assert(self);
+
+		if (self->names)
+		{
+			simple_hash_destroy(self->names, self->brain->brain_mem);
+			self->names = NULL;
+		}
+
+		mem_free(self->brain->brain_mem, (lu_p_byte) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
 // 
  	
  	static void n_mem_print_info(N_Mem self)
