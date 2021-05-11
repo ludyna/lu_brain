@@ -1,0 +1,8 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+	
+	typedef struct names_list* Names_List;

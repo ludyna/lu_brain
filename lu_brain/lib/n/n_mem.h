@@ -13,10 +13,9 @@
 	
 	struct n_mem {
 		// vlasnyk
-		Lu_Brain 				brain;
+		Lu_Brain brain;
 
-		lu_size 				names_size;
-		Simple_Hash				names;
+		Names_List names;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

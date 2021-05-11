@@ -15,11 +15,7 @@
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
 		self->brain 		= brain;
-
-		self->names_size 	= names_size;
-
-		self->names 		= simple_hash_create(brain->brain_mem, self->names_size);
-		lu_user_assert(self->names, "Cannot create names");
+		self->names 		= names_list_create(brain->brain_mem, names_size);
 
 		return self;
 	}
@@ -27,12 +23,9 @@
 	static void n_mem_destroy(N_Mem self)
 	{
 		lu_assert(self);
+		lu_assert(self->names);
 
-		if (self->names)
-		{
-			simple_hash_destroy(self->names, self->brain->brain_mem);
-			self->names = NULL;
-		}
+		names_list_destroy(self->names);
 
 		mem_free(self->brain->brain_mem, (lu_p_byte) self);
 	}

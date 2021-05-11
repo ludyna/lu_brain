@@ -1,0 +1,30 @@
+ /**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Names_List Create & Destroy
+
+	static Names_List names_list_create(Mem mem, lu_size names_size)
+	{
+		Names_List self = (Names_List) mem_alloc(mem, sizeof(struct names_list));
+		lu_assert(self);
+
+		self->mem = mem;
+		self->names_size = names_size;
+		self->hash = simple_hash_create(self->mem, self->names_size);
+		lu_assert(self->hash);
+
+		return self;
+	}
+
+	static void names_list_destroy(Names_List self)
+	{
+		lu_assert(self);
+		lu_assert(self->hash);
+		lu_assert(self->mem);
+
+		simple_hash_destroy(self->hash, self->mem);
+
+		mem_free(self->mem, (lu_p_byte) self);
+	}
