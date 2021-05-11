@@ -188,6 +188,7 @@
 		
 		lu_size i;
 		lu_size count;
+		lu_size total_count = 0;
 		Hnn_Table_Node node;
 
 		printf("\n Table distribution:");
@@ -204,6 +205,9 @@
 				node = node->prev;
 			}
 
+			total_count += count;
 			printf("\n [%lu]: %lu", i, count);
 		}
+
+		printf("\n Total count: %lu", total_count);
 	}
