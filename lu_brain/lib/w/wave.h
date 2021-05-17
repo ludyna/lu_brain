@@ -6,7 +6,7 @@
 // W_Cell - w_
 
 	struct w_cell {
-		N_Cell 					neu;
+		// N_Cell 					neu;
 		lu_value 				p;
 	};
 

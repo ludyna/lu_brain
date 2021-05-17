@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Hnn_Config
 
 	struct hnn_config {
 		lu_size size_in_cell_0;
@@ -16,6 +16,14 @@
 		lu_size t3_size;
 		lu_size t4_size;
 	};
+
+	static inline void hnn_config_validate(Hnn_Config self)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Hnn
 
 	struct hnn {
 		Mem mem;

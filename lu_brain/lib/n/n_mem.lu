@@ -5,17 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem create methods
 
-	static N_Mem n_mem_create(Lu_Brain brain, lu_size names_size)
+	static N_Mem n_mem_create(Lu_Brain brain, struct n_mem_config config)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->brain_mem, "Lu_Brain brain_mem is NULL");
-		lu_user_assert(names_size > 0, "names_size should be greater than 0");
+
+		n_mem_config_validate(&config);
 
 		N_Mem self 			= (N_Mem) mem_alloc(brain->brain_mem, sizeof(struct n_mem));
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
+		self->config 		= config;
 		self->brain 		= brain;
-		self->names 		= names_list_create(brain->brain_mem, names_size);
+		self->names 		= names_list_create(brain->brain_mem, self->config.names_size);
 
 		return self;
 	}

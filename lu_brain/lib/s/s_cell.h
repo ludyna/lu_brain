@@ -43,10 +43,10 @@
 		lu_size 				z;
 
 		S_Layer_Conf 			v_conf;
-		N_Cell* 				n_v_cells;
+		Hnn_Cell_0* 			n_v_cells;
 
 		S_Layer_Conf 			p_conf;
-		N_Cell*					n_p_cells;
+		Hnn_Cell_0*				n_p_cells;
 	};
 
 	// s_neu_inits.lu
