@@ -11,7 +11,6 @@
 		lu_user_assert(p_config, "Cannot get Lu_Brain_Config");
 		
 		struct lu_brain_config config = *p_config;
-		config.size_in_bytes = size_in_bytes;
 
 		return lu_brain_create(config);
 	}
@@ -21,7 +20,7 @@
 		Lu_Brain_Config p_config = lu_brain_config_validate(&config);
 		lu_user_assert(p_config, "Lu_Brain_Config validation failed");
 
-		Mem brain_mem		= (Mem) mem_perm_create(g_mem_temp, p_config->size_in_bytes); 
+		Mem brain_mem		= g_mem_temp; 
 		lu_user_assert(brain_mem, "Cannot create brain_mem. Not enough memory?");
 
 		Lu_Brain self 		= (Lu_Brain) mem_alloc(brain_mem, sizeof(struct lu_brain));
@@ -52,7 +51,7 @@
 
 		arr_destroy(self->recs);
 	
-		mem_destroy(self->brain_mem, g_mem_temp);
+		mem_temp_free((lu_p_byte) self);
 	}
 
 	void lu_brain_print_info(Lu_Brain self)

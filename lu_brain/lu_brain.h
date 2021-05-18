@@ -46,10 +46,6 @@
 	struct lu_brain_config {
 		lu_size id;							// optional, to identify brain by unique id
 
-		lu_size size_in_bytes;				// brain size in bytes (not includes recs, stories or waves)
-											// optimal size depends on number of recs, rec sizes, 
-											// story sizes and amount of data to remember
-
 		lu_size recs_size;					// initial maximum number of recs 
 
 		lu_size names_size; 				// initial maximum number of names
