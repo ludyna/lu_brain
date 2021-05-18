@@ -47,16 +47,16 @@
 		return (lu_size) lu_value_round(val / self->step);
 	}
 
-	static inline struct lu_size_range s_layer_conf_ix_range(S_Layer_Conf self, lu_value val)
+	static inline struct lu_size_range s_layer_conf_ix_range(S_Layer_Conf self, lu_value val, lu_size nsc)
 	{
 		lu_size orig_i = s_layer_conf_ix(self, val);
 
 		long begin, end;
 
-		begin = orig_i - self->nsc;
+		begin = orig_i - nsc;
 		if (begin < 0) begin = 0;
 
-		end = orig_i + self->nsc;
+		end = orig_i + nsc;
 		if (end > (self->cells_size - 1)) end = self->cells_size - 1; 
 
 		struct lu_size_range r;

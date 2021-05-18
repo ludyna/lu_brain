@@ -14,7 +14,6 @@
 		lu_value 				step;
 		lu_value*				steps;  		// preobchysleni kroky
 		lu_size 				cells_size;
-		lu_size 				nsc; 			// (tilky dlia poshuku) nei sim count
 	};
 
 	// s_layer_conf.lu
@@ -23,7 +22,7 @@
 
 	static inline lu_value s_layer_conf_norm(S_Layer_Conf self, lu_value request);
 	static inline lu_size s_layer_conf_ix(S_Layer_Conf self, lu_value val);
-	static inline struct lu_size_range s_layer_conf_ix_range(S_Layer_Conf self, lu_value val);
+	static inline struct lu_size_range s_layer_conf_ix_range(S_Layer_Conf self, lu_value val, lu_size nsc);
 	static inline lu_value s_layer_conf_calc_sig(S_Layer_Conf self, lu_size val_step_i, lu_value val);
 	static inline lu_value s_layer_conf_step_norm_dist(S_Layer_Conf self);
 
