@@ -6,16 +6,15 @@
 // W_Cell - w_
 
 	struct w_cell {
-		// N_Cell 					neu;
-		lu_value 				p;
+		// N_Cell neu;
+		lu_value p;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // W_Cell_3 w_receptor_cell (c1, p, c2)
 
 	struct w_cell_3 {
-		struct w_cell 			super;
-
+		struct w_cell super;
 	};
 
 	static void w_cell_3_save_value(W_Cell_3 w_cell_3, lu_value value);

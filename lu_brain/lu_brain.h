@@ -18,6 +18,7 @@
 	typedef struct lu_rec* 				Lu_Rec; 
 
 	// Story 
+	
 	typedef struct lu_data* 			Lu_Data;
 	typedef struct lu_story* 			Lu_Story;
 

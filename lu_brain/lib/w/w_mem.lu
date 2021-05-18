@@ -97,8 +97,8 @@
 				// data->values ? lu_debug("%.0f", data->values[0]) : lu_debug("NULL");
 				// lu_debug("] SAVING ...");
 
-				if (!lu_data_is_empty(data)) 
-					w_rec_data_save(w_rec, data, 0);
+				// if (!lu_data_is_empty(data)) 
+				// 	w_rec_data_save(w_rec, data, 0);
 			}
 
 			curr = lu_l_node_next(curr);

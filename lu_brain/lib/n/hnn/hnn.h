@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Config
 
-	struct hnn_config {
+	struct lu_hnn_config {
 		lu_size size_in_cell_0;
 		lu_size size_in_cell_1;
 		lu_size size_in_cell_2;
@@ -17,9 +17,12 @@
 		lu_size t4_size;
 	};
 
-	static inline void hnn_config_validate(Hnn_Config self)
+	static inline Hnn_Config hnn_config_validate(Hnn_Config self)
 	{
 
+		
+
+		return self;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,7 +37,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn hnn_create(Mem mem, struct hnn_config config);
+	Hnn hnn_create(Mem mem, struct lu_hnn_config config);
 	void hnn_destroy(Hnn self);
 
 ///////////////////////////////////////////////////////////////////////////////

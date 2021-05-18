@@ -98,8 +98,8 @@ void tearDown(void)
 
 void test_lu_brain_basics(void) 
 { 
-	lu_debug("\n n_cell: %lu", sizeof(struct n_cell));
-	lu_debug("\n n_lin: %lu", sizeof(struct n_lin));
+	// lu_debug("\n n_cell: %lu", sizeof(struct n_cell));
+	// lu_debug("\n n_lin: %lu", sizeof(struct n_lin));
 	lu_size ws = sizeof(struct lu_neu);
 	lu_debug("\n w_sig: %lu, 1Kb=%'lu, 1Mb=%'lu, 1Gb=%'lu", ws, 1024 / ws, 1024 * 1024 / ws, 1024 * 1024 * 1024 / ws); 
 
