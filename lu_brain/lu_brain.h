@@ -29,20 +29,32 @@
 	typedef struct lu_wave* 			Lu_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
-// Brain 
+// Lu_Brain_Config 
 
-	// Lu_Brain_Config
+	struct lu_net_config {
+		lu_size names_size; 		// initial maximum number of names
+
+		lu_size size_in_cell_0;
+		lu_size size_in_cell_1;
+		lu_size size_in_cell_2;
+		lu_size size_in_cell_3; 
+		lu_size size_in_cell_4;
+
+		lu_size hnn_table_mod;
+	};
 	
 	struct lu_brain_config {
-		lu_size 		id;					// optional, to identify brain by unique id
+		lu_size id;							// optional, to identify brain by unique id
 
-		lu_size 		size_in_bytes;		// brain size in bytes (not includes recs, stories or waves)
+		lu_size size_in_bytes;				// brain size in bytes (not includes recs, stories or waves)
 											// optimal size depends on number of recs, rec sizes, 
 											// story sizes and amount of data to remember
 
-		lu_size 		recs_size;			// initial maximum number of recs 
+		lu_size recs_size;					// initial maximum number of recs 
 
-		lu_size 		names_size; 		// initial maximum number of names
+		lu_size names_size; 				// initial maximum number of names
+
+		struct lu_net_config net_config;
 	};
 
 	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);
@@ -56,7 +68,8 @@
 
 	Lu_Brain_Config lu_brain_config_predefined_get(lu_size id);
 
-	// Lu_Brain 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Brain 
 
 	Lu_Brain lu_brain_create_from_predefined(lu_size size_in_bytes, lu_size predefined_config_id);
 	Lu_Brain lu_brain_create(struct lu_brain_config config);

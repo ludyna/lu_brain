@@ -14,7 +14,7 @@
 
 Hnn g_hnn = NULL;
 Mem_Debugger g_md = NULL;
-struct lu_hnn_config g_config = {
+struct hnn_config g_config = {
         .size_in_cell_0 = 5, 
         .size_in_cell_1 = 5,
         .size_in_cell_2 = 5, 

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem create methods
 
-	static N_Mem n_mem_create(Lu_Brain brain, struct lu_n_mem_config config)
+	static N_Mem n_mem_create(Lu_Brain brain, struct n_mem_config config)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->brain_mem, "Lu_Brain brain_mem is NULL");

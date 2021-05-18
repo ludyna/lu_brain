@@ -13,5 +13,5 @@ typedef struct hnn_table_node* Hnn_Table_Node;
 typedef struct hnn_table* Hnn_Table;
 typedef struct hnn_links* Hnn_Links;
 
-typedef struct lu_hnn_config* Hnn_Config;
+typedef struct hnn_config* Hnn_Config;
 typedef struct hnn* Hnn;

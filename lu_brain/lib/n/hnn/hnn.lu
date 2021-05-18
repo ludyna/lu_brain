@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn hnn_create(Mem mem, struct lu_hnn_config config)
+	Hnn hnn_create(Mem mem, struct hnn_config config)
 	{
 		lu_assert(mem);
 

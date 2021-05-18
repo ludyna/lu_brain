@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem Config 
 
-	struct lu_n_mem_config {
+	struct n_mem_config {
 		lu_size names_size;
 
-		struct lu_hnn_config hnn_config;
+		struct hnn_config hnn_config;
 	};
 
 	static inline N_Mem_Config lu_n_mem_config_validate(N_Mem_Config self)
@@ -26,7 +26,7 @@
 	
 	struct n_mem {
 
-		struct lu_n_mem_config config;
+		struct n_mem_config config;
 
 		// vlasnyk
 		Lu_Brain brain;
@@ -39,7 +39,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Mem Create & Destroy
 
-	static N_Mem n_mem_create(Lu_Brain brain, struct lu_n_mem_config config);
+	static N_Mem n_mem_create(Lu_Brain brain, struct n_mem_config config);
 	static void n_mem_destroy(N_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
