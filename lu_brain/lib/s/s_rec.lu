@@ -30,8 +30,8 @@
 		///////////////////////////////////////
 		// Confs
 
-		s_layer_conf_init(&self->v_conf, rec->config.v_min, rec->config.v_max, rec->config.v_neu_size, rec->config.v_nsc);
-		s_layer_conf_init(&self->p_conf, rec->config.v_min, rec->config.v_max, rec->config.p_neu_size, rec->config.p_nsc);
+		s_layer_conf_init(&self->v_conf, rec->config.v_min, rec->config.v_max, rec->config.v_neu_size);
+		s_layer_conf_init(&self->p_conf, rec->config.v_min, rec->config.v_max, rec->config.p_neu_size);
 
 		///////////////////////////////////////
 		// Allocate Lu_Data Layers

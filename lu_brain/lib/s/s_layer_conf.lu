@@ -5,14 +5,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Layer_Conf s_layer_conf_init(S_Layer_Conf self, lu_value min, lu_value max, lu_size cells_size, lu_size nsc)
+	static S_Layer_Conf s_layer_conf_init(S_Layer_Conf self, lu_value min, lu_value max, lu_size cells_size)
 	{
 		self->cells_size  		= cells_size; // value depth in indexes
 		self->orig_min 			= min;
 		self->orig_max 			= max;
 		self->max 				= self->orig_max - self->orig_min;
 		self->step 				= self->max / (lu_value) self->cells_size;
-		self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
+		//self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
 
 	 	// Kroky preobchysleni
 		self->steps 		= (lu_value*) mem_temp_alloc(sizeof(lu_value) * self->cells_size);

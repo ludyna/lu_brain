@@ -32,7 +32,7 @@
 // Lu_Brain_Config 
 
 	struct lu_net_config {
-		lu_size names_size; 		// initial maximum number of names
+		lu_size names_size; 				// initial maximum number of names
 
 		lu_size size_in_cell_0;
 		lu_size size_in_cell_1;
@@ -98,10 +98,7 @@
 		lu_value 		v_min;
 		lu_value 		v_max;
 		lu_size			v_neu_size;
-		lu_size 		v_nsc;
-
 		lu_size 		p_neu_size;
-		lu_size 		p_nsc;  	// nei sim count	
 	};
 
 	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self);

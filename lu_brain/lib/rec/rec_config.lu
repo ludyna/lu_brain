@@ -16,10 +16,7 @@
 			.v_min 				= 0,
 			.v_max 				= 1,
 			.v_neu_size			= 2,
-			.v_nsc				= 0,
-
 			.p_neu_size			= 2,
-			.p_nsc				= 0
 		},
 		{
 			// LU_RC_MONOCHROME8_IMAGE
@@ -34,10 +31,7 @@
 			.v_min 				= 0,
 			.v_max 				= 255,
 			.v_neu_size			= 256,
-			.v_nsc				= 0,
-
 			.p_neu_size			= 128,
-			.p_nsc				= 0
 		},
 		{
 			// LU_RC_RBG16_IMAGE
@@ -55,10 +49,7 @@
 			.v_min 				= 0,
 			.v_max 				= 10,
 			.v_neu_size			= 10,
-			.v_nsc				= 0,
-
 			.p_neu_size			= 2,
-			.p_nsc				= 0
 		}
 	};
 
@@ -83,10 +74,7 @@
 
 		lu_user_assert(self->v_max - self->v_min > 0, "v_max minus v_min should greater than 0");
 		lu_user_assert(self->v_neu_size > 1, "v_neu_size should be greater than 1");
-		lu_user_assert(self->v_nsc < self->v_neu_size / 2, "v_nsc should less than v_neu_size / 2");
-
 		lu_user_assert(self->p_neu_size > 1, "p_neu_size should be greater than 1");
-		lu_user_assert(self->p_nsc < self->p_neu_size / 2, "p_nsc should less than p_neu_size / 2");
 
 		return self;
 	}

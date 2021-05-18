@@ -18,7 +18,7 @@
 	};
 
 	// s_layer_conf.lu
-	static S_Layer_Conf s_layer_conf_init(S_Layer_Conf, lu_value min, lu_value max, lu_size cells_size, lu_size nsc);
+	static S_Layer_Conf s_layer_conf_init(S_Layer_Conf, lu_value min, lu_value max, lu_size cells_size);
 	static void s_layer_conf_deinit(S_Layer_Conf self);
 
 	static inline lu_value s_layer_conf_norm(S_Layer_Conf self, lu_value request);
