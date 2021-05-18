@@ -46,7 +46,7 @@
 
 		S_Layer_Conf 			conf;		
 
-		lu_size 				n_cells_count; // cells_count potriben shob znayty n_sig dlia n_cell po yoho n_cell->s_ix v wave->w_neu->cells
+		lu_size 				n_cells_count; 	// cells_count potriben shob znayty n_sig dlia n_cell po yoho n_cell->s_ix v wave->w_neu->cells
 	};
 
 	static inline void s_layer_cell_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Cell val) 
