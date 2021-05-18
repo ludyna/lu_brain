@@ -9,7 +9,7 @@
 		{
 			.id						= 0,					
 			.recs_size				= 16,
-			.names_size				= 128
+			.net.names_size			= 128
 		},
 	};		
 

@@ -34,7 +34,7 @@
 		lu_user_assert(self->s_mem, "Cannot create S_Mem. Not enough memory?");
 
 		struct n_mem_config n_config;
-		n_config.names_size = p_config->names_size;
+		n_config.names_size = p_config->net.names_size;
 
 		self->n_mem 		= n_mem_create(self, n_config);
 		lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");

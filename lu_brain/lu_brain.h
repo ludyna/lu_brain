@@ -48,9 +48,7 @@
 
 		lu_size recs_size;					// initial maximum number of recs 
 
-		lu_size names_size; 				// initial maximum number of names
-
-		struct lu_net_config net_config;
+		struct lu_net_config net;
 	};
 
 	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);
