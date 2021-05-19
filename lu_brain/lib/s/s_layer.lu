@@ -29,7 +29,7 @@
 		self->h 		= h;
 		self->d 		= d;
 
-		self->cells = (S_Cell*) mem_temp_alloc(sizeof(S_Cell) * self->w * self->h * self->d);
+		self->cells = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * self->w * self->h * self->d);
 		lu_user_assert(self->cells, "Cannot allocate S_Layer cells");
 
 		return self;
@@ -40,7 +40,7 @@
 		lu_user_assert_void(self, "S_Layer is NULL");
 		if (self->cells)
 		{
-			mem_temp_free((lu_p_byte) self->cells);
+			lu_g_mem_free((lu_p_byte) self->cells);
 			self->cells = NULL;
 		}
 	}

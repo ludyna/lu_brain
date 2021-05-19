@@ -24,7 +24,7 @@
 		lu_user_assert(s_rec->rec, "Lu_Rec is NULL");
 		lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
 
-		W_Rec self 		= (W_Rec) mem_temp_alloc(sizeof(struct w_rec));
+		W_Rec self 		= (W_Rec) lu_g_mem_alloc(sizeof(struct w_rec));
 		lu_user_assert(self, "Cannot allocate W_Rec");
 		 
 		self->w_mem 		= w_mem;
@@ -67,7 +67,7 @@
 		// w_layer_deinit(&self->layer_1);
 		// w_layer_2_deinit(&self->layer_0);
 
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

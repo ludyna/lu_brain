@@ -37,7 +37,7 @@
 
 		lu_list_each_1p(self->blocks, lu_story_destroy_blocks, NULL);
 		lu_list_destroy(self->blocks);
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

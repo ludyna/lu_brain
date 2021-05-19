@@ -51,7 +51,7 @@
 
 		arr_destroy(self->recs);
 	
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 	void lu_brain_print_info(Lu_Brain self)

@@ -7,7 +7,7 @@
 		lu_assert(s_mem);
 		lu_assert(rec);
 
-		S_Rec self = (S_Rec) mem_temp_alloc(sizeof(struct s_rec));
+		S_Rec self = (S_Rec) lu_g_mem_alloc(sizeof(struct s_rec));
 		lu_assert(self);
 
 		self->mem				= s_mem;
@@ -40,7 +40,7 @@
 		
 		++self->data_layers_size; // + odyn dlia component 
 																				
-		self->data_layers = (struct s_layer*) mem_temp_alloc(sizeof(struct s_layer) * self->data_layers_size);
+		self->data_layers = (struct s_layer*) lu_g_mem_alloc(sizeof(struct s_layer) * self->data_layers_size);
 		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
 
 		///////////////////////////////////////
@@ -49,7 +49,7 @@
 		self->max_blocks_size 		= rec->config.max_blocks_size;
 		self->block_layers_size 	= self->max_blocks_size + 1;	
 
-		self->block_layers = (struct s_layer*) mem_temp_alloc(sizeof(struct s_layer) * self->block_layers_size);
+		self->block_layers = (struct s_layer*) lu_g_mem_alloc(sizeof(struct s_layer) * self->block_layers_size);
 		lu_user_assert(self->block_layers, "Cannot allocate av layers"); 
 
 		///////////////////////////////////////
@@ -60,13 +60,13 @@
 		///////////////////////////////////////
 		// Allocate cells
 
-		self->cells = (struct s_cell*) mem_temp_alloc(sizeof(struct s_cell) * self->cells_size);
+		self->cells = (struct s_cell*) lu_g_mem_alloc(sizeof(struct s_cell) * self->cells_size);
 		lu_user_assert(self->cells, "Cannot allocate cells"); 
 
-		self->cells_2 = (struct s_cell_2*) mem_temp_alloc(sizeof(struct s_cell_2) * self->cells_2_size);
+		self->cells_2 = (struct s_cell_2*) lu_g_mem_alloc(sizeof(struct s_cell_2) * self->cells_2_size);
 		lu_user_assert(self->cells_2, "Cannot allocate cells"); 
 
-		self->cells_3 = (struct s_cell_3*) mem_temp_alloc(sizeof(struct s_cell_3) * self->cells_3_size);
+		self->cells_3 = (struct s_cell_3*) lu_g_mem_alloc(sizeof(struct s_cell_3) * self->cells_3_size);
 		lu_user_assert(self->cells_3, "Cannot allocate cells"); 
 
 		///////////////////////////////////////
@@ -100,13 +100,13 @@
 		s_layer_conf_deinit(&self->p_conf);
 		s_layer_conf_deinit(&self->v_conf);
 
-		mem_temp_free((lu_p_byte) self->cells_3);
-		mem_temp_free((lu_p_byte) self->cells_2);
-		mem_temp_free((lu_p_byte) self->cells);
-		mem_temp_free((lu_p_byte) self->block_layers);
-		mem_temp_free((lu_p_byte) self->data_layers);
+		lu_g_mem_free((lu_p_byte) self->cells_3);
+		lu_g_mem_free((lu_p_byte) self->cells_2);
+		lu_g_mem_free((lu_p_byte) self->cells);
+		lu_g_mem_free((lu_p_byte) self->block_layers);
+		lu_g_mem_free((lu_p_byte) self->data_layers);
 
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 	/*

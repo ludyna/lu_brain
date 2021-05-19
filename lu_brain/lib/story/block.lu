@@ -12,10 +12,10 @@
 		Lu_Brain brain = story->brain;
 		lu_assert(brain);
 
-		Lu_Block self = (Lu_Block) mem_temp_alloc(sizeof(struct lu_block));
+		Lu_Block self = (Lu_Block) lu_g_mem_alloc(sizeof(struct lu_block));
  
  		self->datum_size = arr_size(brain->recs);
- 		self->datum = (struct lu_data*) mem_temp_alloc(sizeof(struct lu_data) * self->datum_size);
+ 		self->datum = (struct lu_data*) lu_g_mem_alloc(sizeof(struct lu_data) * self->datum_size);
 
  		Lu_Data data;
  		for(lu_size i = 0; i < self->datum_size; i++)
@@ -31,8 +31,8 @@
 	{
 		lu_assert(self);
 
-		mem_temp_free((lu_p_byte) self->datum);
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self->datum);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 	void lu_block_begin(Lu_Story story)

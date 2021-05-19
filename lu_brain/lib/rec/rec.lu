@@ -30,7 +30,7 @@
 	 	Lu_Rec_Config p_config 	= lu_rec_config_validate(&config);
 	 	lu_user_assert(p_config, "Lu_Rec_Config validation failed");
 
-		Lu_Rec self 			= (Lu_Rec) mem_temp_alloc(sizeof(struct lu_rec));
+		Lu_Rec self 			= (Lu_Rec) lu_g_mem_alloc(sizeof(struct lu_rec));
 		lu_user_assert(self, "Cannot allocate lu_rec");
 
 		// Initialize
@@ -50,7 +50,7 @@
 		if (self->brain)
 			lu_brain_rec_detach(self->brain, self);
 
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 

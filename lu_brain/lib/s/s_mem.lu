@@ -10,7 +10,7 @@
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->recs, "Lu_Brain recs is NULL");
 
-		S_Mem self 			= (S_Mem) mem_temp_alloc(sizeof(struct s_mem));
+		S_Mem self 			= (S_Mem) lu_g_mem_alloc(sizeof(struct s_mem));
 		lu_user_assert(self, "Cannot allocate S_Mem");
 
 		self->brain 		= brain;
@@ -33,7 +33,7 @@
 		}
 
 		arr_temp_destroy(self->recs);
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 	static void s_mem_print_info(S_Mem self)

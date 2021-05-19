@@ -51,10 +51,10 @@
 
 		self->z 			= z;
 		self->v_conf 		= &rec->v_conf;
-		self->n_v_cells 	= (Hnn_Cell_0*) mem_temp_alloc(sizeof(Hnn_Cell_0) * self->v_conf->cells_size);
+		self->n_v_cells 	= (Hnn_Cell_0*) lu_g_mem_alloc(sizeof(Hnn_Cell_0) * self->v_conf->cells_size);
 		
 		self->p_conf 		= &rec->p_conf;
-		self->n_p_cells 	= (Hnn_Cell_0*) mem_temp_alloc(sizeof(Hnn_Cell_0) * self->p_conf->cells_size);
+		self->n_p_cells 	= (Hnn_Cell_0*) lu_g_mem_alloc(sizeof(Hnn_Cell_0) * self->p_conf->cells_size);
 
 		return self;
 	}
@@ -65,13 +65,13 @@
 
 		if (self->n_v_cells)
 		{
-			mem_temp_free((lu_p_byte) self->n_v_cells);
+			lu_g_mem_free((lu_p_byte) self->n_v_cells);
 			self->n_v_cells = NULL;
 		}
 
 		if (self->n_p_cells)
 		{
-			mem_temp_free((lu_p_byte) self->n_p_cells);
+			lu_g_mem_free((lu_p_byte) self->n_p_cells);
 			self->n_p_cells = NULL;
 		}
 	}
@@ -80,7 +80,7 @@
 	{
 		lu_user_assert(self->type == SCT_CELL_3, "Wrong self type");
 
-		self->d = (S_Cell*) mem_temp_alloc(sizeof(S_Cell));
+		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell));
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
@@ -91,10 +91,10 @@
 	{
 		lu_user_assert(self->type == SCT_CELL_2, "Wrong self type");
 		
-		self->b = (S_Cell*) mem_temp_alloc(sizeof(S_Cell) * rec->cells_d);
+		self->b = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * rec->cells_d);
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (S_Cell*) mem_temp_alloc(sizeof(S_Cell) * 4);
+		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * 4);
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
@@ -104,10 +104,10 @@
 	{
 		lu_user_assert(self->type == SCT_CELL_2, "Wrong self type");
 
-		self->b = (S_Cell*) mem_temp_alloc(sizeof(S_Cell) * 4);
+		self->b = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * 4);
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (S_Cell*) mem_temp_alloc(sizeof(S_Cell) * 4);
+		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * 4);
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
@@ -117,10 +117,10 @@
 	{
 		lu_user_assert(self->type == SCT_CELL, "Wrong self type");
 
-		self->b = (S_Cell*) mem_temp_alloc(sizeof(S_Cell));
+		self->b = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell));
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (S_Cell*) mem_temp_alloc(sizeof(S_Cell));
+		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell));
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
@@ -132,13 +132,13 @@
 
 		if (self->b)
 		{
-			mem_temp_free((lu_p_byte) self->b);
+			lu_g_mem_free((lu_p_byte) self->b);
 			self->b = NULL;
 		}
 
 		if (self->d)
 		{
-			mem_temp_free((lu_p_byte) self->d);
+			lu_g_mem_free((lu_p_byte) self->d);
 			self->d = NULL;
 		}
 	}

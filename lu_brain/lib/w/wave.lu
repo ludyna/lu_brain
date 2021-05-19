@@ -11,7 +11,7 @@
 		lu_user_assert(brain->s_mem, "S_Mem is NULL");
 		lu_user_assert(brain->n_mem, "N_Mem is NULL");
 
-		Lu_Wave self 		= (Lu_Wave) mem_temp_alloc(sizeof(struct lu_wave));
+		Lu_Wave self 		= (Lu_Wave) lu_g_mem_alloc(sizeof(struct lu_wave));
 		lu_user_assert(self, "Cannot allocate Lu_Wave");
 
 		w_mem_init((W_Mem) self, brain);
@@ -23,7 +23,7 @@
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		w_mem_deinit(&self->super);
-		mem_temp_free((lu_p_byte) self);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

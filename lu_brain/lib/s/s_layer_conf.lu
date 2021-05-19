@@ -15,7 +15,7 @@
 		//self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
 
 	 	// Kroky preobchysleni
-		self->steps 		= (lu_value*) mem_temp_alloc(sizeof(lu_value) * self->cells_size);
+		self->steps 		= (lu_value*) lu_g_mem_alloc(sizeof(lu_value) * self->cells_size);
 		lu_user_assert(self->steps, "Cannot allocate steps");
 	
 		lu_size i;
@@ -29,7 +29,7 @@
 	{
 		lu_user_assert_void(self, "S_Layer_Conf is NULL");
 
-		mem_temp_free((lu_p_byte) self->steps);
+		lu_g_mem_free((lu_p_byte) self->steps);
 		self->steps = NULL;
 	}
 
