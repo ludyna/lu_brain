@@ -7,8 +7,8 @@
 // Permanent memory means that allocations should stay until the end of life of 
 // brain.
 
-	struct mem_perm {
-		struct mem 			super;
+	struct lu_mem_perm {
+		struct lu_mem 			super;
 
 		lu_size 			size_in_bytes;
 		lu_p_byte 			buff_start;
@@ -17,7 +17,7 @@
 	};
 
 
-	Mem_Perm mem_perm_create(Mem parent_mem, lu_size size_in_bytes);
+	Mem_Perm mem_perm_create(Lu_Mem parent_mem, lu_size size_in_bytes);
 
 	static inline lu_bool mem_perm_is_out_of_mem(Mem_Perm self)
 	{
@@ -38,8 +38,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Perm_Table
 
-	struct mem_table_perm {
-		struct mem_table 	super;
+	struct lu_mem_table_perm {
+		struct lu_mem_table 	super;
 		Mem_Perm 			mem_perm;
 	};
 

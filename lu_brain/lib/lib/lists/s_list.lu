@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Node
 
-Lu_S_Node s_node_create(Mem_Table mem_table, lu_size limit_size)
+Lu_S_Node s_node_create(Lu_Mem_Table mem_table, lu_size limit_size)
 {
 	Lu_S_Node node = (Lu_S_Node) mem_record_alloc(mem_table);
 
@@ -14,7 +14,7 @@ Lu_S_Node s_node_create(Mem_Table mem_table, lu_size limit_size)
 	return node;
 }
 
-void s_node_destroy(Mem_Table mem_table, Lu_S_Node* s_node)
+void s_node_destroy(Lu_Mem_Table mem_table, Lu_S_Node* s_node)
 {
 	lu_list_node_destroy_all((Lu_List) &(*s_node)->values);
 	mem_record_free(mem_table, (lu_p_byte) *s_node);
@@ -47,7 +47,7 @@ static void build_header(Lu_S_List self)
 	self->header = below;
 }
 
-Lu_S_List s_list_create(Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_side over_limit_remove_side)
+Lu_S_List s_list_create(Lu_Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_side over_limit_remove_side)
 {
 	lu_assert(limit_size > 0);
 	Lu_S_List self = (Lu_S_List) mem_alloc(mem, sizeof(struct lu_s_list));

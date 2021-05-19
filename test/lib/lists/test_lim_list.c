@@ -19,9 +19,9 @@ typedef struct neu* Neu;
 
 void test_lim_list(void)
 {
-    Mem_Debugger md = mem_debugger_create(g_mem_temp);
+    Mem_Debugger md = mem_debugger_create(lu_g_mem);
 
-    Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
+    Lu_Mem mem     = (Lu_Mem) mem_perm_create(lu_g_mem, 2048);
 
     Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -75,7 +75,7 @@ void test_lim_list(void)
     TEST_ASSERT(list->super.last == NULL);
 
     lu_lim_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 
     //mem_debugger_print(md);
 
@@ -85,8 +85,8 @@ void test_lim_list(void)
 
 void test_lim_list_max_size(void)
 {
-    Mem_Debugger md = mem_debugger_create(g_mem_temp);
-    Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
+    Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem mem     = (Lu_Mem) mem_perm_create(lu_g_mem, 2048);
 
     Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -110,7 +110,7 @@ void test_lim_list_max_size(void)
     TEST_ASSERT(list->super.first->value == n2);
 
     lu_lim_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
     mem_debugger_destroy(md, true);

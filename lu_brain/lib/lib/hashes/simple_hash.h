@@ -16,8 +16,8 @@
 		lu_size 		table_size;
 	};
 
-	Simple_Hash simple_hash_create(Mem mem, lu_size size);
-	void simple_hash_destroy(Simple_Hash self, Mem mem);
+	Simple_Hash simple_hash_create(Lu_Mem mem, lu_size size);
+	void simple_hash_destroy(Simple_Hash self, Lu_Mem mem);
 
 	void simple_hash_set(Simple_Hash self, lu_size key, lu_p_void value);
 	lu_p_void simple_hash_get(Simple_Hash self, lu_size key);

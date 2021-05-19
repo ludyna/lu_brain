@@ -20,7 +20,7 @@ typedef struct test1* Test1;
 
 void test_mem_perm_1(void)
 {
-	Mem mem = (Mem) mem_perm_create(g_mem_temp, 512);
+	Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 512);
 
     TEST_ASSERT(mem);
 
@@ -37,5 +37,5 @@ void test_mem_perm_1(void)
 
 	lu_user_assert_on();
 
-	mem_destroy(mem, g_mem_temp);
+	mem_destroy(mem, lu_g_mem);
 }

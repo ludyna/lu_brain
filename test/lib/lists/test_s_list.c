@@ -39,7 +39,7 @@ static lu_value neu_compare_reverse(lu_p_void p1, lu_p_void p2)
 
 void test_s_list1(void)
 {
-    Mem mem = (Mem) mem_perm_create(g_mem_temp, 4096);
+    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
 
     Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -90,12 +90,12 @@ void test_s_list1(void)
     TEST_ASSERT(list->level_size == 3);
 
     s_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 }
 
 void test_s_list_limited(void)
 {
-    Mem mem = (Mem) mem_perm_create(g_mem_temp, 4096);
+    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
 
     Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -158,12 +158,12 @@ void test_s_list_limited(void)
     s_list_debug(list);
 
     s_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 }
 
 void test_s_list_limited_reverse(void)
 {
-    Mem mem = (Mem) mem_perm_create(g_mem_temp, 4096);
+    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
 
     Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -226,12 +226,12 @@ void test_s_list_limited_reverse(void)
     s_list_debug(list);
 
     s_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 }
 
 void test_s_list_eq(void)
 {
-    Mem mem = (Mem) mem_perm_create(g_mem_temp, 4096);
+    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
 
     Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n22 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -294,5 +294,5 @@ void test_s_list_eq(void)
     s_list_debug(list);
 
     s_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 }

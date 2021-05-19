@@ -35,12 +35,12 @@
 		Lu_L_Node 			first;
 		Lu_L_Node 			last;
 		lu_size 			count;
-		Mem 				mem;
+		Lu_Mem 				mem;
 	};
 
 	// Init, create and destroy
 
-	static inline Lu_List lu_list_init(Lu_List self, Mem mem)
+	static inline Lu_List lu_list_init(Lu_List self, Lu_Mem mem)
 	{
 		self->first 		= NULL;
 		self->last 			= NULL;
@@ -49,7 +49,7 @@
 
 		return self;
 	}
-	Lu_List lu_list_create(Mem); 
+	Lu_List lu_list_create(Lu_Mem); 
 	void lu_list_destroy(Lu_List self);
 
 	// Getters / Setters

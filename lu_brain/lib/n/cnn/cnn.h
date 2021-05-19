@@ -6,9 +6,9 @@
 // Cnn 
 
 	struct lnn {
-			// Tut potriben Mem_Table bo teoretychno neu mozhut vydaliatys
-		Mem_Table 				cells;
-		Mem_Table				cells_2;
-		Mem_Table 				cells_3;
-		Mem_Table				lins;
+			// Tut potriben Lu_Mem_Table bo teoretychno neu mozhut vydaliatys
+		Lu_Mem_Table 				cells;
+		Lu_Mem_Table				cells_2;
+		Lu_Mem_Table 				cells_3;
+		Lu_Mem_Table				lins;
 	}

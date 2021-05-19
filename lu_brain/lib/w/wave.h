@@ -90,7 +90,7 @@
 		Arr 					recs;
 
 		// BH
-		Mem_Table 				cells;				
+		Lu_Mem_Table 				cells;				
 	};
 	
 	// w_mem.lu

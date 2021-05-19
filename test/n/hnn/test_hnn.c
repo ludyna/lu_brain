@@ -33,10 +33,10 @@ void setUp(void)
 { 
 	lu_debug("\nsetUp");
 
-    g_md = mem_debugger_create(g_mem_temp);
+    g_md = mem_debugger_create(lu_g_mem);
     TEST_ASSERT(g_md);
 
-    g_hnn = hnn_create(g_mem_temp, g_config);
+    g_hnn = hnn_create(lu_g_mem, g_config);
     TEST_ASSERT(g_hnn);
 }
 

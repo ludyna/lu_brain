@@ -29,7 +29,7 @@
 // Hnn
 
 	struct hnn {
-		Mem mem;
+		Lu_Mem mem;
 		Hnn_Cell_Allocator cell_allocator;
 		Hnn_Links links;
 	};
@@ -37,7 +37,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn hnn_create(Mem mem, struct hnn_config config);
+	Hnn hnn_create(Lu_Mem mem, struct hnn_config config);
 	void hnn_destroy(Hnn self);
 
 ///////////////////////////////////////////////////////////////////////////////

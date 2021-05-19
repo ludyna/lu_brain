@@ -27,10 +27,10 @@
 	#define LU_MD_INDEX_MASK 	0xFFFF
 	#define LU_MD_HASH_SIZE 	LU_MD_INDEX_MASK + 1
 
-	struct mem_debugger {
-		struct i_mem_debugger 	super;
+	struct lu_mem_debugger {
+		struct lu_i_mem_debugger 	super;
 
-		Mem 					mem;
+		Lu_Mem 					mem;
 		Lu_Md_Item* 	 		items;
 		lu_size 				items_size;
 
@@ -52,19 +52,19 @@
 		return self->alloc_size == self->freed_size;
 	}
 
-	Mem_Debugger mem_debugger_create(Mem mem);
+	Mem_Debugger mem_debugger_create(Lu_Mem mem);
 	void mem_debugger_destroy(Mem_Debugger self, lu_bool deallocate_leaks);
 
 
 	void mem_debugger_print(Mem_Debugger self);
 
 
-	void mem_debugger_register_alloc(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_alloc(	Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  
 										const char* func, const char* file, int line);
 
-	void mem_debugger_register_realloc(	I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  
 										const char* func, const char* file, int line);
 
-	void mem_debugger_register_free(	I_Mem_Debugger self, lu_p_byte address, 
+	void mem_debugger_register_free(	Lu_I_Mem_Debugger self, lu_p_byte address, 
 										const char* func, const char* file, int line);
 

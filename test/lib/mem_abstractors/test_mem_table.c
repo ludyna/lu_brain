@@ -18,9 +18,9 @@ typedef struct test1* Test1;
 
 void test_mem_table1(void)
 {
-    Mem mem        = (Mem) mem_perm_create(g_mem_temp, 512);
-    Mem_Table mt   = mem_table_create(
-        /*Mem*/                     mem, 
+    Lu_Mem mem        = (Lu_Mem) mem_perm_create(lu_g_mem, 512);
+    Lu_Mem_Table mt   = mem_table_create(
+        /*Lu_Mem*/                     mem, 
         /*record_size_in_bytes*/    sizeof(struct test1), 
         /*table_size_in_records*/   3, 
         /*percent*/                 0, 
@@ -94,5 +94,5 @@ void test_mem_table1(void)
     // TEST_ASSERT(mt->free_count == 8);
     // TEST_ASSERT(mt->records_count == 0);
 
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 }

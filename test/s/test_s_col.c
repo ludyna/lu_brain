@@ -20,7 +20,7 @@
 // lu_value			data_999[] 		= { 999.0 };
 // lu_value			data_m1[] 		= { -1.0 };
 
-// Mem 				mem;
+// Lu_Mem 				mem;
 // S_Mem				s_mem;
 // S_Rec 				s_rec;
 // S_Cell				s_neu_com_0;

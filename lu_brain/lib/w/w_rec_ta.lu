@@ -7,7 +7,7 @@
 
 	static void w_rec_ta_none(W_Rec self, Lu_Data data)
 	{
-		Lu_Data dest = lu_data_create_via_deep_copy(g_mem_temp, data);
+		Lu_Data dest = lu_data_create_via_deep_copy(lu_g_mem, data);
 
 		w_rec_hold(self, dest);
 	}
@@ -19,11 +19,11 @@
 		lu_assert(data);
 		lu_assert(w_rec_is_empty(self)); 	// if not empty, something is probably wrong
 
-		Lu_Data dest = lu_data_create_via_deep_copy(g_mem_temp, data);
+		Lu_Data dest = lu_data_create_via_deep_copy(lu_g_mem, data);
 
 		w_rec_hold(self, dest);
 
-		dest = lu_data_create_via_shift(g_mem_temp, data, 1, 1);
+		dest = lu_data_create_via_shift(lu_g_mem, data, 1, 1);
 
 		w_rec_hold(self, dest);
 	} 

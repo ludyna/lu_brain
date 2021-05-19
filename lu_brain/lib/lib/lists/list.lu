@@ -21,7 +21,7 @@
 		*l_node = NULL;
 	}
 
-	Lu_List lu_list_create(Mem mem)
+	Lu_List lu_list_create(Lu_Mem mem)
 	{
 		lu_assert(mem);
 		
@@ -34,7 +34,7 @@
 
 	void lu_list_destroy(Lu_List self)
 	{
-		Mem mem = self->mem;
+		Lu_Mem mem = self->mem;
 
 		lu_list_node_destroy_all(self);
 

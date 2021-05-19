@@ -3,15 +3,15 @@
 */
  
 ///////////////////////////////////////////////////////////////////////////////
-// Mem (default)
+// Lu_Mem (default)
 
-	lu_p_byte mem_alloc_default(Mem self, lu_size size, const char* func, const char* file, int line)
+	lu_p_byte mem_alloc_default(Lu_Mem self, lu_size size, const char* func, const char* file, int line)
 	{
 		// I am using calloc instead of malloc here for easier debugging 
 		// changing to malloc should not change program behavior
 		lu_p_byte address = (lu_p_byte) calloc(1, size);
 
-		// Mem specific debug here
+		// Lu_Mem specific debug here
 		#ifdef LU_DEBUG
 
 			if (self->debugger)
@@ -22,11 +22,11 @@
 		return address;
 	}
 
-	lu_p_byte mem_realloc_default(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte mem_realloc_default(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		lu_p_byte address = (lu_p_byte) realloc(p, size_in_bytes);
 
-		// Mem specific debug here
+		// Lu_Mem specific debug here
 		#ifdef LU_DEBUG
 
 			if (self->debugger)
@@ -37,11 +37,11 @@
 		return address;
 	}
 
-	void mem_free_default(Mem self, lu_p_byte p, const char* func, const char* file, int line)
+	void mem_free_default(Lu_Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		free((lu_p_void) p);
 
-		// Mem specific debug here
+		// Lu_Mem specific debug here
 		#ifdef LU_DEBUG
 
 			if (self->debugger)
@@ -50,15 +50,15 @@
 		#endif
 	}
 
-	void mem_destroy_default(Mem self, Mem parent_mem, const char* func, const char* file, int line)
+	void mem_destroy_default(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
-		// Mem specific debug here
+		// Lu_Mem specific debug here
 		free((lu_p_void) self);
 	}
 
 	// declaration 
-	Mem_Table mem_table_create_default(
-		Mem 		mem, 
+	Lu_Mem_Table mem_table_create_default(
+		Lu_Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
 		lu_value 	percent,
@@ -68,12 +68,12 @@
 		int line
 	);
 
-	void mem_table_destory_default(Mem_Table self);
+	void mem_table_destory_default(Lu_Mem_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
 
-	struct mem g_mem_default_instance = {
+	struct lu_mem g_mem_default_instance = {
 		.alloc 				= mem_alloc_default,
 		.realloc 			= mem_realloc_default,
 		.free 				= mem_free_default,
@@ -82,14 +82,14 @@
 		.debugger 			= NULL
 	};
 
-	Mem g_mem_temp = &g_mem_default_instance;
+	Lu_Mem lu_g_mem = &g_mem_default_instance;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	Mem mem_create()
+	Lu_Mem mem_create()
 	{
-		Mem self 					= calloc(1, sizeof(struct mem));
+		Lu_Mem self 					= calloc(1, sizeof(struct lu_mem));
 		
 		self->debugger 				= NULL;
 		self->alloc 				= g_mem_default_instance.alloc;

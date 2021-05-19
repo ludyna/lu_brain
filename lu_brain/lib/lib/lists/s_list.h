@@ -19,7 +19,7 @@
 
 	// Init, create and destroy
 
-	static inline void s_node_init(Lu_S_Node self, Mem_Table mem_table, lu_size limit_size)
+	static inline void s_node_init(Lu_S_Node self, Lu_Mem_Table mem_table, lu_size limit_size)
 	{
 		lu_lim_list_init(&self->values, mem_table, limit_size);
 
@@ -33,9 +33,9 @@
 
 	// Main public methods
 
-	Lu_S_Node s_node_create(Mem_Table mem_table, lu_size limit_size);
+	Lu_S_Node s_node_create(Lu_Mem_Table mem_table, lu_size limit_size);
 
-	void s_node_destroy(Mem_Table mem_table, Lu_S_Node* s_node);
+	void s_node_destroy(Lu_Mem_Table mem_table, Lu_S_Node* s_node);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_List
@@ -48,13 +48,13 @@
 
 	struct lu_s_list  
 	{
-		Mem 				mem;
+		Lu_Mem 				mem;
 		lu_size 			limit_size;
 		s_list_side 		over_limit_remove_side;
 		lu_size				level_size;
 		lu_size 			count;
 		lu_fp_compare 		compare;
-		Mem_Table 			mem_table;
+		Lu_Mem_Table 			mem_table;
 
 		Lu_S_Node 			first;
 		Lu_S_Node 			last;
@@ -64,7 +64,7 @@
 
 	// Init, create and destroy
 
-	Lu_S_List s_list_create(Mem, lu_size limit, lu_fp_compare compare, s_list_side over_limit_remove_side);
+	Lu_S_List s_list_create(Lu_Mem, lu_size limit, lu_fp_compare compare, s_list_side over_limit_remove_side);
 	void s_list_destroy(Lu_S_List self);
 
 	// Main public methods

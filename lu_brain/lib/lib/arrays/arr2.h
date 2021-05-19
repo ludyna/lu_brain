@@ -21,7 +21,7 @@
 
 	// Create and destroy
 
-	static inline Arr2 arr2_create(Mem mem, lu_size width, lu_size height, lu_bool allow_realloc)
+	static inline Arr2 arr2_create(Lu_Mem mem, lu_size width, lu_size height, lu_bool allow_realloc)
 	{
 		Arr2 self = (Arr2) mem_alloc(mem, sizeof(struct arr2));
 		
@@ -36,8 +36,8 @@
 	{
 		lu_user_assert_void(self, "Arr2 is NULL");
 
-		Mem mem = self->items->mem;
-		lu_user_assert_void(mem, "Mem is NULL");
+		Lu_Mem mem = self->items->mem;
+		lu_user_assert_void(mem, "Lu_Mem is NULL");
 
 		arr_destroy(self->items);
 		mem_free(mem, (lu_p_byte) self);

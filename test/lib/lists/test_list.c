@@ -18,7 +18,7 @@ typedef struct neu* Neu;
 
 void test_list1(void)
 {
-    Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
+    Lu_Mem mem     = (Lu_Mem) mem_perm_create(lu_g_mem, 2048);
 
     Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -84,12 +84,12 @@ void test_list1(void)
     TEST_ASSERT(list->last == NULL);
 
     lu_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 }
 
 void test_list_fast_ma(void)
 {
-    Mem mem     = (Mem) mem_perm_create(g_mem_temp, 2048);
+    Lu_Mem mem     = (Lu_Mem) mem_perm_create(lu_g_mem, 2048);
 
     Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) mem_alloc(mem, sizeof(struct neu));
@@ -117,5 +117,5 @@ void test_list_fast_ma(void)
     TEST_ASSERT(list->count == 3);
 
     lu_list_destroy(list);
-    mem_destroy(mem, g_mem_temp);
+    mem_destroy(mem, lu_g_mem);
 }

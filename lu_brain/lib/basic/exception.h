@@ -17,7 +17,7 @@
 enum lu_e {
 	LU_E_FIRST = 6000, 
 	
-	// Mem 
+	// Lu_Mem 
 	LU_E_MEM_ALLOC_FAIL, 
 
 	// Brain

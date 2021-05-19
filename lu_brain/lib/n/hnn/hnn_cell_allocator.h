@@ -7,12 +7,12 @@
 
 	struct hnn_cell_allocator {
 
-		Mem mem;
-		Mem_Table 	mt_cell_0;
-		Mem_Table 	mt_cell_1;
-		Mem_Table	mt_cell_2;
-		Mem_Table 	mt_cell_3;
-		Mem_Table 	mt_cell_4;
+		Lu_Mem mem;
+		Lu_Mem_Table 	mt_cell_0;
+		Lu_Mem_Table 	mt_cell_1;
+		Lu_Mem_Table	mt_cell_2;
+		Lu_Mem_Table 	mt_cell_3;
+		Lu_Mem_Table 	mt_cell_4;
 
 	};
 
@@ -20,7 +20,7 @@
 // 
 
 	Hnn_Cell_Allocator hnn_cell_allocator_create(
-		Mem mem, 
+		Lu_Mem mem, 
 		lu_size size_in_cell_0,
 		lu_size size_in_cell_1,
 		lu_size size_in_cell_2,

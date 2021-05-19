@@ -55,7 +55,7 @@ lu_value			data_6[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	md = mem_debugger_create(g_mem_temp);
+	md = mem_debugger_create(lu_g_mem);
 
 	brain 				= lu_brain_create_from_predefined(200 * 1024, LU_BC_DEFAULT);
 	TEST_ASSERT(brain);

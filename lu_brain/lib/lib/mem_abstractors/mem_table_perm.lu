@@ -6,7 +6,7 @@
 // Mem_Table_Perm
 
 	void mem_table_perm_realloc_internal(
-		Mem_Table self, 
+		Lu_Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
 		const char* func, 
@@ -17,11 +17,11 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	Mem mem_table_perm_mem_get(Mem_Table self)
+	Lu_Mem mem_table_perm_mem_get(Lu_Mem_Table self)
 	{
 		Mem_Table_Perm perm = (Mem_Table_Perm) self;
 
-		return (Mem) perm->mem_perm;
+		return (Lu_Mem) perm->mem_perm;
 	}
 
 	Mem_Table_Perm mem_table_perm_create(
@@ -53,15 +53,15 @@
 			if (flags & MTF_FREEABLE) 
 				fis += sizeof(lu_p_byte);
 
-			table_size_in_records = (a - sizeof(struct mem_table_perm)) / fis;
+			table_size_in_records = (a - sizeof(struct lu_mem_table_perm)) / fis;
 		}
 
-		lu_size full_size = sizeof(struct mem_table_perm) + record_size_in_bytes * table_size_in_records;
+		lu_size full_size = sizeof(struct lu_mem_table_perm) + record_size_in_bytes * table_size_in_records;
 		
 		if (flags & MTF_FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
-		Mem mem = (Mem) mem_perm;
+		Lu_Mem mem = (Lu_Mem) mem_perm;
 		lu_p_byte start = mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
@@ -80,7 +80,7 @@
 		self->super.record_size_in_bytes 	= record_size_in_bytes;
 		self->super.table_size_in_records 	= table_size_in_records;
 		self->super.flags 					= flags;
-		self->super.records_start 			= start + sizeof(struct mem_table_perm);
+		self->super.records_start 			= start + sizeof(struct lu_mem_table_perm);
 		self->super.records_pos				= self->super.records_start;
 		self->super.records_end				= self->super.records_start + self->super.table_size_in_records * self->super.record_size_in_bytes;
 		self->super.free_start 				= (lu_p_byte*) self->super.records_end;

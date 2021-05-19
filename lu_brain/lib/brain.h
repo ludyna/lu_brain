@@ -11,7 +11,7 @@
 // Lu_Brain 
 
 	struct lu_brain {
-		Mem brain_mem;
+		Lu_Mem brain_mem;
 
 		struct lu_brain_config config;
 

@@ -5,19 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Debugger 
 
-	Mem_Debugger mem_debugger_create(Mem mem)
+	Mem_Debugger mem_debugger_create(Lu_Mem mem)
 	{
 		lu_assert(mem);
 		lu_assert(!mem->debugger); // mem already has debugger
 
-		Mem_Debugger self = (Mem_Debugger) calloc(1, sizeof(struct mem_debugger));
+		Mem_Debugger self = (Mem_Debugger) calloc(1, sizeof(struct lu_mem_debugger));
 		lu_assert(self);
 
 		self->super.register_alloc 		= mem_debugger_register_alloc;
 		self->super.register_realloc 	= mem_debugger_register_realloc;
 		self->super.register_free 		= mem_debugger_register_free;
 		self->mem 						= mem;
-		self->mem->debugger 			= (I_Mem_Debugger) self;  // attach
+		self->mem->debugger 			= (Lu_I_Mem_Debugger) self;  // attach
 
 		self->items 					= calloc(LU_MD_HASH_SIZE, sizeof(Lu_Md_Item));
 		self->items_size 				= LU_MD_HASH_SIZE;
@@ -89,7 +89,7 @@
 		lu_debug("\n");
 	}
 
-	void mem_debugger_register_alloc(	I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_alloc(	Lu_I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
 										const char* func, const char* file, int line)
 	{
 		if (address == NULL) 
@@ -148,7 +148,7 @@
 		++self->alloc_count;
 	}
 	
-	void mem_debugger_register_realloc(	I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
 										const char* func, const char* file, int line)
 	{
 		if (address == NULL) 
@@ -160,7 +160,7 @@
 		lu_debug("\n!!! MEM DEBUGGER REGISTER REALLOC !!!");
 	}
 
-	void mem_debugger_register_free(	I_Mem_Debugger imd, lu_p_byte address, 
+	void mem_debugger_register_free(	Lu_I_Mem_Debugger imd, lu_p_byte address, 
 										const char* func, const char* file, int line)
 	{
 		if (address == NULL) 

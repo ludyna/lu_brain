@@ -13,11 +13,11 @@
 			"Lu_Brain recs should be created first"
 		);
 
-		Lu_Story self 					= (Lu_Story) mem_alloc(g_mem_temp, sizeof(struct lu_story));
+		Lu_Story self 					= (Lu_Story) mem_alloc(lu_g_mem, sizeof(struct lu_story));
 
 		// Initialize
 		self->brain 					= brain;
-		self->blocks 					= lu_list_create(g_mem_temp);
+		self->blocks 					= lu_list_create(lu_g_mem);
 		self->start_block_on_next_data 	= false; 
 
 

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn hnn_create(Mem mem, struct hnn_config config)
+	Hnn hnn_create(Lu_Mem mem, struct hnn_config config)
 	{
 		lu_assert(mem);
 
@@ -57,7 +57,7 @@
 		hnn_cell_allocator_destroy(self->cell_allocator);
 		hnn_links_destroy(self->links);
 
-		Mem mem = self->mem;
+		Lu_Mem mem = self->mem;
 		self->mem = NULL;
 
 		mem_free(mem, (lu_p_byte) self);

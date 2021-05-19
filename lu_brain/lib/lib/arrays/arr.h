@@ -15,13 +15,13 @@
 		lu_size 	count;
 		lu_p_void* 	items;
 		lu_bool 	allow_realloc;
-		Mem 		mem;
+		Lu_Mem 		mem;
 	};
 
 	// Create and destroy 
 
-	Arr arr_create(Mem mem, lu_size size, lu_bool allow_realloc);
-	static inline Arr arr_temp_create(lu_size size, lu_bool allow_realloc) { return arr_create(g_mem_temp, size, allow_realloc); }
+	Arr arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc);
+	static inline Arr arr_temp_create(lu_size size, lu_bool allow_realloc) { return arr_create(lu_g_mem, size, allow_realloc); }
 	void arr_destroy(Arr);
 	static inline void arr_temp_destroy(Arr self) { arr_destroy(self); }
 

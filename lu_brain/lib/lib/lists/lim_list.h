@@ -9,7 +9,7 @@
 	struct lu_lim_list {
 		struct lu_list 	super;
 
-		Mem_Table 		mem_table;
+		Lu_Mem_Table 		mem_table;
 		lu_size 		max_size;
 
 		// We need callbacks feature for this data structure because this data structure 
@@ -23,7 +23,7 @@
 	static inline lu_size lu_lim_list_size(Lu_Lim_List self) { return self->max_size; }
 	static inline lu_bool lu_lim_list_is_empty(Lu_Lim_List self) { return lu_list_count(&self->super) == 0; }
 
-	static inline Lu_Lim_List lu_lim_list_init(Lu_Lim_List self, Mem_Table mem_table, lu_size limit_size)
+	static inline Lu_Lim_List lu_lim_list_init(Lu_Lim_List self, Lu_Mem_Table mem_table, lu_size limit_size)
 	{
 		lu_assert(self);
 		lu_assert(mem_table);
@@ -37,7 +37,7 @@
 		return self;
 	}
 	
-	Lu_Lim_List lu_lim_list_create(Mem, lu_size);
+	Lu_Lim_List lu_lim_list_create(Lu_Mem, lu_size);
 	void lu_lim_list_destroy(Lu_Lim_List self);
 
 	static inline Lu_L_Node lu_lim_list_node_last(Lu_Lim_List self) { return self->super.last; }

@@ -9,7 +9,7 @@
 	// All allocations should be at the beginning of app existance executed 
 	// in single thread. No multi-threading support is needed.
 	//
-	lu_p_byte mem_perm_alloc_internal(Mem mem, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte mem_perm_alloc_internal(Lu_Mem mem, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		Mem_Perm self = (Mem_Perm) mem;
 
@@ -34,24 +34,24 @@
 		return tmp;
 	} 
 
-	lu_p_byte mem_perm_realloc_internal(Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte mem_perm_realloc_internal(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		lu_debug_message_internal(file, line, "MEM PERM REALLOC NOT IMPLEMENTED");
 		return NULL;
 	}
 
-	void mem_perm_free_internal(Mem self, lu_p_byte p, const char* func, const char* file, int line)
+	void mem_perm_free_internal(Lu_Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		lu_debug_message_internal(file, line, "MEM PERM FREE NOT IMPLEMENTED");
 	}
 
-	void mem_perm_destroy_internal(Mem self, Mem parent_mem, const char* func, const char* file, int line)
+	void mem_perm_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
 		mem_free(parent_mem, (lu_p_byte) self);
 	}
 
-	Mem_Table mem_table_perm_create_internal(
-		Mem 		mem, 
+	Lu_Mem_Table mem_table_perm_create_internal(
+		Lu_Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
 		lu_value 	percent,
@@ -61,7 +61,7 @@
 		int 		line
 	)
 	{
-		return (Mem_Table) mem_table_perm_create(
+		return (Lu_Mem_Table) mem_table_perm_create(
 			(Mem_Perm) mem,
 			record_size_in_bytes,
 			table_size_in_records,
@@ -73,9 +73,9 @@
 		); 
 	}
 
-	Mem_Perm mem_perm_create(Mem parent_mem, lu_size size_in_bytes)
+	Mem_Perm mem_perm_create(Lu_Mem parent_mem, lu_size size_in_bytes)
 	{
-		lu_assert(size_in_bytes > sizeof(struct mem_perm));
+		lu_assert(size_in_bytes > sizeof(struct lu_mem_perm));
 
 		lu_p_void buff_start	= mem_alloc(parent_mem, size_in_bytes);
 
@@ -92,7 +92,7 @@
 
 		self->buff_start 			= (lu_p_byte) buff_start;
 		self->buff_end				= self->buff_start + size_in_bytes;
-		self->buff_pos 				= self->buff_start + sizeof(struct mem_perm);
+		self->buff_pos 				= self->buff_start + sizeof(struct lu_mem_perm);
 		self->size_in_bytes 		= size_in_bytes;
 
 		return self;

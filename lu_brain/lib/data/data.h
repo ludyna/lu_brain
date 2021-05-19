@@ -49,15 +49,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create, detsroy
 
-	static Lu_Data lu_data_create_via_deep_copy_internal(Mem, Lu_Data src, const char* func, const char* file, int line);
+	static Lu_Data lu_data_create_via_deep_copy_internal(Lu_Mem, Lu_Data src, const char* func, const char* file, int line);
 
 	#define lu_data_create_via_deep_copy(mem, src) lu_data_create_via_deep_copy_internal(mem, src, __func__, __FILE__, __LINE__)
 
-	Lu_Data lu_data_create_via_shift_internal(Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line);
+	Lu_Data lu_data_create_via_shift_internal(Lu_Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line);
 
 	#define lu_data_create_via_shift(mem, src, x_shift, y_shift) lu_data_create_via_shift_internal(mem, src, x_shift, y_shift,  __func__, __FILE__, __LINE__)
 
-	void lu_data_destroy(Lu_Data, Mem);
+	void lu_data_destroy(Lu_Data, Lu_Mem);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Validators

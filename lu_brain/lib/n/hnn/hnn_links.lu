@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Hnn_Links hnn_links_create(Mem mem, lu_size t1_size, lu_size t2_size, lu_size t3_size, lu_size t4_size)
+	static Hnn_Links hnn_links_create(Lu_Mem mem, lu_size t1_size, lu_size t2_size, lu_size t3_size, lu_size t4_size)
 	{
 		lu_assert(mem);
 
@@ -25,7 +25,7 @@
 	static void hnn_links_destroy(Hnn_Links self)
 	{
 		lu_assert(self);
-		Mem mem = self->mem;
+		Lu_Mem mem = self->mem;
 		lu_assert(mem);
 
 		if(self->table_1)

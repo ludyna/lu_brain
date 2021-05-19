@@ -12,7 +12,7 @@
 		Lu_Data data = (Lu_Data) lu_l_node_value(node);
 		lu_assert(data);
 
-		lu_data_destroy(data, g_mem_temp);
+		lu_data_destroy(data, lu_g_mem);
 
 		lu_l_node_value_set(node, NULL);
 	}
@@ -32,7 +32,7 @@
 		self->config 		= s_rec->rec->config;		// pochatkovi znachennia
 
 		// Datum
-		self->datum 						= lu_lim_list_create(g_mem_temp, self->config.hold_blocks_size); 
+		self->datum 						= lu_lim_list_create(lu_g_mem, self->config.hold_blocks_size); 
 		lu_user_assert(self->datum, "Cannot allocate Lu_Lim_List");
 
 		self->datum->node_before_destroy 	= w_rec_datum_node_before_destroy_block;
@@ -51,7 +51,7 @@
 
  		Lu_Data data = (Lu_Data) value;
 
- 		lu_data_destroy(data, g_mem_temp);
+ 		lu_data_destroy(data, lu_g_mem);
  	}
 
 	static void w_rec_destroy(W_Rec self)

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Lu_Lim_List lu_lim_list_create(Mem mem, lu_size max_size_in_items)
+	Lu_Lim_List lu_lim_list_create(Lu_Mem mem, lu_size max_size_in_items)
 	{
 		lu_assert(mem);
 		lu_assert(max_size_in_items > 0);

@@ -6,7 +6,7 @@
 // Create/Destroy
 
 	Hnn_Cell_Allocator hnn_cell_allocator_create(
-		Mem mem,  
+		Lu_Mem mem,  
 		lu_size size_in_cell_0,
 		lu_size size_in_cell_1,
 		lu_size size_in_cell_2,
@@ -93,7 +93,7 @@
 			self->mt_cell_4 = NULL;
 		}
 
-		Mem mem = self->mem;
+		Lu_Mem mem = self->mem;
 		self->mem = NULL;
 
 		mem_free(mem, (lu_p_byte) self);

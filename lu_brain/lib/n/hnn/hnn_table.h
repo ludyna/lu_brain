@@ -10,7 +10,7 @@
 		Hnn_Cell_0 cell;
 	};
 
-	static inline Hnn_Table_Node hnn_table_node_create(Mem mem, Hnn_Cell_0 cell, Hnn_Table_Node prev)
+	static inline Hnn_Table_Node hnn_table_node_create(Lu_Mem mem, Hnn_Cell_0 cell, Hnn_Table_Node prev)
 	{
 		Hnn_Table_Node self = (Hnn_Table_Node) mem_alloc(mem, sizeof(struct hnn_table_node));
 
@@ -20,14 +20,14 @@
 		return self;
 	}
 
-	static void hnn_table_unit_destroy(Hnn_Table_Node self, Mem mem);
+	static void hnn_table_unit_destroy(Hnn_Table_Node self, Lu_Mem mem);
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Table 
 
 	struct hnn_table {
-		Mem mem;
+		Lu_Mem mem;
 		Hnn_Table_Node* units; // unit might contain more than one cell 
 		lu_size size_in_cells;
 		lu_byte cell_type;
@@ -36,7 +36,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Table Create And Destroy
 
-	static Hnn_Table hnn_table_create(Mem mem, lu_size size_in_cells, lu_byte cell_type);
+	static Hnn_Table hnn_table_create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type);
 	static void hnn_table_destroy(Hnn_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
