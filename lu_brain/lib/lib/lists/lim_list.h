@@ -29,7 +29,7 @@
 		lu_assert(mem_table);
 		lu_assert(limit_size > 0);
 
-		lu_list_init((Lu_List) self, mem_table_mem_get(mem_table));
+		lu_list_init((Lu_List) self, lu_mem_table_mem_get(mem_table));
 
 		self->mem_table = mem_table;
 		self->max_size 	= limit_size;

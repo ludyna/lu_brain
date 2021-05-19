@@ -7,7 +7,7 @@
 
 Lu_S_Node s_node_create(Lu_Mem_Table mem_table, lu_size limit_size)
 {
-	Lu_S_Node node = (Lu_S_Node) mem_record_alloc(mem_table);
+	Lu_S_Node node = (Lu_S_Node) lu_mem_record_alloc(mem_table);
 
 	s_node_init(node, mem_table, limit_size);
 
@@ -17,7 +17,7 @@ Lu_S_Node s_node_create(Lu_Mem_Table mem_table, lu_size limit_size)
 void s_node_destroy(Lu_Mem_Table mem_table, Lu_S_Node* s_node)
 {
 	lu_list_node_destroy_all((Lu_List) &(*s_node)->values);
-	mem_record_free(mem_table, (lu_p_byte) *s_node);
+	lu_mem_record_free(mem_table, (lu_p_byte) *s_node);
 	*s_node = NULL;
 }
 
@@ -86,7 +86,7 @@ void s_list_destroy(Lu_S_List self)
 {
 	lu_assert(self);
 
-	mem_table_destroy(self->mem_table);
+	lu_mem_table_destroy(self->mem_table);
 
 	lu_mem_free(self->mem, (lu_p_byte) self);
 

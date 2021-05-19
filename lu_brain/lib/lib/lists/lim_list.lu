@@ -35,7 +35,7 @@
 	{
 		lu_assert(self);
 
-		mem_table_destroy(self->mem_table);
+		lu_mem_table_destroy(self->mem_table);
 		lu_mem_free(self->super.mem, (lu_p_byte) self);
 	}
 
@@ -46,7 +46,7 @@
 		Lu_Lim_List self = (Lu_Lim_List) list;
 		lu_assert(self->mem_table);
 
-		Lu_L_Node node = (Lu_L_Node) mem_record_alloc(self->mem_table);
+		Lu_L_Node node = (Lu_L_Node) lu_mem_record_alloc(self->mem_table);
 		lu_assert(node);
 
 		if (self->node_after_create) self->node_after_create(self, node);
@@ -64,7 +64,7 @@
 
  		if (self->node_before_destroy) self->node_before_destroy(self, *l_node);
 
-		mem_record_free(self->mem_table, (lu_p_byte) *l_node);
+		lu_mem_record_free(self->mem_table, (lu_p_byte) *l_node);
 		*l_node = NULL;
 	}
 

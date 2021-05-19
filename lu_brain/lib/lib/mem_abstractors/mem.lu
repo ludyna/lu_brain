@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem (default)
 
-	lu_p_byte mem_alloc_default(Lu_Mem self, lu_size size, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_alloc_default(Lu_Mem self, lu_size size, const char* func, const char* file, int line)
 	{
 		// I am using calloc instead of malloc here for easier debugging 
 		// changing to malloc should not change program behavior
@@ -22,7 +22,7 @@
 		return address;
 	}
 
-	lu_p_byte mem_realloc_default(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_realloc_default(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		lu_p_byte address = (lu_p_byte) realloc(p, size_in_bytes);
 
@@ -37,7 +37,7 @@
 		return address;
 	}
 
-	void mem_free_default(Lu_Mem self, lu_p_byte p, const char* func, const char* file, int line)
+	void lu_mem_free_default(Lu_Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		free((lu_p_void) p);
 
@@ -50,14 +50,14 @@
 		#endif
 	}
 
-	void mem_destroy_default(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
+	void lu_mem_destroy_default(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
 		// Lu_Mem specific debug here
 		free((lu_p_void) self);
 	}
 
 	// declaration 
-	Lu_Mem_Table mem_table_create_default(
+	Lu_Mem_Table lu_mem_table_create_default(
 		Lu_Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
@@ -68,17 +68,17 @@
 		int line
 	);
 
-	void mem_table_destory_default(Lu_Mem_Table self);
+	void lu_mem_table_destory_default(Lu_Mem_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
 
 	struct lu_mem g_mem_default_instance = {
-		.alloc 				= mem_alloc_default,
-		.realloc 			= mem_realloc_default,
-		.free 				= mem_free_default,
-		.destroy 			= mem_destroy_default,
-		.table_create 		= mem_table_create_default,
+		.alloc 				= lu_mem_alloc_default,
+		.realloc 			= lu_mem_realloc_default,
+		.free 				= lu_mem_free_default,
+		.destroy 			= lu_mem_destroy_default,
+		.table_create 		= lu_mem_table_create_default,
 		.debugger 			= NULL
 	};
 
@@ -87,7 +87,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Inits, create and destroy
 
-	Lu_Mem mem_create()
+	Lu_Mem lu_mem_create()
 	{
 		Lu_Mem self 					= calloc(1, sizeof(struct lu_mem));
 		

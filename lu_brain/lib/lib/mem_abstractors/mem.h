@@ -64,7 +64,7 @@
 	#define lu_g_mem_free(p) lu_g_mem->free(lu_g_mem, p, __func__, __FILE__, __LINE__)
 	#define lu_g_mem_table_create(r_size, t_size, p, f) lu_g_mem->table_create(lu_g_mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
 
-	Lu_Mem mem_create();
+	Lu_Mem lu_mem_create();
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Table
@@ -98,21 +98,21 @@
 		lu_size 		full_size_in_bytes;
 	};
 
-	#define mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
-	#define mem_table_destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
+	#define lu_mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
+	#define lu_mem_table_destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
 
-	#define mem_record_alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
-	#define mem_record_free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 
+	#define lu_mem_record_alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
+	#define lu_mem_record_free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 
 
-	#define mem_table_size_in_bytes(mt) mt->size_in_bytes(mt)
-	#define mem_table_mem_get(mt) mt->mem_get(mt)
+	#define lu_mem_table_size_in_bytes(mt) mt->size_in_bytes(mt)
+	#define lu_mem_table_mem_get(mt) mt->mem_get(mt)
 
-	static inline lu_p_byte mem_table_get(Lu_Mem_Table self, lu_size index)
+	static inline lu_p_byte lu_mem_table_get(Lu_Mem_Table self, lu_size index)
 	{
 		return (self->records_start + index * self->record_size_in_bytes); 
 	} 
 
-	static inline lu_size mem_table_record_shift(Lu_Mem_Table self, lu_p_byte record_addr)
+	static inline lu_size lu_mem_table_record_shift(Lu_Mem_Table self, lu_p_byte record_addr)
 	{
 		lu_assert(self);
 		lu_assert(record_addr);

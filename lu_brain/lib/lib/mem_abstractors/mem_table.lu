@@ -19,7 +19,7 @@
 
 	void mem_table_destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
-		lu_mem_free(mem_table_mem_get(self), (lu_p_byte) self);
+		lu_mem_free(lu_mem_table_mem_get(self), (lu_p_byte) self);
 	}
 	
 	lu_p_byte mem_table_record_alloc_default(Lu_Mem_Table self, const char* func, const char* file, int line)
@@ -70,7 +70,7 @@
 		return lu_g_mem;
 	}
 
-	Lu_Mem_Table mem_table_create_default(
+	Lu_Mem_Table lu_mem_table_create_default(
 		Lu_Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
