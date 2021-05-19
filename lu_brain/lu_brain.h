@@ -40,7 +40,7 @@
 		lu_size size_in_cell_3; 
 		lu_size size_in_cell_4;
 
-		lu_size hnn_table_mod;
+		lu_size hnn_table_mod;				
 	};
 	
 	struct lu_brain_config {
@@ -48,7 +48,7 @@
 
 		lu_size recs_size;					// initial maximum number of recs 
 
-		struct lu_net_config net;
+		struct lu_net_config net;			// initial values
 	};
 
 	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);

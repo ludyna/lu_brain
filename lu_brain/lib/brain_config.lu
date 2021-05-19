@@ -7,6 +7,7 @@
 
 	struct lu_brain_config lu_g_bc_predefined[LU_BC_END] = {
 		{
+			// LU_BC_DEFAULT
 			.id						= 0,					
 			.recs_size				= 16, 
 
@@ -27,12 +28,20 @@
 		return &lu_g_bc_predefined[id];
 	}
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain_Config
 
 
 	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config)
 	{
+		lu_user_assert(config->recs_size > 0, "recs_size should be greater than 0");
+		lu_user_assert(config->net.names_size > 0, "net.names_size should be greater than 0");
+		lu_user_assert(config->net.size_in_cell_0 > 0, "net.size_in_cell_0 should be greater than 0");
+		lu_user_assert(config->net.size_in_cell_1 > 0, "net.size_in_cell_1 should be greater than 0");
+		lu_user_assert(config->net.size_in_cell_2 > 0, "net.size_in_cell_2 should be greater than 0");
+		lu_user_assert(config->net.size_in_cell_3 > 0, "net.size_in_cell_3 should be greater than 0");
+		lu_user_assert(config->net.size_in_cell_4 > 0, "net.size_in_cell_4 should be greater than 0");
+		lu_user_assert(config->net.hnn_table_mod > 1, "net.hnn_table_mod should be greater than 1");
+
 		return config;
 	}
