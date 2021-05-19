@@ -10,12 +10,12 @@
 		lu_assert(mem);
 		lu_assert(max_size_in_items > 0);
 	
-		Lu_Lim_List self 	= (Lu_Lim_List) mem_alloc(mem, sizeof(struct lu_lim_list));
+		Lu_Lim_List self 	= (Lu_Lim_List) lu_mem_alloc(mem, sizeof(struct lu_lim_list));
 		lu_assert(self);
 
 		lu_list_init(&self->super, mem);
 
-		self->mem_table 	= mem_table_create(
+		self->mem_table 	= lu_mem_table_create(
 			mem, 
 			sizeof(struct lu_l_node),
 			max_size_in_items,
@@ -36,7 +36,7 @@
 		lu_assert(self);
 
 		mem_table_destroy(self->mem_table);
-		mem_free(self->super.mem, (lu_p_byte) self);
+		lu_mem_free(self->super.mem, (lu_p_byte) self);
 	}
 
 	Lu_L_Node lu_lim_list_l_node_create(Lu_List list)

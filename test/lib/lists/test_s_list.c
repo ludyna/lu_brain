@@ -39,15 +39,15 @@ static lu_value neu_compare_reverse(lu_p_void p1, lu_p_void p2)
 
 void test_s_list1(void)
 {
-    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
 
-    Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n35 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n45 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n1  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n35 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n45 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
 
     lu_debug("A1");
 
@@ -90,21 +90,21 @@ void test_s_list1(void)
     TEST_ASSERT(list->level_size == 3);
 
     s_list_destroy(list);
-    mem_destroy(mem, lu_g_mem);
+    lu_mem_destroy(mem, lu_g_mem);
 }
 
 void test_s_list_limited(void)
 {
-    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
 
-    Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n35 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n45 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n6  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n1  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n35 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n45 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n6  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
 
     neu_p_set(n1, 1.0);
     neu_p_set(n2, 2.0);
@@ -158,21 +158,21 @@ void test_s_list_limited(void)
     s_list_debug(list);
 
     s_list_destroy(list);
-    mem_destroy(mem, lu_g_mem);
+    lu_mem_destroy(mem, lu_g_mem);
 }
 
 void test_s_list_limited_reverse(void)
 {
-    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
 
-    Neu n1  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n35 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n45 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n6  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n1  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n35 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n45 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n6  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
 
     neu_p_set(n1, 1.0);
     neu_p_set(n2, 2.0);
@@ -226,21 +226,21 @@ void test_s_list_limited_reverse(void)
     s_list_debug(list);
 
     s_list_destroy(list);
-    mem_destroy(mem, lu_g_mem);
+    lu_mem_destroy(mem, lu_g_mem);
 }
 
 void test_s_list_eq(void)
 {
-    Lu_Mem mem = (Lu_Mem) mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
 
-    Neu n2  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n22 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n3  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n33 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n4  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n44 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n5  = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n6  = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n22 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n3  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n33 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n4  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n44 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n5  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n6  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
 
     neu_p_set(n2, 2.0);
     neu_p_set(n22, 2.0);
@@ -294,5 +294,5 @@ void test_s_list_eq(void)
     s_list_debug(list);
 
     s_list_destroy(list);
-    mem_destroy(mem, lu_g_mem);
+    lu_mem_destroy(mem, lu_g_mem);
 }

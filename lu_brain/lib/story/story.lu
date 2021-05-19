@@ -13,7 +13,7 @@
 			"Lu_Brain recs should be created first"
 		);
 
-		Lu_Story self 					= (Lu_Story) mem_alloc(lu_g_mem, sizeof(struct lu_story));
+		Lu_Story self 					= (Lu_Story) lu_mem_alloc(lu_g_mem, sizeof(struct lu_story));
 
 		// Initialize
 		self->brain 					= brain;

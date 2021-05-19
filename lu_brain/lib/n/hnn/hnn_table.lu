@@ -17,7 +17,7 @@
 			// vydaliaty komirky ce skladna tema (bo ye zviazky z inshymy i td)
 			// ye inshi sposoby robyty "defragmentaciyu" komirok
 
-			mem_free(mem, (lu_p_byte) self);
+			lu_mem_free(mem, (lu_p_byte) self);
 
 			self = prev;
 		}
@@ -33,7 +33,7 @@
 		if (size_in_cells == 0)
 			return NULL;
 
-		Hnn_Table self = (Hnn_Table) mem_alloc(mem, sizeof(struct hnn_table));
+		Hnn_Table self = (Hnn_Table) lu_mem_alloc(mem, sizeof(struct hnn_table));
 		lu_assert(self);
 
 		self->mem = mem;
@@ -42,7 +42,7 @@
 		
 		lu_size bytes_size = sizeof(Hnn_Table_Node) * self->size_in_cells;
 		
-		self->units = (Hnn_Table_Node*) mem_alloc(mem, bytes_size);
+		self->units = (Hnn_Table_Node*) lu_mem_alloc(mem, bytes_size);
 
 		memset(self->units, 0, bytes_size);
 
@@ -71,13 +71,13 @@
 				hnn_table_unit_destroy(unit, mem);
 			}
 			
-			mem_free(mem, (lu_p_byte) self->units);
+			lu_mem_free(mem, (lu_p_byte) self->units);
 		}
 
 		self->size_in_cells = 0;
 		self->units = NULL;
 		self->mem = NULL;
-		mem_free(mem, (lu_p_byte) self);
+		lu_mem_free(mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

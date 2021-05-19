@@ -23,7 +23,7 @@
 
 	static inline Arr2 arr2_create(Lu_Mem mem, lu_size width, lu_size height, lu_bool allow_realloc)
 	{
-		Arr2 self = (Arr2) mem_alloc(mem, sizeof(struct arr2));
+		Arr2 self = (Arr2) lu_mem_alloc(mem, sizeof(struct arr2));
 		
 		self->width 	= width;
 		self->height 	= height;
@@ -40,7 +40,7 @@
 		lu_user_assert_void(mem, "Lu_Mem is NULL");
 
 		arr_destroy(self->items);
-		mem_free(mem, (lu_p_byte) self);
+		lu_mem_free(mem, (lu_p_byte) self);
 	}
 
 	// Main public methods

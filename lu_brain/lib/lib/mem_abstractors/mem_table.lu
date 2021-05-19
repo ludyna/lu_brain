@@ -19,7 +19,7 @@
 
 	void mem_table_destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
-		mem_free(mem_table_mem_get(self), (lu_p_byte) self);
+		lu_mem_free(mem_table_mem_get(self), (lu_p_byte) self);
 	}
 	
 	lu_p_byte mem_table_record_alloc_default(Lu_Mem_Table self, const char* func, const char* file, int line)
@@ -92,7 +92,7 @@
 		if (flags & MTF_FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
-		lu_p_byte start = mem_alloc(mem, full_size);
+		lu_p_byte start = lu_mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
 

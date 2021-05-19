@@ -9,7 +9,7 @@
 	{
 		lu_assert(mem);
 
-		Hnn self = (Hnn) mem_alloc(mem, sizeof(struct hnn));
+		Hnn self = (Hnn) lu_mem_alloc(mem, sizeof(struct hnn));
 		lu_assert(self);
 
 		self->mem = mem;
@@ -60,7 +60,7 @@
 		Lu_Mem mem = self->mem;
 		self->mem = NULL;
 
-		mem_free(mem, (lu_p_byte) self);
+		lu_mem_free(mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

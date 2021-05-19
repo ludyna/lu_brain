@@ -12,7 +12,7 @@
 
 		lu_n_mem_config_validate(&config);
 
-		N_Mem self 			= (N_Mem) mem_alloc(brain->brain_mem, sizeof(struct n_mem));
+		N_Mem self 			= (N_Mem) lu_mem_alloc(brain->brain_mem, sizeof(struct n_mem));
 		lu_user_assert(self, "Cannot allocate N_Mem");
 
 		self->config 		= config;
@@ -29,7 +29,7 @@
 
 		names_list_destroy(self->names);
 
-		mem_free(self->brain->brain_mem, (lu_p_byte) self);
+		lu_mem_free(self->brain->brain_mem, (lu_p_byte) self);
 	}
 
 

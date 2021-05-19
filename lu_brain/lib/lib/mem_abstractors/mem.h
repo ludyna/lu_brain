@@ -37,8 +37,8 @@
 		void 					(*destroy)(Lu_Mem, Lu_Mem, const char* func, const char* file, int line);
 
 		// Memory stats
-		lu_size 				(*preallocated)(Mem_Perm self); 
-		lu_size 				(*used)(Mem_Perm self);
+		lu_size 				(*preallocated)(Lu_Mem self); 
+		lu_size 				(*used)(Lu_Mem self);
 
 		// Memory tables
 		Lu_Mem_Table 				(*table_create)(
@@ -53,11 +53,11 @@
 	 	);
 	};
 
-	#define mem_alloc(mem, size) mem->alloc(mem, size, __func__, __FILE__, __LINE__)
-	#define mem_realloc(mem, p, size) mem->realloc(mem, p, size, __func__, __FILE__, __LINE__)
-	#define mem_free(mem, p) mem->free(mem, p, __func__, __FILE__, __LINE__)
-	#define mem_destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __func__, __FILE__, __LINE__)
-	#define mem_table_create(mem, r_size, t_size, p, f) mem->table_create(mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
+	#define lu_mem_alloc(mem, size) mem->alloc(mem, size, __func__, __FILE__, __LINE__)
+	#define lu_mem_realloc(mem, p, size) mem->realloc(mem, p, size, __func__, __FILE__, __LINE__)
+	#define lu_mem_free(mem, p) mem->free(mem, p, __func__, __FILE__, __LINE__)
+	#define lu_mem_destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __func__, __FILE__, __LINE__)
+	#define lu_mem_table_create(mem, r_size, t_size, p, f) mem->table_create(mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
 
 	#define mem_temp_alloc(size) lu_g_mem->alloc(lu_g_mem, size, __func__, __FILE__, __LINE__)
 	#define mem_temp_realloc(p, size) lu_g_mem->realloc(lu_g_mem, p, size, __func__, __FILE__, __LINE__)
@@ -69,7 +69,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Table
 
-	enum mem_table_flags {
+	enum lu_mem_table_flags {
 		MTF_FREEABLE = 1
 	};
 

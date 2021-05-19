@@ -3,9 +3,9 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Table_Perm
+// Lu_Mem_Table_Perm
 
-	void mem_table_perm_realloc_internal(
+	void lu_mem_table_perm_realloc_internal(
 		Lu_Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
@@ -17,15 +17,15 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	Lu_Mem mem_table_perm_mem_get(Lu_Mem_Table self)
+	Lu_Mem lu_mem_table_perm_mem_get(Lu_Mem_Table self)
 	{
-		Mem_Table_Perm perm = (Mem_Table_Perm) self;
+		Lu_Mem_Table_Perm perm = (Lu_Mem_Table_Perm) self;
 
 		return (Lu_Mem) perm->mem_perm;
 	}
 
-	Mem_Table_Perm mem_table_perm_create(
-		Mem_Perm 			mem_perm, 
+	Lu_Mem_Table_Perm lu_mem_table_perm_create(
+		Lu_Mem_Perm 			mem_perm, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,
@@ -47,7 +47,7 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = mem_perm_avail(mem_perm) * percent  / 100.0;
+			lu_size a = lu_mem_perm_avail(mem_perm) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
 			if (flags & MTF_FREEABLE) 
@@ -62,20 +62,20 @@
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
 		Lu_Mem mem = (Lu_Mem) mem_perm;
-		lu_p_byte start = mem_alloc(mem, full_size);
+		lu_p_byte start = lu_mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
 
-		Mem_Table_Perm self = (Mem_Table_Perm) start;
+		Lu_Mem_Table_Perm self = (Lu_Mem_Table_Perm) start;
 
 		// super
 
-		self->super.realloc 				= mem_table_perm_realloc_internal;
+		self->super.realloc 				= lu_mem_table_perm_realloc_internal;
 		self->super.destroy 				= mem_table_destroy_default;
 		self->super.record_alloc 			= mem_table_record_alloc_default;
 		self->super.record_free 			= mem_table_record_free_default;
 		self->super.size_in_bytes 			= mem_table_size_in_bytes_default;
-		self->super.mem_get 				= mem_table_perm_mem_get;
+		self->super.mem_get 				= lu_mem_table_perm_mem_get;
 
 		self->super.record_size_in_bytes 	= record_size_in_bytes;
 		self->super.table_size_in_records 	= table_size_in_records;

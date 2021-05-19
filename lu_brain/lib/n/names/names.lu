@@ -7,7 +7,7 @@
 
 	static Names_List names_list_create(Lu_Mem mem, lu_size names_size)
 	{
-		Names_List self = (Names_List) mem_alloc(mem, sizeof(struct names_list));
+		Names_List self = (Names_List) lu_mem_alloc(mem, sizeof(struct names_list));
 		lu_assert(self);
 
 		self->mem = mem;
@@ -26,5 +26,5 @@
 
 		simple_hash_destroy(self->hash, self->mem);
 
-		mem_free(self->mem, (lu_p_byte) self);
+		lu_mem_free(self->mem, (lu_p_byte) self);
 	}

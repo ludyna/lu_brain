@@ -21,13 +21,13 @@ void test_lim_list(void)
 {
     Mem_Debugger md = mem_debugger_create(lu_g_mem);
 
-    Lu_Mem mem     = (Lu_Mem) mem_perm_create(lu_g_mem, 2048);
+    Lu_Mem mem     = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 2048);
 
-    Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n2 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n3 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n4 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n5 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n3 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n4 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n5 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
 
     Lu_Lim_List list = lu_lim_list_create(mem, 10);
 
@@ -75,7 +75,7 @@ void test_lim_list(void)
     TEST_ASSERT(list->super.last == NULL);
 
     lu_lim_list_destroy(list);
-    mem_destroy(mem, lu_g_mem);
+    lu_mem_destroy(mem, lu_g_mem);
 
     //mem_debugger_print(md);
 
@@ -86,13 +86,13 @@ void test_lim_list(void)
 void test_lim_list_max_size(void)
 {
     Mem_Debugger md = mem_debugger_create(lu_g_mem);
-    Lu_Mem mem     = (Lu_Mem) mem_perm_create(lu_g_mem, 2048);
+    Lu_Mem mem     = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 2048);
 
-    Neu n1 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n2 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n3 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n4 = (Neu) mem_alloc(mem, sizeof(struct neu));
-    Neu n5 = (Neu) mem_alloc(mem, sizeof(struct neu));
+    Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n3 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n4 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n5 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
 
     Lu_Lim_List list = lu_lim_list_create(mem, 3);
 
@@ -110,7 +110,7 @@ void test_lim_list_max_size(void)
     TEST_ASSERT(list->super.first->value == n2);
 
     lu_lim_list_destroy(list);
-    mem_destroy(mem, lu_g_mem);
+    lu_mem_destroy(mem, lu_g_mem);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
     mem_debugger_destroy(md, true);

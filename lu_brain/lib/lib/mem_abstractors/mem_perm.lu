@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Perm
+// Lu_Mem_Perm
 
 	// 
 	// All allocations should be at the beginning of app existance executed 
@@ -11,7 +11,7 @@
 	//
 	lu_p_byte mem_perm_alloc_internal(Lu_Mem mem, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
-		Mem_Perm self = (Mem_Perm) mem;
+		Lu_Mem_Perm self = (Lu_Mem_Perm) mem;
 
 		if (self->buff_pos + size_in_bytes > self->buff_end)
 		{
@@ -47,7 +47,7 @@
 
 	void mem_perm_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
-		mem_free(parent_mem, (lu_p_byte) self);
+		lu_mem_free(parent_mem, (lu_p_byte) self);
 	}
 
 	Lu_Mem_Table mem_table_perm_create_internal(
@@ -61,8 +61,8 @@
 		int 		line
 	)
 	{
-		return (Lu_Mem_Table) mem_table_perm_create(
-			(Mem_Perm) mem,
+		return (Lu_Mem_Table) lu_mem_table_perm_create(
+			(Lu_Mem_Perm) mem,
 			record_size_in_bytes,
 			table_size_in_records,
 			percent,
@@ -73,15 +73,15 @@
 		); 
 	}
 
-	Mem_Perm mem_perm_create(Lu_Mem parent_mem, lu_size size_in_bytes)
+	Lu_Mem_Perm lu_mem_perm_create(Lu_Mem parent_mem, lu_size size_in_bytes)
 	{
 		lu_assert(size_in_bytes > sizeof(struct lu_mem_perm));
 
-		lu_p_void buff_start	= mem_alloc(parent_mem, size_in_bytes);
+		lu_p_void buff_start	= lu_mem_alloc(parent_mem, size_in_bytes);
 
 		if (buff_start == NULL) return NULL;
 
-		Mem_Perm self 				= (Mem_Perm) buff_start;
+		Lu_Mem_Perm self 				= (Lu_Mem_Perm) buff_start;
 
 		self->super.debugger  		= NULL; // debugger makes no much sense for mem_perm
 		self->super.alloc 			= mem_perm_alloc_internal;

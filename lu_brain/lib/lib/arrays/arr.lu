@@ -16,13 +16,13 @@ Arr arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
 	lu_user_assert(size > 0, "size should be greater than zero");
 	lu_user_assert(mem, "Lu_Mem is NULL");
 
-	Arr self = (Arr) mem_alloc(mem, sizeof(struct arr));
+	Arr self = (Arr) lu_mem_alloc(mem, sizeof(struct arr));
 	lu_user_assert(self, "Unable to allocate array");
 	
 	// Initialize
 	self->size 			= size;
 	self->count 		= 0;
-	self->items 		= (lu_p_void*) mem_alloc(mem, self->size * sizeof(lu_p_void));
+	self->items 		= (lu_p_void*) lu_mem_alloc(mem, self->size * sizeof(lu_p_void));
  	self->allow_realloc = allow_realloc;
  	self->mem 			= mem;
 
@@ -40,8 +40,8 @@ void arr_destroy(Arr self)
 	Lu_Mem mem = self->mem;
 	lu_user_assert_void(mem, "Lu_Mem is NULL");
 
-	mem_free(mem, (lu_p_byte) self->items);
-	mem_free(mem, (lu_p_byte) self);
+	lu_mem_free(mem, (lu_p_byte) self->items);
+	lu_mem_free(mem, (lu_p_byte) self);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -118,7 +118,7 @@ void arr_realloc(Arr self, lu_size new_size)
 
 	self->size = new_size;
 
-	self->items = (lu_p_void*) mem_realloc(self->mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
+	self->items = (lu_p_void*) lu_mem_realloc(self->mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
 	lu_assert(self->items != NULL);
 }
 

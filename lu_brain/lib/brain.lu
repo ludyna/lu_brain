@@ -23,7 +23,7 @@
 		Lu_Mem brain_mem		= lu_g_mem; 
 		lu_user_assert(brain_mem, "Cannot create brain_mem. Not enough memory?");
 
-		Lu_Brain self 		= (Lu_Brain) mem_alloc(brain_mem, sizeof(struct lu_brain));
+		Lu_Brain self 		= (Lu_Brain) lu_mem_alloc(brain_mem, sizeof(struct lu_brain));
 		lu_user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->brain_mem  	= brain_mem; 
@@ -58,11 +58,11 @@
 	{
 		lu_user_assert_void(self, "Lu_Brain is NULL");
 		lu_user_assert_void(self->brain_mem, "Lu_Mem is NULL");
-		Mem_Perm brain_mem = (Mem_Perm) self->brain_mem;
+		Lu_Mem_Perm brain_mem = (Lu_Mem_Perm) self->brain_mem;
 
 		lu_debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
-		lu_debug("\nMemory allocated (bytes): %lu", mem_perm_allocated(brain_mem));
-		lu_debug("\nMemory used (bytes): %lu", mem_perm_used(brain_mem));
+		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_perm_preallocated(brain_mem));
+		lu_debug("\nMemory used (bytes): %lu", lu_mem_perm_used(brain_mem));
 
  		if (self->s_mem)
  			s_mem_print_info(self->s_mem);

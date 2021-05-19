@@ -12,7 +12,7 @@
 
 	static inline Hnn_Table_Node hnn_table_node_create(Lu_Mem mem, Hnn_Cell_0 cell, Hnn_Table_Node prev)
 	{
-		Hnn_Table_Node self = (Hnn_Table_Node) mem_alloc(mem, sizeof(struct hnn_table_node));
+		Hnn_Table_Node self = (Hnn_Table_Node) lu_mem_alloc(mem, sizeof(struct hnn_table_node));
 
 		self->prev = prev;
 		self->cell = cell;

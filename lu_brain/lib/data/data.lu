@@ -98,11 +98,11 @@
 
 		if (self->values) 
 		{
-			mem_free(mem, (lu_p_byte) self->values);
+			lu_mem_free(mem, (lu_p_byte) self->values);
 			self->values = NULL;
 		}
 
-		mem_free(mem, (lu_p_byte) self);
+		lu_mem_free(mem, (lu_p_byte) self);
 	}
 
 
