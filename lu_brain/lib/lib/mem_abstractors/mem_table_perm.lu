@@ -71,10 +71,10 @@
 		// super
 
 		self->super.realloc 				= lu_mem_table_perm_realloc_internal;
-		self->super.destroy 				= mem_table_destroy_default;
-		self->super.record_alloc 			= mem_table_record_alloc_default;
-		self->super.record_free 			= mem_table_record_free_default;
-		self->super.size_in_bytes 			= mem_table_size_in_bytes_default;
+		self->super.destroy 				= lu_mem_table_destroy_default;
+		self->super.record_alloc 			= lu_mem_table_record_alloc_default;
+		self->super.record_free 			= lu_mem_table_record_free_default;
+		self->super.size_in_bytes 			= lu_mem_table_size_in_bytes_default;
 		self->super.mem_get 				= lu_mem_table_perm_mem_get;
 
 		self->super.record_size_in_bytes 	= record_size_in_bytes;

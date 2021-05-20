@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Table
 
-    void mem_table_realloc_default(
+    void lu_mem_table_realloc_default(
 		Lu_Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
@@ -17,12 +17,12 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	void mem_table_destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line)
+	void lu_mem_table_destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
 		lu_mem_free(lu_mem_table_mem_get(self), (lu_p_byte) self);
 	}
 	
-	lu_p_byte mem_table_record_alloc_default(Lu_Mem_Table self, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_table_record_alloc_default(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
 		lu_p_byte res;
 		if (self->records_pos < self->records_end)
@@ -45,7 +45,7 @@
 		return res;
 	}
 
-	void mem_table_record_free_default(Lu_Mem_Table self, lu_p_byte record, const char* func, const char* file, int line)
+	void lu_mem_table_record_free_default(Lu_Mem_Table self, lu_p_byte record, const char* func, const char* file, int line)
 	{
 		if (record == NULL) return;  // should prob debug this
 
@@ -59,13 +59,13 @@
 		--self->records_count;
 	}
 
-	lu_size mem_table_size_in_bytes_default(Lu_Mem_Table self)
+	lu_size lu_mem_table_size_in_bytes_default(Lu_Mem_Table self)
 	{
 		return self->full_size_in_bytes;
 	}
 
 
-	Lu_Mem mem_table_mem_get_default(Lu_Mem_Table self)
+	Lu_Mem lu_mem_table_mem_get_default(Lu_Mem_Table self)
 	{
 		return lu_g_mem;
 	}
@@ -98,12 +98,12 @@
 
 		Lu_Mem_Table self 				= (Lu_Mem_Table) start;
 
-		self->realloc 				= mem_table_realloc_default;
-		self->destroy 				= mem_table_destroy_default;
-		self->record_alloc 			= mem_table_record_alloc_default;
-		self->record_free 			= mem_table_record_free_default;
-		self->size_in_bytes 		= mem_table_size_in_bytes_default;
-		self->mem_get 				= mem_table_mem_get_default;
+		self->realloc 				= lu_mem_table_realloc_default;
+		self->destroy 				= lu_mem_table_destroy_default;
+		self->record_alloc 			= lu_mem_table_record_alloc_default;
+		self->record_free 			= lu_mem_table_record_free_default;
+		self->size_in_bytes 		= lu_mem_table_size_in_bytes_default;
+		self->mem_get 				= lu_mem_table_mem_get_default;
 
 		self->record_size_in_bytes 	= record_size_in_bytes;
 		self->table_size_in_records = table_size_in_records;
