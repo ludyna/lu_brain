@@ -21,11 +21,11 @@
 	{
 		Lu_Mem_Table_Perm perm = (Lu_Mem_Table_Perm) self;
 
-		return (Lu_Mem) perm->mem_perm;
+		return (Lu_Mem) perm->mem_stack;
 	}
 
 	Lu_Mem_Table_Perm lu_mem_table_perm_create(
-		Lu_Mem_Perm 			mem_perm, 
+		Lu_Mem_Perm 			mem_stack, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,
@@ -47,7 +47,7 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = lu_mem_perm_avail(mem_perm) * percent  / 100.0;
+			lu_size a = lu_mem_stack_avail(mem_stack) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
 			if (flags & MTF_FREEABLE) 
@@ -61,7 +61,7 @@
 		if (flags & MTF_FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
-		Lu_Mem mem = (Lu_Mem) mem_perm;
+		Lu_Mem mem = (Lu_Mem) mem_stack;
 		lu_p_byte start = lu_mem_alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
@@ -89,7 +89,7 @@
 		self->super.full_size_in_bytes 		= full_size;
 
 		// own
-		self->mem_perm 				= mem_perm;
+		self->mem_stack 				= mem_stack;
 
 		return self;
 	}

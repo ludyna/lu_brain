@@ -18,7 +18,7 @@ typedef struct test1* Test1;
 
 void test_mem_table1(void)
 {
-    Lu_Mem mem        = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 512);
+    Lu_Mem mem        = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 512);
     Lu_Mem_Table mt   = lu_mem_table_create(
         /*Lu_Mem*/                  mem, 
         /*record_size_in_bytes*/    sizeof(struct test1), 
@@ -27,7 +27,7 @@ void test_mem_table1(void)
         /*flags*/                   MTF_FREEABLE
     );
 
-    TEST_ASSERT( ((Lu_Mem_Table_Perm)mt)->mem_perm == (Lu_Mem_Perm) mem );
+    TEST_ASSERT( ((Lu_Mem_Table_Perm)mt)->mem_stack == (Lu_Mem_Perm) mem );
 
     TEST_ASSERT(mt->table_size_in_records == 3);
     TEST_ASSERT(mt->free_count == 0);

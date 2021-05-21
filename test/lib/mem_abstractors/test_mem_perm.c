@@ -18,9 +18,9 @@ struct test1
 
 typedef struct test1* Test1;
 
-void test_mem_perm_1(void)
+void test_mem_stack_1(void)
 {
-	Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 512);
+	Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 512);
 
     TEST_ASSERT(mem);
 

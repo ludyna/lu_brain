@@ -9,7 +9,7 @@
 	// All allocations should be at the beginning of app existance executed 
 	// in single thread. No multi-threading support is needed.
 	//
-	lu_p_byte lu_mem_perm_alloc_internal(Lu_Mem mem, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_stack_alloc_internal(Lu_Mem mem, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		Lu_Mem_Perm self = (Lu_Mem_Perm) mem;
 
@@ -34,18 +34,18 @@
 		return tmp;
 	} 
 
-	lu_p_byte lu_mem_perm_realloc_internal(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_stack_realloc_internal(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		lu_debug_message_internal(file, line, "MEM PERM REALLOC NOT IMPLEMENTED");
 		return NULL;
 	}
 
-	void lu_mem_perm_free_internal(Lu_Mem self, lu_p_byte p, const char* func, const char* file, int line)
+	void lu_mem_stack_free_internal(Lu_Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		lu_debug_message_internal(file, line, "MEM PERM FREE NOT IMPLEMENTED");
 	}
 
-	void lu_mem_perm_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
+	void lu_mem_stack_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
 		lu_mem_free(parent_mem, (lu_p_byte) self);
 	}
@@ -73,9 +73,9 @@
 		); 
 	}
 
-	Lu_Mem_Perm lu_mem_perm_create(Lu_Mem parent_mem, lu_size size_in_bytes)
+	Lu_Mem_Perm lu_mem_stack_create(Lu_Mem parent_mem, lu_size size_in_bytes)
 	{
-		lu_assert(size_in_bytes > sizeof(struct lu_mem_perm));
+		lu_assert(size_in_bytes > sizeof(struct lu_mem_stack));
 
 		lu_p_void buff_start	= lu_mem_alloc(parent_mem, size_in_bytes);
 
@@ -83,16 +83,16 @@
 
 		Lu_Mem_Perm self 				= (Lu_Mem_Perm) buff_start;
 
-		self->super.debugger  		= NULL; // debugger makes no much sense for mem_perm
-		self->super.alloc 			= lu_mem_perm_alloc_internal;
-		self->super.realloc 		= lu_mem_perm_realloc_internal;
-		self->super.free 			= lu_mem_perm_free_internal;
-		self->super.destroy 		= lu_mem_perm_destroy_internal;
+		self->super.debugger  		= NULL; // debugger makes no much sense for mem_stack
+		self->super.alloc 			= lu_mem_stack_alloc_internal;
+		self->super.realloc 		= lu_mem_stack_realloc_internal;
+		self->super.free 			= lu_mem_stack_free_internal;
+		self->super.destroy 		= lu_mem_stack_destroy_internal;
 		self->super.table_create 	= lu_mem_table_perm_create_internal;
 
 		self->buff_start 			= (lu_p_byte) buff_start;
 		self->buff_end				= self->buff_start + size_in_bytes;
-		self->buff_pos 				= self->buff_start + sizeof(struct lu_mem_perm);
+		self->buff_pos 				= self->buff_start + sizeof(struct lu_mem_stack);
 		self->size_in_bytes 		= size_in_bytes;
 
 		return self;

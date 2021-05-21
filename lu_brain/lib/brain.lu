@@ -61,8 +61,8 @@
 		Lu_Mem_Perm brain_mem = (Lu_Mem_Perm) self->brain_mem;
 
 		lu_debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
-		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_perm_preallocated(brain_mem));
-		lu_debug("\nMemory used (bytes): %lu", lu_mem_perm_used(brain_mem));
+		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_stack_preallocated(brain_mem));
+		lu_debug("\nMemory used (bytes): %lu", lu_mem_stack_used(brain_mem));
 
  		if (self->s_mem)
  			s_mem_print_info(self->s_mem);

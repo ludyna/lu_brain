@@ -39,7 +39,7 @@ static lu_value neu_compare_reverse(lu_p_void p1, lu_p_void p2)
 
 void test_s_list1(void)
 {
-    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 4096);
 
     Neu n1  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
@@ -95,7 +95,7 @@ void test_s_list1(void)
 
 void test_s_list_limited(void)
 {
-    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 4096);
 
     Neu n1  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
@@ -163,7 +163,7 @@ void test_s_list_limited(void)
 
 void test_s_list_limited_reverse(void)
 {
-    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 4096);
 
     Neu n1  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
     Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
@@ -231,7 +231,7 @@ void test_s_list_limited_reverse(void)
 
 void test_s_list_eq(void)
 {
-    Lu_Mem mem = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 4096);
+    Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 4096);
 
     Neu n2  = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
     Neu n22 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));

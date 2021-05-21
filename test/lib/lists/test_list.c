@@ -18,7 +18,7 @@ typedef struct neu* Neu;
 
 void test_list1(void)
 {
-    Lu_Mem mem     = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 2048);
+    Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
 
     Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
@@ -89,7 +89,7 @@ void test_list1(void)
 
 void test_list_fast_ma(void)
 {
-    Lu_Mem mem     = (Lu_Mem) lu_mem_perm_create(lu_g_mem, 2048);
+    Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
 
     Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
