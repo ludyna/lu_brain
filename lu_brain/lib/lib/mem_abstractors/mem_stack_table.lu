@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Mem_Table_Perm
+// Lu_Mem_Stack_Table
 
 	void lu_mem_stack_table_realloc_internal(
 		Lu_Mem_Table self, 
@@ -19,12 +19,12 @@
 
 	Lu_Mem lu_mem_stack_table_mem_get(Lu_Mem_Table self)
 	{
-		Lu_Mem_Table_Perm perm = (Lu_Mem_Table_Perm) self;
+		Lu_Mem_Stack_Table perm = (Lu_Mem_Stack_Table) self;
 
 		return (Lu_Mem) perm->mem_stack;
 	}
 
-	Lu_Mem_Table_Perm lu_mem_stack_table_create(
+	Lu_Mem_Stack_Table lu_mem_stack_table_create(
 		Lu_Mem_Perm 			mem_stack, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
@@ -66,7 +66,7 @@
 
 		if (start == NULL) return NULL;
 
-		Lu_Mem_Table_Perm self = (Lu_Mem_Table_Perm) start;
+		Lu_Mem_Stack_Table self = (Lu_Mem_Stack_Table) start;
 
 		// super
 
