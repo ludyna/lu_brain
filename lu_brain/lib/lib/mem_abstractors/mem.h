@@ -7,9 +7,14 @@
 
 	extern Lu_Mem lu_g_mem;
 
+	// Alloc, realloc and free
 	#define lu_g_mem_alloc(size) lu_g_mem->alloc(lu_g_mem, size, __func__, __FILE__, __LINE__)
 	#define lu_g_mem_realloc(p, size) lu_g_mem->realloc(lu_g_mem, p, size, __func__, __FILE__, __LINE__)
 	#define lu_g_mem_free(p) lu_g_mem->free(lu_g_mem, p, __func__, __FILE__, __LINE__)
+
+	// Memory stats
+
+	// Memory tables
 	#define lu_g_mem_table_create(r_size, t_size, p, f) lu_g_mem->table_create(lu_g_mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
 
 
@@ -29,6 +34,7 @@
 									const char* func, const char* file, int line);
 	};
 
+	// Memory
 	struct lu_mem {
 
 		// Memory debugger

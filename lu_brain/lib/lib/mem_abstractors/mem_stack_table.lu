@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Table_Perm
 
-	void lu_mem_table_perm_realloc_internal(
+	void lu_mem_stack_table_realloc_internal(
 		Lu_Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
@@ -17,14 +17,14 @@
 		lu_debug_message("NOT IMPLEMENTED");
 	}
 
-	Lu_Mem lu_mem_table_perm_mem_get(Lu_Mem_Table self)
+	Lu_Mem lu_mem_stack_table_mem_get(Lu_Mem_Table self)
 	{
 		Lu_Mem_Table_Perm perm = (Lu_Mem_Table_Perm) self;
 
 		return (Lu_Mem) perm->mem_stack;
 	}
 
-	Lu_Mem_Table_Perm lu_mem_table_perm_create(
+	Lu_Mem_Table_Perm lu_mem_stack_table_create(
 		Lu_Mem_Perm 			mem_stack, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
@@ -53,10 +53,10 @@
 			if (flags & MTF_FREEABLE) 
 				fis += sizeof(lu_p_byte);
 
-			table_size_in_records = (a - sizeof(struct lu_mem_table_perm)) / fis;
+			table_size_in_records = (a - sizeof(struct lu_mem_stack_table)) / fis;
 		}
 
-		lu_size full_size = sizeof(struct lu_mem_table_perm) + record_size_in_bytes * table_size_in_records;
+		lu_size full_size = sizeof(struct lu_mem_stack_table) + record_size_in_bytes * table_size_in_records;
 		
 		if (flags & MTF_FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
@@ -70,17 +70,17 @@
 
 		// super
 
-		self->super.realloc 				= lu_mem_table_perm_realloc_internal;
+		self->super.realloc 				= lu_mem_stack_table_realloc_internal;
 		self->super.destroy 				= lu_mem_table_destroy_default;
 		self->super.record_alloc 			= lu_mem_table_record_alloc_default;
 		self->super.record_free 			= lu_mem_table_record_free_default;
 		self->super.size_in_bytes 			= lu_mem_table_size_in_bytes_default;
-		self->super.mem_get 				= lu_mem_table_perm_mem_get;
+		self->super.mem_get 				= lu_mem_stack_table_mem_get;
 
 		self->super.record_size_in_bytes 	= record_size_in_bytes;
 		self->super.table_size_in_records 	= table_size_in_records;
 		self->super.flags 					= flags;
-		self->super.records_start 			= start + sizeof(struct lu_mem_table_perm);
+		self->super.records_start 			= start + sizeof(struct lu_mem_stack_table);
 		self->super.records_pos				= self->super.records_start;
 		self->super.records_end				= self->super.records_start + self->super.table_size_in_records * self->super.record_size_in_bytes;
 		self->super.free_start 				= (lu_p_byte*) self->super.records_end;

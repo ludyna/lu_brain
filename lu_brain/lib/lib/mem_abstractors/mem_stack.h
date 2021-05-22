@@ -38,12 +38,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Perm_Table
 
-	struct lu_mem_table_perm {
+	struct lu_mem_stack_table {
 		struct lu_mem_table 	super;
 		Lu_Mem_Perm 			mem_stack;
 	};
 
-	Lu_Mem_Table_Perm lu_mem_table_perm_create(
+	Lu_Mem_Table_Perm lu_mem_stack_table_create(
 		Lu_Mem_Perm 			mem, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
