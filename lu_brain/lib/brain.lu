@@ -58,7 +58,7 @@
 	{
 		lu_user_assert_void(self, "Lu_Brain is NULL");
 		lu_user_assert_void(self->brain_mem, "Lu_Mem is NULL");
-		Lu_Mem_Perm brain_mem = (Lu_Mem_Perm) self->brain_mem;
+		Lu_Mem_Stack brain_mem = (Lu_Mem_Stack) self->brain_mem;
 
 		lu_debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
 		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_stack_preallocated(brain_mem));

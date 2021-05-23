@@ -27,7 +27,7 @@ void test_mem_table1(void)
         /*flags*/                   MTF_FREEABLE
     );
 
-    TEST_ASSERT( ((Lu_Mem_Stack_Table)mt)->mem_stack == (Lu_Mem_Perm) mem );
+    TEST_ASSERT( ((Lu_Mem_Stack_Table)mt)->mem_stack == (Lu_Mem_Stack) mem );
 
     TEST_ASSERT(mt->table_size_in_records == 3);
     TEST_ASSERT(mt->free_count == 0);

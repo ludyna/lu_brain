@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Mem_Perm
+// Lu_Mem_Stack
 
 	// 
 	// All allocations should be at the beginning of app existance executed 
@@ -11,7 +11,7 @@
 	//
 	lu_p_byte lu_mem_stack_alloc_internal(Lu_Mem mem, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
-		Lu_Mem_Perm self = (Lu_Mem_Perm) mem;
+		Lu_Mem_Stack self = (Lu_Mem_Stack) mem;
 
 		if (self->buff_pos + size_in_bytes > self->buff_end)
 		{
@@ -62,7 +62,7 @@
 	)
 	{
 		return (Lu_Mem_Table) lu_mem_stack_table_create(
-			(Lu_Mem_Perm) mem,
+			(Lu_Mem_Stack) mem,
 			record_size_in_bytes,
 			table_size_in_records,
 			percent,
@@ -73,7 +73,7 @@
 		); 
 	}
 
-	Lu_Mem_Perm lu_mem_stack_create(Lu_Mem parent_mem, lu_size size_in_bytes)
+	Lu_Mem_Stack lu_mem_stack_create(Lu_Mem parent_mem, lu_size size_in_bytes)
 	{
 		lu_assert(size_in_bytes > sizeof(struct lu_mem_stack));
 
@@ -81,7 +81,7 @@
 
 		if (buff_start == NULL) return NULL;
 
-		Lu_Mem_Perm self 				= (Lu_Mem_Perm) buff_start;
+		Lu_Mem_Stack self 				= (Lu_Mem_Stack) buff_start;
 
 		self->super.debugger  		= NULL; // debugger makes no much sense for mem_stack
 		self->super.alloc 			= lu_mem_stack_alloc_internal;
