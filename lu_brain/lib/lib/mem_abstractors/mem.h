@@ -13,6 +13,8 @@
 	#define lu_g_mem_free(p) lu_g_mem->free(lu_g_mem, p, __func__, __FILE__, __LINE__)
 
 	// Memory stats
+	#define lu_g_mem_preallocated(mem) 0
+	#define lu_g_mem_used(mem) 0
 
 	// Memory tables
 	#define lu_g_mem_table_create(r_size, t_size, p, f) lu_g_mem->table_create(lu_g_mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
@@ -76,6 +78,8 @@
 	#define lu_mem_destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __func__, __FILE__, __LINE__)
 
 	// Memory stats
+	#define lu_mem_preallocated(mem) mem->preallocated(mem)
+	#define lu_mem_used(mem) mem->used(mem)
 
 	// Memory tables
 	#define lu_mem_table_create(mem, r_size, t_size, p, f) mem->table_create(mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)

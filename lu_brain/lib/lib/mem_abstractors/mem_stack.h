@@ -4,8 +4,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Stack
-// Permanent memory means that allocations should stay until the end of life of 
-// brain.
+// 
 
 	struct lu_mem_stack {
 		struct lu_mem 		super;

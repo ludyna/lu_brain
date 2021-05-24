@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Mem_Stack
+// Mem_Stack alloc, realloc and free
 
 	// 
 	// All allocations should be at the beginning of app existance executed 
@@ -45,6 +45,9 @@
 		lu_debug_message_internal(file, line, "MEM PERM FREE NOT IMPLEMENTED");
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Stack Destory
+
 	void lu_mem_stack_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
 		lu_mem_free(parent_mem, (lu_p_byte) self);
@@ -71,7 +74,24 @@
 			file,
 			line
 		); 
+	} 
+
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Stack Stats
+
+	lu_size lu_mem_stack_preallocated_internal(Lu_Mem self)
+	{
+		return lu_mem_stack_preallocated((Lu_Mem_Stack) self);
 	}
+
+	lu_size lu_mem_stack_used_internal(Lu_Mem self)
+	{
+		return lu_mem_stack_used((Lu_Mem_Stack) self);
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Mem_Stack Create
 
 	Lu_Mem_Stack lu_mem_stack_create(Lu_Mem parent_mem, lu_size size_in_bytes)
 	{
@@ -84,12 +104,23 @@
 		Lu_Mem_Stack self 				= (Lu_Mem_Stack) buff_start;
 
 		self->super.debugger  		= NULL; // debugger makes no much sense for mem_stack
+
+		// alloc, realloc, free
 		self->super.alloc 			= lu_mem_stack_alloc_internal;
 		self->super.realloc 		= lu_mem_stack_realloc_internal;
 		self->super.free 			= lu_mem_stack_free_internal;
+
+		// destroy
 		self->super.destroy 		= lu_mem_stack_destroy_internal;
+
+		// stats
+		self->super.preallocated 	= lu_mem_stack_preallocated_internal;
+		self->super.used 			= lu_mem_stack_used_internal;
+
+		// table create
 		self->super.table_create 	= lu_mem_stack_table_create_internal;
 
+		// variables
 		self->buff_start 			= (lu_p_byte) buff_start;
 		self->buff_end				= self->buff_start + size_in_bytes;
 		self->buff_pos 				= self->buff_start + sizeof(struct lu_mem_stack);

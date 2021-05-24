@@ -4,5 +4,6 @@
 
 #include "mem.lu"
 #include "mem_table.lu"
+#include "mem_with_stats.lu"
 #include "mem_stack.lu"
 #include "mem_stack_table.lu"
