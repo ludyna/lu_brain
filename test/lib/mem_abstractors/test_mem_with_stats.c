@@ -16,14 +16,7 @@ void tearDown(void)
 	lu_user_assert_on();
 }
 
-struct test1 
-{ 
-    lu_size size;
-};
-
-typedef struct test1* Test1;
-
-void test_mem_stack_1(void)
+void test_mem_stats(void)
 {
     lu_p_byte p;
 	
