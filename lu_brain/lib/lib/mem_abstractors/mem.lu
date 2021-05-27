@@ -3,7 +3,7 @@
 */
  
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Mem (default)
+// Lu_Mem alloc, realloc, fere defaults
 
 	lu_p_byte lu_mem_alloc_default(Lu_Mem self, lu_size size, const char* func, const char* file, int line)
 	{
@@ -50,11 +50,29 @@
 		#endif
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Mem destroy default
+
 	void lu_mem_destroy_default(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
-		// Lu_Mem specific debug here
 		free((lu_p_void) self);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Mem stats defaults
+
+	lu_size lu_mem_preallocated_default(Lu_Mem self)
+	{
+		return 0;
+	}
+
+	lu_size lu_mem_used_default(Lu_Mem self)
+	{
+		return 0;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Mem table defaults
 
 	// declaration 
 	Lu_Mem_Table lu_mem_table_create_default(
@@ -74,11 +92,22 @@
 // Globals
 
 	struct lu_mem g_mem_default_instance = {
+		// alloc, realloc, free
 		.alloc 				= lu_mem_alloc_default,
 		.realloc 			= lu_mem_realloc_default,
 		.free 				= lu_mem_free_default,
+
+		// destroy
 		.destroy 			= lu_mem_destroy_default,
+
+		// stats
+		.preallocated 		= lu_mem_preallocated_default,
+		.used 				= lu_mem_used_default, 
+
+		// table 
 		.table_create 		= lu_mem_table_create_default,
+
+		// debugger
 		.debugger 			= NULL
 	};
 

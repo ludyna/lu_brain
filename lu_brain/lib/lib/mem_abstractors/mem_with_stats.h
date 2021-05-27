@@ -15,8 +15,9 @@
 		lu_size alloc_count;
 		lu_size free_count;
 		lu_size realloc_count;
-		lu_size allocated_size;
-		lu_size freed_size;
+
+		lu_size alloc_size;
+		lu_size free_size;
 	};
 
 	static inline size_t lu_mem_with_stats_allocated_size(void * ptr) 
