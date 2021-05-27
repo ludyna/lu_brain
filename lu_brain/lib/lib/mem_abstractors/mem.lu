@@ -89,7 +89,7 @@
 
 	Lu_Mem lu_mem_create()
 	{
-		Lu_Mem self 					= calloc(1, sizeof(struct lu_mem));
+		Lu_Mem self 				= calloc(1, sizeof(struct lu_mem));
 		
 		self->debugger 				= NULL;
 		self->alloc 				= g_mem_default_instance.alloc;

@@ -29,7 +29,7 @@
 	// Destroy memory
 	void lu_mem_with_stats_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
-
+		lu_mem_free(parent_mem, (lu_p_byte) self);
 	}
 
 	// Memory stats
