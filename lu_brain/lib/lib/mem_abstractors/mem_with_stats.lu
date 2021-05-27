@@ -15,7 +15,7 @@
 
 		if (!ret) return (lu_p_byte) ret;
 
-		*ret = size;
+		*ret = s;
 
 		++self->alloc_count;
 		self->alloc_size += s;
@@ -23,9 +23,25 @@
 		return (lu_p_byte) &ret[1];
 	}
 
-	lu_p_byte lu_mem_with_stats_realloc_internal(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_with_stats_realloc_internal(Lu_Mem mem, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
+		Lu_Mem_With_Stats self = (Lu_Mem_With_Stats) mem;
 
+		lu_size old_size = *((lu_size*)p - 1);
+
+		lu_size new_size = size_in_bytes + sizeof(lu_size);
+		lu_p_byte new_p = lu_mem_realloc(self->parent_mem, (lu_p_byte)((lu_size*)p - 1), new_size);
+
+		if (!new_p) return new_p;
+
+		lu_size* new_p_size = (lu_size*) new_p;
+		*new_p_size = new_size;
+
+		++self->realloc_count;
+		self->free_size += old_size;
+		self->alloc_size += new_size;
+
+		return (lu_p_byte) &new_p_size[1];
 	}
 
 	void lu_mem_with_stats_free_internal(Lu_Mem mem, lu_p_byte p, const char* func, const char* file, int line)
@@ -33,15 +49,9 @@
 		Lu_Mem_With_Stats self = (Lu_Mem_With_Stats) mem;
 
 		++self->free_count;
-		self->free_size += *((lu_size*)p - 1) + sizeof(lu_size);
+		self->free_size += *((lu_size*)p - 1);
 
 		lu_mem_free(self->parent_mem, (lu_p_byte)((lu_size*)p - 1));
-	}
-
-	// Destroy memory
-	void lu_mem_with_stats_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
-	{
-		lu_mem_free(parent_mem, (lu_p_byte) self);
 	}
 
 	// Memory stats
@@ -52,6 +62,13 @@
 
 		return self->alloc_size - self->free_size;
 	}
+
+	// Destroy memory
+	void lu_mem_with_stats_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
+	{
+		lu_mem_free(parent_mem, (lu_p_byte) self);
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_With_Stats Create
