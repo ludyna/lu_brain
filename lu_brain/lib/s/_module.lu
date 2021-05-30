@@ -8,4 +8,4 @@
 #include "s_layer_conf.lu"
 #include "s_rec_layer_inits.lu"
 #include "s_rec.lu"
-#include "s_mem.lu"
+#include "s.lu"

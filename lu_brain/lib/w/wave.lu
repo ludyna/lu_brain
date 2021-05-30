@@ -8,8 +8,8 @@
 	Lu_Wave lu_wave_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(brain->s_mem, "S_Mem is NULL");
-		lu_user_assert(brain->n_mem, "N_Mem is NULL");
+		lu_user_assert(brain->s, "Lu_S is NULL");
+		lu_user_assert(brain->n, "Lu_N is NULL");
 
 		Lu_Wave self 		= (Lu_Wave) lu_g_mem_alloc(sizeof(struct lu_wave));
 		lu_user_assert(self, "Cannot allocate Lu_Wave");

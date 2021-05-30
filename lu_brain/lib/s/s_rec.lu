@@ -2,15 +2,15 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static S_Rec s_rec_create(S_Mem s_mem, Lu_Rec rec)
+	static S_Rec s_rec_create(Lu_S s, Lu_Rec rec)
 	{
-		lu_assert(s_mem);
+		lu_assert(s);
 		lu_assert(rec);
 
 		S_Rec self = (S_Rec) lu_g_mem_alloc(sizeof(struct s_rec));
 		lu_assert(self);
 
-		self->mem				= s_mem;
+		self->mem				= s;
 		self->rec 				= rec;
 		self->id 				= rec->id;
 

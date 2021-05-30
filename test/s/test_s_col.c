@@ -21,7 +21,7 @@
 // lu_value			data_m1[] 		= { -1.0 };
 
 // Lu_Mem 				mem;
-// S_Mem				s_mem;
+// Lu_S				s;
 // S_Rec 				s_rec;
 // S_Cell				s_neu_com_0;
 // S_Cell 				s_neu_com_1;
@@ -75,17 +75,17 @@ void test_s_col1and2(void)
 	// rec_1 				= lu_brain_rec_get(brain, 0);
 	// TEST_ASSERT(rec_1);
 
-	// s_mem = brain->s_mem;
-	// TEST_ASSERT(s_mem);
+	// s = brain->s;
+	// TEST_ASSERT(s);
 
-	// s_rec = s_mem_s_rec_get(s_mem, 0);
+	// s_rec = s_mem_s_rec_get(s, 0);
 	// TEST_ASSERT(s_rec);
 
 	// s_neu_com_0 = s_rec_v_cell_get(s_rec, 0, 0, 0, 0);
 	// TEST_ASSERT(s_neu_com_0);
 
 
-	// s_rec = s_mem_s_rec_get(s_mem, 1);
+	// s_rec = s_mem_s_rec_get(s, 1);
 	// TEST_ASSERT(s_rec);
 
 	// s_neu_com_1 = s_rec_v_cell_get(s_rec, 0, 0, 0, 0);

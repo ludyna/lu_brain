@@ -12,14 +12,14 @@
  
  		self->brain 		= brain;
  		
- 		S_Mem s_mem = brain->s_mem;
- 		lu_user_assert(s_mem, "S_Mem is NULL");
+ 		Lu_S s = brain->s;
+ 		lu_user_assert(s, "Lu_S is NULL");
 
- 		lu_user_assert(arr_count(s_mem->recs) > 0, "No S_Recs?");
+ 		lu_user_assert(arr_count(s->recs) > 0, "No S_Recs?");
 
  		// here we use arr_size (not arr_count) and this is correct
  		// because recs could be potentionaly removed from brain
-		self->recs = arr_temp_create(arr_size(s_mem->recs), false);
+		self->recs = arr_temp_create(arr_size(s->recs), false);
  
  		S_Rec s_rec;
  		W_Rec w_rec;
@@ -27,7 +27,7 @@
 
 		for(i = 0; i < arr_size(self->recs); i++)
 		{
-			s_rec = (S_Rec) arr_get(s_mem->recs, i);
+			s_rec = (S_Rec) arr_get(s->recs, i);
 			if (!s_rec) continue;  // this is correct
 
 			// s_rec maye takozh vkazivnyk na lu_rec

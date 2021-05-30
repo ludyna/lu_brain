@@ -100,7 +100,7 @@
 		
 		// Vlasnyk
 
-		S_Mem 					mem; 			
+		Lu_S 					mem; 			
 
 		// Lu_Rec related
 
@@ -145,7 +145,7 @@
 	}
 
 	// s_rec.lu
-	static S_Rec s_rec_create(S_Mem mem, Lu_Rec s_rec);
+	static S_Rec s_rec_create(Lu_S mem, Lu_Rec s_rec);
 	static void s_rec_destroy(S_Rec self);
 	
 	static S_Cell s_rec_cell_assign(S_Rec, S_Layer);   
@@ -176,22 +176,22 @@
 	static void s_rec_print_info(S_Rec self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// S_Mem
+// Lu_S
 //
 
-	struct s_mem {
+	struct lu_s {
 		Lu_Brain 				brain;
 
 		Arr 					recs;
 	};
 	
-	static inline S_Rec s_mem_s_rec_get(S_Mem self, lu_size indx) { return arr_get(self->recs, indx); }
+	static inline S_Rec s_mem_s_rec_get(Lu_S self, lu_size indx) { return arr_get(self->recs, indx); }
 
-	// s_mem.lu
-	static S_Mem s_mem_create(Lu_Brain brain);
-	static void s_mem_destroy(S_Mem self);
+	// s.lu
+	static Lu_S s_mem_create(Lu_Brain brain);
+	static void s_mem_destroy(Lu_S self);
 
-	static void s_mem_print_info(S_Mem self);
+	static void s_mem_print_info(Lu_S self);
 
-	static void s_mem_rec_create(S_Mem self, Lu_Rec rec);
-	static void s_mem_rec_destroy(S_Mem self, Lu_Rec rec);
+	static void s_mem_rec_create(Lu_S self, Lu_Rec rec);
+	static void s_mem_rec_destroy(Lu_S self, Lu_Rec rec);

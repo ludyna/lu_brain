@@ -30,14 +30,14 @@
 		self->config 		= *p_config;
 		self->recs 			= arr_temp_create(p_config->recs_size, false);
 
-		self->s_mem 		= s_mem_create(self);
-		lu_user_assert(self->s_mem, "Cannot create S_Mem. Not enough memory?");
+		self->s 			= s_mem_create(self);
+		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
 
-		struct n_mem_config n_config;
+		struct lu_n_config n_config;
 		n_config.names_size = p_config->net.names_size;
 
-		self->n_mem 		= n_mem_create(self, n_config);
-		lu_user_assert(self->n_mem, "Cannot create N_Mem. Not enough memory?");
+		self->n 			= n_mem_create(self, n_config);
+		lu_user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
 
 		return self;
 	}
@@ -46,8 +46,8 @@
 	{
 		lu_user_assert_void(self, "Lu_Brain is NULL");
 
-		n_mem_destroy(self->n_mem);
-		s_mem_destroy(self->s_mem);
+		n_mem_destroy(self->n);
+		s_mem_destroy(self->s);
 
 		arr_destroy(self->recs);
 	
@@ -64,11 +64,11 @@
 		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_stack_preallocated(brain_mem));
 		lu_debug("\nMemory used (bytes): %lu", lu_mem_stack_used(brain_mem));
 
- 		if (self->s_mem)
- 			s_mem_print_info(self->s_mem);
+ 		if (self->s)
+ 			s_mem_print_info(self->s);
 
- 		// if (self->n_mem)
- 		// 		n_mem_print_info(self->n_mem);
+ 		// if (self->n)
+ 		// 		n_mem_print_info(self->n);
 	}
 
 	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
@@ -93,7 +93,7 @@
 		lu_assert(rec);
 		lu_assert(self->recs);
 		lu_assert(!rec->brain);
-		lu_assert(self->s_mem);
+		lu_assert(self->s);
 
 		rec->brain = self;
 
@@ -107,7 +107,7 @@
 		rec->id = i;
 		arr_set(self->recs, rec->id, rec);
 
-		s_mem_rec_create(self->s_mem, rec);
+		s_mem_rec_create(self->s, rec);
 		
 	}
 
@@ -115,9 +115,9 @@
 	{
 		lu_assert(self);
 		lu_assert(rec->brain);
-		lu_assert(self->s_mem);
+		lu_assert(self->s);
 
-		s_mem_rec_destroy(self->s_mem, rec);
+		s_mem_rec_destroy(self->s, rec);
 
 		arr_set(self->recs, rec->id, NULL);
 		

@@ -11,14 +11,19 @@
 // Lu_Brain 
 
 	struct lu_brain {
-		Lu_Mem brain_mem;
-
+		// config copy
 		struct lu_brain_config config;
+
+		// Mems
+		Lu_Mem brain_mem;
+		Lu_Mem s_mem;
+		Lu_Mem n_mem;
+		Lu_Mem w_mem;
 
 		Arr	recs; // receivers
 
-		S_Mem s_mem;
-		N_Mem n_mem;		
+		Lu_S s;
+		Lu_N n;		
 	};	
 
 	static void lu_brain_rec_attach(Lu_Brain self, Lu_Rec rec);

@@ -28,5 +28,5 @@
 	typedef struct s_layer_conf*		S_Layer_Conf;
 	typedef struct s_layer* 			S_Layer;
 	typedef struct s_rec*				S_Rec;
-	typedef struct s_mem* 				S_Mem;
+	typedef struct lu_s* 				Lu_S;
 
