@@ -60,18 +60,16 @@
 		LU_BC_END 				
 	};
 
-	Lu_Brain_Config lu_brain_config_predefined_get(lu_size id);
+	struct lu_brain_config lu_brain_config_get_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain 
 
-	Lu_Brain lu_brain_create_from_predefined(lu_size size_in_bytes, lu_size predefined_config_id);
 	Lu_Brain lu_brain_create(struct lu_brain_config config);
 	void lu_brain_destroy(Lu_Brain);
 
 	void lu_brain_print_info(Lu_Brain self);
 
-	struct lu_brain_config lu_brain_config_get(Lu_Brain self);
 	Lu_Brain lu_brain_reconfigure(Lu_Brain self, struct lu_brain_config config);
 
 	lu_size lu_brain_recs_size(Lu_Brain self);
@@ -115,18 +113,17 @@
 		LU_RC_END 				
 	};
 
-	Lu_Rec_Config lu_rec_config_predefined_get(lu_size id);
+	struct lu_rec_config lu_rec_config_get_by_id(lu_size id);
 
 	// Lu_Rec 
 
-	Lu_Rec lu_rec_create_from_predefined(
+	Lu_Rec lu_rec_create(
 		Lu_Brain brain, 
 		lu_size width, 
 		lu_size height, 
-		lu_size predefined_config_id
+		struct lu_rec_config config
 	);		
 
-	Lu_Rec lu_rec_create(Lu_Brain brain, struct lu_rec_config config);
 	void lu_rec_destroy(Lu_Rec self);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -170,8 +167,6 @@
 	};
 
 	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);
-
-	struct lu_wave_config lu_wave_config_get(Lu_Wave);
 	
 	// Lu_Wave_Config Predefined
 
@@ -181,8 +176,8 @@
 		LU_WC_FIND_FULL_COLOR,
 		LU_WC_END			
 	};
-	
-	Lu_Wave lu_wave_config_predefined_set(Lu_Wave, lu_size id);
+
+	struct lu_wave_config lu_wave_config_get_by_id(lu_size id);
 
 	// Lu_Wave Sync
 

@@ -5,16 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
-	Lu_Brain lu_brain_create_from_predefined(lu_size size_in_bytes, lu_size predefined_config_id)
-	{
-		Lu_Brain_Config p_config = lu_brain_config_predefined_get(predefined_config_id);
-		lu_user_assert(p_config, "Cannot get Lu_Brain_Config");
-		
-		struct lu_brain_config config = *p_config;
-
-		return lu_brain_create(config);
-	}
-
 	Lu_Brain lu_brain_create(struct lu_brain_config config)
 	{
 		Lu_Brain_Config p_config = lu_brain_config_validate(&config);
@@ -71,12 +61,12 @@
  		// 		n_mem_print_info(self->n);
 	}
 
-	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
+	struct lu_brain_config lu_brain_config_get_by_id(Lu_Brain self)
 	{
 		if (self == NULL) 
 		{
 			lu_user_debug("Lu_Brain is NULL! Returning LU_BC_DEFAULT config");
-			return *lu_brain_config_predefined_get(LU_BC_DEFAULT);
+			return *lu_brain_config_get_by_id(LU_BC_DEFAULT);
 		}
 
 		return self->config;

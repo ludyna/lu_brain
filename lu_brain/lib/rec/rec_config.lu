@@ -53,10 +53,10 @@
 		}
 	};
 
-	Lu_Rec_Config lu_rec_config_predefined_get(lu_size id)
+	struct lu_rec_config lu_rec_config_get_by_id(lu_size id)
 	{
 		lu_user_assert(id < LU_RC_END, "Predefined id is > LU_RC_END");
-		return &lu_g_rc_predefined[id];
+		return lu_g_rc_predefined[id];
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -13,5 +13,3 @@
 // Lu_Rec_Config Predefined 
 
 	extern struct lu_wave_config lu_g_wc_predefined[LU_WC_END];
-
-	Lu_Wave_Config lu_wave_config_predefined_get(lu_size id);

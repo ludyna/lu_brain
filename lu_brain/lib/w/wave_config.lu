@@ -32,10 +32,10 @@
     	}
     };
 
-  	Lu_Wave_Config lu_wave_config_predefined_get(lu_size id)
+  	struct lu_wave_config lu_wave_config_get_by_id(lu_size id)
   	{
   		lu_user_assert(id < LU_WC_END, "Predefined id is > LU_WC_END");
-  		return &lu_g_wc_predefined[id];
+  		return lu_g_wc_predefined[id];
   	}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -41,7 +41,7 @@
  		return self;
  	}
 
- 	struct lu_wave_config lu_wave_config_get(Lu_Wave self)
+ 	struct lu_wave_config lu_wave_config_get_by_id(Lu_Wave self)
  	{
  		lu_assert(self);
 
@@ -52,7 +52,7 @@
 	{
 		lu_user_assert(self, "Lu_Wave is NULL");
 
-		Lu_Wave_Config p_config = lu_wave_config_predefined_get(id);
+		Lu_Wave_Config p_config = lu_wave_config_get_by_id(id);
 		lu_user_assert(p_config, "Cannot get Lu_Wave_Config");
 
 		lu_wave_config_set(self, *p_config);

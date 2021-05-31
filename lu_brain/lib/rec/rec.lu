@@ -12,7 +12,7 @@
 		lu_size predefined_config_id
 	)
 	{
-		Lu_Rec_Config p_config = lu_rec_config_predefined_get(predefined_config_id);
+		Lu_Rec_Config p_config = lu_rec_config_get_by_id(predefined_config_id);
 		lu_user_assert(p_config, "Cannot get Lu_Rec_Config");
 
 		struct lu_rec_config config = *p_config;

@@ -13,7 +13,6 @@ Mem_Debugger 		md;
 Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
-Lu_Wave 			wave;
 
 lu_value			data_0[] 		= { 
 										0, 0, 0,
@@ -57,35 +56,31 @@ void setUp(void)
 { 
 	md = mem_debugger_create(lu_g_mem);
 
-	brain 				= lu_brain_create_from_predefined(200 * 1024, LU_BC_DEFAULT);
+	brain 				= lu_brain_create(lu_brain_config_get_by_id(LU_BC_DEFAULT));
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 
-	rec_0 				= lu_rec_create_from_predefined(
+	rec_0 				= lu_rec_create(
 		/*belongs to*/			brain, 
 		/*width*/				3, 
 		/*height*/				3, 
-		/*predefined config*/ 	LU_RC_TEST1
+		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
 	);	
 	TEST_ASSERT(rec_0);
 
-	rec_1 				= lu_rec_create_from_predefined(
+	rec_1 				= lu_rec_create(
 		/*belongs to*/			brain, 
 		/*width*/				3, 
 		/*height*/				3, 
-		/*predefined config*/ 	LU_RC_TEST1
+		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
 	);	
 	TEST_ASSERT(rec_1);
 	
 	TEST_ASSERT(brain->recs->count);
-
-	wave = lu_wave_create(brain);
 }
 
 void tearDown(void)
 {	
-	lu_wave_destroy(wave);
-
 	lu_rec_destroy(rec_0);
 	lu_rec_destroy(rec_1);
 	lu_brain_destroy(brain);
@@ -98,22 +93,13 @@ void tearDown(void)
 
 void test_lu_brain_basics(void) 
 { 
-	// lu_debug("\n n_cell: %lu", sizeof(struct n_cell));
-	// lu_debug("\n n_lin: %lu", sizeof(struct n_lin));
-	// lu_size ws = sizeof(struct lu_neu);
-	// lu_debug("\n w_sig: %lu, 1Kb=%'lu, 1Mb=%'lu, 1Gb=%'lu", ws, 1024 / ws, 1024 * 1024 / ws, 1024 * 1024 * 1024 / ws); 
-
 	/////////////////////////////////////////////////////////
 	// Save 
-
-	//lu_p_byte ttt = lu_g_mem_alloc(10);
 
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 
 	lu_brain_print_info(brain);
-
-	Lu_Wave wave_mem;
 
 	Lu_Story story = lu_story_create(brain); 
 
@@ -136,8 +122,8 @@ void test_lu_brain_basics(void)
 		lu_story_push(story, rec_1, data_5);
 		lu_block_end(story);
 
-	lu_wave_save_async(wave, story);
-	wave_mem = lu_wave_join(wave);
+	Lu_Wave wave = lu_wave_save_async(brain, story, lu_wave_config_get_by_id(LU_WC_SAVE_DEFAULT));
+	lu_wave_join(wave);
 
 	// Destroy all temporary info associated with story. 
 	// Does not destroy created related neurons.
@@ -158,15 +144,15 @@ void test_lu_brain_basics(void)
 
 			lu_story_push(story, rec_0, data_3);
 
-	wave_mem = lu_wave_find(wave, story);
+	wave = lu_wave_find(brain, story, lu_wave_config_get_by_id(LU_WC_FIND_DEFAULT));
 
 			lu_block_begin(story);
 			lu_story_push(story, rec_0, data_4);
 			lu_story_push(story, rec_1, data_5);
 			lu_block_end(story);
 
-	lu_wave_find_async(wave, story);
-	wave_mem = lu_wave_join(wave);
+	wave = lu_wave_find_async(brain, story, lu_wave_config_get_by_id(LU_WC_FIND_DEFAULT));
+	lu_wave_join(wave);
 
 	lu_story_destroy(story); 
 
