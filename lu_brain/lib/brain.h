@@ -18,7 +18,7 @@
 		Lu_Mem brain_mem;
 		Lu_Mem s_mem;
 		Lu_Mem n_mem;
-		Lu_Mem w_mem;
+		Lu_Mem lu_w;
 
 		Arr	recs; // receivers
 

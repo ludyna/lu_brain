@@ -4,4 +4,4 @@
 
 
 typedef struct lu_w* Lu_W;
-
+typedef struct lu_wave* Lu_Wave; 

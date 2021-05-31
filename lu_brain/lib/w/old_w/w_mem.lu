@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 //
 
-	static W_Mem w_mem_init(W_Mem self, Lu_Brain brain)
+	static Lu_W lu_w_init(Lu_W self, Lu_Brain brain)
 	{
-		lu_user_assert(self, "W_Mem is NULL");
+		lu_user_assert(self, "Lu_W is NULL");
 		lu_user_assert(brain, "Lu_Brain is NULL");
  
  		self->brain 		= brain;
@@ -40,7 +40,7 @@
 		return self;
 	}
 
-	static void w_mem_deinit(W_Mem self)
+	static void lu_w_deinit(Lu_W self)
 	{
 		lu_size i;
 		W_Rec w_rec;
@@ -57,17 +57,17 @@
 		}
 	}
 
-	static void w_mem_reset(W_Mem self)
+	static void lu_w_reset(Lu_W self)
 	{
 
 	}
 
-	static W_Rec w_mem_rec_get(W_Mem self, lu_size rec_id)
+	static W_Rec lu_w_rec_get(Lu_W self, lu_size rec_id)
 	{
 		return (W_Rec) arr_get(self->recs, rec_id);
 	}
 
-	static void w_mem_save_async(W_Mem self, Lu_Story story)
+	static void lu_w_save_async(Lu_W self, Lu_Story story)
 	{
 		lu_assert(self);
 		lu_assert(story);
@@ -77,7 +77,7 @@
 		Lu_Data data;
 		W_Rec w_rec;
 		
-		w_mem_reset(self);
+		lu_w_reset(self);
 
 		Lu_L_Node curr = lu_list_node_first(story->blocks);
 
@@ -88,7 +88,7 @@
 		{
 			for(rec_i = 0; rec_i < recs_count; rec_i++)
 			{
-				w_rec 	= w_mem_rec_get(self, rec_i);
+				w_rec 	= lu_w_rec_get(self, rec_i);
 				if (w_rec == NULL) continue;
 
 				data 	= lu_story_data_get(story, rec_i, curr);

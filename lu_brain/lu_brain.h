@@ -157,7 +157,7 @@
 
 	// Lu_Wave
 
-	Lu_Wave lu_wave_create(Lu_Brain brain);
+	Lu_Wave lu_wave_create(Lu_Brain brain, struct lu_wave_config config);
 	void lu_wave_destroy(Lu_Wave); 
 	Lu_Wave lu_wave_reset(Lu_Wave);
 
@@ -171,7 +171,6 @@
 
 	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);
 
-	Lu_Wave lu_wave_config_set(Lu_Wave, struct lu_wave_config);
 	struct lu_wave_config lu_wave_config_get(Lu_Wave);
 	
 	// Lu_Wave_Config Predefined

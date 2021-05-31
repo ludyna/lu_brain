@@ -17,9 +17,9 @@
 		lu_l_node_value_set(node, NULL);
 	}
 
-	static W_Rec w_rec_create(W_Mem w_mem, S_Rec s_rec)
+	static W_Rec w_rec_create(Lu_W lu_w, S_Rec s_rec)
 	{
-		lu_user_assert(w_mem, "W_Mem is NULL");
+		lu_user_assert(lu_w, "Lu_W is NULL");
 		lu_user_assert(s_rec, "S_Rec is NULL");
 		lu_user_assert(s_rec->rec, "Lu_Rec is NULL");
 		lu_user_assert(s_rec->data_layers, "S_Rec data_layers is NULL");
@@ -27,7 +27,7 @@
 		W_Rec self 		= (W_Rec) lu_g_mem_alloc(sizeof(struct w_rec));
 		lu_user_assert(self, "Cannot allocate W_Rec");
 		 
-		self->w_mem 		= w_mem;
+		self->lu_w 		= lu_w;
 		self->s_rec 		= s_rec;
 		self->config 		= s_rec->rec->config;		// pochatkovi znachennia
 
