@@ -5,19 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Save
 
-
 	Lu_Wave lu_save_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config) 
 	{
+		lu_user_assert(mem, "Lu_Mem is NULL");
 		lu_user_assert(brain, "Lu_Brain is NULL");
+
 
 		Lu_Wave_Config p_config = lu_wave_config_validate(&config);
 		lu_user_assert(p_config, "struct lu_wave_config is invalid");
 
-		//Lu_Wave self = 
+		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem_alloc(mem, sizeof(struct lu_save_wave));
 
-		return NULL;
+		return (Lu_Wave) self;
 	}
-
 	
 ///////////////////////////////////////////////////////////////////////////////
 // Find 
