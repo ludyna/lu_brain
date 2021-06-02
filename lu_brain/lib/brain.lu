@@ -5,12 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
-	Lu_Brain lu_brain_create(struct lu_brain_config config)
+	Lu_Brain lu_brain_create(Lu_Mem mem, struct lu_brain_config config)
 	{
 		Lu_Brain_Config p_config = lu_brain_config_validate(&config);
 		lu_user_assert(p_config, "Lu_Brain_Config validation failed");
 
-		Lu_Mem brain_mem		= lu_g_mem; 
+		Lu_Mem brain_mem		= mem; 
 		lu_user_assert(brain_mem, "Cannot create brain_mem. Not enough memory?");
 
 		Lu_Brain self 		= (Lu_Brain) lu_mem_alloc(brain_mem, sizeof(struct lu_brain));

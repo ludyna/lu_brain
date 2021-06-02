@@ -164,18 +164,6 @@
 		return &block->datum[rec_i];
 	}
 
-	Lu_Story lu_story_validate(Lu_Story self)
-	{
-		lu_user_assert(self, "Lu_Story is NULL");
-		lu_user_assert(!lu_story_is_empty(self), "Lu_Story is empty");
-		lu_user_assert(self->brain, "Lu_Story not linked to brain");
-
-		lu_user_assert(self->brain->recs, "Lu_Brain has no recs");
-		lu_user_assert(arr_count(self->brain->recs), "Lu_Brain has no recs");
-
-		return self;
-	}
-
 	Lu_Story lu_story_prepare(Lu_Story self)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");

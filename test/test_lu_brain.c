@@ -56,7 +56,7 @@ void setUp(void)
 { 
 	md = mem_debugger_create(lu_g_mem);
 
-	brain 				= lu_brain_create(lu_brain_config_get_by_id(LU_BC_DEFAULT));
+	brain 				= lu_brain_create(lu_g_mem, lu_brain_config_get_by_id(LU_BC_DEFAULT));
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 
@@ -101,7 +101,7 @@ void test_lu_brain_basics(void)
 
 	lu_brain_print_info(brain);
 
-	Lu_Wave wave = lu_save_wave_create(brain, lu_wave_config_get_by_id(LU_WC_SAVE_DEFAULT)); 
+	Lu_Wave wave = lu_save_wave_create(lu_g_mem, brain, lu_wave_config_get_by_id(LU_WC_SAVE_DEFAULT)); 
 
 		lu_wave_push(wave, rec_0, data_0);
 
@@ -119,14 +119,14 @@ void test_lu_brain_basics(void)
 		lu_wave_push(wave, rec_1, data_5);
 		lu_wave_block_end(wave);
 
-	lu_wave_process(wave);
+	lu_wave_step(wave);
 
 	lu_wave_destroy(wave); 
 
 	/////////////////////////////////////////////////////////
 	// Find
 
-	wave = lu_find_wave_create(brain, lu_wave_config_get_by_id(LU_WC_FIND_FULL_CONTRAST));
+	wave = lu_find_wave_create(lu_g_mem, brain, lu_wave_config_get_by_id(LU_WC_FIND_FULL_CONTRAST));
 
 			lu_wave_push(wave, rec_0, data_0);
 
@@ -144,7 +144,7 @@ void test_lu_brain_basics(void)
 			lu_wave_push(wave, rec_1, data_5);
 			lu_wave_block_end(wave); 
 
-	lu_wave_process(wave);
+	lu_wave_step(wave);
 
 	lu_wave_destroy(wave);
 

@@ -6,9 +6,15 @@
 #define _LU_BRAIN_PUB_H
 
 #include "lu_types.h"
+	// #include "lib/lib/mem_abstractors/_module.h"
+	// #include "lib/lib/mem_debuggers/_module.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // Typedefs
+
+	// Mem
+
+	typedef struct lu_mem*  			Lu_Mem;
 
 	// Brain  
 	
@@ -17,13 +23,10 @@
 	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
 
-	// Story 
-	
-	typedef struct lu_data* 			Lu_Data;
-	typedef struct lu_story* 			Lu_Story;
 
 	// Wave 
 	
+	typedef struct lu_data* 			Lu_Data;
 	typedef struct lu_neu* 				Lu_Neu;
 	typedef struct lu_wave_config*		Lu_Wave_Config;
 	typedef struct lu_wave* 			Lu_Wave;
@@ -65,7 +68,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain 
 
-	Lu_Brain lu_brain_create(struct lu_brain_config config);
+	Lu_Brain lu_brain_create(Lu_Mem, struct lu_brain_config config);
 	void lu_brain_destroy(Lu_Brain);
 
 	void lu_brain_print_info(Lu_Brain self);
@@ -154,9 +157,9 @@
 
 	// Sync Create
 
-	Lu_Wave lu_save_wave_create(Lu_Brain, struct lu_wave_config); 
-	Lu_Wave lu_find_wave_create(Lu_Brain, struct lu_wave_config);
-	Lu_Wave lu_restore_wave_create(Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_save_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config); 
+	Lu_Wave lu_find_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_restore_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 
 	// Wave Story
 
