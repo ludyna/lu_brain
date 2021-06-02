@@ -101,63 +101,52 @@ void test_lu_brain_basics(void)
 
 	lu_brain_print_info(brain);
 
-	Lu_Story story = lu_story_create(brain); 
+	Lu_Wave wave = lu_save_wave_create(brain, lu_wave_config_get_by_id(LU_WC_SAVE_DEFAULT)); 
 
-		lu_story_push(story, rec_0, data_0);
+		lu_wave_push(wave, rec_0, data_0);
 
-		lu_block_begin(story);
-		lu_story_push(story, rec_0, data_01);
-		lu_story_push(story, rec_1, data_2);
-		lu_block_end(story);
+		lu_wave_block_start(wave);
+		lu_wave_push(wave, rec_0, data_01);
+		lu_wave_push(wave, rec_1, data_2);
+		lu_wave_block_end(wave);
 
-		lu_story_push(story, rec_0, data_3);
+		lu_wave_push(wave, rec_0, data_3);
  
-		// Because we called save (or find or restore) - it automatically 
-		// reset number of available blocks inside story. If available lu_block count 
-		// was 13 before save (we filled 3 blocks above), after save avalable 
-		// lu_block count will be again 16 (this number is configurable)
+	lu_wave_process(wave);
 
-		lu_block_begin(story);
-		lu_story_push(story, rec_0, data_4);
-		lu_story_push(story, rec_1, data_5);
-		lu_block_end(story);
+		lu_wave_block_start(wave);
+		lu_wave_push(wave, rec_0, data_4);
+		lu_wave_push(wave, rec_1, data_5);
+		lu_wave_block_end(wave);
 
-	Lu_Wave wave = lu_wave_save_async(brain, story, lu_wave_config_get_by_id(LU_WC_SAVE_DEFAULT));
-	lu_wave_join(wave);
+	lu_wave_process(wave);
 
-	// Destroy all temporary info associated with story. 
-	// Does not destroy created related neurons.
-
-	lu_story_destroy(story); 
 	lu_wave_destroy(wave); 
 
 	/////////////////////////////////////////////////////////
 	// Find
 
-	story = lu_story_create(brain);
+	wave = lu_find_wave_create(brain, lu_wave_config_get_by_id(LU_WC_FIND_FULL_CONTRAST));
 
-			lu_story_push(story, rec_0, data_0);
+			lu_wave_push(wave, rec_0, data_0);
 
-			lu_block_begin(story);
-			lu_story_push(story, rec_0, data_01);
-			lu_story_push(story, rec_1, data_2);
-			lu_block_end(story);
+			lu_wave_block_start(wave);
+			lu_wave_push(wave, rec_0, data_01);
+			lu_wave_push(wave, rec_1, data_2);
+			lu_wave_block_end(wave);
 
-			lu_story_push(story, rec_0, data_3);
+			lu_wave_push(wave, rec_0, data_3);
 
-	wave = lu_wave_find(brain, story, lu_wave_config_get_by_id(LU_WC_FIND_FULL_CONTRAST));
+	lu_wave_process(wave);
 
-			lu_block_begin(story);
-			lu_story_push(story, rec_0, data_4);
-			lu_story_push(story, rec_1, data_5);
-			lu_block_end(story); 
+			lu_wave_block_start(wave);
+			lu_wave_push(wave, rec_0, data_4);
+			lu_wave_push(wave, rec_1, data_5);
+			lu_wave_block_end(wave); 
 
-	// Continue search with additional story information
-	lu_wave_continue_async(wave);  
-	lu_wave_join(wave);
+	lu_wave_process(wave);
 
 	lu_wave_destroy(wave);
-	lu_story_destroy(story); 
 
 
 	/////////////////////////////////////////////////////////

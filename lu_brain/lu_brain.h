@@ -126,22 +126,6 @@
 
 	void lu_rec_destroy(Lu_Rec self);
 
-///////////////////////////////////////////////////////////////////////////////
-// Story   
-
-	Lu_Story lu_story_create(Lu_Brain);
-	void lu_story_destroy(Lu_Story);
-
-	void lu_story_push(Lu_Story, Lu_Rec, lu_value* data);
-
-	void lu_block_begin(Lu_Story);
-	void lu_block_end(Lu_Story);
-
-	void lu_story_reset(Lu_Story); 
-	lu_size lu_story_blocks_count(Lu_Story self);
-	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i);
-	Lu_Data lu_story_last_data(Lu_Story self, lu_size rec_i);
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave_Config 
@@ -189,12 +173,12 @@
 	void lu_wave_process(Lu_Wave);
 	void lu_wave_step(Lu_Wave);
 
-	// Process Async
-	void lu_wave_process_async(Lu_Wave, Lu_Story);
-	void lu_wave_restore_process_async(Lu_Wave, Lu_Neu);
-	void lu_wave_step_async(Lu_Wave, Lu_Story);
-	void lu_wave_restore_step_async(Lu_Wave, Lu_Story);
-	void lu_wave_join(Lu_Wave);
+	// Process Async (IMPLEMENT LATER)
+	// void lu_wave_process_async(Lu_Wave, Lu_Story);
+	// void lu_wave_restore_process_async(Lu_Wave, Lu_Neu);
+	// void lu_wave_step_async(Lu_Wave, Lu_Story);
+	// void lu_wave_restore_step_async(Lu_Wave, Lu_Story);
+	// void lu_wave_join(Lu_Wave);
 
 	// Destroy
 	void lu_wave_destroy(Lu_Wave); 
