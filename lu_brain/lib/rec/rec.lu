@@ -12,18 +12,10 @@
 		lu_size predefined_config_id
 	)
 	{
-		Lu_Rec_Config p_config = lu_rec_config_get_by_id(predefined_config_id);
-		lu_user_assert(p_config, "Cannot get Lu_Rec_Config");
-
-		struct lu_rec_config config = *p_config;
-
-		config.width 	= width;
-		config.height 	= height;
-
-		return lu_rec_create(brain, config);
+		return lu_rec_create(brain, width, height, lu_rec_config_get_by_id(predefined_config_id));
 	}
 
-	Lu_Rec lu_rec_create(Lu_Brain brain, struct lu_rec_config config)
+	Lu_Rec lu_rec_create(Lu_Brain brain, lu_size width, lu_size height, struct lu_rec_config config)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 	 
@@ -37,6 +29,9 @@
 		self->config 			= *p_config;
 
 		//lu_debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);
+
+		self->width = width;
+		self->height = height;
 
 		lu_brain_rec_attach(brain, self);
 

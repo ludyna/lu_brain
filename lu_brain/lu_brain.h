@@ -57,7 +57,7 @@
 
 	enum lu_bc_predefined_type {
 		LU_BC_DEFAULT 	= 0,
-		LU_BC_END 				
+		LU_BRAIN_CONFIG_END 				
 	};
 
 	struct lu_brain_config lu_brain_config_get_by_id(lu_size id);
@@ -110,7 +110,7 @@
 		LU_RC_RBG16_IMAGE, 
 		LU_RC_RBG32_IMAGE,
 		LU_RC_TEST1,
-		LU_RC_END 				
+		LU_REC_CONFIG_END 				
 	};
 
 	struct lu_rec_config lu_rec_config_get_by_id(lu_size id);
@@ -144,21 +144,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Wave  
-
-	// Lu_Neu 
-
-	lu_size lu_neu_name(Lu_Neu);
-	void lu_neu_name_set(Lu_Neu, lu_size);
-	void lu_neu_connect(Lu_Neu, Lu_Neu);
-
-	// Lu_Wave
-
-	Lu_Wave lu_wave_create(Lu_Brain brain, struct lu_wave_config config);
-	void lu_wave_destroy(Lu_Wave); 
-	Lu_Wave lu_wave_reset(Lu_Wave);
-
-	// Lu_Wave_Config 
+// Lu_Wave_Config 
 
 	struct lu_wave_config {
 		lu_flags 				flags;						// 0 oznachaye not set
@@ -174,24 +160,36 @@
 		LU_WC_SAVE_DEFAULT = 0,
 		LU_WC_FIND_FULL_CONTRAST, 
 		LU_WC_FIND_FULL_COLOR,
-		LU_WC_END			
+		LU_WAVE_CONFIG_END			
 	};
 
 	struct lu_wave_config lu_wave_config_get_by_id(lu_size id);
 
-	// Lu_Wave Sync
+///////////////////////////////////////////////////////////////////////////////
+// Wave  
 
-	Lu_Wave lu_wave_save(Lu_Wave, Lu_Story); 
-	Lu_Wave lu_wave_save_with_name(Lu_Wave, Lu_Story, lu_size name);
-	Lu_Wave lu_wave_find(Lu_Wave, Lu_Story);
-	Lu_Wave lu_wave_restore(Lu_Wave, Lu_Neu);
+	// Sync Create
 
-	// Lu_Wave Async
+	Lu_Wave lu_wave_save(Lu_Brain, Lu_Story, struct lu_wave_config); 
+	Lu_Wave lu_wave_find(Lu_Brain, Lu_Story, struct lu_wave_config);
+	Lu_Wave lu_wave_restore(Lu_Brain, Lu_Neu, struct lu_wave_config);
 
-	void lu_wave_save_async(Lu_Wave, Lu_Story);
-	void lu_wave_find_async(Lu_Wave, Lu_Story);
-	void lu_wave_restore_async(Lu_Wave, Lu_Story);
-	Lu_Wave lu_wave_join(Lu_Wave);
+	// Async Create
+
+	Lu_Wave lu_wave_save_async(Lu_Brain, Lu_Story, struct lu_wave_config);
+	Lu_Wave lu_wave_find_async(Lu_Brain, Lu_Story, struct lu_wave_config);
+	Lu_Wave lu_wave_restore_async(Lu_Brain, Lu_Neu, struct lu_wave_config);
+
+	// Join and Continue
+	
+	void lu_wave_join(Lu_Wave);
+
+	void lu_wave_continue(Lu_Wave);
+	void lu_wave_continue_async(Lu_Wave);
+
+	// Destroy
+
+	void lu_wave_destroy(Lu_Wave); 
 
 	// Lu_Wave Properties
 
@@ -212,5 +210,12 @@
 	Lu_Neu lu_wave_top_neu_get(Lu_Wave);
 
 	Lu_Neu lu_wave_name_find_or_create(Lu_Wave, lu_size);
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Neu 
+
+	lu_size lu_neu_name(Lu_Neu);
+	void lu_neu_name_set(Lu_Neu, lu_size);
+	void lu_neu_connect(Lu_Neu, Lu_Neu);
 
 #endif // _LU_BRAIN_API_H

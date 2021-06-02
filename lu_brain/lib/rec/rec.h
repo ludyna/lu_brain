@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config predefined 
 
-	extern struct lu_rec_config lu_g_rc_predefined[LU_RC_END];
+	extern struct lu_rec_config lu_g_rc_predefined[LU_REC_CONFIG_END];
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec
@@ -14,5 +14,8 @@
 		Lu_Brain 					brain;
 		lu_size 					id;
 
-		struct lu_rec_config 	config;	
+		lu_size  					width;
+		lu_size  					height;
+
+		struct lu_rec_config 		config;	
 	};

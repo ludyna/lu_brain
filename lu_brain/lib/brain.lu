@@ -61,13 +61,9 @@
  		// 		n_mem_print_info(self->n);
 	}
 
-	struct lu_brain_config lu_brain_config_get_by_id(Lu_Brain self)
+	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
 	{
-		if (self == NULL) 
-		{
-			lu_user_debug("Lu_Brain is NULL! Returning LU_BC_DEFAULT config");
-			return *lu_brain_config_get_by_id(LU_BC_DEFAULT);
-		}
+		lu_assert(self);
 
 		return self->config;
 	}

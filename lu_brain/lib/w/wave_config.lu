@@ -16,7 +16,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave_Config predefined
-    struct lu_wave_config lu_g_wc_predefined[LU_WC_END] = { 
+    struct lu_wave_config lu_g_wc_predefined[LU_WAVE_CONFIG_END] = { 
     	// LU_WC_SAVE_DEFAULT
     	{
     		.contrast_vs_color = 0.5,  	// nemaye znachenia dlia save
@@ -34,7 +34,7 @@
 
   	struct lu_wave_config lu_wave_config_get_by_id(lu_size id)
   	{
-  		lu_user_assert(id < LU_WC_END, "Predefined id is > LU_WC_END");
+  		lu_assert(id < LU_WAVE_CONFIG_END);
   		return lu_g_wc_predefined[id];
   	}
 

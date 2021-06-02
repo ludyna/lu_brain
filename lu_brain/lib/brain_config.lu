@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain_Config predefined 
 
-	struct lu_brain_config lu_g_bc_predefined[LU_BC_END] = {
+	struct lu_brain_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END] = {
 		{
 			// LU_BC_DEFAULT
 			.id						= 0,					
@@ -23,7 +23,7 @@
 
 	struct lu_brain_config lu_brain_config_get_by_id(lu_size id)
 	{
-		lu_user_assert(id < LU_BC_END, "id value is out of scope");
+		lu_assert(id < LU_BRAIN_CONFIG_END);
 
 		return lu_g_bc_predefined[id];
 	}

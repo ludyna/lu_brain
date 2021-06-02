@@ -128,10 +128,11 @@ void test_lu_brain_basics(void)
 	// Destroy all temporary info associated with story. 
 	// Does not destroy created related neurons.
 
-	lu_story_destroy(story);  
+	lu_story_destroy(story); 
+	lu_wave_destroy(wave); 
 
-	// /////////////////////////////////////////////////////////
-	// // Find
+	/////////////////////////////////////////////////////////
+	// Find
 
 	story = lu_story_create(brain);
 
@@ -144,17 +145,20 @@ void test_lu_brain_basics(void)
 
 			lu_story_push(story, rec_0, data_3);
 
-	wave = lu_wave_find(brain, story, lu_wave_config_get_by_id(LU_WC_FIND_DEFAULT));
+	wave = lu_wave_find(brain, story, lu_wave_config_get_by_id(LU_WC_FIND_FULL_CONTRAST));
 
 			lu_block_begin(story);
 			lu_story_push(story, rec_0, data_4);
 			lu_story_push(story, rec_1, data_5);
-			lu_block_end(story);
+			lu_block_end(story); 
 
-	wave = lu_wave_find_async(brain, story, lu_wave_config_get_by_id(LU_WC_FIND_DEFAULT));
+	// Continue search with additional story information
+	lu_wave_continue_async(wave);  
 	lu_wave_join(wave);
 
+	lu_wave_destroy(wave);
 	lu_story_destroy(story); 
+
 
 	/////////////////////////////////////////////////////////
 	// Lu_Name

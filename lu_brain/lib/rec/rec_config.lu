@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config predefined
  
- 	struct lu_rec_config lu_g_rc_predefined[LU_RC_END] = {
+ 	struct lu_rec_config lu_g_rc_predefined[LU_REC_CONFIG_END] = {
 		{
 			// LU_RC_MONOCHROME1_IMAGE
 			.depth 				= 1,
@@ -55,7 +55,7 @@
 
 	struct lu_rec_config lu_rec_config_get_by_id(lu_size id)
 	{
-		lu_user_assert(id < LU_RC_END, "Predefined id is > LU_RC_END");
+		lu_assert(id < LU_REC_CONFIG_END);
 		return lu_g_rc_predefined[id];
 	}
 
