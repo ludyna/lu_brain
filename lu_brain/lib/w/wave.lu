@@ -22,7 +22,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Find 
 
-	Lu_Wave lu_wave_find(Lu_Brain brain, struct lu_wave_config config)
+	Lu_Wave lu_find_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
 
 	}
@@ -31,8 +31,75 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Restore
 
-	Lu_Wave lu_wave_restore(Lu_Brain brain, Lu_Neu neu, struct lu_wave_config config)
+	Lu_Wave lu_restore_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
 
 	}
- 
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Wave Story
+
+	void lu_wave_block_start(Lu_Wave self)
+	{
+
+	}
+
+	void lu_wave_block_end(Lu_Wave self)
+	{
+
+	}
+
+	lu_size lu_wave_block_count(Lu_Wave self)
+	{
+
+	}
+
+	Lu_Data lu_wave_last_data(Lu_Wave self, Lu_Rec rec)
+	{
+
+	}
+
+	Lu_Data lu_wave_push(Lu_Wave self, Lu_Rec rec, lu_value* data)
+	{
+
+	}
+
+	Lu_Neu lu_wave_neu_push(Lu_Wave self, Lu_Neu neu)
+	{
+
+	}
+
+	void lu_wave_reset(Lu_Wave self)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Process
+
+	void lu_wave_process(Lu_Wave self)
+	{
+
+	}
+
+	void lu_wave_step(Lu_Wave self)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Destroy
+
+	void lu_wave_destroy(Lu_Wave self)
+	{
+
+	} 
+
+///////////////////////////////////////////////////////////////////////////////
+// Properties
+
+	struct lu_wave_config lu_wave_config_get(Lu_Wave self)
+	{
+
+	}
