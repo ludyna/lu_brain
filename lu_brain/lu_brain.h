@@ -170,46 +170,38 @@
 
 	// Sync Create
 
-	Lu_Wave lu_wave_save(Lu_Brain, Lu_Story, struct lu_wave_config); 
-	Lu_Wave lu_wave_find(Lu_Brain, Lu_Story, struct lu_wave_config);
-	Lu_Wave lu_wave_restore(Lu_Brain, Lu_Neu, struct lu_wave_config);
+	Lu_Wave lu_save_wave_create(Lu_Brain, struct lu_wave_config); 
+	Lu_Wave lu_find_wave_create(Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_restore_wave_create(Lu_Brain, struct lu_wave_config);
 
-	// Async Create
+	// Wave Story
 
-	Lu_Wave lu_wave_save_async(Lu_Brain, Lu_Story, struct lu_wave_config);
-	Lu_Wave lu_wave_find_async(Lu_Brain, Lu_Story, struct lu_wave_config);
-	Lu_Wave lu_wave_restore_async(Lu_Brain, Lu_Neu, struct lu_wave_config);
+	void lu_wave_block_start(Lu_Wave);
+	void lu_wave_block_end(Lu_Wave);
+	lu_size lu_wave_block_count(Lu_Wave);
+	Lu_Data lu_wave_last_data(Lu_Wave, Lu_Rec);
+	Lu_Data lu_wave_push(Lu_Wave, Lu_Rec, lu_value* data);
+	Lu_Neu lu_wave_neu_push(Lu_Wave, Lu_Neu); 
+	void lu_wave_reset(Lu_Wave);
 
-	// Join and Continue
-	
+	// Process
+
+	void lu_wave_process(Lu_Wave);
+	void lu_wave_step(Lu_Wave);
+
+	// Process Async
+	void lu_wave_process_async(Lu_Wave, Lu_Story);
+	void lu_wave_restore_process_async(Lu_Wave, Lu_Neu);
+	void lu_wave_step_async(Lu_Wave, Lu_Story);
+	void lu_wave_restore_step_async(Lu_Wave, Lu_Story);
 	void lu_wave_join(Lu_Wave);
 
-	void lu_wave_continue(Lu_Wave);
-	void lu_wave_continue_async(Lu_Wave);
-
 	// Destroy
-
 	void lu_wave_destroy(Lu_Wave); 
 
-	// Lu_Wave Properties
+	// Properties
 
-	lu_flags lu_wave_flags(Lu_Wave);
-	void lu_wave_flags_set(Lu_Wave, lu_flags);
-	void lu_wave_flags_remove(Lu_Wave self, lu_flags flags);
-
-	lu_value lu_wave_color(Lu_Wave);
-	void lu_wave_color_set(Lu_Wave, lu_value);
-
-	lu_value lu_wave_contrast(Lu_Wave);
-	void lu_wave_contrast_set(Lu_Wave, lu_value);
-
-	lu_value lu_wave_breakpoint(Lu_Wave);
-	void lu_wave_breakpoint_set(Lu_Wave, lu_value);
-
-	Lu_Neu lu_wave_top_name_get(Lu_Wave);
-	Lu_Neu lu_wave_top_neu_get(Lu_Wave);
-
-	Lu_Neu lu_wave_name_find_or_create(Lu_Wave, lu_size);
+	struct lu_wave_config lu_wave_config_get(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Neu 
