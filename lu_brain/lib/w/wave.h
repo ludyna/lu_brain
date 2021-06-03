@@ -41,8 +41,7 @@
 		lu_size id, 
 		Lu_Mem mem, 
 		Lu_Brain brain, 
-		struct lu_wave_config config,
-		void (*wave_destroy)(Lu_Wave)
+		struct lu_wave_config config
 	)
 	{
 		self->type = type;
@@ -50,8 +49,8 @@
 		self->mem = mem;
 		self->brain = brain;
 		self->config = config;
-		self->destroy = wave_destroy;
 
+		self->destroy = NULL;
 		self->block_begin = NULL;
 		self->block_end = NULL;
 		self->push = NULL;

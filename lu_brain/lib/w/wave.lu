@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Save
+// Virtual Destroy
 
 	static void lu_save_wave_destroy_internal(Lu_Wave wave)
 	{
@@ -12,6 +12,82 @@
 
 		lu_story_destroy(self->story);
 	}
+
+	static void lu_find_wave_destroy_internal(Lu_Wave wave)
+	{
+		lu_assert(wave);
+		Lu_Find_Wave self = (Lu_Find_Wave) wave;
+
+		lu_story_destroy(self->story);
+	}
+
+	static void lu_restore_wave_destroy_internal(Lu_Wave wave)
+	{
+		lu_assert(wave);
+		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
+
+		//lu_list_destroy(self->story);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Virtual Block Begin
+
+	static void lu_save_wave_block_begin_internal(Lu_Wave self)
+	{
+
+	} 
+
+	static void lu_find_wave_block_begin_internal(Lu_Wave self)
+	{
+
+	} 
+
+	static void lu_restore_wave_block_begin_internal(Lu_Wave self)
+	{
+
+	}  
+
+///////////////////////////////////////////////////////////////////////////////
+// Virtual Block End
+
+	static void lu_save_wave_block_end_internal(Lu_Wave self)
+	{
+
+	} 
+
+	static void lu_find_wave_block_end_internal(Lu_Wave self)
+	{
+
+	} 
+
+	static void lu_restore_wave_block_end_internal(Lu_Wave self)
+	{
+
+	}  
+
+///////////////////////////////////////////////////////////////////////////////
+// Virtual Push
+
+	static void lu_save_wave_push_internal(Lu_Wave self, Lu_Rec rec, lu_value *data)
+	{
+
+	}
+
+	static void lu_find_wave_push_internal(Lu_Wave self, Lu_Rec rec, lu_value *data)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Virtual Push Neu
+
+	static void lu_restore_wave_push_neu_internal(Lu_Wave self, Lu_Neu neu)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Create
 
 	Lu_Wave lu_save_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config) 
 	{
@@ -29,48 +105,33 @@
 			0,
 			mem,
 			brain, 
-			config,
-			lu_save_wave_destroy_internal
+			config
 		); 
+
+		self->super.destroy = lu_save_wave_destroy_internal;
+		
+		self->super.block_begin = lu_save_wave_block_begin_internal;
+		self->super.block_end = lu_save_wave_block_end_internal;
+
+		self->super.push = lu_save_wave_push_internal;
 
 		self->story = lu_story_create(brain, mem);
 
 		return (Lu_Wave) self;
 	}
 	
-///////////////////////////////////////////////////////////////////////////////
-// Find 
-
-	static void lu_find_wave_destroy_internal(Lu_Wave wave)
-	{
-		lu_assert(wave);
-		Lu_Find_Wave self = (Lu_Find_Wave) wave;
-
-		lu_story_destroy(self->story);
-	}
-
 	Lu_Wave lu_find_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
 		return NULL;
 	}
 
 
-///////////////////////////////////////////////////////////////////////////////
-// Restore
-
-
-	static void lu_restore_wave_destroy_internal(Lu_Wave wave)
-	{
-		lu_assert(wave);
-		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
-
-		//lu_list_destroy(self->story);
-	}
-
 	Lu_Wave lu_restore_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
 		return NULL;
 	}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Destroy
