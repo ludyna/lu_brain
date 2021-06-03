@@ -9,6 +9,7 @@
 		Lu_Story 			story;
 		lu_size 			datum_size;
 		struct lu_data* 	datum;
+
 	};
 
 	static Lu_Block lu_block_create(Lu_Story story);
@@ -22,12 +23,16 @@
 	struct lu_story {
 		// Not resetable
 		Lu_Brain 			brain;
+		Lu_Mem 				mem;
 
 		Lu_List 			blocks;
 
 		// Resetable
 		lu_bool 			start_block_on_next_data;
 	};
+
+	static Lu_Story lu_story_create(Lu_Brain brain, Lu_Mem mem);
+	static void lu_story_destroy(Lu_Story self);
 
 	Lu_Data lu_story_data_get(Lu_Story self, lu_size rec_i, Lu_L_Node node);
 	Lu_Story lu_story_validate(Lu_Story);

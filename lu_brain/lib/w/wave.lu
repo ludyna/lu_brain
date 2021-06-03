@@ -5,11 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Save
 
+	static void lu_save_wave_destroy_internal(Lu_Wave wave)
+	{
+		lu_assert(wave);
+		Lu_Save_Wave self = (Lu_Save_Wave) wave;
+
+		lu_story_destroy(self->story);
+	}
+
 	Lu_Wave lu_save_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config) 
 	{
 		lu_user_assert(mem, "Lu_Mem is NULL");
 		lu_user_assert(brain, "Lu_Brain is NULL");
-
 
 		Lu_Wave_Config p_config = lu_wave_config_validate(&config);
 		lu_user_assert(p_config, "struct lu_wave_config is invalid");
@@ -22,8 +29,11 @@
 			0,
 			mem,
 			brain, 
-			config
-		);
+			config,
+			lu_save_wave_destroy_internal
+		); 
+
+		self->story = lu_story_create(brain, mem);
 
 		return (Lu_Wave) self;
 	}
@@ -52,6 +62,8 @@
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_assert(self);
+
+		self->destroy(self);
 
 		lu_mem_free(self->mem, (lu_p_byte) self);
 	} 

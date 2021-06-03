@@ -21,6 +21,9 @@
 		Lu_Mem mem;
 		Lu_Brain brain;
 		struct lu_wave_config config;
+
+		// virtual destructor
+		void (*destroy)(Lu_Wave);
 	};
 
 	static inline Lu_Wave lu_wave_init(
@@ -29,7 +32,8 @@
 		lu_size id, 
 		Lu_Mem mem, 
 		Lu_Brain brain, 
-		struct lu_wave_config config
+		struct lu_wave_config config,
+		void (*wave_destroy)(Lu_Wave)
 	)
 	{
 		self->type = type;
@@ -37,6 +41,7 @@
 		self->mem = mem;
 		self->brain = brain;
 		self->config = config;
+		self->destroy = wave_destroy;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -63,4 +68,6 @@
 
 	struct lu_restore_wave {
 		struct lu_wave super;
+
+		Lu_List story;
 	};

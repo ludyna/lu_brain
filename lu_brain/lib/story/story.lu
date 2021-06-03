@@ -5,20 +5,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Lu_Story lu_story_create(Lu_Brain brain)
+	Lu_Story lu_story_create(Lu_Brain brain, Lu_Mem mem)
 	{
 		lu_user_assert(brain, "Lu_Brain should not be NULL");
+		lu_user_assert(mem, "Lu_Mem should not be NULL");
 		lu_user_assert(
 			brain->recs && arr_count(brain->recs), 
 			"Lu_Brain recs should be created first"
 		);
 
-		Lu_Story self 					= (Lu_Story) lu_mem_alloc(lu_g_mem, sizeof(struct lu_story));
+		Lu_Story self 					= (Lu_Story) lu_mem_alloc(mem, sizeof(struct lu_story));
 
 		// Initialize
 		self->brain 					= brain;
-		self->blocks 					= lu_list_create(lu_g_mem);
+		self->mem 						= mem;
+		self->blocks 					= lu_list_create(self->mem);
 		self->start_block_on_next_data 	= false; 
+		
 
 
 		return self;
@@ -37,7 +40,7 @@
 
 		lu_list_each_1p(self->blocks, lu_story_destroy_blocks, NULL);
 		lu_list_destroy(self->blocks);
-		lu_g_mem_free((lu_p_byte) self);
+		lu_mem_free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
