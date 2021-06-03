@@ -64,6 +64,7 @@ void setUp(void)
 		/*belongs to*/			brain, 
 		/*width*/				3, 
 		/*height*/				3, 
+		/*depth*/				1,
 		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
 	);	
 	TEST_ASSERT(rec_0);
@@ -72,6 +73,7 @@ void setUp(void)
 		/*belongs to*/			brain, 
 		/*width*/				3, 
 		/*height*/				3, 
+		/*depth*/				1,
 		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
 	);	
 	TEST_ASSERT(rec_1);
@@ -123,8 +125,8 @@ void test_lu_brain_basics(void)
 
 	lu_wave_destroy(wave); 
 
-	/////////////////////////////////////////////////////////
-	// Find
+	// /////////////////////////////////////////////////////////
+	// // Find
 
 	wave = lu_find_wave_create(lu_g_mem, brain, lu_wave_config_get_by_id(LU_WC_FIND_FULL_CONTRAST));
 

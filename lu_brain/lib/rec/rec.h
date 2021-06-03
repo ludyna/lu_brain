@@ -16,6 +16,7 @@
 
 		lu_size  					width;
 		lu_size  					height;
+		lu_size  					depth;
 
 		struct lu_rec_config 		config;	
 	};

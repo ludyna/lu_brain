@@ -16,6 +16,15 @@
 
 		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem_alloc(mem, sizeof(struct lu_save_wave));
 
+		lu_wave_init(
+			&self->super, 
+			LU_WAVE_TYPE_SAVE, 
+			0,
+			mem,
+			brain, 
+			config
+		);
+
 		return (Lu_Wave) self;
 	}
 	
@@ -24,7 +33,7 @@
 
 	Lu_Wave lu_find_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
-
+		return NULL;
 	}
 
 
@@ -33,9 +42,19 @@
 
 	Lu_Wave lu_restore_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
-
+		return NULL;
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Destroy
+
+	void lu_wave_destroy(Lu_Wave self)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu_assert(self);
+
+		lu_mem_free(self->mem, (lu_p_byte) self);
+	} 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave Story
@@ -88,13 +107,6 @@
 
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Destroy
-
-	void lu_wave_destroy(Lu_Wave self)
-	{
-
-	} 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Properties

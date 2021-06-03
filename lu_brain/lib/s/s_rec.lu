@@ -14,9 +14,9 @@
 		self->rec 				= rec;
 		self->id 				= rec->id;
 
-		self->cells_w 			= rec->config.width;
-		self->cells_h			= rec->config.height; 
-		self->cells_d 			= rec->config.depth;
+		self->cells_w 			= rec->width;
+		self->cells_h			= rec->height; 
+		self->cells_d 			= rec->depth;
 
 		self->cells_count		= 0;
 		self->cells_size 		= 0;

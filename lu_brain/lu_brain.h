@@ -88,10 +88,6 @@
 	};
 
 	struct lu_rec_config {
-		lu_size 		width;
-		lu_size 		height;
-		lu_size 		depth;
-
 		lu_size 		max_blocks_size;
 		lu_size 		hold_blocks_size;
 		lu_size 		transf_algorithm;
@@ -124,6 +120,7 @@
 		Lu_Brain brain, 
 		lu_size width, 
 		lu_size height, 
+		lu_size depth,
 		struct lu_rec_config config
 	);		
 
@@ -161,6 +158,9 @@
 	Lu_Wave lu_find_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 	Lu_Wave lu_restore_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 
+	// Destroy
+	void lu_wave_destroy(Lu_Wave); 
+
 	// Wave Story
 
 	void lu_wave_block_start(Lu_Wave);
@@ -182,9 +182,6 @@
 	// void lu_wave_step_async(Lu_Wave, Lu_Story);
 	// void lu_wave_restore_step_async(Lu_Wave, Lu_Story);
 	// void lu_wave_join(Lu_Wave);
-
-	// Destroy
-	void lu_wave_destroy(Lu_Wave); 
 
 	// Properties
 

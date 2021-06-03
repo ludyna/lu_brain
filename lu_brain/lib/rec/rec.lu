@@ -5,19 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create and destroy
 
-	Lu_Rec lu_rec_create_from_predefined(
-		Lu_Brain brain, 
-		lu_size width, 
-		lu_size height, 
-		lu_size predefined_config_id
-	)
-	{
-		return lu_rec_create(brain, width, height, lu_rec_config_get_by_id(predefined_config_id));
-	}
-
-	Lu_Rec lu_rec_create(Lu_Brain brain, lu_size width, lu_size height, struct lu_rec_config config)
+	Lu_Rec lu_rec_create(Lu_Brain brain, lu_size width, lu_size height, lu_size depth, struct lu_rec_config config)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu_user_assert(width, "widht should be greater than 0");
+		lu_user_assert(height, "widht should be greater than 0");
+		lu_user_assert(depth, "widht should be greater than 0");
 	 
 	 	Lu_Rec_Config p_config 	= lu_rec_config_validate(&config);
 	 	lu_user_assert(p_config, "Lu_Rec_Config validation failed");
@@ -32,6 +25,7 @@
 
 		self->width = width;
 		self->height = height;
+		self->depth = depth;
 
 		lu_brain_rec_attach(brain, self);
 

@@ -109,7 +109,7 @@
 		lu_user_assert_void(self, "Lu_Story should not be NULL"); 
 		lu_user_assert_void(rec, "Lu_Rec should not be NULL"); 
 		lu_user_assert_void(values, "values should not be NULL");
-		lu_user_assert_void(rec->config.depth, "Lu_Rec depth is zero"); 
+		lu_user_assert_void(rec->depth, "Lu_Rec depth is zero"); 
 
 	 	if (self->start_block_on_next_data)
 		{ 
@@ -132,7 +132,7 @@
 		lu_assert(data);
 		lu_assert(data->values == NULL);
 
-	 	lu_data_set(data, rec->config.width, rec->config.height, rec->config.depth, values);
+	 	lu_data_set(data, rec->width, rec->height, rec->depth, values);
 	}
 
 	static lu_bool lu_story_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)

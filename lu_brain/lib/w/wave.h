@@ -18,9 +18,26 @@
 		// user can set it, default 0
 		lu_size id;		
 
+		Lu_Mem mem;
 		Lu_Brain brain;
 		struct lu_wave_config config;
 	};
+
+	static inline Lu_Wave lu_wave_init(
+		Lu_Wave self, 
+		enum lu_wave_type type, 
+		lu_size id, 
+		Lu_Mem mem, 
+		Lu_Brain brain, 
+		struct lu_wave_config config
+	)
+	{
+		self->type = type;
+		self->id = id;
+		self->mem = mem;
+		self->brain = brain;
+		self->config = config;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
