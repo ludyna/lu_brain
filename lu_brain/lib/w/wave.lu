@@ -91,13 +91,17 @@
 	void lu_wave_block_begin(Lu_Wave self)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
-		
+
+		if (self->block_begin)
+			self->block_begin(self);
 	}
 
 	void lu_wave_block_end(Lu_Wave self)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
-		
+
+		if (self->block_end)
+			self->block_end(self);
 	}
 
 	// lu_size lu_wave_block_count(Lu_Wave self)
@@ -116,18 +120,26 @@
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(rec, "Lu_Rec is NULL");
 		lu_user_assert_void(data, "data is NULL");
+
+		if (self->push)
+			self->push(self, rec, data);
 	}
 
 	void lu_wave_push_neu(Lu_Wave self, Lu_Neu neu)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 		lu_user_assert_void(neu, "Lu_Neu is NULL");
+
+		if (self->push_neu)
+			self->push_neu(self, neu);
 	}
 
 	void lu_wave_reset(Lu_Wave self)
 	{
 		lu_user_assert_void(self, "Lu_Wave is NULL");
 
+		if (self->reset)
+			self->reset(self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

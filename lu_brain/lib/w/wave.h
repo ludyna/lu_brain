@@ -26,7 +26,7 @@
 		void (*destroy)(Lu_Wave);
 
 		// virtual methods
-		void (*block_start)(Lu_Wave);
+		void (*block_begin)(Lu_Wave);
 		void (*block_end)(Lu_Wave);
 
 		void (*push)(Lu_Wave, Lu_Rec, lu_value* data);
@@ -51,6 +51,12 @@
 		self->brain = brain;
 		self->config = config;
 		self->destroy = wave_destroy;
+
+		self->block_begin = NULL;
+		self->block_end = NULL;
+		self->push = NULL;
+		self->push_neu = NULL;
+		self->reset = NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
