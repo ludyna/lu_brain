@@ -163,13 +163,16 @@
 
 	// Wave Story
 
-	void lu_wave_block_start(Lu_Wave);
+	void lu_wave_block_begin(Lu_Wave);
 	void lu_wave_block_end(Lu_Wave);
-	lu_size lu_wave_block_count(Lu_Wave);
-	Lu_Data lu_wave_last_data(Lu_Wave, Lu_Rec);
-	Lu_Data lu_wave_push(Lu_Wave, Lu_Rec, lu_value* data);
-	Lu_Neu lu_wave_neu_push(Lu_Wave, Lu_Neu); 
+
+	void lu_wave_push(Lu_Wave, Lu_Rec, lu_value* data);
+	void lu_wave_push_neu(Lu_Wave, Lu_Neu); 
+
 	void lu_wave_reset(Lu_Wave);
+
+	// lu_size lu_wave_block_count(Lu_Wave);
+	// Lu_Data lu_wave_last_data(Lu_Wave, Lu_Rec);
 
 	// Process
 

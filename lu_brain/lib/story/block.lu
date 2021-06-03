@@ -35,17 +35,4 @@
 		lu_g_mem_free((lu_p_byte) self);
 	}
 
-	void lu_block_begin(Lu_Story story)
-	{
-		lu_user_assert_void(story, "Lu_Story is NULL");
-		//lu_debug("\nlu_block_begin");
-		story->start_block_on_next_data = true;
-	}
-
-	void lu_block_end(Lu_Story story)
-	{
-		lu_user_assert_void(story, "Lu_Story is NULL");
-		//lu_debug("\nlu_block_end");
-		story->start_block_on_next_data = true;
-	}
 

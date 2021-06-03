@@ -107,7 +107,7 @@ void test_lu_brain_basics(void)
 
 		lu_wave_push(wave, rec_0, data_0);
 
-		lu_wave_block_start(wave);
+		lu_wave_block_begin(wave);
 		lu_wave_push(wave, rec_0, data_01);
 		lu_wave_push(wave, rec_1, data_2);
 		lu_wave_block_end(wave);
@@ -116,7 +116,7 @@ void test_lu_brain_basics(void)
  
 	lu_wave_process(wave);
 
-		lu_wave_block_start(wave);
+		lu_wave_block_begin(wave);
 		lu_wave_push(wave, rec_0, data_4);
 		lu_wave_push(wave, rec_1, data_5);
 		lu_wave_block_end(wave);
@@ -132,7 +132,7 @@ void test_lu_brain_basics(void)
 
 			lu_wave_push(wave, rec_0, data_0);
 
-			lu_wave_block_start(wave);
+			lu_wave_block_begin(wave);
 			lu_wave_push(wave, rec_0, data_01);
 			lu_wave_push(wave, rec_1, data_2);
 			lu_wave_block_end(wave);
@@ -141,7 +141,7 @@ void test_lu_brain_basics(void)
 
 	lu_wave_process(wave);
 
-			lu_wave_block_start(wave);
+			lu_wave_block_begin(wave);
 			lu_wave_push(wave, rec_0, data_4);
 			lu_wave_push(wave, rec_1, data_5);
 			lu_wave_block_end(wave); 

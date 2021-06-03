@@ -31,8 +31,11 @@
 		lu_bool 			start_block_on_next_data;
 	};
 
-	static Lu_Story lu_story_create(Lu_Brain brain, Lu_Mem mem);
-	static void lu_story_destroy(Lu_Story self);
+	Lu_Story lu_story_create(Lu_Brain brain, Lu_Mem mem);
+	void lu_story_destroy(Lu_Story self);
+
+	void lu_story_block_start(Lu_Story story);
+	void lu_story_block_end(Lu_Story story);
 
 	Lu_Data lu_story_data_get(Lu_Story self, lu_size rec_i, Lu_L_Node node);
 	Lu_Story lu_story_validate(Lu_Story);

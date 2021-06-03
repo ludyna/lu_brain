@@ -41,6 +41,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Find 
 
+	static void lu_find_wave_destroy_internal(Lu_Wave wave)
+	{
+		lu_assert(wave);
+		Lu_Find_Wave self = (Lu_Find_Wave) wave;
+
+		lu_story_destroy(self->story);
+	}
+
 	Lu_Wave lu_find_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
 		return NULL;
@@ -49,6 +57,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Restore
+
+
+	static void lu_restore_wave_destroy_internal(Lu_Wave wave)
+	{
+		lu_assert(wave);
+		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
+
+		//lu_list_destroy(self->story);
+	}
 
 	Lu_Wave lu_restore_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
@@ -71,38 +88,45 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Wave Story
 
-	void lu_wave_block_start(Lu_Wave self)
+	void lu_wave_block_begin(Lu_Wave self)
 	{
-
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		
 	}
 
 	void lu_wave_block_end(Lu_Wave self)
 	{
-
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		
 	}
 
-	lu_size lu_wave_block_count(Lu_Wave self)
-	{
+	// lu_size lu_wave_block_count(Lu_Wave self)
+	// {
+	// 	lu_assert(self);
+	// }
 
+	// Lu_Data lu_wave_last_data(Lu_Wave self, Lu_Rec rec)
+	// {
+	// 	lu_user_assert(self, "Lu_Wave is NULL");
+	// 	lu_user_assert(rec, "Lu_Rec is NULL");
+	// }
+
+	void lu_wave_push(Lu_Wave self, Lu_Rec rec, lu_value* data)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu_user_assert_void(rec, "Lu_Rec is NULL");
+		lu_user_assert_void(data, "data is NULL");
 	}
 
-	Lu_Data lu_wave_last_data(Lu_Wave self, Lu_Rec rec)
+	void lu_wave_push_neu(Lu_Wave self, Lu_Neu neu)
 	{
-
-	}
-
-	Lu_Data lu_wave_push(Lu_Wave self, Lu_Rec rec, lu_value* data)
-	{
-
-	}
-
-	Lu_Neu lu_wave_neu_push(Lu_Wave self, Lu_Neu neu)
-	{
-
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu_user_assert_void(neu, "Lu_Neu is NULL");
 	}
 
 	void lu_wave_reset(Lu_Wave self)
 	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
 
 	}
 
@@ -111,11 +135,12 @@
 
 	void lu_wave_process(Lu_Wave self)
 	{
-
+		lu_user_assert_void(self, "Lu_Wave is NULL");
 	}
 
 	void lu_wave_step(Lu_Wave self)
 	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
 
 	}
 

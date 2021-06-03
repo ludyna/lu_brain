@@ -24,6 +24,15 @@
 
 		// virtual destructor
 		void (*destroy)(Lu_Wave);
+
+		// virtual methods
+		void (*block_start)(Lu_Wave);
+		void (*block_end)(Lu_Wave);
+
+		void (*push)(Lu_Wave, Lu_Rec, lu_value* data);
+		void (*push_neu)(Lu_Wave, Lu_Neu); 
+
+		void (*reset)(Lu_Wave);
 	};
 
 	static inline Lu_Wave lu_wave_init(
@@ -69,5 +78,4 @@
 	struct lu_restore_wave {
 		struct lu_wave super;
 
-		Lu_List story;
 	};
