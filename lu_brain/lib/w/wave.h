@@ -33,6 +33,9 @@
 		void (*push_neu)(Lu_Wave, Lu_Neu); 
 
 		void (*reset)(Lu_Wave);
+
+		void (*step)(Lu_Wave);
+		void (*process)(Lu_Wave);
 	};
 
 	static inline Lu_Wave lu_wave_init(
@@ -56,6 +59,8 @@
 		self->push = NULL;
 		self->push_neu = NULL;
 		self->reset = NULL;
+		self->step = NULL;
+		self->process = NULL;
 	}
 
 	static inline lu_bool lu_wave_is_save(Lu_Wave self) { return self->type == LU_WAVE_TYPE_SAVE; }
