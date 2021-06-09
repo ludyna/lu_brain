@@ -58,6 +58,10 @@
 		self->reset = NULL;
 	}
 
+	static inline lu_bool lu_wave_is_save(Lu_Wave self) { return self->type == LU_WAVE_TYPE_SAVE; }
+	static inline lu_bool lu_wave_is_find(Lu_Wave self) { return self->type == LU_WAVE_TYPE_FIND; }
+	static inline lu_bool lu_wave_is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE_RESTORE; }
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
 

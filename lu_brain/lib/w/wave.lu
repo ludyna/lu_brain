@@ -8,6 +8,8 @@
 	static void lu_save_wave_destroy_internal(Lu_Wave wave)
 	{
 		lu_assert(wave);
+		lu_assert(lu_wave_is_save(wave));
+
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
 
 		lu_story_destroy(self->story);
@@ -34,7 +36,11 @@
 
 	static void lu_save_wave_block_begin_internal(Lu_Wave self)
 	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_save(self));
 
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+		lu_story_block_begin(save_wave->story);
 	} 
 
 	static void lu_find_wave_block_begin_internal(Lu_Wave self)
@@ -52,7 +58,11 @@
 
 	static void lu_save_wave_block_end_internal(Lu_Wave self)
 	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_save(self));
 
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+		lu_story_block_end(save_wave->story);
 	} 
 
 	static void lu_find_wave_block_end_internal(Lu_Wave self)
@@ -70,7 +80,8 @@
 
 	static void lu_save_wave_push_internal(Lu_Wave self, Lu_Rec rec, lu_value *data)
 	{
-
+		lu_assert(self);
+		lu_assert(lu_wave_is_save(self));
 	}
 
 	static void lu_find_wave_push_internal(Lu_Wave self, Lu_Rec rec, lu_value *data)
