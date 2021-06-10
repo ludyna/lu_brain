@@ -175,7 +175,7 @@
 		self->super.step = lu_save_wave_step_internal;
 		self->super.process = lu_save_wave_process_internal;
 
-		self->story = lu_story_create(brain, mem);
+		self->story = lu_story_create(mem, lu_brain_recs_size(brain));
 
 		return (Lu_Wave) self;
 	}

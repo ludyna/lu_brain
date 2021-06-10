@@ -5,25 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Lu_Story lu_story_create(Lu_Brain brain, Lu_Mem mem)
+	Lu_Story lu_story_create(Lu_Mem mem, lu_size recs_size)
 	{
-		lu_user_assert(brain, "Lu_Brain should not be NULL");
-		lu_user_assert(mem, "Lu_Mem should not be NULL");
-		lu_user_assert(
-			brain->recs && arr_count(brain->recs), 
-			"Lu_Brain recs should be created first"
-		);
+		lu_assert(mem);
+		lu_assert(recs_size);
 
 		Lu_Story self 					= (Lu_Story) lu_mem_alloc(mem, sizeof(struct lu_story));
 
 		// Initialize
-		self->brain 					= brain;
 		self->mem 						= mem;
+		self->recs_size 				= recs_size;
 		self->blocks 					= lu_list_create(self->mem);
 		self->start_block_on_next_data 	= false; 
 		
-
-
 		return self;
 	}
 
@@ -105,7 +99,7 @@
 	{
 		lu_assert(self);
 
-		Lu_Block block = lu_block_create(self);
+		Lu_Block block = lu_block_create(self->mem, self->recs_size);
 		lu_assert(block);
 
 		lu_list_append(self->blocks, (lu_p_void) block);
@@ -116,7 +110,6 @@
 	void lu_story_reset(Lu_Story self)
 	{
 		lu_user_assert_void(self, "Lu_Story should be present");
-		lu_user_assert_void(self->brain, "Lu_Story brain should be present");
 		lu_user_assert_void(self->blocks, "Lu_Story blocks should be present");
 
 		lu_list_each_1p(self->blocks, lu_story_destroy_blocks, NULL);
@@ -194,7 +187,7 @@
 		Lu_Data d1;
 		Lu_Data d2;
 
-		lu_size recs_size = arr_size(self->brain->recs);
+		lu_size recs_size =self->recs_size;
 
 		for(rec_i = 0; rec_i < recs_size; rec_i++)
 		{
