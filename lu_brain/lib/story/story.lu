@@ -178,6 +178,11 @@
 		return &block->datum[rec_i];
 	}
 
+	Lu_Story lu_story_validate(Lu_Story self)
+	{
+		return self;
+	}
+
 	Lu_Story lu_story_prepare(Lu_Story self)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");

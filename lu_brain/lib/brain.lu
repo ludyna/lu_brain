@@ -48,11 +48,10 @@
 	{
 		lu_user_assert_void(self, "Lu_Brain is NULL");
 		lu_user_assert_void(self->brain_mem, "Lu_Mem is NULL");
-		Lu_Mem_Stack brain_mem = (Lu_Mem_Stack) self->brain_mem;
 
 		lu_debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
-		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_stack_preallocated(brain_mem));
-		lu_debug("\nMemory used (bytes): %lu", lu_mem_stack_used(brain_mem));
+		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_preallocated(self->brain_mem));
+		lu_debug("\nMemory used (bytes): %lu", lu_mem_used(self->brain_mem));
 
  		if (self->s)
  			s_mem_print_info(self->s);
