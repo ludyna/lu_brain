@@ -98,8 +98,8 @@ void setUp(void)
 
 	rec_1 				= lu_rec_create(
 		/*belongs to*/			brain, 
-		/*width*/				3, 
-		/*height*/				3, 
+		/*width*/				2, 
+		/*height*/				2, 
 		/*depth*/				1,
 		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
 	);	

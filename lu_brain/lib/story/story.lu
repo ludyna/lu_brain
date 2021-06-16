@@ -180,6 +180,8 @@
 
 	Lu_Story lu_story_validate(Lu_Story self)
 	{
+		lu_user_assert(lu_story_blocks_count(self), "Story is empty");
+
 		return self;
 	}
 
