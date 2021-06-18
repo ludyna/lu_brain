@@ -60,7 +60,7 @@ void setUp(void)
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 
-	rec_0 				= lu_rec_create(
+	rec_0 				= lu_brain_rec_add(
 		/*belongs to*/			brain, 
 		/*width*/				3, 
 		/*height*/				3, 
@@ -69,7 +69,7 @@ void setUp(void)
 	);	
 	TEST_ASSERT(rec_0);
 
-	rec_1 				= lu_rec_create(
+	rec_1 				= lu_brain_rec_add(
 		/*belongs to*/			brain, 
 		/*width*/				3, 
 		/*height*/				3, 
@@ -83,8 +83,6 @@ void setUp(void)
 
 void tearDown(void)
 {	
-	lu_rec_destroy(rec_0);
-	lu_rec_destroy(rec_1);
 	lu_brain_destroy(brain);
 
 	mem_debugger_print(md);

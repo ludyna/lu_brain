@@ -23,7 +23,6 @@
 	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
 
-
 	// Wave 
 	
 	typedef struct lu_data* 			Lu_Data;
@@ -78,7 +77,7 @@
 	lu_size lu_brain_recs_size(Lu_Brain self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Rec  
+// Lu_Rec  
 
 	// Lu_Rec_Config 
 
@@ -116,7 +115,7 @@
 
 	// Lu_Rec 
 
-	Lu_Rec lu_rec_create(
+	Lu_Rec lu_brain_rec_add(
 		Lu_Brain brain, 
 		lu_size width, 
 		lu_size height, 
@@ -124,7 +123,8 @@
 		struct lu_rec_config config
 	);		
 
-	void lu_rec_destroy(Lu_Rec self);
+	// MVP out of scope
+	// void lu_brain_rec_remove(Lu_Rec self);
 
 
 ///////////////////////////////////////////////////////////////////////////////

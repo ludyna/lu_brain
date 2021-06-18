@@ -39,6 +39,16 @@
 		n_mem_destroy(self->n);
 		s_mem_destroy(self->s);
 
+		Lu_Rec rec;
+		if (self->recs)
+			for (lu_size i = 0; i < arr_count(self->recs); i++)
+			{
+				rec = (Lu_Rec) arr_get(self->recs, i);
+
+				if (rec)
+					lu_rec_destroy(rec, self->brain_mem);
+			}
+
 		arr_destroy(self->recs);
 	
 		lu_g_mem_free((lu_p_byte) self);

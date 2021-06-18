@@ -20,3 +20,5 @@
 
 		struct lu_rec_config 		config;	
 	};
+
+	static void lu_rec_destroy(Lu_Rec self, Lu_Mem mem);

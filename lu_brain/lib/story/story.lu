@@ -94,7 +94,6 @@
 		return lu_story_data_get(self, rec_i, lu_list_node_last(self->blocks));
 	}
 
-
 	static Lu_Block lu_story_block_add(Lu_Story self)
 	{
 		lu_assert(self);
@@ -185,6 +184,10 @@
 		return self;
 	}
 
+	//
+	// We don't need this actually, we can move this out of scope. 
+	// W_Rec/Wave should have reset() to clear last data.
+	//
 	Lu_Story lu_story_prepare(Lu_Story self)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
