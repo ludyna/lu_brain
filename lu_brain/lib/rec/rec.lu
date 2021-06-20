@@ -48,5 +48,11 @@
 		lu_mem_free(mem, (lu_p_byte) self);
 	}
 
+	lu_size lu_rec_get_id(Lu_Rec self)
+	{
+		lu_assert(self);
+		return self->id;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // 

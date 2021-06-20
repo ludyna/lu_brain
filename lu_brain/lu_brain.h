@@ -125,6 +125,8 @@
 
 	// MVP out of scope
 	// void lu_brain_rec_remove(Lu_Rec self);
+ 
+	lu_size lu_rec_get_id(Lu_Rec self);
 
 	Lu_Rec lu_brain_rec_get_by_id(Lu_Brain brain, lu_size rec_id);
 
