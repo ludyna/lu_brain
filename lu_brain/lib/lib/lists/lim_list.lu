@@ -72,7 +72,7 @@
 	{
 		// if out of items, remove first
 		if (lu_lim_list_count(self) >= self->max_size)
-			lu_lim_list_node_remove(self, lu_list_node_first(&self->super));
+			lu_lim_list_node_remove(self, lu_list_first_node(&self->super));
 
 		return lu_list_node_append_with_creator((Lu_List) self, value, lu_lim_list_l_node_create);
 	}

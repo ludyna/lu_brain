@@ -16,7 +16,9 @@
 		self->mem 						= mem;
 		self->recs_size 				= recs_size;
 		self->blocks 					= lu_list_create(self->mem);
-		self->start_block_on_next_data 	= false; 
+		self->start_block_on_next_data 	= false;  
+
+		self->current_read_pos 			= NULL;
 		
 		return self;
 	}
@@ -82,7 +84,7 @@
 	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
-		Lu_Data data = lu_story_data_get(self, rec_i, lu_list_node_last(self->blocks));
+		Lu_Data data = lu_story_data_get(self, rec_i, lu_list_last_node(self->blocks));
 		if (data == NULL) return NULL;
 
 		return data->values;
@@ -91,7 +93,7 @@
 	Lu_Data lu_story_last_data(Lu_Story self, lu_size rec_i)
 	{
 		lu_user_assert(self, "Lu_Story is NULL");
-		return lu_story_data_get(self, rec_i, lu_list_node_last(self->blocks));
+		return lu_story_data_get(self, rec_i, lu_list_last_node(self->blocks));
 	}
 
 	static Lu_Block lu_story_block_add(Lu_Story self)
@@ -135,13 +137,13 @@
 		if (lu_list_is_empty(self->blocks))
 			lu_story_block_add(self);
 
-		Lu_Data data = lu_story_data_get(self, rec->id, lu_list_node_last(self->blocks));
+		Lu_Data data = lu_story_data_get(self, rec->id, lu_list_last_node(self->blocks));
 		lu_p_value v = data->values;
 		if (v)
 			// new input to the same rec and channel advances story
 			lu_story_block_add(self);
 
-		data = lu_story_data_get(self, rec->id, lu_list_node_last(self->blocks));
+		data = lu_story_data_get(self, rec->id, lu_list_last_node(self->blocks));
 		lu_assert(data);
 		lu_assert(data->values == NULL);
 
@@ -201,7 +203,7 @@
 
 		for(rec_i = 0; rec_i < recs_size; rec_i++)
 		{
-			Lu_L_Node curr = lu_list_node_first(self->blocks);
+			Lu_L_Node curr = lu_list_first_node(self->blocks);
 
 			while(curr)
 			{
@@ -212,7 +214,7 @@
 
 				if (d1->values) goto end;
 				
-				if (curr == lu_list_node_first(self->blocks))
+				if (curr == lu_list_first_node(self->blocks))
 				{
 					d2 = lu_story_first_non_null_data(self, rec_i);
 					if (d2 == NULL) break; 	// nema danyh dlia rec_i vzahali
@@ -231,3 +233,32 @@
 
 		return self;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Story reading
+
+	static Lu_Block lu_story_next_block_get(Lu_Story self)
+	{
+		lu_assert(self);
+		lu_assert(self->blocks);
+
+		// when first element
+		if (self->current_read_pos == NULL) 
+		{
+			self->current_read_pos = lu_list_first_node(self->blocks);
+			if (self->current_read_pos == NULL) return NULL;
+
+			return (Lu_Block) lu_l_node_value(self->current_read_pos);
+		}
+
+		if (self->current_read_pos)
+		{
+			self->current_read_pos = lu_l_node_next(self->current_read_pos);
+
+			if (self->current_read_pos == NULL) return NULL;
+
+			return (Lu_Block) lu_l_node_value(self->current_read_pos);
+		}
+
+		return NULL;
+	} 

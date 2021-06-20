@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual Destroy
 
-	static void lu_save_wave_destroy_internal(Lu_Wave wave)
+	static void lu_save_wave_destroy_virtual(Lu_Wave wave)
 	{
 		lu_assert(wave);
 		lu_assert(lu_wave_is_save(wave));
@@ -15,7 +15,7 @@
 		lu_story_destroy(self->story);
 	}
 
-	static void lu_find_wave_destroy_internal(Lu_Wave wave)
+	static void lu_find_wave_destroy_virtual(Lu_Wave wave)
 	{
 		lu_assert(wave);
 		Lu_Find_Wave self = (Lu_Find_Wave) wave;
@@ -23,7 +23,7 @@
 		lu_story_destroy(self->story);
 	}
 
-	static void lu_restore_wave_destroy_internal(Lu_Wave wave)
+	static void lu_restore_wave_destroy_virtual(Lu_Wave wave)
 	{
 		lu_assert(wave);
 		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
@@ -34,7 +34,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual Block Begin
 
-	static void lu_save_wave_block_begin_internal(Lu_Wave self)
+	static void lu_save_wave_block_begin_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_save(self));
@@ -43,12 +43,12 @@
 		lu_story_block_begin(save_wave->story);
 	} 
 
-	static void lu_find_wave_block_begin_internal(Lu_Wave self)
+	static void lu_find_wave_block_begin_virtual(Lu_Wave self)
 	{
 
 	} 
 
-	static void lu_restore_wave_block_begin_internal(Lu_Wave self)
+	static void lu_restore_wave_block_begin_virtual(Lu_Wave self)
 	{
 
 	}  
@@ -56,7 +56,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual Block End
 
-	static void lu_save_wave_block_end_internal(Lu_Wave self)
+	static void lu_save_wave_block_end_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_save(self));
@@ -65,12 +65,12 @@
 		lu_story_block_end(save_wave->story);
 	} 
 
-	static void lu_find_wave_block_end_internal(Lu_Wave self)
+	static void lu_find_wave_block_end_virtual(Lu_Wave self)
 	{
 
 	} 
 
-	static void lu_restore_wave_block_end_internal(Lu_Wave self)
+	static void lu_restore_wave_block_end_virtual(Lu_Wave self)
 	{
 
 	}  
@@ -78,7 +78,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual Push
 
-	static void lu_save_wave_push_internal(Lu_Wave self, Lu_Rec rec, lu_value *data)
+	static void lu_save_wave_push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_save(self));
@@ -87,7 +87,7 @@
 		lu_story_push(save_wave->story, rec, data);
 	}
 
-	static void lu_find_wave_push_internal(Lu_Wave self, Lu_Rec rec, lu_value *data)
+	static void lu_find_wave_push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)
 	{
 
 	}
@@ -95,7 +95,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual Push Neu
 
-	static void lu_restore_wave_push_neu_internal(Lu_Wave self, Lu_Neu neu)
+	static void lu_restore_wave_push_neu_virtual(Lu_Wave self, Lu_Neu neu)
 	{
 
 	}
@@ -103,21 +103,30 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual Step
 
-	static void lu_save_wave_step_internal(Lu_Wave self)
+	static void lu_save_wave_process_block(Lu_Save_Wave self, Lu_Block block)
+	{
+		lu_debug("\nOH HELLO\n");
+	}
+
+	static void lu_save_wave_step_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_save(self));
 
-		printf("\n\n HELLO ");
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+		Lu_Block block = lu_story_next_block_get(save_wave->story);
+		if (block)
+			lu_save_wave_process_block(save_wave, block);
 	}
 
-	static void lu_find_wave_step_internal(Lu_Wave self)
+	static void lu_find_wave_step_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_find(self));
 	}
 
-	static void lu_restore_wave_step_internal(Lu_Wave self)
+	static void lu_restore_wave_step_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_restore(self));
@@ -127,26 +136,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Virtual Process
 
-	static void lu_save_wave_process_internal(Lu_Wave self)
+	static void lu_save_wave_process_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
 
-		for (lu_size step = save_wave->current_step; step < lu_story_block_count(save_wave->story); step++)
-		{
-			self->step(self);
-		}
+		Lu_Block block = NULL;
+
+		while(block = lu_story_next_block_get(save_wave->story))
+			lu_save_wave_process_block(save_wave, block);
 	}
 
-	static void lu_find_wave_process_internal(Lu_Wave self)
+	static void lu_find_wave_process_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_find(self));
 	}
 
-	static void lu_restore_wave_process_internal(Lu_Wave self)
+	static void lu_restore_wave_process_virtual(Lu_Wave self)
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_restore(self));
@@ -174,19 +183,17 @@
 			config
 		); 
 
-		self->super.destroy = lu_save_wave_destroy_internal;
+		self->super.destroy = lu_save_wave_destroy_virtual;
 		
-		self->super.block_begin = lu_save_wave_block_begin_internal;
-		self->super.block_end = lu_save_wave_block_end_internal;
+		self->super.block_begin = lu_save_wave_block_begin_virtual;
+		self->super.block_end = lu_save_wave_block_end_virtual;
 
-		self->super.push = lu_save_wave_push_internal;
+		self->super.push = lu_save_wave_push_virtual;
 
-		self->super.step = lu_save_wave_step_internal;
-		self->super.process = lu_save_wave_process_internal;
+		self->super.step = lu_save_wave_step_virtual;
+		self->super.process = lu_save_wave_process_virtual;
 
 		self->story = lu_story_create(mem, lu_brain_recs_size(brain));
-
-		self->current_step = 0;
 
 		return (Lu_Wave) self;
 	}

@@ -24,7 +24,7 @@
 
 	static inline Lu_L_Node lu_l_node_next(Lu_L_Node self) { return self->next; }
 	static inline Lu_L_Node lu_l_node_prev(Lu_L_Node self) { return self->prev; }
-	static inline Lu_L_Node lu_l_node_value(Lu_L_Node self) { return self->value; }
+	static inline lu_p_void lu_l_node_value(Lu_L_Node self) { return self->value; }
 	static inline void lu_l_node_value_set(Lu_L_Node self, lu_p_void value) { self->value = value; }
 
 
@@ -55,10 +55,10 @@
 	// Getters / Setters
 
 	static inline lu_size lu_list_count(Lu_List self) { return self->count; }
-	static inline Lu_L_Node lu_list_node_first(Lu_List self) { return self->first; }
-	static inline lu_p_void lu_list_first(Lu_List self) { if (!self->first) return NULL; return self->first->value; }
-	static inline Lu_L_Node lu_list_node_last(Lu_List self) { return self->last; }
-	static inline lu_p_void lu_list_last(Lu_List self) { if (!self->last) return NULL; return self->last->value; } 
+	static inline Lu_L_Node lu_list_first_node(Lu_List self) { return self->first; }
+	static inline lu_p_void lu_list_first_value(Lu_List self) { if (!self->first) return NULL; return self->first->value; }
+	static inline Lu_L_Node lu_list_last_node(Lu_List self) { return self->last; }
+	static inline lu_p_void lu_list_last_value(Lu_List self) { if (!self->last) return NULL; return self->last->value; } 
 
 	// State checks
 

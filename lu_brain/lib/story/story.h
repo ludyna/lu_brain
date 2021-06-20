@@ -30,6 +30,8 @@
 		Lu_List 			blocks;
 
 		lu_bool 			start_block_on_next_data;
+
+		Lu_L_Node 			current_read_pos;
 	};
 
 	static inline lu_size lu_story_block_count(Lu_Story self) { return lu_list_count(self->blocks); }
@@ -54,3 +56,7 @@
 	lu_size lu_story_blocks_count(Lu_Story self);
 	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i);
 	Lu_Data lu_story_last_data(Lu_Story self, lu_size rec_i);
+
+	// Story reading
+
+	static Lu_Block lu_story_next_block_get(Lu_Story self);
