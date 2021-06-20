@@ -32,6 +32,8 @@
 		lu_bool 			start_block_on_next_data;
 	};
 
+	static inline lu_size lu_story_block_count(Lu_Story self) { return lu_list_count(self->blocks); }
+
 	Lu_Story lu_story_create(Lu_Mem mem, lu_size recs_size);
 	void lu_story_destroy(Lu_Story self);
 

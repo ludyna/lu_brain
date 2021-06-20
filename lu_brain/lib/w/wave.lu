@@ -107,6 +107,8 @@
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_save(self));
+
+		printf("\n\n HELLO ");
 	}
 
 	static void lu_find_wave_step_internal(Lu_Wave self)
@@ -129,6 +131,13 @@
 	{
 		lu_assert(self);
 		lu_assert(lu_wave_is_save(self));
+
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+		for (lu_size step = save_wave->current_step; step < lu_story_block_count(save_wave->story); step++)
+		{
+			self->step(self);
+		}
 	}
 
 	static void lu_find_wave_process_internal(Lu_Wave self)
@@ -176,6 +185,8 @@
 		self->super.process = lu_save_wave_process_internal;
 
 		self->story = lu_story_create(mem, lu_brain_recs_size(brain));
+
+		self->current_step = 0;
 
 		return (Lu_Wave) self;
 	}
