@@ -70,6 +70,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
 
+	struct w_cell {
+		W_Layer w_layer;
+		Hnn_Cell_0 hnn_cell_0;
+		lu_value sig;
+	};
+
+	struct w_layer {
+		S_Layer s_layer;
+
+		W_Cell w_cells;
+	};
 
 	struct lu_save_wave {
 		struct lu_wave super;

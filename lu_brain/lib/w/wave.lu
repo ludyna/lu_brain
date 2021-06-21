@@ -105,7 +105,12 @@
 
 	static void lu_save_wave_process_block(Lu_Save_Wave self, Lu_Block block)
 	{
+		lu_assert(self);
+		lu_assert(block);
+
 		lu_debug("\nOH HELLO\n");
+
+		
 	}
 
 	static void lu_save_wave_step_virtual(Lu_Wave self)

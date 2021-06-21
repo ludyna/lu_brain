@@ -46,6 +46,7 @@
 
 		S_Layer_Conf 			conf;		
 
+		// TODO: probably remove this
 		lu_size 				n_cells_count; 	// cells_count potriben shob znayty n_sig dlia n_cell po yoho n_cell->s_ix v wave->w_neu->cells
 	};
 
