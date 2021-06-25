@@ -28,7 +28,7 @@
 
 	struct hnn_table {
 		Lu_Mem mem;
-		Hnn_Table_Node* units; // unit might contain more than one cell 
+		Hnn_Table_Node* units; // unit might contain more than one node
 		lu_size size_in_cells;
 		lu_byte cell_type;
 	};
