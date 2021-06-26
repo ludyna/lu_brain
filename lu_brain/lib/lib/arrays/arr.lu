@@ -11,12 +11,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-Arr arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
+Lu_Arr lu_arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
 {
 	lu_user_assert(size > 0, "size should be greater than zero");
 	lu_user_assert(mem, "Lu_Mem is NULL");
 
-	Arr self = (Arr) lu_mem_alloc(mem, sizeof(struct arr));
+	Lu_Arr self = (Lu_Arr) lu_mem_alloc(mem, sizeof(struct lu_arr));
 	lu_user_assert(self, "Unable to allocate array");
 	
 	// Initialize
@@ -33,9 +33,9 @@ Arr arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
 	return self;
 }
 
-void arr_destroy(Arr self)
+void lu_arr_destroy(Lu_Arr self)
 {
-	lu_user_assert_void(self, "Arr is NULL");
+	lu_user_assert_void(self, "Lu_Arr is NULL");
 	
 	Lu_Mem mem = self->mem;
 	lu_user_assert_void(mem, "Lu_Mem is NULL");
@@ -47,14 +47,14 @@ void arr_destroy(Arr self)
 ///////////////////////////////////////////////////////////////////////////////
 // Main public methods
 
-lu_size arr_append(Arr self, lu_p_void item)
+lu_size lu_arr_append(Lu_Arr self, lu_p_void item)
 {
 	lu_assert(self != NULL);
 	lu_assert(self->count < self->size);
  
  	// no automatic realloc 
 	if (self->allow_realloc && self->count >= self->size) 
-		arr_realloc(self, self->size * 2);
+		lu_arr_realloc(self, self->size * 2);
 
 	lu_size index = self->count;
 
@@ -64,7 +64,7 @@ lu_size arr_append(Arr self, lu_p_void item)
 	return index;
 }
 
-void arr_each(Arr self, void (*block)(lu_p_void item))
+void lu_arr_each(Lu_Arr self, void (*block)(lu_p_void item))
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -72,7 +72,7 @@ void arr_each(Arr self, void (*block)(lu_p_void item))
 	}
 }
 
-void arr_each1(Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+void lu_arr_each1(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -80,7 +80,7 @@ void arr_each1(Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void 
 	}
 }
 
-void arr_each_1p(Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+void lu_arr_each_1p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -88,7 +88,7 @@ void arr_each_1p(Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_voi
 	}
 }
 
-void arr_each_2p(Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), lu_p_void p1, lu_p_void p2)
+void lu_arr_each_2p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), lu_p_void p1, lu_p_void p2)
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -96,7 +96,7 @@ void arr_each_2p(Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void
 	}
 }
 
-void arr_each_with_index_1p(Arr self, void (*block)(Arr self, lu_p_void item, lu_size index, lu_p_void p1), lu_p_void p1)
+void lu_arr_each_with_index_1p(Lu_Arr self, void (*block)(Lu_Arr self, lu_p_void item, lu_size index, lu_p_void p1), lu_p_void p1)
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -104,7 +104,7 @@ void arr_each_with_index_1p(Arr self, void (*block)(Arr self, lu_p_void item, lu
 	}
 }
 
-void arr_nullify(Arr self)
+void lu_arr_nullify(Lu_Arr self)
 { 
 	for (lu_size i = 0; i < self->size; i++)
 	{
@@ -112,7 +112,7 @@ void arr_nullify(Arr self)
 	}
 }
 
-void arr_realloc(Arr self, lu_size new_size)
+void lu_arr_realloc(Lu_Arr self, lu_size new_size)
 {
 	lu_user_assert_void(new_size > self->size, "new_size should be greater than current size");
 
@@ -122,13 +122,13 @@ void arr_realloc(Arr self, lu_size new_size)
 	lu_assert(self->items != NULL);
 }
 
-Arr arr_merge(Arr self, Arr src)
+Lu_Arr lu_arr_merge(Lu_Arr self, Lu_Arr src)
 {
 	lu_assert(self->count + src->count < self->size);
 
 	// realloc if needed
 	if (self->allow_realloc && (self->count + src->count) > self->size)
-		arr_realloc(self, self->count + src->count);
+		lu_arr_realloc(self, self->count + src->count);
 
 	for(lu_size i = 0; i < src->count; i++)
 		self->items[self->count++] = src->items[i];
@@ -136,7 +136,7 @@ Arr arr_merge(Arr self, Arr src)
 	return self;
 } 
 
-lu_p_void arr_find_first_1p(Arr self, lu_bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+lu_p_void lu_arr_find_first_1p(Lu_Arr self, lu_bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
 {
 	lu_p_void item;
 	for(lu_size i = 0; i < self->count; i++) 

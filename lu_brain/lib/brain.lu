@@ -18,7 +18,7 @@
 		
 		self->brain_mem  	= brain_mem; 
 		self->config 		= *p_config;
-		self->recs 			= arr_temp_create(p_config->recs_size, false);
+		self->recs 			= lu_arr_temp_create(p_config->recs_size, false);
 
 		self->s 			= s_mem_create(self);
 		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
@@ -41,15 +41,15 @@
 
 		Lu_Rec rec;
 		if (self->recs)
-			for (lu_size i = 0; i < arr_count(self->recs); i++)
+			for (lu_size i = 0; i < lu_arr_count(self->recs); i++)
 			{
-				rec = (Lu_Rec) arr_get(self->recs, i);
+				rec = (Lu_Rec) lu_arr_get(self->recs, i);
 
 				if (rec)
 					lu_rec_destroy(rec, self->brain_mem);
 			}
 
-		arr_destroy(self->recs);
+		lu_arr_destroy(self->recs);
 	
 		lu_g_mem_free((lu_p_byte) self);
 	}
@@ -94,13 +94,13 @@
 
 		// find empty slot
 		lu_size i;
-		for(i = 0; i < arr_count(self->recs); i++)
+		for(i = 0; i < lu_arr_count(self->recs); i++)
 		{
-			if (arr_get(self->recs, i) == NULL) break;
+			if (lu_arr_get(self->recs, i) == NULL) break;
 		}
 		
 		rec->id = i;
-		arr_set(self->recs, rec->id, rec);
+		lu_arr_set(self->recs, rec->id, rec);
 
 		s_mem_rec_create(self->s, rec);
 
@@ -115,7 +115,7 @@
 
 		s_mem_rec_destroy(self->s, rec);
 
-		arr_set(self->recs, rec->id, NULL);
+		lu_arr_set(self->recs, rec->id, NULL);
 		
 		rec->brain = NULL;
 	}
@@ -124,11 +124,11 @@
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_assert(brain->recs);
-		lu_user_assert(rec_id < arr_count(brain->recs), "rec_id is out of range");
+		lu_user_assert(rec_id < lu_arr_count(brain->recs), "rec_id is out of range");
 
-		return (Lu_Rec) arr_get(brain->recs, rec_id);
+		return (Lu_Rec) lu_arr_get(brain->recs, rec_id);
 	}
 
-	lu_size lu_brain_recs_size(Lu_Brain self) { return arr_size(self->recs); }
+	lu_size lu_brain_recs_size(Lu_Brain self) { return lu_arr_size(self->recs); }
 
 	

@@ -182,10 +182,10 @@
 	struct lu_s {
 		Lu_Brain 				brain;
 
-		Arr 					recs;
+		Lu_Arr 					recs;
 	};
 	
-	static inline S_Rec s_mem_s_rec_get(Lu_S self, lu_size indx) { return arr_get(self->recs, indx); }
+	static inline S_Rec s_mem_s_rec_get(Lu_S self, lu_size indx) { return lu_arr_get(self->recs, indx); }
 
 	// s.lu
 	static Lu_S s_mem_create(Lu_Brain brain);

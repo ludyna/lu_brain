@@ -13,7 +13,7 @@
 	struct arr2 {
 		lu_size width;
 		lu_size height;
-		Arr items;
+		Lu_Arr items;
 	};
 
 	static inline lu_size arr2_width(Arr2 self) { return self->width; }
@@ -27,7 +27,7 @@
 		
 		self->width 	= width;
 		self->height 	= height;
-		self->items 	= arr_create(mem, width * height, allow_realloc);
+		self->items 	= lu_arr_create(mem, width * height, allow_realloc);
 
 		return self;
 	} 
@@ -39,7 +39,7 @@
 		Lu_Mem mem = self->items->mem;
 		lu_user_assert_void(mem, "Lu_Mem is NULL");
 
-		arr_destroy(self->items);
+		lu_arr_destroy(self->items);
 		lu_mem_free(mem, (lu_p_byte) self);
 	}
 
@@ -47,7 +47,7 @@
 
 	static inline void arr2_each(Arr2 self, void (*block)(lu_p_void item))
 	{
-		arr_each(self->items, block);
+		lu_arr_each(self->items, block);
 	}
 
 	static inline void arr2_each_2p(
@@ -57,28 +57,28 @@
 		lu_p_void p2
 	)
 	{
-		arr_each_2p(self->items, block, p1, p2);
+		lu_arr_each_2p(self->items, block, p1, p2);
 	}
 
 	static inline lu_p_void arr2_get_internal(Arr2 self, lu_size x, lu_size y)
 	{
-		return arr_get(self->items, (y * self->width) + x);
+		return lu_arr_get(self->items, (y * self->width) + x);
 	}
 
 	static inline void arr2_set_internal(Arr2 self, lu_size x, lu_size y, lu_p_void value)
 	{
-		arr_set(self->items, (y * self->width) + x, value);
+		lu_arr_set(self->items, (y * self->width) + x, value);
 	}
 
 	static inline lu_p_void arr2_get_internal_debug(Arr2 self, lu_size x, lu_size y, const char* func, const char* file, int line)
 	{
 		// lu_user_debug_args_internal(func, file, line, "arr2_get_internal_debug: (x=%lu, y=%lu, index=%lu)", x, y, (y * self->width) + x);
-		return arr_get_internal_debug(self->items, (y * self->width) + x, func, file, line);
+		return lu_arr_get_internal_debug(self->items, (y * self->width) + x, func, file, line);
 	}
 
 	static inline void arr2_set_internal_debug(Arr2 self, lu_size x, lu_size y, lu_p_void value, const char* func, const char* file, int line)
 	{
-		arr_set_internal_debug(self->items, (y * self->width) + x, value, func, file, line);
+		lu_arr_set_internal_debug(self->items, (y * self->width) + x, value, func, file, line);
 	}
 
 	#ifdef LU_DEBUG
@@ -100,5 +100,5 @@
 		self->width = w;
 		self->height = h;
 
-		arr_realloc(self->items, self->width * self->height);
+		lu_arr_realloc(self->items, self->width * self->height);
 	}

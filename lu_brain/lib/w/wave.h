@@ -76,16 +76,6 @@
 		lu_value sig;
 	};
 
-	struct lu_cell_map_node {
-
-	};
-
-	struct lu_cell_map {
-		Lu_Mem mem;
-		Lu_Cell_Map_Node* units; // unit might contain more than one node
-		lu_size size_in_units;
-	};
-
 	struct lu_layer {
 		S_Layer s_layer;
 
@@ -97,7 +87,7 @@
 	};
 
 	struct lu_wave_snapshot {
-		Arr recs;
+		Lu_Arr recs;
 	};
 
 	struct lu_save_wave {
@@ -106,8 +96,6 @@
 		Lu_Story story;
 
 		Lu_List snapshots;
-
-
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

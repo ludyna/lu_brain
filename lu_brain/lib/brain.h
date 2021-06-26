@@ -20,7 +20,7 @@
 		Lu_Mem n_mem;
 		Lu_Mem lu_w;
 
-		Arr	recs; // receivers
+		Lu_Arr	recs; // receivers
 
 		Lu_S s;
 		Lu_N n;		
