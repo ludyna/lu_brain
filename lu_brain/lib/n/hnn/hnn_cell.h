@@ -7,6 +7,7 @@
 
 	enum hnn_cell_type {
 		HNN_CT_0,
+		HNN_CT_VALUE,
 		HNN_CT_1,
 		HNN_CT_2,
 		HNN_CT_3,
@@ -24,6 +25,16 @@
 
 		return self;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Hnn_Cell_Value
+
+	struct hnn_cell_value {
+		struct hnn_cell_0 super;
+
+		lu_value value;
+	};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_1
 

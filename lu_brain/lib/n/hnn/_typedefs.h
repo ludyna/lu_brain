@@ -3,6 +3,7 @@
 */
 
 typedef struct hnn_cell_0* Hnn_Cell_0; 
+typedef struct hnn_cell_value* Hnn_Cell_Value;
 typedef struct hnn_cell_1* Hnn_Cell_1;
 typedef struct hnn_cell_2* Hnn_Cell_2; 
 typedef struct hnn_cell_3* Hnn_Cell_3;
