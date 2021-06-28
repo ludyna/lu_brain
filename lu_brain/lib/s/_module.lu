@@ -4,6 +4,7 @@
 
 #include "s_cell_inits.lu"
 #include "s_cell_connect.lu"
+#include "s_cell_values.lu"
 #include "s_layer.lu"
 #include "s_layer_conf.lu"
 #include "s_rec_layer_inits.lu"

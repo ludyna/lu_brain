@@ -68,7 +68,7 @@
 	static inline lu_bool lu_wave_is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE_RESTORE; }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Save_Wave 
+// Lu_Snapshot
 
 	struct lu_cell {
 		Lu_Layer layer;
@@ -82,13 +82,18 @@
 		Lu_Cell* cells;
 	};
 
-	struct lu_wave_rec {
+	struct lu_snapshot_rec {
 		S_Rec s_rec;
 	};
 
-	struct lu_wave_snapshot {
+	struct lu_snapshot {
 		Lu_Arr recs;
 	};
+
+	static Lu_Snapshot lu_snapshot_create(Lu_Mem mem, Lu_S s);
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Save_Wave 
 
 	struct lu_save_wave {
 		struct lu_wave super;

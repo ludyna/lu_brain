@@ -14,6 +14,7 @@
 
  	typedef struct s_cell* 				S_Cell;
  	typedef struct s_cell_2* 			S_Cell_2;
+ 	typedef struct s_cell_values*  		S_Cell_Values;
  	typedef struct s_cell_3* 			S_Cell_3;
 	
 	// Helpers

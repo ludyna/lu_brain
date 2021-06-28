@@ -37,6 +37,15 @@
 		lu_size 				y;   		
 	};
 
+
+	struct s_cell_values {
+		S_Layer_Conf conf;
+		Hnn_Cell_Value* cell;
+	};
+
+	static S_Cell_Values s_cell_values_create(Lu_Mem mem, S_Layer_Conf conf);
+	static void s_cell_values_destroy(S_Cell_Values self, Lu_Mem mem);
+
 	struct s_cell_3 {
 		struct s_cell_2 		super;
 
