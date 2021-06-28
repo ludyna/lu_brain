@@ -50,11 +50,8 @@
 		S_Rec rec 			= layer->rec;
 
 		self->z 			= z;
-		self->v_conf 		= &rec->v_conf;
-		self->n_v_cells 	= (Hnn_Cell_0*) lu_g_mem_alloc(sizeof(Hnn_Cell_0) * self->v_conf->cells_size);
-		
-		self->p_conf 		= &rec->p_conf;
-		self->n_p_cells 	= (Hnn_Cell_0*) lu_g_mem_alloc(sizeof(Hnn_Cell_0) * self->p_conf->cells_size);
+		self->v 			= s_cell_values_create(lu_g_mem, &rec->v_conf);
+		self->p 			= s_cell_values_create(lu_g_mem, &rec->p_conf);
 
 		return self;
 	}
@@ -63,17 +60,11 @@
 	{
 		lu_user_assert_void(self, "S_Cell3 is NULL");
 
-		if (self->n_v_cells)
-		{
-			lu_g_mem_free((lu_p_byte) self->n_v_cells);
-			self->n_v_cells = NULL;
-		}
-
-		if (self->n_p_cells)
-		{
-			lu_g_mem_free((lu_p_byte) self->n_p_cells);
-			self->n_p_cells = NULL;
-		}
+		if (self->v)
+			s_cell_values_destroy(self->v, lu_g_mem);
+	
+		if (self->p)
+			s_cell_values_destroy(self->p, lu_g_mem);
 	}
 
 	static S_Cell s_component_links_alloc(S_Cell self, S_Rec rec)

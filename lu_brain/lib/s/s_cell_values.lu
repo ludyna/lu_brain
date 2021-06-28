@@ -1,0 +1,35 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static S_Cell_Values s_cell_values_create(Lu_Mem mem, S_Layer_Conf conf)
+	{
+		lu_assert(mem);
+		lu_assert(conf);
+
+		S_Cell_Values self = (S_Cell_Values) lu_mem_alloc(mem, sizeof(struct s_cell_values));
+		lu_assert(self);
+
+		self->conf = conf;
+		self->cells = (Hnn_Cell_Value*) lu_mem_alloc(mem, sizeof(Hnn_Cell_Value) * conf->cells_size);
+		lu_assert(self->cells);
+
+		for(lu_size i = 0; i < conf->cells_size; i++)
+			self->cells[i] = NULL;
+
+		return self;
+	}
+
+	static void s_cell_values_destroy(S_Cell_Values self, Lu_Mem mem)
+	{
+		lu_assert(self);
+		lu_assert(mem);
+ 
+ 		if (self->cells)
+			lu_mem_free(mem, (lu_p_byte) self->cells);
+		
+		lu_mem_free(mem, (lu_p_byte) self);
+	}

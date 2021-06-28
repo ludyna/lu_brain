@@ -40,7 +40,7 @@
 
 	struct s_cell_values {
 		S_Layer_Conf conf;
-		Hnn_Cell_Value* cell;
+		Hnn_Cell_Value* cells;
 	};
 
 	static S_Cell_Values s_cell_values_create(Lu_Mem mem, S_Layer_Conf conf);
@@ -51,11 +51,9 @@
 
 		lu_size 				z;
 
-		S_Layer_Conf 			v_conf;
-		Hnn_Cell_0* 			n_v_cells;
 
-		S_Layer_Conf 			p_conf;
-		Hnn_Cell_0*				n_p_cells;
+		S_Cell_Values 			v;
+		S_Cell_Values  			p;
 	};
 
 	// s_neu_inits.lu
