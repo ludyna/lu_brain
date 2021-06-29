@@ -1,0 +1,53 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Create
+
+	Lu_Wave lu_save_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config) 
+	{
+		lu_user_assert(mem, "Lu_Mem is NULL");
+		lu_user_assert(brain, "Lu_Brain is NULL");
+
+		Lu_Wave_Config p_config = lu_wave_config_validate(&config);
+		lu_user_assert(p_config, "struct lu_wave_config is invalid");
+
+		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem_alloc(mem, sizeof(struct lu_save_wave));
+
+		lu_wave_init(
+			&self->super, 
+			LU_WAVE_TYPE_SAVE, 
+			0,
+			mem,
+			brain, 
+			config
+		); 
+
+		self->super.destroy = lu_save_wave_destroy_virtual;
+		
+		self->super.block_begin = lu_save_wave_block_begin_virtual;
+		self->super.block_end = lu_save_wave_block_end_virtual;
+
+		self->super.push = lu_save_wave_push_virtual;
+
+		self->super.step = lu_save_wave_step_virtual;
+		self->super.process = lu_save_wave_process_virtual;
+
+		self->story = lu_story_create(mem, lu_brain_recs_size(brain));
+		self->snapshots = lu_list_create(mem);
+
+		return (Lu_Wave) self;
+	}
+	
+	Lu_Wave lu_find_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
+	{
+		return NULL;
+	}
+
+
+	Lu_Wave lu_restore_wave_create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
+	{
+		return NULL;
+	}
+
