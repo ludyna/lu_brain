@@ -4,6 +4,7 @@
 
 #include "cell.lu"
 #include "neu.lu"
+#include "snapshot.lu"
 #include "wave_config.lu"
 #include "wave_methods.lu"
 #include "wave_create.lu"
