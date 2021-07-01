@@ -18,6 +18,17 @@
 		self->s = s;
 		self->recs = lu_arr_create(mem, lu_arr_count(s->recs), false);
 
+		S_Rec s_rec;
+		Lu_Snapshot_Rec rec;
+		for(lu_size i = 0; i < lu_arr_count(s->recs); i++)
+		{
+			s_rec = (S_Rec) lu_arr_get(s->recs, i);
+			lu_assert(s_rec);
+
+			rec = lu_snapshot_rec_create(mem, s_rec);
+			lu_arr_append(self->recs, rec);
+		}
+
 		return self;
 	}
 

@@ -1,0 +1,53 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Process
+
+	void lu_wave_process(Lu_Wave self)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+
+		if (self->process)
+			self->process(self);
+		else lu_user_assert_void(false, "Method is not supported by this wave implementation");
+	}
+
+	static void lu_save_wave_process_virtual(Lu_Wave self)
+	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_save(self));
+
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+		Lu_Block block = NULL;
+
+		while(block = lu_story_next_block_get(save_wave->story))
+			lu_save_wave_process_block(save_wave, block);
+	}
+
+	static void lu_find_wave_process_virtual(Lu_Wave self)
+	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_find(self));
+	}
+
+	static void lu_restore_wave_process_virtual(Lu_Wave self)
+	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_restore(self));
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Reset
+
+	void lu_wave_reset(Lu_Wave self)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+
+		if (self->reset)
+			self->reset(self);
+		else lu_user_assert_void(false, "Method is not supported by this wave implementation");
+	}

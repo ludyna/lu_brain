@@ -3,9 +3,12 @@
 */
 
 #include "cell.lu"
-#include "neu.lu"
+#include "neu.lu" 
+#include "layer.lu"
+#include "snapshot_rec.lu"
 #include "snapshot.lu"
 #include "wave_config.lu"
 #include "wave_methods.lu"
+#include "wave_process.lu"
 #include "wave_create.lu"
 #include "w.lu"

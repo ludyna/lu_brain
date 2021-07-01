@@ -1,0 +1,28 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_Snapshot_Rec lu_snapshot_rec_create(Lu_Mem mem, S_Rec s_rec)
+	{
+		lu_assert(mem);
+		lu_assert(s_rec);
+
+		Lu_Snapshot_Rec self = (Lu_Snapshot_Rec) lu_mem_alloc(mem, sizeof(struct lu_snapshot_rec));
+		lu_assert(self);
+
+		self->s_rec = s_rec;
+
+		return self;
+	}
+
+	static void lu_snapshot_rec_destroy(Lu_Snapshot_Rec self, Lu_Mem mem)
+	{
+		lu_assert(self);
+		lu_assert(mem);
+
+
+		lu_mem_free(mem, (lu_p_byte) self);
+	}

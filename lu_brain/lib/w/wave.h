@@ -76,15 +76,23 @@
 		lu_value sig;
 	};
 
+	// static Lu_Cell lu_cell_create
+
 	struct lu_layer {
 		S_Layer s_layer;
 
 		Lu_Cell* cells;
 	};
 
+	static Lu_Layer lu_layer_create(Lu_Mem mem, S_Layer s_layer);
+	static void lu_layer_destroy(Lu_Layer self, Lu_Mem mem);
+
 	struct lu_snapshot_rec {
 		S_Rec s_rec;
 	};
+
+	static Lu_Snapshot_Rec lu_snapshot_rec_create(Lu_Mem mem, S_Rec s_rec);
+	static void lu_snapshot_rec_destroy(Lu_Snapshot_Rec self, Lu_Mem mem);
 
 	struct lu_snapshot {
 		Lu_S s;
