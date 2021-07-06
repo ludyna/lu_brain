@@ -4,6 +4,53 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
+// Process block
+
+static void lu_save_wave_process_block(Lu_Save_Wave sef, Lu_Block block)
+{
+
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// Step
+
+	void lu_wave_step(Lu_Wave self)
+	{
+		lu_user_assert_void(self, "Lu_Wave is NULL");
+
+		if (self->step)
+			self->step(self);
+		else lu_user_assert_void(false, "Method is not supported by this wave implementation");
+	}
+
+
+	static void lu_save_wave_step_virtual(Lu_Wave self)
+	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_save(self));
+
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+		Lu_Block block = lu_story_next_block_get(save_wave->story);
+		if (!block) return; // nothing to process
+
+		Lu_Snapshot shot = lu_snapshot_create(self->mem, self->brain->s);
+	}
+
+	static void lu_find_wave_step_virtual(Lu_Wave self)
+	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_find(self));
+	}
+
+	static void lu_restore_wave_step_virtual(Lu_Wave self)
+	{
+		lu_assert(self);
+		lu_assert(lu_wave_is_restore(self));
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Process
 
 	void lu_wave_process(Lu_Wave self)
