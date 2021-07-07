@@ -5,6 +5,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Stack_Table
 
+	void lu_mem_stack_table_reset_internal(Lu_Mem_Table self, const char* func, const char* file, int line)
+	{
+		lu_assert(self);
+
+		lu_p_byte start 			= (lu_p_byte) self;
+
+		Lu_Mem_Stack_Table st = (Lu_Mem_Stack_Table) self;
+
+		st->super.records_start 			= start + sizeof(struct lu_mem_stack_table);
+		st->super.records_pos				= st->super.records_start;
+		st->super.records_end				= st->super.records_start + st->super.table_size_in_records * st->super.record_size_in_bytes;
+		st->super.free_start 				= (lu_p_byte*) st->super.records_end;
+		st->super.records_count 			= 0;
+		st->super.free_count				= 0;
+	}
+
 	void lu_mem_stack_table_realloc_internal(
 		Lu_Mem_Table self, 
 		lu_size new_size_in_bytes, 
@@ -69,7 +85,8 @@
 		Lu_Mem_Stack_Table self = (Lu_Mem_Stack_Table) start;
 
 		// super
-
+ 
+ 		self->super.reset 					= lu_mem_stack_table_reset_internal;
 		self->super.realloc 				= lu_mem_stack_table_realloc_internal;
 		self->super.destroy 				= lu_mem_table_destroy_default;
 		self->super.record_alloc 			= lu_mem_table_record_alloc_default;
@@ -82,15 +99,10 @@
 		self->super.flags 					= flags;
 		self->super.full_size_in_bytes 		= full_size;
 
-		self->super.records_start 			= start + sizeof(struct lu_mem_stack_table);
-		self->super.records_pos				= self->super.records_start;
-		self->super.records_end				= self->super.records_start + self->super.table_size_in_records * self->super.record_size_in_bytes;
-		self->super.free_start 				= (lu_p_byte*) self->super.records_end;
-		self->super.records_count 			= 0;
-		self->super.free_count				= 0;
-
 		// own
 		self->mem_stack 				= mem_stack;
+
+		lu_mem_table_reset(((Lu_Mem_Table) self));
 
 		return self;
 	}

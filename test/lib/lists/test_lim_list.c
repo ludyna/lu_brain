@@ -149,9 +149,13 @@ void test_lim_list_clear(void)
     TEST_ASSERT(lu_lim_list_count(list) == 3);
     TEST_ASSERT(list->super.first->value == n2); 
 
+    Lu_L_Node node5 = lu_lim_list_append(list, n5);
+
     lu_lim_list_clear(list);
 
     lu_lim_list_destroy(list);
+
+    mem_debugger_print(md);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
     mem_debugger_destroy(md, true);
