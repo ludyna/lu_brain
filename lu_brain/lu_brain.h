@@ -137,6 +137,8 @@
 		lu_flags 				flags;						// 0 oznachaye not set
 		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
 		lu_value 				fire_breakpoint;
+		lu_size 				snapshots_size;				// How many wave snapshots should we hold.
+															// Oldest ones are destroyed once limit is reached (FIFO).
 	};
 
 	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);

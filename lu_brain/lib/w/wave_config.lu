@@ -10,6 +10,7 @@
         self->flags                 = 0;
         self->contrast_vs_color     = 0.5;
         self->fire_breakpoint       = 0.9;
+        self->snapshots_size        = 50;
 
         return self;
     }   
@@ -19,8 +20,10 @@
     struct lu_wave_config lu_g_wc_predefined[LU_WAVE_CONFIG_END] = { 
     	// LU_WC_SAVE_DEFAULT
     	{
-    		.contrast_vs_color = 0.5,  	// nemaye znachenia dlia save
-    		.fire_breakpoint   = 0.9  	// potribna povna kopiya
+            .flags                        = 0,
+    		.contrast_vs_color            = 0.5,  	// nemaye znachenia dlia save
+    		.fire_breakpoint              = 0.9,  	// potribna povna kopiya
+            .snapshots_size               = 50
     	},
     	// LU_WC_FIND_FULL_CONTRAST
     	{

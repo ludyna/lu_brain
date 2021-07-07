@@ -2,6 +2,7 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Properties
 
@@ -21,46 +22,6 @@
 	// 	lu_user_assert(rec, "Lu_Rec is NULL");
 	// }
 
-
-///////////////////////////////////////////////////////////////////////////////
-// Destroy
-
-	void lu_wave_destroy(Lu_Wave self)
-	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
-		lu_assert(self);
-
-		self->destroy(self);
-
-		lu_mem_free(self->mem, (lu_p_byte) self);
-	} 
-
-	static void lu_save_wave_destroy_virtual(Lu_Wave wave)
-	{
-		lu_assert(wave);
-		lu_assert(lu_wave_is_save(wave));
-
-		Lu_Save_Wave self = (Lu_Save_Wave) wave;
-
-		lu_story_destroy(self->story);
-		lu_list_destroy(self->snapshots);
-	}
-
-	static void lu_find_wave_destroy_virtual(Lu_Wave wave)
-	{
-		lu_assert(wave);
-		Lu_Find_Wave self = (Lu_Find_Wave) wave;
-
-		lu_story_destroy(self->story);
-	}
-
-	static void lu_restore_wave_destroy_virtual(Lu_Wave wave)
-	{
-		lu_assert(wave);
-		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
-
-		//lu_list_destroy(self->story);
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Block Begin

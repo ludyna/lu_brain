@@ -12,6 +12,9 @@
 		LU_WAVE_TYPE_RESTORE
 	};
 
+	//
+	// One wave is one story. Create another wave to create another story.
+	//
 	struct lu_wave {
 		enum lu_wave_type type;
 
@@ -110,7 +113,7 @@
 
 		Lu_Story story;
 
-		Lu_List snapshots;
+		Lu_Lim_List snapshots;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

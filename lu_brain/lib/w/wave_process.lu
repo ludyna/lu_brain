@@ -6,10 +6,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Process block
 
-static void lu_save_wave_process_block(Lu_Save_Wave sef, Lu_Block block)
-{
+	static void lu_save_wave_process_block(Lu_Save_Wave self, Lu_Block block)
+	{
+		lu_assert(self);
+		lu_assert(block);
 
-}
+		//Lu_Snapshot shot = lu_snapshot_create(self->super.mem, self->super.brain->s);
+
+		
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Step
@@ -34,7 +39,7 @@ static void lu_save_wave_process_block(Lu_Save_Wave sef, Lu_Block block)
 		Lu_Block block = lu_story_next_block_get(save_wave->story);
 		if (!block) return; // nothing to process
 
-		Lu_Snapshot shot = lu_snapshot_create(self->mem, self->brain->s);
+		lu_save_wave_process_block(save_wave, block);
 	}
 
 	static void lu_find_wave_step_virtual(Lu_Wave self)

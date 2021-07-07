@@ -10,5 +10,5 @@
 #include "wave_config.lu"
 #include "wave_methods.lu"
 #include "wave_process.lu"
-#include "wave_create.lu"
+#include "wave_create_destroy.lu"
 #include "w.lu"
