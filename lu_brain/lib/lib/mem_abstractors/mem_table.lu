@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Table
 
+	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
 	void lu_mem_table_reset_default(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
 		lu_p_byte start 			= (lu_p_byte) self;

@@ -5,6 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Stack_Table
 
+	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
 	void lu_mem_stack_table_reset_internal(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
 		lu_assert(self);

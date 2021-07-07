@@ -117,6 +117,7 @@
 		lu_size 		full_size_in_bytes;
 	};
 
+	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
 	#define lu_mem_table_reset(mt) mt->reset(mt, __func__, __FILE__, __LINE__)
 	#define lu_mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
 	#define lu_mem_table_destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
