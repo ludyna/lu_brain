@@ -80,13 +80,14 @@
 		self->super.record_size_in_bytes 	= record_size_in_bytes;
 		self->super.table_size_in_records 	= table_size_in_records;
 		self->super.flags 					= flags;
+		self->super.full_size_in_bytes 		= full_size;
+
 		self->super.records_start 			= start + sizeof(struct lu_mem_stack_table);
 		self->super.records_pos				= self->super.records_start;
 		self->super.records_end				= self->super.records_start + self->super.table_size_in_records * self->super.record_size_in_bytes;
 		self->super.free_start 				= (lu_p_byte*) self->super.records_end;
 		self->super.records_count 			= 0;
 		self->super.free_count				= 0;
-		self->super.full_size_in_bytes 		= full_size;
 
 		// own
 		self->mem_stack 				= mem_stack;

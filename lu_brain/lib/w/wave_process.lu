@@ -11,9 +11,12 @@
 		lu_assert(self);
 		lu_assert(block);
 
-		//Lu_Snapshot shot = lu_snapshot_create(self->super.mem, self->super.brain->s);
+		Lu_Snapshot shot = lu_snapshot_create(self->super.mem, self->super.brain->s);
 
+		lu_lim_list_append(self->snapshots, shot);
 		
+
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

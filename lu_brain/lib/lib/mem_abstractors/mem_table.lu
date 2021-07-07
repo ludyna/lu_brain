@@ -5,6 +5,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Table
 
+	void lu_mem_table_reset_default(Lu_Mem_Table self, const char* func, const char* file, int line)
+	{
+		lu_p_byte start 			= (lu_p_byte) self;
+		self->records_start 		= start + sizeof(struct lu_mem_table);
+		self->records_pos			= self->records_start;
+		self->records_end			= self->records_start + self->table_size_in_records * self->record_size_in_bytes;
+		self->free_start 			= (lu_p_byte*) self->records_end;
+		self->records_count 		= 0;
+		self->free_count			= 0;
+	}
+
     void lu_mem_table_realloc_default(
 		Lu_Mem_Table self, 
 		lu_size new_size_in_bytes, 
@@ -98,6 +109,7 @@
 
 		Lu_Mem_Table self 				= (Lu_Mem_Table) start;
 
+		self->reset 				= lu_mem_table_reset_default;
 		self->realloc 				= lu_mem_table_realloc_default;
 		self->destroy 				= lu_mem_table_destroy_default;
 		self->record_alloc 			= lu_mem_table_record_alloc_default;
@@ -108,13 +120,9 @@
 		self->record_size_in_bytes 	= record_size_in_bytes;
 		self->table_size_in_records = table_size_in_records;
 		self->flags 				= flags;
-		self->records_start 		= start + sizeof(struct lu_mem_table);
-		self->records_pos			= self->records_start;
-		self->records_end			= self->records_start + self->table_size_in_records * self->record_size_in_bytes;
-		self->free_start 			= (lu_p_byte*) self->records_end;
-		self->records_count 		= 0;
-		self->free_count			= 0;
 		self->full_size_in_bytes 	= full_size;
+
+		lu_mem_table_reset(self);
 
 		return self;
 	}

@@ -75,6 +75,8 @@
 
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
 
+		
+
 		lu_story_destroy(self->story);
 		lu_lim_list_destroy(self->snapshots);
 	}

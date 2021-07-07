@@ -92,6 +92,7 @@
 	};
 
 	struct lu_mem_table {
+		void 		(*reset)(Lu_Mem_Table, const char* func, const char* file, int line);
 		void 		(*realloc)(Lu_Mem_Table, lu_size new_size_in_bytes, lu_flags flags, const char* func, const char* file, int line);
 	 	void 		(*destroy)(Lu_Mem_Table, const char* func, const char* file, int line);
 
@@ -116,6 +117,7 @@
 		lu_size 		full_size_in_bytes;
 	};
 
+	#define lu_mem_table_reset(mt) mt->reset(mt, __func__, __FILE__, __LINE__)
 	#define lu_mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
 	#define lu_mem_table_destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
 

@@ -82,3 +82,24 @@
 		lu_list_node_remove_with_destroyer((Lu_List) self, node, lu_lim_list_l_node_destroy);
 	}
 
+	void lu_lim_list_clear(Lu_Lim_List self)
+	{
+		Lu_List list = (Lu_List) self;
+
+		if (self->node_before_destroy)
+		{
+			Lu_L_Node curr = list->first;
+			Lu_L_Node to_dest;
+			while (curr)
+			{
+				to_dest = curr;
+				curr 	= curr->next;
+
+				self->node_before_destroy(self, to_dest);
+			}
+		}	
+
+		lu_mem_table_reset(self->mem_table);
+
+		lu_list_init(list, list->mem);
+	}

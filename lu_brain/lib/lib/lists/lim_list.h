@@ -13,8 +13,7 @@
 		lu_size 		max_size;
 
 		// We need callbacks feature for this data structure because this data structure 
-		// "randomly" destroys its nodes while in lu_list, for example, we 
-		// fully control when nodes are created or destroyed
+		// "randomly" destroys its nodes 
 		void 			(*node_after_create)(Lu_Lim_List, Lu_L_Node);
 		void 			(*node_before_destroy)(Lu_Lim_List, Lu_L_Node);
 	};
@@ -53,3 +52,5 @@
 
 	Lu_L_Node lu_lim_list_append(Lu_Lim_List, lu_p_void);
 	void lu_lim_list_node_remove(Lu_Lim_List, Lu_L_Node);
+
+	void lu_lim_list_clear(Lu_Lim_List);
