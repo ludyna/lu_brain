@@ -2,6 +2,7 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
+	static void lu_save_wave_snapshot_node_before_destroy(Lu_Lim_List, Lu_L_Node);
 	static void lu_save_wave_destroy_virtual(Lu_Wave wave);
 	static void lu_find_wave_destroy_virtual(Lu_Wave wave);
 	static void lu_restore_wave_destroy_virtual(Lu_Wave wave);
@@ -38,8 +39,13 @@
 		self->super.step = lu_save_wave_step_virtual;
 		self->super.process = lu_save_wave_process_virtual;
 
-		self->story = lu_story_create(mem, lu_brain_recs_size(brain));
+		self->story = lu_story_create(mem, lu_brain_recs_size(brain)); 
+		lu_assert(self->story);
+
 		self->snapshots = lu_lim_list_create(mem, self->super.config.snapshots_size);
+		lu_assert(self->snapshots);
+
+		self->snapshots->node_before_destroy = lu_save_wave_snapshot_node_before_destroy;
 
 		return (Lu_Wave) self;
 	}
@@ -68,6 +74,19 @@
 		lu_mem_free(self->mem, (lu_p_byte) self);
 	} 
 
+	// Save
+
+	static void lu_save_wave_snapshot_node_before_destroy(Lu_Lim_List list, Lu_L_Node node)
+	{
+		lu_assert(list);
+		lu_assert(node);
+
+		lu_p_void value = lu_l_node_value(node);
+		lu_assert(value);
+
+		lu_snapshot_destroy((Lu_Snapshot) value);
+	}
+
 	static void lu_save_wave_destroy_virtual(Lu_Wave wave)
 	{
 		lu_assert(wave);
@@ -75,11 +94,13 @@
 
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
 
-		
+		lu_lim_list_clear(self->snapshots);
 
-		lu_story_destroy(self->story);
 		lu_lim_list_destroy(self->snapshots);
+		lu_story_destroy(self->story);
 	}
+
+	// Find
 
 	static void lu_find_wave_destroy_virtual(Lu_Wave wave)
 	{
@@ -88,6 +109,8 @@
 
 		lu_story_destroy(self->story);
 	}
+
+	// Restore
 
 	static void lu_restore_wave_destroy_virtual(Lu_Wave wave)
 	{

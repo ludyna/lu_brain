@@ -98,12 +98,13 @@
 	static void lu_snapshot_rec_destroy(Lu_Snapshot_Rec self, Lu_Mem mem);
 
 	struct lu_snapshot {
+		Lu_Mem mem;
 		Lu_S s;
 		Lu_Arr recs;
 	};
 
 	static Lu_Snapshot lu_snapshot_create(Lu_Mem mem, Lu_S s);
-	static void lu_snapshot_destroy(Lu_Snapshot self, Lu_Mem mem);
+	static void lu_snapshot_destroy(Lu_Snapshot self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
