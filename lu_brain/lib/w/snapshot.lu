@@ -40,12 +40,13 @@
 		lu_assert(self->recs);
 
 		Lu_Snapshot_Rec rec;
-		for(lu_size i = 0; i < lu_arr_count(self->recs); i++)
-		{
-			rec = (Lu_Snapshot_Rec) lu_arr_get(self->recs, i);
-			if (rec)
-				lu_snapshot_rec_destroy(rec, self->mem);
-		}
+		if (self->recs)
+			for(lu_size i = 0; i < lu_arr_count(self->recs); i++)
+			{
+				rec = (Lu_Snapshot_Rec) lu_arr_get(self->recs, i);
+				if (rec)
+					lu_snapshot_rec_destroy(rec, self->mem);
+			}
 
 		lu_arr_destroy(self->recs);
 

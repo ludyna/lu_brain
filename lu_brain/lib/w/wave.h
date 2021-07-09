@@ -101,6 +101,7 @@
 		Lu_Mem mem;
 		Lu_S s;
 		Lu_Arr recs;
+		// lu_size time;
 	};
 
 	static Lu_Snapshot lu_snapshot_create(Lu_Mem mem, Lu_S s);
