@@ -6,28 +6,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
-	enum s_cell_type {
-		SCT_CELL_3,
-		SCT_CELL_2, 
-		SCT_CELL
+	enum lu_s_cell_type {
+		LU_SCT_CELL_3,
+		LU_SCT_CELL_2, 
+		LU_SCT_CELL
 	};
 
- 	typedef struct s_cell* 				S_Cell;
- 	typedef struct s_cell_2* 			S_Cell_2;
- 	typedef struct s_cell_values*  		S_Cell_Values;
- 	typedef struct s_cell_3* 			S_Cell_3;
+ 	typedef struct lu_s_cell* 				Lu_S_Cell;
+ 	typedef struct lu_s_cell_2* 			Lu_S_Cell_2;
+ 	typedef struct lu_s_cell_values*  		Lu_S_Cell_Values;
+ 	typedef struct lu_s_cell_3* 			Lu_S_Cell_3;
 	
 	// Helpers
 
-	enum s_layer_type {
-		SLT_COMPONENTS,
-		SLT_PIXELS, 	
-		SLT_PYRAS,
-		SLT_BLOCKS
+	enum lu_s_layer_type {
+		LU_SLT_COMPONENTS,
+		LU_SLT_PIXELS, 	
+		LU_SLT_PYRAS,
+		LU_SLT_BLOCKS
 	};
 	
-	typedef struct s_layer_conf*		S_Layer_Conf;
-	typedef struct s_layer* 			S_Layer;
-	typedef struct s_rec*				S_Rec;
+	typedef struct lu_s_layer_conf*		Lu_S_Layer_Conf;
+	typedef struct lu_s_layer* 			Lu_S_Layer;
+	typedef struct lu_s_rec_layer*		Lu_S_Rec_Layer;
 	typedef struct lu_s* 				Lu_S;
 

@@ -5,12 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static S_Cell_Values s_cell_values_create(Lu_Mem mem, S_Layer_Conf conf)
+	static Lu_S_Cell_Values lu_s_cell_values_create(Lu_Mem mem, Lu_S_Layer_Conf conf)
 	{
 		lu_assert(mem);
 		lu_assert(conf);
 
-		S_Cell_Values self = (S_Cell_Values) lu_mem_alloc(mem, sizeof(struct s_cell_values));
+		Lu_S_Cell_Values self = (Lu_S_Cell_Values) lu_mem_alloc(mem, sizeof(struct lu_s_cell_values));
 		lu_assert(self);
 
 		self->conf = conf;
@@ -23,7 +23,7 @@
 		return self;
 	}
 
-	static void s_cell_values_destroy(S_Cell_Values self, Lu_Mem mem)
+	static void lu_s_cell_values_destroy(Lu_S_Cell_Values self, Lu_Mem mem)
 	{
 		lu_assert(self);
 		lu_assert(mem);

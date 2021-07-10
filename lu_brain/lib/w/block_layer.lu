@@ -19,14 +19,14 @@
 		self->s = s;
 		self->recs = lu_arr_create(mem, lu_arr_count(s->recs), false);
 
-		S_Rec s_rec;
-		Lu_Block_Rec_Layer rec;
+		Lu_S_Rec_Layer lu_s_rec_layer;
+		Lu_Rec_Layer rec;
 		for(lu_size i = 0; i < lu_arr_count(s->recs); i++)
 		{
-			s_rec = (S_Rec) lu_arr_get(s->recs, i);
-			lu_assert(s_rec);
+			lu_s_rec_layer = (Lu_S_Rec_Layer) lu_arr_get(s->recs, i);
+			lu_assert(lu_s_rec_layer);
 
-			rec = lu_block_rec_layer_create(mem, s_rec);
+			rec = lu_block_rec_layer_create(mem, lu_s_rec_layer);
 			lu_arr_append(self->recs, rec);
 		}
 
@@ -39,11 +39,11 @@
 		lu_assert(self->mem);
 		lu_assert(self->recs);
 
-		Lu_Block_Rec_Layer rec;
+		Lu_Rec_Layer rec;
 		if (self->recs)
 			for(lu_size i = 0; i < lu_arr_count(self->recs); i++)
 			{
-				rec = (Lu_Block_Rec_Layer) lu_arr_get(self->recs, i);
+				rec = (Lu_Rec_Layer) lu_arr_get(self->recs, i);
 				if (rec)
 					lu_block_rec_layer_destroy(rec, self->mem);
 			}

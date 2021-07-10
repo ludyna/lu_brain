@@ -22,9 +22,9 @@
 
 // Lu_Mem 				mem;
 // Lu_S				s;
-// S_Rec 				s_rec;
-// S_Cell				s_neu_com_0;
-// S_Cell 				s_neu_com_1;
+// Lu_S_Rec_Layer 				lu_s_rec_layer;
+// Lu_S_Cell				s_neu_com_0;
+// Lu_S_Cell 				s_neu_com_1;
 
 
 // setUp is executed for each test, even if test does nothing
@@ -78,17 +78,17 @@ void test_s_col1and2(void)
 	// s = brain->s;
 	// TEST_ASSERT(s);
 
-	// s_rec = s_mem_s_rec_get(s, 0);
-	// TEST_ASSERT(s_rec);
+	// lu_s_rec_layer = s_mem_lu_s_rec_layer_get(s, 0);
+	// TEST_ASSERT(lu_s_rec_layer);
 
-	// s_neu_com_0 = s_rec_v_cell_get(s_rec, 0, 0, 0, 0);
+	// s_neu_com_0 = lu_s_rec_layer_v_cell_get(lu_s_rec_layer, 0, 0, 0, 0);
 	// TEST_ASSERT(s_neu_com_0);
 
 
-	// s_rec = s_mem_s_rec_get(s, 1);
-	// TEST_ASSERT(s_rec);
+	// lu_s_rec_layer = s_mem_lu_s_rec_layer_get(s, 1);
+	// TEST_ASSERT(lu_s_rec_layer);
 
-	// s_neu_com_1 = s_rec_v_cell_get(s_rec, 0, 0, 0, 0);
+	// s_neu_com_1 = lu_s_rec_layer_v_cell_get(lu_s_rec_layer, 0, 0, 0, 0);
 	// TEST_ASSERT(s_neu_com_1);
 
 

@@ -82,24 +82,24 @@
 	// static Lu_Cell lu_cell_create
 
 	struct lu_layer {
-		S_Layer s_layer;
+		Lu_S_Layer lu_s_layer;
 
 		Lu_Cell* cells;
 	};
 
-	static Lu_Layer lu_layer_create(Lu_Mem mem, S_Layer s_layer);
+	static Lu_Layer lu_layer_create(Lu_Mem mem, Lu_S_Layer lu_s_layer);
 	static void lu_layer_destroy(Lu_Layer self, Lu_Mem mem);
 
-	struct lu_block_rec_layer {
-		S_Rec s_rec;
+	struct lu_rec_layer {
+		Lu_S_Rec_Layer lu_s_rec_layer;
 
-		struct lu_layer components_layer;
-		struct lu_layer pixels_layer;
-		struct lu_layer* pyras_layers;
+		struct lu_layer componentlu_s_layer;
+		struct lu_layer pixellu_s_layer;
+		struct lu_layer* pyralu_s_layers;
 	};
 
-	static Lu_Block_Rec_Layer lu_block_rec_layer_create(Lu_Mem mem, S_Rec s_rec);
-	static void lu_block_rec_layer_destroy(Lu_Block_Rec_Layer self, Lu_Mem mem);
+	static Lu_Rec_Layer lu_block_rec_layer_create(Lu_Mem mem, Lu_S_Rec_Layer lu_s_rec_layer);
+	static void lu_block_rec_layer_destroy(Lu_Rec_Layer self, Lu_Mem mem);
 
 	struct lu_block_layer {
 		Lu_Mem mem;

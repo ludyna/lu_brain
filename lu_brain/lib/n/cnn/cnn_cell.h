@@ -7,8 +7,8 @@
 
 	struct n_cell {
 		enum n_cell_type 		type;
-		S_Cell 					s_cell;
-		lu_size 				sl_ix;   	// nomer v s_layer
+		Lu_S_Cell 					s_cell;
+		lu_size 				sl_ix;   	// nomer v lu_s_layer
 
 		N_Lin 					b_l; 		
 		lu_value 				b_count;

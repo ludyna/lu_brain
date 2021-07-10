@@ -3,10 +3,10 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// S_Layer_Conf
+// Lu_S_Layer_Conf
 //
 
-	struct s_layer_conf {
+	struct lu_s_layer_conf {
 		lu_value 				orig_min;
 		lu_value 				orig_max;
 		lu_value 				max;
@@ -16,25 +16,25 @@
 		lu_size 				cells_size;
 	};
 
-	// s_layer_conf.lu
-	static S_Layer_Conf s_layer_conf_init(S_Layer_Conf, lu_value min, lu_value max, lu_size cells_size);
-	static void s_layer_conf_deinit(S_Layer_Conf self);
+	// lu_s_layer_conf.lu
+	static Lu_S_Layer_Conf lu_s_layer_conf_init(Lu_S_Layer_Conf, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_layer_conf_deinit(Lu_S_Layer_Conf self);
 
-	static inline lu_value s_layer_conf_norm(S_Layer_Conf self, lu_value request);
-	static inline lu_size s_layer_conf_ix(S_Layer_Conf self, lu_value val);
-	static inline struct lu_size_range s_layer_conf_ix_range(S_Layer_Conf self, lu_value val, lu_size nsc);
-	static inline lu_value s_layer_conf_calc_sig(S_Layer_Conf self, lu_size val_step_i, lu_value val);
-	static inline lu_value s_layer_conf_step_norm_dist(S_Layer_Conf self);
+	static inline lu_value lu_s_layer_conf_norm(Lu_S_Layer_Conf self, lu_value request);
+	static inline lu_size lu_s_layer_conf_ix(Lu_S_Layer_Conf self, lu_value val);
+	static inline struct lu_size_range lu_s_layer_conf_ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_layer_conf_calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_layer_conf_step_norm_dist(Lu_S_Layer_Conf self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// S_Layer
+// Lu_S_Layer
 //
 
-	struct s_layer {
+	struct lu_s_layer {
 		// vlasnyk
-		S_Rec 					rec;
+		Lu_S_Rec_Layer 					rec;
 
-		enum s_layer_type 		type;
+		enum lu_s_layer_type 		type;
 
 		lu_size 				l;
 		lu_size 				w;
@@ -42,16 +42,16 @@
 		lu_size 				d;				// komponenty v pershomu layer
 
 		lu_size 				cells_count;
-		S_Cell* 				cells;
+		Lu_S_Cell* 				cells;
 
-		S_Layer_Conf 			conf;		
+		Lu_S_Layer_Conf 			conf;		
 
 		lu_size 				n_cells_count; 	// cells_count potriben shob znayty n_sig dlia n_cell po yoho n_cell->s_ix v wave->w_neu->cells
 	};
 
-	static inline void s_layer_cell_set(S_Layer self, lu_size x, lu_size y, lu_size z, S_Cell val) 
+	static inline void lu_s_layer_cell_set(Lu_S_Layer self, lu_size x, lu_size y, lu_size z, Lu_S_Cell val) 
 	{
-		lu_user_assert_void(val, "S_Cell is NULL");
+		lu_user_assert_void(val, "Lu_S_Cell is NULL");
 		lu_user_assert_void(x < self->w, "x index out of range");
 		lu_user_assert_void(y < self->h, "y index out of range");
 		lu_user_assert_void(z < self->d, "z index out of range");
@@ -59,7 +59,7 @@
 		self->cells[z * self->w * self->h + y * self->w + x] = val; 
 	}
 
-	static inline S_Cell s_layer_cell_get(S_Layer self, lu_size x, lu_size y, lu_size z) 
+	static inline Lu_S_Cell lu_s_layer_cell_get(Lu_S_Layer self, lu_size x, lu_size y, lu_size z) 
 	{ 
 		lu_user_assert(x < self->w, "x index out of range");
 		lu_user_assert(y < self->h, "y index out of range");
@@ -68,35 +68,35 @@
 		return self->cells[z * self->w * self->h + y * self->w + x]; 
 	}
 
-	static inline lu_size s_layer_cells_size(S_Layer self) 
+	static inline lu_size lu_s_layer_cells_size(Lu_S_Layer self) 
 	{ 
 		return self->w * self->h * self->d; 
 	}
 
-	// s_layer.lu
-	static S_Layer s_layer_base_init(S_Layer self, S_Rec rec, enum s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
-	static void s_layer_base_deinit(S_Layer self);
+	// lu_s_layer.lu
+	static Lu_S_Layer lu_s_layer_base_init(Lu_S_Layer self, Lu_S_Rec_Layer rec, enum lu_s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
+	static void lu_s_layer_base_deinit(Lu_S_Layer self);
 
-	static void s_layer_component_cells_init(S_Layer self);
-	static void s_layer_component_cells_deinit(S_Layer self);
+	static void lu_s_layer_component_cells_init(Lu_S_Layer self);
+	static void lu_s_layer_component_cells_deinit(Lu_S_Layer self);
 
-	static void s_layer_pixel_cells_init(S_Layer self, S_Layer b_layer);
-	static void s_layer_pixel_cells_deinit(S_Layer self);
+	static void lu_s_layer_pixel_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
+	static void lu_s_layer_pixel_cells_deinit(Lu_S_Layer self);
 
-	static void s_layer_pyra_cells_init(S_Layer self, S_Layer b_layer);
-	static void s_layer_pyra_cells_deinit(S_Layer self);
+	static void lu_s_layer_pyra_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
+	static void lu_s_layer_pyra_cells_deinit(Lu_S_Layer self);
 
-	static void s_layer_block_cells_init(S_Layer self, S_Layer b_layer);
-	static void s_layer_block_cells_deinit(S_Layer self);
+	static void lu_s_layer_block_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
+	static void lu_s_layer_block_cells_deinit(Lu_S_Layer self);
 
-	static void s_layer_print_info(S_Layer self);
+	static void lu_s_layer_print_info(Lu_S_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// S_Rec
+// Lu_S_Rec_Layer
 //
 
-	// velyki masyvy v s_rec shob vykorystaty perevahu cpu keshuvania
-	struct s_rec {
+	// velyki masyvy v lu_s_rec_layer shob vykorystaty perevahu cpu keshuvania
+	struct lu_s_rec_layer {
 		
 		// Vlasnyk
 
@@ -115,71 +115,71 @@
 
 		lu_size 				cells_size;
 		lu_size 				cells_count;
-		struct s_cell* 			cells;
+		struct lu_s_cell* 			cells;
 
 		lu_size 				cells_2_size;
 		lu_size 				cells_2_count;
-		struct s_cell_2*		cells_2;
+		struct lu_s_cell_2*		cells_2;
 
 		lu_size 				cells_3_size;
 		lu_size 				cells_3_count;
-		struct s_cell_3* 		cells_3;
+		struct lu_s_cell_3* 		cells_3;
  
  		// Layers
 
-		struct s_layer_conf 	v_conf;	
-		struct s_layer_conf 	p_conf;
+		struct lu_s_layer_conf 	v_conf;	
+		struct lu_s_layer_conf 	p_conf;
 
 		lu_size 				data_layers_size;
-		struct s_layer* 		data_layers;
+		struct lu_s_layer* 		data_layers;
  
 		lu_size 				max_blocks_size;
 		lu_size 				block_layers_size;
-		struct s_layer* 		block_layers;
+		struct lu_s_layer* 		block_layers;
 	};
 
-	static inline S_Cell s_rec_v_cell_get(S_Rec self, lu_size l, lu_size x, lu_size y, lu_size z)
+	static inline Lu_S_Cell lu_s_rec_layer_v_cell_get(Lu_S_Rec_Layer self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
-		S_Layer layer = &self->data_layers[l];
-		return s_layer_cell_get(layer, x, y, z);
+		Lu_S_Layer layer = &self->data_layers[l];
+		return lu_s_layer_cell_get(layer, x, y, z);
 	}
 
-	// s_rec.lu
-	static S_Rec s_rec_create(Lu_S mem, Lu_Rec s_rec);
-	static void s_rec_destroy(S_Rec self);
+	// lu_s_rec_layer.lu
+	static Lu_S_Rec_Layer lu_s_rec_layer_create(Lu_S mem, Lu_Rec lu_s_rec_layer);
+	static void lu_s_rec_layer_destroy(Lu_S_Rec_Layer self);
 	
-	static S_Cell s_rec_cell_assign(S_Rec, S_Layer);   
-	static void s_rec_cell_retract(S_Rec self, S_Cell cell); 
+	static Lu_S_Cell lu_s_rec_layer_cell_assign(Lu_S_Rec_Layer, Lu_S_Layer);   
+	static void lu_s_rec_layer_cell_retract(Lu_S_Rec_Layer self, Lu_S_Cell cell); 
 
-	static S_Cell_2 s_rec_cell_2_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y);
-	static void s_rec_cell_2_retract(S_Rec self, S_Cell_2 cell);
+	static Lu_S_Cell_2 lu_s_rec_layer_cell_2_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer, lu_size x, lu_size y);
+	static void lu_s_rec_layer_cell_2_retract(Lu_S_Rec_Layer self, Lu_S_Cell_2 cell);
 
-	static S_Cell_3 s_rec_cell_3_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y, lu_size z);
-	static void s_rec_cell_3_retract(S_Rec self, S_Cell_3 cell);
+	static Lu_S_Cell_3 lu_s_rec_layer_cell_3_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z);
+	static void lu_s_rec_layer_cell_3_retract(Lu_S_Rec_Layer self, Lu_S_Cell_3 cell);
 
-	// s_rec_layer_inits.lu
-	static void s_rec_layers_init(S_Rec self);
-	static void s_rec_layers_deinit(S_Rec self);
+	// lu_s_rec_layer_layer_inits.lu
+	static void lu_s_rec_layer_layers_init(Lu_S_Rec_Layer self);
+	static void lu_s_rec_layer_layers_deinit(Lu_S_Rec_Layer self);
 	
-	static void s_rec_components_init(S_Rec self);
-	static void s_rec_components_deinit(S_Rec self);
+	static void lu_s_rec_layer_components_init(Lu_S_Rec_Layer self);
+	static void lu_s_rec_layer_components_deinit(Lu_S_Rec_Layer self);
 	
-	static void s_rec_pixels_init(S_Rec self); 
-	static void s_rec_pixels_deinit(S_Rec self); 
+	static void lu_s_rec_layer_pixels_init(Lu_S_Rec_Layer self); 
+	static void lu_s_rec_layer_pixels_deinit(Lu_S_Rec_Layer self); 
 
-	static void s_rec_pyras_init(S_Rec self); 
-	static void s_rec_pyras_deinit(S_Rec self);
+	static void lu_s_rec_layer_pyras_init(Lu_S_Rec_Layer self); 
+	static void lu_s_rec_layer_pyras_deinit(Lu_S_Rec_Layer self);
 
-	static void s_rec_blocks_init(S_Rec self);
-	static void s_rec_blocks_deinit(S_Rec self);
+	static void lu_s_rec_layer_blocks_init(Lu_S_Rec_Layer self);
+	static void lu_s_rec_layer_blocks_deinit(Lu_S_Rec_Layer self);
 
-	static void s_rec_print_info(S_Rec self);
+	static void lu_s_rec_layer_print_info(Lu_S_Rec_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Block
 //
 
-	struct lu_s_block {
+	struct lu_s_block_layer {
 
 	};
 
@@ -194,7 +194,7 @@
 		Lu_Arr 					recs;
 	};
 	
-	static inline S_Rec s_mem_s_rec_get(Lu_S self, lu_size indx) { return lu_arr_get(self->recs, indx); }
+	static inline Lu_S_Rec_Layer s_mem_lu_s_rec_layer_get(Lu_S self, lu_size indx) { return lu_arr_get(self->recs, indx); }
 
 	// s.lu
 	static Lu_S s_mem_create(Lu_Brain brain);

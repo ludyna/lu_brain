@@ -2,9 +2,9 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static S_Cell s_cell_init(S_Cell self, enum s_cell_type type, S_Layer layer, lu_size l_ix)
+	static Lu_S_Cell lu_s_cell_init(Lu_S_Cell self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix)
 	{
-		lu_user_assert(layer, "S_Layer is NULL");
+		lu_user_assert(layer, "Lu_S_Layer is NULL");
 
 		self->type 			= type;
 
@@ -17,15 +17,15 @@
 		return self;
 	}
 
-	static void s_cell_deinit(S_Cell self)
+	static void lu_s_cell_deinit(Lu_S_Cell self)
 	{
-		lu_user_assert_void(self, "S_Cell is NULL");
+		lu_user_assert_void(self, "Lu_S_Cell is NULL");
 
 	}
 
-	static S_Cell_2 s_cell_2_init(S_Cell_2 self, enum s_cell_type type, S_Layer layer, lu_size l_ix, lu_size x, lu_size y)
+	static Lu_S_Cell_2 lu_s_cell_2_init(Lu_S_Cell_2 self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y)
 	{
-		s_cell_init((S_Cell) self, type, layer, l_ix);
+		lu_s_cell_init((Lu_S_Cell) self, type, layer, l_ix);
 
 		self->x = x;
 		self->y = y;
@@ -33,93 +33,93 @@
 		return self;
 	}
 
-	static void s_cell_2_deinit(S_Cell_2 self)
+	static void lu_s_cell_2_deinit(Lu_S_Cell_2 self)
 	{
-		lu_user_assert_void(self, "S_Cell_2 is NULL");
+		lu_user_assert_void(self, "Lu_S_Cell_2 is NULL");
 		
 	}
 
-	static S_Cell_3 s_cell_3_init(S_Cell_3 self, S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z)
+	static Lu_S_Cell_3 lu_s_cell_3_init(Lu_S_Cell_3 self, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z)
 	{
-		lu_user_assert(layer, "S_Layer is NULL");
-		lu_user_assert(layer->rec, "S_Rec is NULL");
+		lu_user_assert(layer, "Lu_S_Layer is NULL");
+		lu_user_assert(layer->rec, "Lu_S_Rec_Layer is NULL");
 
-		s_cell_2_init((S_Cell_2) self, SCT_CELL_3, layer, l_ix, x, y);
+		lu_s_cell_2_init((Lu_S_Cell_2) self, LU_SCT_CELL_3, layer, l_ix, x, y);
 
 		// zbudzheni neyrony ce v wave
-		S_Rec rec 			= layer->rec;
+		Lu_S_Rec_Layer rec 			= layer->rec;
 
 		self->z 			= z;
-		self->v 			= s_cell_values_create(lu_g_mem, &rec->v_conf);
-		self->p 			= s_cell_values_create(lu_g_mem, &rec->p_conf);
+		self->v 			= lu_s_cell_values_create(lu_g_mem, &rec->v_conf);
+		self->p 			= lu_s_cell_values_create(lu_g_mem, &rec->p_conf);
 
 		return self;
 	}
 
-	static void s_cell_3_deinit(S_Cell_3 self)
+	static void lu_s_cell_3_deinit(Lu_S_Cell_3 self)
 	{
 		lu_user_assert_void(self, "S_Cell3 is NULL");
 
 		if (self->v)
-			s_cell_values_destroy(self->v, lu_g_mem);
+			lu_s_cell_values_destroy(self->v, lu_g_mem);
 	
 		if (self->p)
-			s_cell_values_destroy(self->p, lu_g_mem);
+			lu_s_cell_values_destroy(self->p, lu_g_mem);
 	}
 
-	static S_Cell s_component_links_alloc(S_Cell self, S_Rec rec)
+	static Lu_S_Cell s_component_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
 	{
-		lu_user_assert(self->type == SCT_CELL_3, "Wrong self type");
+		lu_user_assert(self->type == LU_SCT_CELL_3, "Wrong self type");
 
-		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell));
+		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell));
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
 
-	static S_Cell s_pixel_links_alloc(S_Cell self, S_Rec rec)
+	static Lu_S_Cell s_pixel_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
 	{
-		lu_user_assert(self->type == SCT_CELL_2, "Wrong self type");
+		lu_user_assert(self->type == LU_SCT_CELL_2, "Wrong self type");
 		
-		self->b = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * rec->cells_d);
+		self->b = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * rec->cells_d);
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * 4);
+		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * 4);
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
-	static S_Cell s_pyra_links_alloc(S_Cell self, S_Rec rec)
+	static Lu_S_Cell s_pyra_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
 	{
-		lu_user_assert(self->type == SCT_CELL_2, "Wrong self type");
+		lu_user_assert(self->type == LU_SCT_CELL_2, "Wrong self type");
 
-		self->b = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * 4);
+		self->b = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * 4);
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell) * 4);
+		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * 4);
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
-	static S_Cell s_block_links_alloc(S_Cell self, S_Rec rec)
+	static Lu_S_Cell s_block_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
 	{
-		lu_user_assert(self->type == SCT_CELL, "Wrong self type");
+		lu_user_assert(self->type == LU_SCT_CELL, "Wrong self type");
 
-		self->b = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell));
+		self->b = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell));
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (S_Cell*) lu_g_mem_alloc(sizeof(S_Cell));
+		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell));
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
-	static void s_cell_links_free(S_Cell self)
+	static void lu_s_cell_links_free(Lu_S_Cell self)
 	{
-		lu_user_assert_void(self, "S_Cell is NULL");
+		lu_user_assert_void(self, "Lu_S_Cell is NULL");
 
 		if (self->b)
 		{

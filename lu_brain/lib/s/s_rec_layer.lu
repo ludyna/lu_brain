@@ -2,12 +2,12 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static S_Rec s_rec_create(Lu_S s, Lu_Rec rec)
+	static Lu_S_Rec_Layer lu_s_rec_layer_create(Lu_S s, Lu_Rec rec)
 	{
 		lu_assert(s);
 		lu_assert(rec);
 
-		S_Rec self = (S_Rec) lu_g_mem_alloc(sizeof(struct s_rec));
+		Lu_S_Rec_Layer self = (Lu_S_Rec_Layer) lu_g_mem_alloc(sizeof(struct lu_s_rec_layer));
 		lu_assert(self);
 
 		self->mem				= s;
@@ -30,8 +30,8 @@
 		///////////////////////////////////////
 		// Confs
 
-		s_layer_conf_init(&self->v_conf, rec->config.v_min, rec->config.v_max, rec->config.v_neu_size);
-		s_layer_conf_init(&self->p_conf, rec->config.v_min, rec->config.v_max, rec->config.p_neu_size);
+		lu_s_layer_conf_init(&self->v_conf, rec->config.v_min, rec->config.v_max, rec->config.v_neu_size);
+		lu_s_layer_conf_init(&self->p_conf, rec->config.v_min, rec->config.v_max, rec->config.p_neu_size);
 
 		///////////////////////////////////////
 		// Allocate Lu_Data Layers
@@ -40,7 +40,7 @@
 		
 		++self->data_layers_size; // + odyn dlia component 
 																				
-		self->data_layers = (struct s_layer*) lu_g_mem_alloc(sizeof(struct s_layer) * self->data_layers_size);
+		self->data_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->data_layers_size);
 		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
 
 		///////////////////////////////////////
@@ -49,33 +49,33 @@
 		self->max_blocks_size 		= rec->config.max_blocks_size;
 		self->block_layers_size 	= self->max_blocks_size + 1;	
 
-		self->block_layers = (struct s_layer*) lu_g_mem_alloc(sizeof(struct s_layer) * self->block_layers_size);
+		self->block_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->block_layers_size);
 		lu_user_assert(self->block_layers, "Cannot allocate av layers"); 
 
 		///////////////////////////////////////
 		// All layers init
 
-		s_rec_layers_init(self);
+		lu_s_rec_layer_layers_init(self);
 
 		///////////////////////////////////////
 		// Allocate cells
 
-		self->cells = (struct s_cell*) lu_g_mem_alloc(sizeof(struct s_cell) * self->cells_size);
+		self->cells = (struct lu_s_cell*) lu_g_mem_alloc(sizeof(struct lu_s_cell) * self->cells_size);
 		lu_user_assert(self->cells, "Cannot allocate cells"); 
 
-		self->cells_2 = (struct s_cell_2*) lu_g_mem_alloc(sizeof(struct s_cell_2) * self->cells_2_size);
+		self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
 		lu_user_assert(self->cells_2, "Cannot allocate cells"); 
 
-		self->cells_3 = (struct s_cell_3*) lu_g_mem_alloc(sizeof(struct s_cell_3) * self->cells_3_size);
+		self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
 		lu_user_assert(self->cells_3, "Cannot allocate cells"); 
 
 		///////////////////////////////////////
 		// Init cells
 
-		s_rec_components_init(self);
-		s_rec_pixels_init(self);
-		s_rec_pyras_init(self);
-		s_rec_blocks_init(self);
+		lu_s_rec_layer_components_init(self);
+		lu_s_rec_layer_pixels_init(self);
+		lu_s_rec_layer_pyras_init(self);
+		lu_s_rec_layer_blocks_init(self);
 
 		//lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
 
@@ -86,19 +86,19 @@
 		return self;
 	}
 
-	static void s_rec_destroy(S_Rec self)
+	static void lu_s_rec_layer_destroy(Lu_S_Rec_Layer self)
 	{
 		lu_assert(self); 
 
-		s_rec_blocks_deinit(self);
-		s_rec_pyras_deinit(self);
-		s_rec_pixels_deinit(self);
-		s_rec_components_deinit(self);
+		lu_s_rec_layer_blocks_deinit(self);
+		lu_s_rec_layer_pyras_deinit(self);
+		lu_s_rec_layer_pixels_deinit(self);
+		lu_s_rec_layer_components_deinit(self);
 
-		s_rec_layers_deinit(self);
+		lu_s_rec_layer_layers_deinit(self);
 
-		s_layer_conf_deinit(&self->p_conf);
-		s_layer_conf_deinit(&self->v_conf);
+		lu_s_layer_conf_deinit(&self->p_conf);
+		lu_s_layer_conf_deinit(&self->v_conf);
 
 		lu_g_mem_free((lu_p_byte) self->cells_3);
 		lu_g_mem_free((lu_p_byte) self->cells_2);
@@ -110,17 +110,17 @@
 	}
 
 	/*
-	** Allocate space for S_Cell
+	** Allocate space for Lu_S_Cell
 	*/
-	static S_Cell s_rec_cell_assign(S_Rec self, S_Layer layer)
+	static Lu_S_Cell lu_s_rec_layer_cell_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer)
 	{
-		lu_user_assert(self->cells_count < self->cells_size, "Out of space for S_Cell");
+		lu_user_assert(self->cells_count < self->cells_size, "Out of space for Lu_S_Cell");
 
-		S_Cell neu = &self->cells[self->cells_count];
-		neu = s_cell_init(neu, SCT_CELL, layer, layer->cells_count);
-		lu_user_assert(neu, "Cannot init S_Cell");
+		Lu_S_Cell neu = &self->cells[self->cells_count];
+		neu = lu_s_cell_init(neu, LU_SCT_CELL, layer, layer->cells_count);
+		lu_user_assert(neu, "Cannot init Lu_S_Cell");
 
-		s_layer_cell_set(layer, 0, 0, 0, neu);
+		lu_s_layer_cell_set(layer, 0, 0, 0, neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
@@ -129,20 +129,20 @@
 		return neu;
 	}  
 
-	static void s_rec_cell_retract(S_Rec self, S_Cell cell)
+	static void lu_s_rec_layer_cell_retract(Lu_S_Rec_Layer self, Lu_S_Cell cell)
 	{
-		s_cell_deinit(cell);
+		lu_s_cell_deinit(cell);
 	}
 
-	static S_Cell_2 s_rec_cell_2_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y)
+	static Lu_S_Cell_2 lu_s_rec_layer_cell_2_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer, lu_size x, lu_size y)
 	{
-		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for S_Cell_2");
+		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for Lu_S_Cell_2");
 
-		S_Cell_2 neu = &self->cells_2[self->cells_2_count];
-		neu = s_cell_2_init(neu, SCT_CELL_2, layer, layer->cells_count, x, y);
-		lu_user_assert(neu, "Cannot init S_Cell_2");
+		Lu_S_Cell_2 neu = &self->cells_2[self->cells_2_count];
+		neu = lu_s_cell_2_init(neu, LU_SCT_CELL_2, layer, layer->cells_count, x, y);
+		lu_user_assert(neu, "Cannot init Lu_S_Cell_2");
 
-		s_layer_cell_set(layer, x, y, 0, (S_Cell) neu);
+		lu_s_layer_cell_set(layer, x, y, 0, (Lu_S_Cell) neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
@@ -151,20 +151,20 @@
 		return neu;
 	}
 
-	static void s_rec_cell_2_retract(S_Rec self, S_Cell_2 cell)
+	static void lu_s_rec_layer_cell_2_retract(Lu_S_Rec_Layer self, Lu_S_Cell_2 cell)
 	{
-		s_cell_2_deinit(cell);
+		lu_s_cell_2_deinit(cell);
 	}
 
-	static S_Cell_3 s_rec_cell_3_assign(S_Rec self, S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static Lu_S_Cell_3 lu_s_rec_layer_cell_3_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z)
 	{
-		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for S_Cell_3");
+		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
 
-		S_Cell_3 neu = &self->cells_3[self->cells_3_count];
-		neu = s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
-		lu_user_assert(neu, "Cannot init S_Cell_3");
+		Lu_S_Cell_3 neu = &self->cells_3[self->cells_3_count];
+		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
+		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
 
-		s_layer_cell_set(layer, x, y, z, (S_Cell) neu);
+		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell) neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
@@ -173,21 +173,21 @@
 		return neu;
 	}
 
-	static void s_rec_cell_3_retract(S_Rec self, S_Cell_3 cell)
+	static void lu_s_rec_layer_cell_3_retract(Lu_S_Rec_Layer self, Lu_S_Cell_3 cell)
 	{
-		s_cell_3_deinit(cell);
+		lu_s_cell_3_deinit(cell);
 	}
 
-	static void s_rec_print_layers_info(struct s_layer* layers, lu_size size, lu_size print_top_size)
+	static void lu_s_rec_layer_print_layers_info(struct lu_s_layer* layers, lu_size size, lu_size print_top_size)
 	{
 		if (size < 1) return;
 		if (size < print_top_size) print_top_size = size;
-		S_Layer layer;
+		Lu_S_Layer layer;
 
 		for (lu_size i = 0; i < print_top_size; i++)
 		{
 			layer = &layers[i];
-	 		s_layer_print_info(layer);
+	 		lu_s_layer_print_info(layer);
 		}
  		 
 		lu_size print_last = size > print_top_size ? 1 : 0;
@@ -198,16 +198,16 @@
  		if (print_last)
  		{
 			layer = &layers[size - 1];
- 			s_layer_print_info(layer);
+ 			lu_s_layer_print_info(layer);
  		}
 	}
 
 
-	static void s_rec_print_info(S_Rec self)
+	static void lu_s_rec_layer_print_info(Lu_S_Rec_Layer self)
 	{
-		lu_user_assert_void(self, "S_Rec is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
 
-		lu_debug("\n\n 	-- S_Rec #%lu info: ", self->id);
+		lu_debug("\n\n 	-- Lu_S_Rec_Layer #%lu info: ", self->id);
  		lu_debug("\n 	 	%-19s %lu", "cells_w:", self->cells_w);
  		lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
  		lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
@@ -223,9 +223,9 @@
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
  		lu_debug("\n 	 	");
 
- 		s_rec_print_layers_info(self->data_layers, self->data_layers_size, 3);
+ 		lu_s_rec_layer_print_layers_info(self->data_layers, self->data_layers_size, 3);
 
 		lu_debug("\n"); 
 		
- 		s_rec_print_layers_info(self->block_layers, self->block_layers_size, 1);
+ 		lu_s_rec_layer_print_layers_info(self->block_layers, self->block_layers_size, 1);
 	}
