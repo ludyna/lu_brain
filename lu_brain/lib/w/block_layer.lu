@@ -5,13 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Snapshot lu_snapshot_create(Lu_Mem mem, Lu_S s)
+	static Lu_Block_Layer lu_block_layer_create(Lu_Mem mem, Lu_S s)
 	{
 		lu_assert(mem);
 		lu_assert(s);
 		lu_assert(s->recs);
 
-		Lu_Snapshot self = (Lu_Snapshot) lu_mem_alloc(mem, sizeof(struct lu_snapshot));
+		Lu_Block_Layer self = (Lu_Block_Layer) lu_mem_alloc(mem, sizeof(struct lu_block_layer));
 		lu_assert(self);
 
 
@@ -20,32 +20,32 @@
 		self->recs = lu_arr_create(mem, lu_arr_count(s->recs), false);
 
 		S_Rec s_rec;
-		Lu_Snapshot_Rec rec;
+		Lu_Block_Rec_Layer rec;
 		for(lu_size i = 0; i < lu_arr_count(s->recs); i++)
 		{
 			s_rec = (S_Rec) lu_arr_get(s->recs, i);
 			lu_assert(s_rec);
 
-			rec = lu_snapshot_rec_create(mem, s_rec);
+			rec = lu_block_rec_layer_create(mem, s_rec);
 			lu_arr_append(self->recs, rec);
 		}
 
 		return self;
 	}
 
-	static void lu_snapshot_destroy(Lu_Snapshot self)
+	static void lu_block_layer_destroy(Lu_Block_Layer self)
 	{
 		lu_assert(self);
 		lu_assert(self->mem);
 		lu_assert(self->recs);
 
-		Lu_Snapshot_Rec rec;
+		Lu_Block_Rec_Layer rec;
 		if (self->recs)
 			for(lu_size i = 0; i < lu_arr_count(self->recs); i++)
 			{
-				rec = (Lu_Snapshot_Rec) lu_arr_get(self->recs, i);
+				rec = (Lu_Block_Rec_Layer) lu_arr_get(self->recs, i);
 				if (rec)
-					lu_snapshot_rec_destroy(rec, self->mem);
+					lu_block_rec_layer_destroy(rec, self->mem);
 			}
 
 		lu_arr_destroy(self->recs);

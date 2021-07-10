@@ -10,7 +10,7 @@
         self->flags                 = 0;
         self->contrast_vs_color     = 0.5;
         self->fire_breakpoint       = 0.9;
-        self->snapshots_size        = 50;
+        self->block_layers_size        = 50;
 
         return self;
     }   
@@ -23,7 +23,7 @@
             .flags                        = 0,
     		.contrast_vs_color            = 0.5,  	// nemaye znachenia dlia save
     		.fire_breakpoint              = 0.9,  	// potribna povna kopiya
-            .snapshots_size               = 50
+            .block_layers_size               = 50
     	},
     	// LU_WC_FIND_FULL_CONTRAST
     	{

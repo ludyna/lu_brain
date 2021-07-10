@@ -71,7 +71,7 @@
 	static inline lu_bool lu_wave_is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE_RESTORE; }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Snapshot
+// Lu_Block_Layer
 
 	struct lu_cell {
 		Lu_Layer layer;
@@ -90,22 +90,33 @@
 	static Lu_Layer lu_layer_create(Lu_Mem mem, S_Layer s_layer);
 	static void lu_layer_destroy(Lu_Layer self, Lu_Mem mem);
 
-	struct lu_snapshot_rec {
+	struct lu_block_rec_layer {
 		S_Rec s_rec;
+
+		struct lu_layer components_layer;
+		struct lu_layer pixels_layer;
+		struct lu_layer* pyras_layers;
 	};
 
-	static Lu_Snapshot_Rec lu_snapshot_rec_create(Lu_Mem mem, S_Rec s_rec);
-	static void lu_snapshot_rec_destroy(Lu_Snapshot_Rec self, Lu_Mem mem);
+	static Lu_Block_Rec_Layer lu_block_rec_layer_create(Lu_Mem mem, S_Rec s_rec);
+	static void lu_block_rec_layer_destroy(Lu_Block_Rec_Layer self, Lu_Mem mem);
 
-	struct lu_snapshot {
+	struct lu_block_layer {
 		Lu_Mem mem;
 		Lu_S s;
+	
 		Lu_Arr recs;
-		// lu_size time;
+
+		// block (time) index, we dont save reference to Lu_Block
+		// because they might be destroyed and we don't want to copy it
+		// (for space/speed performance)
+		lu_size story_index; 	
+							
+		Lu_Cell cell; // resulting block_layer cell	
 	};
 
-	static Lu_Snapshot lu_snapshot_create(Lu_Mem mem, Lu_S s);
-	static void lu_snapshot_destroy(Lu_Snapshot self);
+	static Lu_Block_Layer lu_block_layer_create(Lu_Mem mem, Lu_S s);
+	static void lu_block_layer_destroy(Lu_Block_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
@@ -115,7 +126,10 @@
 
 		Lu_Story story;
 
-		Lu_Lim_List snapshots;
+		Lu_Lim_List block_layers;
+
+		// max size is lu_lim_list_size(self->block_layers)
+		struct lu_layer* block_layer_layers;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
