@@ -28,6 +28,7 @@
 	
 	typedef struct lu_s_layer_conf*		Lu_S_Layer_Conf;
 	typedef struct lu_s_layer* 			Lu_S_Layer;
-	typedef struct lu_s_rec_layer*		Lu_S_Rec_Layer;
+	typedef struct lu_s_rec_rg*			Lu_S_Rec_Rg;
+	typedef struct lu_s_story_rg*  		Lu_S_Story_Rg;
 	typedef struct lu_s* 				Lu_S;
 

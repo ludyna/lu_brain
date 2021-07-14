@@ -2,9 +2,9 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */  
 
-	static void lu_s_rec_layer_layers_init(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_layers_init(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
 		lu_user_assert_void(self->block_layers, "self->block_layers is NULL");
 
@@ -73,9 +73,9 @@
 		}
 	}
 
-	static void lu_s_rec_layer_layers_deinit(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_layers_deinit(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		Lu_S_Layer layer;
 		for (lu_size i = 0; i < self->data_layers_size; i++)
@@ -91,25 +91,25 @@
 		}
 	}
 
-	static void lu_s_rec_layer_components_init(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_components_init(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
 
 		if (self->data_layers_size > 0)
 			lu_s_layer_component_cells_init(&self->data_layers[0]);
 	}
 
-	static void lu_s_rec_layer_components_deinit(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_components_deinit(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		lu_s_layer_component_cells_deinit(&self->data_layers[0]);
 	}
 
-	static void lu_s_rec_layer_pixels_init(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_pixels_init(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
 
 		Lu_S_Layer layer 		= &self->data_layers[1];
@@ -118,17 +118,17 @@
 		lu_s_layer_pixel_cells_init(layer, b_layer);
 	}
 
-	static void lu_s_rec_layer_pixels_deinit(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_pixels_deinit(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 	
 		if (self->data_layers_size > 1)
 			lu_s_layer_pixel_cells_deinit(&self->data_layers[1]);
 	}
 
-	static void lu_s_rec_layer_pyras_init(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_pyras_init(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		Lu_S_Layer layer;
 		Lu_S_Layer b_layer = NULL;
@@ -142,9 +142,9 @@
 		}
 	}
 
-	static void lu_s_rec_layer_pyras_deinit(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_pyras_deinit(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		for(lu_size i = 0; i < self->data_layers_size; i++)
 		{
@@ -152,9 +152,9 @@
 		}
 	}
 
-	static void lu_s_rec_layer_blocks_init(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_blocks_init(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		Lu_S_Layer layer;
 		Lu_S_Layer b_layer = NULL;
@@ -178,9 +178,9 @@
 		}
 	}
 
-	static void lu_s_rec_layer_blocks_deinit(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_blocks_deinit(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		for(lu_size i = 0; i < self->block_layers_size; i++)
 		{

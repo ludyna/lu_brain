@@ -42,12 +42,12 @@
 	static Lu_S_Cell_3 lu_s_cell_3_init(Lu_S_Cell_3 self, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(layer, "Lu_S_Layer is NULL");
-		lu_user_assert(layer->rec, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert(layer->rec, "Lu_S_Rec_Rg is NULL");
 
 		lu_s_cell_2_init((Lu_S_Cell_2) self, LU_SCT_CELL_3, layer, l_ix, x, y);
 
 		// zbudzheni neyrony ce v wave
-		Lu_S_Rec_Layer rec 			= layer->rec;
+		Lu_S_Rec_Rg rec 			= layer->rec;
 
 		self->z 			= z;
 		self->v 			= lu_s_cell_values_create(lu_g_mem, &rec->v_conf);
@@ -67,7 +67,7 @@
 			lu_s_cell_values_destroy(self->p, lu_g_mem);
 	}
 
-	static Lu_S_Cell s_component_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
+	static Lu_S_Cell s_component_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL_3, "Wrong self type");
 
@@ -78,7 +78,7 @@
 	}
 
 
-	static Lu_S_Cell s_pixel_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
+	static Lu_S_Cell s_pixel_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL_2, "Wrong self type");
 		
@@ -91,7 +91,7 @@
 		return self;
 	}
 
-	static Lu_S_Cell s_pyra_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
+	static Lu_S_Cell s_pyra_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL_2, "Wrong self type");
 
@@ -104,7 +104,7 @@
 		return self;
 	}
 
-	static Lu_S_Cell s_block_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer rec)
+	static Lu_S_Cell s_block_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL, "Wrong self type");
 

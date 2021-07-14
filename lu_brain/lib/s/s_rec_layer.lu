@@ -2,12 +2,12 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static Lu_S_Rec_Layer lu_s_rec_layer_create(Lu_S s, Lu_Rec rec)
+	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_S s, Lu_Rec rec)
 	{
 		lu_assert(s);
 		lu_assert(rec);
 
-		Lu_S_Rec_Layer self = (Lu_S_Rec_Layer) lu_g_mem_alloc(sizeof(struct lu_s_rec_layer));
+		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_g_mem_alloc(sizeof(struct lu_s_rec_rg));
 		lu_assert(self);
 
 		self->mem				= s;
@@ -55,7 +55,7 @@
 		///////////////////////////////////////
 		// All layers init
 
-		lu_s_rec_layer_layers_init(self);
+		lu_s_rec_rg_layers_init(self);
 
 		///////////////////////////////////////
 		// Allocate cells
@@ -72,10 +72,10 @@
 		///////////////////////////////////////
 		// Init cells
 
-		lu_s_rec_layer_components_init(self);
-		lu_s_rec_layer_pixels_init(self);
-		lu_s_rec_layer_pyras_init(self);
-		lu_s_rec_layer_blocks_init(self);
+		lu_s_rec_rg_components_init(self);
+		lu_s_rec_rg_pixels_init(self);
+		lu_s_rec_rg_pyras_init(self);
+		lu_s_rec_rg_blocks_init(self);
 
 		//lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
 
@@ -86,16 +86,16 @@
 		return self;
 	}
 
-	static void lu_s_rec_layer_destroy(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self)
 	{
 		lu_assert(self); 
 
-		lu_s_rec_layer_blocks_deinit(self);
-		lu_s_rec_layer_pyras_deinit(self);
-		lu_s_rec_layer_pixels_deinit(self);
-		lu_s_rec_layer_components_deinit(self);
+		lu_s_rec_rg_blocks_deinit(self);
+		lu_s_rec_rg_pyras_deinit(self);
+		lu_s_rec_rg_pixels_deinit(self);
+		lu_s_rec_rg_components_deinit(self);
 
-		lu_s_rec_layer_layers_deinit(self);
+		lu_s_rec_rg_layers_deinit(self);
 
 		lu_s_layer_conf_deinit(&self->p_conf);
 		lu_s_layer_conf_deinit(&self->v_conf);
@@ -112,7 +112,7 @@
 	/*
 	** Allocate space for Lu_S_Cell
 	*/
-	static Lu_S_Cell lu_s_rec_layer_cell_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer)
+	static Lu_S_Cell lu_s_rec_rg_cell_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer)
 	{
 		lu_user_assert(self->cells_count < self->cells_size, "Out of space for Lu_S_Cell");
 
@@ -129,12 +129,12 @@
 		return neu;
 	}  
 
-	static void lu_s_rec_layer_cell_retract(Lu_S_Rec_Layer self, Lu_S_Cell cell)
+	static void lu_s_rec_rg_cell_retract(Lu_S_Rec_Rg self, Lu_S_Cell cell)
 	{
 		lu_s_cell_deinit(cell);
 	}
 
-	static Lu_S_Cell_2 lu_s_rec_layer_cell_2_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer, lu_size x, lu_size y)
+	static Lu_S_Cell_2 lu_s_rec_rg_cell_2_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y)
 	{
 		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for Lu_S_Cell_2");
 
@@ -151,12 +151,12 @@
 		return neu;
 	}
 
-	static void lu_s_rec_layer_cell_2_retract(Lu_S_Rec_Layer self, Lu_S_Cell_2 cell)
+	static void lu_s_rec_rg_cell_2_retract(Lu_S_Rec_Rg self, Lu_S_Cell_2 cell)
 	{
 		lu_s_cell_2_deinit(cell);
 	}
 
-	static Lu_S_Cell_3 lu_s_rec_layer_cell_3_assign(Lu_S_Rec_Layer self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static Lu_S_Cell_3 lu_s_rec_rg_cell_3_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z)
 	{
 		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
 
@@ -173,12 +173,12 @@
 		return neu;
 	}
 
-	static void lu_s_rec_layer_cell_3_retract(Lu_S_Rec_Layer self, Lu_S_Cell_3 cell)
+	static void lu_s_rec_rg_cell_3_retract(Lu_S_Rec_Rg self, Lu_S_Cell_3 cell)
 	{
 		lu_s_cell_3_deinit(cell);
 	}
 
-	static void lu_s_rec_layer_print_layers_info(struct lu_s_layer* layers, lu_size size, lu_size print_top_size)
+	static void lu_s_rec_rg_print_layers_info(struct lu_s_layer* layers, lu_size size, lu_size print_top_size)
 	{
 		if (size < 1) return;
 		if (size < print_top_size) print_top_size = size;
@@ -203,11 +203,11 @@
 	}
 
 
-	static void lu_s_rec_layer_print_info(Lu_S_Rec_Layer self)
+	static void lu_s_rec_rg_print_info(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Layer is NULL");
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
-		lu_debug("\n\n 	-- Lu_S_Rec_Layer #%lu info: ", self->id);
+		lu_debug("\n\n 	-- Lu_S_Rec_Rg #%lu info: ", self->id);
  		lu_debug("\n 	 	%-19s %lu", "cells_w:", self->cells_w);
  		lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
  		lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
@@ -223,9 +223,9 @@
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
  		lu_debug("\n 	 	");
 
- 		lu_s_rec_layer_print_layers_info(self->data_layers, self->data_layers_size, 3);
+ 		lu_s_rec_rg_print_layers_info(self->data_layers, self->data_layers_size, 3);
 
 		lu_debug("\n"); 
 		
- 		lu_s_rec_layer_print_layers_info(self->block_layers, self->block_layers_size, 1);
+ 		lu_s_rec_rg_print_layers_info(self->block_layers, self->block_layers_size, 1);
 	}

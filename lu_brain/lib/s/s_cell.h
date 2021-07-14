@@ -63,10 +63,10 @@
 	static Lu_S_Cell_3 lu_s_cell_3_init(Lu_S_Cell_3 self, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z);
 	static void lu_s_cell_3_deinit(Lu_S_Cell_3 self);
 
-	static Lu_S_Cell s_component_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer);
-	static Lu_S_Cell s_pixel_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer);
-	static Lu_S_Cell s_pyra_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer);
-	static Lu_S_Cell s_block_links_alloc(Lu_S_Cell self, Lu_S_Rec_Layer); 
+	static Lu_S_Cell s_component_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg);
+	static Lu_S_Cell s_pixel_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg);
+	static Lu_S_Cell s_pyra_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg);
+	static Lu_S_Cell s_block_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg); 
 	static void lu_s_cell_links_free(Lu_S_Cell self);
 
 	// s_neu_connects.lu

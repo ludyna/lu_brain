@@ -5,8 +5,8 @@
 
 typedef struct lu_cell* Lu_Cell;
 typedef struct lu_layer* Lu_Layer;
-typedef struct lu_rec_layer* Lu_Rec_Layer;
-typedef struct lu_block_layer* Lu_Block_Layer;
+typedef struct lu_rec_rg* Lu_Rec_Rg;
+typedef struct lu_story_rg* Lu_Story_Rg;
 
 typedef struct lu_save_wave* Lu_Save_Wave;
 typedef struct lu_find_wave* Lu_Find_Wave;

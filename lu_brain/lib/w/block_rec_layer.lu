@@ -5,20 +5,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Rec_Layer lu_block_rec_layer_create(Lu_Mem mem, Lu_S_Rec_Layer lu_s_rec_layer)
+	static Lu_Rec_Rg lu_block_rec_layer_create(Lu_Mem mem, Lu_S_Rec_Rg lu_s_rec_rg)
 	{
 		lu_assert(mem);
-		lu_assert(lu_s_rec_layer);
+		lu_assert(lu_s_rec_rg);
 
-		Lu_Rec_Layer self = (Lu_Rec_Layer) lu_mem_alloc(mem, sizeof(struct lu_rec_layer));
+		Lu_Rec_Rg self = (Lu_Rec_Rg) lu_mem_alloc(mem, sizeof(struct lu_rec_rg));
 		lu_assert(self);
 
-		self->lu_s_rec_layer = lu_s_rec_layer;
+		self->lu_s_rec_rg = lu_s_rec_rg;
 
 		return self;
 	}
 
-	static void lu_block_rec_layer_destroy(Lu_Rec_Layer self, Lu_Mem mem)
+	static void lu_block_rec_layer_destroy(Lu_Rec_Rg self, Lu_Mem mem)
 	{
 		lu_assert(self);
 		lu_assert(mem);

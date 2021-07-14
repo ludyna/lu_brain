@@ -23,13 +23,13 @@
 	{
 		lu_user_assert_void(self, "Lu_S is NULL");
 
-		Lu_S_Rec_Layer lu_s_rec_layer;
+		Lu_S_Rec_Rg lu_s_rec_rg;
 		for(lu_size i = 0; i < lu_arr_count(self->recs); i++)
 		{
-			lu_s_rec_layer = (Lu_S_Rec_Layer) lu_arr_get(self->recs, i);
+			lu_s_rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 
-			if (lu_s_rec_layer) 
-				lu_s_rec_layer_destroy(lu_s_rec_layer);
+			if (lu_s_rec_rg) 
+				lu_s_rec_rg_destroy(lu_s_rec_rg);
 		}
 
 		lu_arr_temp_destroy(self->recs);
@@ -42,15 +42,15 @@
 		lu_user_assert_void(self->recs, "Lu_S recs is NULL");
 
  		lu_debug("\n\n-- Lu_S info: ");
- 		lu_debug("\n 	Lu_S_Rec_Layer count: %lu", lu_arr_count(self->recs));
+ 		lu_debug("\n 	Lu_S_Rec_Rg count: %lu", lu_arr_count(self->recs));
 
- 		Lu_S_Rec_Layer rec;
+ 		Lu_S_Rec_Rg rec;
  		lu_size i;
  		for(i = 0; i < lu_arr_count(self->recs); i++)
  		{
- 			rec = (Lu_S_Rec_Layer) lu_arr_get(self->recs, i);
+ 			rec = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
  			if (rec) 
- 				lu_s_rec_layer_print_info(rec);
+ 				lu_s_rec_rg_print_info(rec);
  		}
 	}
 
@@ -62,21 +62,21 @@
 			if (lu_arr_get(self->recs, i) == NULL) return;
 		}
 
-		Lu_S_Rec_Layer lu_s_rec_layer = lu_s_rec_layer_create(self, rec);
-		lu_arr_set(self->recs, i, lu_s_rec_layer);
+		Lu_S_Rec_Rg lu_s_rec_rg = lu_s_rec_rg_create(self, rec);
+		lu_arr_set(self->recs, i, lu_s_rec_rg);
 	}
 
 	static void s_mem_rec_destroy(Lu_S self, Lu_Rec rec)
 	{
 		lu_size i;
-		Lu_S_Rec_Layer lu_s_rec_layer;
+		Lu_S_Rec_Rg lu_s_rec_rg;
 		for (i = 0; i < lu_arr_count(self->recs); i++)
 		{
-			lu_s_rec_layer = (Lu_S_Rec_Layer) lu_arr_get(self->recs, i);
+			lu_s_rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 	
-			if (lu_s_rec_layer && lu_s_rec_layer->rec && lu_s_rec_layer->rec->id == rec->id)
+			if (lu_s_rec_rg && lu_s_rec_rg->rec && lu_s_rec_rg->rec->id == rec->id)
 			{
-				lu_s_rec_layer_destroy(lu_s_rec_layer);
+				lu_s_rec_rg_destroy(lu_s_rec_rg);
 				lu_arr_set(self->recs, i, NULL);
 				break;
 			}

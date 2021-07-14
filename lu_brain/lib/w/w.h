@@ -71,7 +71,7 @@
 	static inline lu_bool lu_wave_is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE_RESTORE; }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Block_Layer
+// Lu_Story_Rg
 
 	struct lu_cell {
 		Lu_Layer layer;
@@ -90,18 +90,18 @@
 	static Lu_Layer lu_layer_create(Lu_Mem mem, Lu_S_Layer lu_s_layer);
 	static void lu_layer_destroy(Lu_Layer self, Lu_Mem mem);
 
-	struct lu_rec_layer {
-		Lu_S_Rec_Layer lu_s_rec_layer;
+	struct lu_rec_rg {
+		Lu_S_Rec_Rg lu_s_rec_rg;
 
 		struct lu_layer componentlu_s_layer;
 		struct lu_layer pixellu_s_layer;
 		struct lu_layer* pyralu_s_layers;
 	};
 
-	static Lu_Rec_Layer lu_block_rec_layer_create(Lu_Mem mem, Lu_S_Rec_Layer lu_s_rec_layer);
-	static void lu_block_rec_layer_destroy(Lu_Rec_Layer self, Lu_Mem mem);
+	static Lu_Rec_Rg lu_block_rec_layer_create(Lu_Mem mem, Lu_S_Rec_Rg lu_s_rec_rg);
+	static void lu_block_rec_layer_destroy(Lu_Rec_Rg self, Lu_Mem mem);
 
-	struct lu_block_layer {
+	struct lu_story_rg {
 		Lu_Mem mem;
 		Lu_S s;
 	
@@ -115,8 +115,8 @@
 		Lu_Cell cell; // resulting block_layer cell	
 	};
 
-	static Lu_Block_Layer lu_block_layer_create(Lu_Mem mem, Lu_S s);
-	static void lu_block_layer_destroy(Lu_Block_Layer self);
+	static Lu_Story_Rg lu_story_rg_create(Lu_Mem mem, Lu_S s);
+	static void lu_story_rg_destroy(Lu_Story_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
@@ -129,7 +129,7 @@
 		Lu_Lim_List block_layers;
 
 		// max size is lu_lim_list_size(self->block_layers)
-		struct lu_layer* block_layer_layers;
+		struct lu_layer* block_layer_layers; // !!! WRONG
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

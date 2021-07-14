@@ -84,7 +84,7 @@
 		lu_p_void value = lu_l_node_value(node);
 		lu_assert(value);
 
-		lu_block_layer_destroy((Lu_Block_Layer) value);
+		lu_story_rg_destroy((Lu_Story_Rg) value);
 	}
 
 	static void lu_save_wave_destroy_virtual(Lu_Wave wave)

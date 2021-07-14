@@ -22,7 +22,7 @@
 
 // Lu_Mem 				mem;
 // Lu_S				s;
-// Lu_S_Rec_Layer 				lu_s_rec_layer;
+// Lu_S_Rec_Rg 				lu_s_rec_rg;
 // Lu_S_Cell				s_neu_com_0;
 // Lu_S_Cell 				s_neu_com_1;
 
@@ -78,17 +78,17 @@ void test_s_col1and2(void)
 	// s = brain->s;
 	// TEST_ASSERT(s);
 
-	// lu_s_rec_layer = s_mem_lu_s_rec_layer_get(s, 0);
-	// TEST_ASSERT(lu_s_rec_layer);
+	// lu_s_rec_rg = s_mem_lu_s_rec_rg_get(s, 0);
+	// TEST_ASSERT(lu_s_rec_rg);
 
-	// s_neu_com_0 = lu_s_rec_layer_v_cell_get(lu_s_rec_layer, 0, 0, 0, 0);
+	// s_neu_com_0 = lu_s_rec_rg_v_cell_get(lu_s_rec_rg, 0, 0, 0, 0);
 	// TEST_ASSERT(s_neu_com_0);
 
 
-	// lu_s_rec_layer = s_mem_lu_s_rec_layer_get(s, 1);
-	// TEST_ASSERT(lu_s_rec_layer);
+	// lu_s_rec_rg = s_mem_lu_s_rec_rg_get(s, 1);
+	// TEST_ASSERT(lu_s_rec_rg);
 
-	// s_neu_com_1 = lu_s_rec_layer_v_cell_get(lu_s_rec_layer, 0, 0, 0, 0);
+	// s_neu_com_1 = lu_s_rec_rg_v_cell_get(lu_s_rec_rg, 0, 0, 0, 0);
 	// TEST_ASSERT(s_neu_com_1);
 
 

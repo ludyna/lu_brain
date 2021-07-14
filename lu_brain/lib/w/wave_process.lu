@@ -11,7 +11,7 @@
 		lu_assert(self);
 		lu_assert(block);
 
-		Lu_Block_Layer shot = lu_block_layer_create(self->super.mem, self->super.brain->s);
+		Lu_Story_Rg shot = lu_story_rg_create(self->super.mem, self->super.brain->s);
 
 		lu_lim_list_append(self->block_layers, shot);
 		
