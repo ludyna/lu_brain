@@ -144,7 +144,10 @@
 		return lu_s_layer_cell_get(layer, x, y, z);
 	}
 
+	//
 	// lu_s_rec_rg.lu
+	//
+
 	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_S mem, Lu_Rec lu_s_rec_rg);
 	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self);
 	
@@ -157,7 +160,10 @@
 	static Lu_S_Cell_3 lu_s_rec_rg_cell_3_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z);
 	static void lu_s_rec_rg_cell_3_retract(Lu_S_Rec_Rg self, Lu_S_Cell_3 cell);
 
+	//
 	// lu_s_rec_rg_layer_inits.lu
+	//
+
 	static void lu_s_rec_rg_layers_init(Lu_S_Rec_Rg self);
 	static void lu_s_rec_rg_layers_deinit(Lu_S_Rec_Rg self);
 	
