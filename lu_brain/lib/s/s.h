@@ -98,10 +98,6 @@
 	// velyki masyvy v lu_s_rec_rg shob vykorystaty perevahu cpu keshuvania
 	struct lu_s_rec_rg {
 		
-		// Vlasnyk
-
-		Lu_S 					mem; 			
-
 		// Lu_Rec related
 
 		Lu_Rec 					rec;			
@@ -148,7 +144,7 @@
 	// lu_s_rec_rg.lu
 	//
 
-	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_S mem, Lu_Rec lu_s_rec_rg);
+	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec lu_s_rec_rg);
 	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self);
 	
 	static Lu_S_Cell lu_s_rec_rg_cell_assign(Lu_S_Rec_Rg, Lu_S_Layer);   
@@ -190,6 +186,12 @@
 		lu_size 				block_layers_size;
 		struct lu_s_layer* 		block_layers;
 	};
+
+	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size);
+	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
+
+	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self);
+	static void lu_s_story_rg_blocks_deinit(Lu_S_Story_Rg self);
 
 
 ///////////////////////////////////////////////////////////////////////////////

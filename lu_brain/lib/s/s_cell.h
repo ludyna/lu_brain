@@ -21,13 +21,13 @@
 	#define d_nl(n) n->d[3]
 
 	struct lu_s_cell {
-		enum lu_s_cell_type    	type;			
-		//lu_size 				l_ix;		// nomer v layer
+		enum lu_s_cell_type type;			
+		//lu_size l_ix;		// nomer v layer
 
-		Lu_S_Layer 				layer;
+		Lu_S_Layer layer;
 	
-		Lu_S_Cell*					b;
-		Lu_S_Cell*					d;
+		Lu_S_Cell* b;
+		Lu_S_Cell* d;
 	}; 
 
 	struct lu_s_cell_2 {
@@ -36,7 +36,6 @@
 		lu_size 				x; 
 		lu_size 				y;   		
 	};
-
 
 	struct lu_s_cell_values {
 		Lu_S_Layer_Conf conf;
@@ -47,16 +46,18 @@
 	static void lu_s_cell_values_destroy(Lu_S_Cell_Values self, Lu_Mem mem);
 
 	struct lu_s_cell_3 {
-		struct lu_s_cell_2 		super;
+		struct lu_s_cell_2 super;
 
-		lu_size 				z;
+		lu_size z;
 
-
-		Lu_S_Cell_Values 			v;
-		Lu_S_Cell_Values  			p;
+		Lu_S_Cell_Values v;
+		Lu_S_Cell_Values p;
 	};
 
+	//
 	// s_neu_inits.lu
+	//
+
 	static Lu_S_Cell lu_s_cell_init(Lu_S_Cell self, enum lu_s_cell_type type, Lu_S_Layer, lu_size l_ix);
 	static Lu_S_Cell_2 lu_s_cell_2_init(Lu_S_Cell_2 self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y);
 	
@@ -69,7 +70,10 @@
 	static Lu_S_Cell s_block_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg); 
 	static void lu_s_cell_links_free(Lu_S_Cell self);
 
+	//
 	// s_neu_connects.lu
+	//
+
 	static void s_pixel_connect(Lu_S_Cell_2 self, Lu_S_Layer);
 	static void s_pyra_connect(Lu_S_Cell_2 self, Lu_S_Layer);
 	static void s_block_connect(Lu_S_Cell self, Lu_S_Layer);

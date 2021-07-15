@@ -62,7 +62,7 @@
 			if (lu_arr_get(self->recs, i) == NULL) return;
 		}
 
-		Lu_S_Rec_Rg lu_s_rec_rg = lu_s_rec_rg_create(self, rec);
+		Lu_S_Rec_Rg lu_s_rec_rg = lu_s_rec_rg_create(rec);
 		lu_arr_set(self->recs, i, lu_s_rec_rg);
 	}
 
