@@ -92,6 +92,34 @@
 	static void lu_s_layer_print_info(Lu_S_Layer self);
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Cell_Mem
+//
+
+	struct lu_s_cell_mem {
+
+		lu_size 				cells_w;
+		lu_size 				cells_h; 
+		lu_size 				cells_d;		
+
+		lu_size 				cells_size;
+		lu_size 				cells_count;
+		struct lu_s_cell* 		cells;
+
+		lu_size 				cells_2_size;
+		lu_size 				cells_2_count;
+		struct lu_s_cell_2*		cells_2;
+
+		lu_size 				cells_3_size;
+		lu_size 				cells_3_count;
+		struct lu_s_cell_3* 	cells_3;
+
+	};
+
+
+	static Lu_S_Cell_Mem lu_s_cell_mem_create(lu_size w, lu_size h, lu_size d);
+	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self);
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Rec_Rg
 //
 
