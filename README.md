@@ -17,7 +17,7 @@ I see two main approaches to achieve it:
 
 In this project, I use the second approach.
 
-What is different about this project compared to purely mathematical models based on gradient descent algorithms is that the resulting library will contain an algorithm close to what the human brain does. 
+What is different about this project compared to purely mathematical models based on gradient descent algorithms is that the resulting library will contain an algorithm(s) close to what the human brain does. 
 
 ## Why
 
