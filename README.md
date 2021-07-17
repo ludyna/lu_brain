@@ -11,11 +11,13 @@ I believe human brains are optimal or close to optimal. So to create natural int
 
 I see two main approaches to achieve it:
 
-1. Try to understand brain algorithms by observing them. Unfortunately, this approach is tough to deduct complicated algorithms. It's like trying to understand what computer programs do by only observing their hardware (CPU, motherboard, RAM, etc.). This approach is good at understanding basics, but it is hard to deduct algorithms from it.
+1. Try to understand brain algorithms by observing them. Unfortunately, this approach is tough to deduct complicated algorithms. It's like trying to understand what computer programs do by only observing hardware (CPU, motherboard, RAM, etc.). This approach is good at understanding basics, but it is hard to deduct algorithms from it.
 
 2. Try to use logic, imagination, creativity, intuition, math, and what we already know about our brains to recreate our brain algorithms.
 
 In this project, I use the second approach.
+
+What is different about this project compared to purely mathematical models based on gradient descent algorithms is that the resulting library will contain an algorithm close to what the human brain does. 
 
 ## Why
 
