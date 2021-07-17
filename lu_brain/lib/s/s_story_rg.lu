@@ -5,19 +5,32 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_Mem mem, lu_size max_blocks_size)
+
+	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size)
 	{
 		Lu_S_Story_Rg self = (Lu_S_Story_Rg) lu_g_mem_alloc(sizeof(struct lu_s_story_rg));
 		lu_assert(self);
 
 		
+		///////////////////////////////////////
+		// Allocate Block Layers
+
+		self->max_blocks_size 		= max_blocks_size;
+		self->block_layers_size 	= self->max_blocks_size + 1;	
+
+		self->block_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->block_layers_size);
+		lu_user_assert(self->block_layers, "Cannot allocate av layers");
 
 		return self;
 	}
 
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self)
 	{
+		lu_assert(self);
 
+		lu_s_story_rg_blocks_deinit(self);
+		lu_g_mem_free((lu_p_byte) self->block_layers);
+		lu_g_mem_free((lu_p_byte) self);
 	}
 
 
@@ -26,11 +39,37 @@
 
 	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self)
 	{
+		lu_assert(self);
 
+		Lu_S_Layer layer;
+		Lu_S_Layer b_layer = NULL;
+		lu_size ix;
+
+		for(ix = 0; ix < self->block_layers_size; ix++)
+		{
+			layer = &self->block_layers[ix];
+
+			if (ix > 0)
+			{
+				b_layer = &self->block_layers[ix - 1];
+			}
+			else
+			{
+				// last layer from data layers
+				//b_layer = &self->data_layers[self->data_layers_size - 1];
+			}
+
+			lu_s_layer_block_cells_init(layer, b_layer);
+		}
 	}
 
 	static void lu_s_story_rg_blocks_deinit(Lu_S_Story_Rg self)
 	{
+		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
+		for(lu_size i = 0; i < self->block_layers_size; i++)
+		{
+			lu_s_layer_block_cells_deinit(&self->block_layers[i]);
+		}
 	}
 

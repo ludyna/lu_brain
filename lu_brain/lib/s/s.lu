@@ -2,6 +2,7 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S
 
@@ -15,6 +16,7 @@
 
 		self->brain 		= brain;
 		self->recs 			= lu_arr_temp_create(lu_arr_size(brain->recs), false);
+		self->story 		= lu_s_story_rg_create(brain->config.max_story_size_in_blocks);
 
 		return self;
 	}
@@ -33,6 +35,9 @@
 		}
 
 		lu_arr_temp_destroy(self->recs);
+
+		lu_s_story_rg_destroy(self->story);
+
 		lu_g_mem_free((lu_p_byte) self);
 	}
 
