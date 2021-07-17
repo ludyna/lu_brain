@@ -5,3 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	static Lu_S_Cell_Mem lu_s_cell_mem_create(lu_size w, lu_size h, lu_size d)
+	{
+		Lu_S_Cell_Mem self = (Lu_S_Cell_Mem) lu_g_mem_alloc(sizeof(struct lu_s_cell_mem));
+		lu_assert(self);
+
+
+		return self;
+	}
+
+	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self)
+	{
+		lu_assert(self);
+
+		lu_g_mem_free((lu_p_byte) self);
+	}

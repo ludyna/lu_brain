@@ -229,6 +229,8 @@
 	struct lu_s {
 		Lu_Brain 				brain;
 
+		Lu_S_Cell_Mem  			cell_mem;
+
 		Lu_Arr 					recs;
 
 		Lu_S_Story_Rg 			story;
