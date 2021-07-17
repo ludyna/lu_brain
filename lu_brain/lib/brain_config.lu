@@ -8,16 +8,17 @@
 	struct lu_brain_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END] = {
 		{
 			// LU_BC_DEFAULT
-			.id						= 0,					
-			.recs_size				= 16, 
+			.id							= 0,					
+			.recs_size					= 16, 
+			.max_story_size_in_blocks 	= 16,
 
-			.net.names_size			= 128,
-			.net.size_in_cell_0		= 10000, 
-			.net.size_in_cell_1		= 10000,
-			.net.size_in_cell_2		= 10000, 
-			.net.size_in_cell_3		= 10000, 
-			.net.size_in_cell_4		= 10000, 
-			.net.hnn_table_mod		= 2
+			.net.names_size				= 128,
+			.net.size_in_cell_0			= 10000, 
+			.net.size_in_cell_1			= 10000,
+			.net.size_in_cell_2			= 10000, 
+			.net.size_in_cell_3			= 10000, 
+			.net.size_in_cell_4			= 10000, 
+			.net.hnn_table_mod			= 2
 		},
 	};		
 

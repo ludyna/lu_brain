@@ -44,7 +44,7 @@
 		///////////////////////////////////////
 		// Allocate Block Layers
 
-		self->max_blocks_size 		= rec->config.max_blocks_size;
+		self->max_blocks_size 		= 16; //rec->config.max_blocks_size;
 		self->block_layers_size 	= self->max_blocks_size + 1;	
 
 		self->block_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->block_layers_size);

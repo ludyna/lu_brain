@@ -8,7 +8,6 @@
  	struct lu_rec_config lu_g_rc_predefined[LU_REC_CONFIG_END] = {
 		{
 			// LU_RC_MONOCHROME1_IMAGE
-			.max_blocks_size 	= 16,
 			.hold_blocks_size 	= 2, 
 			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
@@ -22,7 +21,6 @@
 		},
 		{
 			// LU_RC_RBG8_IMAGE
-			.max_blocks_size 	= 16,
 			.hold_blocks_size 	= 4, 
 			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
@@ -39,7 +37,6 @@
 		},
 		{
 			// LU_RC_TEST1
-			.max_blocks_size 	= 16,
 			.hold_blocks_size 	= 4, 
 			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
@@ -62,12 +59,6 @@
 	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self)
 	{
 		lu_user_assert(self, "Lu_Rec_Config is NULL");
-	
-		// lu_user_assert(self->width > 0, "Width should be greater than 0");
-		// lu_user_assert(self->height > 0, "Height should be greater than 0");	
-		// lu_user_assert(self->depth > 0, "Depth should be greater than 0");
-
-		lu_user_assert(self->max_blocks_size > 0, "max_block_size should be greater than 0");
 
 		lu_user_assert(self->v_max - self->v_min > 0, "v_max minus v_min should greater than 0");
 		lu_user_assert(self->v_neu_size > 1, "v_neu_size should be greater than 1");

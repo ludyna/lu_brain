@@ -47,10 +47,12 @@
 	
 	struct lu_brain_config {
 		lu_size id;							// optional, to identify brain by unique id
-
 		lu_size recs_size;					// initial maximum number of recs 
+		lu_size max_story_size_in_blocks; 	// max story size in blocks
 
 		struct lu_net_config net;			// initial values
+
+
 	};
 
 	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);
@@ -87,7 +89,8 @@
 	};
 
 	struct lu_rec_config {
-		lu_size 		max_blocks_size;
+		// lu_size 		max_blocks_size; // !!! should be in story not here
+
 		lu_size 		hold_blocks_size;
 		lu_size 		transf_algorithm;
 
