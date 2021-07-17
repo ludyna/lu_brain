@@ -26,4 +26,4 @@ What is different about this project compared to purely mathematical models base
 3. Move AI's ease of use to the next level.
 4. Bring tech that will help humanity to survive the next extinction event.
 
-GLORY TO HUMANITY AND A LARGER CONSCIOUSNESS SYSTEM! :)
+FOR THE GLORY OF HUMANITY AND A LARGER CONSCIOUSNESS SYSTEM! :)
