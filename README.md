@@ -16,7 +16,7 @@ I see two main approaches to achieve it:
 
 In this project, I use the second approach while taking basics from the first one. To invent algorithms in this library, I asked myself how nature would do this, how the brain could evolve to what we have now, what baseline principles are, etc.
 
-What is different about this project compared to purely mathematical models based on gradient descent algorithms is that the resulting library will contain an algorithm(s) close to what the human brain does. 
+What is different about this project compared to purely mathematical models based on gradient descent algorithms is that the resulting library contains an algorithm(s) close to what the human brain does, in my opinion. Thus, after I figured out baseline principles, there was only one right way forward.
 
 ## Why
 
