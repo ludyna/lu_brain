@@ -16,7 +16,7 @@ I see two main approaches to achieve it:
 
 In this project, I use the second approach while taking basics from the first one. To invent algorithms in this library, I asked myself how nature would do this, how the brain could evolve to what we have now, what baseline principles are, etc.
 
-What is different about this project compared to purely mathematical models based on gradient descent algorithms is that the resulting library contains an algorithm(s) close to what the human brain does, in my opinion. Thus, after I figured out baseline principles, there was only one right way forward.
+What is different about this project compared to purely mathematical models based on gradient descent algorithms is that the resulting library contains an algorithm(s) close to what the human brain does, in my opinion. Thus, after I figured out baseline principles, there was only one right way forward. However, I think only knowing how part of the brain work is not enough. So I spent a lot of time translating that knowledge to an algorithm that can optimally work on our computer systems which are very different from a highly distributed brain.
 
 ## Why
 
