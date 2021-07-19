@@ -3,5 +3,4 @@
 */
 
 #include "_typedefs.h"
-#include "s_cell.h"
 #include "s.h"

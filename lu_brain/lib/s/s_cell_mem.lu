@@ -11,6 +11,34 @@
 		lu_assert(self);
 
 
+		self->cells_w 			= w;
+		self->cells_h			= h; 
+		self->cells_d 			= d;
+
+		self->cells_count		= 0;
+		self->cells_size 		= 0;
+
+		self->cells_2_count 	= 0;
+		self->cells_2_size 		= 0;
+
+		self->cells_3_count 	= 0;
+		self->cells_3_size 		= 0; 
+
+
+
+
+		///////////////////////////////////////
+		// Allocate cells
+
+		self->cells = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_size);
+		lu_assert(self->cells); 
+
+		self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
+		lu_assert(self->cells_2); 
+
+		self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
+		lu_assert(self->cells_3); 
+
 		return self;
 	}
 

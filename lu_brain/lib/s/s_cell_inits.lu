@@ -2,7 +2,7 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static Lu_S_Cell lu_s_cell_init(Lu_S_Cell self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix)
+	static Lu_S_Cell_1 lu_s_cell_init(Lu_S_Cell_1 self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix)
 	{
 		lu_user_assert(layer, "Lu_S_Layer is NULL");
 
@@ -17,15 +17,15 @@
 		return self;
 	}
 
-	static void lu_s_cell_deinit(Lu_S_Cell self)
+	static void lu_s_cell_deinit(Lu_S_Cell_1 self)
 	{
-		lu_user_assert_void(self, "Lu_S_Cell is NULL");
+		lu_user_assert_void(self, "Lu_S_Cell_1 is NULL");
 
 	}
 
 	static Lu_S_Cell_2 lu_s_cell_2_init(Lu_S_Cell_2 self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y)
 	{
-		lu_s_cell_init((Lu_S_Cell) self, type, layer, l_ix);
+		lu_s_cell_init((Lu_S_Cell_1) self, type, layer, l_ix);
 
 		self->x = x;
 		self->y = y;
@@ -67,59 +67,59 @@
 			lu_s_cell_values_destroy(self->p, lu_g_mem);
 	}
 
-	static Lu_S_Cell s_component_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
+	static Lu_S_Cell_1 s_component_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL_3, "Wrong self type");
 
-		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell));
+		self->d = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1));
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
 
-	static Lu_S_Cell s_pixel_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
+	static Lu_S_Cell_1 s_pixel_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL_2, "Wrong self type");
 		
-		self->b = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * rec->cells_d);
+		self->b = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1) * rec->cells_d);
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * 4);
+		self->d = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1) * 4);
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
-	static Lu_S_Cell s_pyra_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
+	static Lu_S_Cell_1 s_pyra_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL_2, "Wrong self type");
 
-		self->b = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * 4);
+		self->b = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1) * 4);
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * 4);
+		self->d = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1) * 4);
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
-	static Lu_S_Cell s_block_links_alloc(Lu_S_Cell self, Lu_S_Rec_Rg rec)
+	static Lu_S_Cell_1 s_block_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg rec)
 	{
 		lu_user_assert(self->type == LU_SCT_CELL, "Wrong self type");
 
-		self->b = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell));
+		self->b = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1));
 		lu_user_assert(self->b, "Cannot allocate self->b");
 
-		self->d = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell));
+		self->d = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1));
 		lu_user_assert(self->d, "Cannot allocate self->d");
 
 		return self;
 	}
 
-	static void lu_s_cell_links_free(Lu_S_Cell self)
+	static void lu_s_cell_links_free(Lu_S_Cell_1 self)
 	{
-		lu_user_assert_void(self, "Lu_S_Cell is NULL");
+		lu_user_assert_void(self, "Lu_S_Cell_1 is NULL");
 
 		if (self->b)
 		{

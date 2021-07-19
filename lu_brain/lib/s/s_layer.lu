@@ -29,7 +29,7 @@
 		self->h 		= h;
 		self->d 		= d;
 
-		self->cells = (Lu_S_Cell*) lu_g_mem_alloc(sizeof(Lu_S_Cell) * self->w * self->h * self->d);
+		self->cells = (Lu_S_Cell_1*) lu_g_mem_alloc(sizeof(Lu_S_Cell_1) * self->w * self->h * self->d);
 		lu_user_assert(self->cells, "Cannot allocate Lu_S_Layer cells");
 
 		return self;
@@ -67,7 +67,7 @@
 					cell = lu_s_rec_rg_cell_3_assign(self->rec, self, x, y, z); 
 					lu_user_assert_void(cell, "Cannot init cell");
 
-					cell = (Lu_S_Cell_3) s_component_links_alloc((Lu_S_Cell) cell, self->rec); 
+					cell = (Lu_S_Cell_3) s_component_links_alloc((Lu_S_Cell_1) cell, self->rec); 
 					lu_user_assert_void(cell, "Cannot component init cell");
 				}
 	}
@@ -85,7 +85,7 @@
 		lu_size y;
 		lu_size x;
 
-		Lu_S_Cell cell = NULL;
+		Lu_S_Cell_1 cell = NULL;
 
 		for (z = 0; z < d; z++)
 			for (y = 0; y < h; y++)
@@ -116,7 +116,7 @@
 				cell = lu_s_rec_rg_cell_2_assign(self->rec, self, x, y); 
 				lu_user_assert_void(cell, "Cannot init cell");
 
-				cell = (Lu_S_Cell_2) s_pixel_links_alloc((Lu_S_Cell) cell, self->rec); 
+				cell = (Lu_S_Cell_2) s_pixel_links_alloc((Lu_S_Cell_1) cell, self->rec); 
 				lu_user_assert_void(cell, "Cannot component init cell");
 
 				s_pixel_connect(cell, b_layer);
@@ -129,7 +129,7 @@
 		lu_user_assert_void(self, "Lu_S_Layer is NULL");
 		lu_user_assert_void(self->rec, "Lu_S_Rec_Rg is NULL");
 
-		Lu_S_Cell cell = NULL;
+		Lu_S_Cell_1 cell = NULL;
 		for (lu_size j = 0; j < self->cells_count; j++)
 		{
 			cell = self->cells[j];
@@ -157,7 +157,7 @@
 				cell = lu_s_rec_rg_cell_2_assign(self->rec, self, x, y); 
 				lu_user_assert_void(cell, "Cannot init cell");
 
-				cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell) cell, self->rec); 
+				cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell, self->rec); 
 				lu_user_assert_void(cell, "Cannot pyra init cell");
 
 				if (b_layer)
@@ -169,7 +169,7 @@
 	{
 		lu_user_assert_void(self, "Lu_S_Layer is NULL");
 
-		Lu_S_Cell cell = NULL;
+		Lu_S_Cell_1 cell = NULL;
 		for (lu_size j = 0; j < self->cells_count; j++)
 		{
 			cell = self->cells[j];
@@ -187,7 +187,7 @@
 		lu_user_assert_void(self->rec, "Lu_S_Rec_Rg is NULL");
 
 		lu_size w 	= self->w;
-		Lu_S_Cell cell 	= NULL;
+		Lu_S_Cell_1 cell 	= NULL;
 
 		//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
 		for (lu_size x = 0; x < w; x++)
@@ -195,7 +195,7 @@
 			cell = lu_s_rec_rg_cell_assign(self->rec, self); 
 			lu_user_assert_void(cell, "Cannot init cell");
 
-			cell = s_block_links_alloc((Lu_S_Cell) cell, self->rec); 
+			cell = s_block_links_alloc((Lu_S_Cell_1) cell, self->rec); 
 			lu_user_assert_void(cell, "Cannot alloc block links");
 
 			if (b_layer)
@@ -209,7 +209,7 @@
 	{ 
 		lu_user_assert_void(self, "Lu_S_Layer is NULL");
 
-		Lu_S_Cell cell = NULL;
+		Lu_S_Cell_1 cell = NULL;
 		for (lu_size j = 0; j < self->cells_count; j++)
 		{
 			cell = self->cells[j];

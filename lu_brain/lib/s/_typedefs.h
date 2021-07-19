@@ -12,7 +12,7 @@
 		LU_SCT_CELL
 	};
 
- 	typedef struct lu_s_cell* 				Lu_S_Cell;
+ 	typedef struct lu_s_cell_1* 			Lu_S_Cell_1;
  	typedef struct lu_s_cell_2* 			Lu_S_Cell_2;
  	typedef struct lu_s_cell_values*  		Lu_S_Cell_Values;
  	typedef struct lu_s_cell_3* 			Lu_S_Cell_3;

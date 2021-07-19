@@ -58,7 +58,7 @@
 		///////////////////////////////////////
 		// Allocate cells
 
-		self->cells = (struct lu_s_cell*) lu_g_mem_alloc(sizeof(struct lu_s_cell) * self->cells_size);
+		self->cells = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_size);
 		lu_user_assert(self->cells, "Cannot allocate cells"); 
 
 		self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
@@ -108,15 +108,15 @@
 	}
 
 	/*
-	** Allocate space for Lu_S_Cell
+	** Allocate space for Lu_S_Cell_1
 	*/
-	static Lu_S_Cell lu_s_rec_rg_cell_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer)
+	static Lu_S_Cell_1 lu_s_rec_rg_cell_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer)
 	{
-		lu_user_assert(self->cells_count < self->cells_size, "Out of space for Lu_S_Cell");
+		lu_user_assert(self->cells_count < self->cells_size, "Out of space for Lu_S_Cell_1");
 
-		Lu_S_Cell neu = &self->cells[self->cells_count];
+		Lu_S_Cell_1 neu = &self->cells[self->cells_count];
 		neu = lu_s_cell_init(neu, LU_SCT_CELL, layer, layer->cells_count);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell");
+		lu_user_assert(neu, "Cannot init Lu_S_Cell_1");
 
 		lu_s_layer_cell_set(layer, 0, 0, 0, neu);
 
@@ -127,7 +127,7 @@
 		return neu;
 	}  
 
-	static void lu_s_rec_rg_cell_retract(Lu_S_Rec_Rg self, Lu_S_Cell cell)
+	static void lu_s_rec_rg_cell_retract(Lu_S_Rec_Rg self, Lu_S_Cell_1 cell)
 	{
 		lu_s_cell_deinit(cell);
 	}
@@ -140,7 +140,7 @@
 		neu = lu_s_cell_2_init(neu, LU_SCT_CELL_2, layer, layer->cells_count, x, y);
 		lu_user_assert(neu, "Cannot init Lu_S_Cell_2");
 
-		lu_s_layer_cell_set(layer, x, y, 0, (Lu_S_Cell) neu);
+		lu_s_layer_cell_set(layer, x, y, 0, (Lu_S_Cell_1) neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
@@ -162,7 +162,7 @@
 		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
 		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
 
-		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell) neu);
+		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
 
 		// no need for lock, they are created once in one thread
 		++layer->cells_count;
