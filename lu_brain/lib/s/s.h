@@ -192,6 +192,20 @@
 	static Lu_S_Cell_Mem lu_s_cell_mem_create(lu_size cells_1_size, lu_size cells_2_size, lu_size cells_3_size);
 	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self);
 
+	//
+	// Cells assign and retract
+	//
+
+	static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem, Lu_S_Layer);   
+	static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell); 
+
+	static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y);
+	static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell);
+
+	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z);
+	static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell);
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Rec_Rg
 //

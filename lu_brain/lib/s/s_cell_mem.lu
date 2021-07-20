@@ -44,3 +44,73 @@
 
 		lu_g_mem_free((lu_p_byte) self);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Cells Assign And Retract
+
+	static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer)
+	{
+		lu_user_assert(self->cells_1_count < self->cells_1_size, "Out of space for Lu_S_Cell_1");
+
+		Lu_S_Cell_1 neu = &self->cells_1[self->cells_1_count];
+		neu = lu_s_cell_1_init(neu, LU_SCT_CELL, layer, layer->cells_count);
+		lu_user_assert(neu, "Cannot init Lu_S_Cell_1");
+
+		lu_s_layer_cell_set(layer, 0, 0, 0, neu);
+
+		// no need for lock, they are created once in one thread
+		++layer->cells_count;
+		++self->cells_1_count;
+
+		return neu;
+	}  
+
+	static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell)
+	{
+		lu_s_cell_1_deinit(cell);
+	}
+
+	static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y)
+	{
+		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for Lu_S_Cell_2");
+
+		Lu_S_Cell_2 neu = &self->cells_2[self->cells_2_count];
+		neu = lu_s_cell_2_init(neu, LU_SCT_CELL_2, layer, layer->cells_count, x, y);
+		lu_user_assert(neu, "Cannot init Lu_S_Cell_2");
+
+		lu_s_layer_cell_set(layer, x, y, 0, (Lu_S_Cell_1) neu);
+
+		// no need for lock, they are created once in one thread
+		++layer->cells_count;
+		++self->cells_2_count;
+
+		return neu;
+	}
+
+	static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell)
+	{
+		lu_s_cell_2_deinit(cell);
+	}
+
+	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z)
+	{
+		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
+
+		Lu_S_Cell_3 neu = &self->cells_3[self->cells_3_count];
+		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
+		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
+
+		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
+
+		// no need for lock, they are created once in one thread
+		++layer->cells_count;
+		++self->cells_3_count;
+
+		return neu;
+	}
+
+	static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell)
+	{
+		lu_s_cell_3_deinit(cell);
+	}
+
