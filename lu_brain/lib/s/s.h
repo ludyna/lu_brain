@@ -58,7 +58,7 @@
 	// s_neu_inits.lu
 	//
 
-	static Lu_S_Cell_1 lu_s_cell_init(Lu_S_Cell_1 self, enum lu_s_cell_type type, Lu_S_Layer, lu_size l_ix);
+	static Lu_S_Cell_1 lu_s_cell_1_init(Lu_S_Cell_1 self, enum lu_s_cell_type type, Lu_S_Layer, lu_size l_ix);
 	static Lu_S_Cell_2 lu_s_cell_2_init(Lu_S_Cell_2 self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y);
 	
 	static Lu_S_Cell_3 lu_s_cell_3_init(Lu_S_Cell_3 self, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z);
@@ -180,7 +180,7 @@
 
 		lu_size 				cells_size;
 		lu_size 				cells_count;
-		struct lu_s_cell_1* 		cells;
+		struct lu_s_cell_1* 	cells;
 
 		lu_size 				cells_2_size;
 		lu_size 				cells_2_count;
@@ -216,7 +216,7 @@
 
 		lu_size 				cells_size;
 		lu_size 				cells_count;
-		struct lu_s_cell_1* 		cells;
+		struct lu_s_cell_1* 	cells;
 
 		lu_size 				cells_2_size;
 		lu_size 				cells_2_count;

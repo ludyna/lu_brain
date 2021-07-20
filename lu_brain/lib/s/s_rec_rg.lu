@@ -115,7 +115,7 @@
 		lu_user_assert(self->cells_count < self->cells_size, "Out of space for Lu_S_Cell_1");
 
 		Lu_S_Cell_1 neu = &self->cells[self->cells_count];
-		neu = lu_s_cell_init(neu, LU_SCT_CELL, layer, layer->cells_count);
+		neu = lu_s_cell_1_init(neu, LU_SCT_CELL, layer, layer->cells_count);
 		lu_user_assert(neu, "Cannot init Lu_S_Cell_1");
 
 		lu_s_layer_cell_set(layer, 0, 0, 0, neu);
@@ -129,7 +129,7 @@
 
 	static void lu_s_rec_rg_cell_retract(Lu_S_Rec_Rg self, Lu_S_Cell_1 cell)
 	{
-		lu_s_cell_deinit(cell);
+		lu_s_cell_1_deinit(cell);
 	}
 
 	static Lu_S_Cell_2 lu_s_rec_rg_cell_2_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y)
