@@ -15,6 +15,7 @@
 		lu_user_assert(self, "Cannot allocate Lu_S");
 
 		self->brain 		= brain;
+		self->cell_mem 		= lu_s_cell_mem_create(lu_g_mem);
 		self->recs 			= lu_arr_temp_create(lu_arr_size(brain->recs), false);
 		self->story 		= lu_s_story_rg_create(brain->config.max_story_size_in_blocks);
 
@@ -24,6 +25,8 @@
 	static void s_mem_destroy(Lu_S self)
 	{
 		lu_user_assert_void(self, "Lu_S is NULL");
+
+		lu_s_story_rg_destroy(self->story);
 
 		Lu_S_Rec_Rg lu_s_rec_rg;
 		for(lu_size i = 0; i < lu_arr_count(self->recs); i++)
@@ -36,7 +39,7 @@
 
 		lu_arr_temp_destroy(self->recs);
 
-		lu_s_story_rg_destroy(self->story);
+		lu_s_cell_mem_destroy(self->cell_mem);
 
 		lu_g_mem_free((lu_p_byte) self);
 	}
@@ -67,7 +70,7 @@
 			if (lu_arr_get(self->recs, i) == NULL) return;
 		}
 
-		Lu_S_Rec_Rg lu_s_rec_rg = lu_s_rec_rg_create(rec);
+		Lu_S_Rec_Rg lu_s_rec_rg = lu_s_rec_rg_create(rec, self->cell_mem);
 		lu_arr_set(self->recs, i, lu_s_rec_rg);
 	}
 

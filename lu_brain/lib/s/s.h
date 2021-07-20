@@ -174,6 +174,8 @@
 
 	struct lu_s_cell_mem {
 
+		Lu_Mem mem;
+
 		lu_size 				cells_1_size;
 		lu_size 				cells_1_count;
 		struct lu_s_cell_1* 	cells_1;
@@ -188,9 +190,14 @@
 
 	};
 
-
-	static Lu_S_Cell_Mem lu_s_cell_mem_create(lu_size cells_1_size, lu_size cells_2_size, lu_size cells_3_size);
+	static Lu_S_Cell_Mem lu_s_cell_mem_create(Lu_Mem mem);
 	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self);
+
+	//
+	// Allocate cells
+	// 
+
+	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self, lu_size cells_1_size, lu_size cells_2_size, lu_size cells_3_size);
 
 	//
 	// Cells assign and retract
@@ -224,18 +231,12 @@
 		lu_size 				cells_h; 
 		lu_size 				cells_d;		
 
-		lu_size 				cells_size;
-		lu_size 				cells_count;
-		struct lu_s_cell_1* 	cells;
+		Lu_S_Cell_Mem 			cell_mem;
 
+		lu_size 				cells_1_size;
 		lu_size 				cells_2_size;
-		lu_size 				cells_2_count;
-		struct lu_s_cell_2*		cells_2;
-
 		lu_size 				cells_3_size;
-		lu_size 				cells_3_count;
-		struct lu_s_cell_3* 	cells_3;
- 
+
  		// Layers
 
 		struct lu_s_layer_conf 	v_conf;	
@@ -259,18 +260,11 @@
 	// lu_s_rec_rg.lu
 	//
 
-	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec lu_s_rec_rg);
+	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem cell_mem);
 	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self);
+
+	static void lu_s_rec_rg_cells_init(Lu_S_Rec_Rg self);
 	
-	static Lu_S_Cell_1 lu_s_rec_rg_cell_assign(Lu_S_Rec_Rg, Lu_S_Layer);   
-	static void lu_s_rec_rg_cell_retract(Lu_S_Rec_Rg self, Lu_S_Cell_1 cell); 
-
-	static Lu_S_Cell_2 lu_s_rec_rg_cell_2_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y);
-	static void lu_s_rec_rg_cell_2_retract(Lu_S_Rec_Rg self, Lu_S_Cell_2 cell);
-
-	static Lu_S_Cell_3 lu_s_rec_rg_cell_3_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z);
-	static void lu_s_rec_rg_cell_3_retract(Lu_S_Rec_Rg self, Lu_S_Cell_3 cell);
-
 	//
 	// lu_s_rec_rg_layer_inits.lu
 	//

@@ -2,9 +2,10 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec rec)
+	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec rec, Lu_S_Cell_Mem cell_mem)
 	{
 		lu_assert(rec);
+		lu_assert(cell_mem);
 
 		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_g_mem_alloc(sizeof(struct lu_s_rec_rg));
 		lu_assert(self);
@@ -16,14 +17,7 @@
 		self->cells_h			= rec->height; 
 		self->cells_d 			= rec->depth;
 
-		self->cells_count		= 0;
-		self->cells_size 		= 0;
-
-		self->cells_2_count 	= 0;
-		self->cells_2_size 		= 0;
-
-		self->cells_3_count 	= 0;
-		self->cells_3_size 		= 0;
+		self->cell_mem 			= cell_mem;
 
 		///////////////////////////////////////
 		// Confs
@@ -55,32 +49,6 @@
 
 		lu_s_rec_rg_layers_init(self);
 
-		///////////////////////////////////////
-		// Allocate cells
-
-		self->cells = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_size);
-		lu_user_assert(self->cells, "Cannot allocate cells"); 
-
-		self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
-		lu_user_assert(self->cells_2, "Cannot allocate cells"); 
-
-		self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
-		lu_user_assert(self->cells_3, "Cannot allocate cells"); 
-
-		///////////////////////////////////////
-		// Init cells
-
-		lu_s_rec_rg_components_init(self);
-		lu_s_rec_rg_pixels_init(self);
-		lu_s_rec_rg_pyras_init(self);
-		lu_s_rec_rg_blocks_init(self);
-
-		//lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
-
-		lu_user_assert(self->cells_count == self->cells_size, "Something wrong with cells_count");
-		lu_user_assert(self->cells_2_count == self->cells_2_size, "Something wrong with cells_2_count");
-		lu_user_assert(self->cells_3_count == self->cells_3_size, "Something wrong with cells_3_count");
-
 		return self;
 	}
 
@@ -98,83 +66,26 @@
 		lu_s_layer_conf_deinit(&self->p_conf);
 		lu_s_layer_conf_deinit(&self->v_conf);
 
-		lu_g_mem_free((lu_p_byte) self->cells_3);
-		lu_g_mem_free((lu_p_byte) self->cells_2);
-		lu_g_mem_free((lu_p_byte) self->cells);
 		lu_g_mem_free((lu_p_byte) self->block_layers);
 		lu_g_mem_free((lu_p_byte) self->data_layers);
 
 		lu_g_mem_free((lu_p_byte) self);
 	}
 
-	/*
-	** Allocate space for Lu_S_Cell_1
-	*/
-	static Lu_S_Cell_1 lu_s_rec_rg_cell_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer)
+	static void lu_s_rec_rg_cells_init(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert(self->cells_count < self->cells_size, "Out of space for Lu_S_Cell_1");
+		lu_s_rec_rg_components_init(self);
+		lu_s_rec_rg_pixels_init(self);
+		lu_s_rec_rg_pyras_init(self);
+		lu_s_rec_rg_blocks_init(self);
 
-		Lu_S_Cell_1 neu = &self->cells[self->cells_count];
-		neu = lu_s_cell_1_init(neu, LU_SCT_CELL, layer, layer->cells_count);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell_1");
+		// //lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
 
-		lu_s_layer_cell_set(layer, 0, 0, 0, neu);
-
-		// no need for lock, they are created once in one thread
-		++layer->cells_count;
-		++self->cells_count;
-
-		return neu;
-	}  
-
-	static void lu_s_rec_rg_cell_retract(Lu_S_Rec_Rg self, Lu_S_Cell_1 cell)
-	{
-		lu_s_cell_1_deinit(cell);
+		// lu_user_assert(self->cells_count == self->cells_size, "Something wrong with cells_count");
+		// lu_user_assert(self->cells_2_count == self->cells_2_size, "Something wrong with cells_2_count");
+		// lu_user_assert(self->cells_3_count == self->cells_3_size, "Something wrong with cells_3_count");
 	}
 
-	static Lu_S_Cell_2 lu_s_rec_rg_cell_2_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y)
-	{
-		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for Lu_S_Cell_2");
-
-		Lu_S_Cell_2 neu = &self->cells_2[self->cells_2_count];
-		neu = lu_s_cell_2_init(neu, LU_SCT_CELL_2, layer, layer->cells_count, x, y);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell_2");
-
-		lu_s_layer_cell_set(layer, x, y, 0, (Lu_S_Cell_1) neu);
-
-		// no need for lock, they are created once in one thread
-		++layer->cells_count;
-		++self->cells_2_count;
-
-		return neu;
-	}
-
-	static void lu_s_rec_rg_cell_2_retract(Lu_S_Rec_Rg self, Lu_S_Cell_2 cell)
-	{
-		lu_s_cell_2_deinit(cell);
-	}
-
-	static Lu_S_Cell_3 lu_s_rec_rg_cell_3_assign(Lu_S_Rec_Rg self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z)
-	{
-		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
-
-		Lu_S_Cell_3 neu = &self->cells_3[self->cells_3_count];
-		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
-
-		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
-
-		// no need for lock, they are created once in one thread
-		++layer->cells_count;
-		++self->cells_3_count;
-
-		return neu;
-	}
-
-	static void lu_s_rec_rg_cell_3_retract(Lu_S_Rec_Rg self, Lu_S_Cell_3 cell)
-	{
-		lu_s_cell_3_deinit(cell);
-	}
 
 	static void lu_s_rec_rg_print_layers_info(struct lu_s_layer* layers, lu_size size, lu_size print_top_size)
 	{
@@ -210,12 +121,10 @@
  		lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
  		lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
  		lu_debug("\n 	 	");
- 		lu_debug("\n 	 	%-19s %lu", "cells_size:", self->cells_size);
- 		lu_debug("\n 	 	%-19s %lu", "cells_count:", self->cells_count);
+ 		lu_debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
  		lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
- 		lu_debug("\n 	 	%-19s %lu", "cells_2_count:", self->cells_2_count);
  		lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
- 		lu_debug("\n 	 	%-19s %lu", "cells_3_count:", self->cells_3_count);
+ 		
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
  		lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);
  		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);

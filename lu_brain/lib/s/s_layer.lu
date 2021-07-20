@@ -64,7 +64,7 @@
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
-					cell = lu_s_rec_rg_cell_3_assign(self->rec, self, x, y, z); 
+					cell = lu_s_cell_mem_cell_3_assign(self->rec->cell_mem, self, x, y, z); 
 					lu_user_assert_void(cell, "Cannot init cell");
 
 					cell = (Lu_S_Cell_3) s_component_links_alloc((Lu_S_Cell_1) cell, self->rec); 
@@ -93,7 +93,7 @@
 				{
 					cell = lu_s_layer_cell_get(self, x, y, z);
 					lu_s_cell_links_free(cell);
-					lu_s_rec_rg_cell_3_retract(self->rec, (Lu_S_Cell_3) cell);
+					lu_s_cell_mem_cell_3_retract(self->rec->cell_mem, (Lu_S_Cell_3) cell);
 				}
 	}
 
@@ -113,7 +113,7 @@
 		for (y = 0; y < h; y++)
 			for (x = 0; x < w; x++)
 			{
-				cell = lu_s_rec_rg_cell_2_assign(self->rec, self, x, y); 
+				cell = lu_s_cell_mem_cell_2_assign(self->rec->cell_mem, self, x, y); 
 				lu_user_assert_void(cell, "Cannot init cell");
 
 				cell = (Lu_S_Cell_2) s_pixel_links_alloc((Lu_S_Cell_1) cell, self->rec); 
@@ -136,7 +136,7 @@
 			if (cell)
 			{
 				lu_s_cell_links_free(cell);
-				lu_s_rec_rg_cell_2_retract(self->rec, (Lu_S_Cell_2) cell);
+				lu_s_cell_mem_cell_2_retract(self->rec->cell_mem, (Lu_S_Cell_2) cell);
 			}
 		}
 	}
@@ -154,7 +154,7 @@
 		for (lu_size y = 0; y < h; y++)
 			for (x = 0; x < w; x++)
 			{
-				cell = lu_s_rec_rg_cell_2_assign(self->rec, self, x, y); 
+				cell = lu_s_cell_mem_cell_2_assign(self->rec->cell_mem, self, x, y); 
 				lu_user_assert_void(cell, "Cannot init cell");
 
 				cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell, self->rec); 
@@ -176,7 +176,7 @@
 			if (cell)
 			{
 				lu_s_cell_links_free(cell);
-				lu_s_rec_rg_cell_2_retract(self->rec, (Lu_S_Cell_2) cell);
+				lu_s_cell_mem_cell_2_retract(self->rec->cell_mem, (Lu_S_Cell_2) cell);
 			}
 		}
 	}
@@ -192,7 +192,7 @@
 		//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
 		for (lu_size x = 0; x < w; x++)
 		{
-			cell = lu_s_rec_rg_cell_assign(self->rec, self); 
+			cell = lu_s_cell_mem_cell_1_assign(self->rec->cell_mem, self); 
 			lu_user_assert_void(cell, "Cannot init cell");
 
 			cell = s_block_links_alloc((Lu_S_Cell_1) cell, self->rec); 
@@ -216,7 +216,7 @@
 			if (cell)
 			{
 				lu_s_cell_links_free(cell);
-				lu_s_rec_rg_cell_retract(self->rec, cell);
+				lu_s_cell_mem_cell_1_retract(self->rec->cell_mem, cell);
 			}
 		}
 	}

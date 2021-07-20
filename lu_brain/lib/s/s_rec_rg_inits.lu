@@ -8,7 +8,7 @@
 		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
 		lu_user_assert_void(self->block_layers, "self->block_layers is NULL");
 
-		self->cells_size = 0;
+		self->cells_1_size = 0;
 
 		lu_size w = self->cells_w;
 		lu_size h = self->cells_h;
@@ -66,7 +66,7 @@
 
 			layer = lu_s_layer_base_init(layer, self, LU_SLT_BLOCKS, ix, 1, h, d);
 			lu_user_assert_void(layer, "Cannot init layer");
-			self->cells_size += lu_s_layer_cells_size(layer);
+			self->cells_1_size += lu_s_layer_cells_size(layer);
 
 			++ix;
 			--w;
