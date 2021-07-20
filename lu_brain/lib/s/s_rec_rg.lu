@@ -121,9 +121,9 @@
  		lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
  		lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
  		lu_debug("\n 	 	");
- 		lu_debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
- 		lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
- 		lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
  		
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
  		lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);

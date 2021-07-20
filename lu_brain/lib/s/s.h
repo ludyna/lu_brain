@@ -233,10 +233,6 @@
 
 		Lu_S_Cell_Mem 			cell_mem;
 
-		lu_size 				cells_1_size;
-		lu_size 				cells_2_size;
-		lu_size 				cells_3_size;
-
  		// Layers
 
 		struct lu_s_layer_conf 	v_conf;	
