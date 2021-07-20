@@ -174,13 +174,9 @@
 
 	struct lu_s_cell_mem {
 
-		lu_size 				cells_w;
-		lu_size 				cells_h; 
-		lu_size 				cells_d;		
-
-		lu_size 				cells_size;
-		lu_size 				cells_count;
-		struct lu_s_cell_1* 	cells;
+		lu_size 				cells_1_size;
+		lu_size 				cells_1_count;
+		struct lu_s_cell_1* 	cells_1;
 
 		lu_size 				cells_2_size;
 		lu_size 				cells_2_count;
@@ -193,7 +189,7 @@
 	};
 
 
-	static Lu_S_Cell_Mem lu_s_cell_mem_create(lu_size w, lu_size h, lu_size d);
+	static Lu_S_Cell_Mem lu_s_cell_mem_create(lu_size cells_1_size, lu_size cells_2_size, lu_size cells_3_size);
 	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
