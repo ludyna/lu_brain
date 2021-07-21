@@ -131,4 +131,10 @@
 
 	lu_size lu_brain_recs_size(Lu_Brain self) { return lu_arr_size(self->recs); }
 
+	Lu_Brain lu_brain_build(Lu_Brain self) 
+	{
+
+		return NULL;
+	}
+
 	

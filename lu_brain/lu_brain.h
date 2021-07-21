@@ -76,7 +76,11 @@
 
 	Lu_Brain lu_brain_reconfigure(Lu_Brain self, struct lu_brain_config config);
 
-	lu_size lu_brain_recs_size(Lu_Brain self);
+	lu_size lu_brain_recs_size(Lu_Brain self); 
+
+	// After you added recs call this method to build or rebuild brain.  
+	// Method returns NULL if build failed.
+	Lu_Brain lu_brain_build(Lu_Brain self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec  

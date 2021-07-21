@@ -79,6 +79,8 @@ void setUp(void)
 	TEST_ASSERT(rec_1);
 	
 	TEST_ASSERT(brain->recs->count);
+
+	lu_brain_build(brain);
 }
 
 void tearDown(void)
