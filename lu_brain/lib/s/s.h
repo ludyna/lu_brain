@@ -313,13 +313,13 @@
 		Lu_S_Story_Rg 			story;
 	};
 	
-	static inline Lu_S_Rec_Rg s_mem_lu_s_rec_rg_get(Lu_S self, lu_size indx) { return lu_arr_get(self->recs, indx); }
+	static inline Lu_S_Rec_Rg lu_s_mem_rec_rg_get(Lu_S self, lu_size indx) { return lu_arr_get(self->recs, indx); }
 
 	// s.lu
-	static Lu_S s_mem_create(Lu_Brain brain);
-	static void s_mem_destroy(Lu_S self);
+	static Lu_S lu_s_mem_create(Lu_Brain brain);
+	static void lu_s_mem_destroy(Lu_S self);
 
-	static void s_mem_print_info(Lu_S self);
+	static void lu_s_mem_print_info(Lu_S self);
 
-	static void s_mem_rec_create(Lu_S self, Lu_Rec rec);
-	static void s_mem_rec_destroy(Lu_S self, Lu_Rec rec);
+	static void lu_s_mem_rec_create(Lu_S self, Lu_Rec rec);
+	static void lu_s_mem_rec_destroy(Lu_S self, Lu_Rec rec);
