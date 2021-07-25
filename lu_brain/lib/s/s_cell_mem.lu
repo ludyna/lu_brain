@@ -38,14 +38,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Allocate cells
 
-	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self, lu_size cells_1_size, lu_size cells_2_size, lu_size cells_3_size)
+	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self)
 	{
 		lu_assert(self);
-		lu_assert(cells_1_size > 0);
-		lu_assert(cells_2_size > 0);
-		lu_assert(cells_3_size > 0);
+		lu_assert(self->cells_1_size > 0);
+		lu_assert(self->cells_2_size > 0);
+		lu_assert(self->cells_3_size > 0);
 
-		self->cells_1_size = cells_1_size;
 		self->cells_1 = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_1_size);
 		lu_assert(self->cells_1); 
 

@@ -15,9 +15,41 @@
 		lu_user_assert(self, "Cannot allocate Lu_S");
 
 		self->brain 		= brain;
+
 		self->cell_mem 		= lu_s_cell_mem_create(lu_g_mem);
-		self->recs 			= lu_arr_temp_create(lu_arr_size(brain->recs), false);
+		lu_assert(self->cell_mem);
+
+		self->recs 			= lu_arr_temp_create(lu_arr_count(brain->recs), false);
+		lu_assert(self->recs);
+
 		self->story 		= lu_s_story_rg_create(brain->config.max_story_size_in_blocks);
+		lu_assert(self->story);
+
+		// Create S recs
+		lu_size i; 
+		Lu_Rec rec;
+		Lu_S_Rec_Rg rec_rg;
+		for (i = 0; i < lu_arr_count(brain->recs); i++)
+		{
+			rec = (Lu_Rec) lu_arr_get(brain->recs, i);
+			lu_assert(rec);
+
+			rec_rg = lu_s_rec_rg_create(rec, self->cell_mem);
+			lu_assert(rec_rg);
+
+			lu_arr_set(self->recs, i, rec_rg);
+		}
+
+		lu_s_cell_mem_alloc_cells(self->cell_mem);
+
+		// Init rec_rg cells 
+		for (i = 0; i < lu_arr_count(self->recs); i++)
+		{
+			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
+			lu_assert(rec_rg);
+
+			lu_s_rec_rg_cells_init(rec_rg);
+		}
 
 		return self;
 	}
@@ -28,13 +60,13 @@
 
 		lu_s_story_rg_destroy(self->story);
 
-		Lu_S_Rec_Rg lu_s_rec_rg;
+		Lu_S_Rec_Rg rec_rg;
 		for(lu_size i = 0; i < lu_arr_count(self->recs); i++)
 		{
-			lu_s_rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
+			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 
-			if (lu_s_rec_rg) 
-				lu_s_rec_rg_destroy(lu_s_rec_rg);
+			if (rec_rg) 
+				lu_s_rec_rg_destroy(rec_rg);
 		}
 
 		lu_arr_temp_destroy(self->recs);
@@ -60,33 +92,4 @@
  			if (rec) 
  				lu_s_rec_rg_print_info(rec);
  		}
-	}
-
-	static void lu_s_mem_rec_create(Lu_S self, Lu_Rec rec)
-	{
-		lu_size i;
-		for (i = 0; i < lu_arr_count(self->recs); i++)
-		{
-			if (lu_arr_get(self->recs, i) == NULL) return;
-		}
-
-		Lu_S_Rec_Rg lu_s_rec_rg = lu_s_rec_rg_create(rec, self->cell_mem);
-		lu_arr_set(self->recs, i, lu_s_rec_rg);
-	}
-
-	static void lu_s_mem_rec_destroy(Lu_S self, Lu_Rec rec)
-	{
-		lu_size i;
-		Lu_S_Rec_Rg lu_s_rec_rg;
-		for (i = 0; i < lu_arr_count(self->recs); i++)
-		{
-			lu_s_rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
-	
-			if (lu_s_rec_rg && lu_s_rec_rg->rec && lu_s_rec_rg->rec->id == rec->id)
-			{
-				lu_s_rec_rg_destroy(lu_s_rec_rg);
-				lu_arr_set(self->recs, i, NULL);
-				break;
-			}
-		}
 	}

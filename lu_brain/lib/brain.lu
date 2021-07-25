@@ -104,8 +104,6 @@
 		lu_assert(rec->brain);
 		lu_assert(self->s);
 
-		lu_s_mem_rec_destroy(self->s, rec);
-
 		lu_arr_set(self->recs, rec->id, NULL);
 		
 		rec->brain = NULL;
@@ -152,18 +150,6 @@
 		self->s = lu_s_mem_create(self);
 		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
 
-		// Create S recs
-		lu_size i; 
-		Lu_Rec rec;
-		for (i = 0; i < lu_arr_count(self->recs); i++)
-		{
-			rec = (Lu_Rec) lu_arr_get(self->recs, i);
-			lu_assert(rec);
-
-			lu_s_mem_rec_create(self->s, rec);
-		}
-
-
 		//
 		// Create N
 		//
@@ -173,8 +159,6 @@
 
 		self->n = lu_n_mem_create(self, n_config);
 		lu_user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
-		
-
 
 		return self;
 	}

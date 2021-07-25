@@ -197,7 +197,7 @@
 	// Allocate cells
 	// 
 
-	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self, lu_size cells_1_size, lu_size cells_2_size, lu_size cells_3_size);
+	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self);
 
 	//
 	// Cells assign and retract
@@ -298,7 +298,6 @@
 	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self);
 	static void lu_s_story_rg_blocks_deinit(Lu_S_Story_Rg self);
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S
 //
@@ -320,6 +319,3 @@
 	static void lu_s_mem_destroy(Lu_S self);
 
 	static void lu_s_mem_print_info(Lu_S self);
-
-	static void lu_s_mem_rec_create(Lu_S self, Lu_Rec rec);
-	static void lu_s_mem_rec_destroy(Lu_S self, Lu_Rec rec);
