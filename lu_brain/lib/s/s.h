@@ -190,8 +190,34 @@
 
 	};
 
+	//
+	// Create and Destroy
+	// 
+
 	static Lu_S_Cell_Mem lu_s_cell_mem_create(Lu_Mem mem);
 	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self);
+
+	// 
+	// Size increments
+	//
+
+	static inline lu_size lu_s_cell_mem_cell_1_size_inc(Lu_S_Cell_Mem self, lu_size s) 
+	{
+		self->cells_1_size += s;
+		return self->cells_1_size;
+	}
+
+	static inline lu_size lu_s_cell_mem_cell_2_size_inc(Lu_S_Cell_Mem self, lu_size s) 
+	{
+		self->cells_2_size += s;
+		return self->cells_2_size;
+	}
+
+	static inline lu_size lu_s_cell_mem_cell_3_size_inc(Lu_S_Cell_Mem self, lu_size s) 
+	{
+		self->cells_3_size += s;
+		return self->cells_3_size;
+	}
 
 	//
 	// Allocate cells
