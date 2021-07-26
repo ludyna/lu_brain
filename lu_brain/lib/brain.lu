@@ -31,7 +31,7 @@
 		lu_user_assert_void(self, "Lu_Brain is NULL");
 
 		lu_n_mem_destroy(self->n);
-		lu_s_mem_destroy(self->s);
+		lu_s_destroy(self->s);
 
 		Lu_Rec rec;
 		if (self->recs)
@@ -58,7 +58,7 @@
 		lu_debug("\nMemory used (bytes): %lu", lu_mem_used(self->brain_mem));
 
  		if (self->s)
- 			lu_s_mem_print_info(self->s);
+ 			lu_s_print_info(self->s);
 
  		// if (self->n)
  		// 		lu_n_mem_print_info(self->n);
@@ -133,7 +133,7 @@
 
 		if (self->s)
 		{
-			lu_s_mem_destroy(self->s);
+			lu_s_destroy(self->s);
 			self->s_mem = NULL;
 		}
 
@@ -147,7 +147,7 @@
 		// Create S
 		// 
 
-		self->s = lu_s_mem_create(self);
+		self->s = lu_s_create(self);
 		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
 
 		//

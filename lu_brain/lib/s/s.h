@@ -280,8 +280,6 @@
 
 	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem cell_mem);
 	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self);
-
-	static void lu_s_rec_rg_cells_init(Lu_S_Rec_Rg self);
 	
 	//
 	// lu_s_rec_rg_layer_inits.lu
@@ -331,10 +329,8 @@
 		Lu_S_Story_Rg 			story;
 	};
 	
-	static inline Lu_S_Rec_Rg lu_s_mem_rec_rg_get(Lu_S self, lu_size indx) { return lu_arr_get(self->recs, indx); }
-
 	// s.lu
-	static Lu_S lu_s_mem_create(Lu_Brain brain);
-	static void lu_s_mem_destroy(Lu_S self);
+	static Lu_S lu_s_create(Lu_Brain brain);
+	static void lu_s_destroy(Lu_S self);
 
-	static void lu_s_mem_print_info(Lu_S self);
+	static void lu_s_print_info(Lu_S self);

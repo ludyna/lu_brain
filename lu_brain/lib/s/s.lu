@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S
 
-	static Lu_S lu_s_mem_create(Lu_Brain brain)
+	static Lu_S lu_s_create(Lu_Brain brain)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->recs, "Lu_Brain recs is NULL");
@@ -48,13 +48,15 @@
 			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 			lu_assert(rec_rg);
 
-			lu_s_rec_rg_cells_init(rec_rg);
+			lu_s_rec_rg_components_init(rec_rg);
+			lu_s_rec_rg_pixels_init(rec_rg);
+			lu_s_rec_rg_pyras_init(rec_rg);
 		}
 
 		return self;
 	}
 
-	static void lu_s_mem_destroy(Lu_S self)
+	static void lu_s_destroy(Lu_S self)
 	{
 		lu_user_assert_void(self, "Lu_S is NULL");
 
@@ -76,7 +78,7 @@
 		lu_g_mem_free((lu_p_byte) self);
 	}
 
-	static void lu_s_mem_print_info(Lu_S self)
+	static void lu_s_print_info(Lu_S self)
 	{
 		lu_user_assert_void(self, "Lu_S is NULL");
 		lu_user_assert_void(self->recs, "Lu_S recs is NULL");

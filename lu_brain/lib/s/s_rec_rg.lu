@@ -36,7 +36,7 @@
 		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
 
 		///////////////////////////////////////
-		// All layers init
+		// Layers init
 
 		lu_s_rec_rg_layers_init(self);
 
@@ -60,20 +60,6 @@
 
 		lu_g_mem_free((lu_p_byte) self);
 	}
-
-	static void lu_s_rec_rg_cells_init(Lu_S_Rec_Rg self)
-	{
-		lu_s_rec_rg_components_init(self);
-		lu_s_rec_rg_pixels_init(self);
-		lu_s_rec_rg_pyras_init(self);
-
-		// //lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
-
-		// lu_user_assert(self->cells_count == self->cells_size, "Something wrong with cells_count");
-		// lu_user_assert(self->cells_2_count == self->cells_2_size, "Something wrong with cells_2_count");
-		// lu_user_assert(self->cells_3_count == self->cells_3_size, "Something wrong with cells_3_count");
-	}
-
 
 	static void lu_s_rec_rg_print_layers_info(struct lu_s_layer* layers, lu_size size, lu_size print_top_size)
 	{
