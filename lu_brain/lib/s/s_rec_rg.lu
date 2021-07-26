@@ -36,15 +36,6 @@
 		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
 
 		///////////////////////////////////////
-		// Allocate Block Layers
-
-		self->max_blocks_size 		= 16; //rec->config.max_blocks_size;
-		self->block_layers_size 	= self->max_blocks_size + 1;	
-
-		self->block_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->block_layers_size);
-		lu_user_assert(self->block_layers, "Cannot allocate av layers"); 
-
-		///////////////////////////////////////
 		// All layers init
 
 		lu_s_rec_rg_layers_init(self);
@@ -56,7 +47,6 @@
 	{
 		lu_assert(self); 
 
-		lu_s_rec_rg_blocks_deinit(self);
 		lu_s_rec_rg_pyras_deinit(self);
 		lu_s_rec_rg_pixels_deinit(self);
 		lu_s_rec_rg_components_deinit(self);
@@ -66,7 +56,6 @@
 		lu_s_layer_conf_deinit(&self->p_conf);
 		lu_s_layer_conf_deinit(&self->v_conf);
 
-		lu_g_mem_free((lu_p_byte) self->block_layers);
 		lu_g_mem_free((lu_p_byte) self->data_layers);
 
 		lu_g_mem_free((lu_p_byte) self);
@@ -77,7 +66,6 @@
 		lu_s_rec_rg_components_init(self);
 		lu_s_rec_rg_pixels_init(self);
 		lu_s_rec_rg_pyras_init(self);
-		lu_s_rec_rg_blocks_init(self);
 
 		// //lu_debug("\nneus_count = %d, cells_size = %d, rw=%d, rh=%d, rd=%d", self->cells_count, self->cells_size, self->cells_w, self->cells_h, self->cells_d);
 
@@ -126,13 +114,13 @@
  		// lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
  		
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
- 		lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);
- 		lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
  		lu_debug("\n 	 	");
 
  		lu_s_rec_rg_print_layers_info(self->data_layers, self->data_layers_size, 3);
 
 		lu_debug("\n"); 
 		
- 		lu_s_rec_rg_print_layers_info(self->block_layers, self->block_layers_size, 1);
+ 		// lu_s_rec_rg_print_layers_info(self->block_layers, self->block_layers_size, 1);
 	}

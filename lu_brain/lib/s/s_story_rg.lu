@@ -19,7 +19,28 @@
 		self->block_layers_size 	= self->max_blocks_size + 1;	
 
 		self->block_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->block_layers_size);
-		lu_user_assert(self->block_layers, "Cannot allocate av layers");
+		lu_user_assert(self->block_layers, "Cannot allocate story layers");
+
+
+				// Blocks
+		// ix = 0;
+		// w = self->block_layers_size;
+		// h = 1;
+		// d = 1;
+
+		// while(w > 0)
+		// {
+		// 	lu_user_assert_void(ix < self->block_layers_size, "Wrong layer index");
+
+		// 	layer = &self->block_layers[ix];
+
+		// 	layer = lu_s_layer_base_init(layer, self, LU_SLT_BLOCKS, ix, 1, h, d);
+		// 	lu_user_assert_void(layer, "Cannot init layer");
+		// 	lu_s_cell_mem_cell_1_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
+
+		// 	++ix;
+		// 	--w;
+		// }
 
 		return self;
 	}

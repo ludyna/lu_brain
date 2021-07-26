@@ -266,10 +266,6 @@
 
 		lu_size 				data_layers_size;
 		struct lu_s_layer* 		data_layers;
- 
-		lu_size 				max_blocks_size;
-		lu_size 				block_layers_size;
-		struct lu_s_layer* 		block_layers;
 	};
 
 	static inline Lu_S_Cell_1 lu_s_rec_rg_v_cell_get(Lu_S_Rec_Rg self, lu_size l, lu_size x, lu_size y, lu_size z)
@@ -302,9 +298,6 @@
 
 	static void lu_s_rec_rg_pyras_init(Lu_S_Rec_Rg self); 
 	static void lu_s_rec_rg_pyras_deinit(Lu_S_Rec_Rg self);
-
-	static void lu_s_rec_rg_blocks_init(Lu_S_Rec_Rg self);
-	static void lu_s_rec_rg_blocks_deinit(Lu_S_Rec_Rg self);
 
 	static void lu_s_rec_rg_print_info(Lu_S_Rec_Rg self);
 
