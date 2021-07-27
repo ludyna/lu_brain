@@ -101,12 +101,12 @@
  		
  		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
  		// lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);
- 		// lu_debug("\n 	 	%-19s %lu", "block_layers_size:", self->block_layers_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "layers_size:", self->layers_size);
  		lu_debug("\n 	 	");
 
  		lu_s_rec_rg_print_layers_info(self->data_layers, self->data_layers_size, 3);
 
 		lu_debug("\n"); 
 		
- 		// lu_s_rec_rg_print_layers_info(self->block_layers, self->block_layers_size, 1);
+ 		// lu_s_rec_rg_print_layers_info(self->layers, self->layers_size, 1);
 	}

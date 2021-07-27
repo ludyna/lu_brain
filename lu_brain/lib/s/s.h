@@ -305,11 +305,11 @@
 
 	struct lu_s_story_rg {
 		lu_size 				max_blocks_size;
-		lu_size 				block_layers_size;
-		struct lu_s_layer* 		block_layers;
+		lu_size 				layers_size;
+		struct lu_s_layer* 		layers;
 	};
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size);
+	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size, lu_size recs_count);
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
 
 	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self);

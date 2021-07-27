@@ -6,7 +6,7 @@
 // 
 
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size)
+	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size, lu_size recs_count)
 	{
 		Lu_S_Story_Rg self = (Lu_S_Story_Rg) lu_g_mem_alloc(sizeof(struct lu_s_story_rg));
 		lu_assert(self);
@@ -16,23 +16,23 @@
 		// Allocate Block Layers
 
 		self->max_blocks_size 		= max_blocks_size;
-		self->block_layers_size 	= self->max_blocks_size + 1;	
+		self->layers_size 	= self->max_blocks_size + 1;	
 
-		self->block_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->block_layers_size);
-		lu_user_assert(self->block_layers, "Cannot allocate story layers");
+		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
+		lu_user_assert(self->layers, "Cannot allocate story layers");
 
 
-				// Blocks
+		// Blocks
 		// ix = 0;
-		// w = self->block_layers_size;
+		// w = self->layers_size;
 		// h = 1;
 		// d = 1;
 
 		// while(w > 0)
 		// {
-		// 	lu_user_assert_void(ix < self->block_layers_size, "Wrong layer index");
+		// 	lu_user_assert_void(ix < self->layers_size, "Wrong layer index");
 
-		// 	layer = &self->block_layers[ix];
+		// 	layer = &self->layers[ix];
 
 		// 	layer = lu_s_layer_base_init(layer, self, LU_SLT_BLOCKS, ix, 1, h, d);
 		// 	lu_user_assert_void(layer, "Cannot init layer");
@@ -50,7 +50,7 @@
 		lu_assert(self);
 
 		lu_s_story_rg_blocks_deinit(self);
-		lu_g_mem_free((lu_p_byte) self->block_layers);
+		lu_g_mem_free((lu_p_byte) self->layers);
 		lu_g_mem_free((lu_p_byte) self);
 	}
 
@@ -66,13 +66,13 @@
 		Lu_S_Layer b_layer = NULL;
 		lu_size ix;
 
-		for(ix = 0; ix < self->block_layers_size; ix++)
+		for(ix = 0; ix < self->layers_size; ix++)
 		{
-			layer = &self->block_layers[ix];
+			layer = &self->layers[ix];
 
 			if (ix > 0)
 			{
-				b_layer = &self->block_layers[ix - 1];
+				b_layer = &self->layers[ix - 1];
 			}
 			else
 			{
@@ -88,9 +88,9 @@
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
-		for(lu_size i = 0; i < self->block_layers_size; i++)
+		for(lu_size i = 0; i < self->layers_size; i++)
 		{
-			lu_s_layer_block_cells_deinit(&self->block_layers[i]);
+			lu_s_layer_block_cells_deinit(&self->layers[i]);
 		}
 	}
 
