@@ -61,13 +61,22 @@
 	static Lu_S_Cell_1 lu_s_cell_1_init(Lu_S_Cell_1 self, enum lu_s_cell_type type, Lu_S_Layer, lu_size l_ix);
 	static Lu_S_Cell_2 lu_s_cell_2_init(Lu_S_Cell_2 self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y);
 	
-	static Lu_S_Cell_3 lu_s_cell_3_init(Lu_S_Cell_3 self, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y, lu_size z);
+	static Lu_S_Cell_3 lu_s_cell_3_init(
+		Lu_S_Cell_3 self, 
+		Lu_S_Layer layer, 
+		lu_size l_ix, 
+		lu_size x, 
+		lu_size y, 
+		lu_size z, 
+		Lu_S_Layer_Conf v_conf, 
+		Lu_S_Layer_Conf p_conf
+	);
 	static void lu_s_cell_3_deinit(Lu_S_Cell_3 self);
 
-	static Lu_S_Cell_1 s_component_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg);
-	static Lu_S_Cell_1 s_pixel_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg);
-	static Lu_S_Cell_1 s_pyra_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg);
-	static Lu_S_Cell_1 s_block_links_alloc(Lu_S_Cell_1 self, Lu_S_Rec_Rg); 
+	static Lu_S_Cell_1 s_component_links_alloc(Lu_S_Cell_1 self);
+	static Lu_S_Cell_1 s_pixel_links_alloc(Lu_S_Cell_1 self, lu_size cells_d);
+	static Lu_S_Cell_1 s_pyra_links_alloc(Lu_S_Cell_1 self);
+	static Lu_S_Cell_1 s_block_links_alloc(Lu_S_Cell_1 self); 
 	static void lu_s_cell_links_free(Lu_S_Cell_1 self);
 
 	//
@@ -108,8 +117,6 @@
 //
 
 	struct lu_s_layer {
-		// vlasnyk
-		Lu_S_Rec_Rg rec;
 
 		enum lu_s_layer_type type;
 
@@ -151,20 +158,25 @@
 	}
 
 	// lu_s_layer.lu
-	static Lu_S_Layer lu_s_layer_base_init(Lu_S_Layer self, Lu_S_Rec_Rg rec, enum lu_s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
+	static Lu_S_Layer lu_s_layer_base_init(Lu_S_Layer self, enum lu_s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
 	static void lu_s_layer_base_deinit(Lu_S_Layer self);
 
-	static void lu_s_layer_component_cells_init(Lu_S_Layer self);
-	static void lu_s_layer_component_cells_deinit(Lu_S_Layer self);
+	static void lu_s_layer_component_cells_init(
+		Lu_S_Layer self, 
+		Lu_S_Cell_Mem cell_mem, 
+		Lu_S_Layer_Conf v_conf, 
+		Lu_S_Layer_Conf p_conf
+	);
+	static void lu_s_layer_component_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
 
-	static void lu_s_layer_pixel_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
-	static void lu_s_layer_pixel_cells_deinit(Lu_S_Layer self);
+	static void lu_s_layer_pixel_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem, lu_size cells_d);
+	static void lu_s_layer_pixel_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
 
-	static void lu_s_layer_pyra_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
-	static void lu_s_layer_pyra_cells_deinit(Lu_S_Layer self);
+	static void lu_s_layer_pyra_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_layer_pyra_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
 
-	static void lu_s_layer_story_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
-	static void lu_s_layer_story_cells_deinit(Lu_S_Layer self);
+	static void lu_s_layer_story_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_layer_story_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
 
 	static void lu_s_layer_print_info(Lu_S_Layer self);
 
@@ -235,7 +247,15 @@
 	static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y);
 	static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell);
 
-	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z);
+	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
+		Lu_S_Cell_Mem self, 
+		Lu_S_Layer layer, 
+		lu_size x, 
+		lu_size y, 
+		lu_size z,
+		Lu_S_Layer_Conf v_conf, 
+		Lu_S_Layer_Conf p_conf
+	);
 	static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell);
 
 
@@ -246,24 +266,22 @@
 	// velyki masyvy v lu_s_rec_rg shob vykorystaty perevahu cpu keshuvania
 	struct lu_s_rec_rg {
 		
-		// Lu_Rec related
-
+		// Lu_Rec 
 		Lu_Rec 					rec;			
 		lu_size 				id;
 
-		// Cells
-
+		// Dimensions
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
 		lu_size 				cells_d;		
 
 		Lu_S_Cell_Mem 			cell_mem;
 
- 		// Layers
-
+		// v and p configs
 		struct lu_s_layer_conf 	v_conf;	
 		struct lu_s_layer_conf 	p_conf;
-
+ 		
+ 		// Layers
 		lu_size 				layers_size;
 		struct lu_s_layer* 		layers;
 	};
@@ -304,13 +322,14 @@
 //
 
 	struct lu_s_story_rg {
+		Lu_S_Cell_Mem 			cell_mem;
 		lu_size 				max_blocks_size;
 		lu_size 				recs_size;
 		lu_size 				layers_size;
 		struct lu_s_layer* 		layers;
 	};
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size, lu_size recs_size);
+	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size max_blocks_size, lu_size recs_size);
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
 
 	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self);

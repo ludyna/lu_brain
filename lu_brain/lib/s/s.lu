@@ -22,7 +22,11 @@
 		self->recs 			= lu_arr_temp_create(lu_arr_count(brain->recs), false);
 		lu_assert(self->recs);
 
-		self->story 		= lu_s_story_rg_create(brain->config.max_story_size_in_blocks, lu_arr_count(brain->recs));
+		self->story 		= lu_s_story_rg_create(
+			self->cell_mem, 
+			brain->config.max_story_size_in_blocks, 
+			lu_arr_count(brain->recs)
+		);
 		lu_assert(self->story);
 
 		// Create S recs

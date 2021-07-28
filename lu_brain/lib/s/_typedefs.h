@@ -23,7 +23,7 @@
 		LU_SLT_COMPONENTS,
 		LU_SLT_PIXELS, 	
 		LU_SLT_PYRAS,
-		LU_SLT_BLOCKS
+		LU_SLT_STORY
 	};
 	
 	typedef struct lu_s_layer_conf*		Lu_S_Layer_Conf;

@@ -102,12 +102,20 @@
 		lu_s_cell_2_deinit(cell);
 	}
 
-	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y, lu_size z)
+	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
+		Lu_S_Cell_Mem self, 
+		Lu_S_Layer layer, 
+		lu_size x, 
+		lu_size y, 
+		lu_size z,
+		Lu_S_Layer_Conf v_conf, 
+		Lu_S_Layer_Conf p_conf
+	)
 	{
 		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
 
 		Lu_S_Cell_3 neu = &self->cells_3[self->cells_3_count];
-		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z);
+		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);
 		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
 
 		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
