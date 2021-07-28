@@ -28,12 +28,12 @@
 		///////////////////////////////////////
 		// Allocate Lu_Data Layers
 
-		self->data_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
+		self->layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
 		
-		++self->data_layers_size; // + odyn dlia component 
+		++self->layers_size; // + odyn dlia component 
 																				
-		self->data_layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->data_layers_size);
-		lu_user_assert(self->data_layers, "Cannot allocate v layers"); 
+		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
+		lu_user_assert(self->layers, "Cannot allocate v layers"); 
 
 		///////////////////////////////////////
 		// Layers init
@@ -56,7 +56,7 @@
 		lu_s_layer_conf_deinit(&self->p_conf);
 		lu_s_layer_conf_deinit(&self->v_conf);
 
-		lu_g_mem_free((lu_p_byte) self->data_layers);
+		lu_g_mem_free((lu_p_byte) self->layers);
 
 		lu_g_mem_free((lu_p_byte) self);
 	}
@@ -99,12 +99,12 @@
  		// lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
  		// lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
  		
- 		lu_debug("\n 	 	%-19s %lu", "data_layers_size:", self->data_layers_size);
+ 		lu_debug("\n 	 	%-19s %lu", "layers_size:", self->layers_size);
  		// lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);
  		// lu_debug("\n 	 	%-19s %lu", "layers_size:", self->layers_size);
  		lu_debug("\n 	 	");
 
- 		lu_s_rec_rg_print_layers_info(self->data_layers, self->data_layers_size, 3);
+ 		lu_s_rec_rg_print_layers_info(self->layers, self->layers_size, 3);
 
 		lu_debug("\n"); 
 		

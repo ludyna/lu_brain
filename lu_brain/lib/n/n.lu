@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N create methods
 
-	static Lu_N lu_n_mem_create(Lu_Brain brain, struct lu_n_config config)
+	static Lu_N lu_n_create(Lu_Brain brain, struct lu_n_config config)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu_user_assert(brain->brain_mem, "Lu_Brain brain_mem is NULL");
@@ -22,7 +22,7 @@
 		return self;
 	}
 
-	static void lu_n_mem_destroy(Lu_N self)
+	static void lu_n_destroy(Lu_N self)
 	{
 		lu_assert(self);
 		lu_assert(self->names);
@@ -36,7 +36,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
  	
- 	static void lu_n_mem_print_info(Lu_N self)
+ 	static void lu_n_print_info(Lu_N self)
  	{
  		lu_user_assert_void(self, "Lu_N is NULL");
 

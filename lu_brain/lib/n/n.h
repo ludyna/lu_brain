@@ -39,10 +39,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N Create & Destroy
 
-	static Lu_N lu_n_mem_create(Lu_Brain brain, struct lu_n_config config);
-	static void lu_n_mem_destroy(Lu_N self);
+	static Lu_N lu_n_create(Lu_Brain brain, struct lu_n_config config);
+	static void lu_n_destroy(Lu_N self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N Utility
 
-	static void lu_n_mem_print_info(Lu_N);
+	static void lu_n_print_info(Lu_N);

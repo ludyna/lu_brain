@@ -181,7 +181,7 @@
 		}
 	}
 
-	static void lu_s_layer_block_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer)
+	static void lu_s_layer_story_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer)
 	{
 		lu_user_assert_void(self, "Lu_S_Layer is NULL"); 
 		lu_user_assert_void(self->rec, "Lu_S_Rec_Rg is NULL");
@@ -205,7 +205,7 @@
 		}
 	}
 
-	static void lu_s_layer_block_cells_deinit(Lu_S_Layer self)
+	static void lu_s_layer_story_cells_deinit(Lu_S_Layer self)
 	{ 
 		lu_user_assert_void(self, "Lu_S_Layer is NULL");
 

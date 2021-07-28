@@ -163,8 +163,8 @@
 	static void lu_s_layer_pyra_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
 	static void lu_s_layer_pyra_cells_deinit(Lu_S_Layer self);
 
-	static void lu_s_layer_block_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
-	static void lu_s_layer_block_cells_deinit(Lu_S_Layer self);
+	static void lu_s_layer_story_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer);
+	static void lu_s_layer_story_cells_deinit(Lu_S_Layer self);
 
 	static void lu_s_layer_print_info(Lu_S_Layer self);
 
@@ -264,13 +264,13 @@
 		struct lu_s_layer_conf 	v_conf;	
 		struct lu_s_layer_conf 	p_conf;
 
-		lu_size 				data_layers_size;
-		struct lu_s_layer* 		data_layers;
+		lu_size 				layers_size;
+		struct lu_s_layer* 		layers;
 	};
 
 	static inline Lu_S_Cell_1 lu_s_rec_rg_v_cell_get(Lu_S_Rec_Rg self, lu_size l, lu_size x, lu_size y, lu_size z)
 	{
-		Lu_S_Layer layer = &self->data_layers[l];
+		Lu_S_Layer layer = &self->layers[l];
 		return lu_s_layer_cell_get(layer, x, y, z);
 	}
 
@@ -305,11 +305,12 @@
 
 	struct lu_s_story_rg {
 		lu_size 				max_blocks_size;
+		lu_size 				recs_size;
 		lu_size 				layers_size;
 		struct lu_s_layer* 		layers;
 	};
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size, lu_size recs_count);
+	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size, lu_size recs_size);
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
 
 	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self);

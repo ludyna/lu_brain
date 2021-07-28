@@ -5,7 +5,7 @@
 	static void lu_s_rec_rg_layers_init(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
-		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
+		lu_user_assert_void(self->layers, "self->layers is NULL");
 		lu_assert(self->cell_mem);
 
 		lu_size w = self->cells_w;
@@ -13,7 +13,7 @@
 		lu_size d = self->cells_d;
 		lu_size ix = 0;
 
-		Lu_S_Layer layer 	= &self->data_layers[ix];
+		Lu_S_Layer layer 	= &self->layers[ix];
 
 		// Components
 		layer = lu_s_layer_base_init(layer, self, LU_SLT_COMPONENTS, ix, w, h, d);
@@ -23,23 +23,23 @@
 		++ix;
 		d = 1;
 
-		// Cells 
-		layer 	= &self->data_layers[ix];
+		// Pixels 
+		layer 	= &self->layers[ix];
 
 		layer = lu_s_layer_base_init(layer, self, LU_SLT_PIXELS, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init cell layer");
 		lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
-		// Datum
+		// Pyras
 		--w;
 		--h;
 		++ix;
 
 		while (w > 0 && h > 0)
 		{
-			lu_user_assert_void(ix < self->data_layers_size, "Index error");
+			lu_user_assert_void(ix < self->layers_size, "Index error");
 
-			layer = &self->data_layers[ix];
+			layer = &self->layers[ix];
 
 			layer = lu_s_layer_base_init(layer, self, LU_SLT_PYRAS, ix, w, h, d);
 			lu_user_assert_void(layer, "Cannot init pyra layer");
@@ -56,9 +56,9 @@
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		Lu_S_Layer layer;
-		for (lu_size i = 0; i < self->data_layers_size; i++)
+		for (lu_size i = 0; i < self->layers_size; i++)
 		{
-			layer 	= &self->data_layers[i];
+			layer 	= &self->layers[i];
 			lu_s_layer_base_deinit(layer);
 		}
 	}
@@ -66,26 +66,26 @@
 	static void lu_s_rec_rg_components_init(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
-		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
+		lu_user_assert_void(self->layers, "self->layers is NULL");
 
-		if (self->data_layers_size > 0)
-			lu_s_layer_component_cells_init(&self->data_layers[0]);
+		if (self->layers_size > 0)
+			lu_s_layer_component_cells_init(&self->layers[0]);
 	}
 
 	static void lu_s_rec_rg_components_deinit(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
-		lu_s_layer_component_cells_deinit(&self->data_layers[0]);
+		lu_s_layer_component_cells_deinit(&self->layers[0]);
 	}
 
 	static void lu_s_rec_rg_pixels_init(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
-		lu_user_assert_void(self->data_layers, "self->data_layers is NULL");
+		lu_user_assert_void(self->layers, "self->layers is NULL");
 
-		Lu_S_Layer layer 		= &self->data_layers[1];
-		Lu_S_Layer b_layer 	= &self->data_layers[0];
+		Lu_S_Layer layer 		= &self->layers[1];
+		Lu_S_Layer b_layer 	= &self->layers[0];
 
 		lu_s_layer_pixel_cells_init(layer, b_layer);
 	}
@@ -94,8 +94,8 @@
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 	
-		if (self->data_layers_size > 1)
-			lu_s_layer_pixel_cells_deinit(&self->data_layers[1]);
+		if (self->layers_size > 1)
+			lu_s_layer_pixel_cells_deinit(&self->layers[1]);
 	}
 
 	static void lu_s_rec_rg_pyras_init(Lu_S_Rec_Rg self)
@@ -105,10 +105,10 @@
 		Lu_S_Layer layer;
 		Lu_S_Layer b_layer = NULL;
 
-		for(lu_size ix = 2; ix < self->data_layers_size; ix++)
+		for(lu_size ix = 2; ix < self->layers_size; ix++)
 		{
-			layer 		= &self->data_layers[ix];
-			b_layer 	= &self->data_layers[ix - 1];
+			layer 		= &self->layers[ix];
+			b_layer 	= &self->layers[ix - 1];
 
 			lu_s_layer_pyra_cells_init(layer, b_layer);
 		}
@@ -118,8 +118,8 @@
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
-		for(lu_size i = 0; i < self->data_layers_size; i++)
+		for(lu_size i = 0; i < self->layers_size; i++)
 		{
-			lu_s_layer_pyra_cells_deinit(&self->data_layers[i]);
+			lu_s_layer_pyra_cells_deinit(&self->layers[i]);
 		}
 	}

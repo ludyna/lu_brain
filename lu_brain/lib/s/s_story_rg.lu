@@ -6,21 +6,20 @@
 // 
 
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size, lu_size recs_count)
+	static Lu_S_Story_Rg lu_s_story_rg_create(lu_size max_blocks_size, lu_size recs_size)
 	{
 		Lu_S_Story_Rg self = (Lu_S_Story_Rg) lu_g_mem_alloc(sizeof(struct lu_s_story_rg));
 		lu_assert(self);
-
 		
 		///////////////////////////////////////
 		// Allocate Block Layers
 
-		self->max_blocks_size 		= max_blocks_size;
-		self->layers_size 	= self->max_blocks_size + 1;	
+		self->max_blocks_size 	= max_blocks_size;
+		self->recs_size 		= recs_size;
+		self->layers_size 		= max_blocks_size > recs_size ? max_blocks_size : recs_size;	
 
 		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
-		lu_user_assert(self->layers, "Cannot allocate story layers");
-
+		lu_assert(self->layers);
 
 		// Blocks
 		// ix = 0;
@@ -40,6 +39,50 @@
 
 		// 	++ix;
 		// 	--w;
+		// }
+		
+		// lu_assert(self->cell_mem);
+
+		// lu_size w = self->cells_w;
+		// lu_size h = self->cells_h;
+		// lu_size d = self->cells_d;
+		// lu_size ix = 0;
+
+		// Lu_S_Layer layer 	= &self->layers[ix];
+
+		// // Components
+		// layer = lu_s_layer_base_init(layer, self, LU_SLT_COMPONENTS, ix, w, h, d);
+		// lu_user_assert_void(layer, "Cannot init component layer");
+		// lu_s_cell_mem_cell_3_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
+
+		// ++ix;
+		// d = 1;
+
+		// // Pixels 
+		// layer 	= &self->layers[ix];
+
+		// layer = lu_s_layer_base_init(layer, self, LU_SLT_PIXELS, ix, w, h, d);
+		// lu_user_assert_void(layer, "Cannot init cell layer");
+		// lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
+
+		// // Pyras
+		// --w;
+		// --h;
+		// ++ix;
+
+		// while (w > 0 && h > 0)
+		// {
+		// 	lu_user_assert_void(ix < self->layers_size, "Index error");
+
+		// 	layer = &self->layers[ix];
+
+		// 	layer = lu_s_layer_base_init(layer, self, LU_SLT_PYRAS, ix, w, h, d);
+		// 	lu_user_assert_void(layer, "Cannot init pyra layer");
+		// 	lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
+
+		// 	if (w > 0) --w;
+		// 	if (h > 0) --h;
+		// 	++ix; 
 		// }
 
 		return self;
@@ -77,10 +120,10 @@
 			else
 			{
 				// last layer from data layers
-				//b_layer = &self->data_layers[self->data_layers_size - 1];
+				//b_layer = &self->layers[self->layers_size - 1];
 			}
 
-			lu_s_layer_block_cells_init(layer, b_layer);
+			lu_s_layer_story_cells_init(layer, b_layer);
 		}
 	}
 
@@ -90,7 +133,7 @@
 
 		for(lu_size i = 0; i < self->layers_size; i++)
 		{
-			lu_s_layer_block_cells_deinit(&self->layers[i]);
+			lu_s_layer_story_cells_deinit(&self->layers[i]);
 		}
 	}
 

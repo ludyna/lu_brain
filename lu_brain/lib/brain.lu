@@ -30,7 +30,7 @@
 	{
 		lu_user_assert_void(self, "Lu_Brain is NULL");
 
-		lu_n_mem_destroy(self->n);
+		lu_n_destroy(self->n);
 		lu_s_destroy(self->s);
 
 		Lu_Rec rec;
@@ -61,7 +61,7 @@
  			lu_s_print_info(self->s);
 
  		// if (self->n)
- 		// 		lu_n_mem_print_info(self->n);
+ 		// 		lu_n_print_info(self->n);
 	}
 
 	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
@@ -139,7 +139,7 @@
 
 		if (self->n_mem)
 		{
-			lu_n_mem_destroy(self->n);
+			lu_n_destroy(self->n);
 			self->n = NULL;
 		}
 
@@ -157,7 +157,7 @@
 		struct lu_n_config n_config;
 		n_config.names_size = self->config.net.names_size;
 
-		self->n = lu_n_mem_create(self, n_config);
+		self->n = lu_n_create(self, n_config);
 		lu_user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
 
 		return self;
