@@ -21,6 +21,10 @@
 		self->cells_3_count 	= 0;
 		self->cells_3_size 		= 0;
 
+		self->cells_1 = NULL;
+		self->cells_2 = NULL;
+		self->cells_3 = NULL;
+
 		return self;
 	}
 
@@ -40,19 +44,25 @@
 
 	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self)
 	{
-		lu_assert(self);
-		lu_assert(self->cells_1_size > 0);
-		lu_assert(self->cells_2_size > 0);
-		lu_assert(self->cells_3_size > 0);
+		lu_assert(self); 
+		
+		if (self->cells_1_size > 0)
+		{
+			self->cells_1 = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_1_size);
+			lu_assert(self->cells_1); 
+		}
+ 	
+ 		if (self->cells_2_size > 0)
+ 		{
+			self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
+			lu_assert(self->cells_2); 
+		}
 
-		self->cells_1 = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_1_size);
-		lu_assert(self->cells_1); 
-
-		self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
-		lu_assert(self->cells_2); 
-
-		self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
-		lu_assert(self->cells_3); 
+		if (self->cells_3_size > 0)
+		{
+			self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
+			lu_assert(self->cells_3); 
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

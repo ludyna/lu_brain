@@ -46,37 +46,38 @@
 
 
 
-		// lu_size w = recs_size;
-		// lu_size h = max_blocks_size;
-		// lu_size ix = 0;
-		// Lu_S_Layer layer;
+		lu_size w = recs_size;
+		lu_size h = max_blocks_size;
+		lu_size d = 1;
+		lu_size ix = 0;
+		Lu_S_Layer layer;
 		
-		// // First layer 
-		// layer 	= &self->layers[ix];
+		// First layer 
+		layer 	= &self->layers[ix];
 
-		// layer = lu_s_layer_base_init(layer, self, LU_SLT_STORY, ix, w, h, d);
-		// lu_user_assert_void(layer, "Cannot init cell layer");
-		// lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
+		layer = lu_s_layer_base_init(layer, LU_SLT_STORY, ix, w, h, d);
+		lu_assert(layer);
+		lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
-		// // Pyras
-		// --w;
-		// --h;
-		// ++ix;
+		// Pyras
+		--w;
+		--h;
+		++ix;
 
-		// while (w > 0 && h > 0)
-		// {
-		// 	lu_user_assert_void(ix < self->layers_size, "Index error");
+		while (w > 0 && h > 0)
+		{
+			lu_assert(ix < self->layers_size);
 
-		// 	layer = &self->layers[ix];
+			layer = &self->layers[ix];
 
-		// 	layer = lu_s_layer_base_init(layer, self, LU_SLT_PYRAS, ix, w, h, d);
-		// 	lu_user_assert_void(layer, "Cannot init pyra layer");
-		// 	lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
+			layer = lu_s_layer_base_init(layer, LU_SLT_STORY, ix, w, h, d);
+			lu_assert(layer);
+			lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
-		// 	if (w > 0) --w;
-		// 	if (h > 0) --h;
-		// 	++ix; 
-		// }
+			if (w > 0) --w;
+			if (h > 0) --h;
+			++ix; 
+		}
 
 		return self;
 	}
