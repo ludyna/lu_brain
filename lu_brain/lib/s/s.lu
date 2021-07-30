@@ -8,11 +8,11 @@
 
 	static Lu_S lu_s_create(Lu_Brain brain)
 	{
-		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(brain->recs, "Lu_Brain recs is NULL");
+		lu_assert(brain);
+		lu_assert(brain->recs);
 
 		Lu_S self 			= (Lu_S) lu_g_mem_alloc(sizeof(struct lu_s));
-		lu_user_assert(self, "Cannot allocate Lu_S");
+		lu_assert(self);
 
 		self->brain 		= brain;
 
@@ -29,7 +29,10 @@
 		);
 		lu_assert(self->story);
 
+		//
 		// Create S recs
+		//
+
 		lu_size i; 
 		Lu_Rec rec;
 		Lu_S_Rec_Rg rec_rg;
@@ -46,15 +49,18 @@
 
 		lu_s_cell_mem_alloc_cells(self->cell_mem);
 
-		// Init rec_rg cells 
+		//
+		// Connect rec_rg layers 
+		//
+
 		for (i = 0; i < lu_arr_count(self->recs); i++)
 		{
 			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 			lu_assert(rec_rg);
 
-			lu_s_rec_rg_components_init(rec_rg);
-			lu_s_rec_rg_pixels_init(rec_rg);
-			lu_s_rec_rg_pyras_init(rec_rg);
+			lu_s_rec_rg_component_layer_connect(rec_rg);
+			lu_s_rec_rg_pixel_layer_connect(rec_rg);
+			lu_s_rec_rg_pyras_layers_connect(rec_rg);
 		}
 
 		return self;

@@ -47,9 +47,9 @@
 	{
 		lu_assert(self); 
 
-		lu_s_rec_rg_pyras_deinit(self);
-		lu_s_rec_rg_pixels_deinit(self);
-		lu_s_rec_rg_components_deinit(self);
+		lu_s_rec_rg_pyras_layers_disconnect(self);
+		lu_s_rec_rg_pixel_layer_disconnect(self);
+		lu_s_rec_rg_component_layer_disconnect(self);
 
 		lu_s_rec_rg_layers_deinit(self);
 

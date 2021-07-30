@@ -306,14 +306,14 @@
 	static void lu_s_rec_rg_layers_init(Lu_S_Rec_Rg self);
 	static void lu_s_rec_rg_layers_deinit(Lu_S_Rec_Rg self);
 	
-	static void lu_s_rec_rg_components_init(Lu_S_Rec_Rg self);
-	static void lu_s_rec_rg_components_deinit(Lu_S_Rec_Rg self);
+	static void lu_s_rec_rg_component_layer_connect(Lu_S_Rec_Rg self);
+	static void lu_s_rec_rg_component_layer_disconnect(Lu_S_Rec_Rg self);
 	
-	static void lu_s_rec_rg_pixels_init(Lu_S_Rec_Rg self); 
-	static void lu_s_rec_rg_pixels_deinit(Lu_S_Rec_Rg self); 
+	static void lu_s_rec_rg_pixel_layer_connect(Lu_S_Rec_Rg self); 
+	static void lu_s_rec_rg_pixel_layer_disconnect(Lu_S_Rec_Rg self); 
 
-	static void lu_s_rec_rg_pyras_init(Lu_S_Rec_Rg self); 
-	static void lu_s_rec_rg_pyras_deinit(Lu_S_Rec_Rg self);
+	static void lu_s_rec_rg_pyras_layers_connect(Lu_S_Rec_Rg self); 
+	static void lu_s_rec_rg_pyras_layers_disconnect(Lu_S_Rec_Rg self);
 
 	static void lu_s_rec_rg_print_info(Lu_S_Rec_Rg self);
 
@@ -332,8 +332,8 @@
 	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size max_blocks_size, lu_size recs_size);
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
 
-	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self);
-	static void lu_s_story_rg_blocks_deinit(Lu_S_Story_Rg self);
+	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self, Lu_S_Layer last_data_layer);
+	static void lu_s_story_rg_layers_disconnect(Lu_S_Story_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S

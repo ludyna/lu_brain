@@ -63,7 +63,7 @@
 		}
 	}
 
-	static void lu_s_rec_rg_components_init(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg_component_layer_connect(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 		lu_user_assert_void(self->layers, "self->layers is NULL");
@@ -72,14 +72,14 @@
 			lu_s_layer_component_cells_init(&self->layers[0], self->cell_mem, &self->v_conf, &self->p_conf);
 	}
 
-	static void lu_s_rec_rg_components_deinit(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg_component_layer_disconnect(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 		lu_s_layer_component_cells_deinit(&self->layers[0], self->cell_mem);
 	}
 
-	static void lu_s_rec_rg_pixels_init(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg_pixel_layer_connect(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 		lu_user_assert_void(self->layers, "self->layers is NULL");
@@ -90,7 +90,7 @@
 		lu_s_layer_pixel_cells_init(layer, b_layer, self->cell_mem, self->cells_d);
 	}
 
-	static void lu_s_rec_rg_pixels_deinit(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg_pixel_layer_disconnect(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 	
@@ -98,7 +98,7 @@
 			lu_s_layer_pixel_cells_deinit(&self->layers[1], self->cell_mem);
 	}
 
-	static void lu_s_rec_rg_pyras_init(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg_pyras_layers_connect(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
@@ -114,7 +114,7 @@
 		}
 	}
 
-	static void lu_s_rec_rg_pyras_deinit(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg_pyras_layers_disconnect(Lu_S_Rec_Rg self)
 	{
 		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 

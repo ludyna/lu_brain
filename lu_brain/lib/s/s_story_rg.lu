@@ -13,8 +13,9 @@
 		Lu_S_Story_Rg self = (Lu_S_Story_Rg) lu_g_mem_alloc(sizeof(struct lu_s_story_rg));
 		lu_assert(self);
 		
-		///////////////////////////////////////
+		//
 		// Allocate Block Layers
+		//
 
 		self->cell_mem 			= cell_mem;
 		self->max_blocks_size 	= max_blocks_size;
@@ -70,10 +71,14 @@
 	{
 		lu_assert(self);
 
-		lu_s_story_rg_blocks_deinit(self);
+		// 
+		// Layers disconnect 
+		//
+
+		lu_s_story_rg_layers_disconnect(self);
 
 		// 
-		// Destroy story all layers 
+		// Destroy all story layers 
 		// 
 
 		for (lu_size i = 0; i < self->layers_size; i++)
@@ -87,9 +92,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_story_rg_blocks_init(Lu_S_Story_Rg self)
+	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self, Lu_S_Layer last_data_layer)
 	{
 		lu_assert(self);
+		lu_assert(last_data_layer);
 
 		Lu_S_Layer layer;
 		Lu_S_Layer b_layer = NULL;
@@ -106,14 +112,14 @@
 			else
 			{
 				// last layer from data layers
-				//b_layer = &self->layers[self->layers_size - 1];
+				b_layer = last_data_layer;
 			}
 
 			lu_s_layer_story_cells_init(layer, b_layer, self->cell_mem);
 		}
 	}
 
-	static void lu_s_story_rg_blocks_deinit(Lu_S_Story_Rg self)
+	static void lu_s_story_rg_layers_disconnect(Lu_S_Story_Rg self)
 	{
 		lu_assert(self);
 
