@@ -24,42 +24,26 @@
 		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
 		lu_assert(self->layers);
 
-		// Blocks
-		// ix = 0;
-		// w = self->layers_size;
-		// h = 1;
-		// d = 1;
-
-		// while(w > 0)
-		// {
-		// 	lu_user_assert_void(ix < self->layers_size, "Wrong layer index");
-
-		// 	layer = &self->layers[ix];
-
-		// 	layer = lu_s_layer_base_init(layer, self, LU_SLT_STORY, ix, 1, h, d);
-		// 	lu_user_assert_void(layer, "Cannot init layer");
-		// 	lu_s_cell_mem_cell_1_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
-
-		// 	++ix;
-		// 	--w;
-		// }
-
-
-
 		lu_size w = recs_size;
 		lu_size h = max_blocks_size;
 		lu_size d = 1;
 		lu_size ix = 0;
 		Lu_S_Layer layer;
 		
+		//
 		// First layer 
+		//
+
 		layer 	= &self->layers[ix];
 
 		layer = lu_s_layer_base_init(layer, LU_SLT_STORY, ix, w, h, d);
 		lu_assert(layer);
 		lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
-		// Pyras
+		//
+		// Create other story layers
+		//
+
 		--w;
 		--h;
 		++ix;
@@ -87,6 +71,14 @@
 		lu_assert(self);
 
 		lu_s_story_rg_blocks_deinit(self);
+
+		// 
+		// Destroy story all layers 
+		// 
+
+		for (lu_size i = 0; i < self->layers_size; i++)
+			lu_s_layer_base_deinit(&self->layers[i]);
+
 		lu_g_mem_free((lu_p_byte) self->layers);
 		lu_g_mem_free((lu_p_byte) self);
 	}
@@ -123,7 +115,7 @@
 
 	static void lu_s_story_rg_blocks_deinit(Lu_S_Story_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+		lu_assert(self);
 
 		for(lu_size i = 0; i < self->layers_size; i++)
 		{
