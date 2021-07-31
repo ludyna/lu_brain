@@ -263,7 +263,6 @@
 // Lu_S_Rec_Rg
 //
 
-	// velyki masyvy v lu_s_rec_rg shob vykorystaty perevahu cpu keshuvania
 	struct lu_s_rec_rg {
 		
 		// Lu_Rec 
@@ -290,6 +289,11 @@
 	{
 		Lu_S_Layer layer = &self->layers[l];
 		return lu_s_layer_cell_get(layer, x, y, z);
+	}
+
+	static inline Lu_S_Layer lu_s_rec_rg_last_layer_get(Lu_S_Rec_Rg self)
+	{
+		return &self->layers[self->layers_size - 1];
 	}
 
 	//

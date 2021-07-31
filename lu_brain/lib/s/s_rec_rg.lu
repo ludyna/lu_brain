@@ -33,7 +33,7 @@
 		++self->layers_size; // + odyn dlia component 
 																				
 		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
-		lu_user_assert(self->layers, "Cannot allocate v layers"); 
+		lu_assert(self->layers); 
 
 		///////////////////////////////////////
 		// Layers init
@@ -88,7 +88,7 @@
 
 	static void lu_s_rec_rg_print_info(Lu_S_Rec_Rg self)
 	{
-		lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+		lu_assert(self);
 
 		lu_debug("\n\n 	-- Lu_S_Rec_Rg #%lu info: ", self->id);
  		lu_debug("\n 	 	%-19s %lu", "cells_w:", self->cells_w);

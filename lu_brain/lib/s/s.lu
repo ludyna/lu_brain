@@ -63,6 +63,12 @@
 			lu_s_rec_rg_pyras_layers_connect(rec_rg);
 		}
 
+		//
+		// Connect story_rg layers
+		// 
+
+		lu_s_story_rg_layers_connect(self->story, lu_s_rec_rg_last_layer_get(rec_rg));
+
 		return self;
 	}
 
