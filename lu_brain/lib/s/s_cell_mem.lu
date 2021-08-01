@@ -142,3 +142,13 @@
 		lu_s_cell_3_deinit(cell);
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Print
+
+	static void lu_s_cell_mem_print_info(Lu_S_Cell_Mem self)
+	{
+ 		// lu_debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
+ 		// lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
+	}
+

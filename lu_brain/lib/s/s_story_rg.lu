@@ -92,29 +92,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self, Lu_S_Layer last_data_layer)
+	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self)
 	{
 		lu_assert(self);
-		lu_assert(last_data_layer);
 
 		Lu_S_Layer layer;
 		Lu_S_Layer b_layer = NULL;
 		lu_size ix;
 
-		for(ix = 0; ix < self->layers_size; ix++)
+		for(ix = 1; ix < self->layers_size; ix++)
 		{
 			layer = &self->layers[ix];
-
-			if (ix > 0)
-			{
-				b_layer = &self->layers[ix - 1];
-			}
-			else
-			{
-				// last layer from data layers
-				b_layer = last_data_layer;
-			}
-
+			b_layer = &self->layers[ix - 1];
+		
 			lu_s_layer_story_cells_init(layer, b_layer, self->cell_mem);
 		}
 	}

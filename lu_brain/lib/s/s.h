@@ -259,6 +259,12 @@
 	static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell);
 
 
+	// 
+	// Print
+	//
+
+	static void lu_s_cell_mem_print_info(Lu_S_Cell_Mem self);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Rec_Rg
 //
@@ -336,8 +342,9 @@
 	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size max_blocks_size, lu_size recs_size);
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
 
-	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self, Lu_S_Layer last_data_layer);
+	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self);
 	static void lu_s_story_rg_layers_disconnect(Lu_S_Story_Rg self);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S

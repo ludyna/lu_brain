@@ -4,7 +4,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S
+// Lu_S Create & Destroy
 
 	static Lu_S lu_s_create(Lu_Brain brain)
 	{
@@ -67,7 +67,17 @@
 		// Connect story_rg layers
 		// 
 
-		lu_s_story_rg_layers_connect(self->story, lu_s_rec_rg_last_layer_get(rec_rg));
+		Lu_S_Layer top_layer;
+		for (i = 0; i < lu_arr_count(self->recs); i++)
+		{
+			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
+			lu_assert(rec_rg);
+
+			top_layer = lu_s_rec_rg_last_layer_get(rec_rg);
+			lu_assert(top_layer);
+		}
+
+		lu_s_story_rg_layers_connect(self->story);
 
 		return self;
 	}
@@ -93,6 +103,9 @@
 
 		lu_g_mem_free((lu_p_byte) self);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_S Methods
 
 	static void lu_s_print_info(Lu_S self)
 	{

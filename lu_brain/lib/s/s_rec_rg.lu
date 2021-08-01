@@ -28,9 +28,9 @@
 		///////////////////////////////////////
 		// Allocate Lu_Data Layers
 
+		// plus one for components, but minus one for last pyras layer 
+		// which is the first layer of story_rg
 		self->layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
-		
-		++self->layers_size; // + odyn dlia component 
 																				
 		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
 		lu_assert(self->layers); 
@@ -95,18 +95,11 @@
  		lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
  		lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
  		lu_debug("\n 	 	");
- 		// lu_debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
- 		// lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
- 		// lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
  		
  		lu_debug("\n 	 	%-19s %lu", "layers_size:", self->layers_size);
- 		// lu_debug("\n 	 	%-19s %lu", "max_blocks_size:", self->max_blocks_size);
- 		// lu_debug("\n 	 	%-19s %lu", "layers_size:", self->layers_size);
  		lu_debug("\n 	 	");
 
  		lu_s_rec_rg_print_layers_info(self->layers, self->layers_size, 3);
 
 		lu_debug("\n"); 
-		
- 		// lu_s_rec_rg_print_layers_info(self->layers, self->layers_size, 1);
 	}
