@@ -5,25 +5,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Slots
 //
-
 	struct lu_s_slot_1 {
-		enum lu_s_slot_type type;
-		Lu_S_Cell_1 one;
+		Lu_S_Base_Cell one;
 	};
 
 	struct lu_s_slot_2 {
-		struct lu_s_slot_1 super;
-		Lu_S_Cell_1 two;
-	};
-
-	struct lu_s_slot_3 {
-		struct lu_s_slot_2 super;
-		Lu_S_Cell_1 three;
+		Lu_S_Base_Cell one;
+		Lu_S_Base_Cell two;
 	};
 
 	struct lu_s_slot_4 {
-		struct lu_s_slot_3 super;
-		Lu_S_Cell_1 four;
+		Lu_S_Base_Cell one;
+		Lu_S_Base_Cell two;
+		Lu_S_Base_Cell three;
+		Lu_S_Base_Cell four;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,7 +100,7 @@
 	struct lu_s_pixel_cell {
 		struct lu_s_base_cell super;
 
- 		// always one parent: component
+ 		// for pixe always one p
 		struct lu_s_slot_1 p;
 
 		lu_size x; 
@@ -118,7 +113,7 @@
 		Lu_S_Cell_Values v;
 		Lu_S_Cell_Values p;
 
-		// doesn't have p
+		// no p
 	};
 
 	struct lu_s_pyra_cell {

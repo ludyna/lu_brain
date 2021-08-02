@@ -6,29 +6,31 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
-	enum lu_s_slot_type {
-		LU_SST_SLOT_1,
-		LU_SST_SLOT_2,
-		LU_SST_SLOT_3,
-		LU_SST_SLOT_4
-	};
-
 	typedef struct lu_s_slot_1* Lu_S_Slot_1;
 	typedef struct lu_s_slot_2* Lu_S_Slot_2;
-	typedef struct lu_s_slot_3* Lu_S_Slot_3;
 	typedef struct lu_s_slot_4* Lu_S_Slot_4;
 
 	enum lu_s_cell_type {
 		LU_SCT_CELL_3,
 		LU_SCT_CELL_2, 
-		LU_SCT_CELL
+		LU_SCT_CELL,
+		LU_SCT_COMPONTENT,
+		LU_SCT_PIXEL,
+		LU_SCT_PYRA,
+		LU_SCT_STORY
 	};
 
  	typedef struct lu_s_cell_1* 			Lu_S_Cell_1;
  	typedef struct lu_s_cell_2* 			Lu_S_Cell_2;
  	typedef struct lu_s_cell_values*  		Lu_S_Cell_Values;
  	typedef struct lu_s_cell_3* 			Lu_S_Cell_3;
-	
+
+ 	typedef struct lu_s_base_cell* Lu_S_Base_Cell;
+ 	typedef struct lu_s_component_cell* Lu_S_Component_Cell;
+ 	typedef struct lu_s_pixel_cell* Lu_S_Pixel_Cell;
+ 	typedef struct lu_s_pyra_cell* Lu_S_Pyra_Cell;
+ 	typedef struct lu_s_story_cell* Lu_S_Story_Cell;
+
 	// Helpers
 
 	enum lu_s_layer_type {
