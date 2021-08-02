@@ -9,7 +9,7 @@
 	( 
 		Lu_S_Layer self, 
 		enum lu_s_layer_type type, 
-		lu_size l, 
+		lu_size l, // layer index
 		lu_size w, 
 		lu_size h, 
 		lu_size d
@@ -180,45 +180,45 @@
 
 	static void lu_s_layer_story_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem)
 	{
-		// lu_user_assert_void(self, "Lu_S_Layer is NULL"); 
-
-		// lu_size w 			= self->w;
-		// Lu_S_Cell_1 cell 	= NULL;
-
-		// //lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
-		// for (lu_size x = 0; x < w; x++)
-		// {
-		// 	cell = lu_s_cell_mem_cell_2_assign(cell_mem, self); 
-		// 	lu_user_assert_void(cell, "Cannot init cell");
-
-		// 	cell = s_block_links_alloc((Lu_S_Cell_1) cell); 
-		// 	lu_user_assert_void(cell, "Cannot alloc block links");
-
-		// 	if (b_layer)
-		// 	{
-		// 		s_block_connect(cell, b_layer);
-		// 	}
-		// }
-
-		lu_assert(self);  
+		lu_assert(self); 
 
 		lu_size w 			= self->w;
-		lu_size h 			= self->h; 
- 
- 		Lu_S_Cell_2 cell = NULL;
- 		lu_size x;
-		for (lu_size y = 0; y < h; y++)
-			for (x = 0; x < w; x++)
+		Lu_S_Cell_1 cell 	= NULL;
+
+		//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
+		for (lu_size x = 0; x < w; x++)
+		{
+			cell = lu_s_cell_mem_cell_1_assign(cell_mem, self); 
+			lu_user_assert_void(cell, "Cannot init cell");
+
+			cell = s_block_links_alloc((Lu_S_Cell_1) cell); 
+			lu_user_assert_void(cell, "Cannot alloc block links");
+
+			if (b_layer)
 			{
-				cell = lu_s_cell_mem_cell_2_assign(cell_mem, self, x, y); 
-				lu_user_assert_void(cell, "Cannot init cell");
-
-				cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell); 
-				lu_user_assert_void(cell, "Cannot pyra init cell");
-
-				if (b_layer)
-					s_pyra_connect(cell, b_layer);
+				s_block_connect(cell, b_layer);
 			}
+		}
+
+		// lu_assert(self);  
+
+		// lu_size w 			= self->w;
+		// lu_size h 			= self->h; 
+ 
+ 	// 	Lu_S_Cell_2 cell = NULL;
+ 	// 	lu_size x;
+		// for (lu_size y = 0; y < h; y++)
+		// 	for (x = 0; x < w; x++)
+		// 	{
+		// 		cell = lu_s_cell_mem_cell_2_assign(cell_mem, self, x, y); 
+		// 		lu_user_assert_void(cell, "Cannot init cell");
+
+		// 		cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell); 
+		// 		lu_user_assert_void(cell, "Cannot pyra init cell");
+
+		// 		if (b_layer)
+		// 			s_pyra_connect(cell, b_layer);
+		// 	}
 	}
 
 	static void lu_s_layer_story_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)

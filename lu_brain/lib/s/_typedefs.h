@@ -6,6 +6,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
+	enum lu_s_slot_type {
+		LU_SST_SLOT_1,
+		LU_SST_SLOT_2,
+		LU_SST_SLOT_3,
+		LU_SST_SLOT_4
+	};
+
+	typedef struct lu_s_slot_1* Lu_S_Slot_1;
+	typedef struct lu_s_slot_2* Lu_S_Slot_2;
+	typedef struct lu_s_slot_3* Lu_S_Slot_3;
+	typedef struct lu_s_slot_4* Lu_S_Slot_4;
+
 	enum lu_s_cell_type {
 		LU_SCT_CELL_3,
 		LU_SCT_CELL_2, 

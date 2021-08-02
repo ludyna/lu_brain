@@ -24,8 +24,8 @@
 
 	static void s_pyra_connect(Lu_S_Cell_2 self, Lu_S_Layer b_layer)
 	{
-		lu_user_assert_void(self, "Lu_S_Cell_2 is NULL");
-		lu_user_assert_void(b_layer, "Lu_S_Layer is NULL");
+		lu_assert(self);
+		lu_assert(b_layer);
 
 		lu_size x 			= self->x;
 		lu_size y 			= self->y;
@@ -39,7 +39,7 @@
 		Lu_S_Cell_1 d 			= (Lu_S_Cell_1) self;
 
 		b = lu_s_layer_cell_get(b_layer, x, y, 0);
-		lu_user_assert_void(b, "Lu_S_Cell_1 is NULL");
+		lu_assert(b);
 
 		d_np(b) = d; // b->d->np = d; 
 		b_vl(d) = b; // d->b->vl = b; 
@@ -80,6 +80,7 @@
 		b = lu_s_layer_cell_get(b_layer, x, y, 0);
 		lu_user_assert_void(b, "Lu_S_Cell_1 is NULL");
 
+		// WRONG
 		d_d(b) = d; 
 		b_b(d) = b; 
 	}

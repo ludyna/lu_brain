@@ -35,7 +35,8 @@
 		--h;
 		++ix;
 
-		while (w > 0 && h > 0)
+		// here is 1s instead of 0s, because top layer is actually base layer in story rg
+		while (w > 1 && h > 1)
 		{
 			lu_user_assert_void(ix < self->layers_size, "Index error");
 

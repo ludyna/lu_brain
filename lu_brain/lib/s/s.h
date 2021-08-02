@@ -3,6 +3,30 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Slots
+//
+
+	struct lu_s_slot_1 {
+		enum lu_s_slot_type type;
+		Lu_S_Cell_1 one;
+	};
+
+	struct lu_s_slot_2 {
+		struct lu_s_slot_1 super;
+		Lu_S_Cell_1 two;
+	};
+
+	struct lu_s_slot_3 {
+		struct lu_s_slot_2 super;
+		Lu_S_Cell_1 three;
+	};
+
+	struct lu_s_slot_4 {
+		struct lu_s_slot_3 super;
+		Lu_S_Cell_1 four;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
 // Cells
 // 
 	// block_neu
