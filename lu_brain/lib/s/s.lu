@@ -24,7 +24,6 @@
 
 		self->story 		= lu_s_story_rg_create(
 			self->cell_mem, 
-			brain->config.max_story_size_in_blocks, 
 			lu_arr_count(brain->recs)
 		);
 		lu_assert(self->story);
@@ -46,12 +45,6 @@
 
 			lu_arr_set(self->recs, i, rec_rg);
 		}
-
-		//
-		// Update Lu_S_Cell_Mem cells sizes
-		//
-
-		
 
 		//
 		// Lu_S_Cell_Mem cells allocation

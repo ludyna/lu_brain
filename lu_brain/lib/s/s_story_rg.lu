@@ -6,7 +6,7 @@
 // 
 
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size max_blocks_size, lu_size recs_size)
+	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size recs_size)
 	{
 		lu_assert(cell_mem);
 
@@ -18,15 +18,14 @@
 		//
 
 		self->cell_mem 			= cell_mem;
-		self->max_blocks_size 	= max_blocks_size;
 		self->recs_size 		= recs_size;
-		self->layers_size 		= max_blocks_size > recs_size ? max_blocks_size : recs_size;	
+		self->layers_size 		= recs_size;	
 
 		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
 		lu_assert(self->layers);
 
 		lu_size w = recs_size;
-		lu_size h = max_blocks_size;
+		lu_size h = 1;
 		lu_size d = 1;
 		lu_size ix = 0;
 		Lu_S_Layer layer;
@@ -39,6 +38,9 @@
 
 		layer = lu_s_layer_base_init(layer, LU_SLT_STORY, ix, w, h, d);
 		lu_assert(layer);
+
+		// For this layer we will have cell_2 because top of each rec_rg is cell in 
+		// story_rg base layer
 		lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
 		//
@@ -46,10 +48,9 @@
 		//
 
 		--w;
-		--h;
 		++ix;
 
-		while (w > 0 && h > 0)
+		while (w > 0)
 		{
 			lu_assert(ix < self->layers_size);
 
@@ -57,10 +58,9 @@
 
 			layer = lu_s_layer_base_init(layer, LU_SLT_STORY, ix, w, h, d);
 			lu_assert(layer);
-			lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
+			lu_s_cell_mem_cell_1_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
 			if (w > 0) --w;
-			if (h > 0) --h;
 			++ix; 
 		}
 

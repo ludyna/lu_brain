@@ -344,7 +344,7 @@
 		return &self->layers[0];
 	}
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size max_blocks_size, lu_size recs_size);
+	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size recs_size);
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
 
 	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self);
