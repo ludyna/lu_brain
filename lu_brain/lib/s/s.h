@@ -27,6 +27,18 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Cell_Values
+//
+	struct lu_s_cell_values {
+		Lu_S_Layer_Conf conf;
+		Hnn_Cell_Value* cells;
+	};
+
+	static Lu_S_Cell_Values lu_s_cell_values_create(Lu_Mem mem, Lu_S_Layer_Conf conf);
+	static void lu_s_cell_values_destroy(Lu_S_Cell_Values self, Lu_Mem mem);
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Cells
 // 
 	// block_neu
@@ -51,7 +63,13 @@
 		Lu_S_Layer layer;
 	
 		Lu_S_Cell_1* b;
-		Lu_S_Cell_1* d;
+		Lu_S_Cell_1* d; 
+
+		// pixel has one parent, pyra four, story two
+		Lu_S_Slot_1 p;
+
+		// for S and W it is always one child
+		struct lu_s_slot_1 c; 
 	}; 
 
 	struct lu_s_cell_2 {
@@ -61,14 +79,6 @@
 		lu_size y;   		
 	};
 
-	struct lu_s_cell_values {
-		Lu_S_Layer_Conf conf;
-		Hnn_Cell_Value* cells;
-	};
-
-	static Lu_S_Cell_Values lu_s_cell_values_create(Lu_Mem mem, Lu_S_Layer_Conf conf);
-	static void lu_s_cell_values_destroy(Lu_S_Cell_Values self, Lu_Mem mem);
-
 	struct lu_s_cell_3 {
 		struct lu_s_cell_2 super;
 
@@ -77,6 +87,52 @@
 		Lu_S_Cell_Values v;
 		Lu_S_Cell_Values p;
 	};
+
+
+	//
+	// 
+	//
+
+	struct lu_s_base_cell {
+		enum lu_s_cell_type type;			
+
+		Lu_S_Layer layer;
+
+		// for S and W it is always one child
+		struct lu_s_slot_1 c; 
+	}; 
+
+	struct lu_s_pixel_cell {
+		struct lu_s_base_cell super;
+
+ 		// always one parent: component
+		struct lu_s_slot_1 p;
+
+		lu_size x; 
+		lu_size y;   		
+	};
+
+	struct lu_s_component_cell {
+		struct lu_s_base_cell super;
+
+		Lu_S_Cell_Values v;
+		Lu_S_Cell_Values p;
+
+		// doesn't have p
+	};
+
+	struct lu_s_pyra_cell {
+		struct lu_s_base_cell super;
+
+		struct lu_s_slot_4 p;
+	};
+
+	struct lu_s_story_cell {
+		struct lu_s_base_cell super;
+
+		struct lu_s_slot_2 p;
+	};
+
 
 	//
 	// s_neu_inits.lu
@@ -110,7 +166,6 @@
 	static void s_pixel_connect(Lu_S_Cell_2 self, Lu_S_Layer);
 	static void s_pyra_connect(Lu_S_Cell_2 self, Lu_S_Layer);
 	static void s_block_connect(Lu_S_Cell_1 self, Lu_S_Layer);
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Conf
