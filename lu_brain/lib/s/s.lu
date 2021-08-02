@@ -47,6 +47,16 @@
 			lu_arr_set(self->recs, i, rec_rg);
 		}
 
+		//
+		// Update Lu_S_Cell_Mem cells sizes
+		//
+
+		
+
+		//
+		// Lu_S_Cell_Mem cells allocation
+		//
+
 		lu_s_cell_mem_alloc_cells(self->cell_mem);
 
 		//
@@ -64,18 +74,35 @@
 		}
 
 		//
-		// Connect story_rg layers
+		// Connect rec_rg(s) to story_rg
 		// 
 
-		Lu_S_Layer top_layer;
+		Lu_S_Layer b_layer;
+		Lu_S_Layer layer = lu_s_story_rg_base_layer_get(self->story);
+		lu_assert(layer);
+
+		Lu_S_Cell_2 cell = NULL;
 		for (i = 0; i < lu_arr_count(self->recs); i++)
 		{
 			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 			lu_assert(rec_rg);
 
-			top_layer = lu_s_rec_rg_last_layer_get(rec_rg);
-			lu_assert(top_layer);
+			b_layer = lu_s_rec_rg_top_layer_get(rec_rg);
+			lu_assert(b_layer);
+
+			cell = lu_s_cell_mem_cell_2_assign(self->cell_mem, layer, i, 0); 
+			lu_assert(cell);
+
+			cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell); 
+			lu_assert(cell);
+
+			if (b_layer)
+				s_pyra_connect(cell, b_layer);
 		}
+
+		//
+		// Connect story_rg layers
+		// 
 
 		lu_s_story_rg_layers_connect(self->story);
 

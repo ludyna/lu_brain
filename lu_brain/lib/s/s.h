@@ -297,7 +297,7 @@
 		return lu_s_layer_cell_get(layer, x, y, z);
 	}
 
-	static inline Lu_S_Layer lu_s_rec_rg_last_layer_get(Lu_S_Rec_Rg self)
+	static inline Lu_S_Layer lu_s_rec_rg_top_layer_get(Lu_S_Rec_Rg self)
 	{
 		return &self->layers[self->layers_size - 1];
 	}
@@ -338,6 +338,11 @@
 		lu_size 				layers_size;
 		struct lu_s_layer* 		layers;
 	};
+
+	static inline Lu_S_Layer lu_s_story_rg_base_layer_get(Lu_S_Story_Rg self) 
+	{
+		return &self->layers[0];
+	}
 
 	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size max_blocks_size, lu_size recs_size);
 	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
