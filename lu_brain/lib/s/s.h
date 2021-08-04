@@ -36,6 +36,58 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cells
 // 
+
+	//
+	// Plan:
+	// component (w x h) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) ==> story (w - 1) ... story (1)
+	//
+
+	struct lu_s_base_cell {
+		enum lu_s_cell_type type;			
+
+		Lu_S_Layer layer;
+
+		// for S and W it is always one child
+		struct lu_s_slot_1 c; 
+	}; 
+ 
+
+ 	// We can make algorithm a bit more complicated but save memory for components 
+ 	// (1 component cell instead of w x h component cells)
+ 	// but for MVP it is not important (if ever)
+	struct lu_s_component_cell {
+		struct lu_s_base_cell super;
+
+		Lu_S_Cell_Values v;
+		Lu_S_Cell_Values p;
+
+		// no parent
+	};
+
+	struct lu_s_pixel_cell {
+		struct lu_s_base_cell super;
+
+ 		// for pixe always one p
+		struct lu_s_slot_1 p;
+
+		lu_size x; 
+		lu_size y;   		
+	};
+
+	struct lu_s_pyra_cell {
+		struct lu_s_base_cell super;
+
+		struct lu_s_slot_4 p;
+	};
+
+	struct lu_s_story_cell {
+		struct lu_s_base_cell super;
+
+		struct lu_s_slot_2 p;
+	};
+
+
+
 	// block_neu
  	#define b_b(n) n->b[0]  
 	#define d_d(n) n->d[0]
@@ -82,52 +134,6 @@
 		Lu_S_Cell_Values v;
 		Lu_S_Cell_Values p;
 	};
-
-
-	//
-	// 
-	//
-
-	struct lu_s_base_cell {
-		enum lu_s_cell_type type;			
-
-		Lu_S_Layer layer;
-
-		// for S and W it is always one child
-		struct lu_s_slot_1 c; 
-	}; 
-
-	struct lu_s_pixel_cell {
-		struct lu_s_base_cell super;
-
- 		// for pixe always one p
-		struct lu_s_slot_1 p;
-
-		lu_size x; 
-		lu_size y;   		
-	};
-
-	struct lu_s_component_cell {
-		struct lu_s_base_cell super;
-
-		Lu_S_Cell_Values v;
-		Lu_S_Cell_Values p;
-
-		// no p
-	};
-
-	struct lu_s_pyra_cell {
-		struct lu_s_base_cell super;
-
-		struct lu_s_slot_4 p;
-	};
-
-	struct lu_s_story_cell {
-		struct lu_s_base_cell super;
-
-		struct lu_s_slot_2 p;
-	};
-
 
 	//
 	// s_neu_inits.lu
@@ -194,17 +200,14 @@
 
 		enum lu_s_layer_type type;
 
-		lu_size l;
+		lu_size l;				// layer id
 		lu_size w;
 		lu_size h;
 		lu_size d;				// components 
 
 		lu_size cells_count;
 		Lu_S_Cell_1* cells;
-
-		Lu_S_Layer_Conf conf;		
-
-		lu_size n_cells_count; 	// cells_count potriben shob znayty n_sig dlia n_cell po yoho n_cell->s_ix v wave->w_neu->cells
+		Lu_S_Base_Cell* qq_cells;
 	};
 
 	static inline void lu_s_layer_cell_set(Lu_S_Layer self, lu_size x, lu_size y, lu_size z, Lu_S_Cell_1 val) 
@@ -274,6 +277,22 @@
 		lu_size 				cells_3_count;
 		struct lu_s_cell_3* 	cells_3;
 
+		lu_size component_cells_size;
+		lu_size component_cells_count;
+		struct lu_s_component_cell* component_cells;
+
+		lu_size pixel_cells_size;
+		lu_size pixel_cells_count;
+		struct lu_s_pixel_cell* pixel_cells;
+
+		lu_size pyra_cells_size;
+		lu_size pyra_cells_count;
+		struct lu_s_pyra_cell* pyra_cells;
+
+		lu_size story_cells_size;
+		lu_size story_cells_count;
+		struct lu_s_story_cell* story_cells;
+
 	};
 
 	//
@@ -286,6 +305,31 @@
 	// 
 	// Size increments
 	//
+
+	static inline lu_size lu_s_cell_mem_component_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
+	{
+		self->component_cells_size += s;
+		return self->component_cells_size;
+	}
+
+	static inline lu_size lu_s_cell_mem_pixel_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
+	{
+		self->pixel_cells_size += s;
+		return self->pixel_cells_size;
+	}
+
+	static inline lu_size lu_s_cell_mem_pyra_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
+	{
+		self->pyra_cells_size += s;
+		return self->pyra_cells_size;
+	}
+
+	static inline lu_size lu_s_cell_mem_story_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
+	{
+		self->story_cells_size += s;
+		return self->story_cells_size;
+	}
+
 
 	static inline lu_size lu_s_cell_mem_cell_1_size_inc(Lu_S_Cell_Mem self, lu_size s) 
 	{
