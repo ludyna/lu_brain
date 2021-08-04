@@ -44,25 +44,16 @@
 	} 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Cell_Values
-//
-	struct lu_s_cell_values {
-		Lu_S_Layer_Conf conf;
-		Hnn_Cell_Value* cells;
-	};
-
-	static Lu_S_Cell_Values lu_s_cell_values_create(Lu_Mem mem, Lu_S_Layer_Conf conf);
-	static void lu_s_cell_values_destroy(Lu_S_Cell_Values self, Lu_Mem mem);
-
-
-///////////////////////////////////////////////////////////////////////////////
 // Cells
 // 
-
-	//
-	// Plan:
-	// component (w x h) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) ==> story (w - 1) ... story (1)
-	//
+//
+// Plan:
+// component_v (1) ==>
+// component_p (1) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) ==> story (w - 1) ... story (1)
+// where comoponent_v and component_p are actually layers
+//
+// pixel has one parent, pyra four, story two
+// for S and W it is always one child
 
 	struct lu_s_base_cell {
 		enum lu_s_cell_type type;			
@@ -72,50 +63,6 @@
 		// for S and W it is always one child
 		struct lu_s_slot_1 c; 
 	}; 
-
-	static inline Lu_S_Base_Cell lu_s_base_cell_init(Lu_S_Base_Cell self, enum lu_s_cell_type type, Lu_S_Layer layer)
-	{
-		lu_assert(self);
-		self->type = type;
-		self->layer = layer;
-		
-		lu_s_slot_1_init(&self->c);
-
-		return self;
-	}
- 
-
- 	// We can make algorithm a bit more complicated but save memory for components 
- 	// (1 component cell instead of w x h component cells)
- 	// but for MVP it is not important (if ever)
-	struct lu_s_component_cell {
-		struct lu_s_base_cell super;
-
-		Lu_S_Cell_Values v;
-		Lu_S_Cell_Values p;
-
-		// no parent
-	};
-
-	static inline Lu_S_Component_Cell lu_s_component_cell_init(
-		Lu_S_Component_Cell self, 
-		enum lu_s_cell_type type, 
-		Lu_S_Layer layer, 
-		Lu_S_Cell_Values v,
-		Lu_S_Cell_Values p
-	)
-	{
-		lu_assert(self);
-		lu_assert(v);
-		lu_assert(p);
-
-		lu_s_base_cell_init(&self->super, type, layer);
-
-		self->v = v;
-		self->p = p;
-
-		return self;
-	}
 
 	struct lu_s_pixel_cell {
 		struct lu_s_base_cell super;
@@ -127,52 +74,11 @@
 		lu_size y;   		
 	};
 
-
-	static inline Lu_S_Component_Cell lu_s_pixel_cell_init(
-		Lu_S_Component_Cell self, 
-		enum lu_s_cell_type type, 
-		Lu_S_Layer layer, 
-		lu_size x, 
-		lu_size y
-	)
-	{
-		lu_assert(self);
-		lu_assert(v);
-		lu_assert(p);
-
-		lu_s_base_cell_init(&self->super, type, layer);
-
-		self->x = x;
-		self->y = y;
-
-		lu_s_slot_1_init(&self->p);
-
-		return self;
-	}
-
-
 	struct lu_s_pyra_cell {
 		struct lu_s_base_cell super;
 
 		struct lu_s_slot_4 p;
 	};
-
-
-	static inline Lu_S_Component_Cell lu_s_pyra_cell_init(
-		Lu_S_Component_Cell self, 
-		enum lu_s_cell_type type, 
-		Lu_S_Layer layer
-	)
-	{
-		lu_assert(self);
-		lu_assert(v);
-		lu_assert(p);
-
-		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_4_init(&self->p);
-
-		return self;
-	}
 
 	struct lu_s_story_cell {
 		struct lu_s_base_cell super;
@@ -180,94 +86,10 @@
 		struct lu_s_slot_2 p;
 	};
 
-	static inline Lu_S_Component_Cell lu_s_story_cell_init(
-		Lu_S_Component_Cell self, 
-		enum lu_s_cell_type type, 
-		Lu_S_Layer layer
-	)
-	{
-		lu_assert(self);
-		lu_assert(v);
-		lu_assert(p);
+	// moved static inline inits to this file to avoid overcrowding this file
+	#include "s_cell_inits.h"
 
-		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_4_init(&self->p);
-
-		return self;
-	}
-
-	// block_neu
- 	#define b_b(n) n->b[0]  
-	#define d_d(n) n->d[0]
-
-	// neu
-	#define b_vl(n) n->b[0]
-	#define b_vp(n) n->b[1]
-	#define b_np(n) n->b[2]
-	#define b_nl(n) n->b[3]
-
-	#define d_vl(n) n->d[0]
-	#define d_vp(n) n->d[1]
-	#define d_np(n) n->d[2]
-	#define d_nl(n) n->d[3]
-
-	struct lu_s_cell_1 {
-		enum lu_s_cell_type type;			
-		//lu_size l_ix;		// nomer v layer
-
-		Lu_S_Layer layer;
 	
-		Lu_S_Cell_1* b;
-		Lu_S_Cell_1* d; 
-
-		// pixel has one parent, pyra four, story two
-		Lu_S_Slot_1 p;
-
-		// for S and W it is always one child
-		struct lu_s_slot_1 c; 
-	}; 
-
-	struct lu_s_cell_2 {
-		struct lu_s_cell_1 super;
-
-		lu_size x; 
-		lu_size y;   		
-	};
-
-	struct lu_s_cell_3 {
-		struct lu_s_cell_2 super;
-
-		lu_size z;
-
-		Lu_S_Cell_Values v;
-		Lu_S_Cell_Values p;
-	};
-
-	//
-	// s_neu_inits.lu
-	//
-
-	static Lu_S_Cell_1 lu_s_cell_1_init(Lu_S_Cell_1 self, enum lu_s_cell_type type, Lu_S_Layer, lu_size l_ix);
-	static Lu_S_Cell_2 lu_s_cell_2_init(Lu_S_Cell_2 self, enum lu_s_cell_type type, Lu_S_Layer layer, lu_size l_ix, lu_size x, lu_size y);
-	
-	static Lu_S_Cell_3 lu_s_cell_3_init(
-		Lu_S_Cell_3 self, 
-		Lu_S_Layer layer, 
-		lu_size l_ix, 
-		lu_size x, 
-		lu_size y, 
-		lu_size z, 
-		Lu_S_Layer_Conf v_conf, 
-		Lu_S_Layer_Conf p_conf
-	);
-	static void lu_s_cell_3_deinit(Lu_S_Cell_3 self);
-
-	static Lu_S_Cell_1 s_component_links_alloc(Lu_S_Cell_1 self);
-	static Lu_S_Cell_1 s_pixel_links_alloc(Lu_S_Cell_1 self, lu_size cells_d);
-	static Lu_S_Cell_1 s_pyra_links_alloc(Lu_S_Cell_1 self);
-	static Lu_S_Cell_1 s_block_links_alloc(Lu_S_Cell_1 self); 
-	static void lu_s_cell_links_free(Lu_S_Cell_1 self);
-
 	//
 	// s_neu_connects.lu
 	//
@@ -301,6 +123,18 @@
 	static inline lu_value lu_s_layer_conf_step_norm_dist(Lu_S_Layer_Conf self);
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Cell_Values
+//
+	struct lu_s_cell_values {
+		Lu_S_Layer_Conf conf;
+		Hnn_Cell_Value* cells;
+	};
+
+	static Lu_S_Cell_Values lu_s_cell_values_create(Lu_Mem mem, Lu_S_Layer_Conf conf);
+	static void lu_s_cell_values_destroy(Lu_S_Cell_Values self, Lu_Mem mem);
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer
 //
 
@@ -311,10 +145,17 @@
 		lu_size l;				// layer id
 		lu_size w;
 		lu_size h;
-		lu_size d;				// components 
+
 
 		lu_size cells_count;
 		Lu_S_Base_Cell* cells;
+	};
+
+ 	// We can make algorithm a bit more complicated but save memory for components 
+ 	// but for MVP it is not important (if ever)
+	struct lu_s_component_layer {
+
+		lu_size d;				// components 
 	};
 
 	static inline void lu_s_layer_cell_set(Lu_S_Layer self, lu_size x, lu_size y, lu_size z, Lu_S_Base_Cell val) 
