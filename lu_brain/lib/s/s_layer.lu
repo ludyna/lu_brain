@@ -65,11 +65,8 @@
 			for (y = 0; y < h; y++)
 				for (x = 0; x < w; x++)
 				{
-					cell = lu_s_cell_mem_cell_3_assign(cell_mem, self, x, y, z, v_conf, p_conf); 
+					cell = lu_s_cell_mem_component_cell_assign(cell_mem, self, x, y, z, v_conf, p_conf); 
 					lu_user_assert_void(cell, "Cannot init cell");
-
-					cell = (Lu_S_Cell_3) s_component_links_alloc((Lu_S_Cell_1) cell); 
-					lu_user_assert_void(cell, "Cannot component init cell");
 				}
 	}
 
@@ -92,7 +89,6 @@
 				for (x = 0; x < w; x++)
 				{
 					cell = lu_s_layer_cell_get(self, x, y, z);
-					lu_s_cell_links_free(cell);
 					lu_s_cell_mem_cell_3_retract(cell_mem, (Lu_S_Cell_3) cell);
 				}
 	}

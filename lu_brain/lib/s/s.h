@@ -9,10 +9,23 @@
 		Lu_S_Base_Cell one;
 	};
 
+	static inline Lu_S_Slot_1 lu_s_slot_1_init(Lu_S_Slot_1 self) 
+	{
+		self->one = NULL;
+		return self;
+	} 
+
 	struct lu_s_slot_2 {
 		Lu_S_Base_Cell one;
 		Lu_S_Base_Cell two;
 	};
+
+	static inline Lu_S_Slot_2 lu_s_slot_2_init(Lu_S_Slot_2 self) 
+	{
+		self->one = NULL;
+		self->two = NULL;
+		return self;
+	} 
 
 	struct lu_s_slot_4 {
 		Lu_S_Base_Cell one;
@@ -20,6 +33,15 @@
 		Lu_S_Base_Cell three;
 		Lu_S_Base_Cell four;
 	};
+
+	static inline Lu_S_Slot_4 lu_s_slot_4_init(Lu_S_Slot_4 self) 
+	{
+		self->one = NULL;
+		self->two = NULL;
+		self->three = NULL;
+		self->four = NULL;
+		return self;
+	} 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Cell_Values
@@ -50,6 +72,17 @@
 		// for S and W it is always one child
 		struct lu_s_slot_1 c; 
 	}; 
+
+	static inline Lu_S_Base_Cell lu_s_base_cell_init(Lu_S_Base_Cell self, enum lu_s_cell_type type, Lu_S_Layer layer)
+	{
+		lu_assert(self);
+		self->type = type;
+		self->layer = layer;
+		
+		lu_s_slot_1_init(&self->c);
+
+		return self;
+	}
  
 
  	// We can make algorithm a bit more complicated but save memory for components 
@@ -64,6 +97,26 @@
 		// no parent
 	};
 
+	static inline Lu_S_Component_Cell lu_s_component_cell_init(
+		Lu_S_Component_Cell self, 
+		enum lu_s_cell_type type, 
+		Lu_S_Layer layer, 
+		Lu_S_Cell_Values v,
+		Lu_S_Cell_Values p
+	)
+	{
+		lu_assert(self);
+		lu_assert(v);
+		lu_assert(p);
+
+		lu_s_base_cell_init(&self->super, type, layer);
+
+		self->v = v;
+		self->p = p;
+
+		return self;
+	}
+
 	struct lu_s_pixel_cell {
 		struct lu_s_base_cell super;
 
@@ -74,11 +127,52 @@
 		lu_size y;   		
 	};
 
+
+	static inline Lu_S_Component_Cell lu_s_pixel_cell_init(
+		Lu_S_Component_Cell self, 
+		enum lu_s_cell_type type, 
+		Lu_S_Layer layer, 
+		lu_size x, 
+		lu_size y
+	)
+	{
+		lu_assert(self);
+		lu_assert(v);
+		lu_assert(p);
+
+		lu_s_base_cell_init(&self->super, type, layer);
+
+		self->x = x;
+		self->y = y;
+
+		lu_s_slot_1_init(&self->p);
+
+		return self;
+	}
+
+
 	struct lu_s_pyra_cell {
 		struct lu_s_base_cell super;
 
 		struct lu_s_slot_4 p;
 	};
+
+
+	static inline Lu_S_Component_Cell lu_s_pyra_cell_init(
+		Lu_S_Component_Cell self, 
+		enum lu_s_cell_type type, 
+		Lu_S_Layer layer
+	)
+	{
+		lu_assert(self);
+		lu_assert(v);
+		lu_assert(p);
+
+		lu_s_base_cell_init(&self->super, type, layer);
+		lu_s_slot_4_init(&self->p);
+
+		return self;
+	}
 
 	struct lu_s_story_cell {
 		struct lu_s_base_cell super;
@@ -86,7 +180,21 @@
 		struct lu_s_slot_2 p;
 	};
 
+	static inline Lu_S_Component_Cell lu_s_story_cell_init(
+		Lu_S_Component_Cell self, 
+		enum lu_s_cell_type type, 
+		Lu_S_Layer layer
+	)
+	{
+		lu_assert(self);
+		lu_assert(v);
+		lu_assert(p);
 
+		lu_s_base_cell_init(&self->super, type, layer);
+		lu_s_slot_4_init(&self->p);
+
+		return self;
+	}
 
 	// block_neu
  	#define b_b(n) n->b[0]  
@@ -206,13 +314,12 @@
 		lu_size d;				// components 
 
 		lu_size cells_count;
-		Lu_S_Cell_1* cells;
-		Lu_S_Base_Cell* qq_cells;
+		Lu_S_Base_Cell* cells;
 	};
 
-	static inline void lu_s_layer_cell_set(Lu_S_Layer self, lu_size x, lu_size y, lu_size z, Lu_S_Cell_1 val) 
+	static inline void lu_s_layer_cell_set(Lu_S_Layer self, lu_size x, lu_size y, lu_size z, Lu_S_Base_Cell val) 
 	{
-		lu_user_assert_void(val, "Lu_S_Cell_1 is NULL");
+		lu_user_assert_void(val, "Lu_S_Base_Cell is NULL");
 		lu_user_assert_void(x < self->w, "x index out of range");
 		lu_user_assert_void(y < self->h, "y index out of range");
 		lu_user_assert_void(z < self->d, "z index out of range");
@@ -220,7 +327,7 @@
 		self->cells[z * self->w * self->h + y * self->w + x] = val; 
 	}
 
-	static inline Lu_S_Cell_1 lu_s_layer_cell_get(Lu_S_Layer self, lu_size x, lu_size y, lu_size z) 
+	static inline Lu_S_Base_Cell lu_s_layer_cell_get(Lu_S_Layer self, lu_size x, lu_size y, lu_size z) 
 	{ 
 		lu_user_assert(x < self->w, "x index out of range");
 		lu_user_assert(y < self->h, "y index out of range");

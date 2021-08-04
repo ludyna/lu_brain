@@ -68,6 +68,33 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cells Assign And Retract
 
+
+	static Lu_S_Cell_3 lu_s_cell_mem_component_cell_assign(
+		Lu_S_Cell_Mem self, 
+		Lu_S_Layer layer, 
+		lu_size x, 
+		lu_size y, 
+		lu_size z,
+		Lu_S_Layer_Conf v_conf, 
+		Lu_S_Layer_Conf p_conf
+	)
+	{
+		lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Component_Cell");
+
+		Lu_S_Cell_3 neu = &self->component_cells[self->component_cells_count];
+		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);
+		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
+
+		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
+
+		// no need for lock, they are created once in one thread
+		++layer->cells_count;
+		++self->cells_3_count;
+
+		return neu;
+	}
+
+
 	static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer)
 	{
 		lu_user_assert(self->cells_1_count < self->cells_1_size, "Out of space for Lu_S_Cell_1");
