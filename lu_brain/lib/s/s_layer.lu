@@ -253,13 +253,13 @@
 
 		switch(self->type)
 		{
-			case LU_SLT_COMPONENTS:
+			case LU_SLT_COMPONENT:
 				lu_debug("\n 	 	%-15s", "Comps Layer, ");
 				break;
-			case LU_SLT_PIXELS:
+			case LU_SLT_PIXEL:
 				lu_debug("\n 	 	%-15s", "Pixels Layer, ");
 				break;
-			case LU_SLT_PYRAS:
+			case LU_SLT_REC:
 				lu_debug("\n 	 	%-15s", "Pyras Layer, ");
 				break;
 			case LU_SLT_STORY:

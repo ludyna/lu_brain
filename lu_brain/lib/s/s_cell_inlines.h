@@ -2,6 +2,8 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */ 
  
+///////////////////////////////////////////////////////////////////////////////
+// Cell Inlines 
 
 	static inline Lu_S_Base_Cell lu_s_base_cell_init(Lu_S_Base_Cell self, enum lu_s_cell_type type, Lu_S_Layer layer)
 	{

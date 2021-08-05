@@ -16,7 +16,7 @@
 		Lu_S_Layer layer 	= &self->layers[ix];
 
 		// Components
-		layer = lu_s_layer_base_init(layer, LU_SLT_COMPONENTS, ix, w, h, d);
+		layer = lu_s_layer_base_init(layer, LU_SLT_COMPONENT, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init component layer");
 		lu_s_cell_mem_cell_3_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
@@ -26,7 +26,7 @@
 		// Pixels 
 		layer 	= &self->layers[ix];
 
-		layer = lu_s_layer_base_init(layer, LU_SLT_PIXELS, ix, w, h, d);
+		layer = lu_s_layer_base_init(layer, LU_SLT_PIXEL, ix, w, h, d);
 		lu_user_assert_void(layer, "Cannot init cell layer");
 		lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
@@ -42,7 +42,7 @@
 
 			layer = &self->layers[ix];
 
-			layer = lu_s_layer_base_init(layer, LU_SLT_PYRAS, ix, w, h, d);
+			layer = lu_s_layer_base_init(layer, LU_SLT_REC, ix, w, h, d);
 			lu_user_assert_void(layer, "Cannot init pyra layer");
 			lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
