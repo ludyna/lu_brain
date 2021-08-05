@@ -135,7 +135,7 @@
 		}
 	}
 
-	static void lu_s_layer_pyra_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem)
+	static void lu_s_layer_rec_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem)
 	{ 
 		lu_user_assert_void(self, "Lu_S_Layer is NULL");  
 
@@ -158,7 +158,7 @@
 			}
 	}
 
-	static void lu_s_layer_pyra_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
+	static void lu_s_layer_rec_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
 	{
 		lu_user_assert_void(self, "Lu_S_Layer is NULL");
 
@@ -174,7 +174,7 @@
 		}
 	}
 
-	static void lu_s_layer_story_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem)
+	static void lu_s_layer_seq_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem)
 	{
 		lu_assert(self); 
 
@@ -217,7 +217,7 @@
 		// 	}
 	}
 
-	static void lu_s_layer_story_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
+	static void lu_s_layer_seq_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
 	{ 
 		// lu_user_assert_void(self, "Lu_S_Layer is NULL");
 

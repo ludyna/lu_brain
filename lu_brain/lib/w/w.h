@@ -13,7 +13,7 @@
 	};
 
 	//
-	// One wave is one story. Create another wave to create another story.
+	// One wave is one seq. Create another wave to create another seq.
 	//
 	struct lu_wave {
 		enum lu_wave_type type;
@@ -71,7 +71,7 @@
 	static inline lu_bool lu_wave_is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE_RESTORE; }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Story_Rg
+// Lu_Seq_Rg
 
 	struct lu_cell {
 		Lu_Layer layer;
@@ -101,7 +101,7 @@
 	static Lu_Rec_Rg lu_block_rec_layer_create(Lu_Mem mem, Lu_S_Rec_Rg lu_s_rec_rg);
 	static void lu_block_rec_layer_destroy(Lu_Rec_Rg self, Lu_Mem mem);
 
-	struct lu_story_rg {
+	struct lu_seq_rg {
 		Lu_Mem mem;
 		Lu_S s;
 	
@@ -110,13 +110,13 @@
 		// block (time) index, we dont save reference to Lu_Block
 		// because they might be destroyed and we don't want to copy it
 		// (for space/speed performance)
-		lu_size story_index; 	
+		lu_size seq_index; 	
 							
 		Lu_Cell cell; // resulting block_layer cell	
 	};
 
-	static Lu_Story_Rg lu_story_rg_create(Lu_Mem mem, Lu_S s);
-	static void lu_story_rg_destroy(Lu_Story_Rg self);
+	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_S s);
+	static void lu_seq_rg_destroy(Lu_Seq_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
@@ -124,7 +124,7 @@
 	struct lu_save_wave {
 		struct lu_wave super;
 
-		Lu_Story story;
+		Lu_Seq seq;
 
 		Lu_Lim_List block_layers;
 
@@ -138,7 +138,7 @@
 	struct lu_find_wave {
 		struct lu_wave super;
 
-		Lu_Story story;
+		Lu_Seq seq;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

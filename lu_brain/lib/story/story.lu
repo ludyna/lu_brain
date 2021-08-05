@@ -5,12 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Lu_Story lu_story_create(Lu_Mem mem, lu_size recs_size)
+	Lu_Seq lu_seq_create(Lu_Mem mem, lu_size recs_size)
 	{
 		lu_assert(mem);
 		lu_assert(recs_size);
 
-		Lu_Story self 					= (Lu_Story) lu_mem_alloc(mem, sizeof(struct lu_story));
+		Lu_Seq self 					= (Lu_Seq) lu_mem_alloc(mem, sizeof(struct lu_seq));
 
 		// Initialize
 		self->mem 						= mem;
@@ -23,44 +23,44 @@
 		return self;
 	}
 
-	void lu_story_destroy_blocks(Lu_List blocks, lu_p_void value, lu_p_void p1)
+	void lu_seq_destroy_blocks(Lu_List blocks, lu_p_void value, lu_p_void p1)
 	{
 		lu_assert(blocks);
 		lu_assert(value);
 		lu_block_destroy((Lu_Block) value);
 	}
 
-	void lu_story_destroy(Lu_Story self)
+	void lu_seq_destroy(Lu_Seq self)
 	{
-		lu_user_assert_void(self, "Lu_Story is NULL");
+		lu_user_assert_void(self, "Lu_Seq is NULL");
 
-		lu_list_each_1p(self->blocks, lu_story_destroy_blocks, NULL);
+		lu_list_each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
 		lu_list_destroy(self->blocks);
 		lu_mem_free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Story Block 
+// Seq Block 
 
-	void lu_story_block_begin(Lu_Story story)
+	void lu_seq_block_begin(Lu_Seq seq)
 	{
-		lu_user_assert_void(story, "Lu_Story is NULL");
+		lu_user_assert_void(seq, "Lu_Seq is NULL");
 		//lu_debug("\nlu_block_begin");
-		story->start_block_on_next_data = true;
+		seq->start_block_on_next_data = true;
 	}
 
-	void lu_story_block_end(Lu_Story story)
+	void lu_seq_block_end(Lu_Seq seq)
 	{
-		lu_user_assert_void(story, "Lu_Story is NULL");
+		lu_user_assert_void(seq, "Lu_Seq is NULL");
 		//lu_debug("\nlu_block_end");
-		story->start_block_on_next_data = true;
+		seq->start_block_on_next_data = true;
 	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Lu_Data lu_story_data_get(Lu_Story self, lu_size rec_i, Lu_L_Node node)
+	Lu_Data lu_seq_data_get(Lu_Seq self, lu_size rec_i, Lu_L_Node node)
 	{
 		lu_assert(self);
 
@@ -75,28 +75,28 @@
 		return &block->datum[rec_i]; 
 	}
 
-	lu_size lu_story_blocks_count(Lu_Story self)
+	lu_size lu_seq_blocks_count(Lu_Seq self)
 	{ 
 		lu_assert(self);
 		return lu_list_count(self->blocks);
 	}
 
-	lu_p_value lu_story_last_values(Lu_Story self, lu_size rec_i)
+	lu_p_value lu_seq_last_values(Lu_Seq self, lu_size rec_i)
 	{
-		lu_user_assert(self, "Lu_Story is NULL");
-		Lu_Data data = lu_story_data_get(self, rec_i, lu_list_last_node(self->blocks));
+		lu_user_assert(self, "Lu_Seq is NULL");
+		Lu_Data data = lu_seq_data_get(self, rec_i, lu_list_last_node(self->blocks));
 		if (data == NULL) return NULL;
 
 		return data->values;
 	}
 
-	Lu_Data lu_story_last_data(Lu_Story self, lu_size rec_i)
+	Lu_Data lu_seq_last_data(Lu_Seq self, lu_size rec_i)
 	{
-		lu_user_assert(self, "Lu_Story is NULL");
-		return lu_story_data_get(self, rec_i, lu_list_last_node(self->blocks));
+		lu_user_assert(self, "Lu_Seq is NULL");
+		return lu_seq_data_get(self, rec_i, lu_list_last_node(self->blocks));
 	}
 
-	static Lu_Block lu_story_block_add(Lu_Story self)
+	static Lu_Block lu_seq_block_add(Lu_Seq self)
 	{
 		lu_assert(self);
 
@@ -108,20 +108,20 @@
 		return block;
 	}
 
-	void lu_story_reset(Lu_Story self)
+	void lu_seq_reset(Lu_Seq self)
 	{
-		lu_user_assert_void(self, "Lu_Story should be present");
-		lu_user_assert_void(self->blocks, "Lu_Story blocks should be present");
+		lu_user_assert_void(self, "Lu_Seq should be present");
+		lu_user_assert_void(self->blocks, "Lu_Seq blocks should be present");
 
-		lu_list_each_1p(self->blocks, lu_story_destroy_blocks, NULL);
+		lu_list_each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
 		lu_list_clear(self->blocks); 
 
 		self->start_block_on_next_data = false;
 	}
 
-	void lu_story_push(Lu_Story self, Lu_Rec rec, lu_value* values)
+	void lu_seq_push(Lu_Seq self, Lu_Rec rec, lu_value* values)
 	{ 
-		lu_user_assert_void(self, "Lu_Story should not be NULL"); 
+		lu_user_assert_void(self, "Lu_Seq should not be NULL"); 
 		lu_user_assert_void(rec, "Lu_Rec should not be NULL"); 
 		lu_user_assert_void(values, "values should not be NULL");
 		lu_user_assert_void(rec->depth, "Lu_Rec depth is zero"); 
@@ -129,28 +129,28 @@
 	 	if (self->start_block_on_next_data)
 		{ 
 			// yaksho my na nuliu, to ce itak pochatok bloka
-			lu_story_block_add(self);
+			lu_seq_block_add(self);
 			
 			self->start_block_on_next_data = false;
 		}
 
 		if (lu_list_is_empty(self->blocks))
-			lu_story_block_add(self);
+			lu_seq_block_add(self);
 
-		Lu_Data data = lu_story_data_get(self, rec->id, lu_list_last_node(self->blocks));
+		Lu_Data data = lu_seq_data_get(self, rec->id, lu_list_last_node(self->blocks));
 		lu_p_value v = data->values;
 		if (v)
-			// new input to the same rec and channel advances story
-			lu_story_block_add(self);
+			// new input to the same rec and channel advances seq
+			lu_seq_block_add(self);
 
-		data = lu_story_data_get(self, rec->id, lu_list_last_node(self->blocks));
+		data = lu_seq_data_get(self, rec->id, lu_list_last_node(self->blocks));
 		lu_assert(data);
 		lu_assert(data->values == NULL);
 
 	 	lu_data_set(data, rec->width, rec->height, rec->depth, values);
 	}
 
-	static lu_bool lu_story_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)
+	static lu_bool lu_seq_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)
 	{
 		if (value == NULL) return false;
 		lu_assert(p1);
@@ -166,11 +166,11 @@
 		return data->values != NULL;
 	}
 
-	static Lu_Data lu_story_first_non_null_data(Lu_Story self, lu_size rec_i)
+	static Lu_Data lu_seq_first_non_null_data(Lu_Seq self, lu_size rec_i)
 	{
-		lu_user_assert(self, "Lu_Story is NULL");
+		lu_user_assert(self, "Lu_Seq is NULL");
 
-		Lu_Block block = (Lu_Block) lu_list_find_forward_1p(self->blocks, lu_story_blocks_non_empty_values_block, &rec_i);
+		Lu_Block block = (Lu_Block) lu_list_find_forward_1p(self->blocks, lu_seq_blocks_non_empty_values_block, &rec_i);
 
 		if (block == NULL) return NULL;
 
@@ -179,9 +179,9 @@
 		return &block->datum[rec_i];
 	}
 
-	Lu_Story lu_story_validate(Lu_Story self)
+	Lu_Seq lu_seq_validate(Lu_Seq self)
 	{
-		lu_user_assert(lu_story_blocks_count(self), "Story is empty");
+		lu_user_assert(lu_seq_blocks_count(self), "Seq is empty");
 
 		return self;
 	}
@@ -190,9 +190,9 @@
 	// We don't need this actually, we can move this out of scope. 
 	// W_Rec/Wave should have reset() to clear last data.
 	//
-	Lu_Story lu_story_prepare(Lu_Story self)
+	Lu_Seq lu_seq_prepare(Lu_Seq self)
 	{
-		lu_user_assert(self, "Lu_Story is NULL");
+		lu_user_assert(self, "Lu_Seq is NULL");
 		lu_assert(self->blocks);
 
 		lu_size rec_i;
@@ -207,7 +207,7 @@
 
 			while(curr)
 			{
-				d1 = lu_story_data_get(self, rec_i, curr);
+				d1 = lu_seq_data_get(self, rec_i, curr);
 				lu_assert(d1);
 
 				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
@@ -216,13 +216,13 @@
 				
 				if (curr == lu_list_first_node(self->blocks))
 				{
-					d2 = lu_story_first_non_null_data(self, rec_i);
+					d2 = lu_seq_first_non_null_data(self, rec_i);
 					if (d2 == NULL) break; 	// nema danyh dlia rec_i vzahali
 					lu_data_shallow_copy(d1, d2);
 				}
 				else
 				{
-					d2 = lu_story_data_get(self, rec_i, lu_l_node_prev(curr));
+					d2 = lu_seq_data_get(self, rec_i, lu_l_node_prev(curr));
 					lu_data_shallow_copy(d1, d2);
 				}
 
@@ -235,9 +235,9 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Story reading
+// Seq reading
 
-	static Lu_Block lu_story_next_block_get(Lu_Story self)
+	static Lu_Block lu_seq_next_block_get(Lu_Seq self)
 	{
 		lu_assert(self);
 		lu_assert(self->blocks);

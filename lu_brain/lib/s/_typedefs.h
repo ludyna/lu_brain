@@ -28,8 +28,10 @@
  	typedef struct lu_s_base_cell* Lu_S_Base_Cell;
  	typedef struct lu_s_component_cell* Lu_S_Component_Cell;
  	typedef struct lu_s_pixel_cell* Lu_S_Pixel_Cell;
- 	typedef struct lu_s_pyra_cell* Lu_S_Pyra_Cell;
- 	typedef struct lu_s_story_cell* Lu_S_Story_Cell;
+ 	typedef struct lu_s_rec_cell* Lu_S_Rec_Cell;
+ 	typedef struct lu_s_seq_element_cell* Lu_S_Seq_Element_Cell;
+ 	typedef struct lu_s_seq_cell* Lu_S_Seq_Cell;
+ 	typedef struct lu_s_story_element_cell* Lu_S_Story_Element_Cell;
 
 	// Helpers
 
@@ -44,6 +46,6 @@
 	typedef struct lu_s_layer* 			Lu_S_Layer;
 	typedef struct lu_s_cell_mem*   	Lu_S_Cell_Mem;
 	typedef struct lu_s_rec_rg*			Lu_S_Rec_Rg;
-	typedef struct lu_s_story_rg*  		Lu_S_Story_Rg;
+	typedef struct lu_s_seq_rg*  		Lu_S_Seq_Rg;
 	typedef struct lu_s* 				Lu_S;
 

@@ -48,7 +48,7 @@
 	struct lu_brain_config {
 		lu_size id;							// optional, to identify brain by unique id
 		lu_size recs_size;					// initial maximum number of recs 
-		lu_size max_story_size_in_blocks; 	// max story size in blocks
+		lu_size max_seq_size_in_blocks; 	// max seq size in blocks
 
 		struct lu_net_config net;			// initial values
 
@@ -93,7 +93,7 @@
 	};
 
 	struct lu_rec_config {
-		// lu_size 		max_blocks_size; // !!! should be in story not here
+		// lu_size 		max_blocks_size; // !!! should be in seq not here
 
 		lu_size 		hold_blocks_size;
 		lu_size 		transf_algorithm;
@@ -173,7 +173,7 @@
 	// Destroy
 	void lu_wave_destroy(Lu_Wave); 
 
-	// Wave Story
+	// Wave Seq
 
 	void lu_wave_block_begin(Lu_Wave);
 	void lu_wave_block_end(Lu_Wave);
@@ -192,10 +192,10 @@
 	void lu_wave_step(Lu_Wave);
 
 	// Process Async (IMPLEMENT LATER)
-	// void lu_wave_process_async(Lu_Wave, Lu_Story);
+	// void lu_wave_process_async(Lu_Wave, Lu_Seq);
 	// void lu_wave_restore_process_async(Lu_Wave, Lu_Neu);
-	// void lu_wave_step_async(Lu_Wave, Lu_Story);
-	// void lu_wave_restore_step_async(Lu_Wave, Lu_Story);
+	// void lu_wave_step_async(Lu_Wave, Lu_Seq);
+	// void lu_wave_restore_step_async(Lu_Wave, Lu_Seq);
 	// void lu_wave_join(Lu_Wave);
 
 	// Properties

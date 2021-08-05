@@ -22,11 +22,11 @@
 		self->recs 			= lu_arr_temp_create(lu_arr_count(brain->recs), false);
 		lu_assert(self->recs);
 
-		self->story 		= lu_s_story_rg_create(
+		self->seq 		= lu_s_seq_rg_create(
 			self->cell_mem, 
 			lu_arr_count(brain->recs)
 		);
-		lu_assert(self->story);
+		lu_assert(self->seq);
 
 		//
 		// Create S recs
@@ -67,11 +67,11 @@
 		}
 
 		//
-		// Connect rec_rg(s) to story_rg
+		// Connect rec_rg(s) to seq_rg
 		// 
 
 		Lu_S_Layer b_layer;
-		Lu_S_Layer layer = lu_s_story_rg_base_layer_get(self->story);
+		Lu_S_Layer layer = lu_s_seq_rg_base_layer_get(self->seq);
 		lu_assert(layer);
 
 		Lu_S_Cell_2 cell = NULL;
@@ -94,10 +94,10 @@
 		}
 
 		//
-		// Connect story_rg layers
+		// Connect seq_rg layers
 		// 
 
-		lu_s_story_rg_layers_connect(self->story);
+		lu_s_seq_rg_layers_connect(self->seq);
 
 		return self;
 	}
@@ -106,7 +106,7 @@
 	{
 		lu_user_assert_void(self, "Lu_S is NULL");
 
-		lu_s_story_rg_destroy(self->story);
+		lu_s_seq_rg_destroy(self->seq);
 
 		Lu_S_Rec_Rg rec_rg;
 		for(lu_size i = 0; i < lu_arr_count(self->recs); i++)

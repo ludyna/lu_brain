@@ -39,8 +39,8 @@
 		self->super.step = lu_save_wave_step_virtual;
 		self->super.process = lu_save_wave_process_virtual;
 
-		self->story = lu_story_create(mem, lu_brain_recs_size(brain)); 
-		lu_assert(self->story);
+		self->seq = lu_seq_create(mem, lu_brain_recs_size(brain)); 
+		lu_assert(self->seq);
 
 		self->block_layers = lu_lim_list_create(mem, self->super.config.block_layers_size);
 		lu_assert(self->block_layers);
@@ -84,7 +84,7 @@
 		lu_p_void value = lu_l_node_value(node);
 		lu_assert(value);
 
-		lu_story_rg_destroy((Lu_Story_Rg) value);
+		lu_seq_rg_destroy((Lu_Seq_Rg) value);
 	}
 
 	static void lu_save_wave_destroy_virtual(Lu_Wave wave)
@@ -97,7 +97,7 @@
 		lu_lim_list_clear(self->block_layers);
 
 		lu_lim_list_destroy(self->block_layers);
-		lu_story_destroy(self->story);
+		lu_seq_destroy(self->seq);
 	}
 
 	// Find
@@ -107,7 +107,7 @@
 		lu_assert(wave);
 		Lu_Find_Wave self = (Lu_Find_Wave) wave;
 
-		lu_story_destroy(self->story);
+		lu_seq_destroy(self->seq);
 	}
 
 	// Restore
@@ -117,5 +117,5 @@
 		lu_assert(wave);
 		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
 
-		//lu_list_destroy(self->story);
+		//lu_list_destroy(self->seq);
 	}

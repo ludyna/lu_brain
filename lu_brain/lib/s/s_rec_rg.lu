@@ -29,7 +29,7 @@
 		// Allocate Lu_Data Layers
 
 		// plus one for components, but minus one for last pyras layer 
-		// which is the first layer of story_rg
+		// which is the first layer of seq_rg
 		self->layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
 																				
 		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);

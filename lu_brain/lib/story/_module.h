@@ -3,4 +3,4 @@
 */
 
 #include "_typedefs.h"
-#include "story.h"
+#include "seq.h"

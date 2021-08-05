@@ -10,7 +10,7 @@
 			// LU_BC_DEFAULT
 			.id							= 0,					
 			.recs_size					= 16, 
-			.max_story_size_in_blocks 	= 16,
+			.max_seq_size_in_blocks 	= 16,
 
 			.net.names_size				= 128,
 			.net.size_in_cell_0			= 10000, 

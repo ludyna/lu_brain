@@ -5,13 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Story_Rg lu_story_rg_create(Lu_Mem mem, Lu_S s)
+	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_S s)
 	{
 		lu_assert(mem);
 		lu_assert(s);
 		lu_assert(s->recs);
 
-		Lu_Story_Rg self = (Lu_Story_Rg) lu_mem_alloc(mem, sizeof(struct lu_story_rg));
+		Lu_Seq_Rg self = (Lu_Seq_Rg) lu_mem_alloc(mem, sizeof(struct lu_seq_rg));
 		lu_assert(self);
 
 
@@ -33,7 +33,7 @@
 		return self;
 	}
 
-	static void lu_story_rg_destroy(Lu_Story_Rg self)
+	static void lu_seq_rg_destroy(Lu_Seq_Rg self)
 	{
 		lu_assert(self);
 		lu_assert(self->mem);

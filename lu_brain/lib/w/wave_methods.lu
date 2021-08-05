@@ -41,7 +41,7 @@
 		lu_assert(lu_wave_is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_story_block_begin(save_wave->story);
+		lu_seq_block_begin(save_wave->seq);
 	} 
 
 	static void lu_find_wave_block_begin_virtual(Lu_Wave self)
@@ -72,7 +72,7 @@
 		lu_assert(lu_wave_is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_story_block_end(save_wave->story);
+		lu_seq_block_end(save_wave->seq);
 	} 
 
 	static void lu_find_wave_block_end_virtual(Lu_Wave self)
@@ -105,7 +105,7 @@
 		lu_assert(lu_wave_is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_story_push(save_wave->story, rec, data);
+		lu_seq_push(save_wave->seq, rec, data);
 	}
 
 	static void lu_find_wave_push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)

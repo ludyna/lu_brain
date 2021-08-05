@@ -2,12 +2,10 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-#include "s_cell_connect.lu"
-#include "s_cell_values.lu"
 #include "s_cell_mem.lu"
 #include "s_layer.lu"
 #include "s_layer_conf.lu"
 #include "s_rec_rg_inits.lu"
 #include "s_rec_rg.lu"
-#include "s_story_rg.lu"
+#include "s_seq_rg.lu"
 #include "s.lu"

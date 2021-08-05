@@ -15,7 +15,7 @@
 #include "data/_module.lu"
 #include "n/_module.lu"
 #include "rec/_module.lu"
-#include "story/_module.lu"
+#include "seq/_module.lu"
 #include "w/_module.lu" 
 #include "s/_module.lu"
 

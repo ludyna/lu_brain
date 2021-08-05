@@ -163,7 +163,7 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Restore
 
-	// Lu_Restore_Resp lu_restore_resp = lu_story_restore(brain, save_neuron, restore_opts);
+	// Lu_Restore_Resp lu_restore_resp = lu_seq_restore(brain, save_neuron, restore_opts);
 
 	/////////////////////////////////////////////////////
 	// Restore stories by lu_name

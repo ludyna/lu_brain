@@ -17,19 +17,14 @@
 	static inline Lu_S_Component_Cell lu_s_component_cell_init(
 		Lu_S_Component_Cell self, 
 		enum lu_s_cell_type type, 
-		Lu_S_Layer layer, 
-		Lu_S_Cell_Values v,
-		Lu_S_Cell_Values p
+		Lu_S_Layer layer,
+		Hnn_Cell_Value* cells 
 	)
 	{
 		lu_assert(self);
-		lu_assert(v);
-		lu_assert(p);
-
 		lu_s_base_cell_init(&self->super, type, layer);
 
-		self->v = v;
-		self->p = p;
+		self->cells = cells;
 
 		return self;
 	}
@@ -56,7 +51,7 @@
 		return self;
 	}
 
-	static inline Lu_S_Component_Cell lu_s_pyra_cell_init(
+	static inline Lu_S_Component_Cell lu_s_rec_cell_init(
 		Lu_S_Component_Cell self, 
 		enum lu_s_cell_type type, 
 		Lu_S_Layer layer
@@ -72,7 +67,7 @@
 		return self;
 	}
 
-	static inline Lu_S_Component_Cell lu_s_story_cell_init(
+	static inline Lu_S_Component_Cell lu_s_seq_cell_init(
 		Lu_S_Component_Cell self, 
 		enum lu_s_cell_type type, 
 		Lu_S_Layer layer

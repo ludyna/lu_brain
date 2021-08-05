@@ -46,7 +46,7 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Stack Destory
+// Mem_Stack Destroy
 
 	void lu_mem_stack_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{

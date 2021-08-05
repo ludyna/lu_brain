@@ -35,7 +35,7 @@
 		--h;
 		++ix;
 
-		// here is 1s instead of 0s, because top layer is actually base layer in story rg
+		// here is 1s instead of 0s, because top layer is actually base layer in seq rg
 		while (w > 1 && h > 1)
 		{
 			lu_user_assert_void(ix < self->layers_size, "Index error");
@@ -111,7 +111,7 @@
 			layer 		= &self->layers[ix];
 			b_layer 	= &self->layers[ix - 1];
 
-			lu_s_layer_pyra_cells_init(layer, b_layer, self->cell_mem);
+			lu_s_layer_rec_cells_init(layer, b_layer, self->cell_mem);
 		}
 	}
 
@@ -121,6 +121,6 @@
 
 		for(lu_size i = 0; i < self->layers_size; i++)
 		{
-			lu_s_layer_pyra_cells_deinit(&self->layers[i], self->cell_mem);
+			lu_s_layer_rec_cells_deinit(&self->layers[i], self->cell_mem);
 		}
 	}

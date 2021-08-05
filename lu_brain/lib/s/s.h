@@ -9,16 +9,27 @@
 		Lu_S_Base_Cell one;
 	};
 
-	static inline Lu_S_Slot_1 lu_s_slot_1_init(Lu_S_Slot_1 self) 
-	{
-		self->one = NULL;
-		return self;
-	} 
+	struct lu_s_slot_4 {
+		Lu_S_Base_Cell one;
+		Lu_S_Base_Cell two;
+		Lu_S_Base_Cell three;
+		Lu_S_Base_Cell four;
+	};
 
 	struct lu_s_slot_2 {
 		Lu_S_Base_Cell one;
 		Lu_S_Base_Cell two;
 	};
+
+	//
+	// Slot inits
+	//
+
+	static inline Lu_S_Slot_1 lu_s_slot_1_init(Lu_S_Slot_1 self) 
+	{
+		self->one = NULL;
+		return self;
+	} 
 
 	static inline Lu_S_Slot_2 lu_s_slot_2_init(Lu_S_Slot_2 self) 
 	{
@@ -26,13 +37,6 @@
 		self->two = NULL;
 		return self;
 	} 
-
-	struct lu_s_slot_4 {
-		Lu_S_Base_Cell one;
-		Lu_S_Base_Cell two;
-		Lu_S_Base_Cell three;
-		Lu_S_Base_Cell four;
-	};
 
 	static inline Lu_S_Slot_4 lu_s_slot_4_init(Lu_S_Slot_4 self) 
 	{
@@ -49,10 +53,10 @@
 //
 // Plan:
 // component_v (1) ==>
-// component_p (1) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) ==> story (w - 1) ... story (1)
+// component_p (1) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) ==> seq (w - 1) ... seq (1)
 // where comoponent_v and component_p are actually layers
 //
-// pixel has one parent, pyra four, story two
+// pixel has two parents, pyra four, seq two
 // for S and W it is always one child
 
 	struct lu_s_base_cell {
@@ -64,23 +68,42 @@
 		struct lu_s_slot_1 c; 
 	}; 
 
+	struct lu_s_component_cell {
+		struct lu_s_base_cell super;
+
+		Hnn_Cell_Value* cells;
+	};
+
 	struct lu_s_pixel_cell {
 		struct lu_s_base_cell super;
 
  		// for pixe always one p
-		struct lu_s_slot_1 p;
+		struct lu_s_slot_2 p;
 
 		lu_size x; 
 		lu_size y;   		
 	};
 
-	struct lu_s_pyra_cell {
+	struct lu_s_rec_cell {
 		struct lu_s_base_cell super;
 
 		struct lu_s_slot_4 p;
 	};
 
-	struct lu_s_story_cell {
+	struct lu_seq_element_cell {
+		struct lu_s_base_cell super;
+
+		struct lu_s_slot_4 p;
+		Lu_Rec rec;
+	};
+
+	struct lu_s_seq_cell {
+		struct lu_s_base_cell super;
+
+		struct lu_s_slot_2 p;
+	};
+
+	struct lu_s_story_element_cell {
 		struct lu_s_base_cell super;
 
 		struct lu_s_slot_2 p;
@@ -88,15 +111,6 @@
 
 	// moved static inline inits to this file to avoid overcrowding this file
 	#include "s_cell_inits.h"
-
-	
-	//
-	// s_neu_connects.lu
-	//
-
-	static void s_pixel_connect(Lu_S_Cell_2 self, Lu_S_Layer);
-	static void s_pyra_connect(Lu_S_Cell_2 self, Lu_S_Layer);
-	static void s_block_connect(Lu_S_Cell_1 self, Lu_S_Layer);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Conf
@@ -122,41 +136,66 @@
 	static inline lu_value lu_s_layer_conf_calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val);
 	static inline lu_value lu_s_layer_conf_step_norm_dist(Lu_S_Layer_Conf self);
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Cell_Values
-//
-	struct lu_s_cell_values {
-		Lu_S_Layer_Conf conf;
-		Hnn_Cell_Value* cells;
-	};
-
-	static Lu_S_Cell_Values lu_s_cell_values_create(Lu_Mem mem, Lu_S_Layer_Conf conf);
-	static void lu_s_cell_values_destroy(Lu_S_Cell_Values self, Lu_Mem mem);
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer
 //
 
-	struct lu_s_layer {
-
+	struct lu_s_base_layer {
 		enum lu_s_layer_type type;
 
-		lu_size l;				// layer id
+		// layer number, starting from bottom, starting from zero 
+		// layer number resets for every layer type
+		lu_size number; 				
 		lu_size w;
 		lu_size h;
-
-
-		lu_size cells_count;
-		Lu_S_Base_Cell* cells;
 	};
 
- 	// We can make algorithm a bit more complicated but save memory for components 
+	// v an p layers are instances of this layer
+	 // We can make algorithm a bit more complicated but save memory for components 
  	// but for MVP it is not important (if ever)
 	struct lu_s_component_layer {
+		struct lu_s_base_layer super;
+		struct lu_s_layer_conf conf;
 
-		lu_size d;				// components 
+		Lu_S_Component_Cell* cells;
 	};
+
+	struct lu_s_pixel_layer {
+		struct lu_s_base_layer super;
+
+		lu_size cells_count;
+		Lu_S_Pixel_Cell* cells;
+	};
+
+	struct lu_s_pyra_layer {
+		struct lu_s_base_layer super;
+
+		lu_size cells_count;
+		Lu_S_Rec_Cell* cells;
+	};
+
+	struct lu_s_seq_element_layer {
+		struct lu_s_base_layer super;
+
+		lu_size cells_count;
+		Lu_S_Seq_Pixel_Cell* cells;
+	};
+
+	struct lu_s_seq_layer {
+		struct lu_s_base_layer super;
+
+		lu_size cells_count;
+		Lu_S_Seq_Cell* cells;
+	};
+
+	struct lu_s_story_element_layer {
+		struct lu_s_base_layer super;
+
+		lu_size cells_count;
+		Lu_S_Story_Element_Cell* cells;
+	};
+
 
 	static inline void lu_s_layer_cell_set(Lu_S_Layer self, lu_size x, lu_size y, lu_size z, Lu_S_Base_Cell val) 
 	{
@@ -197,11 +236,11 @@
 	static void lu_s_layer_pixel_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem, lu_size cells_d);
 	static void lu_s_layer_pixel_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
 
-	static void lu_s_layer_pyra_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
-	static void lu_s_layer_pyra_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_layer_rec_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_layer_rec_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
 
-	static void lu_s_layer_story_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
-	static void lu_s_layer_story_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_layer_seq_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_layer_seq_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
 
 	static void lu_s_layer_print_info(Lu_S_Layer self);
 
@@ -233,13 +272,13 @@
 		lu_size pixel_cells_count;
 		struct lu_s_pixel_cell* pixel_cells;
 
-		lu_size pyra_cells_size;
-		lu_size pyra_cells_count;
-		struct lu_s_pyra_cell* pyra_cells;
+		lu_size rec_cells_size;
+		lu_size rec_cells_count;
+		struct lu_s_rec_cell* rec_cells;
 
-		lu_size story_cells_size;
-		lu_size story_cells_count;
-		struct lu_s_story_cell* story_cells;
+		lu_size seq_cells_size;
+		lu_size seq_cells_count;
+		struct lu_s_seq_cell* seq_cells;
 
 	};
 
@@ -266,16 +305,16 @@
 		return self->pixel_cells_size;
 	}
 
-	static inline lu_size lu_s_cell_mem_pyra_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
+	static inline lu_size lu_s_cell_mem_rec_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
 	{
-		self->pyra_cells_size += s;
-		return self->pyra_cells_size;
+		self->rec_cells_size += s;
+		return self->rec_cells_size;
 	}
 
-	static inline lu_size lu_s_cell_mem_story_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
+	static inline lu_size lu_s_cell_mem_seq_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
 	{
-		self->story_cells_size += s;
-		return self->story_cells_size;
+		self->seq_cells_size += s;
+		return self->seq_cells_size;
 	}
 
 
@@ -394,10 +433,10 @@
 	static void lu_s_rec_rg_print_info(Lu_S_Rec_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Story_Rg
+// Lu_S_Seq_Rg
 //
 
-	struct lu_s_story_rg {
+	struct lu_s_seq_rg {
 		Lu_S_Cell_Mem 			cell_mem;
 		lu_size 				max_blocks_size;
 		lu_size 				recs_size;
@@ -405,16 +444,16 @@
 		struct lu_s_layer* 		layers;
 	};
 
-	static inline Lu_S_Layer lu_s_story_rg_base_layer_get(Lu_S_Story_Rg self) 
+	static inline Lu_S_Layer lu_s_seq_rg_base_layer_get(Lu_S_Seq_Rg self) 
 	{
 		return &self->layers[0];
 	}
 
-	static Lu_S_Story_Rg lu_s_story_rg_create(Lu_S_Cell_Mem cell_mem, lu_size recs_size);
-	static void lu_s_story_rg_destroy(Lu_S_Story_Rg self);
+	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_S_Cell_Mem cell_mem, lu_size recs_size);
+	static void lu_s_seq_rg_destroy(Lu_S_Seq_Rg self);
 
-	static void lu_s_story_rg_layers_connect(Lu_S_Story_Rg self);
-	static void lu_s_story_rg_layers_disconnect(Lu_S_Story_Rg self);
+	static void lu_s_seq_rg_layers_connect(Lu_S_Seq_Rg self);
+	static void lu_s_seq_rg_layers_disconnect(Lu_S_Seq_Rg self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -428,7 +467,7 @@
 
 		Lu_Arr 					recs;
 
-		Lu_S_Story_Rg 			story;
+		Lu_S_Seq_Rg 			seq;
 	};
 	
 	// s.lu

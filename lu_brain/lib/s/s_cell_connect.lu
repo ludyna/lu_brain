@@ -5,84 +5,84 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void s_pixel_connect(Lu_S_Cell_2 self, Lu_S_Layer b_layer)
-	{
-		lu_size z;
-		Lu_S_Cell_1 com = NULL;
-		Lu_S_Cell_1 cell = (Lu_S_Cell_1) self;
-		lu_size d = b_layer->d;
-		for (z = 0; z < d; z++)
-		{
-			com = lu_s_layer_cell_get(b_layer, self->x, self->y, z);  
+	// static void s_pixel_connect(Lu_S_Cell_2 self, Lu_S_Layer b_layer)
+	// {
+	// 	lu_size z;
+	// 	Lu_S_Cell_1 com = NULL;
+	// 	Lu_S_Cell_1 cell = (Lu_S_Cell_1) self;
+	// 	lu_size d = b_layer->d;
+	// 	for (z = 0; z < d; z++)
+	// 	{
+	// 		com = lu_s_layer_cell_get(b_layer, self->x, self->y, z);  
 
-			lu_user_assert_void(com, "S_Component is NULL");
+	// 		lu_user_assert_void(com, "S_Component is NULL");
 
-			com->d[0] 	= cell;
-			cell->b[z] 	= com;
-		}
-	}
+	// 		com->d[0] 	= cell;
+	// 		cell->b[z] 	= com;
+	// 	}
+	// }
 
-	static void s_pyra_connect(Lu_S_Cell_2 self, Lu_S_Layer b_layer)
-	{
-		lu_assert(self);
-		lu_assert(b_layer);
+	// static void s_pyra_connect(Lu_S_Cell_2 self, Lu_S_Layer b_layer)
+	// {
+	// 	lu_assert(self);
+	// 	lu_assert(b_layer);
 
-		lu_size x 			= self->x;
-		lu_size y 			= self->y;
+	// 	lu_size x 			= self->x;
+	// 	lu_size y 			= self->y;
 
-		// x, y				// np
-		// x + 1, y	  		// nl
-		// x + 1, y + 1 	// vl
-		// x, y + 1			// vp
+	// 	// x, y				// np
+	// 	// x + 1, y	  		// nl
+	// 	// x + 1, y + 1 	// vl
+	// 	// x, y + 1			// vp
 
-		Lu_S_Cell_1 b 			= NULL;
-		Lu_S_Cell_1 d 			= (Lu_S_Cell_1) self;
+	// 	Lu_S_Cell_1 b 			= NULL;
+	// 	Lu_S_Cell_1 d 			= (Lu_S_Cell_1) self;
 
-		b = lu_s_layer_cell_get(b_layer, x, y, 0);
-		lu_assert(b);
+	// 	b = lu_s_layer_cell_get(b_layer, x, y, 0);
+	// 	lu_assert(b);
 
-		d_np(b) = d; // b->d->np = d; 
-		b_vl(d) = b; // d->b->vl = b; 
+	// 	d_np(b) = d; // b->d->np = d; 
+	// 	b_vl(d) = b; // d->b->vl = b; 
 
-		b = lu_s_layer_cell_get(b_layer, x + 1, y, 0);
-		if (b) 
-		{
-			d_nl(b) = d; // b->d->nl = d;
-			b_vp(d) = b; // d->b->vp = b;
-		}
+	// 	b = lu_s_layer_cell_get(b_layer, x + 1, y, 0);
+	// 	if (b) 
+	// 	{
+	// 		d_nl(b) = d; // b->d->nl = d;
+	// 		b_vp(d) = b; // d->b->vp = b;
+	// 	}
 
-		b = lu_s_layer_cell_get(b_layer, x + 1, y + 1, 0);
-		if (b)
-		{
-			d_vl(b) = d; // b->d->vl = d;
-			b_np(d) = b; // d->b->np = b;
-		}
+	// 	b = lu_s_layer_cell_get(b_layer, x + 1, y + 1, 0);
+	// 	if (b)
+	// 	{
+	// 		d_vl(b) = d; // b->d->vl = d;
+	// 		b_np(d) = b; // d->b->np = b;
+	// 	}
 
-		b = lu_s_layer_cell_get(b_layer, x, y + 1, 0);
+	// 	b = lu_s_layer_cell_get(b_layer, x, y + 1, 0);
 		
-		if (b)
-		{
-			d_vp(b) = d; // b->d->vp = d;
-			b_nl(d) = b; // d->b->nl = b;
-		}
-	}
+	// 	if (b)
+	// 	{
+	// 		d_vp(b) = d; // b->d->vp = d;
+	// 		b_nl(d) = b; // d->b->nl = b;
+	// 	}
+	// }
 
-	static void s_block_connect(Lu_S_Cell_1 d, Lu_S_Layer b_layer)
-	{
-		lu_user_assert_void(d, "Lu_S_Cell_1 is NULL");
-		lu_user_assert_void(b_layer, "Lu_S_Layer is NULL"); 
+	// static void s_block_connect(Lu_S_Cell_1 d, Lu_S_Layer b_layer)
+	// {
+	// 	lu_user_assert_void(d, "Lu_S_Cell_1 is NULL");
+	// 	lu_user_assert_void(b_layer, "Lu_S_Layer is NULL"); 
 
-		lu_size x 		= 0;
-		lu_size y 		= 0;
+	// 	lu_size x 		= 0;
+	// 	lu_size y 		= 0;
 
-		Lu_S_Cell_1 b = NULL;
+	// 	Lu_S_Cell_1 b = NULL;
 
-		b = lu_s_layer_cell_get(b_layer, x, y, 0);
-		lu_user_assert_void(b, "Lu_S_Cell_1 is NULL");
+	// 	b = lu_s_layer_cell_get(b_layer, x, y, 0);
+	// 	lu_user_assert_void(b, "Lu_S_Cell_1 is NULL");
 
-		// WRONG
-		d_d(b) = d; 
-		b_b(d) = b; 
-	}
+	// 	// WRONG
+	// 	d_d(b) = d; 
+	// 	b_b(d) = b; 
+	// }
 
 
