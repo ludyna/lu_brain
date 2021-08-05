@@ -86,7 +86,7 @@
 		struct lu_s_slot_4 p;
 	};
 
-	struct lu_seq_element_cell {
+	struct lu_s_seq_nx_cell {
 		struct lu_s_base_cell super;
 
 		struct lu_s_slot_4 p;
@@ -99,7 +99,7 @@
 		struct lu_s_slot_2 p;
 	};
 
-	struct lu_s_story_element_cell {
+	struct lu_s_story_nx_cell {
 		struct lu_s_base_cell super;
 
 		struct lu_s_slot_2 p;
@@ -154,7 +154,7 @@
 		Lu_S_Component_Cell* cells;
 	};
 
-	// link
+	// nertex
 	struct lu_s_pixel_layer {
 		struct lu_s_base_layer super;
 
@@ -170,8 +170,8 @@
 		Lu_S_Rec_Cell* cells;
 	};
 
-	// link
-	struct lu_s_seq_element_layer {
+	// nertex
+	struct lu_s_seq_nx_layer {
 		struct lu_s_base_layer super;
 
 		lu_size cells_count;
@@ -186,12 +186,12 @@
 		Lu_S_Seq_Cell* cells;
 	};
 
-	// link
-	struct lu_s_story_element_layer {
+	// nertex
+	struct lu_s_story_nx_layer {
 		struct lu_s_base_layer super;
 
 		lu_size cells_count;
-		Lu_S_Story_Element_Cell* cells;
+		Lu_S_Story_Nx_Cell* cells;
 	};
 
 

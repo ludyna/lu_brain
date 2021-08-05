@@ -31,9 +31,9 @@
  	typedef struct lu_s_component_cell* 		Lu_S_Component_Cell;
  	typedef struct lu_s_pixel_cell* 			Lu_S_Pixel_Cell;
  	typedef struct lu_s_rec_cell* 				Lu_S_Rec_Cell;
- 	typedef struct lu_s_seq_element_cell* 		Lu_S_Seq_Element_Cell;
+ 	typedef struct lu_s_seq_element_cell* 		Lu_S_Seq_Nx_Cell;
  	typedef struct lu_s_seq_cell* 				Lu_S_Seq_Cell;
- 	typedef struct lu_s_story_element_cell* 	Lu_S_Story_Element_Cell;
+ 	typedef struct lu_s_story_nx_cell* 			Lu_S_Story_Nx_Cell;
 
 	//
 	// Layes
@@ -49,7 +49,14 @@
 	};
 	
 	typedef struct lu_s_layer_conf*		Lu_S_Layer_Conf;
-	typedef struct lu_s_layer* 			Lu_S_Layer;
+
+	typedef struct lu_s_base_layer* 		Lu_S_Base_Layer;
+	typedef struct lu_s_component_layer* 	Lu_S_Component_Layer;
+	typedef struct lu_s_pixel_layer*  		Lu_S_Pixel_Layer;
+	typedef struct lu_s_rec_layer*  		Lu_S_Rec_Layer;
+	typedef struct lu_s_seq_nx_layer*  		Lu_S_Seq_Nx_Layer;
+	typedef struct lu_s_seq_layer* 			Lu_S_Seq_Layer;
+	typedef struct lu_s_story_nx_layer*   	Lu_S_Story_Nx_Layer;
 
 	// 
 	// Cell_Mem
