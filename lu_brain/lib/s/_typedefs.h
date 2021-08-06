@@ -31,7 +31,7 @@
  	typedef struct lu_s_component_cell* 		Lu_S_Component_Cell;
  	typedef struct lu_s_pixel_cell* 			Lu_S_Pixel_Cell;
  	typedef struct lu_s_rec_cell* 				Lu_S_Rec_Cell;
- 	typedef struct lu_s_seq_element_cell* 		Lu_S_Seq_Nx_Cell;
+ 	typedef struct lu_s_seq_nx_cell* 			Lu_S_Seq_Nx_Cell;
  	typedef struct lu_s_seq_cell* 				Lu_S_Seq_Cell;
  	typedef struct lu_s_story_nx_cell* 			Lu_S_Story_Nx_Cell;
 

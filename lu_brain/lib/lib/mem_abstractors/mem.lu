@@ -86,7 +86,7 @@
 		int line
 	);
 
-	void lu_mem_table_destroy_default(Lu_Mem_Table self);
+	void lu_mem_table_destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals

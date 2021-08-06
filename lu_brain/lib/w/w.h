@@ -82,12 +82,12 @@
 	// static Lu_Cell lu_cell_create
 
 	struct lu_layer {
-		Lu_S_Layer lu_s_layer;
+		Lu_S_Base_Layer s_layer;
 
 		Lu_Cell* cells;
 	};
 
-	static Lu_Layer lu_layer_create(Lu_Mem mem, Lu_S_Layer lu_s_layer);
+	static Lu_Layer lu_layer_create(Lu_Mem mem, Lu_S_Base_Layer s_layer);
 	static void lu_layer_destroy(Lu_Layer self, Lu_Mem mem);
 
 	struct lu_rec_rg {

@@ -265,16 +265,16 @@
 		lu_size rec_cells_count;
 		struct lu_s_rec_cell* rec_cells;
 
-		lu_size seq_cells_nx_size;
-		lu_size seq_cells_nx_count;
+		lu_size seq_nx_cells_size;
+		lu_size seq_nx_cells_count;
 		struct lu_s_seq_nx_cell* seq_nx_cells;
 
 		lu_size seq_cells_size;
 		lu_size seq_cells_count;
 		struct lu_s_seq_cell* seq_cells;
 
-		lu_size seq_story_nx_size;
-		lu_size seq_story_nx_count;
+		lu_size story_nx_cells_size;
+		lu_size story_nx_cells_count;
 		struct lu_s_story_nx_cell* story_nx_cells;
 	};
 

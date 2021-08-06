@@ -3,7 +3,7 @@
 */ 
  
 ///////////////////////////////////////////////////////////////////////////////
-// Cell Inlines 
+// Cell Inits 
 
 	static inline Lu_S_Base_Cell lu_s_base_cell_init(Lu_S_Base_Cell self, enum lu_s_cell_type type, Lu_S_Base_Layer layer)
 	{
@@ -31,21 +31,27 @@
 		return self;
 	}
 
-	static inline Lu_S_Component_Cell lu_s_pixel_cell_init(
-		Lu_S_Component_Cell self, 
+	static inline Lu_S_Pixel_Cell lu_s_pixel_cell_init(
+		Lu_S_Pixel_Cell self, 
 		enum lu_s_cell_type type, 
-		Lu_S_Base_Layer layer
+		Lu_S_Base_Layer layer, 
+		lu_size x, 
+		lu_size y
 	)
 	{
 		lu_assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
-		
+		lu_s_slot_2_init(&self->p);
+
+		self->x = x;
+		self->y = y;
+
 		return self;
 	}
 
-	static inline Lu_S_Component_Cell lu_s_rec_cell_init(
-		Lu_S_Component_Cell self, 
+	static inline Lu_S_Rec_Cell lu_s_rec_cell_init(
+		Lu_S_Rec_Cell self, 
 		enum lu_s_cell_type type, 
 		Lu_S_Base_Layer layer
 	)
@@ -58,8 +64,25 @@
 		return self;
 	}
 
-	static inline Lu_S_Component_Cell lu_s_seq_cell_init(
-		Lu_S_Component_Cell self, 
+	static inline Lu_S_Seq_Nx_Cell lu_s_seq_nx_cell_init(
+		Lu_S_Seq_Nx_Cell self, 
+		enum lu_s_cell_type type, 
+		Lu_S_Base_Layer layer,
+		Lu_Rec rec
+	)
+	{
+		lu_assert(self);
+
+		lu_s_base_cell_init(&self->super, type, layer);
+		lu_s_slot_4_init(&self->p);
+
+		self->rec = rec;
+
+		return self;
+	}
+
+	static inline Lu_S_Seq_Cell lu_s_seq_cell_init(
+		Lu_S_Seq_Cell self, 
 		enum lu_s_cell_type type, 
 		Lu_S_Base_Layer layer
 	)
@@ -67,7 +90,21 @@
 		lu_assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_4_init(&self->p);
+		lu_s_slot_2_init(&self->p);
+
+		return self;
+	}
+
+	static inline Lu_S_Story_Nx_Cell lu_s_story_nx_cell_init(
+		Lu_S_Story_Nx_Cell self, 
+		enum lu_s_cell_type type, 
+		Lu_S_Base_Layer layer
+	)
+	{
+		lu_assert(self);
+
+		lu_s_base_cell_init(&self->super, type, layer);
+		lu_s_slot_2_init(&self->p);
 
 		return self;
 	}
