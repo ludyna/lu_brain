@@ -22,9 +22,9 @@
 		LU_SCT_COMPONTENT,
 		LU_SCT_PIXEL,
 		LU_SCT_REC,
-		LU_SCT_SEQ_ELEMENT,
+		LU_SCT_SEQ_NX,
 		LU_SCT_SEQ,
-		LU_SCT_STORY_ELEMENT
+		LU_SCT_STORY_NX
 	};
 
  	typedef struct lu_s_base_cell* 				Lu_S_Base_Cell;
@@ -43,9 +43,9 @@
 		LU_SLT_COMPONENT,
 		LU_SLT_PIXEL, 	
 		LU_SLT_REC,
-		LU_SLT_SEQ_ELEMENT,
+		LU_SLT_SEQ_NX,
 		LU_SLT_SEQ,
-		LU_SLT_STORY_ELEMENT
+		LU_SLT_STORY_NX
 	};
 	
 	typedef struct lu_s_layer_conf*		Lu_S_Layer_Conf;

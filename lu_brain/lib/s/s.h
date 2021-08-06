@@ -58,7 +58,7 @@
 	struct lu_s_base_cell {
 		enum lu_s_cell_type type;			
 
-		Lu_S_Layer layer;
+		Lu_S_Base_Layer layer;
 
 		// for S and W it is always one child
 		struct lu_s_slot_1 c; 
@@ -70,6 +70,7 @@
 		Hnn_Cell_Value* cells;
 	};
 
+	// nertex
 	struct lu_s_pixel_cell {
 		struct lu_s_base_cell super;
 
@@ -86,6 +87,7 @@
 		struct lu_s_slot_4 p;
 	};
 
+	// nertex
 	struct lu_s_seq_nx_cell {
 		struct lu_s_base_cell super;
 
@@ -99,6 +101,7 @@
 		struct lu_s_slot_2 p;
 	};
 
+	// nertex
 	struct lu_s_story_nx_cell {
 		struct lu_s_base_cell super;
 
@@ -175,7 +178,7 @@
 		struct lu_s_base_layer super;
 
 		lu_size cells_count;
-		Lu_S_Seq_Pixel_Cell* cells;
+		Lu_S_Seq_Nx_Cell* cells;
 	};
 
 	// pyra
@@ -262,10 +265,17 @@
 		lu_size rec_cells_count;
 		struct lu_s_rec_cell* rec_cells;
 
+		lu_size seq_cells_nx_size;
+		lu_size seq_cells_nx_count;
+		struct lu_s_seq_nx_cell* seq_nx_cells;
+
 		lu_size seq_cells_size;
 		lu_size seq_cells_count;
 		struct lu_s_seq_cell* seq_cells;
 
+		lu_size seq_story_nx_size;
+		lu_size seq_story_nx_count;
+		struct lu_s_story_nx_cell* story_nx_cells;
 	};
 
 	//
@@ -274,35 +284,6 @@
 
 	static Lu_S_Cell_Mem lu_s_cell_mem_create(Lu_Mem mem);
 	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self);
-
-	// 
-	// Size increments
-	//
-
-	static inline lu_size lu_s_cell_mem_component_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
-	{
-		self->component_cells_size += s;
-		return self->component_cells_size;
-	}
-
-	static inline lu_size lu_s_cell_mem_pixel_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
-	{
-		self->pixel_cells_size += s;
-		return self->pixel_cells_size;
-	}
-
-	static inline lu_size lu_s_cell_mem_rec_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
-	{
-		self->rec_cells_size += s;
-		return self->rec_cells_size;
-	}
-
-	static inline lu_size lu_s_cell_mem_seq_cells_size_inc(Lu_S_Cell_Mem self, lu_size s)
-	{
-		self->seq_cells_size += s;
-		return self->seq_cells_size;
-	}
-
 
 	//
 	// Allocate cells
@@ -314,22 +295,22 @@
 	// Cells assign and retract
 	//
 
-	static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem, Lu_S_Layer);   
-	static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell); 
+	// static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem, Lu_S_Layer);   
+	// static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell); 
 
-	static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y);
-	static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell);
+	// static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y);
+	// static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell);
 
-	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
-		Lu_S_Cell_Mem self, 
-		Lu_S_Layer layer, 
-		lu_size x, 
-		lu_size y, 
-		lu_size z,
-		Lu_S_Layer_Conf v_conf, 
-		Lu_S_Layer_Conf p_conf
-	);
-	static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell);
+	// static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
+	// 	Lu_S_Cell_Mem self, 
+	// 	Lu_S_Layer layer, 
+	// 	lu_size x, 
+	// 	lu_size y, 
+	// 	lu_size z,
+	// 	Lu_S_Layer_Conf v_conf, 
+	// 	Lu_S_Layer_Conf p_conf
+	// );
+	// static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell);
 
 
 	// 
@@ -364,16 +345,16 @@
 		struct lu_s_layer* 		layers;
 	};
 
-	static inline Lu_S_Cell_1 lu_s_rec_rg_v_cell_get(Lu_S_Rec_Rg self, lu_size l, lu_size x, lu_size y, lu_size z)
-	{
-		Lu_S_Layer layer = &self->layers[l];
-		return lu_s_layer_cell_get(layer, x, y, z);
-	}
+	// static inline Lu_S_Cell_1 lu_s_rec_rg_v_cell_get(Lu_S_Rec_Rg self, lu_size l, lu_size x, lu_size y, lu_size z)
+	// {
+	// 	Lu_S_Layer layer = &self->layers[l];
+	// 	return lu_s_layer_cell_get(layer, x, y, z);
+	// }
 
-	static inline Lu_S_Layer lu_s_rec_rg_top_layer_get(Lu_S_Rec_Rg self)
-	{
-		return &self->layers[self->layers_size - 1];
-	}
+	// static inline Lu_S_Layer lu_s_rec_rg_top_layer_get(Lu_S_Rec_Rg self)
+	// {
+	// 	return &self->layers[self->layers_size - 1];
+	// }
 
 	//
 	// lu_s_rec_rg.lu
@@ -412,10 +393,10 @@
 		struct lu_s_layer* 		layers;
 	};
 
-	static inline Lu_S_Layer lu_s_seq_rg_base_layer_get(Lu_S_Seq_Rg self) 
-	{
-		return &self->layers[0];
-	}
+	// static inline Lu_S_Layer lu_s_seq_rg_base_layer_get(Lu_S_Seq_Rg self) 
+	// {
+	// 	return &self->layers[0];
+	// }
 
 	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_S_Cell_Mem cell_mem, lu_size recs_size);
 	static void lu_s_seq_rg_destroy(Lu_S_Seq_Rg self);

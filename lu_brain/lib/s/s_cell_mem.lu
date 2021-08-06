@@ -12,18 +12,39 @@
 
 		self->mem = mem;
 
-		self->cells_1_count		= 0;
-		self->cells_1_size 		= 0;
+		//
+		// size
+		//
 
-		self->cells_2_count 	= 0;
-		self->cells_2_size 		= 0;
+		self->component_cells_size 	= 0;
+		self->pixel_cells_size 		= 0;
+		self->rec_cells_size 		= 0;
+		self->seq_cells_nx_size 	= 0;
+		self->seq_cells_size 		= 0;
+		self->seq_story_nx_size 	= 0;
 
-		self->cells_3_count 	= 0;
-		self->cells_3_size 		= 0;
+		//
+		// count
+		//
 
-		self->cells_1 = NULL;
-		self->cells_2 = NULL;
-		self->cells_3 = NULL;
+		self->component_cells_count = 0;
+		self->pixel_cells_count 	= 0;
+		self->rec_cells_count 		= 0;
+		self->seq_cells_nx_count 	= 0;
+		self->seq_cells_count 		= 0;
+		self->seq_story_nx_count 	= 0;
+
+		// 
+		// arrays
+		//
+
+		self->component_cells 	= NULL;
+		self->pixel_cells 		= NULL;
+		self->rec_cells 		= NULL;
+		self->seq_cells_nx 		= NULL;
+		self->seq_cells			= NULL;
+		self->seq_story_nx 		= NULL;
+
 
 		return self;
 	}
@@ -32,9 +53,23 @@
 	{
 		lu_assert(self);
 
-		lu_mem_free(self->mem, (lu_p_byte) self->cells_3);
-		lu_mem_free(self->mem, (lu_p_byte) self->cells_2);
-		lu_mem_free(self->mem, (lu_p_byte) self->cells_1);
+		if (self->component_cells)
+			lu_mem_free(self->mem, (lu_p_byte) self->component_cells);
+
+		if (self->pixel_cells)
+			lu_mem_free(self->mem, (lu_p_byte) self->pixel_cells);
+
+		if (self->rec_cells)
+			lu_mem_free(self->mem, (lu_p_byte) self->rec_cells);
+
+		if (self->seq_nx_cells)
+			lu_mem_free(self->mem, (lu_p_byte) self->seq_nx_cells);
+
+		if (self->seq_cells)
+			lu_mem_free(self->mem, (lu_p_byte) self->seq_cells);
+
+		if (self->story_nx_cells)
+			lu_mem_free(self->mem, (lu_p_byte) self->story_nx_cells);
 
 		lu_mem_free(self->mem, (lu_p_byte) self);
 	}
@@ -46,128 +81,128 @@
 	{
 		lu_assert(self); 
 		
-		if (self->cells_1_size > 0)
-		{
-			self->cells_1 = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_1_size);
-			lu_assert(self->cells_1); 
-		}
+		// if (self->cells_1_size > 0)
+		// {
+		// 	self->cells_1 = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_1_size);
+		// 	lu_assert(self->cells_1); 
+		// }
  	
- 		if (self->cells_2_size > 0)
- 		{
-			self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
-			lu_assert(self->cells_2); 
-		}
+ 	// 	if (self->cells_2_size > 0)
+ 	// 	{
+		// 	self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
+		// 	lu_assert(self->cells_2); 
+		// }
 
-		if (self->cells_3_size > 0)
-		{
-			self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
-			lu_assert(self->cells_3); 
-		}
+		// if (self->cells_3_size > 0)
+		// {
+		// 	self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
+		// 	lu_assert(self->cells_3); 
+		// }
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Cells Assign And Retract
 
 
-	static Lu_S_Cell_3 lu_s_cell_mem_component_cell_assign(
-		Lu_S_Cell_Mem self, 
-		Lu_S_Layer layer, 
-		lu_size x, 
-		lu_size y, 
-		lu_size z,
-		Lu_S_Layer_Conf v_conf, 
-		Lu_S_Layer_Conf p_conf
-	)
-	{
-		lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Component_Cell");
+	// static Lu_S_Cell_3 lu_s_cell_mem_component_cell_assign(
+	// 	Lu_S_Cell_Mem self, 
+	// 	Lu_S_Layer layer, 
+	// 	lu_size x, 
+	// 	lu_size y, 
+	// 	lu_size z,
+	// 	Lu_S_Layer_Conf v_conf, 
+	// 	Lu_S_Layer_Conf p_conf
+	// )
+	// {
+	// 	lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Component_Cell");
 
-		Lu_S_Cell_3 neu = &self->component_cells[self->component_cells_count];
-		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
+	// 	Lu_S_Cell_3 neu = &self->component_cells[self->component_cells_count];
+	// 	neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);
+	// 	lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
 
-		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
+	// 	lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
 
-		// no need for lock, they are created once in one thread
-		++layer->cells_count;
-		++self->cells_3_count;
+	// 	// no need for lock, they are created once in one thread
+	// 	++layer->cells_count;
+	// 	++self->cells_3_count;
 
-		return neu;
-	}
+	// 	return neu;
+	// }
 
 
-	static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer)
-	{
-		lu_user_assert(self->cells_1_count < self->cells_1_size, "Out of space for Lu_S_Cell_1");
+	// static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer)
+	// {
+	// 	lu_user_assert(self->cells_1_count < self->cells_1_size, "Out of space for Lu_S_Cell_1");
 
-		Lu_S_Cell_1 neu = &self->cells_1[self->cells_1_count];
-		neu = lu_s_cell_1_init(neu, LU_SCT_CELL, layer, layer->cells_count);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell_1");
+	// 	Lu_S_Cell_1 neu = &self->cells_1[self->cells_1_count];
+	// 	neu = lu_s_cell_1_init(neu, LU_SCT_CELL, layer, layer->cells_count);
+	// 	lu_user_assert(neu, "Cannot init Lu_S_Cell_1");
 
-		lu_s_layer_cell_set(layer, 0, 0, 0, neu);
+	// 	lu_s_layer_cell_set(layer, 0, 0, 0, neu);
 
-		// no need for lock, they are created once in one thread
-		++layer->cells_count;
-		++self->cells_1_count;
+	// 	// no need for lock, they are created once in one thread
+	// 	++layer->cells_count;
+	// 	++self->cells_1_count;
 
-		return neu;
-	}  
+	// 	return neu;
+	// }  
 
-	static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell)
-	{
-		lu_s_cell_1_deinit(cell);
-	}
+	// static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell)
+	// {
+	// 	lu_s_cell_1_deinit(cell);
+	// }
 
-	static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y)
-	{
-		lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for Lu_S_Cell_2");
+	// static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y)
+	// {
+	// 	lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for Lu_S_Cell_2");
 
-		Lu_S_Cell_2 neu = &self->cells_2[self->cells_2_count];
-		neu = lu_s_cell_2_init(neu, LU_SCT_CELL_2, layer, layer->cells_count, x, y);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell_2");
+	// 	Lu_S_Cell_2 neu = &self->cells_2[self->cells_2_count];
+	// 	neu = lu_s_cell_2_init(neu, LU_SCT_CELL_2, layer, layer->cells_count, x, y);
+	// 	lu_user_assert(neu, "Cannot init Lu_S_Cell_2");
 
-		lu_s_layer_cell_set(layer, x, y, 0, (Lu_S_Cell_1) neu);
+	// 	lu_s_layer_cell_set(layer, x, y, 0, (Lu_S_Cell_1) neu);
 
-		// no need for lock, they are created once in one thread
-		++layer->cells_count;
-		++self->cells_2_count;
+	// 	// no need for lock, they are created once in one thread
+	// 	++layer->cells_count;
+	// 	++self->cells_2_count;
 
-		return neu;
-	}
+	// 	return neu;
+	// }
 
-	static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell)
-	{
-		lu_s_cell_2_deinit(cell);
-	}
+	// static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell)
+	// {
+	// 	lu_s_cell_2_deinit(cell);
+	// }
 
-	static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
-		Lu_S_Cell_Mem self, 
-		Lu_S_Layer layer, 
-		lu_size x, 
-		lu_size y, 
-		lu_size z,
-		Lu_S_Layer_Conf v_conf, 
-		Lu_S_Layer_Conf p_conf
-	)
-	{
-		lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
+	// static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
+	// 	Lu_S_Cell_Mem self, 
+	// 	Lu_S_Layer layer, 
+	// 	lu_size x, 
+	// 	lu_size y, 
+	// 	lu_size z,
+	// 	Lu_S_Layer_Conf v_conf, 
+	// 	Lu_S_Layer_Conf p_conf
+	// )
+	// {
+	// 	lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
 
-		Lu_S_Cell_3 neu = &self->cells_3[self->cells_3_count];
-		neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);
-		lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
+	// 	Lu_S_Cell_3 neu = &self->cells_3[self->cells_3_count];
+	// 	neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);
+	// 	lu_user_assert(neu, "Cannot init Lu_S_Cell_3");
 
-		lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
+	// 	lu_s_layer_cell_set(layer, x, y, z, (Lu_S_Cell_1) neu);
 
-		// no need for lock, they are created once in one thread
-		++layer->cells_count;
-		++self->cells_3_count;
+	// 	// no need for lock, they are created once in one thread
+	// 	++layer->cells_count;
+	// 	++self->cells_3_count;
 
-		return neu;
-	}
+	// 	return neu;
+	// }
 
-	static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell)
-	{
-		lu_s_cell_3_deinit(cell);
-	}
+	// static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell)
+	// {
+	// 	lu_s_cell_3_deinit(cell);
+	// }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Print
