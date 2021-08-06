@@ -323,6 +323,9 @@
 // Lu_S_Rec_Rg
 //
 
+	// Reason we have different rgs instead of putting every layer into the same 
+	// structure is that we can different number of instances of each rg.
+	// For example, we need rec_rg for ever rec, while we need one seq_rg.
 	struct lu_s_rec_rg {
 		
 		// Lu_Rec 
@@ -336,13 +339,17 @@
 
 		Lu_S_Cell_Mem 			cell_mem;
 
-		// v and p configs
-		struct lu_s_layer_conf 	v_conf;	
-		struct lu_s_layer_conf 	p_conf;
- 		
+		//
  		// Layers
-		lu_size 				layers_size;
-		struct lu_s_layer* 		layers;
+ 		//
+
+		struct lu_s_component_layer v_layer;
+		struct lu_s_component_layer p_layer;
+
+		struct lu_s_pixel_layer pixel_layer;
+
+		lu_size rec_layers_size;
+		struct lu_s_rec_layer* rec_layers;
 	};
 
 	// static inline Lu_S_Cell_1 lu_s_rec_rg_v_cell_get(Lu_S_Rec_Rg self, lu_size l, lu_size x, lu_size y, lu_size z)
@@ -389,9 +396,18 @@
 		Lu_S_Cell_Mem 			cell_mem;
 		lu_size 				max_blocks_size;
 		lu_size 				recs_size;
-		lu_size 				layers_size;
-		struct lu_s_layer* 		layers;
-	};
+
+
+		// 
+		// Layers
+		//
+
+		struct lu_s_seq_nx_layer seq_nx_layer;
+
+		lu_size seq_layers_size;
+		struct lu_s_seq_layer* seq_layers;
+
+	}
 
 	// static inline Lu_S_Layer lu_s_seq_rg_base_layer_get(Lu_S_Seq_Rg self) 
 	// {
@@ -404,6 +420,20 @@
 	static void lu_s_seq_rg_layers_connect(Lu_S_Seq_Rg self);
 	static void lu_s_seq_rg_layers_disconnect(Lu_S_Seq_Rg self);
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Seq_Rg
+//
+
+	struct lu_s_story_rg {
+		Lu_S_Cell_Mem cell_mem;
+
+		//
+		// Layers
+		//
+
+		struct lu_s_story_nx_layer story_nx_layer;
+	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S

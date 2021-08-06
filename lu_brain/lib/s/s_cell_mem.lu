@@ -19,9 +19,9 @@
 		self->component_cells_size 	= 0;
 		self->pixel_cells_size 		= 0;
 		self->rec_cells_size 		= 0;
-		self->seq_cells_nx_size 	= 0;
+		self->seq_nx_cells_size 	= 0;
 		self->seq_cells_size 		= 0;
-		self->seq_story_nx_size 	= 0;
+		self->story_nx_cells_size 	= 0;
 
 		//
 		// count
@@ -30,9 +30,9 @@
 		self->component_cells_count = 0;
 		self->pixel_cells_count 	= 0;
 		self->rec_cells_count 		= 0;
-		self->seq_cells_nx_count 	= 0;
+		self->seq_nx_cells_count 	= 0;
 		self->seq_cells_count 		= 0;
-		self->seq_story_nx_count 	= 0;
+		self->story_nx_cells_count 	= 0;
 
 		// 
 		// arrays
@@ -41,9 +41,9 @@
 		self->component_cells 	= NULL;
 		self->pixel_cells 		= NULL;
 		self->rec_cells 		= NULL;
-		self->seq_cells_nx 		= NULL;
+		self->seq_nx_cells 		= NULL;
 		self->seq_cells			= NULL;
-		self->seq_story_nx 		= NULL;
+		self->story_nx_cells 	= NULL;
 
 
 		return self;
