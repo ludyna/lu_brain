@@ -52,7 +52,8 @@
 // 
 // Plan:
 // component_v (1) ==>
-// component_p (1) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) ==> seq (w - 1) ... seq (1)
+// component_p (1) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) 
+// ==> seq (w - 1) ... seq (1)
 //
 
 	struct lu_s_base_cell {
@@ -397,7 +398,6 @@
 		lu_size 				max_blocks_size;
 		lu_size 				recs_size;
 
-
 		// 
 		// Layers
 		//
@@ -407,7 +407,7 @@
 		lu_size seq_layers_size;
 		struct lu_s_seq_layer* seq_layers;
 
-	}
+	};
 
 	// static inline Lu_S_Layer lu_s_seq_rg_base_layer_get(Lu_S_Seq_Rg self) 
 	// {
@@ -444,9 +444,15 @@
 
 		Lu_S_Cell_Mem  			cell_mem;
 
+		//
+		// Regions
+		//
+
 		Lu_Arr 					recs;
 
 		Lu_S_Seq_Rg 			seq;
+
+		Lu_S_Story_Rg  			story;
 	};
 	
 	// s.lu

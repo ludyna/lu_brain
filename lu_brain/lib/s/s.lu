@@ -11,26 +11,24 @@
 		lu_assert(brain);
 		lu_assert(brain->recs);
 
-		Lu_S self 			= (Lu_S) lu_g_mem_alloc(sizeof(struct lu_s));
+		Lu_S self = (Lu_S) lu_g_mem_alloc(sizeof(struct lu_s));
 		lu_assert(self);
 
-		self->brain 		= brain;
+		self->brain = brain;
 
-		self->cell_mem 		= lu_s_cell_mem_create(lu_g_mem);
+		// 
+		// Cell_Mem
+		//
+
+		self->cell_mem = lu_s_cell_mem_create(lu_g_mem);
 		lu_assert(self->cell_mem);
 
-		self->recs 			= lu_arr_temp_create(lu_arr_count(brain->recs), false);
+		//
+		// Create Rec_Rgs
+		//
+
+		self->recs = lu_arr_temp_create(lu_arr_count(brain->recs), false);
 		lu_assert(self->recs);
-
-		self->seq 		= lu_s_seq_rg_create(
-			self->cell_mem, 
-			lu_arr_count(brain->recs)
-		);
-		lu_assert(self->seq);
-
-		//
-		// Create S recs
-		//
 
 		lu_size i; 
 		Lu_Rec rec;
@@ -47,57 +45,56 @@
 		}
 
 		//
+		// Create Seq_Rg
+		//
+
+		self->seq = lu_s_seq_rg_create(
+			self->cell_mem, 
+			lu_arr_count(brain->recs)
+		);
+		lu_assert(self->seq);
+
+		//
+		// Create Story_Rg
+		//
+
+		self->story = lu_s_story_rg_create(
+			self->cell_mem,
+		);
+		lu_assert(self->story);
+
+		//
 		// Lu_S_Cell_Mem cells allocation
 		//
 
 		lu_s_cell_mem_alloc_cells(self->cell_mem);
 
 		//
-		// Connect rec_rg layers 
+		// Assign cells and connect rec_rg layers 
 		//
-
-		for (i = 0; i < lu_arr_count(self->recs); i++)
-		{
-			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
-			lu_assert(rec_rg);
-
-			lu_s_rec_rg_component_layer_connect(rec_rg);
-			lu_s_rec_rg_pixel_layer_connect(rec_rg);
-			lu_s_rec_rg_pyras_layers_connect(rec_rg);
-		}
-
-		//
-		// Connect rec_rg(s) to seq_rg
-		// 
 
 		Lu_S_Layer b_layer;
-		Lu_S_Layer layer = lu_s_seq_rg_base_layer_get(self->seq);
-		lu_assert(layer);
-
-		Lu_S_Cell_2 cell = NULL;
 		for (i = 0; i < lu_arr_count(self->recs); i++)
 		{
 			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 			lu_assert(rec_rg);
 
-			b_layer = lu_s_rec_rg_top_layer_get(rec_rg);
-			lu_assert(b_layer);
+			b_layer = lu_s_rec_rg_connect_layers(rec_rg);
 
-			cell = lu_s_cell_mem_cell_2_assign(self->cell_mem, layer, i, 0); 
-			lu_assert(cell);
-
-			cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell); 
-			lu_assert(cell);
-
-			if (b_layer)
-				s_pyra_connect(cell, b_layer);
+			lu_s_connect_rec_rg_to_seq_rg(self, b_layer, i);
 		}
 
 		//
-		// Connect seq_rg layers
+		// Assign cells and connect seq_rg layers
 		// 
 
 		lu_s_seq_rg_layers_connect(self->seq);
+
+		//
+		// Assign cells and connect seq_rgs to story_rg
+		//
+
+		lu_s_connect_seq_rg_to_story_rg(self);
 
 		return self;
 	}
