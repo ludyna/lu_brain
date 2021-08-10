@@ -45,5 +45,13 @@
 		self->cells = (Lu_S_Component_Cell*) 
 
 		return Lu_S_Component_Layer;
+	} 
+
+	static inline void lu_s_component_layer_deinit(Lu_S_Component_Layer self)
+	{
+		lu_assert(self);
+
+		if (self->cells)
+			
 	}
 
