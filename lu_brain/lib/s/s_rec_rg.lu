@@ -15,10 +15,9 @@
 
 		self->cells_w 			= rec->width;
 		self->cells_h			= rec->height; 
-		self->cells_d 			= rec->depth; // ne treba?
+		self->cells_d 			= rec->depth; // ne treba? treba ,ce ne maye vidnoshenia to v_neu_size
 
 		self->cell_mem 			= cell_mem;
-
 
 		//
 		// Component layers inits
@@ -37,37 +36,39 @@
 		// Rec layers allocate and init
 		//
 
-		self->rec_layers = NULL;
+		self->rec_layers 		= NULL;
+		self->rec_layers_size 	= (self->cells_w > self->cells_h ? self->cells_w : self->cells_h);
 
 		// minus one for last pyras layer which is the first layer of seq_rg
 		// and minus one for pixel layer which is nertex layer 
-		self->rec_layers_size = (self->cells_w > self->cells_h ? self->cells_w : self->cells_h) - 2;
-		if (rec_layers_size < 0) self->rec_layers_size = 0;
-
-		// if pixel layer is too small, we skip rec_layers
-		if (self->rec_layers_size > 0)
-		{			
-			lu_size i;	
-			lu_size w;
-			lu_size h;				
-			self->rec_layers = (struct lu_s_rec_layer*) lu_g_mem_alloc(sizeof(struct lu_s_rec_layer) * self->rec_layers_size);
-			lu_assert(self->layers); 
-
-			for (i = 0; i < self->rec_layers_size; i++)
-			{
-				w = self->cells_w - 1 - i;
-				h = self->cells_h - 1 - i;
-
-				if (w <= 0) w = 1;
-				if (h <= 0) h = 1;
-
-				// tip should be in seq_nx layer, not here
-				lu_assert(w > 1 || h > 1);
-
-				lu_s_rec_layer_init(&self->rec_layers[i], i, w, h);
-			}
+		if (rec_layers_size <= 2) 
+		{
+			// if pixel layer is too small, we skip rec_layers
+			self->rec_layers_size = 0;
+			return self;
 		}
+		else rec_layers_size -= 2;
+			
+		lu_size w = self->cells_w - 1;
+		lu_size h = self->cells_h - 1;				
+		self->rec_layers = (struct lu_s_rec_layer*) lu_g_mem_alloc(sizeof(struct lu_s_rec_layer) * self->rec_layers_size);
+		lu_assert(self->layers); 
 
+		lu_size ix = 0;
+		while (w > 2 && h > 2)
+		{
+			lu_assert(ix < rec_layers_size);
+
+			// tip should be in seq_nx layer, not here
+			lu_assert(w > 1 && h > 1);
+
+			lu_s_rec_layer_init(&self->rec_layers[i], i, w, h);
+
+			if (w > 2) --w;
+			if (h > 2) --h;
+			++ix; 
+		}
+	
 		return self;
 	}
 

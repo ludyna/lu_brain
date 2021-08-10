@@ -45,7 +45,8 @@
 		LU_SLT_REC,
 		LU_SLT_SEQ_NX,
 		LU_SLT_SEQ,
-		LU_SLT_STORY_NX
+		LU_SLT_STORY_NX,
+		LU_SLT_END
 	};
 	
 	typedef struct lu_s_layer_conf*		Lu_S_Layer_Conf;

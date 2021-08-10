@@ -70,8 +70,10 @@
 		lu_s_cell_mem_alloc_cells(self->cell_mem);
 
 		//
-		// Assign cells and connect rec_rg layers 
-		//
+		// Lu_S_Seq_Rg: assign cells
+		// 
+
+		lu_s_seq_rg_cells_assign(self->seq);
 
 		Lu_S_Layer b_layer;
 		for (i = 0; i < lu_arr_count(self->recs); i++)
@@ -79,22 +81,27 @@
 			rec_rg = (Lu_S_Rec_Rg) lu_arr_get(self->recs, i);
 			lu_assert(rec_rg);
 
-			b_layer = lu_s_rec_rg_connect_layers(rec_rg);
+			//
+			// Lu_S_Rec_Rg: assign cells
+			//
+			b_layer = lu_s_rec_rg_cells_assign(rec_rg);
 
-			lu_s_connect_rec_rg_to_seq_rg(self, b_layer, i);
+			//
+			// Lu_S_Rec_Rg AND Lu_S_Seq_Rg connect
+			//
+			lu_s_rec_and_seq_connect(rec_rg, self->seq);
 		}
 
 		//
-		// Assign cells and connect seq_rg layers
-		// 
-
-		lu_s_seq_rg_layers_connect(self->seq);
-
-		//
-		// Assign cells and connect seq_rgs to story_rg
+		// Lu_S_Story_Rg: assign cells
 		//
 
-		lu_s_connect_seq_rg_to_story_rg(self);
+		lu_s_story_rg_cells_assign(self->story);
+
+		//
+		// Lu_S_Seq_Rg AND Lu_S_Story_Rg connect
+		//
+		lu_s_seq_and_story_connect(self);
 
 		return self;
 	}

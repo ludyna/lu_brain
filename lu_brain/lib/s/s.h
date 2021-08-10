@@ -155,6 +155,8 @@
 		struct lu_s_base_layer super;
 		struct lu_s_layer_conf conf;
 
+		lu_size d;
+
 		Lu_S_Component_Cell* cells;
 	};
 
@@ -440,8 +442,8 @@
 //
 
 	struct lu_s {
-		Lu_Brain 				brain;
-
+		
+		Lu_Mem 					mem;
 		Lu_S_Cell_Mem  			cell_mem;
 
 		//
