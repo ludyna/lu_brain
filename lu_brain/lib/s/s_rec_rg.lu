@@ -34,7 +34,7 @@
 			rec->config.v_max, 
 			rec->config.v_neu_size
 		);
-		
+
 		lu_s_component_layer_init(
 			&self->p_layer, 
 			mem, 
@@ -96,19 +96,23 @@
 
 	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self)
 	{
-		lu_assert(self); 
+		lu_assert(self);
 
-		lu_s_rec_rg_pyras_layers_disconnect(self);
-		lu_s_rec_rg_pixel_layer_disconnect(self);
-		lu_s_rec_rg_component_layer_disconnect(self);
-
-		lu_s_rec_rg_layers_deinit(self);
-
-		lu_s_layer_conf_deinit(&self->p_conf);
-		lu_s_layer_conf_deinit(&self->v_conf);
+		for(lu_size i = 0; i < self->rec_layers_size; i++)
+		{
+			lu_s_rec_layer_deinit(&self->rec_layers[i]);
+		}
 
 		if (self->rec_layers)
 			lu_mem_free((lu_p_byte) self->rec_layers);
+
+
+		lu_s_pixel_layer_deinit(self->pixel_layer);
+
+		lu_s_component_layer_deinit(self->p_layer);
+		lu_s_component_layer_deinit(self->v_layer);
+
+		lu_s_base_rg_deinit(&self->super);
 
 		lu_mem_free((lu_p_byte) self);
 	}

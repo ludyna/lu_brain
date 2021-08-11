@@ -167,7 +167,7 @@
 	struct lu_s_pixel_layer {
 		struct lu_s_base_layer super;
 
-		lu_size cells_count;
+		lu_size cells_size;
 		Lu_S_Pixel_Cell* cells;
 	};
 
@@ -175,7 +175,7 @@
 	struct lu_s_rec_layer {
 		struct lu_s_base_layer super;
 
-		lu_size cells_count;
+		lu_size cells_size;
 		Lu_S_Rec_Cell* cells;
 	};
 
@@ -183,7 +183,7 @@
 	struct lu_s_seq_nx_layer {
 		struct lu_s_base_layer super;
 
-		lu_size cells_count;
+		lu_size cells_size;
 		Lu_S_Seq_Nx_Cell* cells;
 	};
 
@@ -191,7 +191,7 @@
 	struct lu_s_seq_layer {
 		struct lu_s_base_layer super;
 
-		lu_size cells_count;
+		lu_size cells_size;
 		Lu_S_Seq_Cell* cells;
 	};
 
@@ -199,7 +199,7 @@
 	struct lu_s_story_nx_layer {
 		struct lu_s_base_layer super;
 
-		lu_size cells_count;
+		lu_size cells_size;
 		Lu_S_Story_Nx_Cell* cells;
 	};
 
@@ -331,7 +331,6 @@
 	struct lu_s_base_rg {
 		Lu_Mem mem;
 		Lu_S_Cell_Mem cell_mem;
-
 	};
 
 	static inline Lu_S_Base_Rg lu_s_base_rg_init(Lu_S_Base_Rg self, Lu_Mem mem, Lu_S_Cell_Mem cell_mem)
@@ -344,6 +343,13 @@
 		self->cell_mem = cell_mem;
 
 		return self;
+	}
+
+	static inline void lu_s_base_rg_deinit(Lu_S_Base_Rg self)
+	{
+		lu_assert(self);
+		self->mem = NULL;
+		self->cell_mem = NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
