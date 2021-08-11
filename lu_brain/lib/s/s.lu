@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Create & Destroy
 
-	static Lu_S lu_s_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Arr lu_recs)
+	static Lu_S lu_s_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs)
 	{
 		lu_assert(mem);
 		lu_assert(cell_mem);

@@ -114,6 +114,7 @@
 //
 
 	struct lu_s_layer_conf {
+		Lu_Mem 					mem;
 		lu_value 				orig_min;
 		lu_value 				orig_max;
 		lu_value 				max;
@@ -124,7 +125,7 @@
 	};
 
 	// lu_s_layer_conf.lu
-	static Lu_S_Layer_Conf lu_s_layer_conf_init(Lu_S_Layer_Conf, lu_value min, lu_value max, lu_size cells_size);
+	static Lu_S_Layer_Conf lu_s_layer_conf_init(Lu_S_Layer_Conf, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
 	static void lu_s_layer_conf_deinit(Lu_S_Layer_Conf self);
 
 	static inline lu_value lu_s_layer_conf_norm(Lu_S_Layer_Conf self, lu_value request);
@@ -158,6 +159,7 @@
 
 		lu_size d;
 
+		lu_size cells_size;
 		Lu_S_Component_Cell* cells;
 	};
 
@@ -392,7 +394,7 @@
 	// lu_s_rec_rg.lu
 	//
 
-	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem cell_mem);
+	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Mem, Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem cell_mem);
 	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self);
 	
 	//
@@ -481,7 +483,7 @@
 	};
 	
 	// s.lu
-	static Lu_S lu_s_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Arr lu_recs);
+	static Lu_S lu_s_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
 	static void lu_s_destroy(Lu_S self);
 
 	static void lu_s_print_info(Lu_S self);

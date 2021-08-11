@@ -2,13 +2,16 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Rec rec, Lu_S_Cell_Mem cell_mem)
+	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Mem mem, Lu_Rec rec, Lu_S_Cell_Mem cell_mem)
 	{
+		lu_assert(mem);
 		lu_assert(rec);
 		lu_assert(cell_mem);
 
-		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem_alloc(sizeof(struct lu_s_rec_rg));
+		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem_alloc(mem, sizeof(struct lu_s_rec_rg));
 		lu_assert(self);
+
+		lu_s_base_rg_init(&self->super, mem, cell_mem);
 
 		self->rec 				= rec;
 		self->id 				= rec->id;
@@ -17,20 +20,37 @@
 		self->cells_h			= rec->height; 
 		self->cells_d 			= rec->depth; 
 
-		self->cell_mem 			= cell_mem;
-
 		//
 		// Component layers inits
 		//
 
-		lu_s_component_layer_init(&self->v_layer, rec->config.v_min, rec->config.v_max, rec->config.v_neu_size);
-		lu_s_component_layer_init(&self->p_layer, rec->config.v_min, rec->config.v_max, rec->config.p_neu_size);
+		lu_s_component_layer_init(
+			&self->v_layer, 
+			mem, 
+			self->cells_w,
+			self->cells_h,
+			self->cells_d,
+			rec->config.v_min, 
+			rec->config.v_max, 
+			rec->config.v_neu_size
+		);
+		
+		lu_s_component_layer_init(
+			&self->p_layer, 
+			mem, 
+			self->cells_w,
+			self->cells_h,
+			self->cells_d,
+			rec->config.v_min, 
+			rec->config.v_max, 
+			rec->config.p_neu_size
+		);
 
 		//
 		// Pixel layer init
 		// 
 
-		lu_s_pixel_layer_init(&self->pixel_layer, self->cells_w, self->cells_h);
+		lu_s_pixel_layer_init(&self->pixel_layer, mem, self->cells_w, self->cells_h);
 
 		//
 		// Rec layers allocate and init
