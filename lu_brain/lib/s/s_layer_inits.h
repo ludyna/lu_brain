@@ -7,6 +7,7 @@
 
 	static inline Lu_S_Base_Layer lu_s_base_layer_init(
 		Lu_S_Base_Layer self, 
+		Lu_Mem mem,
 		enum lu_s_layer_type type, 
 		lu_size number, 
 		lu_size w, 
@@ -14,10 +15,12 @@
 	)
 	{
 		lu_assert(self);
+		lu_assert(mem);
 		lu_assert(w > 0);
 		lu_assert(h > 0);
 		lu_assert(type >= 0 && type < LU_SLT_END);
 
+		self->mem = mem;
 		self->type = type;
 		self->number = number;
 		self->w = w;
@@ -52,6 +55,6 @@
 		lu_assert(self);
 
 		if (self->cells)
-			
+
 	}
 

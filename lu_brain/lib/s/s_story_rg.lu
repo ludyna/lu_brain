@@ -10,7 +10,7 @@
 	{
 		lu_assert(cell_mem);
 
-		Lu_S_Seq_Rg self = (Lu_S_Seq_Rg) lu_g_mem_alloc(sizeof(struct lu_s_seq_rg));
+		Lu_S_Seq_Rg self = (Lu_S_Seq_Rg) lu_mem_alloc(sizeof(struct lu_s_seq_rg));
 		lu_assert(self);
 		
 		//
@@ -21,7 +21,7 @@
 		self->recs_size 		= recs_size;
 		self->layers_size 		= recs_size;	
 
-		self->layers = (struct lu_s_layer*) lu_g_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
+		self->layers = (struct lu_s_layer*) lu_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
 		lu_assert(self->layers);
 
 		lu_size w = recs_size;
@@ -84,8 +84,8 @@
 		for (lu_size i = 0; i < self->layers_size; i++)
 			lu_s_layer_base_deinit(&self->layers[i]);
 
-		lu_g_mem_free((lu_p_byte) self->layers);
-		lu_g_mem_free((lu_p_byte) self);
+		lu_mem_free((lu_p_byte) self->layers);
+		lu_mem_free((lu_p_byte) self);
 	}
 
 

@@ -6,36 +6,39 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Create & Destroy
 
-	static Lu_S lu_s_create(Lu_Brain brain)
+	static Lu_S lu_s_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Arr lu_recs)
 	{
-		lu_assert(brain);
-		lu_assert(brain->recs);
+		lu_assert(mem);
+		lu_assert(cell_mem);
+		lu_assert(lu_recs);
+		lu_assert(lu_arr_count(lu_recs) > 0);
 
-		Lu_S self = (Lu_S) lu_g_mem_alloc(sizeof(struct lu_s));
+		Lu_S self = (Lu_S) lu_mem_alloc(mem, sizeof(struct lu_s));
 		lu_assert(self);
 
-		self->brain = brain;
+		self->mem = mem;
+		self->cell_mem = cell_mem;
 
 		// 
 		// Cell_Mem
 		//
 
-		self->cell_mem = lu_s_cell_mem_create(lu_g_mem);
+		self->cell_mem = lu_s_cell_mem_create(mem);
 		lu_assert(self->cell_mem);
 
 		//
 		// Create Rec_Rgs
 		//
 
-		self->recs = lu_arr_temp_create(lu_arr_count(brain->recs), false);
+		self->recs = lu_arr_create(self->mem, lu_arr_count(lu_recs), false);
 		lu_assert(self->recs);
 
 		lu_size i; 
 		Lu_Rec rec;
 		Lu_S_Rec_Rg rec_rg;
-		for (i = 0; i < lu_arr_count(brain->recs); i++)
+		for (i = 0; i < lu_arr_count(lu_recs); i++)
 		{
-			rec = (Lu_Rec) lu_arr_get(brain->recs, i);
+			rec = (Lu_Rec) lu_arr_get(lu_recs, i);
 			lu_assert(rec);
 
 			rec_rg = lu_s_rec_rg_create(rec, self->cell_mem);
@@ -50,7 +53,7 @@
 
 		self->seq = lu_s_seq_rg_create(
 			self->cell_mem, 
-			lu_arr_count(brain->recs)
+			lu_arr_count(lu_recs)
 		);
 		lu_assert(self->seq);
 
@@ -137,11 +140,11 @@
 				lu_s_rec_rg_destroy(rec_rg);
 		}
 
-		lu_arr_temp_destroy(self->recs);
+		lu_arr_destroy(self->mem, self->recs);
 
 		lu_s_cell_mem_destroy(self->cell_mem);
 
-		lu_g_mem_free((lu_p_byte) self);
+		lu_mem_free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

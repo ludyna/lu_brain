@@ -139,6 +139,7 @@
 //
 
 	struct lu_s_base_layer {
+		Lu_Mem mem;
 		enum lu_s_layer_type type;
 
 		// layer number, starting from bottom, starting from zero 
@@ -253,7 +254,6 @@
 //
 
 	struct lu_s_cell_mem {
-
 		Lu_Mem mem;
 
 		lu_size component_cells_size;
@@ -323,6 +323,28 @@
 	static void lu_s_cell_mem_print_info(Lu_S_Cell_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Base_Rg
+//
+
+	struct lu_s_base_rg {
+		Lu_Mem mem;
+		Lu_S_Cell_Mem cell_mem;
+
+	};
+
+	static inline Lu_S_Base_Rg lu_s_base_rg_init(Lu_S_Base_Rg self, Lu_Mem mem, Lu_S_Cell_Mem cell_mem)
+	{
+		lu_assert(self);
+		lu_assert(mem);
+		lu_assert(cell_mem);
+
+		self->mem = mem;
+		self->cell_mem = cell_mem;
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Rec_Rg
 //
 
@@ -330,6 +352,8 @@
 	// structure is that we can different number of instances of each rg.
 	// For example, we need rec_rg for ever rec, while we need one seq_rg.
 	struct lu_s_rec_rg {
+
+		struct lu_s_base_rg super;
 		
 		// Lu_Rec 
 		Lu_Rec 					rec;			
@@ -339,8 +363,6 @@
 		lu_size 				cells_w;
 		lu_size 				cells_h; 
 		lu_size 				cells_d;		
-
-		Lu_S_Cell_Mem 			cell_mem;
 
 		//
  		// Layers
@@ -396,7 +418,8 @@
 //
 
 	struct lu_s_seq_rg {
-		Lu_S_Cell_Mem 			cell_mem;
+		struct lu_s_base_rg super;
+
 		lu_size 				max_blocks_size;
 		lu_size 				recs_size;
 
@@ -428,7 +451,7 @@
 //
 
 	struct lu_s_story_rg {
-		Lu_S_Cell_Mem cell_mem;
+		struct lu_s_base_rg super;
 
 		//
 		// Layers
@@ -442,7 +465,7 @@
 //
 
 	struct lu_s {
-		
+
 		Lu_Mem 					mem;
 		Lu_S_Cell_Mem  			cell_mem;
 
@@ -458,7 +481,7 @@
 	};
 	
 	// s.lu
-	static Lu_S lu_s_create(Lu_Brain brain);
+	static Lu_S lu_s_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Arr lu_recs);
 	static void lu_s_destroy(Lu_S self);
 
 	static void lu_s_print_info(Lu_S self);

@@ -7,7 +7,7 @@
 		lu_assert(rec);
 		lu_assert(cell_mem);
 
-		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_g_mem_alloc(sizeof(struct lu_s_rec_rg));
+		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem_alloc(sizeof(struct lu_s_rec_rg));
 		lu_assert(self);
 
 		self->rec 				= rec;
@@ -53,7 +53,7 @@
 
 		lu_size w = self->cells_w - 1;
 		lu_size h = self->cells_h - 1;				
-		self->rec_layers = (struct lu_s_rec_layer*) lu_g_mem_alloc(sizeof(struct lu_s_rec_layer) * self->rec_layers_size);
+		self->rec_layers = (struct lu_s_rec_layer*) lu_mem_alloc(sizeof(struct lu_s_rec_layer) * self->rec_layers_size);
 		lu_assert(self->layers); 
 
 		lu_size ix = 0;
@@ -88,9 +88,9 @@
 		lu_s_layer_conf_deinit(&self->v_conf);
 
 		if (self->rec_layers)
-			lu_g_mem_free((lu_p_byte) self->rec_layers);
+			lu_mem_free((lu_p_byte) self->rec_layers);
 
-		lu_g_mem_free((lu_p_byte) self);
+		lu_mem_free((lu_p_byte) self);
 	}
 
 	static void lu_s_rec_rg_print_layers_info(struct lu_s_layer* layers, lu_size size, lu_size print_top_size)

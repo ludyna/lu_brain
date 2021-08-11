@@ -69,6 +69,7 @@
 	// Regions
 	//
 
+	typedef struct lu_s_base_rg*  		Lu_S_Base_Rg;
 	typedef struct lu_s_rec_rg*			Lu_S_Rec_Rg;
 	typedef struct lu_s_seq_rg*  		Lu_S_Seq_Rg;
 	typedef struct lu_s_story_rg* 		Lu_S_Story_Rg;
