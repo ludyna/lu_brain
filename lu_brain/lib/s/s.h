@@ -1,5 +1,26 @@
 /**
 	Copyright © 2021 Oleh Ihorovych Novosad 
+
+	Map:
+		s_rec_rg
+			component_layer
+				component_cell component_v (d) x n(w x h) ==>
+				component_cell component_p (d) x n(w x h) ==> 
+			pixel_layer 
+				pixel_cell (w x h) ==>  
+			rec_layer ...
+				rec_cell (w - 1 x h - 1) ... 
+
+		s_seq_rg
+			seq_nx_layer
+				seq_nx_cell (n)
+			seq_layer ...
+				seq_cell (n-1) ...
+
+		s_story_rg
+			story_nx_layer 
+				story_nx_cell(1)
+
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,11 +71,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cells
 // 
-// Plan:
-// component_v (1) ==>
-// component_p (1) ==> pixel (w x h) ==> pyra (w - 1 x h - 1) ... pyra (1) = pyra(w) 
-// ==> seq (w - 1) ... seq (1)
-//
 
 	struct lu_s_base_cell {
 		enum lu_s_cell_type type;			
@@ -203,54 +219,6 @@
 		Lu_S_Story_Nx_Cell* cells;
 	};
 
-
-	// static inline void lu_s_layer_cell_set(Lu_S_Layer self, lu_size x, lu_size y, lu_size z, Lu_S_Base_Cell val) 
-	// {
-	// 	lu_user_assert_void(val, "Lu_S_Base_Cell is NULL");
-	// 	lu_user_assert_void(x < self->w, "x index out of range");
-	// 	lu_user_assert_void(y < self->h, "y index out of range");
-	// 	lu_user_assert_void(z < self->d, "z index out of range");
-
-	// 	self->cells[z * self->w * self->h + y * self->w + x] = val; 
-	// }
-
-	// static inline Lu_S_Base_Cell lu_s_layer_cell_get(Lu_S_Layer self, lu_size x, lu_size y, lu_size z) 
-	// { 
-	// 	lu_user_assert(x < self->w, "x index out of range");
-	// 	lu_user_assert(y < self->h, "y index out of range");
-	// 	lu_user_assert(z < self->d, "z index out of range");
-
-	// 	return self->cells[z * self->w * self->h + y * self->w + x]; 
-	// }
-
-	// static inline lu_size lu_s_layer_cells_size(Lu_S_Layer self) 
-	// { 
-	// 	return self->w * self->h * self->d; 
-	// }
-
-	// // lu_s_layer.lu
-	// static Lu_S_Layer lu_s_layer_base_init(Lu_S_Layer self, enum lu_s_layer_type type, lu_size l, lu_size w, lu_size h, lu_size d);
-	// static void lu_s_layer_base_deinit(Lu_S_Layer self);
-
-	// static void lu_s_layer_component_cells_init(
-	// 	Lu_S_Layer self, 
-	// 	Lu_S_Cell_Mem cell_mem, 
-	// 	Lu_S_Layer_Conf v_conf, 
-	// 	Lu_S_Layer_Conf p_conf
-	// );
-	// static void lu_s_layer_component_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
-
-	// static void lu_s_layer_pixel_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem, lu_size cells_d);
-	// static void lu_s_layer_pixel_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
-
-	// static void lu_s_layer_rec_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
-	// static void lu_s_layer_rec_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
-
-	// static void lu_s_layer_seq_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem);
-	// static void lu_s_layer_seq_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem);
-
-	// static void lu_s_layer_print_info(Lu_S_Layer self);
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Cell_Mem
 //
@@ -296,28 +264,6 @@
 
 	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self);
 
-	//
-	// Cells assign and retract
-	//
-
-	// static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem, Lu_S_Layer);   
-	// static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell); 
-
-	// static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y);
-	// static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell);
-
-	// static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
-	// 	Lu_S_Cell_Mem self, 
-	// 	Lu_S_Layer layer, 
-	// 	lu_size x, 
-	// 	lu_size y, 
-	// 	lu_size z,
-	// 	Lu_S_Layer_Conf v_conf, 
-	// 	Lu_S_Layer_Conf p_conf
-	// );
-	// static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell);
-
-
 	// 
 	// Print
 	//
@@ -357,7 +303,7 @@
 //
 
 	// Reason we have different rgs instead of putting every layer into the same 
-	// structure is that we can different number of instances of each rg.
+	// structure is that we can have different number of instances of each rg.
 	// For example, we need rec_rg for ever rec, while we need one seq_rg.
 	struct lu_s_rec_rg {
 
@@ -384,17 +330,6 @@
 		lu_size rec_layers_size;
 		struct lu_s_rec_layer* rec_layers;
 	};
-
-	// static inline Lu_S_Cell_1 lu_s_rec_rg_v_cell_get(Lu_S_Rec_Rg self, lu_size l, lu_size x, lu_size y, lu_size z)
-	// {
-	// 	Lu_S_Layer layer = &self->layers[l];
-	// 	return lu_s_layer_cell_get(layer, x, y, z);
-	// }
-
-	// static inline Lu_S_Layer lu_s_rec_rg_top_layer_get(Lu_S_Rec_Rg self)
-	// {
-	// 	return &self->layers[self->layers_size - 1];
-	// }
 
 	//
 	// lu_s_rec_rg.lu
@@ -428,7 +363,6 @@
 	struct lu_s_seq_rg {
 		struct lu_s_base_rg super;
 
-		lu_size 				max_blocks_size;
 		lu_size 				recs_size;
 
 		// 
@@ -447,7 +381,7 @@
 	// 	return &self->layers[0];
 	// }
 
-	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_S_Cell_Mem cell_mem, lu_size recs_size);
+	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size);
 	static void lu_s_seq_rg_destroy(Lu_S_Seq_Rg self);
 
 	static void lu_s_seq_rg_layers_connect(Lu_S_Seq_Rg self);

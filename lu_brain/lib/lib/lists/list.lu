@@ -25,12 +25,12 @@
 	{
 		lu_assert(mem);
 		
-		Lu_List self 				= (Lu_List) lu_mem_alloc(mem, sizeof(struct lu_list));
+		Lu_List self = (Lu_List) lu_mem_alloc(mem, sizeof(struct lu_list));
 		lu_assert(self);
 
 		// Initialize
 		return lu_list_init(self, mem);
-	}  
+	}
 
 	void lu_list_destroy(Lu_List self)
 	{
@@ -42,14 +42,14 @@
 		lu_mem_free(mem, (lu_p_byte) self);
 	}
 
-	///////////////////////////////////////////////////////////////////////////////
-	// Main public methods
+///////////////////////////////////////////////////////////////////////////////
+// Main public methods
 
 	Lu_L_Node lu_list_node_attach(Lu_List self, Lu_L_Node node)
 	{
 		Lu_L_Node last = self->last;
 		
-		if (last) 
+		if (last)
 		{
 			last->next = node;
 			node->prev = last;

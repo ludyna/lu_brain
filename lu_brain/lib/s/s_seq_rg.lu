@@ -5,64 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-
-	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_S_Cell_Mem cell_mem, lu_size recs_size)
+	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size)
 	{
+		lu_assert(mem);
 		lu_assert(cell_mem);
 
-		Lu_S_Seq_Rg self = (Lu_S_Seq_Rg) lu_mem_alloc(sizeof(struct lu_s_seq_rg));
+		Lu_S_Seq_Rg self = (Lu_S_Seq_Rg) lu_mem_alloc(mem, sizeof(struct lu_s_seq_rg));
 		lu_assert(self);
 		
-		//
-		// Allocate Block Layers
-		//
+		lu_s_base_rg_init(&self->super, mem, cell_mem);
 
-		self->cell_mem 			= cell_mem;
-		self->recs_size 		= recs_size;
-		self->layers_size 		= recs_size;	
 
-		self->layers = (struct lu_s_layer*) lu_mem_alloc(sizeof(struct lu_s_layer) * self->layers_size);
-		lu_assert(self->layers);
-
-		lu_size w = recs_size;
-		lu_size h = 1;
-		lu_size d = 1;
-		lu_size ix = 0;
-		Lu_S_Layer layer;
 		
-		//
-		// First layer 
-		//
 
-		layer 	= &self->layers[ix];
-
-		layer = lu_s_layer_base_init(layer, LU_SLT_STORY, ix, w, h, d);
-		lu_assert(layer);
-
-		// For this layer we will have cell_2 because top of each rec_rg is cell in 
-		// seq_rg base layer
-		lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
-
-		//
-		// Create other seq layers
-		//
-
-		--w;
-		++ix;
-
-		while (w > 0)
-		{
-			lu_assert(ix < self->layers_size);
-
-			layer = &self->layers[ix];
-
-			layer = lu_s_layer_base_init(layer, LU_SLT_STORY, ix, w, h, d);
-			lu_assert(layer);
-			lu_s_cell_mem_cell_1_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
-
-			if (w > 0) --w;
-			++ix; 
-		}
 
 		return self;
 	}
@@ -72,17 +27,11 @@
 		lu_assert(self);
 
 		// 
-		// Layers disconnect 
-		//
-
-		lu_s_seq_rg_layers_disconnect(self);
-
-		// 
 		// Destroy all seq layers 
 		// 
 
-		for (lu_size i = 0; i < self->layers_size; i++)
-			lu_s_layer_base_deinit(&self->layers[i]);
+		for (lu_size i = 0; i < self->seq_layers_size; i++)
+			lu_s_seq_layer_deinit(&self->seq_layers[i]);
 
 		lu_mem_free((lu_p_byte) self->layers);
 		lu_mem_free((lu_p_byte) self);

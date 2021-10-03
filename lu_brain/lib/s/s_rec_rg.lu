@@ -24,7 +24,7 @@
 		// Component layers inits
 		//
 
-		lu_s_component_layer_init(
+		lu_s_component_layer_init( 
 			&self->v_layer, 
 			mem, 
 			self->cells_w,
