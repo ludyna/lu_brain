@@ -23,11 +23,11 @@ void test_lim_list(void)
 
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
 
-    Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n3 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n4 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n5 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n2 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n3 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n4 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n5 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
 
     Lu_Lim_List list = lu_lim_list_create(mem, 10);
 
@@ -88,11 +88,11 @@ void test_lim_list_max_size(void)
     Mem_Debugger md = mem_debugger_create(lu_g_mem);
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
 
-    Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n3 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n4 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n5 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n2 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n3 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n4 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n5 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
 
     Lu_Lim_List list = lu_lim_list_create(mem, 3);
 
@@ -119,18 +119,18 @@ void test_lim_list_max_size(void)
 void node_before_destroy(Lu_Lim_List self, Lu_L_Node node)
 {
     Neu neu = (Neu) lu_l_node_value(node);
-    lu_mem_free(self->super.mem, (lu_p_byte) neu);
+    lu_mem__free(self->super.mem, (lu_p_byte) neu);
 }
 
 void test_lim_list_clear(void)
 {
     Mem_Debugger md = mem_debugger_create(lu_g_mem);
 
-    Neu n1 = (Neu) lu_mem_alloc(lu_g_mem, sizeof(struct neu));
-    Neu n2 = (Neu) lu_mem_alloc(lu_g_mem, sizeof(struct neu));
-    Neu n3 = (Neu) lu_mem_alloc(lu_g_mem, sizeof(struct neu));
-    Neu n4 = (Neu) lu_mem_alloc(lu_g_mem, sizeof(struct neu));
-    Neu n5 = (Neu) lu_mem_alloc(lu_g_mem, sizeof(struct neu));
+    Neu n1 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
+    Neu n2 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
+    Neu n3 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
+    Neu n4 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
+    Neu n5 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
 
     Lu_Lim_List list = lu_lim_list_create(lu_g_mem, 3);
 

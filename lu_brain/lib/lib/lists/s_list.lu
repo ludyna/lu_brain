@@ -49,9 +49,9 @@ static void build_header(Lu_S_List self)
 
 Lu_S_List s_list_create(Lu_Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_side over_limit_remove_side)
 {
-	lu_assert(limit_size > 0);
-	Lu_S_List self = (Lu_S_List) lu_mem_alloc(mem, sizeof(struct lu_s_list));
-	lu_assert(self != NULL);
+	lu__assert(limit_size > 0);
+	Lu_S_List self = (Lu_S_List) lu_mem__alloc(mem, sizeof(struct lu_s_list));
+	lu__assert(self != NULL);
 
 	// Initialize
 
@@ -72,7 +72,7 @@ Lu_S_List s_list_create(Lu_Mem mem, lu_size limit_size, lu_fp_compare compare, s
 							MTF_FREEABLE
 						);
 
-	lu_assert(self->mem_table != NULL);
+	lu__assert(self->mem_table != NULL);
 
 	self->first			= NULL;
 	self->last			= NULL;
@@ -84,11 +84,11 @@ Lu_S_List s_list_create(Lu_Mem mem, lu_size limit_size, lu_fp_compare compare, s
 
 void s_list_destroy(Lu_S_List self)
 {
-	lu_assert(self);
+	lu__assert(self);
 
 	lu_mem_table_destroy(self->mem_table);
 
-	lu_mem_free(self->mem, (lu_p_byte) self);
+	lu_mem__free(self->mem, (lu_p_byte) self);
 
 }
 
@@ -98,7 +98,7 @@ void s_list_destroy(Lu_S_List self)
 static void s_list_path_debug(Lu_S_List self, Lu_S_Node* path)
 {
 	// Lu_S_Node node;
-	// lu_debug("\n\n~~~~~~~~~~ PATH count: %ld ~~~~~~~~~~", self->level_size);
+	// lu__debug("\n\n~~~~~~~~~~ PATH count: %ld ~~~~~~~~~~", self->level_size);
 	// int i = (int) self->level_size - 1;
 
 	// do
@@ -106,20 +106,20 @@ static void s_list_path_debug(Lu_S_List self, Lu_S_Node* path)
 	// 	node = path[i];
 	// 	if (node == NULL)
 	// 	{
-	// 		lu_debug("\n%d: ERROR", i);
+	// 		lu__debug("\n%d: ERROR", i);
 	// 	}
 	// 	else if (node->value == NULL)
 	// 	{
-	// 		lu_debug("\n%d: NULL", i);
+	// 		lu__debug("\n%d: NULL", i);
 	// 	}
 	// 	else
 	// 	{
-	// 		lu_debug("\n%d: %.1f", i, ((Neu)(node->value))->p);
+	// 		lu__debug("\n%d: %.1f", i, ((Neu)(node->value))->p);
 	// 	}
 	// 	--i;
 	// } while (i > 0);
 
-	// lu_debug("\n");
+	// lu__debug("\n");
 }
 
 static Lu_S_Node build_column(Lu_S_List self, Lu_S_Node* path, lu_p_void value)
@@ -177,7 +177,7 @@ static void s_list_remove(Lu_S_List self, Lu_S_Node bottom)
 	Lu_Lim_List values = &bottom->values;
 	if (lu_lim_list_count(values) > 0)
 	{
-		lu_assert(lu_lim_list_node_last(values) != NULL);
+		lu__assert(lu_lim_list_node_last(values) != NULL);
 		lu_lim_list_node_remove(values, lu_lim_list_node_last(values));
 		goto end;
 	}
@@ -228,16 +228,16 @@ void s_list_debug(Lu_S_List self)
 	lu_debug_message("======= SLIST ======");
 	while (head)
 	{
-		lu_debug("\n%ld:  ", i);
+		lu__debug("\n%ld:  ", i);
 		curr = head->next;
 		while (curr)
 		{
-			if (curr->value == NULL) lu_debug("NULL, ");
+			if (curr->value == NULL) lu__debug("NULL, ");
 			else 
 			{
-				//lu_debug("%.1f", (float)(*curr->value));	
-				if(lu_lim_list_count(&curr->values) > 0) lu_debug("(%ld)", lu_lim_list_count(&curr->values) + 1);
-				lu_debug(", ");
+				//lu__debug("%.1f", (float)(*curr->value));	
+				if(lu_lim_list_count(&curr->values) > 0) lu__debug("(%ld)", lu_lim_list_count(&curr->values) + 1);
+				lu__debug(", ");
 			}
 
 			curr = curr->next;

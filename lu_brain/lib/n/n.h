@@ -13,8 +13,8 @@
 
 	static inline Lu_N_Config lu_n_mem_config_validate(Lu_N_Config self)
 	{
-		lu_assert(self);
-		lu_assert(self->names_size > 0);
+		lu__assert(self);
+		lu__assert(self->names_size > 0);
 
 		hnn_config_validate(&self->hnn_config);
 

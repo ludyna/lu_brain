@@ -50,7 +50,7 @@
 
 	void lu_mem_stack_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
-		lu_mem_free(parent_mem, (lu_p_byte) self);
+		lu_mem__free(parent_mem, (lu_p_byte) self);
 	}
 
 	Lu_Mem_Table lu_mem_stack_table_create_internal(
@@ -95,9 +95,9 @@
 
 	Lu_Mem_Stack lu_mem_stack_create(Lu_Mem parent_mem, lu_size size_in_bytes)
 	{
-		lu_assert(size_in_bytes > sizeof(struct lu_mem_stack));
+		lu__assert(size_in_bytes > sizeof(struct lu_mem_stack));
 
-		lu_p_void buff_start	= lu_mem_alloc(parent_mem, size_in_bytes);
+		lu_p_void buff_start	= lu_mem__alloc(parent_mem, size_in_bytes);
 
 		if (buff_start == NULL) return NULL;
 

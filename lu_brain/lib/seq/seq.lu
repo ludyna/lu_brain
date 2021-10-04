@@ -7,10 +7,10 @@
 
 	Lu_Seq lu_seq_create(Lu_Mem mem, lu_size recs_size)
 	{
-		lu_assert(mem);
-		lu_assert(recs_size);
+		lu__assert(mem);
+		lu__assert(recs_size);
 
-		Lu_Seq self 					= (Lu_Seq) lu_mem_alloc(mem, sizeof(struct lu_seq));
+		Lu_Seq self 					= (Lu_Seq) lu_mem__alloc(mem, sizeof(struct lu_seq));
 
 		// Initialize
 		self->mem 						= mem;
@@ -25,18 +25,18 @@
 
 	void lu_seq_destroy_blocks(Lu_List blocks, lu_p_void value, lu_p_void p1)
 	{
-		lu_assert(blocks);
-		lu_assert(value);
+		lu__assert(blocks);
+		lu__assert(value);
 		lu_block_destroy((Lu_Block) value);
 	}
 
 	void lu_seq_destroy(Lu_Seq self)
 	{
-		lu_user_assert_void(self, "Lu_Seq is NULL");
+		lu__user_assert_void(self, "Lu_Seq is NULL");
 
 		lu_list_each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
 		lu_list_destroy(self->blocks);
-		lu_mem_free(self->mem, (lu_p_byte) self);
+		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,15 +44,15 @@
 
 	void lu_seq_block_begin(Lu_Seq seq)
 	{
-		lu_user_assert_void(seq, "Lu_Seq is NULL");
-		//lu_debug("\nlu_block_begin");
+		lu__user_assert_void(seq, "Lu_Seq is NULL");
+		//lu__debug("\nlu_block_begin");
 		seq->start_block_on_next_data = true;
 	}
 
 	void lu_seq_block_end(Lu_Seq seq)
 	{
-		lu_user_assert_void(seq, "Lu_Seq is NULL");
-		//lu_debug("\nlu_block_end");
+		lu__user_assert_void(seq, "Lu_Seq is NULL");
+		//lu__debug("\nlu_block_end");
 		seq->start_block_on_next_data = true;
 	}
 
@@ -62,22 +62,22 @@
 
 	Lu_Data lu_seq_data_get(Lu_Seq self, lu_size rec_i, Lu_L_Node node)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		if (node == NULL) return NULL;
 
-		lu_assert(node->value);
+		lu__assert(node->value);
 
 		Lu_Block block = (Lu_Block) node->value;
 
-		lu_assert(rec_i < block->datum_size);
+		lu__assert(rec_i < block->datum_size);
 
 		return &block->datum[rec_i]; 
 	}
 
 	lu_size lu_seq_blocks_count(Lu_Seq self)
 	{ 
-		lu_assert(self);
+		lu__assert(self);
 		return lu_list_count(self->blocks);
 	}
 
@@ -98,10 +98,10 @@
 
 	static Lu_Block lu_seq_block_add(Lu_Seq self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		Lu_Block block = lu_block_create(self->mem, self->recs_size);
-		lu_assert(block);
+		lu__assert(block);
 
 		lu_list_append(self->blocks, (lu_p_void) block);
 
@@ -110,8 +110,8 @@
 
 	void lu_seq_reset(Lu_Seq self)
 	{
-		lu_user_assert_void(self, "Lu_Seq should be present");
-		lu_user_assert_void(self->blocks, "Lu_Seq blocks should be present");
+		lu__user_assert_void(self, "Lu_Seq should be present");
+		lu__user_assert_void(self->blocks, "Lu_Seq blocks should be present");
 
 		lu_list_each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
 		lu_list_clear(self->blocks); 
@@ -121,10 +121,10 @@
 
 	void lu_seq_push(Lu_Seq self, Lu_Rec rec, lu_value* values)
 	{ 
-		lu_user_assert_void(self, "Lu_Seq should not be NULL"); 
-		lu_user_assert_void(rec, "Lu_Rec should not be NULL"); 
-		lu_user_assert_void(values, "values should not be NULL");
-		lu_user_assert_void(rec->depth, "Lu_Rec depth is zero"); 
+		lu__user_assert_void(self, "Lu_Seq should not be NULL"); 
+		lu__user_assert_void(rec, "Lu_Rec should not be NULL"); 
+		lu__user_assert_void(values, "values should not be NULL");
+		lu__user_assert_void(rec->depth, "Lu_Rec depth is zero"); 
 
 	 	if (self->start_block_on_next_data)
 		{ 
@@ -144,8 +144,8 @@
 			lu_seq_block_add(self);
 
 		data = lu_seq_data_get(self, rec->id, lu_list_last_node(self->blocks));
-		lu_assert(data);
-		lu_assert(data->values == NULL);
+		lu__assert(data);
+		lu__assert(data->values == NULL);
 
 	 	lu_data_set(data, rec->width, rec->height, rec->depth, values);
 	}
@@ -153,13 +153,13 @@
 	static lu_bool lu_seq_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)
 	{
 		if (value == NULL) return false;
-		lu_assert(p1);
+		lu__assert(p1);
 
 		lu_size* p_rec_i = (lu_size*) p1;
 
 		Lu_Block block = (Lu_Block) value;
 
-		lu_assert(*p_rec_i < block->datum_size);
+		lu__assert(*p_rec_i < block->datum_size);
 
 		Lu_Data data = &block->datum[*p_rec_i];
 
@@ -174,7 +174,7 @@
 
 		if (block == NULL) return NULL;
 
-		lu_assert(rec_i < block->datum_size);
+		lu__assert(rec_i < block->datum_size);
 
 		return &block->datum[rec_i];
 	}
@@ -193,7 +193,7 @@
 	Lu_Seq lu_seq_prepare(Lu_Seq self)
 	{
 		lu_user_assert(self, "Lu_Seq is NULL");
-		lu_assert(self->blocks);
+		lu__assert(self->blocks);
 
 		lu_size rec_i;
 		Lu_Data d1;
@@ -208,9 +208,9 @@
 			while(curr)
 			{
 				d1 = lu_seq_data_get(self, rec_i, curr);
-				lu_assert(d1);
+				lu__assert(d1);
 
-				//lu_debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
+				//lu__debug("\n FILL GAPS (rec_i=%d, block_i=%d)", rec_i, block_i);
 
 				if (d1->values) goto end;
 				
@@ -239,8 +239,8 @@
 
 	static Lu_Block lu_seq_next_block_get(Lu_Seq self)
 	{
-		lu_assert(self);
-		lu_assert(self->blocks);
+		lu__assert(self);
+		lu__assert(self->blocks);
 
 		// when first element
 		if (self->current_read_pos == NULL) 

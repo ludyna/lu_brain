@@ -31,7 +31,7 @@ struct hnn_config g_config = {
 
 void setUp(void)
 { 
-	lu_debug("\nsetUp");
+	lu__debug("\nsetUp");
 
     g_md = mem_debugger_create(lu_g_mem);
     TEST_ASSERT(g_md);
@@ -42,7 +42,7 @@ void setUp(void)
 
 void tearDown(void)
 {	
-	lu_debug("\ntearDown");
+	lu__debug("\ntearDown");
     hnn_destroy(g_hnn);
 
     mem_debugger_print(g_md);

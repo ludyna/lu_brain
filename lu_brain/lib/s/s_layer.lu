@@ -34,7 +34,7 @@
 
 	// static void lu_s_layer_base_deinit(Lu_S_Layer self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");
 	// 	if (self->cells)
 	// 	{
 	// 		lu_g_mem_free((lu_p_byte) self->cells);
@@ -49,7 +49,7 @@
 	// 	Lu_S_Layer_Conf p_conf
 	// )
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");
 
 	// 	lu_size w = self->w;
 	// 	lu_size h = self->h;
@@ -66,13 +66,13 @@
 	// 			for (x = 0; x < w; x++)
 	// 			{
 	// 				cell = lu_s_cell_mem_component_cell_assign(cell_mem, self, x, y, z, v_conf, p_conf); 
-	// 				lu_user_assert_void(cell, "Cannot init cell");
+	// 				lu__user_assert_void(cell, "Cannot init cell");
 	// 			}
 	// }
 
 	// static void lu_s_layer_component_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");
 
 	// 	lu_size w = self->w;
 	// 	lu_size h = self->h;
@@ -95,7 +95,7 @@
 
 	// static void lu_s_layer_pixel_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem, lu_size cells_d)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");  
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");  
 
 	// 	lu_size w = self->w;
 	// 	lu_size h = self->h;
@@ -109,10 +109,10 @@
 	// 		for (x = 0; x < w; x++)
 	// 		{
 	// 			cell = lu_s_cell_mem_cell_2_assign(cell_mem, self, x, y); 
-	// 			lu_user_assert_void(cell, "Cannot init cell");
+	// 			lu__user_assert_void(cell, "Cannot init cell");
 
 	// 			cell = (Lu_S_Cell_2) s_pixel_links_alloc((Lu_S_Cell_1) cell, cells_d); 
-	// 			lu_user_assert_void(cell, "Cannot component init cell");
+	// 			lu__user_assert_void(cell, "Cannot component init cell");
 
 	// 			s_pixel_connect(cell, b_layer);
 	// 		}
@@ -121,7 +121,7 @@
 
 	// static void lu_s_layer_pixel_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");
 
 	// 	Lu_S_Cell_1 cell = NULL;
 	// 	for (lu_size j = 0; j < self->cells_count; j++)
@@ -137,7 +137,7 @@
 
 	// static void lu_s_layer_rec_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem)
 	// { 
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");  
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");  
 
 	// 	lu_size w 			= self->w;
 	// 	lu_size h 			= self->h; 
@@ -148,10 +148,10 @@
 	// 		for (x = 0; x < w; x++)
 	// 		{
 	// 			cell = lu_s_cell_mem_cell_2_assign(cell_mem, self, x, y); 
-	// 			lu_user_assert_void(cell, "Cannot init cell");
+	// 			lu__user_assert_void(cell, "Cannot init cell");
 
 	// 			cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell); 
-	// 			lu_user_assert_void(cell, "Cannot pyra init cell");
+	// 			lu__user_assert_void(cell, "Cannot pyra init cell");
 
 	// 			if (b_layer)
 	// 				s_pyra_connect(cell, b_layer);
@@ -160,7 +160,7 @@
 
 	// static void lu_s_layer_rec_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");
 
 	// 	Lu_S_Cell_1 cell = NULL;
 	// 	for (lu_size j = 0; j < self->cells_count; j++)
@@ -176,19 +176,19 @@
 
 	// static void lu_s_layer_seq_cells_init(Lu_S_Layer self, Lu_S_Layer b_layer, Lu_S_Cell_Mem cell_mem)
 	// {
-	// 	lu_assert(self); 
+	// 	lu__assert(self); 
 
 	// 	lu_size w 			= self->w;
 	// 	Lu_S_Cell_1 cell 	= NULL;
 
-	// 	//lu_debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
+	// 	//lu__debug("\nw=%d, h=%d, d=%d", w, layer->h, layer->d);
 	// 	for (lu_size x = 0; x < w; x++)
 	// 	{
 	// 		cell = lu_s_cell_mem_cell_1_assign(cell_mem, self); 
-	// 		lu_user_assert_void(cell, "Cannot init cell");
+	// 		lu__user_assert_void(cell, "Cannot init cell");
 
 	// 		cell = s_block_links_alloc((Lu_S_Cell_1) cell); 
-	// 		lu_user_assert_void(cell, "Cannot alloc block links");
+	// 		lu__user_assert_void(cell, "Cannot alloc block links");
 
 	// 		if (b_layer)
 	// 		{
@@ -196,7 +196,7 @@
 	// 		}
 	// 	}
 
-	// 	// lu_assert(self);  
+	// 	// lu__assert(self);  
 
 	// 	// lu_size w 			= self->w;
 	// 	// lu_size h 			= self->h; 
@@ -207,10 +207,10 @@
 	// 	// 	for (x = 0; x < w; x++)
 	// 	// 	{
 	// 	// 		cell = lu_s_cell_mem_cell_2_assign(cell_mem, self, x, y); 
-	// 	// 		lu_user_assert_void(cell, "Cannot init cell");
+	// 	// 		lu__user_assert_void(cell, "Cannot init cell");
 
 	// 	// 		cell = (Lu_S_Cell_2) s_pyra_links_alloc((Lu_S_Cell_1) cell); 
-	// 	// 		lu_user_assert_void(cell, "Cannot pyra init cell");
+	// 	// 		lu__user_assert_void(cell, "Cannot pyra init cell");
 
 	// 	// 		if (b_layer)
 	// 	// 			s_pyra_connect(cell, b_layer);
@@ -219,7 +219,7 @@
 
 	// static void lu_s_layer_seq_cells_deinit(Lu_S_Layer self, Lu_S_Cell_Mem cell_mem)
 	// { 
-	// 	// lu_user_assert_void(self, "Lu_S_Layer is NULL");
+	// 	// lu__user_assert_void(self, "Lu_S_Layer is NULL");
 
 	// 	// Lu_S_Cell_1 cell = NULL;
 	// 	// for (lu_size j = 0; j < self->cells_count; j++)
@@ -232,7 +232,7 @@
 	// 	// 	}
 	// 	// }
 
-	// 	lu_assert(self);
+	// 	lu__assert(self);
 
 	// 	Lu_S_Cell_1 cell = NULL;
 	// 	for (lu_size j = 0; j < self->cells_count; j++)
@@ -249,25 +249,25 @@
 
 	// static void lu_s_layer_print_info(Lu_S_Layer self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Layer is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Layer is NULL");
 
 	// 	switch(self->type)
 	// 	{
 	// 		case LU_SLT_COMPONENT:
-	// 			lu_debug("\n 	 	%-15s", "Comps Layer, ");
+	// 			lu__debug("\n 	 	%-15s", "Comps Layer, ");
 	// 			break;
 	// 		case LU_SLT_PIXEL:
-	// 			lu_debug("\n 	 	%-15s", "Pixels Layer, ");
+	// 			lu__debug("\n 	 	%-15s", "Pixels Layer, ");
 	// 			break;
 	// 		case LU_SLT_REC:
-	// 			lu_debug("\n 	 	%-15s", "Pyras Layer, ");
+	// 			lu__debug("\n 	 	%-15s", "Pyras Layer, ");
 	// 			break;
 	// 		case LU_SLT_STORY:
-	// 			lu_debug("\n 	 	%-15s", "Blocks Layer, ");
+	// 			lu__debug("\n 	 	%-15s", "Blocks Layer, ");
 	// 			break;
 	// 		default:
-	// 			lu_debug("\n 	 	%-15s", "UNKNOWN Layer, ");
+	// 			lu__debug("\n 	 	%-15s", "UNKNOWN Layer, ");
 	// 	}
 
-	// 	lu_debug("l: %3lu, w: %3lu, h: %3lu, d: %3lu, cells_count: %3lu", self->l, self->w, self->h, self->d, self->cells_count);
+	// 	lu__debug("l: %3lu, w: %3lu, h: %3lu, d: %3lu, cells_count: %3lu", self->l, self->w, self->h, self->d, self->cells_count);
 	// }

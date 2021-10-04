@@ -14,10 +14,10 @@
 		lu_size size_in_cell_4
 	)
 	{
-		lu_assert(mem); 
+		lu__assert(mem); 
 
-		Hnn_Cell_Allocator self = (Hnn_Cell_Allocator) lu_mem_alloc(mem, sizeof(struct hnn_cell_allocator));
-		lu_assert(self);
+		Hnn_Cell_Allocator self = (Hnn_Cell_Allocator) lu_mem__alloc(mem, sizeof(struct hnn_cell_allocator));
+		lu__assert(self);
 
 		self->mem = mem;
 		self->mt_cell_0 = NULL;
@@ -29,31 +29,31 @@
 		if (size_in_cell_0 > 0)
 		{
 			self->mt_cell_0 = lu_mem_table_create(self->mem, sizeof(struct hnn_cell_0), size_in_cell_0, 0, MTF_FREEABLE);
-			lu_assert(self->mt_cell_0);
+			lu__assert(self->mt_cell_0);
 		}
 
 		if (size_in_cell_1 > 0)
 		{
 			self->mt_cell_1 = lu_mem_table_create(self->mem, sizeof(struct hnn_cell_1), size_in_cell_1, 0, MTF_FREEABLE);
-			lu_assert(self->mt_cell_1);
+			lu__assert(self->mt_cell_1);
 		}
 
 		if (size_in_cell_2 > 0)
 		{
 			self->mt_cell_2 = lu_mem_table_create(self->mem, sizeof(struct hnn_cell_2), size_in_cell_2, 0, MTF_FREEABLE);
-			lu_assert(self->mt_cell_2);
+			lu__assert(self->mt_cell_2);
 		}
 
 		if (size_in_cell_3 > 0)
 		{
 			self->mt_cell_3 = lu_mem_table_create(self->mem, sizeof(struct hnn_cell_3), size_in_cell_3, 0, MTF_FREEABLE);
-			lu_assert(self->mt_cell_3);
+			lu__assert(self->mt_cell_3);
 		}
 
 		if (size_in_cell_4 > 0)
 		{
 			self->mt_cell_4 = lu_mem_table_create(self->mem, sizeof(struct hnn_cell_4), size_in_cell_4, 0, MTF_FREEABLE);
-			lu_assert(self->mt_cell_4);
+			lu__assert(self->mt_cell_4);
 		}
 
 		return self;
@@ -61,7 +61,7 @@
 
 	void hnn_cell_allocator_destroy(Hnn_Cell_Allocator self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		if (self->mt_cell_0)
 		{
@@ -96,7 +96,7 @@
 		Lu_Mem mem = self->mem;
 		self->mem = NULL;
 
-		lu_mem_free(mem, (lu_p_byte) self);
+		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
 
@@ -105,11 +105,11 @@
 
 	Hnn_Cell_0 hnn_cell_alloc_0(Hnn_Cell_Allocator self)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_0);
+		lu__assert(self);
+		lu__assert(self->mt_cell_0);
 
 		Hnn_Cell_0 cell = (Hnn_Cell_0) lu_mem_record_alloc(self->mt_cell_0);
-		lu_assert(cell);
+		lu__assert(cell);
 
 		hnn_cell_0_init(cell, HNN_CT_0);
 
@@ -118,11 +118,11 @@
 
 	Hnn_Cell_1 hnn_cell_alloc_1(Hnn_Cell_Allocator self)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_1);
+		lu__assert(self);
+		lu__assert(self->mt_cell_1);
 
 		Hnn_Cell_1 cell = (Hnn_Cell_1) lu_mem_record_alloc(self->mt_cell_1);
-		lu_assert(cell);
+		lu__assert(cell);
 
 		hnn_cell_1_init(cell, HNN_CT_1);
 
@@ -131,11 +131,11 @@
 
 	Hnn_Cell_2 hnn_cell_alloc_2(Hnn_Cell_Allocator self)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_2);
+		lu__assert(self);
+		lu__assert(self->mt_cell_2);
 
 		Hnn_Cell_2 cell = (Hnn_Cell_2) lu_mem_record_alloc(self->mt_cell_2);
-		lu_assert(cell);
+		lu__assert(cell);
 
 		hnn_cell_2_init(cell, HNN_CT_2);
 
@@ -144,11 +144,11 @@
 
 	Hnn_Cell_3 hnn_cell_alloc_3(Hnn_Cell_Allocator self)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_3);
+		lu__assert(self);
+		lu__assert(self->mt_cell_3);
 
 		Hnn_Cell_3 cell = (Hnn_Cell_3) lu_mem_record_alloc(self->mt_cell_3);
-		lu_assert(cell);
+		lu__assert(cell);
 
 		hnn_cell_3_init(cell, HNN_CT_3);
 
@@ -157,11 +157,11 @@
 
 	Hnn_Cell_4 hnn_cell_alloc_4(Hnn_Cell_Allocator self)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_4);
+		lu__assert(self);
+		lu__assert(self->mt_cell_4);
 
 		Hnn_Cell_4 cell = (Hnn_Cell_4) lu_mem_record_alloc(self->mt_cell_4);
-		lu_assert(cell);
+		lu__assert(cell);
 
 		hnn_cell_4_init(cell, HNN_CT_4);
 
@@ -173,45 +173,45 @@
 
 	void hnn_cell_free_0(Hnn_Cell_Allocator self, Hnn_Cell_0 cell)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_0);
-		lu_assert(cell);
+		lu__assert(self);
+		lu__assert(self->mt_cell_0);
+		lu__assert(cell);
 
 		lu_mem_record_free(self->mt_cell_0, (lu_p_byte) cell);
 	}
 
 	void hnn_cell_free_1(Hnn_Cell_Allocator self, Hnn_Cell_0 cell)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_1);
-		lu_assert(cell);
+		lu__assert(self);
+		lu__assert(self->mt_cell_1);
+		lu__assert(cell);
 
 		lu_mem_record_free(self->mt_cell_1, (lu_p_byte) cell);
 	}
 
 	void hnn_cell_free_2(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_2);
-		lu_assert(cell);
+		lu__assert(self);
+		lu__assert(self->mt_cell_2);
+		lu__assert(cell);
 
 		lu_mem_record_free(self->mt_cell_2, (lu_p_byte) cell);
 	}
 
 	void hnn_cell_free_3(Hnn_Cell_Allocator self, Hnn_Cell_3 cell)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_3);
-		lu_assert(cell);
+		lu__assert(self);
+		lu__assert(self->mt_cell_3);
+		lu__assert(cell);
 
 		lu_mem_record_free(self->mt_cell_3, (lu_p_byte) cell);
 	}
 
 	void hnn_cell_free_4(Hnn_Cell_Allocator self, Hnn_Cell_4 cell)
 	{
-		lu_assert(self);
-		lu_assert(self->mt_cell_4);
-		lu_assert(cell);
+		lu__assert(self);
+		lu__assert(self->mt_cell_4);
+		lu__assert(cell);
 
 		lu_mem_record_free(self->mt_cell_4, (lu_p_byte) cell);
 	}

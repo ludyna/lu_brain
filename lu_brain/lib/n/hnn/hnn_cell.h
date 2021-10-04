@@ -20,7 +20,7 @@
 	
 	static inline Hnn_Cell_0 hnn_cell_0_init(Hnn_Cell_0 self, lu_byte type)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		self->type = type;
 
 		return self;

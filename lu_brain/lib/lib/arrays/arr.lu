@@ -11,18 +11,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-Lu_Arr lu_arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
+Lu_Arr lu_arr__create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
 {
 	lu_user_assert(size > 0, "size should be greater than zero");
 	lu_user_assert(mem, "Lu_Mem is NULL");
 
-	Lu_Arr self = (Lu_Arr) lu_mem_alloc(mem, sizeof(struct lu_arr));
+	Lu_Arr self = (Lu_Arr) lu_mem__alloc(mem, sizeof(struct lu_arr));
 	lu_user_assert(self, "Unable to allocate array");
 	
 	// Initialize
 	self->size 			= size;
 	self->count 		= 0;
-	self->items 		= (lu_p_void*) lu_mem_alloc(mem, self->size * sizeof(lu_p_void));
+	self->items 		= (lu_p_void*) lu_mem__alloc(mem, self->size * sizeof(lu_p_void));
  	self->allow_realloc = allow_realloc;
  	self->mem 			= mem;
 
@@ -33,15 +33,15 @@ Lu_Arr lu_arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
 	return self;
 }
 
-void lu_arr_destroy(Lu_Arr self)
+void lu_arr__destroy(Lu_Arr self)
 {
-	lu_user_assert_void(self, "Lu_Arr is NULL");
+	lu__user_assert_void(self, "Lu_Arr is NULL");
 	
 	Lu_Mem mem = self->mem;
-	lu_user_assert_void(mem, "Lu_Mem is NULL");
+	lu__user_assert_void(mem, "Lu_Mem is NULL");
 
-	lu_mem_free(mem, (lu_p_byte) self->items);
-	lu_mem_free(mem, (lu_p_byte) self);
+	lu_mem__free(mem, (lu_p_byte) self->items);
+	lu_mem__free(mem, (lu_p_byte) self);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -49,8 +49,8 @@ void lu_arr_destroy(Lu_Arr self)
 
 lu_size lu_arr_append(Lu_Arr self, lu_p_void item)
 {
-	lu_assert(self != NULL);
-	lu_assert(self->count < self->size);
+	lu__assert(self != NULL);
+	lu__assert(self->count < self->size);
  
  	// no automatic realloc 
 	if (self->allow_realloc && self->count >= self->size) 
@@ -114,17 +114,17 @@ void lu_arr_nullify(Lu_Arr self)
 
 void lu_arr_realloc(Lu_Arr self, lu_size new_size)
 {
-	lu_user_assert_void(new_size > self->size, "new_size should be greater than current size");
+	lu__user_assert_void(new_size > self->size, "new_size should be greater than current size");
 
 	self->size = new_size;
 
 	self->items = (lu_p_void*) lu_mem_realloc(self->mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
-	lu_assert(self->items != NULL);
+	lu__assert(self->items != NULL);
 }
 
 Lu_Arr lu_arr_merge(Lu_Arr self, Lu_Arr src)
 {
-	lu_assert(self->count + src->count < self->size);
+	lu__assert(self->count + src->count < self->size);
 
 	// realloc if needed
 	if (self->allow_realloc && (self->count + src->count) > self->size)

@@ -8,7 +8,7 @@
 	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
 	void lu_mem_stack_table_reset_internal(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		lu_p_byte start 			= (lu_p_byte) self;
 
@@ -79,7 +79,7 @@
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
 		Lu_Mem mem = (Lu_Mem) mem_stack;
-		lu_p_byte start = lu_mem_alloc(mem, full_size);
+		lu_p_byte start = lu_mem__alloc(mem, full_size);
 
 		if (start == NULL) return NULL;
 

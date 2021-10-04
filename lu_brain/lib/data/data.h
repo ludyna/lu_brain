@@ -64,11 +64,11 @@
 
 	static inline Lu_Data lu_data_validate_exists(Lu_Data self)
 	{
-		lu_assert(self);
-		lu_assert(self->values);
-		lu_assert(self->w > 0);
-		lu_assert(self->h > 0);
-		lu_assert(self->d > 0);
+		lu__assert(self);
+		lu__assert(self->values);
+		lu__assert(self->w > 0);
+		lu__assert(self->h > 0);
+		lu__assert(self->d > 0);
 
 		return self;
 	}

@@ -35,7 +35,7 @@ void test_mem_table1(void)
 
     Test1 l1 = (Test1) lu_mem_record_alloc(mt);
 
-    lu_debug("%ld %ld %p", (lu_size)l1, (lu_size)(mt->records_start + (mt->table_size_in_records - 1) * mt->record_size_in_bytes), mt->free_start);
+    lu__debug("%ld %ld %p", (lu_size)l1, (lu_size)(mt->records_start + (mt->table_size_in_records - 1) * mt->record_size_in_bytes), mt->free_start);
     TEST_ASSERT( ((lu_size)l1) == (lu_size)(mt->records_start));
     TEST_ASSERT(mt->table_size_in_records == 3);
     TEST_ASSERT(mt->free_count == 0);

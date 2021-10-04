@@ -5,13 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size)
+	static Lu_S_Seq_Rg lu_s_seq_rg__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size)
 	{
-		lu_assert(mem);
-		lu_assert(cell_mem);
+		lu__assert(mem);
+		lu__assert(cell_mem);
 
-		Lu_S_Seq_Rg self = (Lu_S_Seq_Rg) lu_mem_alloc(mem, sizeof(struct lu_s_seq_rg));
-		lu_assert(self);
+		Lu_S_Seq_Rg self = (Lu_S_Seq_Rg) lu_mem__alloc(mem, sizeof(struct lu_s_seq_rg));
+		lu__assert(self);
 		
 		lu_s_base_rg_init(&self->super, mem, cell_mem);
 
@@ -22,9 +22,9 @@
 		return self;
 	}
 
-	static void lu_s_seq_rg_destroy(Lu_S_Seq_Rg self)
+	static void lu_s_seq_rg__destroy(Lu_S_Seq_Rg self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		// 
 		// Destroy all seq layers 
@@ -33,8 +33,8 @@
 		for (lu_size i = 0; i < self->seq_layers_size; i++)
 			lu_s_seq_layer_deinit(&self->seq_layers[i]);
 
-		lu_mem_free((lu_p_byte) self->layers);
-		lu_mem_free((lu_p_byte) self);
+		lu_mem__free((lu_p_byte) self->layers);
+		lu_mem__free((lu_p_byte) self);
 	}
 
 
@@ -43,7 +43,7 @@
 
 	static void lu_s_seq_rg_layers_connect(Lu_S_Seq_Rg self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		Lu_S_Layer layer;
 		Lu_S_Layer b_layer = NULL;
@@ -60,7 +60,7 @@
 
 	static void lu_s_seq_rg_layers_disconnect(Lu_S_Seq_Rg self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		for(lu_size i = 0; i < self->layers_size; i++)
 		{

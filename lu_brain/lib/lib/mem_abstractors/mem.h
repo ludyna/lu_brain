@@ -70,9 +70,9 @@
 	Lu_Mem lu_mem_create();
 
 	// Alloc, realloc and free
-	#define lu_mem_alloc(mem, size) mem->alloc(mem, size, __func__, __FILE__, __LINE__)
+	#define lu_mem__alloc(mem, size) mem->alloc(mem, size, __func__, __FILE__, __LINE__)
 	#define lu_mem_realloc(mem, p, size) mem->realloc(mem, p, size, __func__, __FILE__, __LINE__)
-	#define lu_mem_free(mem, p) mem->free(mem, p, __func__, __FILE__, __LINE__)
+	#define lu_mem__free(mem, p) mem->free(mem, p, __func__, __FILE__, __LINE__)
 
 	// Destroy memory
 	#define lu_mem_destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __func__, __FILE__, __LINE__)
@@ -135,8 +135,8 @@
 
 	static inline lu_size lu_mem_table_record_shift(Lu_Mem_Table self, lu_p_byte record_addr)
 	{
-		lu_assert(self);
-		lu_assert(record_addr);
+		lu__assert(self);
+		lu__assert(record_addr);
 
 		return (lu_size) (record_addr - self->records_start);
 	}

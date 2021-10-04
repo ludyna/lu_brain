@@ -33,9 +33,9 @@
 	
 	static inline Lu_Lim_List lu_lim_list_init(Lu_Lim_List self, Lu_Mem_Table mem_table, lu_size limit_size)
 	{
-		lu_assert(self);
-		lu_assert(mem_table);
-		lu_assert(limit_size > 0);
+		lu__assert(self);
+		lu__assert(mem_table);
+		lu__assert(limit_size > 0);
 
 		lu_list_init((Lu_List) self, lu_mem_table_mem_get(mem_table));
 

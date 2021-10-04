@@ -1,6 +1,11 @@
 /**
 	Copyright © 2021 Oleh Ihorovych Novosad 
 
+	Reason we have different rgs instead of putting every layer into the same 
+	structure is that we can have different number of instances of each rg.
+	For example, we need rec_rg for ever rec, while we need one seq_rg.
+	story_rg can have many seq_rg.
+
 	Map:
 		s_rec_rg
 			component_layer
@@ -167,8 +172,6 @@
 	};
 
 	// v an p layers are instances of this layer
-	// We can make algorithm a bit more complicated but save memory for components 
- 	// but for MVP it is not important (if ever)
 	struct lu_s_component_layer {
 		struct lu_s_base_layer super;
 		struct lu_s_layer_conf conf;
@@ -255,14 +258,14 @@
 	// Create and Destroy
 	// 
 
-	static Lu_S_Cell_Mem lu_s_cell_mem_create(Lu_Mem mem);
-	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self);
+	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem);
+	static void lu_s_cell_mem__destroy(Lu_S_Cell_Mem self);
 
 	//
 	// Allocate cells
 	// 
 
-	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self);
+	static void lu_s_cell_mem__alloc_cells(Lu_S_Cell_Mem self);
 
 	// 
 	// Print
@@ -281,9 +284,9 @@
 
 	static inline Lu_S_Base_Rg lu_s_base_rg_init(Lu_S_Base_Rg self, Lu_Mem mem, Lu_S_Cell_Mem cell_mem)
 	{
-		lu_assert(self);
-		lu_assert(mem);
-		lu_assert(cell_mem);
+		lu__assert(self);
+		lu__assert(mem);
+		lu__assert(cell_mem);
 
 		self->mem = mem;
 		self->cell_mem = cell_mem;
@@ -293,7 +296,7 @@
 
 	static inline void lu_s_base_rg_deinit(Lu_S_Base_Rg self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		self->mem = NULL;
 		self->cell_mem = NULL;
 	}
@@ -302,9 +305,6 @@
 // Lu_S_Rec_Rg
 //
 
-	// Reason we have different rgs instead of putting every layer into the same 
-	// structure is that we can have different number of instances of each rg.
-	// For example, we need rec_rg for ever rec, while we need one seq_rg.
 	struct lu_s_rec_rg {
 
 		struct lu_s_base_rg super;
@@ -335,8 +335,8 @@
 	// lu_s_rec_rg.lu
 	//
 
-	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Mem, Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem cell_mem);
-	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self);
+	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem, Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_rec_rg__destroy(Lu_S_Rec_Rg self);
 	
 	//
 	// lu_s_rec_rg_layer_inits.lu
@@ -354,7 +354,7 @@
 	static void lu_s_rec_rg_pyras_layers_connect(Lu_S_Rec_Rg self); 
 	static void lu_s_rec_rg_pyras_layers_disconnect(Lu_S_Rec_Rg self);
 
-	static void lu_s_rec_rg_print_info(Lu_S_Rec_Rg self);
+	static void lu_s_rec_rg__print_info(Lu_S_Rec_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Seq_Rg
@@ -381,8 +381,8 @@
 	// 	return &self->layers[0];
 	// }
 
-	static Lu_S_Seq_Rg lu_s_seq_rg_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size);
-	static void lu_s_seq_rg_destroy(Lu_S_Seq_Rg self);
+	static Lu_S_Seq_Rg lu_s_seq_rg__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size);
+	static void lu_s_seq_rg__destroy(Lu_S_Seq_Rg self);
 
 	static void lu_s_seq_rg_layers_connect(Lu_S_Seq_Rg self);
 	static void lu_s_seq_rg_layers_disconnect(Lu_S_Seq_Rg self);
@@ -423,7 +423,7 @@
 	};
 	
 	// s.lu
-	static Lu_S lu_s_create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
-	static void lu_s_destroy(Lu_S self);
+	static Lu_S lu_s__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
+	static void lu_s__destroy(Lu_S self);
 
-	static void lu_s_print_info(Lu_S self);
+	static void lu_s__print_info(Lu_S self);

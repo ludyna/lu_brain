@@ -20,11 +20,11 @@ void test_list1(void)
 {
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
 
-    Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n3 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n4 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n5 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n2 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n3 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n4 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n5 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
 
     Lu_List list = lu_list_create(mem);
 
@@ -91,11 +91,11 @@ void test_list_fast_ma(void)
 {
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
 
-    Neu n1 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n2 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n3 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n4 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
-    Neu n5 = (Neu) lu_mem_alloc(mem, sizeof(struct neu));
+    Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n2 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n3 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n4 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
+    Neu n5 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
 
     Lu_List list = lu_list_create(mem);
 

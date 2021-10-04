@@ -24,7 +24,7 @@
 
 	struct lu_brain_config lu_brain_config_get_by_id(lu_size id)
 	{
-		lu_assert(id < LU_BRAIN_CONFIG_END);
+		lu__assert(id < LU_BRAIN_CONFIG_END);
 
 		return lu_g_bc_predefined[id];
 	}

@@ -40,7 +40,7 @@ int main()
 		/*memory in bytes*/ 	1024 * 1024, 
 		/*predefined config*/ 	LU_BC_DEFAULT
 	);  
-	lu_assert(brain);
+	lu__assert(brain);
 	
 	Lu_Rec image_rec 			= lu_rec_create_from_predefined(
 		/*belongs to*/			brain, 
@@ -48,13 +48,13 @@ int main()
 		/*height*/				16, 
 		/*predefined config */ 	LU_RC_MONOCHROME1_IMAGE
 	);	
-	lu_assert(image_rec);
+	lu__assert(image_rec);
 
 	Lu_Wave wave 				= lu_wave_create(brain);
-	lu_assert(wave);
+	lu__assert(wave);
 
 	Lu_Seq seq 				= lu_seq_create(brain);
-	lu_assert(seq);
+	lu__assert(seq);
 
 	Lu_Neu name 				= NULL;
 

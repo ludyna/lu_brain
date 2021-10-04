@@ -12,7 +12,7 @@
 
 		lu_n_mem_config_validate(&config);
 
-		Lu_N self 			= (Lu_N) lu_mem_alloc(brain->brain_mem, sizeof(struct lu_n));
+		Lu_N self 			= (Lu_N) lu_mem__alloc(brain->brain_mem, sizeof(struct lu_n));
 		lu_user_assert(self, "Cannot allocate Lu_N");
 
 		self->config 		= config;
@@ -24,12 +24,12 @@
 
 	static void lu_n_destroy(Lu_N self)
 	{
-		lu_assert(self);
-		lu_assert(self->names);
+		lu__assert(self);
+		lu__assert(self->names);
 
 		names_list_destroy(self->names);
 
-		lu_mem_free(self->brain->brain_mem, (lu_p_byte) self);
+		lu_mem__free(self->brain->brain_mem, (lu_p_byte) self);
 	}
 
 
@@ -38,11 +38,11 @@
  	
  	static void lu_n_print_info(Lu_N self)
  	{
- 		lu_user_assert_void(self, "Lu_N is NULL");
+ 		lu__user_assert_void(self, "Lu_N is NULL");
 
- 		// lu_debug("\n\n-- Lu_N info: ");
- 		// lu_debug("\n 	cells size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells));
- 		// lu_debug("\n 	lins size (bytes): %lu", lu_mem_table_size_in_bytes(self->lins));
- 		// lu_debug("\n 	cells_2 size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells_2));
- 		// lu_debug("\n 	cells_3 size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells_3));
+ 		// lu__debug("\n\n-- Lu_N info: ");
+ 		// lu__debug("\n 	cells size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells));
+ 		// lu__debug("\n 	lins size (bytes): %lu", lu_mem_table_size_in_bytes(self->lins));
+ 		// lu__debug("\n 	cells_2 size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells_2));
+ 		// lu__debug("\n 	cells_3 size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells_3));
  	}

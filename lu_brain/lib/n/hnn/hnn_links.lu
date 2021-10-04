@@ -7,10 +7,10 @@
 
 	static Hnn_Links hnn_links_create(Lu_Mem mem, lu_size t1_size, lu_size t2_size, lu_size t3_size, lu_size t4_size)
 	{
-		lu_assert(mem);
+		lu__assert(mem);
 
-		Hnn_Links self = (Hnn_Links) lu_mem_alloc(mem, sizeof(struct hnn_links));
-		lu_assert(self);
+		Hnn_Links self = (Hnn_Links) lu_mem__alloc(mem, sizeof(struct hnn_links));
+		lu__assert(self);
 
 		self->mem = mem;
 
@@ -24,9 +24,9 @@
 
 	static void hnn_links_destroy(Hnn_Links self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		Lu_Mem mem = self->mem;
-		lu_assert(mem);
+		lu__assert(mem);
 
 		if(self->table_1)
 		{
@@ -53,7 +53,7 @@
 		}
 
 		self->mem = NULL;
-		lu_mem_free(mem, (lu_p_byte) self);
+		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,25 +61,25 @@
 
 	static Hnn_Table_Node hnn_linklu_s_cell_add_1(Hnn_Links self, lu_size hash, Hnn_Cell_0 new_cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		return hnn_table_cell_add(self->table_1, hash, new_cell);
 	}
 
 	static Hnn_Table_Node hnn_linklu_s_cell_add_2(Hnn_Links self, lu_size hash, Hnn_Cell_0 new_cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		return hnn_table_cell_add(self->table_2, hash, new_cell);
 	}
 
 	static Hnn_Table_Node hnn_linklu_s_cell_add_3(Hnn_Links self, lu_size hash, Hnn_Cell_0 new_cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		return hnn_table_cell_add(self->table_3, hash, new_cell);
 	}
 
 	static Hnn_Table_Node hnn_linklu_s_cell_add_4(Hnn_Links self, lu_size hash, Hnn_Cell_0 new_cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		return hnn_table_cell_add(self->table_4, hash, new_cell);
 	}
 
@@ -88,25 +88,25 @@
 
 	static void hnn_linklu_s_cell_remove_1(Hnn_Links self, lu_size hash, Hnn_Cell_0 cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		hnn_table_cell_remove(self->table_1, hash, cell);
 	}
 
 	static void hnn_linklu_s_cell_remove_2(Hnn_Links self, lu_size hash, Hnn_Cell_0 cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		hnn_table_cell_remove(self->table_2, hash, cell);
 	}
 
 	static void hnn_linklu_s_cell_remove_3(Hnn_Links self, lu_size hash, Hnn_Cell_0 cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		hnn_table_cell_remove(self->table_3, hash, cell);
 	}
 
 	static void hnn_linklu_s_cell_remove_4(Hnn_Links self, lu_size hash, Hnn_Cell_0 cell)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		hnn_table_cell_remove(self->table_4, hash, cell);
 	}
 
@@ -115,38 +115,38 @@
 
 	static Hnn_Cell_0 hnn_linklu_s_cell_get_1(Hnn_Links self, lu_size hash, Hnn_Cell_0 top_left)
 	{
-		lu_assert(self);
-		lu_assert(top_left);
+		lu__assert(self);
+		lu__assert(top_left);
 
 		return hnn_table_cell_get_1(self->table_1, hash, top_left);
 	}
 
 	static Hnn_Cell_0 hnn_linklu_s_cell_get_2(Hnn_Links self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right)
 	{
-		lu_assert(self);
-		lu_assert(top_left);
-		lu_assert(top_right);
+		lu__assert(self);
+		lu__assert(top_left);
+		lu__assert(top_right);
 
 		return hnn_table_cell_get_2(self->table_2, hash, top_left, top_right);
 	}
 
 	static Hnn_Cell_0 hnn_linklu_s_cell_get_3(Hnn_Links self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left)
 	{
-		lu_assert(self);
-		lu_assert(top_left);
-		lu_assert(top_right);
-		lu_assert(bottom_left);
+		lu__assert(self);
+		lu__assert(top_left);
+		lu__assert(top_right);
+		lu__assert(bottom_left);
 
 		return hnn_table_cell_get_3(self->table_3, hash, top_left, top_right, bottom_left);
 	}
 
 	static Hnn_Cell_0 hnn_linklu_s_cell_get_4(Hnn_Links self, lu_size hash, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left, Hnn_Cell_0 bottom_right)
 	{
-		lu_assert(self);
-		lu_assert(top_left);
-		lu_assert(top_right);
-		lu_assert(bottom_left);
-		lu_assert(bottom_right);
+		lu__assert(self);
+		lu__assert(top_left);
+		lu__assert(top_right);
+		lu__assert(bottom_left);
+		lu__assert(bottom_right);
 
 		return hnn_table_cell_get_4(self->table_4, hash, top_left, top_right, bottom_left, bottom_right);
 	}
@@ -156,7 +156,7 @@
 
 	static void hnn_links_print_distribution(Hnn_Links self, lu_size type)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		switch(type)
 		{
@@ -176,6 +176,6 @@
 				break;
 
 			default:
-				lu_assert(false);
+				lu__assert(false);
 		}
 	}

@@ -18,7 +18,7 @@
 		Lu_Wave_Config p_config = lu_wave_config_validate(&config);
 		lu_user_assert(p_config, "struct lu_wave_config is invalid");
 
-		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem_alloc(mem, sizeof(struct lu_save_wave));
+		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(mem, sizeof(struct lu_save_wave));
 
 		lu_wave_init(
 			&self->super, 
@@ -40,10 +40,10 @@
 		self->super.process = lu_save_wave_process_virtual;
 
 		self->seq = lu_seq_create(mem, lu_brain_recs_size(brain)); 
-		lu_assert(self->seq);
+		lu__assert(self->seq);
 
 		self->block_layers = lu_lim_list_create(mem, self->super.config.block_layers_size);
-		lu_assert(self->block_layers);
+		lu__assert(self->block_layers);
 
 		self->block_layers->node_before_destroy = lu_save_wave_block_layer_node_before_destroy;
 
@@ -66,31 +66,31 @@
 
 	void lu_wave_destroy(Lu_Wave self)
 	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
-		lu_assert(self);
+		lu__user_assert_void(self, "Lu_Wave is NULL");
+		lu__assert(self);
 
 		self->destroy(self);
 
-		lu_mem_free(self->mem, (lu_p_byte) self);
+		lu_mem__free(self->mem, (lu_p_byte) self);
 	} 
 
 	// Save
 
 	static void lu_save_wave_block_layer_node_before_destroy(Lu_Lim_List list, Lu_L_Node node)
 	{
-		lu_assert(list);
-		lu_assert(node);
+		lu__assert(list);
+		lu__assert(node);
 
 		lu_p_void value = lu_l_node_value(node);
-		lu_assert(value);
+		lu__assert(value);
 
 		lu_seq_rg_destroy((Lu_Seq_Rg) value);
 	}
 
 	static void lu_save_wave_destroy_virtual(Lu_Wave wave)
 	{
-		lu_assert(wave);
-		lu_assert(lu_wave_is_save(wave));
+		lu__assert(wave);
+		lu__assert(lu_wave_is_save(wave));
 
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
 
@@ -104,7 +104,7 @@
 
 	static void lu_find_wave_destroy_virtual(Lu_Wave wave)
 	{
-		lu_assert(wave);
+		lu__assert(wave);
 		Lu_Find_Wave self = (Lu_Find_Wave) wave;
 
 		lu_seq_destroy(self->seq);
@@ -114,7 +114,7 @@
 
 	static void lu_restore_wave_destroy_virtual(Lu_Wave wave)
 	{
-		lu_assert(wave);
+		lu__assert(wave);
 		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
 
 		//lu_list_destroy(self->seq);

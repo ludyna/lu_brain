@@ -18,13 +18,13 @@
 	 	Lu_Rec_Config p_config 	= lu_rec_config_validate(&config);
 	 	lu_user_assert(p_config, "Lu_Rec_Config validation failed");
 
-		Lu_Rec self 			= (Lu_Rec) lu_mem_alloc(brain->brain_mem, sizeof(struct lu_rec));
+		Lu_Rec self 			= (Lu_Rec) lu_mem__alloc(brain->brain_mem, sizeof(struct lu_rec));
 		lu_user_assert(self, "Cannot allocate lu_rec");
 
 		// Initialize
 		self->config 			= *p_config;
 
-		//lu_debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);
+		//lu__debug("\n\nrec->config.v_nsc=%d\n\n", self->v_nsc);
 
 		self->width = width;
 		self->height = height;
@@ -44,13 +44,13 @@
 
 	static void lu_rec_destroy(Lu_Rec self, Lu_Mem mem)
 	{
-		lu_assert(self);
-		lu_mem_free(mem, (lu_p_byte) self);
+		lu__assert(self);
+		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
 	lu_size lu_rec_get_id(Lu_Rec self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		return self->id;
 	}
 

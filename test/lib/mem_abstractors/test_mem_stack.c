@@ -23,7 +23,7 @@ void test_mem_stack_1(void)
 
 	for (lu_size i = 0; i < 10; i++)
 	{
-		p = lu_mem_alloc(mem, 512);
+		p = lu_mem__alloc(mem, 512);
 
 		TEST_ASSERT(p == NULL);
 	}

@@ -7,15 +7,15 @@
 
 	static Lu_Block lu_block_create(Lu_Mem mem, lu_size recs_size)
 	{	
-		lu_assert(mem);
-		lu_assert(recs_size > 0);
+		lu__assert(mem);
+		lu__assert(recs_size > 0);
 
 
-		Lu_Block self = (Lu_Block) lu_mem_alloc(mem, sizeof(struct lu_block));
+		Lu_Block self = (Lu_Block) lu_mem__alloc(mem, sizeof(struct lu_block));
  
  		self->mem = mem;
  		self->datum_size = recs_size;
- 		self->datum = (struct lu_data*) lu_mem_alloc(self->mem, sizeof(struct lu_data) * self->datum_size);
+ 		self->datum = (struct lu_data*) lu_mem__alloc(self->mem, sizeof(struct lu_data) * self->datum_size);
 
  		Lu_Data data;
  		for(lu_size i = 0; i < self->datum_size; i++)
@@ -29,10 +29,10 @@
 
 	static void lu_block_destroy(Lu_Block self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
-		lu_mem_free(self->mem, (lu_p_byte) self->datum);
-		lu_mem_free(self->mem, (lu_p_byte) self);
+		lu_mem__free(self->mem, (lu_p_byte) self->datum);
+		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 

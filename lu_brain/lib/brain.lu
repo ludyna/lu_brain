@@ -13,7 +13,7 @@
 		Lu_Mem brain_mem		= mem; 
 		lu_user_assert(brain_mem, "Cannot create brain_mem. Not enough memory?");
 
-		Lu_Brain self 		= (Lu_Brain) lu_mem_alloc(brain_mem, sizeof(struct lu_brain));
+		Lu_Brain self 		= (Lu_Brain) lu_mem__alloc(brain_mem, sizeof(struct lu_brain));
 		lu_user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->brain_mem  	= brain_mem; 
@@ -28,37 +28,37 @@
 
 	void lu_brain_destroy(Lu_Brain self)
 	{
-		lu_user_assert_void(self, "Lu_Brain is NULL");
+		lu__user_assert_void(self, "Lu_Brain is NULL");
 
 		lu_n_destroy(self->n);
-		lu_s_destroy(self->s);
+		lu_s__destroy(self->s);
 
 		Lu_Rec rec;
 		if (self->recs)
-			for (lu_size i = 0; i < lu_arr_count(self->recs); i++)
+			for (lu_size i = 0; i < lu_arr__count(self->recs); i++)
 			{
-				rec = (Lu_Rec) lu_arr_get(self->recs, i);
+				rec = (Lu_Rec) lu_arr__get(self->recs, i);
 
 				if (rec)
 					lu_rec_destroy(rec, self->brain_mem);
 			}
 
-		lu_arr_destroy(self->recs);
+		lu_arr__destroy(self->recs);
 	
 		lu_g_mem_free((lu_p_byte) self);
 	}
 
 	void lu_brain_print_info(Lu_Brain self)
 	{
-		lu_user_assert_void(self, "Lu_Brain is NULL");
-		lu_user_assert_void(self->brain_mem, "Lu_Mem is NULL");
+		lu__user_assert_void(self, "Lu_Brain is NULL");
+		lu__user_assert_void(self->brain_mem, "Lu_Mem is NULL");
 
-		lu_debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
-		lu_debug("\nMemory allocated (bytes): %lu", lu_mem_preallocated(self->brain_mem));
-		lu_debug("\nMemory used (bytes): %lu", lu_mem_used(self->brain_mem));
+		lu__debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
+		lu__debug("\nMemory allocated (bytes): %lu", lu_mem_preallocated(self->brain_mem));
+		lu__debug("\nMemory used (bytes): %lu", lu_mem_used(self->brain_mem));
 
  		if (self->s)
- 			lu_s_print_info(self->s);
+ 			lu_s__print_info(self->s);
 
  		// if (self->n)
  		// 		lu_n_print_info(self->n);
@@ -66,7 +66,7 @@
 
 	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		return self->config;
 	}
@@ -78,33 +78,33 @@
 
 	static lu_size lu_brain_rec_attach(Lu_Brain self, Lu_Rec rec)
 	{
-		lu_assert(self);
-		lu_assert(rec);
-		lu_assert(self->recs);
-		lu_assert(!rec->brain);
+		lu__assert(self);
+		lu__assert(rec);
+		lu__assert(self->recs);
+		lu__assert(!rec->brain);
 
 		rec->brain = self;
 
 		// find empty slot
 		lu_size i;
-		for(i = 0; i < lu_arr_count(self->recs); i++)
+		for(i = 0; i < lu_arr__count(self->recs); i++)
 		{
-			if (lu_arr_get(self->recs, i) == NULL) break;
+			if (lu_arr__get(self->recs, i) == NULL) break;
 		}
 		
 		rec->id = i;
-		lu_arr_set(self->recs, rec->id, rec);
+		lu_arr__set(self->recs, rec->id, rec);
 
 		return rec->id;
 	}
 
 	static void lu_brain_rec_detach(Lu_Brain self, Lu_Rec rec)
 	{
-		lu_assert(self);
-		lu_assert(rec->brain);
-		lu_assert(self->s);
+		lu__assert(self);
+		lu__assert(rec->brain);
+		lu__assert(self->s);
 
-		lu_arr_set(self->recs, rec->id, NULL);
+		lu_arr__set(self->recs, rec->id, NULL);
 		
 		rec->brain = NULL;
 	}
@@ -112,10 +112,10 @@
 	Lu_Rec lu_brain_rec_get_by_id(Lu_Brain brain, lu_size rec_id)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_assert(brain->recs);
-		lu_user_assert(rec_id < lu_arr_count(brain->recs), "rec_id is out of range");
+		lu__assert(brain->recs);
+		lu_user_assert(rec_id < lu_arr__count(brain->recs), "rec_id is out of range");
 
-		return (Lu_Rec) lu_arr_get(brain->recs, rec_id);
+		return (Lu_Rec) lu_arr__get(brain->recs, rec_id);
 	}
 
 	lu_size lu_brain_recs_size(Lu_Brain self) { return lu_arr_size(self->recs); }
@@ -133,7 +133,7 @@
 
 		if (self->s)
 		{
-			lu_s_destroy(self->s);
+			lu_s__destroy(self->s);
 			self->s_mem = NULL;
 		}
 
@@ -147,7 +147,7 @@
 		// Create S
 		// 
 
-		self->s = lu_s_create(self);
+		self->s = lu_s__create(self);
 		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
 
 		//

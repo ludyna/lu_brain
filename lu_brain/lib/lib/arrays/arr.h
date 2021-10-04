@@ -20,14 +20,14 @@
 
 	// Create and destroy 
 
-	Lu_Arr lu_arr_create(Lu_Mem mem, lu_size size, lu_bool allow_realloc);
-	static inline Lu_Arr lu_arr_temp_create(lu_size size, lu_bool allow_realloc) { return lu_arr_create(lu_g_mem, size, allow_realloc); }
-	void lu_arr_destroy(Lu_Arr);
-	static inline void lu_arr_temp_destroy(Lu_Arr self) { lu_arr_destroy(self); }
+	Lu_Arr lu_arr__create(Lu_Mem mem, lu_size size, lu_bool allow_realloc);
+	static inline Lu_Arr lu_arr_temp_create(lu_size size, lu_bool allow_realloc) { return lu_arr__create(lu_g_mem, size, allow_realloc); }
+	void lu_arr__destroy(Lu_Arr);
+	static inline void lu_arr_temp_destroy(Lu_Arr self) { lu_arr__destroy(self); }
 
 	// Setters / getters
 
-	static inline lu_size lu_arr_count(Lu_Arr self) { return self->count; }
+	static inline lu_size lu_arr__count(Lu_Arr self) { return self->count; }
 	static inline lu_size lu_arr_size(Lu_Arr self) { return self->size; }
 	static inline lu_p_void lu_arr_last(Lu_Arr self) { return self->items[self->count-1]; }
 
@@ -61,7 +61,7 @@
 	static inline lu_p_void lu_arr_get_internal_debug(Lu_Arr self, lu_size index, const char* func, const char* file, int line)
 	{
 		if (g_user_assert && index >= self->size)
-			lu_user_debug_args_internal(func, file, line, "lu_arr_get: Out of range(index=%lu, size=%lu)", index, self->size);
+			lu_user_debug_args_internal(func, file, line, "lu_arr__get: Out of range(index=%lu, size=%lu)", index, self->size);
 		
 		return lu_arr_get_internal(self, index);
 	}
@@ -69,20 +69,20 @@
 	static inline void lu_arr_set_internal_debug(Lu_Arr self, lu_size index, lu_p_void value, const char* func, const char* file, int line)
 	{
 		if (g_user_assert && index >= self->size)
-			lu_user_debug_args_internal(func, file, line, "lu_arr_set: Out of range(index=%lu, size=%lu)", index, self->size);
+			lu_user_debug_args_internal(func, file, line, "lu_arr__set: Out of range(index=%lu, size=%lu)", index, self->size);
 
 		lu_arr_set_internal(self, index, value);
 	}
 
 	#ifdef LU_DEBUG
 
-	#define lu_arr_get(self, index) lu_arr_get_internal_debug(self, index, __func__, __FILE__, __LINE__)
-	#define lu_arr_set(self, index, value) lu_arr_set_internal_debug(self, index, value, __func__, __FILE__, __LINE__);
+	#define lu_arr__get(self, index) lu_arr_get_internal_debug(self, index, __func__, __FILE__, __LINE__)
+	#define lu_arr__set(self, index, value) lu_arr_set_internal_debug(self, index, value, __func__, __FILE__, __LINE__);
 
 	#else
 
-	#define lu_arr_get(self, index) lu_arr_get_internal(self, index)
-	#define lu_arr_set(self, index, value) lu_arr_set_internal(self, index, value);
+	#define lu_arr__get(self, index) lu_arr_get_internal(self, index)
+	#define lu_arr__set(self, index, value) lu_arr_set_internal(self, index, value);
 
 	#endif
 

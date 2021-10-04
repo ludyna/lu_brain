@@ -8,8 +8,8 @@
 
 	static void lu_save_wave_process_block(Lu_Save_Wave self, Lu_Block block)
 	{
-		lu_assert(self);
-		lu_assert(block);
+		lu__assert(self);
+		lu__assert(block);
 
 		Lu_Seq_Rg shot = lu_seq_rg_create(self->super.mem, self->super.brain->s);
 
@@ -24,18 +24,18 @@
 
 	void lu_wave_step(Lu_Wave self)
 	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu__user_assert_void(self, "Lu_Wave is NULL");
 
 		if (self->step)
 			self->step(self);
-		else lu_user_assert_void(false, "Method is not supported by this wave implementation");
+		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
 	}
 
 
 	static void lu_save_wave_step_virtual(Lu_Wave self)
 	{
-		lu_assert(self);
-		lu_assert(lu_wave_is_save(self));
+		lu__assert(self);
+		lu__assert(lu_wave_is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
 
@@ -47,14 +47,14 @@
 
 	static void lu_find_wave_step_virtual(Lu_Wave self)
 	{
-		lu_assert(self);
-		lu_assert(lu_wave_is_find(self));
+		lu__assert(self);
+		lu__assert(lu_wave_is_find(self));
 	}
 
 	static void lu_restore_wave_step_virtual(Lu_Wave self)
 	{
-		lu_assert(self);
-		lu_assert(lu_wave_is_restore(self));
+		lu__assert(self);
+		lu__assert(lu_wave_is_restore(self));
 	}
 
 
@@ -63,17 +63,17 @@
 
 	void lu_wave_process(Lu_Wave self)
 	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu__user_assert_void(self, "Lu_Wave is NULL");
 
 		if (self->process)
 			self->process(self);
-		else lu_user_assert_void(false, "Method is not supported by this wave implementation");
+		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
 	}
 
 	static void lu_save_wave_process_virtual(Lu_Wave self)
 	{
-		lu_assert(self);
-		lu_assert(lu_wave_is_save(self));
+		lu__assert(self);
+		lu__assert(lu_wave_is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
 
@@ -85,14 +85,14 @@
 
 	static void lu_find_wave_process_virtual(Lu_Wave self)
 	{
-		lu_assert(self);
-		lu_assert(lu_wave_is_find(self));
+		lu__assert(self);
+		lu__assert(lu_wave_is_find(self));
 	}
 
 	static void lu_restore_wave_process_virtual(Lu_Wave self)
 	{
-		lu_assert(self);
-		lu_assert(lu_wave_is_restore(self));
+		lu__assert(self);
+		lu__assert(lu_wave_is_restore(self));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -100,9 +100,9 @@
 
 	void lu_wave_reset(Lu_Wave self)
 	{
-		lu_user_assert_void(self, "Lu_Wave is NULL");
+		lu__user_assert_void(self, "Lu_Wave is NULL");
 
 		if (self->reset)
 			self->reset(self);
-		else lu_user_assert_void(false, "Method is not supported by this wave implementation");
+		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
 	}

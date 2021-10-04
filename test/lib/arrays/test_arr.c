@@ -12,8 +12,8 @@ void tearDown(void)
 void test_arr1(void)
 {
     Lu_Mem mem  = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
-    Lu_Arr arr1 = lu_arr_create(mem, 5, true);
-    Lu_Arr arr2 = lu_arr_create(mem, 2, true);
+    Lu_Arr arr1 = lu_arr__create(mem, 5, true);
+    Lu_Arr arr2 = lu_arr__create(mem, 2, true);
 
     int v1 = 1;
     int v2 = 2;
@@ -31,22 +31,22 @@ void test_arr1(void)
     TEST_ASSERT( *((int*)(arr1->items[1])) == v2);
     TEST_ASSERT( *((int*)(arr1->items[2])) == v3);
 
-    lu_arr_destroy(arr1);
-    lu_arr_destroy(arr2);
+    lu_arr__destroy(arr1);
+    lu_arr__destroy(arr2);
 }
 
 void test_arr2(void)
 {
     Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
-    Lu_Arr arr1 = lu_arr_create(mem, 5, true);
+    Lu_Arr arr1 = lu_arr__create(mem, 5, true);
 
-    lu_arr_set(arr1, 0, NULL);
-    lu_arr_set(arr1, 1, NULL);
-    lu_arr_set(arr1, 2, NULL);
-    lu_arr_set(arr1, 3, NULL);
-    lu_arr_set(arr1, 4, NULL);
+    lu_arr__set(arr1, 0, NULL);
+    lu_arr__set(arr1, 1, NULL);
+    lu_arr__set(arr1, 2, NULL);
+    lu_arr__set(arr1, 3, NULL);
+    lu_arr__set(arr1, 4, NULL);
 
-    TEST_ASSERT(lu_arr_get(arr1, 2) == NULL);
+    TEST_ASSERT(lu_arr__get(arr1, 2) == NULL);
 
-    lu_arr_destroy(arr1);
+    lu_arr__destroy(arr1);
 }

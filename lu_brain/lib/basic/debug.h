@@ -13,7 +13,7 @@
 void lu_debug_internal(const char * format, ...);
 void lu_debug_message_internal(const char* file, int line, const char * message);
 
-#define lu_debug lu_debug_internal
+#define lu__debug lu_debug_internal
 #define lu_debug_message(message) lu_debug_message_internal(__FILE__, __LINE__, message)
 #define lu_debug_message_args(message, ...) lu_debug_message_internal(__FILE__, __LINE__, message, __VA_ARGS__)
 
@@ -21,7 +21,7 @@ void lu_debug_message_internal(const char* file, int line, const char * message)
 
 #define LU_DEBUG 1
 
-#define lu_assert assert
+#define lu__assert assert
 
 ///////////////////////////////////////////////////////////////////////////////
 // Label gen

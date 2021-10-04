@@ -7,8 +7,8 @@
 
 	static inline Lu_S_Layer_Conf lu_s_layer_conf_init(Lu_S_Layer_Conf self, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size)
 	{
-		lu_assert(self);
-		lu_assert(mem);
+		lu__assert(self);
+		lu__assert(mem);
 
 		self->mem 				= mem;
 		self->cells_size  		= cells_size; // value depth in indexes
@@ -19,8 +19,8 @@
 		//self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
 
 	 	// Kroky preobchysleni
-		self->steps 		= (lu_value*) lu_mem_alloc(self->mem, sizeof(lu_value) * self->cells_size);
-		lu_assert(self->steps);
+		self->steps 		= (lu_value*) lu_mem__alloc(self->mem, sizeof(lu_value) * self->cells_size);
+		lu__assert(self->steps);
 	
 		lu_size i;
 		for (i = 0; i < self->cells_size; i++)
@@ -31,9 +31,9 @@
 
 	static inline void lu_s_layer_conf_deinit(Lu_S_Layer_Conf self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
-		lu_mem_free(self->mem, (lu_p_byte) self->steps);
+		lu_mem__free(self->mem, (lu_p_byte) self->steps);
 		self->steps = NULL;
 	}
 

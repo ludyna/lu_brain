@@ -8,7 +8,7 @@
 	Lu_Md_Item lu_md_item_create()
 	{
 		Lu_Md_Item self = (Lu_Md_Item) calloc(1, sizeof(struct lu_md_item));
-		lu_assert(self);
+		lu__assert(self);
 
 		self->address			= NULL;
 		self->size 				= 0;
@@ -24,7 +24,7 @@
 
 	void lu_md_item_destroy(Lu_Md_Item self, lu_bool deallocate_address)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		// unlink
 		if (self->next)

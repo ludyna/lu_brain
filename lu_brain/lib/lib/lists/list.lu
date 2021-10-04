@@ -9,24 +9,24 @@
 	{
 		Lu_L_Node node;
 
-		node = (Lu_L_Node) lu_mem_alloc(self->mem, sizeof(struct lu_l_node));
-		lu_assert(node);
+		node = (Lu_L_Node) lu_mem__alloc(self->mem, sizeof(struct lu_l_node));
+		lu__assert(node);
 
 		return node;
 	}
 
 	void lu_l_node_destroy(Lu_List self, Lu_L_Node* l_node)
 	{
-		lu_mem_free(self->mem, (lu_p_byte) *l_node);
+		lu_mem__free(self->mem, (lu_p_byte) *l_node);
 		*l_node = NULL;
 	}
 
 	Lu_List lu_list_create(Lu_Mem mem)
 	{
-		lu_assert(mem);
+		lu__assert(mem);
 		
-		Lu_List self = (Lu_List) lu_mem_alloc(mem, sizeof(struct lu_list));
-		lu_assert(self);
+		Lu_List self = (Lu_List) lu_mem__alloc(mem, sizeof(struct lu_list));
+		lu__assert(self);
 
 		// Initialize
 		return lu_list_init(self, mem);
@@ -39,7 +39,7 @@
 		lu_list_node_destroy_all(self);
 
 		lu_list_init(self, NULL); 			// reset for safety
-		lu_mem_free(mem, (lu_p_byte) self);
+		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -106,7 +106,7 @@
 
 	Lu_L_Node lu_list_node_detach(Lu_List self, Lu_L_Node node)
 	{
-		lu_assert(node != NULL);
+		lu__assert(node != NULL);
 
 	 	Lu_L_Node prev = node->prev;
 	 	Lu_L_Node next = node->next;

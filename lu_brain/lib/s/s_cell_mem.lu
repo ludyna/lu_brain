@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Cell_Mem lu_s_cell_mem_create(Lu_Mem mem)
+	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem)
 	{
-		Lu_S_Cell_Mem self = (Lu_S_Cell_Mem) lu_mem_alloc(mem, sizeof(struct lu_s_cell_mem));
-		lu_assert(self);
+		Lu_S_Cell_Mem self = (Lu_S_Cell_Mem) lu_mem__alloc(mem, sizeof(struct lu_s_cell_mem));
+		lu__assert(self);
 
 		self->mem = mem;
 
@@ -49,54 +49,54 @@
 		return self;
 	}
 
-	static void lu_s_cell_mem_destroy(Lu_S_Cell_Mem self)
+	static void lu_s_cell_mem__destroy(Lu_S_Cell_Mem self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		if (self->component_cells)
-			lu_mem_free(self->mem, (lu_p_byte) self->component_cells);
+			lu_mem__free(self->mem, (lu_p_byte) self->component_cells);
 
 		if (self->pixel_cells)
-			lu_mem_free(self->mem, (lu_p_byte) self->pixel_cells);
+			lu_mem__free(self->mem, (lu_p_byte) self->pixel_cells);
 
 		if (self->rec_cells)
-			lu_mem_free(self->mem, (lu_p_byte) self->rec_cells);
+			lu_mem__free(self->mem, (lu_p_byte) self->rec_cells);
 
 		if (self->seq_nx_cells)
-			lu_mem_free(self->mem, (lu_p_byte) self->seq_nx_cells);
+			lu_mem__free(self->mem, (lu_p_byte) self->seq_nx_cells);
 
 		if (self->seq_cells)
-			lu_mem_free(self->mem, (lu_p_byte) self->seq_cells);
+			lu_mem__free(self->mem, (lu_p_byte) self->seq_cells);
 
 		if (self->story_nx_cells)
-			lu_mem_free(self->mem, (lu_p_byte) self->story_nx_cells);
+			lu_mem__free(self->mem, (lu_p_byte) self->story_nx_cells);
 
-		lu_mem_free(self->mem, (lu_p_byte) self);
+		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Allocate cells
 
-	static void lu_s_cell_mem_alloc_cells(Lu_S_Cell_Mem self)
+	static void lu_s_cell_mem__alloc_cells(Lu_S_Cell_Mem self)
 	{
-		lu_assert(self); 
+		lu__assert(self); 
 		
 		// if (self->cells_1_size > 0)
 		// {
 		// 	self->cells_1 = (struct lu_s_cell_1*) lu_g_mem_alloc(sizeof(struct lu_s_cell_1) * self->cells_1_size);
-		// 	lu_assert(self->cells_1); 
+		// 	lu__assert(self->cells_1); 
 		// }
  	
  	// 	if (self->cells_2_size > 0)
  	// 	{
 		// 	self->cells_2 = (struct lu_s_cell_2*) lu_g_mem_alloc(sizeof(struct lu_s_cell_2) * self->cells_2_size);
-		// 	lu_assert(self->cells_2); 
+		// 	lu__assert(self->cells_2); 
 		// }
 
 		// if (self->cells_3_size > 0)
 		// {
 		// 	self->cells_3 = (struct lu_s_cell_3*) lu_g_mem_alloc(sizeof(struct lu_s_cell_3) * self->cells_3_size);
-		// 	lu_assert(self->cells_3); 
+		// 	lu__assert(self->cells_3); 
 		// }
 	}
 
@@ -209,8 +209,8 @@
 
 	static void lu_s_cell_mem_print_info(Lu_S_Cell_Mem self)
 	{
- 		// lu_debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
- 		// lu_debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
- 		// lu_debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
+ 		// lu__debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
+ 		// lu__debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);
+ 		// lu__debug("\n 	 	%-19s %lu", "cells_3_size:", self->cells_3_size);
 	}
 

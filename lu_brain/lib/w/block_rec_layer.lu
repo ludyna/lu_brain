@@ -7,11 +7,11 @@
 
 	static Lu_Rec_Rg lu_block_rec_layer_create(Lu_Mem mem, Lu_S_Rec_Rg lu_s_rec_rg)
 	{
-		lu_assert(mem);
-		lu_assert(lu_s_rec_rg);
+		lu__assert(mem);
+		lu__assert(lu_s_rec_rg);
 
-		Lu_Rec_Rg self = (Lu_Rec_Rg) lu_mem_alloc(mem, sizeof(struct lu_rec_rg));
-		lu_assert(self);
+		Lu_Rec_Rg self = (Lu_Rec_Rg) lu_mem__alloc(mem, sizeof(struct lu_rec_rg));
+		lu__assert(self);
 
 		self->lu_s_rec_rg = lu_s_rec_rg;
 
@@ -20,9 +20,9 @@
 
 	static void lu_block_rec_layer_destroy(Lu_Rec_Rg self, Lu_Mem mem)
 	{
-		lu_assert(self);
-		lu_assert(mem);
+		lu__assert(self);
+		lu__assert(mem);
 
 
-		lu_mem_free(mem, (lu_p_byte) self);
+		lu_mem__free(mem, (lu_p_byte) self);
 	}

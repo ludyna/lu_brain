@@ -7,7 +7,7 @@
 
 	static inline Lu_S_Base_Cell lu_s_base_cell_init(Lu_S_Base_Cell self, enum lu_s_cell_type type, Lu_S_Base_Layer layer)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		self->type = type;
 		self->layer = layer;
 		
@@ -23,7 +23,7 @@
 		Hnn_Cell_Value* cells 
 	)
 	{
-		lu_assert(self);
+		lu__assert(self);
 		lu_s_base_cell_init(&self->super, type, layer);
 
 		self->cells = cells;
@@ -39,7 +39,7 @@
 		lu_size y
 	)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
 		lu_s_slot_2_init(&self->p);
@@ -56,7 +56,7 @@
 		Lu_S_Base_Layer layer
 	)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
 		lu_s_slot_4_init(&self->p);
@@ -71,7 +71,7 @@
 		Lu_Rec rec
 	)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
 		lu_s_slot_4_init(&self->p);
@@ -87,7 +87,7 @@
 		Lu_S_Base_Layer layer
 	)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
 		lu_s_slot_2_init(&self->p);
@@ -101,7 +101,7 @@
 		Lu_S_Base_Layer layer
 	)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
 		lu_s_slot_2_init(&self->p);

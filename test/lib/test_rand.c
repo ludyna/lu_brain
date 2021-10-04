@@ -17,6 +17,6 @@ void test_rand(void)
 {
     // for (lu_size i = 0; i < 2068; i++)
     // {
-    //     if (i>2047) lu_debug("%d, ", toss_coin());
+    //     if (i>2047) lu__debug("%d, ", toss_coin());
     // }
 }

@@ -23,24 +23,24 @@
 
 	static inline Arr2 arr2_create(Lu_Mem mem, lu_size width, lu_size height, lu_bool allow_realloc)
 	{
-		Arr2 self = (Arr2) lu_mem_alloc(mem, sizeof(struct arr2));
+		Arr2 self = (Arr2) lu_mem__alloc(mem, sizeof(struct arr2));
 		
 		self->width 	= width;
 		self->height 	= height;
-		self->items 	= lu_arr_create(mem, width * height, allow_realloc);
+		self->items 	= lu_arr__create(mem, width * height, allow_realloc);
 
 		return self;
 	} 
 
 	static inline void arr2_destroy(Arr2 self)
 	{
-		lu_user_assert_void(self, "Arr2 is NULL");
+		lu__user_assert_void(self, "Arr2 is NULL");
 
 		Lu_Mem mem = self->items->mem;
-		lu_user_assert_void(mem, "Lu_Mem is NULL");
+		lu__user_assert_void(mem, "Lu_Mem is NULL");
 
-		lu_arr_destroy(self->items);
-		lu_mem_free(mem, (lu_p_byte) self);
+		lu_arr__destroy(self->items);
+		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
 	// Main public methods
@@ -62,12 +62,12 @@
 
 	static inline lu_p_void arr2_get_internal(Arr2 self, lu_size x, lu_size y)
 	{
-		return lu_arr_get(self->items, (y * self->width) + x);
+		return lu_arr__get(self->items, (y * self->width) + x);
 	}
 
 	static inline void arr2_set_internal(Arr2 self, lu_size x, lu_size y, lu_p_void value)
 	{
-		lu_arr_set(self->items, (y * self->width) + x, value);
+		lu_arr__set(self->items, (y * self->width) + x, value);
 	}
 
 	static inline lu_p_void arr2_get_internal_debug(Arr2 self, lu_size x, lu_size y, const char* func, const char* file, int line)
@@ -95,7 +95,7 @@
 
 	static inline void arr2_realloc(Arr2 self, lu_size w, lu_size h)  
 	{ 
-		lu_assert(w + h > self->width + self->height);
+		lu__assert(w + h > self->width + self->height);
 
 		self->width = w;
 		self->height = h;

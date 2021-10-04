@@ -15,7 +15,7 @@
 	// 	{
 	// 		com = lu_s_layer_cell_get(b_layer, self->x, self->y, z);  
 
-	// 		lu_user_assert_void(com, "S_Component is NULL");
+	// 		lu__user_assert_void(com, "S_Component is NULL");
 
 	// 		com->d[0] 	= cell;
 	// 		cell->b[z] 	= com;
@@ -24,8 +24,8 @@
 
 	// static void s_pyra_connect(Lu_S_Cell_2 self, Lu_S_Layer b_layer)
 	// {
-	// 	lu_assert(self);
-	// 	lu_assert(b_layer);
+	// 	lu__assert(self);
+	// 	lu__assert(b_layer);
 
 	// 	lu_size x 			= self->x;
 	// 	lu_size y 			= self->y;
@@ -39,7 +39,7 @@
 	// 	Lu_S_Cell_1 d 			= (Lu_S_Cell_1) self;
 
 	// 	b = lu_s_layer_cell_get(b_layer, x, y, 0);
-	// 	lu_assert(b);
+	// 	lu__assert(b);
 
 	// 	d_np(b) = d; // b->d->np = d; 
 	// 	b_vl(d) = b; // d->b->vl = b; 
@@ -69,8 +69,8 @@
 
 	// static void s_block_connect(Lu_S_Cell_1 d, Lu_S_Layer b_layer)
 	// {
-	// 	lu_user_assert_void(d, "Lu_S_Cell_1 is NULL");
-	// 	lu_user_assert_void(b_layer, "Lu_S_Layer is NULL"); 
+	// 	lu__user_assert_void(d, "Lu_S_Cell_1 is NULL");
+	// 	lu__user_assert_void(b_layer, "Lu_S_Layer is NULL"); 
 
 	// 	lu_size x 		= 0;
 	// 	lu_size y 		= 0;
@@ -78,7 +78,7 @@
 	// 	Lu_S_Cell_1 b = NULL;
 
 	// 	b = lu_s_layer_cell_get(b_layer, x, y, 0);
-	// 	lu_user_assert_void(b, "Lu_S_Cell_1 is NULL");
+	// 	lu__user_assert_void(b, "Lu_S_Cell_1 is NULL");
 
 	// 	// WRONG
 	// 	d_d(b) = d; 

@@ -7,11 +7,11 @@
 
 	static Lu_Data lu_data_create_via_deep_copy_internal(Lu_Mem mem, Lu_Data src, const char* func, const char* file, int line)
 	{
-		lu_assert(mem);
+		lu__assert(mem);
 		lu_data_validate_exists(src);
 
 		Lu_Data self = (Lu_Data) mem->alloc(mem, sizeof(struct lu_data), func, file, line);
-		lu_assert(self);
+		lu__assert(self);
 
 		self->w 		= src->w;
 		self->h 		= src->h;
@@ -31,18 +31,18 @@
 
 	Lu_Data lu_data_create_via_shift_internal(Lu_Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line) 
 	{
-		lu_assert(mem);
+		lu__assert(mem);
 		lu_data_validate_exists(src);
 
 		lu_int w = (lu_int) src->w;
 		lu_int h = (lu_int) src->h;
 		lu_int d = (lu_int) src->d;
 
-		lu_assert(x_shift < w);
-		lu_assert(y_shift < h);
+		lu__assert(x_shift < w);
+		lu__assert(y_shift < h);
 
 		Lu_Data self = (Lu_Data) mem->alloc(mem, sizeof(struct lu_data), func, file, line);
-		lu_assert(self);
+		lu__assert(self);
 
 		self->w 		= src->w;
 		self->h 		= src->h;
@@ -78,12 +78,12 @@
 					tx = x - x_shift;
 					ty = y - y_shift;
 
-					// lu_debug("\n %d - %d = %d", x, x_shift, tx);
+					// lu__debug("\n %d - %d = %d", x, x_shift, tx);
 
-					lu_assert(tx >= 0);
-					lu_assert(tx < self->w);
-					lu_assert(ty >= 0);
-					lu_assert(ty < self->h);
+					lu__assert(tx >= 0);
+					lu__assert(tx < self->w);
+					lu__assert(ty >= 0);
+					lu__assert(ty < self->h);
 
 					lu_data_value_set(self, tx, ty, z, lu_data_value_get(src, sx, sy, z));
 				}
@@ -93,16 +93,16 @@
 
 	void lu_data_destroy(Lu_Data self, Lu_Mem mem)
 	{
-		lu_assert(self);
-		lu_assert(mem);
+		lu__assert(self);
+		lu__assert(mem);
 
 		if (self->values) 
 		{
-			lu_mem_free(mem, (lu_p_byte) self->values);
+			lu_mem__free(mem, (lu_p_byte) self->values);
 			self->values = NULL;
 		}
 
-		lu_mem_free(mem, (lu_p_byte) self);
+		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
 
@@ -111,12 +111,12 @@
 
 	void lu_data_debug(Lu_Data self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
-		lu_debug("\nData: ");
-		lu_debug("\n\tw: %d", self->w); 
-		lu_debug("\n\th: %d", self->h);
-		lu_debug("\n\td: %d", self->d);
+		lu__debug("\nData: ");
+		lu__debug("\n\tw: %d", self->w); 
+		lu__debug("\n\th: %d", self->h);
+		lu__debug("\n\td: %d", self->d);
 
 		if (self->values)
 		{
@@ -126,15 +126,15 @@
 			for (z = 0; z < self->d; z++)
 				for (y = 0; y < self->h; y++)
 				{
-					lu_debug("\n\t");
+					lu__debug("\n\t");
 					for (x = 0; x < self->w; x++)
 					{
-						lu_debug("%.2f, ", lu_data_value_get(self, x, y, z));
+						lu__debug("%.2f, ", lu_data_value_get(self, x, y, z));
 					}
 				}
 		}
 		else
 		{
-			lu_debug("\tvalues: NULL");
+			lu__debug("\tvalues: NULL");
 		}
 	}

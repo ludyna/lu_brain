@@ -2,14 +2,14 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static Lu_S_Rec_Rg lu_s_rec_rg_create(Lu_Mem mem, Lu_Rec rec, Lu_S_Cell_Mem cell_mem)
+	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem mem, Lu_Rec rec, Lu_S_Cell_Mem cell_mem)
 	{
-		lu_assert(mem);
-		lu_assert(rec);
-		lu_assert(cell_mem);
+		lu__assert(mem);
+		lu__assert(rec);
+		lu__assert(cell_mem);
 
-		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem_alloc(mem, sizeof(struct lu_s_rec_rg));
-		lu_assert(self);
+		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem__alloc(mem, sizeof(struct lu_s_rec_rg));
+		lu__assert(self);
 
 		lu_s_base_rg_init(&self->super, mem, cell_mem);
 
@@ -69,20 +69,20 @@
 		}
 		else self->rec_layers_size -= 2;
 			
-		lu_assert(self->rec_layers_size > 0);
+		lu__assert(self->rec_layers_size > 0);
 
 		lu_size w = self->cells_w - 1;
 		lu_size h = self->cells_h - 1;				
-		self->rec_layers = (struct lu_s_rec_layer*) lu_mem_alloc(mem, sizeof(struct lu_s_rec_layer) * self->rec_layers_size);
-		lu_assert(self->rec_layers); 
+		self->rec_layers = (struct lu_s_rec_layer*) lu_mem__alloc(mem, sizeof(struct lu_s_rec_layer) * self->rec_layers_size);
+		lu__assert(self->rec_layers); 
 
 		lu_size ix = 0;
 		while (w >= 2 || h >= 2)
 		{
-			lu_assert(ix < self->rec_layers_size);
+			lu__assert(ix < self->rec_layers_size);
 
 			// tip should be in seq_nx layer, not here
-			lu_assert(w > 1 && h > 1);
+			lu__assert(w > 1 && h > 1);
 
 			lu_s_rec_layer_init(&self->rec_layers[ix], mem, ix, w, h);
 
@@ -94,10 +94,10 @@
 		return self;
 	}
 
-	static void lu_s_rec_rg_destroy(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg__destroy(Lu_S_Rec_Rg self)
 	{
-		lu_assert(self);
-		lu_assert(self->super.mem);
+		lu__assert(self);
+		lu__assert(self->super.mem);
 
 		for(lu_size i = 0; i < self->rec_layers_size; i++)
 		{
@@ -105,7 +105,7 @@
 		}
 
 		if (self->rec_layers)
-			lu_mem_free(self->super.mem, (lu_p_byte) self->rec_layers);
+			lu_mem__free(self->super.mem, (lu_p_byte) self->rec_layers);
 
 
 		lu_s_pixel_layer_deinit(&self->pixel_layer);
@@ -115,24 +115,24 @@
 
 		lu_s_base_rg_deinit(&self->super);
 
-		lu_mem_free(self->super.mem, (lu_p_byte) self);
+		lu_mem__free(self->super.mem, (lu_p_byte) self);
 	}
 
 
-	static void lu_s_rec_rg_print_info(Lu_S_Rec_Rg self)
+	static void lu_s_rec_rg__print_info(Lu_S_Rec_Rg self)
 	{
-		lu_assert(self);
+		lu__assert(self);
 
-		// lu_debug("\n\n 	-- Lu_S_Rec_Rg #%lu info: ", self->id);
- 	// 	lu_debug("\n 	 	%-19s %lu", "cells_w:", self->cells_w);
- 	// 	lu_debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
- 	// 	lu_debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
- 	// 	lu_debug("\n 	 	");
+		// lu__debug("\n\n 	-- Lu_S_Rec_Rg #%lu info: ", self->id);
+ 	// 	lu__debug("\n 	 	%-19s %lu", "cells_w:", self->cells_w);
+ 	// 	lu__debug("\n 	 	%-19s %lu", "cells_h:", self->cells_h);
+ 	// 	lu__debug("\n 	 	%-19s %lu", "cells_d:", self->cells_d);
+ 	// 	lu__debug("\n 	 	");
  		
- 	// 	lu_debug("\n 	 	%-19s %lu", "layers_size:", self->layers_size);
- 	// 	lu_debug("\n 	 	");
+ 	// 	lu__debug("\n 	 	%-19s %lu", "layers_size:", self->layers_size);
+ 	// 	lu__debug("\n 	 	");
 
  	// 	lu_s_rec_rg_print_layers_info(self->layers, self->layers_size, 3);
 
-		lu_debug("\n"); 
+		lu__debug("\n"); 
 	}

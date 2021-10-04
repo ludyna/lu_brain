@@ -4,9 +4,9 @@
 
 	// static void lu_s_rec_rg_layers_init(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
-	// 	lu_user_assert_void(self->layers, "self->layers is NULL");
-	// 	lu_assert(self->cell_mem);
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self->layers, "self->layers is NULL");
+	// 	lu__assert(self->cell_mem);
 
 	// 	lu_size w = self->cells_w;
 	// 	lu_size h = self->cells_h;
@@ -17,7 +17,7 @@
 
 	// 	// Components
 	// 	layer = lu_s_layer_base_init(layer, LU_SLT_COMPONENT, ix, w, h, d);
-	// 	lu_user_assert_void(layer, "Cannot init component layer");
+	// 	lu__user_assert_void(layer, "Cannot init component layer");
 	// 	lu_s_cell_mem_cell_3_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
 	// 	++ix;
@@ -27,7 +27,7 @@
 	// 	layer 	= &self->layers[ix];
 
 	// 	layer = lu_s_layer_base_init(layer, LU_SLT_PIXEL, ix, w, h, d);
-	// 	lu_user_assert_void(layer, "Cannot init cell layer");
+	// 	lu__user_assert_void(layer, "Cannot init cell layer");
 	// 	lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
 	// 	// Pyras
@@ -38,12 +38,12 @@
 	// 	// here is 1s instead of 0s, because top layer is actually base layer in seq rg
 	// 	while (w > 1 && h > 1)
 	// 	{
-	// 		lu_user_assert_void(ix < self->layers_size, "Index error");
+	// 		lu__user_assert_void(ix < self->layers_size, "Index error");
 
 	// 		layer = &self->layers[ix];
 
 	// 		layer = lu_s_layer_base_init(layer, LU_SLT_REC, ix, w, h, d);
-	// 		lu_user_assert_void(layer, "Cannot init pyra layer");
+	// 		lu__user_assert_void(layer, "Cannot init pyra layer");
 	// 		lu_s_cell_mem_cell_2_size_inc(self->cell_mem, lu_s_layer_cells_size(layer));
 
 	// 		if (w > 0) --w;
@@ -54,7 +54,7 @@
 
 	// static void lu_s_rec_rg_layers_deinit(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 	// 	Lu_S_Layer layer;
 	// 	for (lu_size i = 0; i < self->layers_size; i++)
@@ -66,8 +66,8 @@
 
 	// static void lu_s_rec_rg_component_layer_connect(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
-	// 	lu_user_assert_void(self->layers, "self->layers is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self->layers, "self->layers is NULL");
 
 	// 	if (self->layers_size > 0)
 	// 		lu_s_layer_component_cells_init(&self->layers[0], self->cell_mem, &self->v_conf, &self->p_conf);
@@ -75,15 +75,15 @@
 
 	// static void lu_s_rec_rg_component_layer_disconnect(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 	// 	lu_s_layer_component_cells_deinit(&self->layers[0], self->cell_mem);
 	// }
 
 	// static void lu_s_rec_rg_pixel_layer_connect(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
-	// 	lu_user_assert_void(self->layers, "self->layers is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self->layers, "self->layers is NULL");
 
 	// 	Lu_S_Layer layer 	= &self->layers[1];
 	// 	Lu_S_Layer b_layer 	= &self->layers[0];
@@ -93,7 +93,7 @@
 
 	// static void lu_s_rec_rg_pixel_layer_disconnect(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 	
 	// 	if (self->layers_size > 1)
 	// 		lu_s_layer_pixel_cells_deinit(&self->layers[1], self->cell_mem);
@@ -101,7 +101,7 @@
 
 	// static void lu_s_rec_rg_pyras_layers_connect(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 	// 	Lu_S_Layer layer;
 	// 	Lu_S_Layer b_layer = NULL;
@@ -117,7 +117,7 @@
 
 	// static void lu_s_rec_rg_pyras_layers_disconnect(Lu_S_Rec_Rg self)
 	// {
-	// 	lu_user_assert_void(self, "Lu_S_Rec_Rg is NULL");
+	// 	lu__user_assert_void(self, "Lu_S_Rec_Rg is NULL");
 
 	// 	for(lu_size i = 0; i < self->layers_size; i++)
 	// 	{

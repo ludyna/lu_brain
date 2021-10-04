@@ -6,11 +6,11 @@
 
 void lu_free(void **pp)
 {
-	lu_assert(pp != NULL);
+	lu__assert(pp != NULL);
 	if (!pp) return;
 
 	void *p = *pp;
-	lu_assert(p != NULL);
+	lu__assert(p != NULL);
 	if (!p) return;
 
 	free(p);

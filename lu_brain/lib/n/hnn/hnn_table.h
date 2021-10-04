@@ -12,7 +12,7 @@
 
 	static inline Hnn_Table_Node hnn_table_node_create(Lu_Mem mem, Hnn_Cell_0 cell, Hnn_Table_Node prev)
 	{
-		Hnn_Table_Node self = (Hnn_Table_Node) lu_mem_alloc(mem, sizeof(struct hnn_table_node));
+		Hnn_Table_Node self = (Hnn_Table_Node) lu_mem__alloc(mem, sizeof(struct hnn_table_node));
 
 		self->prev = prev;
 		self->cell = cell;
@@ -49,12 +49,12 @@
 
 	static inline Hnn_Table_Node hnn_table_cell_add(Hnn_Table self, lu_size hash, Hnn_Cell_0 new_cell)
 	{
-		lu_assert(self);
-		lu_assert(new_cell);
-		lu_assert(self->size_in_cells > 0);
-		lu_assert(self->units);
-		lu_assert(self->mem);
-		lu_assert(self->cell_type == new_cell->type);
+		lu__assert(self);
+		lu__assert(new_cell);
+		lu__assert(self->size_in_cells > 0);
+		lu__assert(self->units);
+		lu__assert(self->mem);
+		lu__assert(self->cell_type == new_cell->type);
 
 		lu_size index = hnn_table_hash_to_index(self, hash);
 
