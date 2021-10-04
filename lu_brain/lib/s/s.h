@@ -363,7 +363,7 @@
 	struct lu_s_seq_rg {
 		struct lu_s_base_rg super;
 
-		lu_size 				recs_size;
+		lu_size recs_size;
 
 		// 
 		// Layers
@@ -384,8 +384,8 @@
 	static Lu_S_Seq_Rg lu_s_seq_rg__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size);
 	static void lu_s_seq_rg__destroy(Lu_S_Seq_Rg self);
 
-	static void lu_s_seq_rg_layers_connect(Lu_S_Seq_Rg self);
-	static void lu_s_seq_rg_layers_disconnect(Lu_S_Seq_Rg self);
+	static void lu_s_seq_rg__layers_connect(Lu_S_Seq_Rg self);
+	static void lu_s_seq_rg__layers_disconnect(Lu_S_Seq_Rg self);
 
 
 ///////////////////////////////////////////////////////////////////////////////

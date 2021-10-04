@@ -9,7 +9,7 @@
 	// Lu_S_Base_Layer
 	//
 
-	static inline Lu_S_Base_Layer lu_s_base_layer_init(
+	static inline Lu_S_Base_Layer lu_s_base_layer__init(
 		Lu_S_Base_Layer self, 
 		Lu_Mem mem,
 		enum lu_s_layer_type type, 
@@ -33,7 +33,7 @@
 		return self;
 	}
 
-	static inline void lu_s_base_layer_deinit(Lu_S_Base_Layer self)
+	static inline void lu_s_base_layer__deinit(Lu_S_Base_Layer self)
 	{
 		lu__assert(self);
 
@@ -48,7 +48,7 @@
 	// Lu_S_Component_Layer
 	//
 
-	static inline Lu_S_Component_Layer lu_s_component_layer_init(
+	static inline Lu_S_Component_Layer lu_s_component_layer__init(
 		Lu_S_Component_Layer self, 
 		Lu_Mem mem, 
 		lu_size w, 
@@ -65,7 +65,7 @@
 		lu__assert(h > 0);
 		lu__assert(d > 0);
 
-		lu_s_base_layer_init(&self->super, mem, LU_SLT_COMPONENT, 0, w, h);
+		lu_s_base_layer__init(&self->super, mem, LU_SLT_COMPONENT, 0, w, h);
 
 		self->d = d;
 		lu_s_layer_conf_init(&self->conf, mem, min_val, max_val, cells_size);
@@ -77,7 +77,7 @@
 		return self;
 	} 
 
-	static inline void lu_s_component_layer_deinit(Lu_S_Component_Layer self)
+	static inline void lu_s_component_layer__deinit(Lu_S_Component_Layer self)
 	{
 		lu__assert(self);
 		lu__assert(self->super.mem);
@@ -87,14 +87,14 @@
 
 		lu_s_layer_conf_deinit(&self->conf);
 
-		lu_s_base_layer_deinit(&self->super);
+		lu_s_base_layer__deinit(&self->super);
 	}
 
 	//
 	// Lu_S_Pixel_Layer
 	//
 	
-	static inline Lu_S_Pixel_Layer lu_s_pixel_layer_init(Lu_S_Pixel_Layer self, Lu_Mem mem, lu_size w, lu_size h)
+	static inline Lu_S_Pixel_Layer lu_s_pixel_layer__init(Lu_S_Pixel_Layer self, Lu_Mem mem, lu_size w, lu_size h)
 	{
 		lu__assert(self);
 		lu__assert(mem);
@@ -102,7 +102,7 @@
 		lu__assert(w > 0);
 		lu__assert(h > 0);
 
-		lu_s_base_layer_init(&self->super, mem, LU_SLT_PIXEL, 0, w, h);
+		lu_s_base_layer__init(&self->super, mem, LU_SLT_PIXEL, 0, w, h);
 
 		self->cells_size = w * h;
 		self->cells = (Lu_S_Pixel_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Pixel_Cell) * self->cells_size);
@@ -111,27 +111,27 @@
 		return self;
 	}
 
-	static inline void lu_s_pixel_layer_deinit(Lu_S_Pixel_Layer self)
+	static inline void lu_s_pixel_layer__deinit(Lu_S_Pixel_Layer self)
 	{
 		lu__assert(self);
 		lu__assert(self->super.mem);
 
 		lu_mem__free(self->super.mem, (lu_p_byte) self->cells);
 
-		lu_s_base_layer_deinit(&self->super);
+		lu_s_base_layer__deinit(&self->super);
 	}
 
 	//
 	// Lu_S_Rec_Layer
 	//
 
-	static inline Lu_S_Rec_Layer lu_s_rec_layer_init(Lu_S_Rec_Layer self, Lu_Mem mem, lu_size id, lu_size w, lu_size h)
+	static inline Lu_S_Rec_Layer lu_s_rec_layer__init(Lu_S_Rec_Layer self, Lu_Mem mem, lu_size id, lu_size w, lu_size h)
 	{
 		lu__assert(self);
 		lu__assert(w > 0);
 		lu__assert(h > 0);
 
-		lu_s_base_layer_init(&self->super, mem, LU_SLT_REC, id, w, h); 
+		lu_s_base_layer__init(&self->super, mem, LU_SLT_REC, id, w, h); 
 
 		self->cells_size = w * h;
 		self->cells = (Lu_S_Rec_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Rec_Cell) * self->cells_size);
@@ -140,25 +140,78 @@
 		return self;
 	}
 
-	static inline void lu_s_rec_layer_deinit(Lu_S_Rec_Layer self)
+	static inline void lu_s_rec_layer__deinit(Lu_S_Rec_Layer self)
 	{
 		lu__assert(self);
 		lu__assert(self->super.mem);
 
 		lu_mem__free(self->super.mem, (lu_p_byte) self->cells);
 
-		lu_s_base_layer_deinit(&self->super);
+		lu_s_base_layer__deinit(&self->super);
 	}
 
 	//
 	// Lu_S_Seq_Nx_Layer
 	//
 
+	static inline Lu_S_Seq_Nx_Layer lu_s_seq_nx_layer__init(Lu_S_Seq_Nx_Layer self, Lu_Mem mem, lu_size w)
+	{
+		lu__assert(self);
+		lu__assert(w > 0);
+
+		lu_s_base_layer__init(&self->super, mem, LU_SLT_SEQ_NX, 0, w, 1);
+	}
+
+	static inline void lu_s_seq_nx_layer__deinit(Lu_S_Seq_Nx_Layer self)
+	{
+		lu__assert(self);
+		lu__assert(self->super.mem);
+
+		//...
+
+		lu_s_base_layer__deinit(&self->super);
+	}
+
 	//
 	// Lu_S_Seq_Layer
 	//
+
+	static inline Lu_S_Seq_Layer lu_s_seq_layer__init(Lu_S_Seq_Layer self, Lu_Mem mem, lu_size w)
+	{
+		lu__assert(self);
+		lu__assert(w > 0);
+
+		lu_s_base_layer__init(&self->super, mem, LU_SLT_SEQ, 0, w, 1);
+	}
+
+	static inline void lu_s_seq_layer__deinit(Lu_S_Seq_Layer self)
+	{
+		lu__assert(self);
+		lu__assert(self->super.mem);
+
+		//...
+
+		lu_s_base_layer__deinit(&self->super);
+	}
 
 	//
 	// Lu_S_Story_Nx_Layer
 	//
 
+	static inline Lu_S_Story_Nx_Layer lu_s_story_nx_layer__init(Lu_S_Story_Nx_Layer self, Lu_Mem mem, lu_size w)
+	{
+		lu__assert(self);
+		lu__assert(w > 0);
+
+		lu_s_base_layer__init(&self->super, mem, LU_SLT_SEQ, 0, w, 1);
+	}
+
+	static inline void lu_s_story_nx_layer__deinit(Lu_S_Story_Nx_Layer self)
+	{
+		lu__assert(self);
+		lu__assert(self->super.mem);
+
+		//...
+
+		lu_s_base_layer__deinit(&self->super);
+	}

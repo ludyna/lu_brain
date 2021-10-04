@@ -24,7 +24,7 @@
 		// Component layers inits
 		//
 
-		lu_s_component_layer_init( 
+		lu_s_component_layer__init( 
 			&self->v_layer, 
 			mem, 
 			self->cells_w,
@@ -35,7 +35,7 @@
 			rec->config.v_neu_size
 		);
 
-		lu_s_component_layer_init(
+		lu_s_component_layer__init(
 			&self->p_layer, 
 			mem, 
 			self->cells_w,
@@ -50,7 +50,7 @@
 		// Pixel layer init
 		// 
 
-		lu_s_pixel_layer_init(&self->pixel_layer, mem, self->cells_w, self->cells_h);
+		lu_s_pixel_layer__init(&self->pixel_layer, mem, self->cells_w, self->cells_h);
 
 		//
 		// Rec layers allocate and init
@@ -84,7 +84,7 @@
 			// tip should be in seq_nx layer, not here
 			lu__assert(w > 1 && h > 1);
 
-			lu_s_rec_layer_init(&self->rec_layers[ix], mem, ix, w, h);
+			lu_s_rec_layer__init(&self->rec_layers[ix], mem, ix, w, h);
 
 			if (w > 1) --w;
 			if (h > 1) --h;
@@ -101,17 +101,17 @@
 
 		for(lu_size i = 0; i < self->rec_layers_size; i++)
 		{
-			lu_s_rec_layer_deinit(&self->rec_layers[i]);
+			lu_s_rec_layer__deinit(&self->rec_layers[i]);
 		}
 
 		if (self->rec_layers)
 			lu_mem__free(self->super.mem, (lu_p_byte) self->rec_layers);
 
 
-		lu_s_pixel_layer_deinit(&self->pixel_layer);
+		lu_s_pixel_layer__deinit(&self->pixel_layer);
 
-		lu_s_component_layer_deinit(&self->p_layer);
-		lu_s_component_layer_deinit(&self->v_layer);
+		lu_s_component_layer__deinit(&self->p_layer);
+		lu_s_component_layer__deinit(&self->v_layer);
 
 		lu_s_base_rg_deinit(&self->super);
 

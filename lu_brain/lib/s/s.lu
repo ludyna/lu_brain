@@ -51,14 +51,14 @@
 		// Create Seq_Rg
 		//
 
-		self->seq = lu_s_seq_rg__create(lu_arr__count(recs));
+		self->seq = lu_s_seq_rg__create(mem, self->cell_mem, lu_arr__count(recs));
 		lu__assert(self->seq);
 
 		//
 		// Create Story_Rg
 		//
 
-		self->story = lu_s_story_rg__create();
+		self->story = lu_s_story_rg__create(mem, self->cell_mem);
 		lu__assert(self->story);
 
 		//

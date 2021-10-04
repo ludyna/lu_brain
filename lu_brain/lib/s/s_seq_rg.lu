@@ -31,40 +31,40 @@
 		// 
 
 		for (lu_size i = 0; i < self->seq_layers_size; i++)
-			lu_s_seq_layer_deinit(&self->seq_layers[i]);
+			lu_s_seq_layer__deinit(&self->seq_layers[i]);
 
-		lu_mem__free((lu_p_byte) self->layers);
-		lu_mem__free((lu_p_byte) self);
+		lu_mem__free(self->super.mem, (lu_p_byte) self->seq_layers);
+		lu_mem__free(self->super.mem, (lu_p_byte) self);
 	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_seq_rg_layers_connect(Lu_S_Seq_Rg self)
+	static void lu_s_seq_rg__layers_connect(Lu_S_Seq_Rg self)
 	{
-		lu__assert(self);
+		// lu__assert(self);
 
-		Lu_S_Layer layer;
-		Lu_S_Layer b_layer = NULL;
-		lu_size ix;
+		// Lu_S_Seq_Layer layer;
+		// Lu_S_Seq_Layer b_layer = NULL;
+		// lu_size ix;
 
-		for(ix = 1; ix < self->layers_size; ix++)
-		{
-			layer = &self->layers[ix];
-			b_layer = &self->layers[ix - 1];
+		// for(ix = 1; ix < self->layers_size; ix++)
+		// {
+		// 	layer = &self->layers[ix];
+		// 	b_layer = &self->layers[ix - 1];
 		
-			lu_s_layer_seq_cells_init(layer, b_layer, self->cell_mem);
-		}
+		// 	lu_s_seq_layer__cells_init(layer, b_layer, self->cell_mem);
+		// }
 	}
 
-	static void lu_s_seq_rg_layers_disconnect(Lu_S_Seq_Rg self)
+	static void lu_s_seq_rg__layers_disconnect(Lu_S_Seq_Rg self)
 	{
-		lu__assert(self);
+		// lu__assert(self);
 
-		for(lu_size i = 0; i < self->layers_size; i++)
-		{
-			lu_s_layer_seq_cells_deinit(&self->layers[i], self->cell_mem);
-		}
+		// for(lu_size i = 0; i < self->layers_size; i++)
+		// {
+		// 	lu_s_layer_seq_cells_deinit(&self->layers[i], self->cell_mem);
+		// }
 	}
 
