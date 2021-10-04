@@ -68,7 +68,7 @@
 		lu_s_base_layer__init(&self->super, mem, LU_SLT_COMPONENT, 0, w, h);
 
 		self->d = d;
-		lu_s_layer_conf_init(&self->conf, mem, min_val, max_val, cells_size);
+		lu_s_layer_conf__init(&self->conf, mem, min_val, max_val, cells_size);
 
 		self->cells_size = w * h * d;
 		self->cells = (Lu_S_Component_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Component_Cell) * self->cells_size);
@@ -85,7 +85,7 @@
 		if (self->cells)
 			lu_mem__free(self->super.mem, (lu_p_byte) self->cells);
 
-		lu_s_layer_conf_deinit(&self->conf);
+		lu_s_layer_conf__deinit(&self->conf);
 
 		lu_s_base_layer__deinit(&self->super);
 	}

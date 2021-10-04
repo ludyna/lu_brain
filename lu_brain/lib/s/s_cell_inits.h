@@ -11,7 +11,7 @@
 		self->type = type;
 		self->layer = layer;
 		
-		lu_s_slot_1_init(&self->c);
+		lu_s_slot_1__init(&self->c);
 
 		return self;
 	}
@@ -42,7 +42,7 @@
 		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_2_init(&self->p);
+		lu_s_slot_2__init(&self->p);
 
 		self->x = x;
 		self->y = y;
@@ -59,7 +59,7 @@
 		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_4_init(&self->p);
+		lu_s_slot_4__init(&self->p);
 
 		return self;
 	}
@@ -74,7 +74,7 @@
 		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_4_init(&self->p);
+		lu_s_slot_4__init(&self->p);
 
 		self->rec = rec;
 
@@ -90,7 +90,7 @@
 		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_2_init(&self->p);
+		lu_s_slot_2__init(&self->p);
 
 		return self;
 	}
@@ -104,7 +104,7 @@
 		lu__assert(self);
 
 		lu_s_base_cell_init(&self->super, type, layer);
-		lu_s_slot_2_init(&self->p);
+		lu_s_slot_2__init(&self->p);
 
 		return self;
 	}

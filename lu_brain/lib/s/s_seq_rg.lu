@@ -13,7 +13,7 @@
 		Lu_S_Seq_Rg self = (Lu_S_Seq_Rg) lu_mem__alloc(mem, sizeof(struct lu_s_seq_rg));
 		lu__assert(self);
 		
-		lu_s_base_rg_init(&self->super, mem, cell_mem);
+		lu_s_base_rg__init(&self->super, mem, cell_mem);
 
 
 		

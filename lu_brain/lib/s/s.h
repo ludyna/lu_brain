@@ -51,20 +51,20 @@
 	// Slot inits
 	//
 
-	static inline Lu_S_Slot_1 lu_s_slot_1_init(Lu_S_Slot_1 self) 
+	static inline Lu_S_Slot_1 lu_s_slot_1__init(Lu_S_Slot_1 self) 
 	{
 		self->one = NULL;
 		return self;
 	}
 
-	static inline Lu_S_Slot_2 lu_s_slot_2_init(Lu_S_Slot_2 self) 
+	static inline Lu_S_Slot_2 lu_s_slot_2__init(Lu_S_Slot_2 self) 
 	{
 		self->one = NULL;
 		self->two = NULL;
 		return self;
 	} 
 
-	static inline Lu_S_Slot_4 lu_s_slot_4_init(Lu_S_Slot_4 self) 
+	static inline Lu_S_Slot_4 lu_s_slot_4__init(Lu_S_Slot_4 self) 
 	{
 		self->one = NULL;
 		self->two = NULL;
@@ -146,14 +146,14 @@
 	};
 
 	// lu_s_layer_conf.lu
-	static Lu_S_Layer_Conf lu_s_layer_conf_init(Lu_S_Layer_Conf, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
-	static void lu_s_layer_conf_deinit(Lu_S_Layer_Conf self);
+	static Lu_S_Layer_Conf lu_s_layer_conf__init(Lu_S_Layer_Conf, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_layer_conf__deinit(Lu_S_Layer_Conf self);
 
-	static inline lu_value lu_s_layer_conf_norm(Lu_S_Layer_Conf self, lu_value request);
-	static inline lu_size lu_s_layer_conf_ix(Lu_S_Layer_Conf self, lu_value val);
-	static inline struct lu_size_range lu_s_layer_conf_ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc);
-	static inline lu_value lu_s_layer_conf_calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_s_layer_conf_step_norm_dist(Lu_S_Layer_Conf self);
+	static inline lu_value lu_s_layer_conf__norm(Lu_S_Layer_Conf self, lu_value request);
+	static inline lu_size lu_s_layer_conf__ix(Lu_S_Layer_Conf self, lu_value val);
+	static inline struct lu_size_range lu_s_layer_conf__ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_layer_conf__calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_layer_conf__step_norm_dist(Lu_S_Layer_Conf self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -271,7 +271,7 @@
 	// Print
 	//
 
-	static void lu_s_cell_mem_print_info(Lu_S_Cell_Mem self);
+	static void lu_s_cell_mem__print_info(Lu_S_Cell_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Base_Rg
@@ -282,7 +282,7 @@
 		Lu_S_Cell_Mem cell_mem;
 	};
 
-	static inline Lu_S_Base_Rg lu_s_base_rg_init(Lu_S_Base_Rg self, Lu_Mem mem, Lu_S_Cell_Mem cell_mem)
+	static inline Lu_S_Base_Rg lu_s_base_rg__init(Lu_S_Base_Rg self, Lu_Mem mem, Lu_S_Cell_Mem cell_mem)
 	{
 		lu__assert(self);
 		lu__assert(mem);
@@ -294,7 +294,7 @@
 		return self;
 	}
 
-	static inline void lu_s_base_rg_deinit(Lu_S_Base_Rg self)
+	static inline void lu_s_base_rg__deinit(Lu_S_Base_Rg self)
 	{
 		lu__assert(self);
 		self->mem = NULL;
@@ -342,17 +342,17 @@
 	// lu_s_rec_rg_layer_inits.lu
 	//
 
-	static void lu_s_rec_rg_layers_init(Lu_S_Rec_Rg self);
-	static void lu_s_rec_rg_layers_deinit(Lu_S_Rec_Rg self);
+	static void lu_s_rec_rg_layers__init(Lu_S_Rec_Rg self);
+	static void lu_s_rec_rg_layers__deinit(Lu_S_Rec_Rg self);
 	
-	static void lu_s_rec_rg_component_layer_connect(Lu_S_Rec_Rg self);
-	static void lu_s_rec_rg_component_layer_disconnect(Lu_S_Rec_Rg self);
+	// static void lu_s_rec_rg_component_layer_connect(Lu_S_Rec_Rg self);
+	// static void lu_s_rec_rg_component_layer_disconnect(Lu_S_Rec_Rg self);
 	
-	static void lu_s_rec_rg_pixel_layer_connect(Lu_S_Rec_Rg self); 
-	static void lu_s_rec_rg_pixel_layer_disconnect(Lu_S_Rec_Rg self); 
+	// static void lu_s_rec_rg_pixel_layer_connect(Lu_S_Rec_Rg self); 
+	// static void lu_s_rec_rg_pixel_layer_disconnect(Lu_S_Rec_Rg self); 
 
-	static void lu_s_rec_rg_pyras_layers_connect(Lu_S_Rec_Rg self); 
-	static void lu_s_rec_rg_pyras_layers_disconnect(Lu_S_Rec_Rg self);
+	// static void lu_s_rec_rg_pyras_layers_connect(Lu_S_Rec_Rg self); 
+	// static void lu_s_rec_rg_pyras_layers_disconnect(Lu_S_Rec_Rg self);
 
 	static void lu_s_rec_rg__print_info(Lu_S_Rec_Rg self);
 
@@ -401,6 +401,10 @@
 
 		struct lu_s_story_nx_layer story_nx_layer;
 	};
+
+
+	static Lu_S_Story_Rg lu_s_story_rg__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size stories_size);
+	static void lu_s_story_rg__destroy(Lu_S_Story_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S

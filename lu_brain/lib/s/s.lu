@@ -41,7 +41,7 @@
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			rec_rg = lu_s_rec_rg__create(rec);
+			rec_rg = lu_s_rec_rg__create(mem, rec, cell_mem);
 			lu__assert(rec_rg);
 
 			lu_arr__set(self->recs, i, rec_rg);
@@ -58,7 +58,7 @@
 		// Create Story_Rg
 		//
 
-		self->story = lu_s_story_rg__create(mem, self->cell_mem);
+		self->story = lu_s_story_rg__create(mem, self->cell_mem, 1);
 		lu__assert(self->story);
 
 		//

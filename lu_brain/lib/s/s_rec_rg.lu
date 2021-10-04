@@ -11,7 +11,7 @@
 		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem__alloc(mem, sizeof(struct lu_s_rec_rg));
 		lu__assert(self);
 
-		lu_s_base_rg_init(&self->super, mem, cell_mem);
+		lu_s_base_rg__init(&self->super, mem, cell_mem);
 
 		self->rec 				= rec;
 		self->id 				= rec->id;
@@ -113,7 +113,7 @@
 		lu_s_component_layer__deinit(&self->p_layer);
 		lu_s_component_layer__deinit(&self->v_layer);
 
-		lu_s_base_rg_deinit(&self->super);
+		lu_s_base_rg__deinit(&self->super);
 
 		lu_mem__free(self->super.mem, (lu_p_byte) self);
 	}

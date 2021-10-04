@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static inline Lu_S_Layer_Conf lu_s_layer_conf_init(Lu_S_Layer_Conf self, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size)
+	static inline Lu_S_Layer_Conf lu_s_layer_conf__init(Lu_S_Layer_Conf self, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size)
 	{
 		lu__assert(self);
 		lu__assert(mem);
@@ -29,7 +29,7 @@
 		return self;
 	}
 
-	static inline void lu_s_layer_conf_deinit(Lu_S_Layer_Conf self)
+	static inline void lu_s_layer_conf__deinit(Lu_S_Layer_Conf self)
 	{
 		lu__assert(self);
 
@@ -37,7 +37,7 @@
 		self->steps = NULL;
 	}
 
-	static inline lu_value lu_s_layer_conf_norm(Lu_S_Layer_Conf self, lu_value request)
+	static inline lu_value lu_s_layer_conf__norm(Lu_S_Layer_Conf self, lu_value request)
 	{
 		lu_value val = request - self->orig_min;
 		if (val < 0) val = 0;
@@ -46,14 +46,14 @@
 		return val;
 	}
 
-	static inline lu_size lu_s_layer_conf_ix(Lu_S_Layer_Conf self, lu_value val)
+	static inline lu_size lu_s_layer_conf__ix(Lu_S_Layer_Conf self, lu_value val)
 	{
 		return (lu_size) lu_value_round(val / self->step);
 	}
 
-	static inline struct lu_size_range lu_s_layer_conf_ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc)
+	static inline struct lu_size_range lu_s_layer_conf__ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc)
 	{
-		lu_size orig_i = lu_s_layer_conf_ix(self, val);
+		lu_size orig_i = lu_s_layer_conf__ix(self, val);
 
 		long begin, end;
 
@@ -69,12 +69,12 @@
 		return r;
 	}
 
-	static inline lu_value lu_s_layer_conf_calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val)
+	static inline lu_value lu_s_layer_conf__calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val)
 	{ 
 		return 1.0 - lu_value_abs(self->steps[val_step_i] - val) / self->max;
 	}
 
-	static inline lu_value lu_s_layer_conf_step_norm_dist(Lu_S_Layer_Conf self)
+	static inline lu_value lu_s_layer_conf__step_norm_dist(Lu_S_Layer_Conf self)
 	{
 		return 1.0 / self->cells_size;
 	}
