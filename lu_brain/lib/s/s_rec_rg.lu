@@ -24,7 +24,7 @@
 		// Component layers inits
 		//
 
-		lu_s_component_layer__init( 
+		lu_s_comp_layer__init( 
 			&self->v_layer, 
 			mem, 
 			self->cells_w,
@@ -35,7 +35,7 @@
 			rec->config.v_neu_size
 		);
 
-		lu_s_component_layer__init(
+		lu_s_comp_layer__init(
 			&self->p_layer, 
 			mem, 
 			self->cells_w,
@@ -110,8 +110,8 @@
 
 		lu_s_pixel_layer__deinit(&self->pixel_layer);
 
-		lu_s_component_layer__deinit(&self->p_layer);
-		lu_s_component_layer__deinit(&self->v_layer);
+		lu_s_comp_layer__deinit(&self->p_layer);
+		lu_s_comp_layer__deinit(&self->v_layer);
 
 		lu_s_base_rg__deinit(&self->super);
 

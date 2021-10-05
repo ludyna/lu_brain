@@ -114,7 +114,7 @@
 	// 	Lu_S_Layer_Conf p_conf
 	// )
 	// {
-	// 	lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Component_Cell");
+	// 	lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Comp_Cell");
 
 	// 	Lu_S_Cell_3 neu = &self->component_cells[self->component_cells_count];
 	// 	neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);

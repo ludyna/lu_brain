@@ -8,10 +8,9 @@
 
 	Map:
 		s_rec_rg
-			component_layer
-				
-				component_cell component_v (d) x n(w x h x cells_size_i, empty by default) ==>
-				component_cell component_p (d) x n(w x h) ==> 
+			comp_layer
+				comp_cell component_v (d) x n(w x h x cells_size_i, empty by default) ==>
+				comp_cell component_p (d) x n(w x h x cells_size_i, empty by default) ==> 
 
 			pixel_layer 
 				pixel_cell (w x h) ==>  
@@ -88,7 +87,7 @@
 		struct lu_s_slot_1 c; 
 	}; 
 
-	struct lu_s_component_cell {
+	struct lu_s_comp_cell {
 		struct lu_s_base_cell super;
 
 		lu_value 				orig_min;
@@ -103,14 +102,14 @@
 		Hnn_Cell_Value* cells;
 	};
 
-	static Lu_S_Layer_Conf lu_s_layer_conf__init(Lu_S_Layer_Conf, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
-	static void lu_s_layer_conf__deinit(Lu_S_Layer_Conf self);
+	static Lu_S_Layer_Conf lu_s_comp_cell__init(Lu_S_Layer_Conf, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_comp_cell__deinit(Lu_S_Layer_Conf self);
 
-	static inline lu_value lu_s_layer_conf__norm(Lu_S_Layer_Conf self, lu_value request);
-	static inline lu_size lu_s_layer_conf__ix(Lu_S_Layer_Conf self, lu_value val);
-	static inline struct lu_size_range lu_s_layer_conf__ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc);
-	static inline lu_value lu_s_layer_conf__calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_s_layer_conf__step_norm_dist(Lu_S_Layer_Conf self);
+	static inline lu_value lu_s_comp_cell__norm(Lu_S_Layer_Conf self, lu_value request);
+	static inline lu_size lu_s_comp_cell__ix(Lu_S_Layer_Conf self, lu_value val);
+	static inline struct lu_size_range lu_s_comp_cell__ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_comp_cell__calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_comp_cell__step_norm_dist(Lu_S_Layer_Conf self);
 
 
 	// nertex
@@ -150,7 +149,7 @@
 
 		struct lu_s_slot_2 p;
 	};
-	
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer
@@ -168,13 +167,13 @@
 	};
 
 	// v an p layers are instances of this layer
-	struct lu_s_component_layer {
+	struct lu_s_comp_layer {
 		struct lu_s_base_layer super;
 
 		lu_size d;
 
 		lu_size cells_size;
-		Lu_S_Component_Cell* cells;
+		Lu_S_Comp_Cell* cells;
 	};
 
 	// nertex
@@ -234,7 +233,7 @@
 
 		lu_size component_cells_size;
 		lu_size component_cells_count;
-		struct lu_s_component_cell* component_cells;
+		struct lu_s_comp_cell* component_cells;
 
 		lu_size pixel_cells_size;
 		lu_size pixel_cells_count;
@@ -322,8 +321,8 @@
  		// Layers
  		//
 
-		struct lu_s_component_layer v_layer;
-		struct lu_s_component_layer p_layer;
+		struct lu_s_comp_layer v_layer;
+		struct lu_s_comp_layer p_layer;
 
 		struct lu_s_pixel_layer pixel_layer;
 

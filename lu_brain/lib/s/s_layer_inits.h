@@ -45,11 +45,11 @@
 	}
 
 	//
-	// Lu_S_Component_Layer
+	// Lu_S_Comp_Layer
 	//
 
-	static inline Lu_S_Component_Layer lu_s_component_layer__init(
-		Lu_S_Component_Layer self, 
+	static inline Lu_S_Comp_Layer lu_s_comp_layer__init(
+		Lu_S_Comp_Layer self, 
 		Lu_Mem mem, 
 		lu_size w, 
 		lu_size h,
@@ -68,16 +68,16 @@
 		lu_s_base_layer__init(&self->super, mem, LU_SLT_COMPONENT, 0, w, h);
 
 		self->d = d;
-		lu_s_layer_conf__init(&self->conf, mem, min_val, max_val, cells_size);
+		lu_s_comp_cell__init(&self->conf, mem, min_val, max_val, cells_size);
 
 		self->cells_size = w * h * d;
-		self->cells = (Lu_S_Component_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Component_Cell) * self->cells_size);
+		self->cells = (Lu_S_Comp_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Comp_Cell) * self->cells_size);
 		lu__assert(self->cells);
 
 		return self;
 	} 
 
-	static inline void lu_s_component_layer__deinit(Lu_S_Component_Layer self)
+	static inline void lu_s_comp_layer__deinit(Lu_S_Comp_Layer self)
 	{
 		lu__assert(self);
 		lu__assert(self->super.mem);
@@ -85,7 +85,7 @@
 		if (self->cells)
 			lu_mem__free(self->super.mem, (lu_p_byte) self->cells);
 
-		lu_s_layer_conf__deinit(&self->conf);
+		lu_s_comp_cell__deinit(&self->conf);
 
 		lu_s_base_layer__deinit(&self->super);
 	}

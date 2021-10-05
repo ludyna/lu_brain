@@ -28,7 +28,7 @@
 	};
 
  	typedef struct lu_s_base_cell* 				Lu_S_Base_Cell;
- 	typedef struct lu_s_component_cell* 		Lu_S_Component_Cell;
+ 	typedef struct lu_s_comp_cell* 				Lu_S_Comp_Cell;
  	typedef struct lu_s_pixel_cell* 			Lu_S_Pixel_Cell;
  	typedef struct lu_s_rec_cell* 				Lu_S_Rec_Cell;
  	typedef struct lu_s_seq_nx_cell* 			Lu_S_Seq_Nx_Cell;
@@ -50,7 +50,7 @@
 	};
 
 	typedef struct lu_s_base_layer* 		Lu_S_Base_Layer;
-	typedef struct lu_s_component_layer* 	Lu_S_Component_Layer;
+	typedef struct lu_s_comp_layer* 		Lu_S_Comp_Layer;
 	typedef struct lu_s_pixel_layer*  		Lu_S_Pixel_Layer;
 	typedef struct lu_s_rec_layer*  		Lu_S_Rec_Layer;
 	typedef struct lu_s_seq_nx_layer*  		Lu_S_Seq_Nx_Layer;

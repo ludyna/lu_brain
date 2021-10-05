@@ -16,8 +16,8 @@
 		return self;
 	}
 
-	static inline Lu_S_Component_Cell lu_s_component_cell_init(
-		Lu_S_Component_Cell self, 
+	static inline Lu_S_Comp_Cell lu_s_component_cell_init(
+		Lu_S_Comp_Cell self, 
 		enum lu_s_cell_type type, 
 		Lu_S_Base_Layer layer,
 		Hnn_Cell_Value* cells 
