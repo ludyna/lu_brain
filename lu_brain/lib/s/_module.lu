@@ -7,4 +7,5 @@
 #include "s_rec_rg_inits.lu"
 #include "s_rec_rg.lu"
 #include "s_seq_rg.lu"
+#include "s_story_rg.lu"
 #include "s.lu"

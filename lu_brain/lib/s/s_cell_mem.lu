@@ -77,7 +77,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Allocate cells
 
-	static void lu_s_cell_mem__alloc_cells(Lu_S_Cell_Mem self)
+	static void lu_s_cell_mem__alloc_cells(Lu_S_Cell_Mem self, struct lu_s_cell_mem_config config)
 	{
 		lu__assert(self); 
 		

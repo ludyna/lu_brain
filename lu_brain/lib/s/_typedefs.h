@@ -36,7 +36,7 @@
  	typedef struct lu_s_story_nx_cell* 			Lu_S_Story_Nx_Cell;
 
 	//
-	// Layes
+	// Layers
 	//
 
 	enum lu_s_layer_type {
@@ -48,8 +48,6 @@
 		LU_SLT_STORY_NX,
 		LU_SLT_END
 	};
-	
-	typedef struct lu_s_layer_conf*		Lu_S_Layer_Conf;
 
 	typedef struct lu_s_base_layer* 		Lu_S_Base_Layer;
 	typedef struct lu_s_component_layer* 	Lu_S_Component_Layer;
@@ -63,6 +61,7 @@
 	// Cell_Mem
 	//
 
+	typedef struct lu_s_cell_mem_config* Lu_S_Cell_Mem_Config;
 	typedef struct lu_s_cell_mem*   	Lu_S_Cell_Mem;
 
 	// 
