@@ -12,19 +12,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Typedefs
 
+	//
 	// Mem
+	//
 
 	typedef struct lu_mem*  			Lu_Mem;
 
+	//
 	// Brain  
-	
+	//
+
 	typedef struct lu_brain_config* 	Lu_Brain_Config;
 	typedef struct lu_brain* 			Lu_Brain;	
 	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
 
+	//
 	// Wave 
-	
+	//
+
 	typedef struct lu_data* 			Lu_Data;
 	typedef struct lu_neu* 				Lu_Neu;
 	typedef struct lu_wave_config*		Lu_Wave_Config;
@@ -57,7 +63,9 @@
 
 	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);
 
+	//
 	// Lu_Brain_Config predefined 
+	//
 
 	enum lu_bc_predefined_type {
 		LU_BC_DEFAULT 	= 0,
@@ -85,7 +93,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec  
 
+	//
+	// Lu_Rec_Comp_Config 
+	// Rec component config.
+	//
+
+	struct lu_rec_comp_config {
+		// At this moment every component will use the same v and p config
+		// but we can easily change it in future (s architecture already supports this)
+		lu_value 		v_min;
+		lu_value 		v_max;
+		lu_size			v_neu_size;
+		lu_size 		p_neu_size;
+	};
+
+	//
 	// Lu_Rec_Config 
+	//
 
 	enum lu_trans_algorithm {
 		LU_TA_NONE = 0,
@@ -98,15 +122,14 @@
 		lu_size 		hold_blocks_size;
 		lu_size 		transf_algorithm;
 
-		lu_value 		v_min;
-		lu_value 		v_max;
-		lu_size			v_neu_size;
-		lu_size 		p_neu_size;
+		struct lu_rec_comp_config comp_config;
 	};
 
 	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self);
 
+	//
 	// Lu_Rec_Config predefined 
+	//
 
 	enum lu_rc_predefined_type {
 		LU_RC_MONOCHROME1_IMAGE = 0,
@@ -120,7 +143,9 @@
 
 	struct lu_rec_config lu_rec_config_get_by_id(lu_size id);
 
+	//
 	// Lu_Rec 
+	//
 
 	Lu_Rec lu_brain_rec_add(
 		Lu_Brain brain, 
@@ -150,7 +175,9 @@
 
 	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);
 	
+	//
 	// Lu_Wave_Config Predefined
+	//
 
 	enum lu_wc_predefined_type {
 		LU_WC_SAVE_DEFAULT = 0,
@@ -164,16 +191,23 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Wave  
 
+	//
 	// Sync Create
+	//
 
 	Lu_Wave lu_save_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config); 
 	Lu_Wave lu_find_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 	Lu_Wave lu_restore_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 
+	//
 	// Destroy
+	//
+
 	void lu_wave_destroy(Lu_Wave); 
 
+	//
 	// Wave Seq
+	//
 
 	void lu_wave_block_begin(Lu_Wave);
 	void lu_wave_block_end(Lu_Wave);
@@ -186,7 +220,9 @@
 	// lu_size lu_wave_block_count(Lu_Wave);
 	// Lu_Data lu_wave_last_data(Lu_Wave, Lu_Rec);
 
+	//
 	// Process
+	//
 
 	void lu_wave_process(Lu_Wave);
 	void lu_wave_step(Lu_Wave);
@@ -198,7 +234,9 @@
 	// void lu_wave_restore_step_async(Lu_Wave, Lu_Seq);
 	// void lu_wave_join(Lu_Wave);
 
+	//
 	// Properties
+	//
 
 	struct lu_wave_config lu_wave_config_get(Lu_Wave);
 

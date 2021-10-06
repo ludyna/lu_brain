@@ -109,8 +109,8 @@
 	// 	lu_size x, 
 	// 	lu_size y, 
 	// 	lu_size z,
-	// 	Lu_S_Layer_Conf v_conf, 
-	// 	Lu_S_Layer_Conf p_conf
+	// 	Lu_S_Comp_Cell v_conf, 
+	// 	Lu_S_Comp_Cell p_conf
 	// )
 	// {
 	// 	lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Comp_Cell");
@@ -179,8 +179,8 @@
 	// 	lu_size x, 
 	// 	lu_size y, 
 	// 	lu_size z,
-	// 	Lu_S_Layer_Conf v_conf, 
-	// 	Lu_S_Layer_Conf p_conf
+	// 	Lu_S_Comp_Cell v_conf, 
+	// 	Lu_S_Comp_Cell p_conf
 	// )
 	// {
 	// 	lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");

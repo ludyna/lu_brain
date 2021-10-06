@@ -19,7 +19,6 @@
 		self->mem = mem;
 		self->cell_mem = cell_mem;
 
-
 		//
 		// Cell_Mem_Config
 		//

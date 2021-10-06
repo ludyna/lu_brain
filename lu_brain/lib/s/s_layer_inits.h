@@ -67,12 +67,13 @@
 
 		lu_s_base_layer__init(&self->super, mem, LU_SLT_COMPONENT, 0, w, h);
 
-		self->d = d;
-		lu_s_comp_cell__init(&self->conf, mem, min_val, max_val, cells_size);
+		self->cells_size = d;
+		self->v_cells = (Lu_S_Comp_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Comp_Cell) * self->cells_size);
+		lu__assert(self->v_cells);
 
-		self->cells_size = w * h * d;
-		self->cells = (Lu_S_Comp_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Comp_Cell) * self->cells_size);
-		lu__assert(self->cells);
+		self->p_cells = (Lu_S_Comp_Cell*) lu_mem__alloc(mem, sizeof(Lu_S_Comp_Cell) * self->cells_size);
+		lu__assert(self->p_cells);
+		
 
 		return self;
 	} 
@@ -82,7 +83,7 @@
 		lu__assert(self);
 		lu__assert(self->super.mem);
 
-		if (self->cells)
+		if (self->v_cells)
 			lu_mem__free(self->super.mem, (lu_p_byte) self->cells);
 
 		lu_s_comp_cell__deinit(&self->conf);

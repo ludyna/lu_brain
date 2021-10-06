@@ -88,6 +88,7 @@
 		struct lu_s_slot_1 c; 
 	}; 
 
+	// can be v or p
 	struct lu_s_comp_cell {
 		struct lu_s_base_cell super;
 
@@ -103,14 +104,14 @@
 		Hnn_Cell_Value* cells;
 	};
 
-	static Lu_S_Layer_Conf lu_s_comp_cell__init(Lu_S_Layer_Conf, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
-	static void lu_s_comp_cell__deinit(Lu_S_Layer_Conf self);
+	static Lu_S_Comp_Cell lu_s_comp_cell__init(Lu_S_Comp_Cell, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_comp_cell__deinit(Lu_S_Comp_Cell self);
 
-	static inline lu_value lu_s_comp_cell__norm(Lu_S_Layer_Conf self, lu_value request);
-	static inline lu_size lu_s_comp_cell__ix(Lu_S_Layer_Conf self, lu_value val);
-	static inline struct lu_size_range lu_s_comp_cell__ix_range(Lu_S_Layer_Conf self, lu_value val, lu_size nsc);
-	static inline lu_value lu_s_comp_cell__calc_sig(Lu_S_Layer_Conf self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_s_comp_cell__step_norm_dist(Lu_S_Layer_Conf self);
+	static inline lu_value lu_s_comp_cell__norm(Lu_S_Comp_Cell self, lu_value request);
+	static inline lu_size lu_s_comp_cell__ix(Lu_S_Comp_Cell self, lu_value val);
+	static inline struct lu_size_range lu_s_comp_cell__ix_range(Lu_S_Comp_Cell self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_comp_cell__calc_sig(Lu_S_Comp_Cell self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_comp_cell__step_norm_dist(Lu_S_Comp_Cell self);
 
 
 	// nertex
@@ -171,10 +172,11 @@
 	struct lu_s_comp_layer {
 		struct lu_s_base_layer super;
 
-		lu_size d;
-
 		lu_size cells_size;
-		Lu_S_Comp_Cell* cells;
+
+		// v cells and p cells connect to pixel cells separetely
+		Lu_S_Comp_Cell* v_cells;
+		Lu_S_Comp_Cell* p_cells;
 	};
 
 	// nertex
