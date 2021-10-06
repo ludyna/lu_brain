@@ -56,7 +56,7 @@ void setUp(void)
 { 
 	md = mem_debugger_create(lu_g_mem);
 
-	brain 				= lu_brain_create(lu_g_mem, lu_brain_config_get_by_id(LU_BC_DEFAULT));
+	brain 				= lu_brain__create(lu_g_mem, lu_brain_config__get_by_id(LU_BC_DEFAULT));
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 
@@ -65,7 +65,7 @@ void setUp(void)
 		/*width*/				3, 
 		/*height*/				3, 
 		/*depth*/				1,
-		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
+		/*config*/ 				lu_rec_config__get_by_id(LU_RC_TEST1)
 	);	
 	TEST_ASSERT(rec_0);
 
@@ -74,18 +74,18 @@ void setUp(void)
 		/*width*/				3, 
 		/*height*/				3, 
 		/*depth*/				1,
-		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
+		/*config*/ 				lu_rec_config__get_by_id(LU_RC_TEST1)
 	);	
 	TEST_ASSERT(rec_1);
 	
 	TEST_ASSERT(brain->recs->count);
 
-	lu_brain_build(brain);
+	lu_brain__build(brain);
 }
 
 void tearDown(void)
 {	
-	lu_brain_destroy(brain);
+	lu_brain__destroy(brain);
 
 	mem_debugger_print(md);
 
@@ -101,54 +101,54 @@ void test_lu_brain_basics(void)
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 
-	lu_brain_print_info(brain);
+	lu_brain__print_info(brain);
 
-	Lu_Wave wave = lu_save_wave_create(lu_g_mem, brain, lu_wave_config_get_by_id(LU_WC_SAVE_DEFAULT)); 
+	Lu_Wave wave = lu_save_wave__create(lu_g_mem, brain, lu_wave_config__get_by_id(LU_WC_SAVE_DEFAULT)); 
 
-		lu_wave_push(wave, rec_0, data_0);
+		lu_wave__push(wave, rec_0, data_0);
 
-		lu_wave_block_begin(wave);
-		lu_wave_push(wave, rec_0, data_01);
-		lu_wave_push(wave, rec_1, data_2);
-		lu_wave_block_end(wave);
+		lu_wave__block_begin(wave);
+		lu_wave__push(wave, rec_0, data_01);
+		lu_wave__push(wave, rec_1, data_2);
+		lu_wave__block_end(wave);
 
-		lu_wave_push(wave, rec_0, data_3);
+		lu_wave__push(wave, rec_0, data_3);
  
-	lu_wave_process(wave);
+	lu_wave__process(wave);
 
-		lu_wave_block_begin(wave);
-		lu_wave_push(wave, rec_0, data_4);
-		lu_wave_push(wave, rec_1, data_5);
-		lu_wave_block_end(wave);
+		lu_wave__block_begin(wave);
+		lu_wave__push(wave, rec_0, data_4);
+		lu_wave__push(wave, rec_1, data_5);
+		lu_wave__block_end(wave);
 
-	lu_wave_step(wave);
+	lu_wave__step(wave);
 
-	lu_wave_destroy(wave); 
+	lu_wave__destroy(wave); 
 
 	// /////////////////////////////////////////////////////////
 	// // Find
 
-	wave = lu_find_wave_create(lu_g_mem, brain, lu_wave_config_get_by_id(LU_WC_FIND_FULL_CONTRAST));
+	wave = lu_find_wave__create(lu_g_mem, brain, lu_wave_config__get_by_id(LU_WC_FIND_FULL_CONTRAST));
 
-			lu_wave_push(wave, rec_0, data_0);
+			lu_wave__push(wave, rec_0, data_0);
 
-			lu_wave_block_begin(wave);
-			lu_wave_push(wave, rec_0, data_01);
-			lu_wave_push(wave, rec_1, data_2);
-			lu_wave_block_end(wave);
+			lu_wave__block_begin(wave);
+			lu_wave__push(wave, rec_0, data_01);
+			lu_wave__push(wave, rec_1, data_2);
+			lu_wave__block_end(wave);
 
-			lu_wave_push(wave, rec_0, data_3);
+			lu_wave__push(wave, rec_0, data_3);
 
-	lu_wave_process(wave);
+	lu_wave__process(wave);
 
-			lu_wave_block_begin(wave);
-			lu_wave_push(wave, rec_0, data_4);
-			lu_wave_push(wave, rec_1, data_5);
-			lu_wave_block_end(wave); 
+			lu_wave__block_begin(wave);
+			lu_wave__push(wave, rec_0, data_4);
+			lu_wave__push(wave, rec_1, data_5);
+			lu_wave__block_end(wave); 
 
-	lu_wave_step(wave);
+	lu_wave__step(wave);
 
-	lu_wave_destroy(wave);
+	lu_wave__destroy(wave);
 
 
 	/////////////////////////////////////////////////////////

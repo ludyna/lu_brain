@@ -58,7 +58,7 @@ int main()
 
 	Lu_Neu name 				= NULL;
 
-	lu_brain_print_info(brain);
+	lu_brain__print_info(brain);
  
 	// Show random digit
 
@@ -125,9 +125,9 @@ int main()
 	// Destroy brain and related  
 
 	lu_seq_destroy(seq);
-	lu_wave_destroy(wave);
+	lu_wave__destroy(wave);
 	lu_rec_destroy(image_rec);
-	lu_brain_destroy(brain);
+	lu_brain__destroy(brain);
 
 	// Clean up memory for data
 

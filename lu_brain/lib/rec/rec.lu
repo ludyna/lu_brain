@@ -15,7 +15,7 @@
 		lu_user_assert(height, "widht should be greater than 0");
 		lu_user_assert(depth, "widht should be greater than 0");
 	 
-	 	Lu_Rec_Config p_config 	= lu_rec_config_validate(&config);
+	 	Lu_Rec_Config p_config 	= lu_rec_config__validate(&config);
 	 	lu_user_assert(p_config, "Lu_Rec_Config validation failed");
 
 		Lu_Rec self 			= (Lu_Rec) lu_mem__alloc(brain->brain_mem, sizeof(struct lu_rec));
@@ -48,7 +48,7 @@
 		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
-	lu_size lu_rec_get_id(Lu_Rec self)
+	lu_size lu_rec__get_id(Lu_Rec self)
 	{
 		lu__assert(self);
 		return self->id;

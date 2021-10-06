@@ -22,7 +22,7 @@
 		},
 	};		
 
-	struct lu_brain_config lu_brain_config_get_by_id(lu_size id)
+	struct lu_brain_config lu_brain_config__get_by_id(lu_size id)
 	{
 		lu__assert(id < LU_BRAIN_CONFIG_END);
 
@@ -33,7 +33,7 @@
 // Lu_Brain_Config
 
 
-	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config)
+	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config)
 	{
 		lu_user_assert(config->recs_size > 0, "recs_size should be greater than 0");
 		lu_user_assert(config->net.names_size > 0, "net.names_size should be greater than 0");

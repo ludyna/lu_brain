@@ -82,7 +82,7 @@ lu_value			data_16[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	brain 				= lu_brain_create(lu_g_mem, lu_brain_config_get_by_id(LU_BC_DEFAULT));
+	brain 				= lu_brain__create(lu_g_mem, lu_brain_config__get_by_id(LU_BC_DEFAULT));
 
 	TEST_ASSERT(brain);
 
@@ -91,7 +91,7 @@ void setUp(void)
 		/*width*/				3, 
 		/*height*/				3, 
 		/*depth*/				1,
-		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
+		/*config*/ 				lu_rec_config__get_by_id(LU_RC_TEST1)
 	);	
 
 	TEST_ASSERT(rec_0);
@@ -101,7 +101,7 @@ void setUp(void)
 		/*width*/				2, 
 		/*height*/				2, 
 		/*depth*/				1,
-		/*config*/ 				lu_rec_config_get_by_id(LU_RC_TEST1)
+		/*config*/ 				lu_rec_config__get_by_id(LU_RC_TEST1)
 	);	
 
 	TEST_ASSERT(rec_1);
@@ -113,13 +113,13 @@ void tearDown(void)
 {	
 	lu_rec_destroy(rec_0);
 	lu_rec_destroy(rec_1);
-	lu_brain_destroy(brain);
+	lu_brain__destroy(brain);
 }
 
 void test_lu_seq_1(void)
 { 
 	lu_p_value d;
-	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain_recs_size(brain)); 
+	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain__recs_size(brain)); 
 
  		TEST_ASSERT(lu_seq_blocks_count(seq) == 0);
  		TEST_ASSERT(lu_seq_last_values(seq, 0) == NULL);
@@ -189,7 +189,7 @@ void test_lu_seq_1(void)
 void test_lu_seq_2(void)
 { 
 	lu_p_value d;
-	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain_recs_size(brain)); 
+	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain__recs_size(brain)); 
 	lu_seq_block_begin(seq);
 	lu_seq_block_begin(seq);
 	lu_seq_block_begin(seq);
@@ -215,7 +215,7 @@ void test_lu_seq_data(void)
 {
 	lu_p_value d;
 	Lu_Data data;
-	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain_recs_size(brain)); 
+	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain__recs_size(brain)); 
 
 		TEST_ASSERT(lu_seq_blocks_count(seq) == 0);
 
@@ -261,7 +261,7 @@ void test_lu_seq_data(void)
 
 void test_lu_seq_validate(void)
 {
-	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain_recs_size(brain)); 
+	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain__recs_size(brain)); 
 
 	lu_user_assert_off();
 	TEST_ASSERT(lu_seq_validate(seq) == NULL); 
@@ -278,7 +278,7 @@ void test_lu_seq_prepare(void)
 {
 	lu_p_value d;
 	Lu_Data data;
-	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain_recs_size(brain)); 
+	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain__recs_size(brain)); 
 
 	lu_seq_push(seq, rec_0, data_00);
 

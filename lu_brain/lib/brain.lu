@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
-	Lu_Brain lu_brain_create(Lu_Mem mem, struct lu_brain_config config)
+	Lu_Brain lu_brain__create(Lu_Mem mem, struct lu_brain_config config)
 	{
-		Lu_Brain_Config p_config = lu_brain_config_validate(&config);
+		Lu_Brain_Config p_config = lu_brain_config__validate(&config);
 		lu_user_assert(p_config, "Lu_Brain_Config validation failed");
 
 		Lu_Mem brain_mem		= mem; 
@@ -26,7 +26,7 @@
 		return self;
 	}
 
-	void lu_brain_destroy(Lu_Brain self)
+	void lu_brain__destroy(Lu_Brain self)
 	{
 		lu__user_assert_void(self, "Lu_Brain is NULL");
 
@@ -48,7 +48,7 @@
 		lu_g_mem_free((lu_p_byte) self);
 	}
 
-	void lu_brain_print_info(Lu_Brain self)
+	void lu_brain__print_info(Lu_Brain self)
 	{
 		lu__user_assert_void(self, "Lu_Brain is NULL");
 		lu__user_assert_void(self->brain_mem, "Lu_Mem is NULL");
@@ -71,7 +71,7 @@
 		return self->config;
 	}
 
-	Lu_Brain lu_brain_reconfigure(Lu_Brain self, struct lu_brain_config config)
+	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_brain_config config)
 	{
 		lu_user_assert(NULL, "Not implemented yet");
 	}
@@ -109,7 +109,7 @@
 		rec->brain = NULL;
 	}
 
-	Lu_Rec lu_brain_rec_get_by_id(Lu_Brain brain, lu_size rec_id)
+	Lu_Rec lu_brain__get_rec_by_id(Lu_Brain brain, lu_size rec_id)
 	{
 		lu_user_assert(brain, "Lu_Brain is NULL");
 		lu__assert(brain->recs);
@@ -118,12 +118,12 @@
 		return (Lu_Rec) lu_arr__get(brain->recs, rec_id);
 	}
 
-	lu_size lu_brain_recs_size(Lu_Brain self) { return lu_arr_size(self->recs); }
+	lu_size lu_brain__recs_size(Lu_Brain self) { return lu_arr_size(self->recs); }
 
 
 	// For MVP this method will destroy and re-create s_mem and n_mem.
 	// In future we might want to preserve n_mem (adding recs on fly).
-	Lu_Brain lu_brain_build(Lu_Brain self) 
+	Lu_Brain lu_brain__build(Lu_Brain self) 
 	{
 		lu_user_assert(self, "Lu_Brain is NULL");
 

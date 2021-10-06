@@ -66,7 +66,7 @@ void test_s_col1and2(void)
 
 	// TEST_ASSERT(rec_opts_2);
 
-	// brain 				= lu_brain_create(brain_config);
+	// brain 				= lu_brain__create(brain_config);
 
 	// TEST_ASSERT(brain);
 	// TEST_ASSERT(brain->recs);
@@ -98,5 +98,5 @@ void test_s_col1and2(void)
 	// // s_col2 tests
 
 	// lu_brain_opts_destroy(brain_config);
-	// lu_brain_destroy(brain);
+	// lu_brain__destroy(brain);
 }

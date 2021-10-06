@@ -61,7 +61,7 @@
 
 	};
 
-	Lu_Brain_Config lu_brain_config_validate(Lu_Brain_Config config);
+	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config);
 
 	//
 	// Lu_Brain_Config predefined 
@@ -72,23 +72,23 @@
 		LU_BRAIN_CONFIG_END 				
 	};
 
-	struct lu_brain_config lu_brain_config_get_by_id(lu_size id);
+	struct lu_brain_config lu_brain_config__get_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain 
 
-	Lu_Brain lu_brain_create(Lu_Mem, struct lu_brain_config config);
-	void lu_brain_destroy(Lu_Brain);
+	Lu_Brain lu_brain__create(Lu_Mem, struct lu_brain_config config);
+	void lu_brain__destroy(Lu_Brain);
 
-	void lu_brain_print_info(Lu_Brain self);
+	void lu_brain__print_info(Lu_Brain self);
 
-	Lu_Brain lu_brain_reconfigure(Lu_Brain self, struct lu_brain_config config);
+	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_brain_config config);
 
-	lu_size lu_brain_recs_size(Lu_Brain self); 
+	lu_size lu_brain__recs_size(Lu_Brain self); 
 
 	// After you added recs call this method to build or rebuild brain.  
 	// Method returns NULL if build failed.
-	Lu_Brain lu_brain_build(Lu_Brain self);
+	Lu_Brain lu_brain__build(Lu_Brain self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec  
@@ -125,7 +125,7 @@
 		struct lu_rec_comp_config comp_config;
 	};
 
-	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self);
+	Lu_Rec_Config lu_rec_config__validate(Lu_Rec_Config self);
 
 	//
 	// Lu_Rec_Config predefined 
@@ -141,7 +141,7 @@
 		LU_REC_CONFIG_END 				
 	};
 
-	struct lu_rec_config lu_rec_config_get_by_id(lu_size id);
+	struct lu_rec_config lu_rec_config__get_by_id(lu_size id);
 
 	//
 	// Lu_Rec 
@@ -158,9 +158,9 @@
 	// MVP out of scope
 	// void lu_brain_rec_remove(Lu_Rec self);
  
-	lu_size lu_rec_get_id(Lu_Rec self);
+	lu_size lu_rec__get_id(Lu_Rec self);
 
-	Lu_Rec lu_brain_rec_get_by_id(Lu_Brain brain, lu_size rec_id);
+	Lu_Rec lu_brain__get_rec_by_id(Lu_Brain brain, lu_size rec_id);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave_Config 
@@ -173,7 +173,7 @@
 															// Oldest ones are destroyed once limit is reached (FIFO).
 	};
 
-	Lu_Wave_Config lu_wave_config_validate(Lu_Wave_Config self);
+	Lu_Wave_Config lu_wave_config__validate(Lu_Wave_Config self);
 	
 	//
 	// Lu_Wave_Config Predefined
@@ -186,7 +186,7 @@
 		LU_WAVE_CONFIG_END			
 	};
 
-	struct lu_wave_config lu_wave_config_get_by_id(lu_size id);
+	struct lu_wave_config lu_wave_config__get_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave  
@@ -195,27 +195,27 @@
 	// Sync Create
 	//
 
-	Lu_Wave lu_save_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config); 
-	Lu_Wave lu_find_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
-	Lu_Wave lu_restore_wave_create(Lu_Mem, Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_save_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config); 
+	Lu_Wave lu_find_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_restore_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 
 	//
 	// Destroy
 	//
 
-	void lu_wave_destroy(Lu_Wave); 
+	void lu_wave__destroy(Lu_Wave); 
 
 	//
 	// Wave Seq
 	//
 
-	void lu_wave_block_begin(Lu_Wave);
-	void lu_wave_block_end(Lu_Wave);
+	void lu_wave__block_begin(Lu_Wave);
+	void lu_wave__block_end(Lu_Wave);
 
-	void lu_wave_push(Lu_Wave, Lu_Rec, lu_value* data);
-	void lu_wave_push_neu(Lu_Wave, Lu_Neu); 
+	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* data);
+	void lu_wave__push_neu(Lu_Wave, Lu_Neu); 
 
-	void lu_wave_reset(Lu_Wave);
+	void lu_wave__reset(Lu_Wave);
 
 	// lu_size lu_wave_block_count(Lu_Wave);
 	// Lu_Data lu_wave_last_data(Lu_Wave, Lu_Rec);
@@ -224,8 +224,8 @@
 	// Process
 	//
 
-	void lu_wave_process(Lu_Wave);
-	void lu_wave_step(Lu_Wave);
+	void lu_wave__process(Lu_Wave);
+	void lu_wave__step(Lu_Wave);
 
 	// Process Async (IMPLEMENT LATER)
 	// void lu_wave_process_async(Lu_Wave, Lu_Seq);
@@ -238,13 +238,13 @@
 	// Properties
 	//
 
-	struct lu_wave_config lu_wave_config_get(Lu_Wave);
+	struct lu_wave_config lu_wave_config__get(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Neu 
 
-	lu_size lu_neu_name(Lu_Neu);
-	void lu_neu_name_set(Lu_Neu, lu_size);
-	void lu_neu_connect(Lu_Neu, Lu_Neu);
+	lu_size lu_neu__name(Lu_Neu);
+	void lu_neu__name_set(Lu_Neu, lu_size);
+	void lu_neu__connect(Lu_Neu, Lu_Neu);
 
 #endif // _LU_BRAIN_API_H

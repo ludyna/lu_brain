@@ -47,7 +47,7 @@
 		}
 	};
 
-	struct lu_rec_config lu_rec_config_get_by_id(lu_size id)
+	struct lu_rec_config lu_rec_config__get_by_id(lu_size id)
 	{
 		lu__assert(id < LU_REC_CONFIG_END);
 		return lu_g_rc_predefined[id];
@@ -56,7 +56,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config
 
-	Lu_Rec_Config lu_rec_config_validate(Lu_Rec_Config self)
+	Lu_Rec_Config lu_rec_config__validate(Lu_Rec_Config self)
 	{
 		lu_user_assert(self, "Lu_Rec_Config is NULL");
 

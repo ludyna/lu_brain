@@ -22,7 +22,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Step
 
-	void lu_wave_step(Lu_Wave self)
+	void lu_wave__step(Lu_Wave self)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
@@ -61,7 +61,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Process
 
-	void lu_wave_process(Lu_Wave self)
+	void lu_wave__process(Lu_Wave self)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
@@ -98,7 +98,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Reset
 
-	void lu_wave_reset(Lu_Wave self)
+	void lu_wave__reset(Lu_Wave self)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 

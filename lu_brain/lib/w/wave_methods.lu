@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Properties
 
-	struct lu_wave_config lu_wave_config_get(Lu_Wave self)
+	struct lu_wave_config lu_wave_config__get(Lu_Wave self)
 	{
 
 	}
@@ -26,7 +26,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Block Begin
 
-	void lu_wave_block_begin(Lu_Wave self)
+	void lu_wave__block_begin(Lu_Wave self)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
@@ -57,7 +57,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Block End
 
-	void lu_wave_block_end(Lu_Wave self)
+	void lu_wave__block_end(Lu_Wave self)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
@@ -88,7 +88,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Push
 
-	void lu_wave_push(Lu_Wave self, Lu_Rec rec, lu_value* data)
+	void lu_wave__push(Lu_Wave self, Lu_Rec rec, lu_value* data)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 		lu__user_assert_void(rec, "Lu_Rec is NULL");
@@ -116,7 +116,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Push Neu
 
-	void lu_wave_push_neu(Lu_Wave self, Lu_Neu neu)
+	void lu_wave__push_neu(Lu_Wave self, Lu_Neu neu)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 		lu__user_assert_void(neu, "Lu_Neu is NULL");
