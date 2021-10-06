@@ -32,6 +32,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Slots
 //
+
 	struct lu_s_slot_1 {
 		Lu_S_Base_Cell one;
 	};
@@ -224,34 +225,54 @@
 		lu_size pixel_cells_size;
 		lu_size rec_cells_size;
 		lu_size seq_nx_cells_size;
+		lu_size seq_cells_size;
 		lu_size story_nx_cells_size;
 	};
 
+	static inline Lu_S_Cell_Mem_Config lu_s_cell_mem_config__init(Lu_S_Cell_Mem_Config self)
+	{
+		self->component_cells_size = 0;
+		self->pixel_cells_size = 0;
+		self->rec_cells_size = 0;
+		self->seq_nx_cells_size = 0;
+		self->seq_cells_size = 0;
+		self->story_nx_cells_size = 0;
+
+		return self;
+	}
+
+	static inline Lu_S_Cell_Mem_Config lu_s_cell_mem_config__validate(Lu_S_Cell_Mem_Config self)
+	{
+		if (self->component_cells_size < 1) return NULL;
+		if (self->pixel_cells_size < 1) return NULL;
+		if (self->rec_cells_size < 1) return NULL;
+		if (self->seq_nx_cells_size < 1) return NULL;
+		if (self->seq_cells_size < 1) return NULL;
+		if (self->story_nx_cells_size < 1) return NULL;
+
+		return self;
+	}
 
 	struct lu_s_cell_mem {
 		Lu_Mem mem;
 
-		lu_size component_cells_size;
+		struct lu_s_cell_mem_config config;
+
 		lu_size component_cells_count;
 		struct lu_s_comp_cell* component_cells;
 
-		lu_size pixel_cells_size;
 		lu_size pixel_cells_count;
 		struct lu_s_pixel_cell* pixel_cells;
 
-		lu_size rec_cells_size;
 		lu_size rec_cells_count;
 		struct lu_s_rec_cell* rec_cells;
 
-		lu_size seq_nx_cells_size;
 		lu_size seq_nx_cells_count;
 		struct lu_s_seq_nx_cell* seq_nx_cells;
 
-		lu_size seq_cells_size;
 		lu_size seq_cells_count;
 		struct lu_s_seq_cell* seq_cells;
 
-		lu_size story_nx_cells_size;
 		lu_size story_nx_cells_count;
 		struct lu_s_story_nx_cell* story_nx_cells;
 	};
@@ -260,7 +281,7 @@
 	// Create and Destroy
 	// 
 
-	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem);
+	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem, Lu_S_Cell_Mem_Config cell_mem_config);
 	static void lu_s_cell_mem__destroy(Lu_S_Cell_Mem self);
 
 	//
@@ -297,7 +318,6 @@
 	{
 		lu__assert(self);
 		self->mem = NULL;
-		self->cell_mem = NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -334,7 +354,7 @@
 	// lu_s_rec_rg.lu
 	//
 
-	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem, Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem cell_mem);
+	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem, Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem_Config cell_mem_config);
 	static void lu_s_rec_rg__destroy(Lu_S_Rec_Rg self);
 	
 	//
@@ -380,7 +400,7 @@
 	// 	return &self->layers[0];
 	// }
 
-	static Lu_S_Seq_Rg lu_s_seq_rg__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size recs_size);
+	static Lu_S_Seq_Rg lu_s_seq_rg__create(Lu_Mem mem, Lu_S_Cell_Mem_Config cell_mem_config, lu_size recs_size);
 	static void lu_s_seq_rg__destroy(Lu_S_Seq_Rg self);
 
 	static void lu_s_seq_rg__layers_connect(Lu_S_Seq_Rg self);
@@ -402,7 +422,7 @@
 	};
 
 
-	static Lu_S_Story_Rg lu_s_story_rg__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, lu_size stories_size);
+	static Lu_S_Story_Rg lu_s_story_rg__create(Lu_Mem mem, Lu_S_Cell_Mem_Config cell_mem_config, lu_size stories_size);
 	static void lu_s_story_rg__destroy(Lu_S_Story_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////

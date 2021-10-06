@@ -2,11 +2,11 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem mem, Lu_Rec rec, Lu_S_Cell_Mem cell_mem)
+	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem mem, Lu_Rec rec, Lu_S_Cell_Mem_Config cell_mem_config)
 	{
 		lu__assert(mem);
 		lu__assert(rec);
-		lu__assert(cell_mem);
+		lu__assert(cell_mem_config);
 
 		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem__alloc(mem, sizeof(struct lu_s_rec_rg));
 		lu__assert(self);

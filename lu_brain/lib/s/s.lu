@@ -19,12 +19,14 @@
 		self->mem = mem;
 		self->cell_mem = cell_mem;
 
-		// 
-		// Cell_Mem
+
+		//
+		// Cell_Mem_Config
 		//
 
-		self->cell_mem = lu_s_cell_mem__create(mem);
-		lu__assert(self->cell_mem);
+		struct lu_s_cell_mem_config cell_mem_config;
+
+		lu_s_cell_mem_config__init(&cell_mem_config);
 
 		//
 		// Create Rec_Rgs
@@ -41,7 +43,7 @@
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			rec_rg = lu_s_rec_rg__create(mem, rec, cell_mem);
+			rec_rg = lu_s_rec_rg__create(mem, rec, &cell_mem_config);
 			lu__assert(rec_rg);
 
 			lu_arr__set(self->recs, i, rec_rg);
@@ -51,21 +53,22 @@
 		// Create Seq_Rg
 		//
 
-		self->seq = lu_s_seq_rg__create(mem, self->cell_mem, lu_arr__count(recs));
+		self->seq = lu_s_seq_rg__create(mem, &cell_mem_config, lu_arr__count(recs));
 		lu__assert(self->seq);
 
 		//
 		// Create Story_Rg
 		//
 
-		self->story = lu_s_story_rg__create(mem, self->cell_mem, 1);
+		self->story = lu_s_story_rg__create(mem, &cell_mem_config, 1);
 		lu__assert(self->story);
 
-		//
-		// Lu_S_Cell_Mem Cells Allocation
+		// 
+		// Cell_Mem
 		//
 
-		lu_s_cell_mem__alloc_cells(self->cell_mem);
+		self->cell_mem = lu_s_cell_mem__create(mem, cell_mem_config);
+		lu__assert(self->cell_mem);
 
 		//
 		// Assign cells from Cell_Mem to rgs
