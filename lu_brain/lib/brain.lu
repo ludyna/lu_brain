@@ -120,7 +120,6 @@
 
 	lu_size lu_brain__recs_size(Lu_Brain self) { return lu_arr_size(self->recs); }
 
-
 	// For MVP this method will destroy and re-create s_mem and n_mem.
 	// In future we might want to preserve n_mem (adding recs on fly).
 	Lu_Brain lu_brain__build(Lu_Brain self) 
@@ -146,8 +145,9 @@
 		//
 		// Create S
 		// 
-
-		self->s = lu_s__create(self);
+ 
+ 		// (Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
+		self->s = lu_s__create(self->s_mem, self->recs);
 		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
 
 		//

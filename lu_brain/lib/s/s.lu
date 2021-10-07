@@ -6,10 +6,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Create & Destroy
 
-	static Lu_S lu_s__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr recs)
+	static Lu_S lu_s__create(Lu_Mem mem, Lu_Arr recs)
 	{
 		lu__assert(mem);
-		lu__assert(cell_mem);
 		lu__assert(recs);
 		lu__assert(lu_arr__count(recs) > 0);
 
@@ -17,7 +16,6 @@
 		lu__assert(self);
 
 		self->mem = mem;
-		self->cell_mem = cell_mem;
 
 		//
 		// Cell_Mem_Config

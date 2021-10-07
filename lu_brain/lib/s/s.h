@@ -448,7 +448,7 @@
 		Lu_S_Story_Rg  			story;
 	};
 	
-	static Lu_S lu_s__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
+	static Lu_S lu_s__create(Lu_Mem mem, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
 
 	static void lu_s__rec_and_seq_inter_connect(Lu_S_Rec_Rg rec, Lu_S_Seq_Rg seq);
