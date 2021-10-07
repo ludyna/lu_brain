@@ -124,8 +124,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-	
+
 	static void lu_s_rec_rg__cells_assign(Lu_S_Rec_Rg self, Lu_S_Cell_Mem cell_mem)
+	{
+
+	}
+
+	static void lu_s_rec_rg__inner_connect(Lu_S_Rec_Rg self)
 	{
 
 	}

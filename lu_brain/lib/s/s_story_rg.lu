@@ -28,3 +28,8 @@
 	{
 
 	}
+
+	static void lu_s_story_rg__inner_connect(Lu_S_Story_Rg self)
+	{
+
+	}

@@ -65,6 +65,11 @@
 		// }
 	}
 
+	static void lu_s_seq_rg__inner_connect(Lu_S_Seq_Rg self)
+	{
+
+	}
+
 	static void lu_s_seq_rg__layers_disconnect(Lu_S_Seq_Rg self)
 	{
 		// lu__assert(self);

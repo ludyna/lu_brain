@@ -360,6 +360,8 @@
 	static void lu_s_rec_rg__destroy(Lu_S_Rec_Rg self);
 
 	static void lu_s_rec_rg__cells_assign(Lu_S_Rec_Rg self, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_rec_rg__inner_connect(Lu_S_Rec_Rg self);
+
 	static void lu_s_rec_rg__print_info(Lu_S_Rec_Rg self);
 	
 	//
@@ -398,6 +400,7 @@
 	static void lu_s_seq_rg__destroy(Lu_S_Seq_Rg self);
 
 	static void lu_s_seq_rg__cells_assign(Lu_S_Seq_Rg self, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_seq_rg__inner_connect(Lu_S_Seq_Rg self);
 
 	static void lu_s_seq_rg__layers_connect(Lu_S_Seq_Rg self);
 	static void lu_s_seq_rg__layers_disconnect(Lu_S_Seq_Rg self);
@@ -416,11 +419,11 @@
 		struct lu_s_story_nx_layer story_nx_layer;
 	};
 
-
 	static Lu_S_Story_Rg lu_s_story_rg__create(Lu_Mem mem, Lu_S_Cell_Mem_Config cell_mem_config, lu_size stories_size);
 	static void lu_s_story_rg__destroy(Lu_S_Story_Rg self);
 
 	static void lu_s_story_rg__cells_assign(Lu_S_Story_Rg self, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_story_rg__inner_connect(Lu_S_Story_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S
@@ -435,15 +438,20 @@
 		// Regions
 		//
 
+		// beacuse this is S we have one for each rec
 		Lu_Arr 					recs;
 
+		// because this is S we have one
 		Lu_S_Seq_Rg 			seq;
 
+		// because this is S we have one
 		Lu_S_Story_Rg  			story;
 	};
 	
-	// s.lu
 	static Lu_S lu_s__create(Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
+
+	static void lu_s__rec_and_seq_inter_connect(Lu_S_Rec_Rg rec, Lu_S_Seq_Rg seq);
+	static void lu_s__seq_and_story_inter_connect(Lu_S_Seq_Rg seq, Lu_S_Story_Rg story);
 
 	static void lu_s__print_info(Lu_S self);
