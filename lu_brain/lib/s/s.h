@@ -283,7 +283,7 @@
 	// Create and Destroy
 	// 
 
-	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem, Lu_S_Cell_Mem_Config cell_mem_config);
+	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem, struct lu_s_cell_mem_config config);
 	static void lu_s_cell_mem__destroy(Lu_S_Cell_Mem self);
 
 	//
@@ -358,6 +358,9 @@
 
 	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem, Lu_Rec lu_s_rec_rg, Lu_S_Cell_Mem_Config cell_mem_config);
 	static void lu_s_rec_rg__destroy(Lu_S_Rec_Rg self);
+
+	static void lu_s_rec_rg__cells_assign(Lu_S_Rec_Rg self, Lu_S_Cell_Mem cell_mem);
+	static void lu_s_rec_rg__print_info(Lu_S_Rec_Rg self);
 	
 	//
 	// lu_s_rec_rg_layer_inits.lu
@@ -366,17 +369,6 @@
 	static void lu_s_rec_rg_layers__init(Lu_S_Rec_Rg self);
 	static void lu_s_rec_rg_layers__deinit(Lu_S_Rec_Rg self);
 	
-	// static void lu_s_rec_rg_component_layer_connect(Lu_S_Rec_Rg self);
-	// static void lu_s_rec_rg_component_layer_disconnect(Lu_S_Rec_Rg self);
-	
-	// static void lu_s_rec_rg_pixel_layer_connect(Lu_S_Rec_Rg self); 
-	// static void lu_s_rec_rg_pixel_layer_disconnect(Lu_S_Rec_Rg self); 
-
-	// static void lu_s_rec_rg_pyras_layers_connect(Lu_S_Rec_Rg self); 
-	// static void lu_s_rec_rg_pyras_layers_disconnect(Lu_S_Rec_Rg self);
-
-	static void lu_s_rec_rg__print_info(Lu_S_Rec_Rg self);
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Seq_Rg
 //
@@ -405,12 +397,13 @@
 	static Lu_S_Seq_Rg lu_s_seq_rg__create(Lu_Mem mem, Lu_S_Cell_Mem_Config cell_mem_config, lu_size recs_size);
 	static void lu_s_seq_rg__destroy(Lu_S_Seq_Rg self);
 
+	static void lu_s_seq_rg__cells_assign(Lu_S_Seq_Rg self, Lu_S_Cell_Mem cell_mem);
+
 	static void lu_s_seq_rg__layers_connect(Lu_S_Seq_Rg self);
 	static void lu_s_seq_rg__layers_disconnect(Lu_S_Seq_Rg self);
 
-
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Seq_Rg
+// Lu_S_Story_Rg
 //
 
 	struct lu_s_story_rg {
@@ -426,6 +419,8 @@
 
 	static Lu_S_Story_Rg lu_s_story_rg__create(Lu_Mem mem, Lu_S_Cell_Mem_Config cell_mem_config, lu_size stories_size);
 	static void lu_s_story_rg__destroy(Lu_S_Story_Rg self);
+
+	static void lu_s_story_rg__cells_assign(Lu_S_Story_Rg self, Lu_S_Cell_Mem cell_mem);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S

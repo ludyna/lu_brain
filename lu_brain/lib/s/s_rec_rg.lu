@@ -2,6 +2,9 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// Create and destroy
+
 	static Lu_S_Rec_Rg lu_s_rec_rg__create(Lu_Mem mem, Lu_Rec rec, Lu_S_Cell_Mem_Config cell_mem_config)
 	{
 		lu__assert(mem);
@@ -11,7 +14,7 @@
 		Lu_S_Rec_Rg self = (Lu_S_Rec_Rg) lu_mem__alloc(mem, sizeof(struct lu_s_rec_rg));
 		lu__assert(self);
 
-		lu_s_base_rg__init(&self->super, mem, cell_mem);
+		lu_s_base_rg__init(&self->super, mem);
 
 		self->rec 				= rec;
 		self->id 				= rec->id;
@@ -30,9 +33,9 @@
 			self->cells_w,
 			self->cells_h,
 			self->cells_d,
-			rec->config.v_min, 
-			rec->config.v_max, 
-			rec->config.v_neu_size
+			rec->config.comp_config.v_min, 
+			rec->config.comp_config.v_max, 
+			rec->config.comp_config.v_neu_size
 		);
 
 		lu_s_comp_layer__init(
@@ -41,9 +44,9 @@
 			self->cells_w,
 			self->cells_h,
 			self->cells_d,
-			rec->config.v_min, 
-			rec->config.v_max, 
-			rec->config.p_neu_size
+			rec->config.comp_config.v_min, 
+			rec->config.comp_config.v_max, 
+			rec->config.comp_config.p_neu_size
 		);
 
 		//
@@ -118,6 +121,14 @@
 		lu_mem__free(self->super.mem, (lu_p_byte) self);
 	}
 
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+	
+	static void lu_s_rec_rg__cells_assign(Lu_S_Rec_Rg self, Lu_S_Cell_Mem cell_mem)
+	{
+
+	}
 
 	static void lu_s_rec_rg__print_info(Lu_S_Rec_Rg self)
 	{

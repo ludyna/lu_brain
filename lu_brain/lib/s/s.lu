@@ -80,8 +80,8 @@
 			lu_s_rec_rg__cells_assign(rec_rg, self->cell_mem);
 		}
 
-		lu_s_seq__cells_assign(self->seq, self->cell_mem);
-		lu_s_story__cells_assign(self->story, self->cell_mem);
+		lu_s_seq_rg__cells_assign(self->seq, self->cell_mem);
+		lu_s_story_rg__cells_assign(self->story, self->cell_mem);
 
 		//
 		// Inner region cells connect
@@ -125,6 +125,8 @@
 	static void lu_s__destroy(Lu_S self)
 	{
 		lu__assert(self);
+
+		lu_s_story_rg__destroy(self->story);
 
 		lu_s_seq_rg__destroy(self->seq);
 

@@ -20,3 +20,11 @@
 
 
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_s_story_rg__cells_assign(Lu_S_Story_Rg self, Lu_S_Cell_Mem cell_mem)
+	{
+
+	}
