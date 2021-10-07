@@ -84,9 +84,10 @@
 		lu__assert(self->super.mem);
 
 		if (self->v_cells)
-			lu_mem__free(self->super.mem, (lu_p_byte) self->cells);
+			lu_mem__free(self->super.mem, (lu_p_byte) self->v_cells);
 
-		lu_s_comp_cell__deinit(&self->conf);
+		if (self->p_cells)
+			lu_mem__free(self->super.mem, (lu_p_byte) self->p_cells);
 
 		lu_s_base_layer__deinit(&self->super);
 	}

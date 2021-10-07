@@ -11,10 +11,10 @@
 			.hold_blocks_size 	= 2, 
 			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
-			.v_min 				= 0,
-			.v_max 				= 1,
-			.v_neu_size			= 2,
-			.p_neu_size			= 2,
+			.comp_config.v_min 				= 0,
+			.comp_config.v_max 				= 1,
+			.comp_config.v_neu_size			= 2,
+			.comp_config.p_neu_size			= 2,
 		},
 		{
 			// LU_RC_MONOCHROME8_IMAGE
@@ -24,10 +24,10 @@
 			.hold_blocks_size 	= 4, 
 			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
-			.v_min 				= 0,
-			.v_max 				= 255,
-			.v_neu_size			= 256,
-			.p_neu_size			= 128,
+			.comp_config.v_min 				= 0,
+			.comp_config.v_max 				= 255,
+			.comp_config.v_neu_size			= 256,
+			.comp_config.p_neu_size			= 128,
 		},
 		{
 			// LU_RC_RBG16_IMAGE
@@ -40,12 +40,21 @@
 			.hold_blocks_size 	= 4, 
 			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
 			
-			.v_min 				= 0,
-			.v_max 				= 10,
-			.v_neu_size			= 10,
-			.p_neu_size			= 2,
+			.comp_config.v_min 				= 0,
+			.comp_config.v_max 				= 10,
+			.comp_config.v_neu_size			= 10,
+			.comp_config.p_neu_size			= 2,
 		}
 	};
+
+	Lu_Rec_Comp_Config lu_rec_comp_config__validate(Lu_Rec_Comp_Config self)
+	{
+		lu_user_assert(self->v_max - self->v_min > 0, "v_max minus v_min should greater than 0");
+		lu_user_assert(self->v_neu_size > 1, "v_neu_size should be greater than 1");
+		lu_user_assert(self->p_neu_size > 1, "p_neu_size should be greater than 1");
+
+		return self;
+	}
 
 	struct lu_rec_config lu_rec_config__get_by_id(lu_size id)
 	{
@@ -60,9 +69,7 @@
 	{
 		lu_user_assert(self, "Lu_Rec_Config is NULL");
 
-		lu_user_assert(self->v_max - self->v_min > 0, "v_max minus v_min should greater than 0");
-		lu_user_assert(self->v_neu_size > 1, "v_neu_size should be greater than 1");
-		lu_user_assert(self->p_neu_size > 1, "p_neu_size should be greater than 1");
+		lu_rec_comp_config__validate(&self->comp_config);
 
 		return self;
 	}

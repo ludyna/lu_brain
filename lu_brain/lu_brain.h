@@ -24,6 +24,7 @@
 
 	typedef struct lu_brain_config* 	Lu_Brain_Config;
 	typedef struct lu_brain* 			Lu_Brain;	
+	typedef struct lu_rec_comp_config*  Lu_Rec_Comp_Config;
 	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
 
@@ -106,6 +107,8 @@
 		lu_size			v_neu_size;
 		lu_size 		p_neu_size;
 	};
+
+	Lu_Rec_Comp_Config lu_rec_comp_config__validate(Lu_Rec_Comp_Config self);
 
 	//
 	// Lu_Rec_Config 
