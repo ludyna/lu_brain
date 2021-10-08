@@ -1,6 +1,6 @@
 # Lu_Brain
 
-Lu_Brain is a pattern manipulation engine and pattern database open-source C library.
+Lu_Brain is a pattern database open-source C library.
 
 ___More info soon. This project is a work in progress at this moment.___
 
@@ -13,6 +13,16 @@ Oleh believes our brain or consciousness does not use gradient descent or geneti
 ___The library is free to use by everyone with good intentions.___
 
 The library is our expression of goodwill and good intention towards humanity.
+
+Main features:
+- pattern recognition
+- pattern search
+- pattern storage
+- pattern restoration
+- pattern removal 
+- pattern operations
+- organizing patterns into sequences and stories
+- transparent access to all data and data manipulation
 
 ## Goals
 
