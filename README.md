@@ -21,7 +21,9 @@ Lu_Brain main features:
 - organizing patterns into hierarchies
 - transparent access to all data and data manipulation
 
-___The library is free to use by everyone with good intentions.___
+## Legal 
+
+___The library is free to use by everyone with good intentions (MIT_LICENSE).___
 
 The library is our expression of goodwill and good intention towards humanity.
 
