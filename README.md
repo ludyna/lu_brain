@@ -1,6 +1,6 @@
 # Lu_Brain
 
-Lu_Brain is an open-source C library for custom AI algorithms that is a pattern manipulation engine and pattern database simultaneously. 
+Lu_Brain is a pattern manipulation engine and pattern database open-source C library.
 
 ___More info soon. This project is a work in progress at this moment.___
 
