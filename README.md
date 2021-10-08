@@ -6,8 +6,8 @@ ___More info soon. This project is a work in progress at this moment.___
 
 ## About
 
-Lu_Brain does NOT use gradient descent algorithms.
-Lu_Brain does NOT use genetic algorithms.
+- Lu_Brain does NOT use gradient descent algorithms.
+- Lu_Brain does NOT use genetic algorithms.
 
 The author (Oleh Ihorovych Novosad) believes our brain or consciousness does not use them too. It would be a big waste of computational and energy resources.
  
