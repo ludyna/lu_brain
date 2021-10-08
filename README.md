@@ -13,7 +13,7 @@ The author (Oleh Ihorovych Novosad) believes our brain or consciousness does not
  
 The author created/invented Lu_Brain essential algorithms based on his information theory of pattern recognition.
 
-The library is free to use by everyone with good intentions and is the author's expression of goodwill and good intention towards humanity.
+___The library is free to use by everyone with good intentions___ and is the author's expression of goodwill and good intention towards humanity.
 
 ## Goals
 
