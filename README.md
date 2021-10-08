@@ -6,12 +6,8 @@ ___More info soon. This project is a work in progress at this moment.___
 
 ## About
 
-The original author (Oleh Ihorovych Novosad) believes our brain or consciousness does not use gradient descent or genetic algorithms because it would be a big waste of computational and energy resources.
- 
-- Lu_Brain does NOT use gradient descent algorithms.
-- Lu_Brain does NOT use genetic algorithms.
-
-The original author created/invented Lu_Brain essential algorithms based on his information theory of pattern recognition.
+Oleh Ihorovych Novosad is the original author of this library.
+Oleh believes our brain or consciousness does not use gradient descent or genetic algorithms because it would be a big waste of computational and energy resources. Therefore, Oleh based Lu_Brain essential algorithms on his theory of information and pattern recognition.
 
 ___The library is free to use by everyone with good intentions___ and is contributors expression of goodwill and good intention towards humanity.
 
