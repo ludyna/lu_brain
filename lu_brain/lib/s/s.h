@@ -233,6 +233,8 @@
 
 	static inline Lu_S_Cell_Mem_Config lu_s_cell_mem_config__init(Lu_S_Cell_Mem_Config self)
 	{
+		lu__assert(self);
+
 		self->component_cells_size = 0;
 		self->pixel_cells_size = 0;
 		self->rec_cells_size = 0;
@@ -245,12 +247,14 @@
 
 	static inline Lu_S_Cell_Mem_Config lu_s_cell_mem_config__validate(Lu_S_Cell_Mem_Config self)
 	{
-		if (self->component_cells_size < 1) return NULL;
-		if (self->pixel_cells_size < 1) return NULL;
-		if (self->rec_cells_size < 1) return NULL;
-		if (self->seq_nx_cells_size < 1) return NULL;
-		if (self->seq_cells_size < 1) return NULL;
-		if (self->story_nx_cells_size < 1) return NULL;
+		lu__assert(self);
+
+		lu__assert(self->component_cells_size > 0);
+		lu__assert(self->pixel_cells_size > 0);
+		lu__assert(self->rec_cells_size > 0);
+		lu__assert(self->seq_nx_cells_size > 0);
+		lu__assert(self->seq_cells_size > 0);
+		lu__assert(self->story_nx_cells_size > 0);
 
 		return self;
 	}

@@ -17,6 +17,9 @@
 		lu_user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->brain_mem  	= brain_mem; 
+		self->s_mem			= brain_mem;
+		self->n_mem 		= brain_mem; 
+
 		self->config 		= *p_config;
 		self->recs 			= lu_arr_temp_create(p_config->recs_size, false);
 
@@ -28,10 +31,24 @@
 
 	void lu_brain__destroy(Lu_Brain self)
 	{
+		lu__assert(self);
+		lu__assert(self->brain_mem);
+		lu__assert(self->s_mem);
+		lu__assert(self->n_mem);
+
 		lu__user_assert_void(self, "Lu_Brain is NULL");
 
-		lu_n_destroy(self->n);
-		lu_s__destroy(self->s);
+		if (self->n) 
+		{
+			lu_n__destroy(self->n);
+			self->n = NULL;
+		}
+
+		if (self->s) 
+		{	
+			lu_s__destroy(self->s);
+			self->s = NULL;
+		}
 
 		Lu_Rec rec;
 		if (self->recs)
@@ -44,8 +61,8 @@
 			}
 
 		lu_arr__destroy(self->recs);
-	
-		lu_g_mem_free((lu_p_byte) self);
+
+		lu_mem__free(self->brain_mem, (lu_p_byte) self);
 	}
 
 	void lu_brain__print_info(Lu_Brain self)
@@ -61,7 +78,7 @@
  			lu_s__print_info(self->s);
 
  		// if (self->n)
- 		// 		lu_n_print_info(self->n);
+ 		// 		lu_n__print_info(self->n);
 	}
 
 	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
@@ -76,7 +93,7 @@
 		lu_user_assert(NULL, "Not implemented yet");
 	}
 
-	static lu_size lu_brain_rec_attach(Lu_Brain self, Lu_Rec rec)
+	static lu_size lu_brain__rec_attach(Lu_Brain self, Lu_Rec rec)
 	{
 		lu__assert(self);
 		lu__assert(rec);
@@ -98,7 +115,7 @@
 		return rec->id;
 	}
 
-	static void lu_brain_rec_detach(Lu_Brain self, Lu_Rec rec)
+	static void lu_brain__rec_detach(Lu_Brain self, Lu_Rec rec)
 	{
 		lu__assert(self);
 		lu__assert(rec->brain);
@@ -136,9 +153,9 @@
 			self->s_mem = NULL;
 		}
 
-		if (self->n_mem)
+		if (self->n)
 		{
-			lu_n_destroy(self->n);
+			lu_n__destroy(self->n);
 			self->n = NULL;
 		}
 
@@ -157,7 +174,7 @@
 		struct lu_n_config n_config;
 		n_config.names_size = self->config.net.names_size;
 
-		self->n = lu_n_create(self, n_config);
+		self->n = lu_n__create(self, n_config);
 		lu_user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
 
 		return self;

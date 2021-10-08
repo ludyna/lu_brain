@@ -30,7 +30,7 @@
 		self->height = height;
 		self->depth = depth;
 
-		lu_brain_rec_attach(brain, self);
+		lu_brain__rec_attach(brain, self);
 
 		return self;
 	}
@@ -38,7 +38,7 @@
 	void lu_brain_rec_remove(Lu_Rec self)
 	{
 		if (self->brain)
-			lu_brain_rec_detach(self->brain, self);
+			lu_brain__rec_detach(self->brain, self);
 	}
 
 
