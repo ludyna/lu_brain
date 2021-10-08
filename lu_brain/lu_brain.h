@@ -199,7 +199,7 @@
 	//
 
 	Lu_Wave lu_save_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config); 
-	Lu_Wave lu_find_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_match_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 	Lu_Wave lu_restore_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config);
 
 	//

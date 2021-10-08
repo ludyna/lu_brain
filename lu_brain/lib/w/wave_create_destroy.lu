@@ -50,7 +50,10 @@
 		return (Lu_Wave) self;
 	}
 	
-	Lu_Wave lu_find_wave__create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
+	//
+	// Match is more generalized "find".
+	// 
+	Lu_Wave lu_match_wave__create(Lu_Mem mem, Lu_Brain brain, struct lu_wave_config config)
 	{
 		return NULL;
 	}
