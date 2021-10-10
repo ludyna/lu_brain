@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_S s)
+	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_M s)
 	{
 		lu__assert(mem);
 		// lu__assert(s);

@@ -2,5 +2,5 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-#include "s_cell_mem.lu"
-#include "s.lu"
+#include "_typedefs.h"
+#include "m.h"

@@ -101,7 +101,7 @@
 
 	struct lu_seq_rg {
 		Lu_Mem mem;
-		Lu_S s;
+		Lu_M s;
 	
 		Lu_Arr recs;
 
@@ -113,7 +113,7 @@
 		Lu_Cell cell; // resulting block_layer cell	
 	};
 
-	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_S s);
+	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_M s);
 	static void lu_seq_rg_destroy(Lu_Seq_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////

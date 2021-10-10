@@ -22,7 +22,7 @@
 
 		Lu_Arr	recs; // receivers
 
-		Lu_S s;
+		Lu_M s;
 		Lu_N n;		
 	};	
 

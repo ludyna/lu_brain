@@ -4,15 +4,15 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S Create & Destroy
+// Lu_M Create & Destroy
 
-	static Lu_S lu_s__create(Lu_Mem mem, Lu_Arr recs)
+	static Lu_M lu_s__create(Lu_Mem mem, Lu_Arr recs)
 	{
 		lu__assert(mem);
 		lu__assert(recs);
 		lu__assert(lu_arr__count(recs) > 0);
 
-		Lu_S self = (Lu_S) lu_mem__alloc(mem, sizeof(struct lu_s));
+		Lu_M self = (Lu_M) lu_mem__alloc(mem, sizeof(struct lu_m));
 		lu__assert(self);
 
 		self->mem = mem;
@@ -21,7 +21,7 @@
 		// Cell_Mem_Config
 		//
 
-		struct lu_s_cell_mem_config cell_mem_config;
+		struct lu_m_cell_mem_config cell_mem_config;
 
 		lu_s_cell_mem_config__init(&cell_mem_config);
 
@@ -119,7 +119,7 @@
 		return self;
 	}
 
-	static void lu_s__destroy(Lu_S self)
+	static void lu_s__destroy(Lu_M self)
 	{
 		lu__assert(self);
 
@@ -144,15 +144,15 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S Methods
+// Lu_M Methods
 
 
-	static void lu_s__print_info(Lu_S self)
+	static void lu_s__print_info(Lu_M self)
 	{
-		// lu__user_assert_void(self, "Lu_S is NULL");
-		// lu__user_assert_void(self->recs, "Lu_S recs is NULL");
+		// lu__user_assert_void(self, "Lu_M is NULL");
+		// lu__user_assert_void(self->recs, "Lu_M recs is NULL");
 
- 	// 	lu__debug("\n\n-- Lu_S info: ");
+ 	// 	lu__debug("\n\n-- Lu_M info: ");
  	// 	lu__debug("\n 	Lu_S_Rec_Rg count: %lu", lu_arr__count(self->recs));
 
  	// 	Lu_S_Rec_Rg rec;

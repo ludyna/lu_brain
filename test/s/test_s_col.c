@@ -21,7 +21,7 @@
 // lu_value			data_m1[] 		= { -1.0 };
 
 // Lu_Mem 				mem;
-// Lu_S				s;
+// Lu_M				s;
 // Lu_S_Rec_Rg 				lu_s_rec_rg;
 // Lu_S_Cell_1				s_neu_com_0;
 // Lu_S_Cell_1 				s_neu_com_1;
