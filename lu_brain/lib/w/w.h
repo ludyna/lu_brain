@@ -91,9 +91,9 @@
 
 	struct lu_rec_rg {
 
-		struct lu_layer componentlu_s_layer;
-		struct lu_layer pixellu_s_layer;
-		struct lu_layer* pyralu_s_layers;
+		struct lu_layer componentlu_m_layer;
+		struct lu_layer pixellu_m_layer;
+		struct lu_layer* pyralu_m_layers;
 	};
 
 	static Lu_Rec_Rg lu_block_rec_layer_create(Lu_Mem mem);

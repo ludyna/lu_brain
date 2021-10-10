@@ -135,7 +135,7 @@
 		lu_size hash = 0;
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_left));
 
-		return hnn_linklu_s_cell_get_1(self->links, hash, top_left);
+		return hnn_links_cell_get_1(self->links, hash, top_left);
 	}
 
 	Hnn_Cell_0 hnn_cell_get_2(Hnn self, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right)
@@ -150,7 +150,7 @@
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_left));
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_right));
 
-		return hnn_linklu_s_cell_get_2(self->links, hash, top_left, top_right);
+		return hnn_links_cell_get_2(self->links, hash, top_left, top_right);
 	}
 
 
@@ -168,7 +168,7 @@
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, top_right));
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, bottom_left));
 
-		return hnn_linklu_s_cell_get_3(self->links, hash, top_left, top_right, bottom_left);
+		return hnn_links_cell_get_3(self->links, hash, top_left, top_right, bottom_left);
 	}
 
 	Hnn_Cell_0 hnn_cell_get_4(Hnn self, Hnn_Cell_0 top_left, Hnn_Cell_0 top_right, Hnn_Cell_0 bottom_left, Hnn_Cell_0 bottom_right)
@@ -187,7 +187,7 @@
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, bottom_left));
 		hash = hnn_hash_comb(hash, hnn_cell_shift(self->cell_allocator, bottom_right));
 
-		return hnn_linklu_s_cell_get_4(self->links, hash, top_left, top_right, bottom_left, bottom_right);
+		return hnn_links_cell_get_4(self->links, hash, top_left, top_right, bottom_left, bottom_right);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -208,7 +208,7 @@
  		// Important
 		new_cell->top_left = top_left;
 
-		Hnn_Table_Node node = hnn_linklu_s_cell_add_1(self->links, hash, (Hnn_Cell_0) new_cell);
+		Hnn_Table_Node node = hnn_links_cell_add_1(self->links, hash, (Hnn_Cell_0) new_cell);
 		lu__assert(node);
 
 		return new_cell;
@@ -232,7 +232,7 @@
 		new_cell->super.top_left = top_left;
 		new_cell->top_right = top_right;
 
-		Hnn_Table_Node node = hnn_linklu_s_cell_add_2(self->links, hash, (Hnn_Cell_0) new_cell);
+		Hnn_Table_Node node = hnn_links_cell_add_2(self->links, hash, (Hnn_Cell_0) new_cell);
 		lu__assert(node);
 
 		return new_cell;
@@ -259,7 +259,7 @@
 		new_cell->super.top_right = top_right;
 		new_cell->bottom_left = bottom_left;
 
-		Hnn_Table_Node node = hnn_linklu_s_cell_add_3(self->links, hash, (Hnn_Cell_0) new_cell);
+		Hnn_Table_Node node = hnn_links_cell_add_3(self->links, hash, (Hnn_Cell_0) new_cell);
 		lu__assert(node);
 
 		return new_cell;
@@ -289,7 +289,7 @@
 		new_cell->super.bottom_left = bottom_left;
 		new_cell->bottom_right = bottom_right;
 
-		Hnn_Table_Node node = hnn_linklu_s_cell_add_4(self->links, hash, (Hnn_Cell_0) new_cell);
+		Hnn_Table_Node node = hnn_links_cell_add_4(self->links, hash, (Hnn_Cell_0) new_cell);
 		lu__assert(node);
 
 		return new_cell;

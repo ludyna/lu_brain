@@ -50,7 +50,7 @@ static void build_header(Lu_S_List self)
 Lu_S_List s_list_create(Lu_Mem mem, lu_size limit_size, lu_fp_compare compare, s_list_side over_limit_remove_side)
 {
 	lu__assert(limit_size > 0);
-	Lu_S_List self = (Lu_S_List) lu_mem__alloc(mem, sizeof(struct lu_s_list));
+	Lu_S_List self = (Lu_S_List) lu_mem__alloc(mem, sizeof(struct lu_m_list));
 	lu__assert(self != NULL);
 
 	// Initialize
@@ -66,7 +66,7 @@ Lu_S_List s_list_create(Lu_Mem mem, lu_size limit_size, lu_fp_compare compare, s
 
 	self->mem_table 	= lu_mem_table_create(
 							mem, 
-							sizeof(struct lu_s_node), 
+							sizeof(struct lu_m_node), 
 							self->limit_size * 3 + self->level_size, 
 							0, 
 							MTF_FREEABLE

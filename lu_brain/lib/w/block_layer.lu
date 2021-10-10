@@ -19,14 +19,14 @@
 		self->s = s;
 		// self->recs = lu_arr__create(mem, lu_arr__count(s->recs), false);
 
-		// Lu_S_Rec_Rg lu_s_rec_rg;
+		// Lu_S_Rec_Rg lu_m_rec_rg;
 		// Lu_Rec_Rg rec;
 		// for(lu_size i = 0; i < lu_arr__count(s->recs); i++)
 		// {
-		// 	lu_s_rec_rg = (Lu_S_Rec_Rg) lu_arr__get(s->recs, i);
-		// 	lu__assert(lu_s_rec_rg);
+		// 	lu_m_rec_rg = (Lu_S_Rec_Rg) lu_arr__get(s->recs, i);
+		// 	lu__assert(lu_m_rec_rg);
 
-		// 	rec = lu_block_rec_layer_create(mem, lu_s_rec_rg);
+		// 	rec = lu_block_rec_layer_create(mem, lu_m_rec_rg);
 		// 	lu_arr_append(self->recs, rec);
 		// }
 

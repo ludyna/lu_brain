@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Node
 
-	struct lu_s_node
+	struct lu_m_node
 	{
 		struct lu_lim_list 	values;
 
@@ -46,7 +46,7 @@
 		S_LIST_LAST
 	} s_list_side;
 
-	struct lu_s_list  
+	struct lu_m_list  
 	{
 		Lu_Mem 				mem;
 		lu_size 			limit_size;
