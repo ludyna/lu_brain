@@ -8,8 +8,8 @@
 	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_S s)
 	{
 		lu__assert(mem);
-		lu__assert(s);
-		lu__assert(s->recs);
+		// lu__assert(s);
+		// lu__assert(s->recs);
 
 		Lu_Seq_Rg self = (Lu_Seq_Rg) lu_mem__alloc(mem, sizeof(struct lu_seq_rg));
 		lu__assert(self);
@@ -17,18 +17,18 @@
 
 		self->mem = mem;
 		self->s = s;
-		self->recs = lu_arr__create(mem, lu_arr__count(s->recs), false);
+		// self->recs = lu_arr__create(mem, lu_arr__count(s->recs), false);
 
-		Lu_S_Rec_Rg lu_s_rec_rg;
-		Lu_Rec_Rg rec;
-		for(lu_size i = 0; i < lu_arr__count(s->recs); i++)
-		{
-			lu_s_rec_rg = (Lu_S_Rec_Rg) lu_arr__get(s->recs, i);
-			lu__assert(lu_s_rec_rg);
+		// Lu_S_Rec_Rg lu_s_rec_rg;
+		// Lu_Rec_Rg rec;
+		// for(lu_size i = 0; i < lu_arr__count(s->recs); i++)
+		// {
+		// 	lu_s_rec_rg = (Lu_S_Rec_Rg) lu_arr__get(s->recs, i);
+		// 	lu__assert(lu_s_rec_rg);
 
-			rec = lu_block_rec_layer_create(mem, lu_s_rec_rg);
-			lu_arr_append(self->recs, rec);
-		}
+		// 	rec = lu_block_rec_layer_create(mem, lu_s_rec_rg);
+		// 	lu_arr_append(self->recs, rec);
+		// }
 
 		return self;
 	}
@@ -37,18 +37,18 @@
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
-		lu__assert(self->recs);
+		// lu__assert(self->recs);
 
-		Lu_Rec_Rg rec;
-		if (self->recs)
-			for(lu_size i = 0; i < lu_arr__count(self->recs); i++)
-			{
-				rec = (Lu_Rec_Rg) lu_arr__get(self->recs, i);
-				if (rec)
-					lu_block_rec_layer_destroy(rec, self->mem);
-			}
+		// Lu_Rec_Rg rec;
+		// if (self->recs)
+		// 	for(lu_size i = 0; i < lu_arr__count(self->recs); i++)
+		// 	{
+		// 		rec = (Lu_Rec_Rg) lu_arr__get(self->recs, i);
+		// 		if (rec)
+		// 			lu_block_rec_layer_destroy(rec, self->mem);
+		// 	}
 
-		lu_arr__destroy(self->recs);
+		// lu_arr__destroy(self->recs);
 
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}

@@ -8,7 +8,7 @@ ___More info soon. This project is a work in progress at this moment.___
 
 A _pattern_ is a piece of repeatable (but not necessarily exact) information in the flow of information. Thus, patterns emerge from the flow of information. For example, our ability to recognize objects from visual information flows and words from auditory information flows are pattern recognitions.
 
-Lu_Brain is a _pattern database_ which means it can extract, manipulate and store patterns in an optimal way. 
+Lu_Brain is a _pattern database_ which means it can extract, match and store patterns in an optimal way. 
 
 Lu_Brain main features:
 

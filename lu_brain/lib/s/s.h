@@ -1,31 +1,43 @@
 /**
 	Copyright © 2021 Oleh Ihorovych Novosad 
 
-	Reason we have different rgs instead of putting every layer into the same 
-	structure is that we can have different number of instances of each rg.
-	For example, we need rec_rg for ever rec, while we need one seq_rg.
-	story_rg can have many seq_rg.
-
 	Map:
-		s_rec_rg
-			comp_layer
-				comp_cell component_v (d) x n(w x h x cells_size_i, empty by default) ==>
-				comp_cell component_p (d) x n(w x h x cells_size_i, empty by default) ==> 
 
-			pixel_layer 
-				pixel_cell (w x h) ==>  
-			rec_layer ...
-				rec_cell (w - 1 x h - 1) ... 
+		story_nx_layer 
+			story_nx_cell(1)
 
-		s_seq_rg
-			seq_nx_layer
-				seq_nx_cell (n)
 			seq_layer ...
 				seq_cell (n-1) ...
+				seq_nx_layer
+					seq_nx_cell (n)
 
-		s_story_rg
-			story_nx_layer 
-				story_nx_cell(1)
+
+
+						rec_layer ...
+							rec_cell (w - 1 x h - 1) ... 
+
+						pixel_layer 
+							pixel_cell (w x h) ==>  
+
+							comp_layer
+								comp_cell component_v (d) x n(w x h x cells_size_i, empty by default) ==>
+								comp_cell component_p (d) x n(w x h x cells_size_i, empty by default) ==> 
+
+
+	
+	abstract_cell(1) (self expanding)
+		abstract_cell (2)
+			...
+			story_cell (1) (self expanding)
+				seq_cell (2)
+					... 
+					seq_cell (rec_count * self expanding)
+						rec_cell 
+
+
+
+	Stvoruvaty znyzu duzhe vazhko, i potrebuye dodatkovyh structur taki yak layery.
+	Yaksho stvoruvaty zverhu, dostatnio prost komirok.
 
 */
 
