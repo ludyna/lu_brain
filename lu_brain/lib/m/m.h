@@ -129,11 +129,7 @@
 //
 	struct lu_m_cell_mem_config {
 		lu_size component_cells_size;
-		lu_size pixel_cells_size;
-		lu_size rec_cells_size;
-		lu_size seq_nx_cells_size;
-		lu_size seq_cells_size;
-		lu_size story_nx_cells_size;
+
 	};
 
 	static inline Lu_M_Cell_Mem_Config lu_s_cell_mem_config__init(Lu_M_Cell_Mem_Config self)
@@ -141,11 +137,7 @@
 		lu__assert(self);
 
 		self->component_cells_size = 0;
-		self->pixel_cells_size = 0;
-		self->rec_cells_size = 0;
-		self->seq_nx_cells_size = 0;
-		self->seq_cells_size = 0;
-		self->story_nx_cells_size = 0;
+
 
 		return self;
 	}
@@ -155,11 +147,6 @@
 		lu__assert(self);
 
 		lu__assert(self->component_cells_size > 0);
-		lu__assert(self->pixel_cells_size > 0);
-		lu__assert(self->rec_cells_size > 0);
-		lu__assert(self->seq_nx_cells_size > 0);
-		lu__assert(self->seq_cells_size > 0);
-		lu__assert(self->story_nx_cells_size > 0);
 
 		return self;
 	}
@@ -172,20 +159,7 @@
 		lu_size component_cells_count;
 		struct lu_m_comp_cell* component_cells;
 
-		lu_size pixel_cells_count;
-		struct lu_s_pixel_cell* pixel_cells;
 
-		lu_size rec_cells_count;
-		struct lu_s_rec_cell* rec_cells;
-
-		lu_size seq_nx_cells_count;
-		struct lu_s_seq_nx_cell* seq_nx_cells;
-
-		lu_size seq_cells_count;
-		struct lu_s_seq_cell* seq_cells;
-
-		lu_size story_nx_cells_count;
-		struct lu_s_story_nx_cell* story_nx_cells;
 	};
 
 	//

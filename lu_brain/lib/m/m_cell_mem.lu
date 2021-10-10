@@ -27,22 +27,14 @@
 		//
 
 		self->component_cells_count = 0;
-		self->pixel_cells_count 	= 0;
-		self->rec_cells_count 		= 0;
-		self->seq_nx_cells_count 	= 0;
-		self->seq_cells_count 		= 0;
-		self->story_nx_cells_count 	= 0;
+
 
 		// 
 		// arrays
 		//
 
 		self->component_cells 	= NULL;
-		self->pixel_cells 		= NULL;
-		self->rec_cells 		= NULL;
-		self->seq_nx_cells 		= NULL;
-		self->seq_cells			= NULL;
-		self->story_nx_cells 	= NULL;
+
 
 
 		return self;
@@ -55,20 +47,6 @@
 		if (self->component_cells)
 			lu_mem__free(self->mem, (lu_p_byte) self->component_cells);
 
-		if (self->pixel_cells)
-			lu_mem__free(self->mem, (lu_p_byte) self->pixel_cells);
-
-		if (self->rec_cells)
-			lu_mem__free(self->mem, (lu_p_byte) self->rec_cells);
-
-		if (self->seq_nx_cells)
-			lu_mem__free(self->mem, (lu_p_byte) self->seq_nx_cells);
-
-		if (self->seq_cells)
-			lu_mem__free(self->mem, (lu_p_byte) self->seq_cells);
-
-		if (self->story_nx_cells)
-			lu_mem__free(self->mem, (lu_p_byte) self->story_nx_cells);
 
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
