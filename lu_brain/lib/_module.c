@@ -17,6 +17,6 @@
 #include "rec/_module.lu"
 #include "seq/_module.lu"
 #include "w/_module.lu" 
-#include "m/_module.lu"
+#include "s/_module.lu"
 
 #include "brain.lu"

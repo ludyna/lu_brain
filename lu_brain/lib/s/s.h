@@ -45,40 +45,40 @@
 // Slots
 //
 
-	struct lu_m_slot_1 {
-		Lu_M_Base_Cell one;
+	struct lu_s_slot_1 {
+		Lu_S_Base_Cell one;
 	};
 
-	struct lu_m_slot_4 {
-		Lu_M_Base_Cell one;
-		Lu_M_Base_Cell two;
-		Lu_M_Base_Cell three;
-		Lu_M_Base_Cell four;
+	struct lu_s_slot_4 {
+		Lu_S_Base_Cell one;
+		Lu_S_Base_Cell two;
+		Lu_S_Base_Cell three;
+		Lu_S_Base_Cell four;
 	};
 
-	struct lu_m_slot_2 {
-		Lu_M_Base_Cell one;
-		Lu_M_Base_Cell two;
+	struct lu_s_slot_2 {
+		Lu_S_Base_Cell one;
+		Lu_S_Base_Cell two;
 	};
 
 	//
 	// Slot inits
 	//
 
-	static inline Lu_M_Slot_1 lu_m_slot_1__init(Lu_M_Slot_1 self) 
+	static inline Lu_S_Slot_1 lu_s_slot_1__init(Lu_S_Slot_1 self) 
 	{
 		self->one = NULL;
 		return self;
 	}
 
-	static inline Lu_M_Slot_2 lu_m_slot_2__init(Lu_M_Slot_2 self) 
+	static inline Lu_S_Slot_2 lu_s_slot_2__init(Lu_S_Slot_2 self) 
 	{
 		self->one = NULL;
 		self->two = NULL;
 		return self;
 	} 
 
-	static inline Lu_M_Slot_4 lu_m_slot_4__init(Lu_M_Slot_4 self) 
+	static inline Lu_S_Slot_4 lu_s_slot_4__init(Lu_S_Slot_4 self) 
 	{
 		self->one = NULL;
 		self->two = NULL;
@@ -91,16 +91,16 @@
 // Cells
 // 
 
-	struct lu_m_base_cell {
-		enum lu_m_cell_type type;			
+	struct lu_s_base_cell {
+		enum lu_s_cell_type type;			
 
 		// for S and W it is always one child
-		struct lu_m_slot_1 c; 
+		struct lu_s_slot_1 c; 
 	}; 
 
 	// can be v or p
-	struct lu_m_comp_cell {
-		struct lu_m_base_cell super;
+	struct lu_s_comp_cell {
+		struct lu_s_base_cell super;
 
 		lu_value 				orig_min;
 		lu_value 				orig_max;
@@ -114,25 +114,25 @@
 		Hnn_Cell_Value* cells;
 	};
 
-	static Lu_M_Comp_Cell lu_m_comp_cell__init(Lu_M_Comp_Cell, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
-	static void lu_m_comp_cell__deinit(Lu_M_Comp_Cell self);
+	static Lu_S_Comp_Cell lu_s_comp_cell__init(Lu_S_Comp_Cell, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_comp_cell__deinit(Lu_S_Comp_Cell self);
 
-	static inline lu_value lu_m_comp_cell__norm(Lu_M_Comp_Cell self, lu_value request);
-	static inline lu_size lu_m_comp_cell__ix(Lu_M_Comp_Cell self, lu_value val);
-	static inline struct lu_size_range lu_m_comp_cell__ix_range(Lu_M_Comp_Cell self, lu_value val, lu_size nsc);
-	static inline lu_value lu_m_comp_cell__calc_sig(Lu_M_Comp_Cell self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_m_comp_cell__step_norm_dist(Lu_M_Comp_Cell self);
+	static inline lu_value lu_s_comp_cell__norm(Lu_S_Comp_Cell self, lu_value request);
+	static inline lu_size lu_s_comp_cell__ix(Lu_S_Comp_Cell self, lu_value val);
+	static inline struct lu_size_range lu_s_comp_cell__ix_range(Lu_S_Comp_Cell self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_comp_cell__calc_sig(Lu_S_Comp_Cell self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_comp_cell__step_norm_dist(Lu_S_Comp_Cell self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_M_Cell_Mem
+// Lu_S_Cell_Mem
 //
-	struct lu_m_cell_mem_config {
+	struct lu_s_cell_mem_config {
 		lu_size component_cells_size;
 
 	};
 
-	static inline Lu_M_Cell_Mem_Config lu_m_cell_mem_config__init(Lu_M_Cell_Mem_Config self)
+	static inline Lu_S_Cell_Mem_Config lu_s_cell_mem_config__init(Lu_S_Cell_Mem_Config self)
 	{
 		lu__assert(self);
 
@@ -142,7 +142,7 @@
 		return self;
 	}
 
-	static inline Lu_M_Cell_Mem_Config lu_m_cell_mem_config__validate(Lu_M_Cell_Mem_Config self)
+	static inline Lu_S_Cell_Mem_Config lu_s_cell_mem_config__validate(Lu_S_Cell_Mem_Config self)
 	{
 		lu__assert(self);
 
@@ -151,13 +151,13 @@
 		return self;
 	}
 
-	struct lu_m_cell_mem {
+	struct lu_s_cell_mem {
 		Lu_Mem mem;
 
-		struct lu_m_cell_mem_config config;
+		struct lu_s_cell_mem_config config;
 
 		lu_size component_cells_count;
-		struct lu_m_comp_cell* component_cells;
+		struct lu_s_comp_cell* component_cells;
 
 
 	};
@@ -166,20 +166,20 @@
 	// Create and Destroy
 	// 
 
-	static Lu_M_Cell_Mem lu_m_cell_mem__create(Lu_Mem mem, struct lu_m_cell_mem_config config);
-	static void lu_m_cell_mem__destroy(Lu_M_Cell_Mem self);
+	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem, struct lu_s_cell_mem_config config);
+	static void lu_s_cell_mem__destroy(Lu_S_Cell_Mem self);
 
 	//
 	// Allocate cells
 	// 
 
-	static void lu_m_cell_mem__alloc_cells(Lu_M_Cell_Mem self, struct lu_m_cell_mem_config config);
+	static void lu_s_cell_mem__alloc_cells(Lu_S_Cell_Mem self, struct lu_s_cell_mem_config config);
 
 	// 
 	// Print
 	//
 
-	static void lu_m_cell_mem__print_info(Lu_M_Cell_Mem self);
+	static void lu_s_cell_mem__print_info(Lu_S_Cell_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_M
@@ -188,12 +188,12 @@
 	struct lu_m {
 
 		Lu_Mem 					mem;
-		Lu_M_Cell_Mem  			cell_mem;
+		Lu_S_Cell_Mem  			cell_mem;
 
 
 	};
 	
-	static Lu_M lu_m__create(Lu_Mem mem, Lu_Arr lu_recs);
-	static void lu_m__destroy(Lu_M self);
+	static Lu_M lu_s__create(Lu_Mem mem, Lu_Arr lu_recs);
+	static void lu_s__destroy(Lu_M self);
 
-	static void lu_m__print_info(Lu_M self);
+	static void lu_s__print_info(Lu_M self);

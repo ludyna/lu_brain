@@ -46,7 +46,7 @@
 
 		if (self->s) 
 		{	
-			lu_m__destroy(self->s);
+			lu_s__destroy(self->s);
 			self->s = NULL;
 		}
 
@@ -75,7 +75,7 @@
 		lu__debug("\nMemory used (bytes): %lu", lu_mem_used(self->brain_mem));
 
  		if (self->s)
- 			lu_m__print_info(self->s);
+ 			lu_s__print_info(self->s);
 
  		// if (self->n)
  		// 		lu_n__print_info(self->n);
@@ -149,7 +149,7 @@
 
 		if (self->s)
 		{
-			lu_m__destroy(self->s);
+			lu_s__destroy(self->s);
 			self->s_mem = NULL;
 		}
 
@@ -163,8 +163,8 @@
 		// Create S
 		// 
  
- 		// (Lu_Mem mem, Lu_M_Cell_Mem cell_mem, Lu_Arr lu_recs);
-		self->s = lu_m__create(self->s_mem, self->recs);
+ 		// (Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
+		self->s = lu_s__create(self->s_mem, self->recs);
 		lu_user_assert(self->s, "Cannot create Lu_M. Not enough memory?");
 
 		//
