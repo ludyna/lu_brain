@@ -17,13 +17,13 @@
 
 		self->mem = mem;
 
-		// //
-		// // Cell_Mem_Config
-		// //
+		//
+		// Cell_Mem_Config
+		//
 
-		// struct lu_s_cell_mem_config cell_mem_config;
+		struct lu_s_cell_mem_config cell_mem_config;
 
-		// lu_s_cell_mem_config__init(&cell_mem_config);
+		lu_s_cell_mem_config__init(&cell_mem_config);
 
 		// //
 		// // Create Rec_Rgs
@@ -146,15 +146,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Methods
 
-	static void lu_s__rec_and_seq_inter_connect(Lu_S_Rec_Rg rec, Lu_S_Seq_Rg seq)
-	{
-
-	}
-
-	static void lu_s__seq_and_story_inter_connect(Lu_S_Seq_Rg seq, Lu_S_Story_Rg story)
-	{
-
-	}
 
 	static void lu_s__print_info(Lu_S self)
 	{
