@@ -42,5 +42,5 @@
 	// S
 	//
 	
-	typedef struct lu_m* 				Lu_M;
+	typedef struct lu_s* 				Lu_S;
 

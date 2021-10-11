@@ -182,10 +182,10 @@
 	static void lu_s_cell_mem__print_info(Lu_S_Cell_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_M
+// Lu_S
 //
 
-	struct lu_m {
+	struct lu_s {
 
 		Lu_Mem 					mem;
 		Lu_S_Cell_Mem  			cell_mem;
@@ -193,7 +193,7 @@
 
 	};
 	
-	static Lu_M lu_s__create(Lu_Mem mem, Lu_Arr lu_recs);
-	static void lu_s__destroy(Lu_M self);
+	static Lu_S lu_s__create(Lu_Mem mem, Lu_Arr lu_recs);
+	static void lu_s__destroy(Lu_S self);
 
-	static void lu_s__print_info(Lu_M self);
+	static void lu_s__print_info(Lu_S self);
