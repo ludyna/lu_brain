@@ -5,13 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Cell_Mem lu_s_cell_mem__create(Lu_Mem mem, struct lu_s_cell_mem_config config)
+	static Lu_S_Layer_Mem lu_s_cell_mem__create(Lu_Mem mem, struct lu_s_layer_mem_config config)
 	{
 		lu__assert(mem);
 		lu__assert(lu_s_cell_mem_config__validate(&config));
 
 
-		Lu_S_Cell_Mem self = (Lu_S_Cell_Mem) lu_mem__alloc(mem, sizeof(struct lu_s_cell_mem));
+		Lu_S_Layer_Mem self = (Lu_S_Layer_Mem) lu_mem__alloc(mem, sizeof(struct lu_s_layer_mem));
 		lu__assert(self);
 
 		self->mem = mem;
@@ -40,7 +40,7 @@
 		return self;
 	}
 
-	static void lu_s_cell_mem__destroy(Lu_S_Cell_Mem self)
+	static void lu_s_cell_mem__destroy(Lu_S_Layer_Mem self)
 	{
 		lu__assert(self);
 
@@ -54,7 +54,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Allocate cells
 
-	static void lu_s_cell_mem__alloc_cells(Lu_S_Cell_Mem self, struct lu_s_cell_mem_config config)
+	static void lu_s_cell_mem__alloc_cells(Lu_S_Layer_Mem self, struct lu_s_layer_mem_config config)
 	{
 		lu__assert(self); 
 		
@@ -82,16 +82,16 @@
 
 
 	// static Lu_S_Cell_3 lu_s_cell_mem_component_cell_assign(
-	// 	Lu_S_Cell_Mem self, 
+	// 	Lu_S_Layer_Mem self, 
 	// 	Lu_S_Layer layer, 
 	// 	lu_size x, 
 	// 	lu_size y, 
 	// 	lu_size z,
-	// 	Lu_S_Comp_Cell v_conf, 
-	// 	Lu_S_Comp_Cell p_conf
+	// 	Lu_S_Comp_Layer v_conf, 
+	// 	Lu_S_Comp_Layer p_conf
 	// )
 	// {
-	// 	lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Comp_Cell");
+	// 	lu_user_assert(self->component_cells_count < self->component_cells_size, "Out of space for Lu_S_Comp_Layer");
 
 	// 	Lu_S_Cell_3 neu = &self->component_cells[self->component_cells_count];
 	// 	neu = lu_s_cell_3_init(neu, layer, layer->cells_count, x, y, z, v_conf, p_conf);
@@ -107,7 +107,7 @@
 	// }
 
 
-	// static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer)
+	// static Lu_S_Cell_1 lu_s_cell_mem_cell_1_assign(Lu_S_Layer_Mem self, Lu_S_Layer layer)
 	// {
 	// 	lu_user_assert(self->cells_1_count < self->cells_1_size, "Out of space for Lu_S_Cell_1");
 
@@ -124,12 +124,12 @@
 	// 	return neu;
 	// }  
 
-	// static void lu_s_cell_mem_cell_1_retract(Lu_S_Cell_Mem self, Lu_S_Cell_1 cell)
+	// static void lu_s_cell_mem_cell_1_retract(Lu_S_Layer_Mem self, Lu_S_Cell_1 cell)
 	// {
 	// 	lu_s_cell_1_deinit(cell);
 	// }
 
-	// static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Cell_Mem self, Lu_S_Layer layer, lu_size x, lu_size y)
+	// static Lu_S_Cell_2 lu_s_cell_mem_cell_2_assign(Lu_S_Layer_Mem self, Lu_S_Layer layer, lu_size x, lu_size y)
 	// {
 	// 	lu_user_assert(self->cells_2_count < self->cells_2_size, "Out of space for Lu_S_Cell_2");
 
@@ -146,19 +146,19 @@
 	// 	return neu;
 	// }
 
-	// static void lu_s_cell_mem_cell_2_retract(Lu_S_Cell_Mem self, Lu_S_Cell_2 cell)
+	// static void lu_s_cell_mem_cell_2_retract(Lu_S_Layer_Mem self, Lu_S_Cell_2 cell)
 	// {
 	// 	lu_s_cell_2_deinit(cell);
 	// }
 
 	// static Lu_S_Cell_3 lu_s_cell_mem_cell_3_assign(
-	// 	Lu_S_Cell_Mem self, 
+	// 	Lu_S_Layer_Mem self, 
 	// 	Lu_S_Layer layer, 
 	// 	lu_size x, 
 	// 	lu_size y, 
 	// 	lu_size z,
-	// 	Lu_S_Comp_Cell v_conf, 
-	// 	Lu_S_Comp_Cell p_conf
+	// 	Lu_S_Comp_Layer v_conf, 
+	// 	Lu_S_Comp_Layer p_conf
 	// )
 	// {
 	// 	lu_user_assert(self->cells_3_count < self->cells_3_size, "Out of space for Lu_S_Cell_3");
@@ -176,7 +176,7 @@
 	// 	return neu;
 	// }
 
-	// static void lu_s_cell_mem_cell_3_retract(Lu_S_Cell_Mem self, Lu_S_Cell_3 cell)
+	// static void lu_s_cell_mem_cell_3_retract(Lu_S_Layer_Mem self, Lu_S_Cell_3 cell)
 	// {
 	// 	lu_s_cell_3_deinit(cell);
 	// }
@@ -184,7 +184,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Print
 
-	static void lu_s_cell_mem__print_info(Lu_S_Cell_Mem self)
+	static void lu_s_cell_mem__print_info(Lu_S_Layer_Mem self)
 	{
  		// lu__debug("\n 	 	%-19s %lu", "cells_1_size:", self->cells_1_size);
  		// lu__debug("\n 	 	%-19s %lu", "cells_2_size:", self->cells_2_size);

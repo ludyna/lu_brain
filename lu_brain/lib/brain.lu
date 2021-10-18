@@ -163,7 +163,7 @@
 		// Create S
 		// 
  
- 		// (Lu_Mem mem, Lu_S_Cell_Mem cell_mem, Lu_Arr lu_recs);
+ 		// (Lu_Mem mem, Lu_S_Layer_Mem cell_mem, Lu_Arr lu_recs);
 		self->s = lu_s__create(self->s_mem, self->recs);
 		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
 

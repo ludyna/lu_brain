@@ -21,7 +21,7 @@
 		// Cell_Mem_Config
 		//
 
-		struct lu_s_cell_mem_config cell_mem_config;
+		struct lu_s_layer_mem_config cell_mem_config;
 
 		lu_s_cell_mem_config__init(&cell_mem_config);
 
