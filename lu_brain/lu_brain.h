@@ -208,17 +208,31 @@
 
 	void lu_wave__destroy(Lu_Wave); 
 
+
+	// Wave Level
+
+	void lu_wave__start_layer(Lu_Wave, lu_size level);
+
 	//
 	// Wave Seq
+	// Same as lu_wave__start_level(wave, 0)
 	//
+
+	#define lu_wave__start_seq(self) lu_wave__start_layer(self, 0)
+	#define lu_wave__start_event(self) lu_wave__start_layer(self, 1)
+	#define lu_wave__start_chapter(self) lu_wave__start_layer(self, 2)
+	#define lu_wave__start_story(self) lu_wave__start_layer(self, 3)
+
+	// Wave Block
 
 	void lu_wave__block_begin(Lu_Wave);
 	void lu_wave__block_end(Lu_Wave);
 
+	// Wave Data
+
 	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* data);
 	void lu_wave__push_neu(Lu_Wave, Lu_Neu); 
 
-	void lu_wave__reset(Lu_Wave);
 
 	// lu_size lu_wave_block_count(Lu_Wave);
 	// Lu_Data lu_wave_last_data(Lu_Wave, Lu_Rec);

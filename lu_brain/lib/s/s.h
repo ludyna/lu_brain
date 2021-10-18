@@ -2,43 +2,54 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 
 	Map:
+		comp (d) 
+			comp_cell component_v x n(cells_size_i, empty by default) ==>
+			comp_cell component_p x n(cells_size_i, empty by default) ==> 
 
-		story_nx_layer 
-			story_nx_cell(1)
+			pixel_nx (w Y h)
+				pixel (w - 1 Y h - 1)
+					...
+						rec_nx (recs_count Y t)
+							rec(recs_count - 1 Y t - 1)
+								...
+									seq_nx (seq_count)
+										seq(seq_count - 1)
+											...
+												event_nx (event_count)
+													event_nx (event_count - 1)
+														...
+															scene_nx (chapter_count)
+																..
+																	story_nx (story_count)
 
-			seq_layer ...
-				seq_cell (n-1) ...
-				seq_nx_layer
-					seq_nx_cell (n)
+														
+
+	(x Y y) = max(x - 1, 1) * max(y - 1, 1)
 
 
+	"Minimal" start:
 
-						rec_layer ...
-							rec_cell (w - 1 x h - 1) ... 
+	level3, story(1)
+	level2, scene(1)
+	level1, event (1)
+	seq (1)
+	rec (rec_count)
+	pixel(w Y h)
+	comp1 comp2 comp3
 
-						pixel_layer 
-							pixel_cell (w x h) ==>  
 
-							comp_layer
-								comp_cell component_v (d) x n(w x h x cells_size_i, empty by default) ==>
-								comp_cell component_p (d) x n(w x h x cells_size_i, empty by default) ==> 
+	r1 r2 r3 r4
+	r1 r2 r3 r4
+	r1 r2 r3 r4
 
+	r1 r2 r3 r4
 
 	
-	abstract_cell(1) (self expanding)
-		abstract_cell (2)
-			...
-			story_cell (1) (self expanding)
-				seq_cell (2)
-					... 
-					seq_cell (rec_count * self expanding)
-						rec_cell 
-
-
-
-	Stvoruvaty znyzu duzhe vazhko, i potrebuye dodatkovyh structur taki yak layery.
-	Yaksho stvoruvaty zverhu, dostatnio prost komirok.
-
+	Koly my dobavliayemo novyy sequence to my mozhemo chy ce novyy event, chy ce nova scena 
+	Faktychno sequence ce zavzhdy vyznacheno. Novi rivni poza seq ce vhe problemy avtora (programista).
+	Vin maye maty mozhlyvist dobavliaty yih stilky skilky zahoche i nazyvaty yih yak zahoche 
+	(slova, rechenia, abzacy, storinky i td).
+	Yaksho programist kazhe startuyem novyy level3, ce ozanachaye avtomatychno novyy level 2 and level 1.
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -46,19 +57,19 @@
 //
 
 	struct lu_s_slot_1 {
-		Lu_S_Base_Cell one;
+		Lu_S_Cell_Base one;
 	};
 
 	struct lu_s_slot_4 {
-		Lu_S_Base_Cell one;
-		Lu_S_Base_Cell two;
-		Lu_S_Base_Cell three;
-		Lu_S_Base_Cell four;
+		Lu_S_Cell_Base one;
+		Lu_S_Cell_Base two;
+		Lu_S_Cell_Base three;
+		Lu_S_Cell_Base four;
 	};
 
 	struct lu_s_slot_2 {
-		Lu_S_Base_Cell one;
-		Lu_S_Base_Cell two;
+		Lu_S_Cell_Base one;
+		Lu_S_Cell_Base two;
 	};
 
 	//
@@ -91,16 +102,28 @@
 // Cells
 // 
 
-	struct lu_s_base_cell {
+	struct lu_s_cell_base {
 		enum lu_s_cell_type type;			
 
-		// for S and W it is always one child
-		struct lu_s_slot_1 c; 
+		// for S and W it is always one parent
+		struct lu_s_slot_1 p; 
 	}; 
+
+	struct lu_s_cell_2 {
+		struct lu_s_cell_base super;
+
+		struct lu_s_slot_2 c;
+	};
+
+	// struct lu_s_cell_4 {
+	// 	struct lu_s_cell_base super;
+
+	// 	struct lu_s_slot_2
+	// }
 
 	// can be v or p
 	struct lu_s_comp_cell {
-		struct lu_s_base_cell super;
+		struct lu_s_cell_base super;
 
 		lu_value 				orig_min;
 		lu_value 				orig_max;
@@ -182,6 +205,18 @@
 	static void lu_s_cell_mem__print_info(Lu_S_Cell_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Layer
+//
+
+	struct lu_s_layer_base {
+
+	};
+ 
+	struct lu_s_layer {
+		struct lu_s_layer_base super;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S
 //
 
@@ -191,9 +226,22 @@
 		Lu_S_Cell_Mem  			cell_mem;
 
 
+		Lu_S_Layer 				top;
+		Lu_S_Layer 				seq;
+
 	};
 	
 	static Lu_S lu_s__create(Lu_Mem mem, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
 
+	static void lu_s__add_layer(Lu_S self, lu_size level);
+	
+	#define lu_s__add_seq(self) lu_s__add_layer(self, 0)
+	#define lu_s__add_event(self) lu_s__add_layer(self, 1)
+	#define lu_s__add_chapter(self) lu_s__add_layer(self, 2)
+	#define lu_s__add_story(self) lu_s__add_layer(self, 3)
+
+	static void lu_s__add_rec(Lu_S self, Lu_Rec rec);
+
 	static void lu_s__print_info(Lu_S self);
+

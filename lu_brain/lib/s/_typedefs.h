@@ -27,7 +27,7 @@
 		LU_SCT_STORY_NX
 	};
 
- 	typedef struct lu_s_base_cell* 				Lu_S_Base_Cell;
+ 	typedef struct lu_s_cell_base* 				Lu_S_Cell_Base;
  	typedef struct lu_s_comp_cell* 				Lu_S_Comp_Cell;
 
 	// 
@@ -36,6 +36,14 @@
 
 	typedef struct lu_s_cell_mem_config* Lu_S_Cell_Mem_Config;
 	typedef struct lu_s_cell_mem*   	Lu_S_Cell_Mem;
+
+
+	//
+	// Layer
+	//
+
+	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
+	typedef struct lu_s_layer* Lu_S_Layer;
 
 
 	//
