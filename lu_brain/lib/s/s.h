@@ -226,7 +226,8 @@
 
 
 		Lu_S_Layer_Base 		apex;
-		struct lu_list 			frames;
+		Lu_Arr 					frames;
+		Lu_Arr 					level_lasts;
 
 	};
 	
