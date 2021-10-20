@@ -19,11 +19,11 @@ void test_arr1(void)
     int v2 = 2;
     int v3 = 3;
 
-    lu_arr_append(arr1, (lu_p_void) &v1);
-    lu_arr_append(arr2, (lu_p_void) &v2);
-    lu_arr_append(arr2, (lu_p_void) &v3);
+    lu_arr__append(arr1, (lu_p_void) &v1);
+    lu_arr__append(arr2, (lu_p_void) &v2);
+    lu_arr__append(arr2, (lu_p_void) &v3);
 
-    lu_arr_merge(arr1, arr2);
+    lu_arr__merge(arr1, arr2);
 
     TEST_ASSERT(arr1->size == 5);
     TEST_ASSERT(arr1->count == 3);

@@ -47,14 +47,14 @@ void lu_arr__destroy(Lu_Arr self)
 ///////////////////////////////////////////////////////////////////////////////
 // Main public methods
 
-lu_size lu_arr_append(Lu_Arr self, lu_p_void item)
+lu_size lu_arr__append(Lu_Arr self, lu_p_void item)
 {
 	lu__assert(self != NULL);
 	lu__assert(self->count < self->size);
  
  	// no automatic realloc 
 	if (self->allow_realloc && self->count >= self->size) 
-		lu_arr_realloc(self, self->size * 2);
+		lu_arr__realloc(self, self->size * 2);
 
 	lu_size index = self->count;
 
@@ -64,7 +64,7 @@ lu_size lu_arr_append(Lu_Arr self, lu_p_void item)
 	return index;
 }
 
-void lu_arr_each(Lu_Arr self, void (*block)(lu_p_void item))
+void lu_arr__each(Lu_Arr self, void (*block)(lu_p_void item))
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -80,7 +80,7 @@ void lu_arr_each1(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p
 	}
 }
 
-void lu_arr_each_1p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+void lu_arr__each_1p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -88,7 +88,7 @@ void lu_arr_each_1p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1), lu
 	}
 }
 
-void lu_arr_each_2p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), lu_p_void p1, lu_p_void p2)
+void lu_arr__each_2p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_p_void p2), lu_p_void p1, lu_p_void p2)
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -96,7 +96,7 @@ void lu_arr_each_2p(Lu_Arr self, void (*block)(lu_p_void item, lu_p_void p1, lu_
 	}
 }
 
-void lu_arr_each_with_index_1p(Lu_Arr self, void (*block)(Lu_Arr self, lu_p_void item, lu_size index, lu_p_void p1), lu_p_void p1)
+void lu_arr__each_with_index_1p(Lu_Arr self, void (*block)(Lu_Arr self, lu_p_void item, lu_size index, lu_p_void p1), lu_p_void p1)
 {
 	for (lu_size i = 0; i < self->count; i++)
 	{
@@ -104,7 +104,7 @@ void lu_arr_each_with_index_1p(Lu_Arr self, void (*block)(Lu_Arr self, lu_p_void
 	}
 }
 
-void lu_arr_nullify(Lu_Arr self)
+void lu_arr__nullify(Lu_Arr self)
 { 
 	for (lu_size i = 0; i < self->size; i++)
 	{
@@ -112,7 +112,7 @@ void lu_arr_nullify(Lu_Arr self)
 	}
 }
 
-void lu_arr_realloc(Lu_Arr self, lu_size new_size)
+void lu_arr__realloc(Lu_Arr self, lu_size new_size)
 {
 	lu__user_assert_void(new_size > self->size, "new_size should be greater than current size");
 
@@ -122,13 +122,13 @@ void lu_arr_realloc(Lu_Arr self, lu_size new_size)
 	lu__assert(self->items != NULL);
 }
 
-Lu_Arr lu_arr_merge(Lu_Arr self, Lu_Arr src)
+Lu_Arr lu_arr__merge(Lu_Arr self, Lu_Arr src)
 {
 	lu__assert(self->count + src->count < self->size);
 
 	// realloc if needed
 	if (self->allow_realloc && (self->count + src->count) > self->size)
-		lu_arr_realloc(self, self->count + src->count);
+		lu_arr__realloc(self, self->count + src->count);
 
 	for(lu_size i = 0; i < src->count; i++)
 		self->items[self->count++] = src->items[i];
@@ -136,7 +136,7 @@ Lu_Arr lu_arr_merge(Lu_Arr self, Lu_Arr src)
 	return self;
 } 
 
-lu_p_void lu_arr_find_first_1p(Lu_Arr self, lu_bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
+lu_p_void lu_arr__find_first_1p(Lu_Arr self, lu_bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1)
 {
 	lu_p_void item;
 	for(lu_size i = 0; i < self->count; i++) 

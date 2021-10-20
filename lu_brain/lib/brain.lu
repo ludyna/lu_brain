@@ -21,7 +21,7 @@
 		self->n_mem 		= brain_mem; 
 
 		self->config 		= *p_config;
-		self->recs 			= lu_arr_temp_create(p_config->recs_size, false);
+		self->recs 			= lu_arr__temp_create(p_config->recs_size, false);
 
 		self->s 			= NULL;
 		self->n 			= NULL;
@@ -135,7 +135,7 @@
 		return (Lu_Rec) lu_arr__get(brain->recs, rec_id);
 	}
 
-	lu_size lu_brain__recs_size(Lu_Brain self) { return lu_arr_size(self->recs); }
+	lu_size lu_brain__recs_size(Lu_Brain self) { return lu_arr__size(self->recs); }
 
 	// For MVP this method will destroy and re-create s_mem and n_mem.
 	// In future we might want to preserve n_mem (adding recs on fly).

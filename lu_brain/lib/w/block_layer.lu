@@ -27,7 +27,7 @@
 		// 	lu__assert(lu_m_rec_rg);
 
 		// 	rec = lu_block_rec_layer_create(mem, lu_m_rec_rg);
-		// 	lu_arr_append(self->recs, rec);
+		// 	lu_arr__append(self->recs, rec);
 		// }
 
 		return self;

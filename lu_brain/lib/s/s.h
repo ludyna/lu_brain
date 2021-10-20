@@ -226,7 +226,7 @@
 
 
 		Lu_S_Layer_Base 		apex;
-		Lu_S_Layer_Base 		seq;
+		struct lu_list 			frames;
 
 	};
 	
