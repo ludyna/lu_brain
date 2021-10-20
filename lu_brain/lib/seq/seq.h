@@ -34,7 +34,7 @@
 		Lu_L_Node 			current_read_pos;
 	};
 
-	static inline lu_size lu_seq_block_count(Lu_Seq self) { return lu_list_count(self->blocks); }
+	static inline lu_size lu_seq_block_count(Lu_Seq self) { return lu_list__count(self->blocks); }
 
 	Lu_Seq lu_seq_create(Lu_Mem mem, lu_size recs_size);
 	void lu_seq_destroy(Lu_Seq self);
@@ -51,7 +51,7 @@
 	void lu_seq_reset(Lu_Seq self);
 
 	static Lu_Block lu_seq_block_add(Lu_Seq self);
-	static inline lu_bool lu_seq_is_empty(Lu_Seq self) { return lu_list_is_empty(self->blocks); }
+	static inline lu_bool lu_seq_is_empty(Lu_Seq self) { return lu_list__is_empty(self->blocks); }
 	static inline lu_size lu_seq_recs_count(Lu_Seq self) { return self->recs_size; }
 	lu_size lu_seq_blocks_count(Lu_Seq self);
 	lu_p_value lu_seq_last_values(Lu_Seq self, lu_size rec_i);

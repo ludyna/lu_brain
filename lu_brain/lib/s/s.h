@@ -101,22 +101,23 @@
 		lu_size level;
 
 		Lu_S_Layer_Base parent;
+		struct lu_list children;
 	};
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
 		enum lu_s_layer_type type, 
-		lu_size level,
-		Lu_S_Layer_Base parent
+		lu_size level, 
+		Lu_Mem mem
 	)
 	{
 		lu__assert(self);
 		lu__assert(type < LU_S_LT_END);
-		lu__assert(parent);
 
 		self->type = type;
 		self->level = level;
-		self->parent = parent;
+		self->parent = NULL;
+		lu_list__init(&self->children, mem);
 
 		return self;
 	}
@@ -140,7 +141,6 @@
 	struct lu_s_frame_layer {
 		struct lu_s_layer_base super;
 
-
 		// n_table
 	};
 
@@ -150,6 +150,8 @@
 
 	struct lu_s_layer {
 		struct lu_s_layer_base super;
+
+		// n_table
 	};
 
 

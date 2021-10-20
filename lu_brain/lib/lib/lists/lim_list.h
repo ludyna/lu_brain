@@ -22,9 +22,9 @@
 
 	// Properties
 
-	static inline lu_size lu_lim_list_count(Lu_Lim_List self) { return lu_list_count(&self->super); }
+	static inline lu_size lu_lim_list_count(Lu_Lim_List self) { return lu_list__count(&self->super); }
 	static inline lu_size lu_lim_list_size(Lu_Lim_List self) { return self->max_size; }
-	static inline lu_bool lu_lim_list_is_empty(Lu_Lim_List self) { return lu_list_count(&self->super) == 0; }
+	static inline lu_bool lu_lim_list_is_empty(Lu_Lim_List self) { return lu_list__count(&self->super) == 0; }
 
 	static inline Lu_L_Node lu_lim_list_node_last(Lu_Lim_List self) { return self->super.last; }
 	static inline Lu_L_Node lu_lim_list_node_first(Lu_Lim_List self) { return self->super.first; }
@@ -37,7 +37,7 @@
 		lu__assert(mem_table);
 		lu__assert(limit_size > 0);
 
-		lu_list_init((Lu_List) self, lu_mem_table_mem_get(mem_table));
+		lu_list__init((Lu_List) self, lu_mem_table_mem_get(mem_table));
 
 		self->mem_table = mem_table;
 		self->max_size 	= limit_size;

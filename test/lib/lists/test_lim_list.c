@@ -118,7 +118,7 @@ void test_lim_list_max_size(void)
 
 void node_before_destroy(Lu_Lim_List self, Lu_L_Node node)
 {
-    Neu neu = (Neu) lu_l_node_value(node);
+    Neu neu = (Neu) lu_l_node__value(node);
     lu_mem__free(self->super.mem, (lu_p_byte) neu);
 }
 

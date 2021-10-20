@@ -15,7 +15,7 @@
 		// Initialize
 		self->mem 						= mem;
 		self->recs_size 				= recs_size;
-		self->blocks 					= lu_list_create(self->mem);
+		self->blocks 					= lu_list__create(self->mem);
 		self->start_block_on_next_data 	= false;  
 
 		self->current_read_pos 			= NULL;
@@ -34,8 +34,8 @@
 	{
 		lu__user_assert_void(self, "Lu_Seq is NULL");
 
-		lu_list_each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
-		lu_list_destroy(self->blocks);
+		lu_list__each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
+		lu_list__destroy(self->blocks);
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
@@ -78,13 +78,13 @@
 	lu_size lu_seq_blocks_count(Lu_Seq self)
 	{ 
 		lu__assert(self);
-		return lu_list_count(self->blocks);
+		return lu_list__count(self->blocks);
 	}
 
 	lu_p_value lu_seq_last_values(Lu_Seq self, lu_size rec_i)
 	{
 		lu_user_assert(self, "Lu_Seq is NULL");
-		Lu_Data data = lu_seq_data_get(self, rec_i, lu_list_last_node(self->blocks));
+		Lu_Data data = lu_seq_data_get(self, rec_i, lu_list__last_node(self->blocks));
 		if (data == NULL) return NULL;
 
 		return data->values;
@@ -93,7 +93,7 @@
 	Lu_Data lu_seq_last_data(Lu_Seq self, lu_size rec_i)
 	{
 		lu_user_assert(self, "Lu_Seq is NULL");
-		return lu_seq_data_get(self, rec_i, lu_list_last_node(self->blocks));
+		return lu_seq_data_get(self, rec_i, lu_list__last_node(self->blocks));
 	}
 
 	static Lu_Block lu_seq_block_add(Lu_Seq self)
@@ -103,7 +103,7 @@
 		Lu_Block block = lu_block_create(self->mem, self->recs_size);
 		lu__assert(block);
 
-		lu_list_append(self->blocks, (lu_p_void) block);
+		lu_list__append(self->blocks, (lu_p_void) block);
 
 		return block;
 	}
@@ -113,8 +113,8 @@
 		lu__user_assert_void(self, "Lu_Seq should be present");
 		lu__user_assert_void(self->blocks, "Lu_Seq blocks should be present");
 
-		lu_list_each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
-		lu_list_clear(self->blocks); 
+		lu_list__each_1p(self->blocks, lu_seq_destroy_blocks, NULL);
+		lu_list__clear(self->blocks); 
 
 		self->start_block_on_next_data = false;
 	}
@@ -134,16 +134,16 @@
 			self->start_block_on_next_data = false;
 		}
 
-		if (lu_list_is_empty(self->blocks))
+		if (lu_list__is_empty(self->blocks))
 			lu_seq_block_add(self);
 
-		Lu_Data data = lu_seq_data_get(self, rec->id, lu_list_last_node(self->blocks));
+		Lu_Data data = lu_seq_data_get(self, rec->id, lu_list__last_node(self->blocks));
 		lu_p_value v = data->values;
 		if (v)
 			// new input to the same rec and channel advances seq
 			lu_seq_block_add(self);
 
-		data = lu_seq_data_get(self, rec->id, lu_list_last_node(self->blocks));
+		data = lu_seq_data_get(self, rec->id, lu_list__last_node(self->blocks));
 		lu__assert(data);
 		lu__assert(data->values == NULL);
 
@@ -170,7 +170,7 @@
 	{
 		lu_user_assert(self, "Lu_Seq is NULL");
 
-		Lu_Block block = (Lu_Block) lu_list_find_forward_1p(self->blocks, lu_seq_blocks_non_empty_values_block, &rec_i);
+		Lu_Block block = (Lu_Block) lu_list__find_forward_1p(self->blocks, lu_seq_blocks_non_empty_values_block, &rec_i);
 
 		if (block == NULL) return NULL;
 
@@ -203,7 +203,7 @@
 
 		for(rec_i = 0; rec_i < recs_size; rec_i++)
 		{
-			Lu_L_Node curr = lu_list_first_node(self->blocks);
+			Lu_L_Node curr = lu_list__first_node(self->blocks);
 
 			while(curr)
 			{
@@ -214,7 +214,7 @@
 
 				if (d1->values) goto end;
 				
-				if (curr == lu_list_first_node(self->blocks))
+				if (curr == lu_list__first_node(self->blocks))
 				{
 					d2 = lu_seq_first_non_null_data(self, rec_i);
 					if (d2 == NULL) break; 	// nema danyh dlia rec_i vzahali
@@ -222,12 +222,12 @@
 				}
 				else
 				{
-					d2 = lu_seq_data_get(self, rec_i, lu_l_node_prev(curr));
+					d2 = lu_seq_data_get(self, rec_i, lu_l_node__prev(curr));
 					lu_data_shallow_copy(d1, d2);
 				}
 
 				end:
-				curr = lu_l_node_next(curr);
+				curr = lu_l_node__next(curr);
 			}
 		}
 
@@ -245,19 +245,19 @@
 		// when first element
 		if (self->current_read_pos == NULL) 
 		{
-			self->current_read_pos = lu_list_first_node(self->blocks);
+			self->current_read_pos = lu_list__first_node(self->blocks);
 			if (self->current_read_pos == NULL) return NULL;
 
-			return (Lu_Block) lu_l_node_value(self->current_read_pos);
+			return (Lu_Block) lu_l_node__value(self->current_read_pos);
 		}
 
 		if (self->current_read_pos)
 		{
-			self->current_read_pos = lu_l_node_next(self->current_read_pos);
+			self->current_read_pos = lu_l_node__next(self->current_read_pos);
 
 			if (self->current_read_pos == NULL) return NULL;
 
-			return (Lu_Block) lu_l_node_value(self->current_read_pos);
+			return (Lu_Block) lu_l_node__value(self->current_read_pos);
 		}
 
 		return NULL;
