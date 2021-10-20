@@ -59,6 +59,36 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Comp_View
+//
+
+	// can be v or p
+	struct lu_s_comp_view {
+		enum lu_s_comp_view_type view_type;
+
+		lu_value 				orig_min;
+		lu_value 				orig_max;
+		lu_value 				max;
+
+		lu_value 				step;
+		lu_value*				steps;  		// preobchysleni kroky
+		lu_size 				cells_size;
+
+		// w x h x cells_size_i, empty by default
+		Hnn_Cell_Value* cells;
+	};
+
+	static Lu_S_Comp_View lu_s_comp_view__init(Lu_S_Comp_Layer, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_comp_view__deinit(Lu_S_Comp_Layer self);
+
+	static inline lu_value lu_s_comp_view__norm(Lu_S_Comp_Layer self, lu_value request);
+	static inline lu_size lu_s_comp_view__ix(Lu_S_Comp_Layer self, lu_value val);
+	static inline struct lu_size_range lu_s_comp_view__ix_range(Lu_S_Comp_Layer self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_Layer self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_Layer self);
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer
 //
 
@@ -90,38 +120,18 @@
 
 		return self;
 	}
-	
-	//
-	// Comp_Layer
-	//
 
-	// can be v or p
+	//
+	// Lu_S_Comp_Layer 
+	// n_cells are in views
+	// 
+
 	struct lu_s_comp_layer {
-
 		struct lu_s_layer_base super;
 
-		enum lu_s_comp_layer_type comp_layer_type;
-
-		lu_value 				orig_min;
-		lu_value 				orig_max;
-		lu_value 				max;
-
-		lu_value 				step;
-		lu_value*				steps;  		// preobchysleni kroky
-		lu_size 				cells_size;
-
-		// w x h x cells_size_i, empty by default
-		Hnn_Cell_Value* cells;
+		struct lu_s_comp_view v_view;
+		struct lu_s_comp_view p_view;
 	};
-
-	static Lu_S_Comp_Layer lu_s_comp_layer__init(Lu_S_Comp_Layer, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
-	static void lu_s_comp_layer__deinit(Lu_S_Comp_Layer self);
-
-	static inline lu_value lu_s_comp_layer__norm(Lu_S_Comp_Layer self, lu_value request);
-	static inline lu_size lu_s_comp_layer__ix(Lu_S_Comp_Layer self, lu_value val);
-	static inline struct lu_size_range lu_s_comp_layer__ix_range(Lu_S_Comp_Layer self, lu_value val, lu_size nsc);
-	static inline lu_value lu_s_comp_layer__calc_sig(Lu_S_Comp_Layer self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_s_comp_layer__step_norm_dist(Lu_S_Comp_Layer self);
 
 	//
 	// Frame_Layer
@@ -130,8 +140,8 @@
 	struct lu_s_frame_layer {
 		struct lu_s_layer_base super;
 
-		struct lu_s_comp_layer v_layer;
-		struct lu_s_comp_layer p_layer;
+
+		// n_table
 	};
 
 	//

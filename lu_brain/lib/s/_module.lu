@@ -2,6 +2,6 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-#include "s_comp_layer.lu"
+#include "s_comp_view.lu"
 #include "s_cell_mem.lu"
 #include "s.lu"

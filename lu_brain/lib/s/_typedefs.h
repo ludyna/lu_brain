@@ -6,6 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
+	typedef struct lu_s_comp_view* Lu_S_Comp_View;
+	
 	//
 	// Layer
 	//
@@ -17,15 +19,14 @@
 		LU_S_LT_END
 	};
 
-	enum lu_s_comp_layer_type {
-		LU_S_CLT_V,
-		LU_S_CLT_P
+	enum lu_s_comp_view_type {
+		LU_S_VLT_V,
+		LU_S_VLT_P
 	};
 
 	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
-	typedef struct lu_s_layer* Lu_S_Layer;
 	typedef struct lu_s_comp_layer* Lu_S_Comp_Layer;
-
+	typedef struct lu_s_layer* Lu_S_Layer;
 
 	// 
 	// Layer_Mem
