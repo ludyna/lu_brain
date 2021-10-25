@@ -34,14 +34,14 @@
 
 	S and W wil be very similar.
 
-	We build not from top and not from bottom, we build from pixel layer.
+	We build not from top and not from bottom, we build from frame layer.
 
 	CE SHO NYZHCHE VIDNOSYTSIA DO rozpiznavannia i ne maye niyakoho vidnoshennia do save
 	v = GREEN
 	p = 1 
 	- NIYAKOHO VIDNOSHENIA do VIEW vono ne maye  		
 
-	p i c ce objectyvni rechi, tobto vovy zavzhdy budut maty vyznachennyy pixel
+	p i c ce objectyvni rechi, tobto vovy zavzhdy budut maty vyznachennyy neuron
 	Ya dumayu my mayemo maty kilka gradientiv mixu p i c:
 	p 100% c 0% frame view (perspective)
 	p 0% c 100% frame view (perspective)
@@ -101,14 +101,12 @@
 		lu_size level;
 
 		Lu_S_Layer_Base parent;
-		struct lu_list children;
 	};
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
 		enum lu_s_layer_type type, 
-		lu_size level, 
-		Lu_Mem mem
+		lu_size level
 	)
 	{
 		lu__assert(self);
@@ -117,7 +115,6 @@
 		self->type = type;
 		self->level = level;
 		self->parent = NULL;
-		lu_list__init(&self->children, mem);
 
 		return self;
 	}
@@ -141,8 +138,22 @@
 	struct lu_s_frame_layer {
 		struct lu_s_layer_base super;
 
+		struct lu_list children;
 		// n_table
 	};
+
+	static inline Lu_S_Frame_Layer lu_s_frame_layer__init(
+		Lu_S_Frame_Layer self, 
+		Lu_Mem mem
+	)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+
+		lu_list__init(&self->children, mem);
+
+		return self;
+	}
 
 	//
 	// Layer
@@ -150,6 +161,8 @@
 
 	struct lu_s_layer {
 		struct lu_s_layer_base super;
+
+		Lu_S_Layer_Base child;
 
 		// n_table
 	};
