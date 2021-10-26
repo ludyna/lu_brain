@@ -51,6 +51,11 @@
 
 		lu_size hnn_table_mod;				
 	};
+
+	struct lu_space_config {
+		lu_size frames_size;
+		lu_size apexes_size;
+	};
 	
 	struct lu_brain_config {
 		lu_size id;							// optional, to identify brain by unique id
@@ -58,8 +63,7 @@
 		lu_size max_seq_size_in_blocks; 	// max seq size in blocks
 
 		struct lu_net_config net;			// initial values
-
-
+		struct lu_space_config space;		// initial values
 	};
 
 	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config);

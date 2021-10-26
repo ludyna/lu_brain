@@ -231,20 +231,19 @@
 // Lu_S
 //
 
-
 	struct lu_s {
+
+		struct lu_space_config config;
 
 		Lu_Mem 					mem;
 		Lu_S_Layer_Mem  		cell_mem;
 
-
-		Lu_S_Layer_Base 		apex;
 		Lu_Arr 					frames;
-		Lu_Arr 					level_lasts;
+		Lu_Arr 					apexes;
 
 	};
 	
-	static Lu_S lu_s__create(Lu_Mem mem, Lu_Arr lu_recs);
+	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
 
 	static void lu_s__add_rec(Lu_S self, Lu_Rec rec);

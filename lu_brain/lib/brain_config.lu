@@ -18,7 +18,10 @@
 			.net.size_in_cell_2			= 10000, 
 			.net.size_in_cell_3			= 10000, 
 			.net.size_in_cell_4			= 10000, 
-			.net.hnn_table_mod			= 2
+			.net.hnn_table_mod			= 2,
+
+			.space.frames_size 			= 256,
+			.space.apexes_size 			= 256,
 		},
 	};		
 

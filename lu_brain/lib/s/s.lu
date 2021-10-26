@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Create & Destroy
 
-	static Lu_S lu_s__create(Lu_Mem mem, Lu_Arr recs)
+	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr recs)
 	{
 		lu__assert(mem);
 		lu__assert(recs);
@@ -15,106 +15,37 @@
 		Lu_S self = (Lu_S) lu_mem__alloc(mem, sizeof(struct lu_s));
 		lu__assert(self);
 
+		self->config = config;
 		self->mem = mem;
 
 		//
 		// Cell_Mem_Config
 		//
 
-		struct lu_s_layer_mem_config cell_mem_config;
+		// struct lu_s_layer_mem_config cell_mem_config;
 
-		lu_s_cell_mem_config__init(&cell_mem_config);
+		// lu_s_cell_mem_config__init(&cell_mem_config);
 
-		// //
-		// // Create Rec_Rgs
-		// //
+		//
+		// 
+		//
 
-		// self->recs = lu_arr__create(self->mem, lu_arr__count(recs), false);
-		// lu__assert(self->recs);
+		self->frames = lu_arr__create(mem, self->config.frames_size, true);
+		lu__assert(self->frames);
 
-		// lu_size i;
-		// Lu_Rec rec;
-		// Lu_S_Rec_Rg rec_rg;
-		// for (i = 0; i < lu_arr__count(recs); i++)
-		// {
-		// 	rec = (Lu_Rec) lu_arr__get(recs, i);
-		// 	lu__assert(rec);
+		// "Minimal" start:
 
-		// 	rec_rg = lu_s_rec_rg__create(mem, rec, &cell_mem_config);
-		// 	lu__assert(rec_rg);
+		// level3, story(vertically 1-n4)
+		// level2, scene(vertically 1-n3)
+		// level1, event (vertically 1-n2)
+		// layer seq (vertically 1-n1)
+		// layer recs (vertically rec_count)
+		// layer frames (vertically w Y h)
+		// frame(1)
+		// comp1 comp2 comp3 (horizontally comp_count or d)
 
-		// 	lu_arr__set(self->recs, i, rec_rg);
-		// }
-
-		// //
-		// // Create Seq_Rg
-		// //
-
-		// self->seq = lu_s_seq_rg__create(mem, &cell_mem_config, lu_arr__count(recs));
-		// lu__assert(self->seq);
-
-		// //
-		// // Create Story_Rg
-		// //
-
-		// self->story = lu_s_story_rg__create(mem, &cell_mem_config, 1);
-		// lu__assert(self->story);
-
-		// // 
-		// // Cell_Mem
-		// //
-
-		// self->cell_mem = lu_s_cell_mem__create(mem, cell_mem_config);
-		// lu__assert(self->cell_mem);
-
-		// //
-		// // Assign cells from Cell_Mem to rgs
-		// // 
-		// for (i = 0; i < lu_arr__count(self->recs); i++)
-		// {
-		// 	rec_rg = (Lu_S_Rec_Rg) lu_arr__get(self->recs, i);
-		// 	lu__assert(rec_rg);
-
-		// 	lu_s_rec_rg__cells_assign(rec_rg, self->cell_mem);
-		// }
-
-		// lu_s_seq_rg__cells_assign(self->seq, self->cell_mem);
-		// lu_s_story_rg__cells_assign(self->story, self->cell_mem);
-
-		// //
-		// // Inner region cells connect
-		// //
-
-		// for (i = 0; i < lu_arr__count(self->recs); i++)
-		// {
-		// 	rec_rg = (Lu_S_Rec_Rg) lu_arr__get(self->recs, i);
-		// 	lu__assert(rec_rg);
-
-		// 	lu_s_rec_rg__inner_connect(rec_rg);
-		// }
-
-		// lu_s_seq_rg__inner_connect(self->seq);
-		// lu_s_story_rg__inner_connect(self->story);
-
-		// //
-		// // Inter region cells connect
-		// //
-
-		// for (i = 0; i < lu_arr__count(self->recs); i++)
-		// {
-		// 	rec_rg = (Lu_S_Rec_Rg) lu_arr__get(self->recs, i);
-		// 	lu__assert(rec_rg);
-
-		// 	//
-		// 	// Lu_S_Rec_Rg AND Lu_S_Seq_Rg connect
-		// 	//
-		// 	lu_s__rec_and_seq_inter_connect(rec_rg, self->seq);
-		// }
-
-		// //
-		// // Lu_S_Seq_Rg AND Lu_S_Story_Rg connect
-		// //
-		// lu_s__seq_and_story_inter_connect(self->seq, self->story);
+		self->apexes = lu_arr__create(mem, self->config.apexes_size, true);
+		lu__assert(self->apexes);
 
 		return self;
 	}
@@ -123,22 +54,8 @@
 	{
 		lu__assert(self);
 
-		// lu_s_story_rg__destroy(self->story);
-
-		// lu_s_seq_rg__destroy(self->seq);
-
-		// Lu_S_Rec_Rg rec_rg;
-		// for(lu_size i = 0; i < lu_arr__count(self->recs); i++)
-		// {
-		// 	rec_rg = (Lu_S_Rec_Rg) lu_arr__get(self->recs, i);
-
-		// 	if (rec_rg) 
-		// 		lu_s_rec_rg__destroy(rec_rg);
-		// }
-
-		// lu_arr__destroy(self->recs);
-
-		// lu_s_cell_mem__destroy(self->cell_mem);
+		if (self->frames) lu_arr__destroy(self->frames);
+		if (self->apexes) lu_arr__destroy(self->apexes);
 
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
