@@ -21,9 +21,13 @@
 	//
 	// Brain  
 	//
-
+ 
+ 	typedef struct lu_space_config*  	Lu_Space_Config;
+ 	typedef struct lu_net_config*		Lu_Net_Config;
 	typedef struct lu_brain_config* 	Lu_Brain_Config;
+
 	typedef struct lu_brain* 			Lu_Brain;	
+	
 	typedef struct lu_rec_comp_config*  Lu_Rec_Comp_Config;
 	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
@@ -40,6 +44,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain_Config 
 
+
+	struct lu_space_config {
+		lu_size frames_size;
+		lu_size apexes_size;
+	};
+
 	struct lu_net_config {
 		lu_size names_size; 				// initial maximum number of names
 
@@ -52,18 +62,13 @@
 		lu_size hnn_table_mod;				
 	};
 
-	struct lu_space_config {
-		lu_size frames_size;
-		lu_size apexes_size;
-	};
-	
 	struct lu_brain_config {
 		lu_size id;							// optional, to identify brain by unique id
 		lu_size recs_size;					// initial maximum number of recs 
 		lu_size max_seq_size_in_blocks; 	// max seq size in blocks
 
-		struct lu_net_config net;			// initial values
 		struct lu_space_config space;		// initial values
+		struct lu_net_config net;			// initial values
 	};
 
 	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config);

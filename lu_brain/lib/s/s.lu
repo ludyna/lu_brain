@@ -15,7 +15,10 @@
 		Lu_S self = (Lu_S) lu_mem__alloc(mem, sizeof(struct lu_s));
 		lu__assert(self);
 
-		self->config = config;
+		Lu_Space_Config v_config = lu_space_config__validate(&config);
+		lu__assert(v_config);
+
+		self->config = *v_config;
 		self->mem = mem;
 
 		//

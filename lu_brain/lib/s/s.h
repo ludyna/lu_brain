@@ -226,6 +226,17 @@
 
 	static void lu_s_cell_mem__print_info(Lu_S_Layer_Mem self);
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Space_Config 
+//
+
+	static inline Lu_Space_Config lu_space_config__validate(Lu_Space_Config self)
+	{
+		lu__assert(self->frames_size >= 256);
+		lu__assert(self->apexes_size >= 256);
+
+		return self;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S
