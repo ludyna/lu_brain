@@ -122,7 +122,6 @@
 
 	//
 	// Lu_S_Comp_Layer 
-	// n_cells are in views
 	// 
 
 	struct lu_s_comp_layer {
@@ -136,7 +135,7 @@
 	static void lu_s_comp_layer__destroy(Lu_S_Comp_Layer self, Lu_Mem);
 
 	//
-	// Frame_Layer
+	// Lu_S_Frame_Layer
 	//
 
 	struct lu_s_frame_layer {
@@ -165,7 +164,7 @@
 	static void lu_s_frame_layer__destroy(Lu_S_Frame_Layer self, Lu_Mem mem);
 
 	//
-	// Layer
+	// Lu_S_Layer
 	//
 
 	struct lu_s_layer {

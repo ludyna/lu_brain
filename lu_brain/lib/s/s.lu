@@ -46,6 +46,7 @@
 			lu__assert(lu_rec);
 
 			frame = lu_s_frame_layer__create(mem, lu_rec);
+			lu__assert(frame);
 			lu_arr__append(self->frames, frame);
 		}
 
@@ -93,6 +94,7 @@
 
 		if (self->frames)
 			lu_arr__destroy(self->frames);
+
 
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
