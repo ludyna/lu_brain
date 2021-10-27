@@ -89,7 +89,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Layer
+// Layers
 //
 
 	//
@@ -106,7 +106,8 @@
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
 		enum lu_s_layer_type type, 
-		lu_size level
+		lu_size level,
+		Lu_S_Layer_Base parent
 	)
 	{
 		lu__assert(self);
@@ -114,7 +115,7 @@
 
 		self->type = type;
 		self->level = level;
-		self->parent = NULL;
+		self->parent = parent;
 
 		return self;
 	}
@@ -131,12 +132,17 @@
 		struct lu_s_comp_view p_view;
 	};
 
+	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Frame_Layer frame);
+	static void lu_s_comp_layer__destroy(Lu_S_Comp_Layer self, Lu_Mem);
+
 	//
 	// Frame_Layer
 	//
 
 	struct lu_s_frame_layer {
 		struct lu_s_layer_base super;
+
+		Lu_Rec rec;
 
 		struct lu_list children;
 		// n_table
@@ -155,6 +161,9 @@
 		return self;
 	}
 
+	static Lu_S_Frame_Layer lu_s_frame_layer__create(Lu_Mem mem, Lu_Rec rec);
+	static void lu_s_frame_layer__destroy(Lu_S_Frame_Layer self, Lu_Mem mem);
+
 	//
 	// Layer
 	//
@@ -167,7 +176,15 @@
 		// n_table
 	};
 
+	static Lu_S_Layer lu_s_layer__create(
+		Lu_Mem mem,
+		enum lu_s_layer_type type, 
+		lu_size level,
+		Lu_S_Layer_Base parent,
+		Lu_S_Layer_Base child
+	);
 
+	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Mem

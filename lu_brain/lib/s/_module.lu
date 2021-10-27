@@ -3,5 +3,8 @@
 */
 
 #include "s_comp_view.lu"
+#include "s_comp_layer.lu"
+#include "s_frame_layer.lu"
+#include "s_layer.lu"
 #include "s_cell_mem.lu"
 #include "s.lu"

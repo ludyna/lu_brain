@@ -1,0 +1,22 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_S_Layer lu_s_layer__create(
+		Lu_Mem mem,
+		enum lu_s_layer_type type, 
+		lu_size level,
+		Lu_S_Layer_Base parent,
+		Lu_S_Layer_Base child
+	)
+	{
+
+	}
+
+	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem mem)
+	{
+
+	}

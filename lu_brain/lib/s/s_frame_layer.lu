@@ -1,0 +1,16 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_S_Frame_Layer lu_s_frame_layer__create(Lu_Mem mem, Lu_Rec rec)
+	{
+
+	}
+
+	static void lu_s_frame_layer__destroy(Lu_S_Frame_Layer self, Lu_Mem mem)
+	{
+
+	}
