@@ -131,7 +131,7 @@
 		struct lu_s_comp_view p_view;
 	};
 
-	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Frame_Layer frame);
+	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Frame_Layer frame, Lu_Rec_Comp_Config config);
 	static void lu_s_comp_layer__destroy(Lu_S_Comp_Layer self, Lu_Mem);
 
 	//

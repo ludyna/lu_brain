@@ -23,8 +23,8 @@
 		Lu_S_Comp_Layer comp_layer;
 		lu_size i;
 		for(i = 0; i < rec->depth; i++)
-		{
-			comp_layer = lu_s_comp_layer__create(mem, self);
+		{ 
+			comp_layer = lu_s_comp_layer__create(mem, self, &rec->config.comp_config);
 			lu__assert(comp_layer);
 
 			lu_arr__append(self->children, comp_layer);
