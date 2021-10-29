@@ -49,9 +49,9 @@
 
 	Lu_Rec_Comp_Config lu_rec_comp_config__validate(Lu_Rec_Comp_Config self)
 	{
-		lu_user_assert(self->v_max - self->v_min > 0, "v_max minus v_min should greater than 0");
-		lu_user_assert(self->v_neu_size > 1, "v_neu_size should be greater than 1");
-		lu_user_assert(self->p_neu_size > 1, "p_neu_size should be greater than 1");
+		lu__user_assert(self->v_max - self->v_min > 0, "v_max minus v_min should greater than 0");
+		lu__user_assert(self->v_neu_size > 1, "v_neu_size should be greater than 1");
+		lu__user_assert(self->p_neu_size > 1, "p_neu_size should be greater than 1");
 
 		return self;
 	}
@@ -67,7 +67,7 @@
 
 	Lu_Rec_Config lu_rec_config__validate(Lu_Rec_Config self)
 	{
-		lu_user_assert(self, "Lu_Rec_Config is NULL");
+		lu__user_assert(self, "Lu_Rec_Config is NULL");
 
 		lu_rec_comp_config__validate(&self->comp_config);
 

@@ -7,13 +7,13 @@ void setUp(void)
 {
 	g_mem = (Lu_Mem) lu_mem_with_stats_create(lu_g_mem);
 	TEST_ASSERT(g_mem);
-	lu_user_assert_off();
+	lu__user_assert_off();
 }
 
 void tearDown(void)
 {
 	lu_mem_destroy(g_mem, lu_g_mem);
-	lu_user_assert_on();
+	lu__user_assert_on();
 }
 
 void test_mem_stats(void)

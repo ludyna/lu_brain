@@ -24,7 +24,7 @@
 				self->size_in_bytes
 			);
 
-			lu_user_debug_internal(func, file, line, msg);
+			lu__user_debug_internal(func, file, line, msg);
 			return NULL;
 		}
 

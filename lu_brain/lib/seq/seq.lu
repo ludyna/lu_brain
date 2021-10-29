@@ -83,7 +83,7 @@
 
 	lu_p_value lu_seq_last_values(Lu_Seq self, lu_size rec_i)
 	{
-		lu_user_assert(self, "Lu_Seq is NULL");
+		lu__user_assert(self, "Lu_Seq is NULL");
 		Lu_Data data = lu_seq_data_get(self, rec_i, lu_list__last_node(self->blocks));
 		if (data == NULL) return NULL;
 
@@ -92,7 +92,7 @@
 
 	Lu_Data lu_seq_last_data(Lu_Seq self, lu_size rec_i)
 	{
-		lu_user_assert(self, "Lu_Seq is NULL");
+		lu__user_assert(self, "Lu_Seq is NULL");
 		return lu_seq_data_get(self, rec_i, lu_list__last_node(self->blocks));
 	}
 
@@ -168,7 +168,7 @@
 
 	static Lu_Data lu_seq_first_non_null_data(Lu_Seq self, lu_size rec_i)
 	{
-		lu_user_assert(self, "Lu_Seq is NULL");
+		lu__user_assert(self, "Lu_Seq is NULL");
 
 		Lu_Block block = (Lu_Block) lu_list__find_forward_1p(self->blocks, lu_seq_blocks_non_empty_values_block, &rec_i);
 
@@ -181,7 +181,7 @@
 
 	Lu_Seq lu_seq_validate(Lu_Seq self)
 	{
-		lu_user_assert(lu_seq_blocks_count(self), "Seq is empty");
+		lu__user_assert(lu_seq_blocks_count(self), "Seq is empty");
 
 		return self;
 	}
@@ -192,7 +192,7 @@
 	//
 	Lu_Seq lu_seq_prepare(Lu_Seq self)
 	{
-		lu_user_assert(self, "Lu_Seq is NULL");
+		lu__user_assert(self, "Lu_Seq is NULL");
 		lu__assert(self->blocks);
 
 		lu_size rec_i;

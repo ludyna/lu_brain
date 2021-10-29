@@ -18,8 +18,8 @@
 
 	// Lu_Data lu_wave_last_data(Lu_Wave self, Lu_Rec rec)
 	// {
-	// 	lu_user_assert(self, "Lu_Wave is NULL");
-	// 	lu_user_assert(rec, "Lu_Rec is NULL");
+	// 	lu__user_assert(self, "Lu_Wave is NULL");
+	// 	lu__user_assert(rec, "Lu_Rec is NULL");
 	// }
 
 

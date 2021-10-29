@@ -263,9 +263,9 @@ void test_lu_seq_validate(void)
 {
 	Lu_Seq seq = lu_seq_create(lu_g_mem, lu_brain__recs_size(brain)); 
 
-	lu_user_assert_off();
+	lu__user_assert_off();
 	TEST_ASSERT(lu_seq_validate(seq) == NULL); 
-	lu_user_assert_on();
+	lu__user_assert_on();
 
 	lu_seq_push(seq, rec_0, data_00);
 

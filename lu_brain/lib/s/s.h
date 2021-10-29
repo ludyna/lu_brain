@@ -143,22 +143,10 @@
 
 		Lu_Rec rec;
 
-		struct lu_list children;
+		Lu_Arr children;
+
 		// n_table
 	};
-
-	static inline Lu_S_Frame_Layer lu_s_frame_layer__init(
-		Lu_S_Frame_Layer self, 
-		Lu_Mem mem
-	)
-	{
-		lu__assert(self);
-		lu__assert(mem);
-
-		lu_list__init(&self->children, mem);
-
-		return self;
-	}
 
 	static Lu_S_Frame_Layer lu_s_frame_layer__create(Lu_Mem mem, Lu_Rec rec);
 	static void lu_s_frame_layer__destroy(Lu_S_Frame_Layer self, Lu_Mem mem);
@@ -246,10 +234,20 @@
 // Lu_Space_Config 
 //
 
+	#define LU_S_CONF_FRAMES_MIN_SIZE 256
+	#define LU_S_CONF_APEXES_MIN_SIZE 256
+
 	static inline Lu_Space_Config lu_space_config__validate(Lu_Space_Config self)
 	{
-		lu__assert(self->frames_size >= 256);
-		lu__assert(self->apexes_size >= 256);
+		lu__user_assert(
+			self->frames_size >= LU_S_CONF_FRAMES_MIN_SIZE, 
+			"frames_size is too low in struct lu_space_config"
+		);
+
+		lu__user_assert(
+			self->apexes_size >= LU_S_CONF_APEXES_MIN_SIZE, 
+			"apexes_sixe is too low in struct lu_space_config"
+		);
 
 		return self;
 	}

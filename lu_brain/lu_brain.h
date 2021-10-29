@@ -46,8 +46,8 @@
 
 
 	struct lu_space_config {
-		lu_size frames_size;
-		lu_size apexes_size;
+		lu_size frames_size; 				// initial maximum number of frames
+		lu_size apexes_size;				// initial maximum number of apexes
 	};
 
 	struct lu_net_config {

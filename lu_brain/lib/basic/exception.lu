@@ -4,13 +4,13 @@
 
 lu_bool g_user_assert = LU_USER_ASSERT_DEFAULT;
 
-void lu_throw_internal(enum lu_e e, const char* file, int line)
+void lu__throw_internal(enum lu_e e, const char* file, int line)
 {
 	fprintf(stderr, "\nEXCEPTION: <%s:%d> ID: %d", file, line, e);
 	Throw(e);
 }
 
-void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, const char* fmt, ...)
+void lu__throw_with_message_internal(enum lu_e e, const char* file, int line, const char* fmt, ...)
 {
 	if (fmt != NULL)
 	{
@@ -28,7 +28,7 @@ void lu_throw_with_message_internal(enum lu_e e, const char* file, int line, con
 	Throw(e);
 }
 
-void* lu_user_debug_internal(const char* func, const char* file, int line, const char* fmt)
+void* lu__user_debug_internal(const char* func, const char* file, int line, const char* fmt)
 {
 	if (!g_user_assert) return NULL;
 
@@ -36,7 +36,7 @@ void* lu_user_debug_internal(const char* func, const char* file, int line, const
     return NULL;
 }
 
-void* lu_user_debug_args_internal	(const char* func, const char* file, int line, const char* fmt, ...)
+void* lu__user_debug_args_internal	(const char* func, const char* file, int line, const char* fmt, ...)
 {
 	if (fmt == NULL) return NULL;
 	

@@ -46,7 +46,7 @@
 		{
 			if (self->free_count <= 0)
 			{
-				lu_user_debug_internal(func, file, line, "MEM_TABLE allocation failed");
+				lu__user_debug_internal(func, file, line, "MEM_TABLE allocation failed");
 				return NULL; // out of available memory
 			}
 			res = self->free_start[--self->free_count];

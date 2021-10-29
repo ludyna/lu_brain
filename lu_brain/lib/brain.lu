@@ -8,13 +8,13 @@
 	Lu_Brain lu_brain__create(Lu_Mem mem, struct lu_brain_config config)
 	{
 		Lu_Brain_Config p_config = lu_brain_config__validate(&config);
-		lu_user_assert(p_config, "Lu_Brain_Config validation failed");
+		lu__user_assert(p_config, "Lu_Brain_Config validation failed");
 
 		Lu_Mem brain_mem		= mem; 
-		lu_user_assert(brain_mem, "Cannot create brain_mem. Not enough memory?");
+		lu__user_assert(brain_mem, "Cannot create brain_mem. Not enough memory?");
 
 		Lu_Brain self 		= (Lu_Brain) lu_mem__alloc(brain_mem, sizeof(struct lu_brain));
-		lu_user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
+		lu__user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->brain_mem  	= brain_mem; 
 		self->s_mem			= brain_mem;
@@ -90,7 +90,7 @@
 
 	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_brain_config config)
 	{
-		lu_user_assert(NULL, "Not implemented yet");
+		lu__user_assert(NULL, "Not implemented yet");
 	}
 
 	static lu_size lu_brain__rec_attach(Lu_Brain self, Lu_Rec rec)
@@ -128,9 +128,9 @@
 
 	Lu_Rec lu_brain__get_rec_by_id(Lu_Brain brain, lu_size rec_id)
 	{
-		lu_user_assert(brain, "Lu_Brain is NULL");
+		lu__user_assert(brain, "Lu_Brain is NULL");
 		lu__assert(brain->recs);
-		lu_user_assert(rec_id < lu_arr__count(brain->recs), "rec_id is out of range");
+		lu__user_assert(rec_id < lu_arr__count(brain->recs), "rec_id is out of range");
 
 		return (Lu_Rec) lu_arr__get(brain->recs, rec_id);
 	}
@@ -141,7 +141,7 @@
 	// In future we might want to preserve n_mem (adding recs on fly).
 	Lu_Brain lu_brain__build(Lu_Brain self) 
 	{
-		lu_user_assert(self, "Lu_Brain is NULL");
+		lu__user_assert(self, "Lu_Brain is NULL");
 
 		//
 		// Destroy if exist
@@ -165,7 +165,7 @@
  
  		// (Lu_Mem mem, Lu_S_Layer_Mem cell_mem, Lu_Arr lu_recs);
 		self->s = lu_s__create(self->s_mem, self->config.space, self->recs);
-		lu_user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
+		lu__user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
 
 		//
 		// Create N
@@ -175,7 +175,7 @@
 		n_config.names_size = self->config.net.names_size;
 
 		self->n = lu_n__create(self, n_config);
-		lu_user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
+		lu__user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
 
 		return self;
 	}

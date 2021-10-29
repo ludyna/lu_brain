@@ -7,13 +7,13 @@
 
 	static Lu_N lu_n__create(Lu_Brain brain, struct lu_n_config config)
 	{
-		lu_user_assert(brain, "Lu_Brain is NULL");
-		lu_user_assert(brain->brain_mem, "Lu_Brain brain_mem is NULL");
+		lu__user_assert(brain, "Lu_Brain is NULL");
+		lu__user_assert(brain->brain_mem, "Lu_Brain brain_mem is NULL");
 
 		lu_n_mem_config_validate(&config);
 
 		Lu_N self 			= (Lu_N) lu_mem__alloc(brain->brain_mem, sizeof(struct lu_n));
-		lu_user_assert(self, "Cannot allocate Lu_N");
+		lu__user_assert(self, "Cannot allocate Lu_N");
 
 		self->config 		= config;
 		self->brain 		= brain;

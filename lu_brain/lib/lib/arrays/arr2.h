@@ -72,7 +72,7 @@
 
 	static inline lu_p_void arr2_get_internal_debug(Arr2 self, lu_size x, lu_size y, const char* func, const char* file, int line)
 	{
-		// lu_user_debug_args_internal(func, file, line, "arr2_get_internal_debug: (x=%lu, y=%lu, index=%lu)", x, y, (y * self->width) + x);
+		// lu__user_debug_args_internal(func, file, line, "arr2_get_internal_debug: (x=%lu, y=%lu, index=%lu)", x, y, (y * self->width) + x);
 		return lu_arr__get_internal_debug(self->items, (y * self->width) + x, func, file, line);
 	}
 

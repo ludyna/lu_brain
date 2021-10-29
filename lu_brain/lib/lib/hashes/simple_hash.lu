@@ -7,15 +7,15 @@
 
 	Simple_Hash simple_hash_create(Lu_Mem mem, lu_size table_size)
 	{
-		lu_user_assert(mem, "Lu_Mem is NULL");
-		lu_user_assert(table_size > 0, "table_size is 0");
+		lu__user_assert(mem, "Lu_Mem is NULL");
+		lu__user_assert(table_size > 0, "table_size is 0");
 
 		Simple_Hash self = (Simple_Hash) lu_mem__alloc(mem, sizeof(struct simple_hash));
-		lu_user_assert(self, "Cannot allocate Simple_Hash");
+		lu__user_assert(self, "Cannot allocate Simple_Hash");
 
 		self->table_size = table_size;
 		self->table = (lu_p_void*) lu_mem__alloc(mem, sizeof(lu_p_void) * table_size);
-		lu_user_assert(self->table, "Cannot allocate Simple_Hash table");
+		lu__user_assert(self->table, "Cannot allocate Simple_Hash table");
 
 		for(lu_size i = 0; i < self->table_size; i++)
 		{
@@ -44,7 +44,7 @@
 
 	lu_p_void simple_hash_get(Simple_Hash self, lu_size key)
 	{		
-		lu_user_assert(key < self->table_size, "Key is outside of Simple_Hash range");
+		lu__user_assert(key < self->table_size, "Key is outside of Simple_Hash range");
 
 		return self->table[key];
 	}

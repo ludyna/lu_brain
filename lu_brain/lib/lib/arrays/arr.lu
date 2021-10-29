@@ -13,11 +13,11 @@
 
 Lu_Arr lu_arr__create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
 {
-	lu_user_assert(size > 0, "size should be greater than zero");
-	lu_user_assert(mem, "Lu_Mem is NULL");
+	lu__user_assert(size > 0, "size should be greater than zero");
+	lu__user_assert(mem, "Lu_Mem is NULL");
 
 	Lu_Arr self = (Lu_Arr) lu_mem__alloc(mem, sizeof(struct lu_arr));
-	lu_user_assert(self, "Unable to allocate array");
+	lu__user_assert(self, "Unable to allocate array");
 	
 	// Initialize
 	self->size 			= size;
