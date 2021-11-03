@@ -271,6 +271,8 @@
 	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
 
+	static Lu_S_Layer_Base lu_s__create_min_fractal(Lu_S self, Lu_Arr recs);
+
 	static void lu_s__add_rec(Lu_S self, Lu_Rec rec);
 	static void lu_s__add_layer(Lu_S self, lu_size level);
 	#define lu_s__add_seq(self) lu_s__add_layer(self, 0)

@@ -38,26 +38,14 @@
 		self->frames = lu_arr__create(mem, self->config.frames_size, true);
 		lu__assert(self->frames);
 
-		lu_size i;
-		Lu_S_Frame_Layer frame;
-		for (i = 0; i < lu_arr__count(recs); i++)
-		{
-			Lu_Rec lu_rec = (Lu_Rec) lu_arr__get(recs, i);
-			lu__assert(lu_rec);
+		self->apexes = lu_arr__create(mem, self->config.apexes_size, true);
+		lu__assert(self->apexes);
 
-			frame = lu_s_frame_layer__create(mem, lu_rec);
-			lu__assert(frame);
-			lu_arr__append(self->frames, frame);
-		}
+		// Super "Minimal" start:
 
-		// "Minimal" start:
-
-		// level3, story(vertically 1-n4)
-		// level2, scene(vertically 1-n3)
-		// level1, event (vertically 1-n2)
-		// layer seq/time (vertically 1-n1)
+		// layer seq/time (vertically 1)
 		// layer recs (vertically rec_count)
-		// layer frames (vertically w Y h)
+		// layer frames (vertically (w Y h) - 1)
 		// frame(vert 1)
 		// comp1 comp2 comp3 (vert 1, horizontally comp_count or d)
 
@@ -69,8 +57,21 @@
 		// To increase scene we need to add scene
 		// To increase story we need to add story, etc.
 
-		self->apexes = lu_arr__create(mem, self->config.apexes_size, true);
-		lu__assert(self->apexes);
+		// lu_size i;
+		// Lu_S_Frame_Layer frame;
+		// for (i = 0; i < lu_arr__count(recs); i++)
+		// {
+		// 	Lu_Rec lu_rec = (Lu_Rec) lu_arr__get(recs, i);
+		// 	lu__assert(lu_rec);
+
+		// 	frame = lu_s_frame_layer__create(mem, lu_rec);
+		// 	lu__assert(frame);
+		// 	lu_arr__append(self->frames, frame);
+		// }
+
+		lu_s__create_min_fractal(self, recs);
+	
+		// we start apexes from frame, since 
 
 		return self;
 	}
@@ -101,6 +102,11 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Methods
+
+	static Lu_S_Layer_Base lu_s__create_min_fractal(Lu_S self, Lu_Arr recs)
+	{
+
+	}
 
 
 	static void lu_s__print_info(Lu_S self)
