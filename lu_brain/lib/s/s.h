@@ -173,62 +173,6 @@
 
 	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem);
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Layer_Mem
-//
-	struct lu_s_layer_mem_config {
-		lu_size component_cells_size;
-
-	};
-
-	static inline Lu_S_Layer_Mem_Config lu_s_cell_mem_config__init(Lu_S_Layer_Mem_Config self)
-	{
-		lu__assert(self);
-
-		self->component_cells_size = 0;
-
-
-		return self;
-	}
-
-	static inline Lu_S_Layer_Mem_Config lu_s_cell_mem_config__validate(Lu_S_Layer_Mem_Config self)
-	{
-		lu__assert(self);
-
-		lu__assert(self->component_cells_size > 0);
-
-		return self;
-	}
-
-	struct lu_s_layer_mem {
-		Lu_Mem mem;
-
-		struct lu_s_layer_mem_config config;
-
-		lu_size component_cells_count;
-		struct lu_s_comp_layer* component_cells;
-
-
-	};
-
-	//
-	// Create and Destroy
-	// 
-
-	static Lu_S_Layer_Mem lu_s_cell_mem__create(Lu_Mem mem, struct lu_s_layer_mem_config config);
-	static void lu_s_cell_mem__destroy(Lu_S_Layer_Mem self);
-
-	//
-	// Allocate cells
-	// 
-
-	static void lu_s_cell_mem__alloc_cells(Lu_S_Layer_Mem self, struct lu_s_layer_mem_config config);
-
-	// 
-	// Print
-	//
-
-	static void lu_s_cell_mem__print_info(Lu_S_Layer_Mem self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Space_Config 

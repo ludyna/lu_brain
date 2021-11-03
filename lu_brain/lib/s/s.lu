@@ -41,13 +41,6 @@
 		self->apexes = lu_arr__create(mem, self->config.apexes_size, true);
 		lu__assert(self->apexes);
 
-		// Super "Minimal" start:
-
-		// layer seq/time (vertically 1)
-		// layer recs (vertically rec_count)
-		// layer frames (vertically (w Y h) - 1)
-		// frame(vert 1)
-		// comp1 comp2 comp3 (vert 1, horizontally comp_count or d)
 
 		// User actions must be done to increase layers in levels
 		// For example, we do not allow to increase layer frames
@@ -103,9 +96,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Methods
 
+	// Min fractal:
+	//
+	// 		layer seq (vertically 1)
+	// 		layer recs (vertically rec_count)
+	//
+	// 		Rec Fractal (horizontally recs_count):	
+	// 			layer frames (vertically (w Y h) - 1)
+	// 			frame(vert 1)
+	// 			comp1 comp2 comp3 (vert 1, horizontally comp_count or d)
+	//
 	static Lu_S_Layer_Base lu_s__create_min_fractal(Lu_S self, Lu_Arr recs)
 	{
-
+		
 	}
 
 
