@@ -87,6 +87,35 @@
 	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_Layer self, lu_size val_step_i, lu_value val);
 	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_Layer self);
 
+///////////////////////////////////////////////////////////////////////////////
+// Slots
+//
+
+	struct lu_s_slot_base {
+		enum lu_s_slot_type type;
+	};
+
+	static inline Lu_S_Slot_Base lu_s_slot_base__init(Lu_S_Slot_Base self, enum lu_s_slot_type type)
+	{
+		lu__assert(self);
+		lu__assert(type < LU_S_ST_END);
+
+		self->type = type;
+
+		return self;
+	}
+
+	struct lu_s_slot_single {
+		struct lu_s_slot_base super;
+		Lu_S_Layer_Base c;
+	};
+
+	struct lu_s_slot_multi {
+		struct lu_s_slot_base super;
+
+		Lu_Arr c;
+	};
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Layers
@@ -100,14 +129,14 @@
 		enum lu_s_layer_type type;
 		lu_size level;
 
-		Lu_S_Layer_Base parent;
+		Lu_S_Layer_Base p;
 	};
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
 		enum lu_s_layer_type type, 
 		lu_size level,
-		Lu_S_Layer_Base parent
+		Lu_S_Layer_Base p
 	)
 	{
 		lu__assert(self);
@@ -115,7 +144,7 @@
 
 		self->type = type;
 		self->level = level;
-		self->parent = parent;
+		self->p = p;
 
 		return self;
 	}
@@ -167,7 +196,7 @@
 		Lu_Mem mem,
 		enum lu_s_layer_type type, 
 		lu_size level,
-		Lu_S_Layer_Base parent,
+		Lu_S_Layer_Base p,
 		Lu_S_Layer_Base child
 	);
 

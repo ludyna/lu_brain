@@ -7,6 +7,18 @@
 // S
 
 	typedef struct lu_s_comp_view* Lu_S_Comp_View;
+
+	//
+	// Slots
+	//
+
+	enum lu_s_slot_type {
+		LU_S_ST_SINGLE,
+		LU_S_ST_MULTI,
+		LU_S_ST_END
+	};
+
+	typedef struct lu_s_slot_base* Lu_S_Slot_Base;
 	
 	//
 	// Layer

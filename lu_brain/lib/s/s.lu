@@ -108,7 +108,15 @@
 	//
 	static Lu_S_Layer_Base lu_s__create_min_fractal(Lu_S self, Lu_Arr recs)
 	{
+		lu__assert(recs);
+
+		Lu_S_Layer seq_layer = lu_s_layer__create(self->mem, LU_S_LT_LAYER, 4, NULL, NULL);
+		Lu_S_Layer recs_layer = lu_s_layer__create(self->mem, LU_S_LT_LAYER, 3, (Lu_S_Layer_Base) seq_layer, NULL);
+
 		
+
+		
+		return (Lu_S_Layer_Base) seq_layer;
 	}
 
 
