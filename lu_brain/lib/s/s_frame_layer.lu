@@ -17,18 +17,18 @@
 
 		self->rec = rec;
 
-		self->children = lu_arr__create(mem, rec->depth, true);
-		lu__assert(self->children);
+		// self->children = lu_arr__create(mem, rec->depth, true);
+		// lu__assert(self->children);
 
-		Lu_S_Comp_Layer comp_layer;
-		lu_size i;
-		for(i = 0; i < rec->depth; i++)
-		{ 
-			comp_layer = lu_s_comp_layer__create(mem, self, &rec->config.comp_config);
-			lu__assert(comp_layer);
+		// Lu_S_Comp_Layer comp_layer;
+		// lu_size i;
+		// for(i = 0; i < rec->depth; i++)
+		// { 
+		// 	comp_layer = lu_s_comp_layer__create(mem, self, &rec->config.comp_config);
+		// 	lu__assert(comp_layer);
 
-			lu_arr__append(self->children, comp_layer);
-		}
+		// 	lu_arr__append(self->children, comp_layer);
+		// }
 
 	
 		return self;
@@ -39,18 +39,18 @@
 		lu__assert(self);
 		lu__assert(mem);
 		lu__assert(self->rec);
-		lu__assert(self->children);
+		// lu__assert(self->children);
 
-		Lu_S_Comp_Layer comp_layer;
-		for (lu_size i = 0; i < lu_arr__count(self->children); i++)
-		{
-			comp_layer = (Lu_S_Comp_Layer) lu_arr__get(self->children, i);
-			lu__assert(comp_layer);
+		// Lu_S_Comp_Layer comp_layer;
+		// for (lu_size i = 0; i < lu_arr__count(self->children); i++)
+		// {
+		// 	comp_layer = (Lu_S_Comp_Layer) lu_arr__get(self->children, i);
+		// 	lu__assert(comp_layer);
 
-			lu_s_comp_layer__destroy(comp_layer, mem);
-		}
+		// 	lu_s_comp_layer__destroy(comp_layer, mem);
+		// }
 
-		lu_arr__destroy(self->children);
+		// lu_arr__destroy(self->children);
 
 		lu_mem__free(mem, (lu_p_byte) self);
 	}

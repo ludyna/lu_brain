@@ -7,16 +7,21 @@
 
 	static Lu_S_Layer lu_s_layer__create(
 		Lu_Mem mem,
-		enum lu_s_layer_type type, 
-		lu_size level,
-		Lu_S_Layer_Base parent,
-		Lu_S_Layer_Base child
+		lu_size level
 	)
 	{
+		lu__assert(mem);
+		Lu_S_Layer self = (Lu_S_Layer) lu_mem__alloc(mem, sizeof(struct lu_s_layer));
 
+		lu_s_layer_base__init(&self->super, LU_S_LT_LAYER, level, NULL); 
+
+		return self;
 	}
 
 	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem mem)
 	{
+		lu__assert(self);
+		lu__assert(mem);
 
+		lu_mem__free(mem, (lu_p_byte) self);
 	}

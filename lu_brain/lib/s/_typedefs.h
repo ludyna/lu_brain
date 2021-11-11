@@ -21,7 +21,7 @@
 	typedef struct lu_s_slot_base* Lu_S_Slot_Base;
 	
 	//
-	// Layer
+	// Layers
 	//
 
 	enum lu_s_layer_type {
@@ -42,11 +42,18 @@
 	typedef struct lu_s_layer* Lu_S_Layer;
 
 	// 
-	// Layer_Mem
+	// Apexes
 	//
 
-	typedef struct lu_s_layer_mem_config* Lu_S_Layer_Mem_Config;
-	typedef struct lu_s_layer_mem* Lu_S_Layer_Mem;
+	enum lu_s_apex_type {
+		LU_S_AT_SINGLE,
+		LU_S_AT_MULTI,
+		LU_S_AT_END
+	};
+
+	typedef struct lu_s_apex_base* Lu_S_Apex_Base;
+	typedef struct lu_s_apex_single* Lu_S_Apex_Single;
+	typedef struct lu_s_apex_multi* Lu_S_Apex_Multi;
 
 	//
 	// S
