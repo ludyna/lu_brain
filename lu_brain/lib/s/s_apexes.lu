@@ -1,0 +1,28 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+
+	static Lu_S_Apex_Single lu_s_apex_single__create(Lu_Mem mem, enum lu_s_apex_type type)
+	{
+
+	}
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_S_Apex_Multi lu_s_apex_multi__create(Lu_Mem mem, enum lu_s_apex_type type)
+	{
+
+	}
+
+	static void lu_s_apex_multi__layer_add(Lu_S_Apex_Multi self, Lu_S_Layer_Base layer)
+	{
+		
+	}
