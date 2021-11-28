@@ -274,13 +274,13 @@
 	// S Fractals
 	//
 
-	static void lu_s__create_story_fractal(Lu_Mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_scene_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
-	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Rec rec);
+	static void lu_s__create_story_fractal(Lu_Mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_scene_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
+	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Frame_Layer p, Lu_Arr apexes, Lu_Rec rec);
 
 	//
 	// 
