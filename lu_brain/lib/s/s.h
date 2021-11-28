@@ -190,12 +190,10 @@
 		Lu_S_Layer_Base child;
 	};
 
-	static Lu_S_Layer lu_s_layer__create(
-		Lu_Mem mem,
-		lu_size level
-	);
-
+	static Lu_S_Layer lu_s_layer__create(Lu_Mem mem, lu_size level);
 	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem);
+
+	static void lu_s_layer__connect(Lu_S_Layer p, Lu_S_Layer c);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Apexes
@@ -272,7 +270,21 @@
 	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
 
-	static void lu_s__create_seq_fractal(Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	//
+	// S Fractals
+	//
+
+	static void lu_s__create_story_fractal(Lu_Mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_scene_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
+	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_Arr apexes, Lu_Rec rec);
+
+	//
+	// 
+	//
 
 	static void lu_s__add_rec(Lu_S self, Lu_Rec rec);
 	static void lu_s__add_layer(Lu_S self, lu_size level);

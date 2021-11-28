@@ -25,3 +25,11 @@
 
 		lu_mem__free(mem, (lu_p_byte) self);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_s_layer__connect(Lu_S_Layer p, Lu_S_Layer c)
+	{
+
+	}

@@ -29,7 +29,7 @@
 
 	static inline lu_size lu_arr__count(Lu_Arr self) { return self->count; }
 	static inline lu_size lu_arr__size(Lu_Arr self) { return self->size; }
-	static inline lu_p_void lu_arr__last(Lu_Arr self) { return self->items[self->count-1]; }
+	static inline lu_p_void lu_arr__last(Lu_Arr self) { return self->count == 0 ? NULL : self->items[self->count-1]; }
 
 	// Main public methods
 
