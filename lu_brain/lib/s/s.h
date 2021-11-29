@@ -201,6 +201,9 @@
 
 	struct lu_s_apex_base {
 		enum lu_s_apex_type type;
+
+		// virtual destructor
+		void (*destroy)(Lu_S_Apex_Base, Lu_Mem);
 	};
 
 	static inline Lu_S_Apex_Base lu_s_apex_base__init(Lu_S_Apex_Base self, enum lu_s_apex_type type)
@@ -208,6 +211,7 @@
 		lu__assert(self);
 		
 		self->type = type;
+		self->destroy = NULL;
 
 		return self;
 	}
@@ -219,6 +223,7 @@
 	};
 
 	static Lu_S_Apex_Single lu_s_apex_single__create(Lu_Mem mem, enum lu_s_apex_type type);
+	static void lu_s_apex_single__destroy(Lu_S_Apex_Base self, Lu_Mem mem);
 
 	struct lu_s_apex_multi {
 		struct lu_s_apex_base super;
@@ -227,7 +232,7 @@
 	};
 
 	static Lu_S_Apex_Multi lu_s_apex_multi__create(Lu_Mem mem, enum lu_s_apex_type type);
-	static void lu_s_apex_multi__layer_add(Lu_S_Apex_Multi self, Lu_S_Layer_Base layer);
+	static void lu_s_apex_multi__destroy(Lu_S_Apex_Base self, Lu_Mem mem);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -281,6 +286,8 @@
 	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
 	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Frame_Layer p, Lu_Arr apexes, Lu_Rec rec);
+
+	static void lu_s__destroy_fractal(Lu_Mem, Lu_S_Layer layer);
 
 	//
 	// 

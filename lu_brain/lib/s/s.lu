@@ -62,7 +62,7 @@
 		// 	lu_arr__append(self->frames, frame);
 		// }
 
-		lu_s__create_seq_fractal(self->mem, NULL, self->apexes, self->frames, recs);
+		lu_s__create_story_fractal(self->mem, NULL, self->apexes, self->frames, recs);
 	
 		// we start apexes from frame, since 
 
@@ -76,12 +76,48 @@
 
 		if (self->apexes) 
 		{
-			Lu_S_Layer apex = lu_arr__last(self->apexes);
 
-			if (apex)
+			lu_size apexes_count = lu_arr__count(self->apexes);
+
+			Lu_S_Apex_Base apex_base;
+
+			if (apexes_count)
 			{
-				lu_s_layer__destroy(apex, self->mem);
+				//
+				// Destroy s fractal
+				//
+
+				apex_base = (Lu_S_Apex_Base) lu_arr__last(self->apexes);
+				lu__assert(apex_base);
+
+				// Last one should be always SINGLE apex
+				lu__assert(apex_base->type == LU_S_AT_SINGLE);
+
+				Lu_S_Apex_Single apex = (Lu_S_Apex_Single) apex_base;
+
+				// Last layer should be always LU_S_LT_LAYER
+				lu__assert(apex->layer->type == LU_S_LT_LAYER);
+				Lu_S_Layer layer = (Lu_S_Layer) apex->layer;
+				 
+				lu_s__destroy_fractal(self->mem, layer);
 			}
+
+			//
+			// Destroy apexes
+			//
+
+			for (lu_size i = 0; i < apexes_count; i++)
+			{
+				apex_base = (Lu_S_Apex_Base) lu_arr__get(self->apexes, i); 
+				lu__assert(apex_base);
+				lu__assert(apex_base->destroy);
+
+				apex_base->destroy(apex_base, self->mem);
+			}
+
+			//
+			// Destroy array
+			//
 
 			lu_arr__destroy(self->apexes);
 		}
@@ -89,26 +125,24 @@
 		if (self->frames)
 			lu_arr__destroy(self->frames);
 
-
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Fractals
 
-		// "Minimal" start:
-
-		// level3, story(vertically 1-n4)
-		// level2, scene(vertically 1-n3)
-		// level1, event (vertically 1-n2)
-		// layer seq (vertically 1-n1)
-		// layer recs (vertically rec_count)
-		// layer frames (vertically w Y h)
-		// frame(1)
-		// comp1 comp2 comp3 (horizontally comp_count or d)
-
-
-	// Min fractal:
+	// "Minimal" start:
+	//
+	// 		level3, story(vertically 1-n4)
+	// 		level2, scene(vertically 1-n3)
+	// 		level1, event (vertically 1-n2)
+	// 		layer seq (vertically 1-n1)
+	// 		layer recs (vertically rec_count)
+	// 		layer frames (vertically w Y h)
+	// 		frame(1)
+	// 		comp1 comp2 comp3 (horizontally comp_count or d)
+	//
+	// 
 	//
 	// 		layer seq (sv: seq_count, sh: 1, nh: n)
 	// 		layer recs (sv: rec_count)
@@ -140,45 +174,99 @@
 		lu__assert(frames);
 		lu__assert(recs);
 
-		Lu_S_Layer layer = lu_s_layer__create(mem, 7);
-		lu_arr__append(apexes, (lu_p_void) layer);
+		// Lu_S_Layer layer = lu_s_layer__create(mem, 7);
+		// lu__assert(layer);
 
-		if (p)
-			lu_s_layer__connect(p, layer);
+		// lu_arr__append(apexes, (lu_p_void) layer);
 
-		lu_s__create_scene_fractal(mem, layer, apexes, frames, recs);
+		// if (p)
+		// 	lu_s_layer__connect(p, layer);
+
+		// lu_s__create_scene_fractal(mem, layer, apexes, frames, recs);
 	}
 
 
 	static void lu_s__create_scene_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs)
 	{
-		// lu__assert(mem);
-		// lu__assert(apexes);
-		// lu__assert(frames);
-		// lu__assert(recs);
+		lu__assert(mem);
+		lu__assert(apexes);
+		lu__assert(frames);
+		lu__assert(recs);
 
-		// Lu_S_Layer layer = lu_s_layer__create(mem, 6);
+		Lu_S_Layer layer = lu_s_layer__create(mem, 6);
 
-		// lu_s_layer__connect(p, layer);
+		if (p)
+			lu_s_layer__connect(p, layer);
 
-		// lu_arr__append(apexes, (lu_p_void) layer);
+		lu_arr__append(apexes, (lu_p_void) layer);
 
-		// lu_s__create_event_fractal(mem, apexes, frames, recs);
+		lu_s__create_event_fractal(mem, layer, apexes, frames, recs);
 	}
 
 	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs)
 	{
+		lu__assert(mem);
+		lu__assert(apexes);
+		lu__assert(frames);
+		lu__assert(recs);
 
+		Lu_S_Layer layer = lu_s_layer__create(mem, 5);
+		lu__assert(layer);
+
+		if (p)
+			lu_s_layer__connect(p, layer);
+
+		lu_arr__append(apexes, (lu_p_void) layer);
+
+		lu_s__create_seq_fractal(mem, layer, apexes, frames, recs);
 	}
 
 	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs)
 	{
+		lu__assert(mem);
+		lu__assert(apexes);
+		lu__assert(frames);
+		lu__assert(recs);
 
+		Lu_S_Layer layer = lu_s_layer__create(mem, 4);
+		lu__assert(layer);
+
+		if (p)
+			lu_s_layer__connect(p, layer);
+
+		lu_arr__append(apexes, (lu_p_void) layer);
+
+		lu_s__create_rec_fractal(mem, layer, apexes, frames, recs);
 	}
 
 	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs)
 	{
+		lu__assert(mem);
+		lu__assert(apexes);
+		lu__assert(frames);
+		lu__assert(recs);
+ 
+		// lu_size i;
+		// lu_size count = lu_arr__count(recs);
+		// Lu_S_Layer layer = NULL;
+		// Lu_S_Layer prev = p;
 
+		// for(i = 0; i < count; i++)
+		// {
+ 	// 		layer = lu_s_layer__create(mem, 3);
+ 	// 		lu__assert(layer);
+
+		// 	if (prev)
+		// 		lu_s_layer__connect(prev, layer);
+
+		// 	// Only first one is apex
+		// 	if (i == 0)
+		// 		lu_arr__append(apexes, (lu_p_void) layer);
+
+		// 	prev = layer;
+		// }
+
+		// lu_s__create_frame_fractal(mem, layer, apexes, frames, recs);
 	}  
 
 	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec)
@@ -191,7 +279,10 @@
 
 	}
 
+	static void lu_s__destroy_fractal(Lu_Mem mem, Lu_S_Layer layer)
+	{
 
+	}
 
 	static Lu_S_Layer_Base lu_s__create_vert_layers(
 		Lu_S self, 
@@ -202,6 +293,11 @@
 	{
 
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
 
 	static void lu_s__print_info(Lu_S self)
 	{
