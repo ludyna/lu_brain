@@ -1,8 +1,8 @@
-# Lu_Brain
+# Lu_Brain 
 
 Lu_Brain is a _pattern database_ open-source C library.
 
-___More info soon. This project is a work in progress at this moment.___
+⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
 ## About
 
