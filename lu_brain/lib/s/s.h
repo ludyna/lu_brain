@@ -93,14 +93,21 @@
 
 	struct lu_s_slot_base {
 		enum lu_s_slot_type type;
+		void (*destroy)(Lu_S_Slot_Base, Lu_Mem);
 	};
 
-	static inline Lu_S_Slot_Base lu_s_slot_base__init(Lu_S_Slot_Base self, enum lu_s_slot_type type)
+	static inline Lu_S_Slot_Base lu_s_slot_base__init(
+		 Lu_S_Slot_Base self, 
+		 enum lu_s_slot_type type,
+		 void (*destroy)(Lu_S_Slot_Base, Lu_Mem)
+	)
 	{
 		lu__assert(self);
-		lu__assert(type < LU_S_ST_END);
+		lu__assert(type < LU_S_ST_END); 
+		lu__assert(destroy);
 
 		self->type = type;
+		self->destroy = destroy;
 
 		return self;
 	}
@@ -110,11 +117,15 @@
 		Lu_S_Layer_Base c;
 	};
 
+	static void lu_s_slot_single__destroy(Lu_S_Slot_Base, Lu_Mem);
+
 	struct lu_s_slot_multi {
 		struct lu_s_slot_base super;
 
 		Lu_Arr c;
 	};
+
+	static void lu_s_slot_multi__destroy(Lu_S_Slot_Base, Lu_Mem);
 
 
 ///////////////////////////////////////////////////////////////////////////////

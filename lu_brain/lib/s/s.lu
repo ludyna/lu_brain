@@ -109,6 +109,14 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S Apexes
+
+	static inline void lu_s__axpexes_append(Lu_Arr apexes, Lu_Mem mem, Lu_S_Layer_Base layer)
+	{
+		//Lu_S_Apex_Single apex = lu_s_apex_single__create(mem, 
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S Fractals
 //
 // User actions must be done to increase layers in levels
@@ -162,13 +170,16 @@
 		lu__assert(frames);
 		lu__assert(recs);
 
-		// Lu_S_Layer layer = lu_s_layer__create(mem, 7);
-		// lu__assert(layer);
+		Lu_S_Layer layer = lu_s_layer__create(mem, 7);
+		lu__assert(layer);
 
-		// lu_arr__append(apexes, (lu_p_void) layer);
+		Lu_S_Apex_Single apex = lu_s_apex_single__create(mem, (Lu_S_Layer_Base) layer);
+		lu__assert(apex);
 
-		// if (p)
-		// 	lu_s_layer__connect(p, layer);
+		lu_arr__append(apexes, (lu_p_void) apex);
+
+		if (p)
+			lu_s_layer__connect(p, layer);
 
 		//lu_s__create_scene_fractal(mem, layer, apexes, frames, recs);
 	}
@@ -269,7 +280,7 @@
 
 	static void lu_s__destroy_fractal(Lu_Mem mem, Lu_S_Layer layer)
 	{
-
+		
 	}
 
 	static Lu_S_Layer_Base lu_s__create_vert_layers(

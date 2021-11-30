@@ -6,7 +6,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-
 	static Lu_S_Apex_Single lu_s_apex_single__create(Lu_Mem mem, Lu_S_Layer_Base layer)
 	{
 		lu__assert(mem);
