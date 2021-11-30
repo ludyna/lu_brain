@@ -206,12 +206,17 @@
 		void (*destroy)(Lu_S_Apex_Base, Lu_Mem);
 	};
 
-	static inline Lu_S_Apex_Base lu_s_apex_base__init(Lu_S_Apex_Base self, enum lu_s_apex_type type)
+	static inline Lu_S_Apex_Base lu_s_apex_base__init(
+		Lu_S_Apex_Base self, 
+		enum lu_s_apex_type type, 
+		void (*destroy)(Lu_S_Apex_Base, Lu_Mem)
+	)
 	{
 		lu__assert(self);
+		lu__assert(destroy);
 		
 		self->type = type;
-		self->destroy = NULL;
+		self->destroy = destroy;
 
 		return self;
 	}
@@ -222,7 +227,7 @@
 		Lu_S_Layer_Base layer;
 	};
 
-	static Lu_S_Apex_Single lu_s_apex_single__create(Lu_Mem mem, enum lu_s_apex_type type);
+	static Lu_S_Apex_Single lu_s_apex_single__create(Lu_Mem mem, Lu_S_Layer_Base layer);
 	static void lu_s_apex_single__destroy(Lu_S_Apex_Base self, Lu_Mem mem);
 
 	struct lu_s_apex_multi {
@@ -231,7 +236,7 @@
 		Lu_Arr layers;
 	};
 
-	static Lu_S_Apex_Multi lu_s_apex_multi__create(Lu_Mem mem, enum lu_s_apex_type type);
+	static Lu_S_Apex_Multi lu_s_apex_multi__create(Lu_Mem mem, lu_size layers_count);
 	static void lu_s_apex_multi__destroy(Lu_S_Apex_Base self, Lu_Mem mem);
 
 
