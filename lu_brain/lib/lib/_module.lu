@@ -5,3 +5,4 @@
 #include "lists/_module.lu"
 #include "hashes/_module.lu"
 #include "mem_debuggers/_module.lu"
+#include "slots/_module.lu"

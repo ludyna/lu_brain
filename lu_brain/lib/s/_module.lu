@@ -3,7 +3,6 @@
 */
 
 #include "s_comp_view.lu"
-#include "s_slots.lu"
 #include "s_comp_layer.lu"
 #include "s_frame_layer.lu"
 #include "s_layer.lu"

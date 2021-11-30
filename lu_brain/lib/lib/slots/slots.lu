@@ -1,0 +1,61 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_Slot_One lu_slot_one__create(Lu_Mem mem, lu_p_void item)
+	{
+		lu__assert(mem);
+
+		Lu_Slot_One self = (Lu_Slot_One) lu_mem__alloc(mem, sizeof(struct lu_slot_one));
+		lu__assert(self);
+
+		lu_slot_base__init(&self->super, LU_ST_ONE, lu_slot_one__destroy);
+
+		self->item = item;
+
+		return self;
+	}
+
+	static void lu_slot_one__destroy(Lu_Slot_Base self, Lu_Mem mem)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+		lu__assert(self->type == LU_ST_ONE);
+
+		lu_mem__free(mem, (lu_p_void) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_Slot_Arr lu_slot_arr__create(Lu_Mem mem, lu_size items_count, lu_bool allow_realloc)
+	{
+		lu__assert(mem);
+
+		Lu_Slot_Arr self = (Lu_Slot_Arr) lu_mem__alloc(mem, sizeof(struct lu_slot_arr));
+		lu__assert(self);
+
+		lu_slot_base__init(&self->super, LU_ST_ARR, lu_slot_arr__destroy);
+		
+		self->items = lu_arr__create(mem, items_count, allow_realloc);
+
+		return self;
+	}
+
+	static void lu_slot_arr__destroy(Lu_Slot_Base self, Lu_Mem mem)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+		lu__assert(self->type == LU_ST_ARR);
+
+		Lu_Slot_Arr arr = (Lu_Slot_Arr) self;
+
+		lu_arr__destroy(arr->items);
+
+		lu_mem__free(mem, (lu_p_byte) arr);
+	}
+
