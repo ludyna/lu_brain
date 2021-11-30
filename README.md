@@ -4,7 +4,7 @@ Lu_Brain is a _pattern database_ open-source C library.
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
-#💠 About
+## About
 
 A _pattern_ is a piece of repeatable (but not necessarily exact) information in the flow of information. Thus, patterns emerge from the flow of information. For example, our ability to recognize objects from visual information flows and words from auditory information flows are pattern recognitions.
 
@@ -21,13 +21,13 @@ Lu_Brain main features:
 - organizing patterns into hierarchies
 - transparent access to all data and data manipulation
 
-##✨ Goals
+## Goals  
 
 1. The fastest pattern recognition and manipulation in the World
 2. Pattern database with complete data transparency and ease of access
 3. Easy to use, well designed and architected, fast and bug-free, enjoyable to contribute software
 
-##📄 Legal 
+## Legal
 
 ___The library is free to use by everyone with good intentions (MIT_LICENSE).___
 
