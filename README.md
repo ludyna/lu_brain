@@ -21,13 +21,13 @@ Lu_Brain main features:
 - organizing patterns into hierarchies
 - transparent access to all data and data manipulation
 
-## Goals
+## Goals  
 
 1. The fastest pattern recognition and manipulation in the World
 2. Pattern database with complete data transparency and ease of access
 3. Easy to use, well designed and architected, fast and bug-free, enjoyable to contribute software
 
-## Legal 
+## Legal
 
 ___The library is free to use by everyone with good intentions (MIT_LICENSE).___
 
