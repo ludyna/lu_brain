@@ -6,5 +6,4 @@
 #include "s_comp_layer.lu"
 #include "s_frame_layer.lu"
 #include "s_layer.lu"
-#include "s_apexes.lu"
 #include "s.lu"

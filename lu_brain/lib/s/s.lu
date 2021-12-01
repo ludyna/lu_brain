@@ -59,7 +59,7 @@
 
 			lu_size apexes_count = lu_arr__count(self->apexes);
 
-			Lu_S_Apex_Base apex_base;
+			Lu_Slot_Base apex_base;
 
 			if (apexes_count)
 			{
@@ -67,18 +67,22 @@
 				// Destroy s fractal
 				//
 
-				apex_base = (Lu_S_Apex_Base) lu_arr__last(self->apexes);
+				apex_base = (Lu_Slot_Base) lu_arr__last(self->apexes);
 				lu__assert(apex_base);
 
 				// Last one should be always SINGLE apex
-				lu__assert(apex_base->type == LU_S_AT_SINGLE);
+				lu__assert(apex_base->type == LU_ST_ONE);
 
-				Lu_S_Apex_Single apex = (Lu_S_Apex_Single) apex_base;
+				Lu_Slot_One apex = (Lu_Slot_One) apex_base;
+				lu__assert(apex->item);
+
+				Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) apex->item;
 
 				// Last layer should be always LU_S_LT_LAYER
-				lu__assert(apex->layer->type == LU_S_LT_LAYER);
-				Lu_S_Layer layer = (Lu_S_Layer) apex->layer;
-				 
+				lu__assert(layer_base->type == LU_S_LT_LAYER);
+
+				Lu_S_Layer layer = (Lu_S_Layer) layer_base;
+
 				lu_s__destroy_fractal(self->mem, layer);
 			}
 
@@ -88,7 +92,7 @@
 
 			for (lu_size i = 0; i < apexes_count; i++)
 			{
-				apex_base = (Lu_S_Apex_Base) lu_arr__get(self->apexes, i); 
+				apex_base = (Lu_Slot_Base) lu_arr__get(self->apexes, i); 
 				lu__assert(apex_base);
 				lu__assert(apex_base->destroy);
 
@@ -173,10 +177,10 @@
 		Lu_S_Layer layer = lu_s_layer__create(mem, 7);
 		lu__assert(layer);
 
-		Lu_S_Apex_Single apex = lu_s_apex_single__create(mem, (Lu_S_Layer_Base) layer);
-		lu__assert(apex);
+		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
+		lu__assert(slot);
 
-		lu_arr__append(apexes, (lu_p_void) apex);
+		lu_arr__append(apexes, (lu_p_void) slot);
 
 		if (p)
 			lu_s_layer__connect(p, layer);

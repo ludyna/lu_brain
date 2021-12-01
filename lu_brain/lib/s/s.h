@@ -164,50 +164,6 @@
 
 	static void lu_s_layer__connect(Lu_S_Layer p, Lu_S_Layer c);
 
-///////////////////////////////////////////////////////////////////////////////
-// Apexes
-//
-
-	struct lu_s_apex_base {
-		enum lu_s_apex_type type;
-
-		// virtual destructor
-		void (*destroy)(Lu_S_Apex_Base, Lu_Mem);
-	};
-
-	static inline Lu_S_Apex_Base lu_s_apex_base__init(
-		Lu_S_Apex_Base self, 
-		enum lu_s_apex_type type, 
-		void (*destroy)(Lu_S_Apex_Base, Lu_Mem)
-	)
-	{
-		lu__assert(self);
-		lu__assert(destroy);
-		
-		self->type = type;
-		self->destroy = destroy;
-
-		return self;
-	}
-
-	struct lu_s_apex_single {
-		struct lu_s_apex_base super;
-
-		Lu_S_Layer_Base layer;
-	};
-
-	static Lu_S_Apex_Single lu_s_apex_single__create(Lu_Mem mem, Lu_S_Layer_Base layer);
-	static void lu_s_apex_single__destroy(Lu_S_Apex_Base self, Lu_Mem mem);
-
-	struct lu_s_apex_multi {
-		struct lu_s_apex_base super;
-
-		Lu_Arr layers;
-	};
-
-	static Lu_S_Apex_Multi lu_s_apex_multi__create(Lu_Mem mem, lu_size layers_count);
-	static void lu_s_apex_multi__destroy(Lu_S_Apex_Base self, Lu_Mem mem);
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Space_Config 
