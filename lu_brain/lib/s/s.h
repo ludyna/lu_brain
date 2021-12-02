@@ -105,45 +105,33 @@
 		// n_table
 	};
 
-	static inline Lu_S_Layer_Base lu_s_layer_base__init(
+	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_no_c_slot(
 		Lu_S_Layer_Base self, 
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p
-	)
-	{
-		lu__assert(self);
-		lu__assert(type < LU_S_LT_END);
+	);
 
-		self->type = type;
-		self->level = level;
-		self->p = p;
+	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
+		Lu_S_Layer_Base self, 
+		Lu_Mem mem,
+		enum lu_s_layer_type type, 
+		lu_size level,
+		Lu_S_Layer_Base p
+	);
 
-		return self;
-	}
+	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
+		Lu_S_Layer_Base self, 
+		Lu_Mem mem,
+		enum lu_s_layer_type type, 
+		lu_size level,
+		Lu_S_Layer_Base p,
+		lu_size children_count
+	);
 
-	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c)
-	{
-		lu__assert(p);
-		lu__assert(c);
+	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self, Lu_Mem mem);
 
-		c->p = p;
-		
-		lu__assert(p->c);
-		
-		switch(p->c->type)
-		{
-			case LU_ST_ONE:
-
-				break;
-			case LU_ST_ARR:
-
-
-				break;
-			default:
-				lu__assert(0);
-		}
-	}
+	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c);
 
 	//
 	// Lu_S_Comp_Layer 
@@ -182,7 +170,7 @@
 		Lu_S_Layer_Base child;
 	};
 
-	static Lu_S_Layer lu_s_layer__create(Lu_Mem mem, lu_size level);
+	static Lu_S_Layer lu_s_layer__create(Lu_Mem mem, lu_size level, lu_size children_count);
 	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem);
 
 

@@ -2,6 +2,7 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
+#include "s_layer_base.lu"
 #include "s_comp_view.lu"
 #include "s_comp_layer.lu"
 #include "s_frame_layer.lu"

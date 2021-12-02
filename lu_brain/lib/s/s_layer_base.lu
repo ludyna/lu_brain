@@ -1,0 +1,108 @@
+/**
+	Copyright © 2021 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+
+
+	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_no_c_slot(
+		Lu_S_Layer_Base self, 
+		enum lu_s_layer_type type, 
+		lu_size level,
+		Lu_S_Layer_Base p
+	)
+	{
+		lu__assert(self);
+		lu__assert(type < LU_S_LT_END);
+
+		self->type = type;
+		self->level = level;
+		self->p = p;
+		self->c = NULL;
+
+		return self;
+	}
+
+	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
+		Lu_S_Layer_Base self, 
+		Lu_Mem mem,
+		enum lu_s_layer_type type, 
+		lu_size level,
+		Lu_S_Layer_Base p
+	)
+	{
+		lu__assert(self);
+		lu__assert(type < LU_S_LT_END);
+
+		self->type = type;
+		self->level = level;
+		self->p = p;
+		self->c = (Lu_Slot_Base) lu_slot_one__create(mem, NULL);
+		lu__assert(self->c);
+
+		return self;
+	}
+	
+	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
+		Lu_S_Layer_Base self, 
+		Lu_Mem mem,
+		enum lu_s_layer_type type, 
+		lu_size level,
+		Lu_S_Layer_Base p,
+		lu_size children_count
+	)
+	{
+		lu__assert(self);
+		lu__assert(type < LU_S_LT_END);
+
+		self->type = type;
+		self->level = level;
+		self->p = p;
+		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, children_count, true);
+		lu__assert(self->c);
+
+		return self;
+	}
+
+
+	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self, Lu_Mem mem)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+
+		if (self->c)
+		{
+			self->c->destroy(self->c, mem);
+			self->c = NULL;
+		}
+
+		self->p = NULL;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c)
+	{
+		lu__assert(p);
+		lu__assert(c);
+
+		c->p = p;
+		
+		lu__assert(p->c);
+
+		switch(p->c->type)
+		{
+			case LU_ST_ONE:
+
+				break;
+			case LU_ST_ARR:
+
+
+				break;
+			default:
+				lu__assert(0);
+		}
+	}

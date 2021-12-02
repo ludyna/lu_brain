@@ -174,7 +174,7 @@
 		lu__assert(frames);
 		lu__assert(recs);
 
-		Lu_S_Layer layer = lu_s_layer__create(mem, 7);
+		Lu_S_Layer layer = lu_s_layer__create(mem, 7, LU_ST_ONE);
 		lu__assert(layer);
 
 		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
@@ -185,7 +185,7 @@
 
 		lu_arr__append(apexes, (lu_p_void) slot);
 
-		lu_s__create_scene_fractal(mem, layer, apexes, frames, recs);
+		//lu_s__create_scene_fractal(mem, layer, apexes, frames, recs);
 	}
 
 
@@ -196,7 +196,7 @@
 		lu__assert(frames);
 		lu__assert(recs);
 
-		Lu_S_Layer layer = lu_s_layer__create(mem, 6);
+		Lu_S_Layer layer = lu_s_layer__create(mem, 6, LU_ST_ONE);
 		lu__assert(layer);
 
 		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
@@ -217,7 +217,7 @@
 		lu__assert(frames);
 		lu__assert(recs);
 
-		Lu_S_Layer layer = lu_s_layer__create(mem, 5);
+		Lu_S_Layer layer = lu_s_layer__create(mem, 5, LU_ST_ONE);
 		lu__assert(layer);
 
 		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
@@ -238,7 +238,7 @@
 		lu__assert(frames);
 		lu__assert(recs);
 
-		Lu_S_Layer layer = lu_s_layer__create(mem, 4);
+		Lu_S_Layer layer = lu_s_layer__create(mem, 4, LU_ST_ONE);
 		lu__assert(layer);
 
 		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
