@@ -59,7 +59,7 @@
 
 			lu_size apexes_count = lu_arr__count(self->apexes);
 
-			Lu_Slot_Base apex_base;
+			Lu_Slot_Base slot_base;
 
 			if (apexes_count)
 			{
@@ -67,13 +67,13 @@
 				// Destroy s fractal
 				//
 
-				apex_base = (Lu_Slot_Base) lu_arr__last(self->apexes);
-				lu__assert(apex_base);
+				slot_base = (Lu_Slot_Base) lu_arr__last(self->apexes);
+				lu__assert(slot_base);
 
 				// Last one should be always SINGLE apex
-				lu__assert(apex_base->type == LU_ST_ONE);
+				lu__assert(slot_base->type == LU_ST_ONE);
 
-				Lu_Slot_One apex = (Lu_Slot_One) apex_base;
+				Lu_Slot_One apex = (Lu_Slot_One) slot_base;
 				lu__assert(apex->item);
 
 				Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) apex->item;
@@ -92,11 +92,11 @@
 
 			for (lu_size i = 0; i < apexes_count; i++)
 			{
-				apex_base = (Lu_Slot_Base) lu_arr__get(self->apexes, i); 
-				lu__assert(apex_base);
-				lu__assert(apex_base->destroy);
+				slot_base = (Lu_Slot_Base) lu_arr__get(self->apexes, i); 
+				lu__assert(slot_base);
+				lu__assert(slot_base->destroy);
 
-				apex_base->destroy(apex_base, self->mem);
+				slot_base->destroy(slot_base, self->mem);
 			}
 
 			//
@@ -180,12 +180,12 @@
 		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
 		lu__assert(slot);
 
+		if (p)
+			lu_s_layer_base__connect((Lu_S_Layer_Base) p, (Lu_S_Layer_Base) layer);
+
 		lu_arr__append(apexes, (lu_p_void) slot);
 
-		if (p)
-			lu_s_layer__connect(p, layer);
-
-		//lu_s__create_scene_fractal(mem, layer, apexes, frames, recs);
+		lu_s__create_scene_fractal(mem, layer, apexes, frames, recs);
 	}
 
 
@@ -197,11 +197,15 @@
 		lu__assert(recs);
 
 		Lu_S_Layer layer = lu_s_layer__create(mem, 6);
+		lu__assert(layer);
+
+		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
+		lu__assert(slot);
 
 		if (p)
-			lu_s_layer__connect(p, layer);
+			lu_s_layer_base__connect((Lu_S_Layer_Base) p, (Lu_S_Layer_Base) layer);
 
-		lu_arr__append(apexes, (lu_p_void) layer);
+		lu_arr__append(apexes, (lu_p_void) slot);
 
 		lu_s__create_event_fractal(mem, layer, apexes, frames, recs);
 	}
@@ -216,10 +220,13 @@
 		Lu_S_Layer layer = lu_s_layer__create(mem, 5);
 		lu__assert(layer);
 
-		if (p)
-			lu_s_layer__connect(p, layer);
+		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
+		lu__assert(slot);
 
-		lu_arr__append(apexes, (lu_p_void) layer);
+		if (p)
+			lu_s_layer_base__connect((Lu_S_Layer_Base) p, (Lu_S_Layer_Base) layer);
+
+		lu_arr__append(apexes, (lu_p_void) slot);
 
 		lu_s__create_seq_fractal(mem, layer, apexes, frames, recs);
 	}
@@ -234,10 +241,13 @@
 		Lu_S_Layer layer = lu_s_layer__create(mem, 4);
 		lu__assert(layer);
 
+		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
+		lu__assert(slot);
+		
 		if (p)
-			lu_s_layer__connect(p, layer);
+			lu_s_layer_base__connect((Lu_S_Layer_Base) p, (Lu_S_Layer_Base) layer);
 
-		lu_arr__append(apexes, (lu_p_void) layer);
+		lu_arr__append(apexes, (lu_p_void) slot);
 
 		lu_s__create_rec_fractal(mem, layer, apexes, frames, recs);
 	}

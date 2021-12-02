@@ -122,6 +122,29 @@
 		return self;
 	}
 
+	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c)
+	{
+		lu__assert(p);
+		lu__assert(c);
+
+		c->p = p;
+		
+		lu__assert(p->c);
+		
+		switch(p->c->type)
+		{
+			case LU_ST_ONE:
+
+				break;
+			case LU_ST_ARR:
+
+
+				break;
+			default:
+				lu__assert(0);
+		}
+	}
+
 	//
 	// Lu_S_Comp_Layer 
 	// 
@@ -162,7 +185,7 @@
 	static Lu_S_Layer lu_s_layer__create(Lu_Mem mem, lu_size level);
 	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem);
 
-	static void lu_s_layer__connect(Lu_S_Layer p, Lu_S_Layer c);
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
