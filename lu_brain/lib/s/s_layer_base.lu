@@ -93,14 +93,20 @@
 		
 		lu__assert(p->c);
 
+		Lu_Slot_One one;
+		Lu_Slot_Arr arr;
+
 		switch(p->c->type)
 		{
-			case LU_ST_ONE:
-
+			case LU_ST_ONE :
+				one = (Lu_Slot_One) p->c;
+				one->item = (lu_p_void) c;
 				break;
-			case LU_ST_ARR:
-
-
+			case LU_ST_ARR :
+				arr = (Lu_Slot_Arr) p->c;
+				Lu_Arr items = arr->items;
+				lu__assert(items);
+				lu_arr__append(items, (lu_p_void) c);
 				break;
 			default:
 				lu__assert(0);
