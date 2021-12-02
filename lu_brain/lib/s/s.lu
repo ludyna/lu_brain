@@ -81,9 +81,7 @@
 				// Last layer should be always LU_S_LT_LAYER
 				lu__assert(layer_base->type == LU_S_LT_LAYER);
 
-				Lu_S_Layer layer = (Lu_S_Layer) layer_base;
-
-				lu_s__destroy_fractal(self->mem, layer);
+				lu_s__destroy_fractal(self->mem, layer_base);
 			}
 
 			//
@@ -284,7 +282,7 @@
 
 	}
 
-	static void lu_s__destroy_fractal(Lu_Mem mem, Lu_S_Layer layer)
+	static void lu_s__destroy_fractal(Lu_Mem mem, Lu_S_Layer_Base layer)
 	{
 		
 	}

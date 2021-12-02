@@ -11,7 +11,8 @@
 		Lu_S_Layer_Base self, 
 		enum lu_s_layer_type type, 
 		lu_size level,
-		Lu_S_Layer_Base p
+		Lu_S_Layer_Base p,
+		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
 	)
 	{
 		lu__assert(self);
@@ -21,6 +22,7 @@
 		self->level = level;
 		self->p = p;
 		self->c = NULL;
+		self->destroy = destroy;
 
 		return self;
 	}
@@ -30,7 +32,8 @@
 		Lu_Mem mem,
 		enum lu_s_layer_type type, 
 		lu_size level,
-		Lu_S_Layer_Base p
+		Lu_S_Layer_Base p,
+		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
 	)
 	{
 		lu__assert(self);
@@ -39,8 +42,11 @@
 		self->type = type;
 		self->level = level;
 		self->p = p;
+		
 		self->c = (Lu_Slot_Base) lu_slot_one__create(mem, NULL);
 		lu__assert(self->c);
+
+		self->destroy = destroy;
 
 		return self;
 	}
@@ -51,7 +57,8 @@
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p,
-		lu_size children_count
+		lu_size children_count,
+		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
 	)
 	{
 		lu__assert(self);
@@ -60,8 +67,11 @@
 		self->type = type;
 		self->level = level;
 		self->p = p;
+
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, children_count, true);
 		lu__assert(self->c);
+
+		self->destroy = destroy;
 
 		return self;
 	}

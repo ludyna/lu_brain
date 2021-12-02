@@ -17,26 +17,26 @@
 
 		if (children_count == 0)
 		{
-			lu_s_layer_base__init_with_no_c_slot(&self->super, LU_S_LT_LAYER, level, NULL); 
+			lu_s_layer_base__init_with_no_c_slot(&self->super, LU_S_LT_LAYER, level, NULL, lu_s_layer__destroy); 
 		}
 		else if (children_count == 1)
 		{
-			lu_s_layer_base__init_with_one_c_slot(&self->super, mem, LU_S_LT_LAYER, level, NULL);
+			lu_s_layer_base__init_with_one_c_slot(&self->super, mem, LU_S_LT_LAYER, level, NULL, lu_s_layer__destroy);
 		}
 		else
 		{
-			lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT_LAYER, level, NULL, children_count);
+			lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT_LAYER, level, NULL, children_count, lu_s_layer__destroy);
 		}
 
 		return self;
 	}
 
-	static void lu_s_layer__destroy(Lu_S_Layer self, Lu_Mem mem)
+	static void lu_s_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
 	{
 		lu__assert(self);
 		lu__assert(mem);
 
-		lu_s_layer_base__deinit(&self->super, mem);
+		lu_s_layer_base__deinit(self, mem);
 
 		lu_mem__free(mem, (lu_p_byte) self);
 	}
