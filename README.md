@@ -29,7 +29,8 @@ Lu_Brain main features:
 
 ## FAQ
 
-Q: Why C?
+Q: **Why C?**
+
 A: In short, it is the best language for the job. Also, it can be gratifying if you are qualified enough to use it in larger projects.
 
 ## Legal
