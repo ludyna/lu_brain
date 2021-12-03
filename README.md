@@ -27,6 +27,11 @@ Lu_Brain main features:
 2. Pattern database with complete data transparency and ease of access
 3. Easy to use, well designed and architected, fast and bug-free, enjoyable to contribute software
 
+## FAQ
+
+Q: Why C?
+A: In short, it is the best language for the job. Also, it can be gratifying if you are qualified enough to use it in larger projects.
+
 ## Legal
 
 ___The library is free to use by everyone with good intentions (MIT_LICENSE).___
