@@ -146,6 +146,8 @@
 	{
 		lu__assert(self);
 
+		if (self->count == 0) return; // important because self->count is unsigned int
+
 		lu_size start = 0;
 		lu_size end = self->count - 1;
 

@@ -145,3 +145,33 @@ void test_arr_reverse_event_count(void)
 
     lu_arr__destroy(arr1);
 }
+
+void test_arr_reverse_zero_and_one(void)
+{
+    Lu_Arr arr1 = lu_arr__create(lu_g_mem, 5, true);
+    TEST_ASSERT(arr1);
+
+    lu_arr__reverse(arr1);
+
+    TEST_ASSERT(lu_arr__get(arr1, 0) == NULL);
+
+    int v0 = 11;
+
+    int* v = &v0;
+    TEST_ASSERT(*v == v0);
+
+    lu_arr__set(arr1, 0, (lu_p_void) &v0);
+
+    v = (int*) lu_arr__get(arr1, 0);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v0);
+
+
+    lu_arr__reverse(arr1);
+
+    v = (int*) lu_arr__get(arr1, 0);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v0);
+
+    lu_arr__destroy(arr1);
+}
