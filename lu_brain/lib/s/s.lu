@@ -43,6 +43,9 @@
 
 
 		lu_s__create_story_fractal(self->mem, NULL, self->apexes, self->frames, recs);
+
+		// IMPORTANT: reverse self->apexes
+		lu_arr__reverse(self->apexes);
 	
 		// we start apexes from frame, since 
 
@@ -170,8 +173,10 @@
 		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
 		lu__assert(slot);
 
-		if (p)
-			lu_s_layer_base__connect((Lu_S_Layer_Base) p, (Lu_S_Layer_Base) layer);
+		// if (p)
+		// {
+		// 	lu_s_layer_base__connect((Lu_S_Layer_Base) p, (Lu_S_Layer_Base) layer);
+		// }
 
 		lu_arr__append(apexes, (lu_p_void) slot);
 
@@ -192,12 +197,17 @@
 		Lu_Slot_One slot = lu_slot_one__create(mem, (lu_p_void) layer);
 		lu__assert(slot);
 
+
+		lu__debug("\n CONN \n");
 		if (p)
+		{
+			lu__debug("\n CONN 0 \n");
 			lu_s_layer_base__connect((Lu_S_Layer_Base) p, (Lu_S_Layer_Base) layer);
+		}
 
 		lu_arr__append(apexes, (lu_p_void) slot);
 
-		lu_s__create_event_fractal(mem, layer, apexes, frames, recs);
+		//lu_s__create_event_fractal(mem, layer, apexes, frames, recs);
 	}
 
 	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs)
@@ -290,12 +300,16 @@
 
 		if (layer->c)
 		{
+			lu__debug("\n11111111111\n");
+
 			if (layer->c->type == LU_ST_ONE)
 			{
+				lu__debug("\nONE\n");
 				Lu_Slot_One one = (Lu_Slot_One) layer->c;
 
 				if (one->item)
 				{
+					lu__debug("\nONE 2\n");
 					lu_s__destroy_fractal(mem, (Lu_S_Layer_Base) one->item);
 				}
 			}
@@ -324,6 +338,7 @@
 			}
 		}
 
+		lu__debug("\n222222222222\n");
 		layer->destroy(layer, mem);
 	}
 

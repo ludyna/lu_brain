@@ -50,3 +50,98 @@ void test_arr2(void)
 
     lu_arr__destroy(arr1);
 }
+
+void test_arr_reverse_odd_count(void)
+{
+    Lu_Arr arr1 = lu_arr__create(lu_g_mem, 5, true);
+    TEST_ASSERT(arr1);
+
+    int v0 = 11;
+    int v1 = 22;
+    int v2 = 33;
+    int v3 = 44;
+    int v4 = 55;
+
+    int* v = &v0;
+    TEST_ASSERT(*v == v0);
+
+    lu_arr__set(arr1, 0, (lu_p_void) &v0);
+
+    v = (int*) lu_arr__get(arr1, 0);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v0);
+
+    lu_arr__set(arr1, 1, (lu_p_void) &v1);
+    lu_arr__set(arr1, 2, (lu_p_void) &v2);
+    lu_arr__set(arr1, 3, (lu_p_void) &v3);
+    lu_arr__set(arr1, 4, (lu_p_void) &v4);
+
+    lu_arr__reverse(arr1);
+
+    v = (int*) lu_arr__get(arr1, 0);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v4);
+
+    v = (int*) lu_arr__get(arr1, 1);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v3);
+
+    v = (int*) lu_arr__get(arr1, 2);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v2);
+
+    v = (int*) lu_arr__get(arr1, 3);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v1);
+
+    v = (int*) lu_arr__get(arr1, 4);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v0);
+
+    lu_arr__destroy(arr1);
+}
+
+void test_arr_reverse_event_count(void)
+{
+    Lu_Arr arr1 = lu_arr__create(lu_g_mem, 5, true);
+    TEST_ASSERT(arr1);
+
+    int v0 = 11;
+    int v1 = 22;
+    int v2 = 33;
+    int v3 = 44;
+
+    int* v = &v0;
+    TEST_ASSERT(*v == v0);
+
+    lu_arr__set(arr1, 0, (lu_p_void) &v0);
+
+    v = (int*) lu_arr__get(arr1, 0);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v0);
+
+    lu_arr__set(arr1, 1, (lu_p_void) &v1);
+    lu_arr__set(arr1, 2, (lu_p_void) &v2);
+    lu_arr__set(arr1, 3, (lu_p_void) &v3);
+
+    lu_arr__reverse(arr1);
+
+    v = (int*) lu_arr__get(arr1, 0);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v3);
+
+    v = (int*) lu_arr__get(arr1, 1);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v2);
+
+    v = (int*) lu_arr__get(arr1, 2);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v1);
+
+    v = (int*) lu_arr__get(arr1, 3);
+    TEST_ASSERT(v);
+    TEST_ASSERT(*v == v0);
+
+
+    lu_arr__destroy(arr1);
+}

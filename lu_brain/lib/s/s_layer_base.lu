@@ -67,7 +67,7 @@
 		self->type = type;
 		self->level = level;
 		self->p = p;
-
+ 
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, children_count, true);
 		lu__assert(self->c);
 
@@ -106,15 +106,20 @@
 		Lu_Slot_One one;
 		Lu_Slot_Arr arr;
 
+		lu__debug("\n CONN 1 \n");
+
 		switch(p->c->type)
 		{
 			case LU_ST_ONE :
 				one = (Lu_Slot_One) p->c;
+				lu__debug("\n CONN 2 \n");
+				lu__assert(one->item == NULL);
 				one->item = (lu_p_void) c;
 				break;
 			case LU_ST_ARR :
 				arr = (Lu_Slot_Arr) p->c;
 				Lu_Arr items = arr->items;
+
 				lu__assert(items);
 				lu_arr__append(items, (lu_p_void) c);
 				break;

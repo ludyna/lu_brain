@@ -94,3 +94,5 @@
 	Lu_Arr lu_arr__merge(Lu_Arr self, Lu_Arr src);
 
 	lu_p_void lu_arr__find_first_1p(Lu_Arr self, lu_bool (*block)(lu_p_void item, lu_p_void p1), lu_p_void p1);
+
+	void lu_arr__reverse(Lu_Arr self);
