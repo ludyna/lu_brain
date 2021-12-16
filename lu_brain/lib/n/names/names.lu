@@ -12,7 +12,7 @@
 
 		self->mem = mem;
 		self->names_size = names_size;
-		self->hash = simple_hash_create(self->mem, self->names_size);
+		self->hash = lu_simple_hash__create(self->mem, self->names_size);
 		lu__assert(self->hash);
 
 		return self;
@@ -24,7 +24,7 @@
 		lu__assert(self->hash);
 		lu__assert(self->mem);
 
-		simple_hash_destroy(self->hash, self->mem);
+		lu_simple_hash__destroy(self->hash, self->mem);
 
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}

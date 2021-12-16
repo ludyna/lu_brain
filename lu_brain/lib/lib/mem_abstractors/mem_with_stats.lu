@@ -30,7 +30,7 @@
 		lu_size old_size = *((lu_size*)p - 1);
 
 		lu_size new_size = size_in_bytes + sizeof(lu_size);
-		lu_p_byte new_p = lu_mem_realloc(self->parent_mem, (lu_p_byte)((lu_size*)p - 1), new_size);
+		lu_p_byte new_p = lu_mem__realloc(self->parent_mem, (lu_p_byte)((lu_size*)p - 1), new_size);
 
 		if (!new_p) return new_p;
 

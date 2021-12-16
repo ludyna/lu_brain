@@ -11,5 +11,5 @@
 	typedef struct lu_list* 			Lu_List;
 	typedef struct lu_lim_list* 		Lu_Lim_List;
 
-	typedef struct lu_m_node* 			Lu_S_Node;
-	typedef struct lu_m_list* 			Lu_S_List;
+	typedef struct lu_s_node* 			Lu_S_Node;
+	typedef struct lu_s_list* 			Lu_S_List;

@@ -30,5 +30,5 @@ void test_mem_stack_1(void)
 
 	lu__user_assert_on();
 
-	lu_mem_destroy(mem, lu_g_mem);
+	lu_mem__destroy(mem, lu_g_mem);
 }

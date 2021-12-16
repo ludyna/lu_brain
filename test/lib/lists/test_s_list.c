@@ -60,22 +60,22 @@ void test_s_list1(void)
     neu_p_set(n5, 5.0);
 
     srand(time(NULL));
-    Lu_S_List list = s_list_create(mem, 10, neu_compare, S_LIST_FIRST);
+    Lu_S_List list = lu_s_list__create(mem, 10, neu_compare, LU_S_LST__FIRST);
 
-    s_list_add(list, n4);
+    lu_s_list__add(list, n4);
     TEST_ASSERT(((Neu)(list->first->value))->p == 4);
     TEST_ASSERT(list->last != NULL);
     TEST_ASSERT(((Neu)(list->last->value))->p == 4);
 
-    s_list_add(list, n3);
+    lu_s_list__add(list, n3);
     TEST_ASSERT(((Neu)(list->first->value))->p == 3);
     TEST_ASSERT(((Neu)(list->last->value))->p == 4);
 
-    s_list_add(list, n1);
-    s_list_add(list, n5);
-    s_list_add(list, n35);
-    s_list_add(list, n2);
-    s_list_add(list, n45);
+    lu_s_list__add(list, n1);
+    lu_s_list__add(list, n5);
+    lu_s_list__add(list, n35);
+    lu_s_list__add(list, n2);
+    lu_s_list__add(list, n45);
     TEST_ASSERT(((Neu)(list->first->value))->p == 1);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
     TEST_ASSERT(list->count == 7);
@@ -85,12 +85,12 @@ void test_s_list1(void)
     TEST_ASSERT(((Neu)(list->last->prev->prev->value))->p == 4.0);
     TEST_ASSERT(((Neu)(list->last->prev->prev->prev->value))->p == 3.5);
 
-    s_list_debug(list);
+    lu_s_list__debug(list);
 
     TEST_ASSERT(list->level_size == 3);
 
-    s_list_destroy(list);
-    lu_mem_destroy(mem, lu_g_mem);
+    lu_s_list__destroy(list);
+    lu_mem__destroy(mem, lu_g_mem);
 }
 
 void test_s_list_limited(void)
@@ -116,49 +116,49 @@ void test_s_list_limited(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    Lu_S_List list = s_list_create(mem, 2, neu_compare, S_LIST_FIRST);
+    Lu_S_List list = lu_s_list__create(mem, 2, neu_compare, LU_S_LST__FIRST);
 
-    s_list_add(list, n5);
+    lu_s_list__add(list, n5);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
 
-    s_list_add(list, n2);
+    lu_s_list__add(list, n2);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 2);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
 
-    s_list_add(list, n3);
+    lu_s_list__add(list, n3);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 3);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
 
-    s_list_add(list, n4);
+    lu_s_list__add(list, n4);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 4);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
 
-    s_list_add(list, n35);
+    lu_s_list__add(list, n35);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 4);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
 
-    s_list_add(list, n45);
+    lu_s_list__add(list, n45);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 4.5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
 
-    s_list_add(list, n6);
+    lu_s_list__add(list, n6);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 6);
     TEST_ASSERT(list->count == 2);
     TEST_ASSERT(list->limit_size == 2);
 
-    s_list_debug(list);
+    lu_s_list__debug(list);
 
-    s_list_destroy(list);
-    lu_mem_destroy(mem, lu_g_mem);
+    lu_s_list__destroy(list);
+    lu_mem__destroy(mem, lu_g_mem);
 }
 
 void test_s_list_limited_reverse(void)
@@ -184,49 +184,49 @@ void test_s_list_limited_reverse(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    Lu_S_List list = s_list_create(mem, 2, neu_compare_reverse, S_LIST_LAST);
+    Lu_S_List list = lu_s_list__create(mem, 2, neu_compare_reverse, LU_S_LST__LAST);
 
-    s_list_add(list, n5);
+    lu_s_list__add(list, n5);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
 
-    s_list_add(list, n2);
+    lu_s_list__add(list, n2);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 2);
 
-    s_list_add(list, n3);
+    lu_s_list__add(list, n3);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->first->next->value))->p == 3);
 
-    s_list_add(list, n4);
+    lu_s_list__add(list, n4);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 4);
 
-    s_list_add(list, n35);
+    lu_s_list__add(list, n35);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 4);
 
-    s_list_add(list, n45);
+    lu_s_list__add(list, n45);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 4.5);
 
-    s_list_add(list, n6);
+    lu_s_list__add(list, n6);
 
     TEST_ASSERT(((Neu)(list->first->value))->p == 6);
     TEST_ASSERT(((Neu)(list->last->value))->p == 5);
     TEST_ASSERT(list->count == 2);
     TEST_ASSERT(list->limit_size == 2);
 
-    s_list_debug(list);
+    lu_s_list__debug(list);
 
-    s_list_destroy(list);
-    lu_mem_destroy(mem, lu_g_mem);
+    lu_s_list__destroy(list);
+    lu_mem__destroy(mem, lu_g_mem);
 }
 
 void test_s_list_eq(void)
@@ -252,19 +252,19 @@ void test_s_list_eq(void)
     neu_p_set(n6, 6);
 
     srand(time(NULL));
-    Lu_S_List list = s_list_create(mem, 3, neu_compare_reverse, S_LIST_LAST);
+    Lu_S_List list = lu_s_list__create(mem, 3, neu_compare_reverse, LU_S_LST__LAST);
 
-    s_list_add(list, n5);
-    s_list_add(list, n2);
-    Lu_S_Node s1 = s_list_add(list, n22);
+    lu_s_list__add(list, n5);
+    lu_s_list__add(list, n2);
+    Lu_S_Node s1 = lu_s_list__add(list, n22);
 
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
-    TEST_ASSERT(lu_lim_list_count(&s1->values) == 1);
+    TEST_ASSERT(lu_lim_list__count(&s1->values) == 1);
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 2);
 
-    s_list_add(list, n3);
+    lu_s_list__add(list, n3);
 
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
@@ -272,18 +272,18 @@ void test_s_list_eq(void)
     TEST_ASSERT(((Neu)(list->first->next->value))->p == 3);
     TEST_ASSERT(((Neu)(list->last->value))->p == 2);
 
-    s1 = s_list_add(list, n33);
+    s1 = lu_s_list__add(list, n33);
 
-    TEST_ASSERT(lu_lim_list_count(&s1->values) == 1);
+    TEST_ASSERT(lu_lim_list__count(&s1->values) == 1);
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
     TEST_ASSERT(((Neu)(list->first->value))->p == 5);
     TEST_ASSERT(((Neu)(list->first->next->value))->p == 3);
     TEST_ASSERT(((Neu)(list->last->value))->p == 3);
 
-    s_list_add(list, n4);
-    s_list_add(list, n6);
-    s_list_add(list, n44);
+    lu_s_list__add(list, n4);
+    lu_s_list__add(list, n6);
+    lu_s_list__add(list, n44);
 
     TEST_ASSERT(list->count == 3);
     TEST_ASSERT(list->limit_size == 3);
@@ -291,8 +291,8 @@ void test_s_list_eq(void)
     TEST_ASSERT(((Neu)(list->first->next->value))->p == 5);
     TEST_ASSERT(((Neu)(list->last->value))->p == 4);
 
-    s_list_debug(list);
+    lu_s_list__debug(list);
 
-    s_list_destroy(list);
-    lu_mem_destroy(mem, lu_g_mem);
+    lu_s_list__destroy(list);
+    lu_mem__destroy(mem, lu_g_mem);
 }

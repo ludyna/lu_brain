@@ -5,17 +5,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Simple_Hash simple_hash_create(Lu_Mem mem, lu_size table_size)
+	Lu_Simple_Hash lu_simple_hash__create(Lu_Mem mem, lu_size table_size)
 	{
 		lu__user_assert(mem, "Lu_Mem is NULL");
 		lu__user_assert(table_size > 0, "table_size is 0");
 
-		Simple_Hash self = (Simple_Hash) lu_mem__alloc(mem, sizeof(struct simple_hash));
-		lu__user_assert(self, "Cannot allocate Simple_Hash");
+		Lu_Simple_Hash self = (Lu_Simple_Hash) lu_mem__alloc(mem, sizeof(struct lu_simple_hash));
+		lu__user_assert(self, "Cannot allocate Lu_Simple_Hash");
 
 		self->table_size = table_size;
 		self->table = (lu_p_void*) lu_mem__alloc(mem, sizeof(lu_p_void) * table_size);
-		lu__user_assert(self->table, "Cannot allocate Simple_Hash table");
+		lu__user_assert(self->table, "Cannot allocate Lu_Simple_Hash table");
 
 		for(lu_size i = 0; i < self->table_size; i++)
 		{
@@ -25,7 +25,7 @@
 		return self;
 	}
 
-	void simple_hash_destroy(Simple_Hash self, Lu_Mem mem)
+	void lu_simple_hash__destroy(Lu_Simple_Hash self, Lu_Mem mem)
 	{
 		lu_mem__free(mem, (lu_p_byte) self->table);
 		
@@ -35,16 +35,16 @@
 	}
 
 
-	void simple_hash_set(Simple_Hash self, lu_size key, lu_p_void value)
+	void lu_simple_hash__set(Lu_Simple_Hash self, lu_size key, lu_p_void value)
 	{
-		lu__user_assert_void(key < self->table_size, "Key is outside of Simple_Hash range");
+		lu__user_assert_void(key < self->table_size, "Key is outside of Lu_Simple_Hash range");
 
 		self->table[key] = value;
 	}
 
-	lu_p_void simple_hash_get(Simple_Hash self, lu_size key)
+	lu_p_void lu_simple_hash__get(Lu_Simple_Hash self, lu_size key)
 	{		
-		lu__user_assert(key < self->table_size, "Key is outside of Simple_Hash range");
+		lu__user_assert(key < self->table_size, "Key is outside of Lu_Simple_Hash range");
 
 		return self->table[key];
 	}

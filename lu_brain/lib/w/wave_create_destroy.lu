@@ -42,7 +42,7 @@
 		self->seq = lu_seq_create(mem, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
-		self->block_layers = lu_lim_list_create(mem, self->super.config.block_layers_size);
+		self->block_layers = lu_lim_list__create(mem, self->super.config.block_layers_size);
 		lu__assert(self->block_layers);
 
 		self->block_layers->node_before_destroy = lu_save_wave_block_layer_node_before_destroy;
@@ -97,9 +97,9 @@
 
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
 
-		lu_lim_list_clear(self->block_layers);
+		lu_lim_list__clear(self->block_layers);
 
-		lu_lim_list_destroy(self->block_layers);
+		lu_lim_list__destroy(self->block_layers);
 		lu_seq_destroy(self->seq);
 	}
 

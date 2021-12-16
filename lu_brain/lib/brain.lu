@@ -71,8 +71,8 @@
 		lu__user_assert_void(self->brain_mem, "Lu_Mem is NULL");
 
 		lu__debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
-		lu__debug("\nMemory allocated (bytes): %lu", lu_mem_preallocated(self->brain_mem));
-		lu__debug("\nMemory used (bytes): %lu", lu_mem_used(self->brain_mem));
+		lu__debug("\nMemory allocated (bytes): %lu", lu_mem__preallocated(self->brain_mem));
+		lu__debug("\nMemory used (bytes): %lu", lu_mem__used(self->brain_mem));
 
  		if (self->s)
  			lu_s__print_info(self->s);

@@ -112,7 +112,7 @@
 
 		self->size = new_size;
 
-		self->items = (lu_p_void*) lu_mem_realloc(self->mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
+		self->items = (lu_p_void*) lu_mem__realloc(self->mem, (lu_p_byte) self->items, sizeof(lu_p_void) * self->size);
 		lu__assert(self->items != NULL);
 	}
 

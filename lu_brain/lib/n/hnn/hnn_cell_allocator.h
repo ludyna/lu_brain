@@ -56,7 +56,7 @@
 		lu__assert(self);
 		lu__assert(cell);
 
-		return lu_mem_table_record_shift(self->mt_cell_0, (lu_p_byte) cell);
+		return lu_mem_table__record_shift(self->mt_cell_0, (lu_p_byte) cell);
 	}
 
 	static inline lu_size hnn_cell_shift_1(Hnn_Cell_Allocator self, Hnn_Cell_0 cell)
@@ -64,7 +64,7 @@
 		lu__assert(self);
 		lu__assert(cell);
 
-		return lu_mem_table_record_shift(self->mt_cell_1, (lu_p_byte) cell);
+		return lu_mem_table__record_shift(self->mt_cell_1, (lu_p_byte) cell);
 	}
 
 	static inline lu_size hnn_cell_shift_2(Hnn_Cell_Allocator self, Hnn_Cell_2 cell)
@@ -72,7 +72,7 @@
 		lu__assert(self);
 		lu__assert(cell);
 
-		return lu_mem_table_record_shift(self->mt_cell_2, (lu_p_byte) cell);
+		return lu_mem_table__record_shift(self->mt_cell_2, (lu_p_byte) cell);
 	}
 
 	static inline lu_size hnn_cell_shift_3(Hnn_Cell_Allocator self, Hnn_Cell_3 cell)
@@ -80,7 +80,7 @@
 		lu__assert(self);
 		lu__assert(cell);
 
-		return lu_mem_table_record_shift(self->mt_cell_3, (lu_p_byte) cell);
+		return lu_mem_table__record_shift(self->mt_cell_3, (lu_p_byte) cell);
 	}
 
 	static inline lu_size hnn_cell_shift_4(Hnn_Cell_Allocator self, Hnn_Cell_4 cell)
@@ -88,7 +88,7 @@
 		lu__assert(self);
 		lu__assert(cell);
 
-		return lu_mem_table_record_shift(self->mt_cell_4, (lu_p_byte) cell);
+		return lu_mem_table__record_shift(self->mt_cell_4, (lu_p_byte) cell);
 	}
 
 	static inline lu_size hnn_cell_shift(Hnn_Cell_Allocator self, Hnn_Cell_0 cell)

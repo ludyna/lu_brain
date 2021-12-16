@@ -84,7 +84,7 @@ void test_list1(void)
     TEST_ASSERT(list->last == NULL);
 
     lu_list__destroy(list);
-    lu_mem_destroy(mem, lu_g_mem);
+    lu_mem__destroy(mem, lu_g_mem);
 }
 
 void test_list_fast_ma(void)
@@ -117,5 +117,5 @@ void test_list_fast_ma(void)
     TEST_ASSERT(list->count == 3);
 
     lu_list__destroy(list);
-    lu_mem_destroy(mem, lu_g_mem);
+    lu_mem__destroy(mem, lu_g_mem);
 }

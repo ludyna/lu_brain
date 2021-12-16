@@ -41,8 +41,8 @@
  		lu__user_assert_void(self, "Lu_N is NULL");
 
  		// lu__debug("\n\n-- Lu_N info: ");
- 		// lu__debug("\n 	cells size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells));
- 		// lu__debug("\n 	lins size (bytes): %lu", lu_mem_table_size_in_bytes(self->lins));
- 		// lu__debug("\n 	cells_2 size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells_2));
- 		// lu__debug("\n 	cells_3 size (bytes): %lu", lu_mem_table_size_in_bytes(self->cells_3));
+ 		// lu__debug("\n 	cells size (bytes): %lu", lu_mem_table__size_in_bytes(self->cells));
+ 		// lu__debug("\n 	lins size (bytes): %lu", lu_mem_table__size_in_bytes(self->lins));
+ 		// lu__debug("\n 	cells_2 size (bytes): %lu", lu_mem_table__size_in_bytes(self->cells_2));
+ 		// lu__debug("\n 	cells_3 size (bytes): %lu", lu_mem_table__size_in_bytes(self->cells_3));
  	}

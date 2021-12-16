@@ -8,16 +8,16 @@
 	extern Lu_Mem lu_g_mem;
 
 	// Alloc, realloc and free
-	#define lu_g_mem_alloc(size) lu_g_mem->alloc(lu_g_mem, size, __func__, __FILE__, __LINE__)
-	#define lu_g_mem_realloc(p, size) lu_g_mem->realloc(lu_g_mem, p, size, __func__, __FILE__, __LINE__)
-	#define lu_g_mem_free(p) lu_g_mem->free(lu_g_mem, p, __func__, __FILE__, __LINE__)
+	#define lu_g_mem__alloc(size) lu_g_mem->alloc(lu_g_mem, size, __func__, __FILE__, __LINE__)
+	#define lu_g_mem__realloc(p, size) lu_g_mem->realloc(lu_g_mem, p, size, __func__, __FILE__, __LINE__)
+	#define lu_g_mem__free(p) lu_g_mem->free(lu_g_mem, p, __func__, __FILE__, __LINE__)
 
 	// Memory stats
-	#define lu_g_mem_preallocated(mem) 0
-	#define lu_g_mem_used(mem) 0
+	#define lu_g_mem__preallocated(mem) 0
+	#define lu_g_mem__used(mem) 0
 
 	// Memory tables
-	#define lu_g_mem_table_create(r_size, t_size, p, f) lu_g_mem->table_create(lu_g_mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
+	#define lu_g_mem_table__create(r_size, t_size, p, f) lu_g_mem->table_create(lu_g_mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -71,18 +71,18 @@
 
 	// Alloc, realloc and free
 	#define lu_mem__alloc(mem, size) mem->alloc(mem, size, __func__, __FILE__, __LINE__)
-	#define lu_mem_realloc(mem, p, size) mem->realloc(mem, p, size, __func__, __FILE__, __LINE__)
+	#define lu_mem__realloc(mem, p, size) mem->realloc(mem, p, size, __func__, __FILE__, __LINE__)
 	#define lu_mem__free(mem, p) mem->free(mem, p, __func__, __FILE__, __LINE__)
 
 	// Destroy memory
-	#define lu_mem_destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __func__, __FILE__, __LINE__)
+	#define lu_mem__destroy(mem, parent_mem) mem->destroy(mem, parent_mem, __func__, __FILE__, __LINE__)
 
 	// Memory stats
-	#define lu_mem_preallocated(mem) mem->preallocated(mem)
-	#define lu_mem_used(mem) mem->used(mem)
+	#define lu_mem__preallocated(mem) mem->preallocated(mem)
+	#define lu_mem__used(mem) mem->used(mem)
 
 	// Memory tables
-	#define lu_mem_table_create(mem, r_size, t_size, p, f) mem->table_create(mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
+	#define lu_mem_table__create(mem, r_size, t_size, p, f) mem->table_create(mem, r_size, t_size, p, f, __func__, __FILE__, __LINE__)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Table
@@ -118,22 +118,22 @@
 	};
 
 	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
-	#define lu_mem_table_reset(mt) mt->reset(mt, __func__, __FILE__, __LINE__)
-	#define lu_mem_table_realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
-	#define lu_mem_table_destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
+	#define lu_mem_table__reset(mt) mt->reset(mt, __func__, __FILE__, __LINE__)
+	#define lu_mem_table__realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
+	#define lu_mem_table__destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
 
-	#define lu_mem_record_alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
-	#define lu_mem_record_free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 
+	#define lu_mem_record__alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
+	#define lu_mem_record__free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 
 
-	#define lu_mem_table_size_in_bytes(mt) mt->size_in_bytes(mt)
-	#define lu_mem_table_mem_get(mt) mt->mem_get(mt)
+	#define lu_mem_table__size_in_bytes(mt) mt->size_in_bytes(mt)
+	#define lu_mem_table__mem_get(mt) mt->mem_get(mt)
 
-	static inline lu_p_byte lu_mem_table_get(Lu_Mem_Table self, lu_size index)
+	static inline lu_p_byte lu_mem_table__get(Lu_Mem_Table self, lu_size index)
 	{
 		return (self->records_start + index * self->record_size_in_bytes); 
 	} 
 
-	static inline lu_size lu_mem_table_record_shift(Lu_Mem_Table self, lu_p_byte record_addr)
+	static inline lu_size lu_mem_table__record_shift(Lu_Mem_Table self, lu_p_byte record_addr)
 	{
 		lu__assert(self);
 		lu__assert(record_addr);

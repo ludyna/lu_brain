@@ -103,7 +103,7 @@
 		// own
 		self->mem_stack 				= mem_stack;
 
-		lu_mem_table_reset(((Lu_Mem_Table) self));
+		lu_mem_table__reset(((Lu_Mem_Table) self));
 
 		return self;
 	}

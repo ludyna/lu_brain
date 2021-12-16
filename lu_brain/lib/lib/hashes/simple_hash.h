@@ -5,20 +5,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Typedefs
 
-	typedef struct simple_hash* 		Simple_Hash;
+	typedef struct lu_simple_hash* 		Lu_Simple_Hash;
 
 ///////////////////////////////////////////////////////////////////////////////
-// Very Simple_Hash
+// Very Lu_Simple_Hash
 
 	// extremely simple, might be updated later
-	struct simple_hash {
+	struct lu_simple_hash {
 		lu_p_void* 		table;
 		lu_size 		table_size;
 	};
 
-	Simple_Hash simple_hash_create(Lu_Mem mem, lu_size size);
-	void simple_hash_destroy(Simple_Hash self, Lu_Mem mem);
+	Lu_Simple_Hash lu_simple_hash__create(Lu_Mem mem, lu_size size);
+	void lu_simple_hash__destroy(Lu_Simple_Hash self, Lu_Mem mem);
 
-	void simple_hash_set(Simple_Hash self, lu_size key, lu_p_void value);
-	lu_p_void simple_hash_get(Simple_Hash self, lu_size key);
+	void lu_simple_hash__set(Lu_Simple_Hash self, lu_size key, lu_p_void value);
+	lu_p_void lu_simple_hash__get(Lu_Simple_Hash self, lu_size key);
 

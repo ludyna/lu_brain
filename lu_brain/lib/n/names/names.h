@@ -8,7 +8,7 @@
 	struct names_list {
 		Lu_Mem mem;
 		lu_size names_size;
-		Simple_Hash	hash;
+		Lu_Simple_Hash	hash;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

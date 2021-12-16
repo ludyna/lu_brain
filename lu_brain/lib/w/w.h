@@ -126,7 +126,7 @@
 
 		Lu_Lim_List block_layers;
 
-		// max size is lu_lim_list_size(self->block_layers)
+		// max size is lu_lim_list__size(self->block_layers)
 		struct lu_layer* block_layer_layers; // !!! WRONG
 	};
 
