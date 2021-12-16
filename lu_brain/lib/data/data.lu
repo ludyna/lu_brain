@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create, destroy
 
-	static Lu_Data lu_data_create_via_deep_copy_internal(Lu_Mem mem, Lu_Data src, const char* func, const char* file, int line)
+	static Lu_Data lu_data__create_via_deep_copy_internal(Lu_Mem mem, Lu_Data src, const char* func, const char* file, int line)
 	{
 		lu__assert(mem);
-		lu_data_validate_exists(src);
+		lu_data__validate_exists(src);
 
 		Lu_Data self = (Lu_Data) mem->alloc(mem, sizeof(struct lu_data), func, file, line);
 		lu__assert(self);
@@ -24,15 +24,15 @@
 		for(z = 0; z < src->d; z++)
 			for (y = 0; y < src->h; y++)
 				for(x = 0; x < src->w; x++)
-					lu_data_value_set(self, x, y, z, lu_data_value_get(src, x, y, z));
+					lu_data__value_set(self, x, y, z, lu_data__value_get(src, x, y, z));
 
 		return self;
 	}
 
-	Lu_Data lu_data_create_via_shift_internal(Lu_Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line) 
+	Lu_Data lu_data__create_via_shift_internal(Lu_Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line) 
 	{
 		lu__assert(mem);
-		lu_data_validate_exists(src);
+		lu_data__validate_exists(src);
 
 		lu_int w = (lu_int) src->w;
 		lu_int h = (lu_int) src->h;
@@ -85,13 +85,13 @@
 					lu__assert(ty >= 0);
 					lu__assert(ty < self->h);
 
-					lu_data_value_set(self, tx, ty, z, lu_data_value_get(src, sx, sy, z));
+					lu_data__value_set(self, tx, ty, z, lu_data__value_get(src, sx, sy, z));
 				}
 			
 		return self;
 	}
 
-	void lu_data_destroy(Lu_Data self, Lu_Mem mem)
+	void lu_data__destroy(Lu_Data self, Lu_Mem mem)
 	{
 		lu__assert(self);
 		lu__assert(mem);
@@ -109,7 +109,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Debug
 
-	void lu_data_debug(Lu_Data self)
+	void lu_data__debug(Lu_Data self)
 	{
 		lu__assert(self);
 
@@ -129,7 +129,7 @@
 					lu__debug("\n\t");
 					for (x = 0; x < self->w; x++)
 					{
-						lu__debug("%.2f, ", lu_data_value_get(self, x, y, z));
+						lu__debug("%.2f, ", lu_data__value_get(self, x, y, z));
 					}
 				}
 		}

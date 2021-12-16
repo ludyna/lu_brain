@@ -26,7 +26,7 @@
 		int line
 	)
 	{
-		lu_debug_message("NOT IMPLEMENTED");
+		lu__debug_message("NOT IMPLEMENTED");
 	}
 
 	void lu_mem_table_destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line)

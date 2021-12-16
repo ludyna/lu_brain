@@ -5,6 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Name name_create();
-	static void name_destroy(Name self);
+	static Name name__create();
+	static void name__destroy(Name self);
 

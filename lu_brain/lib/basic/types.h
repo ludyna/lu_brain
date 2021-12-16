@@ -10,12 +10,12 @@
 #define lu_p_byte uint8_t*
 
 #define lu_time unsigned long
-#define LU_TIME_MAX ULONG_MAX
+#define LU__TIME_MAX ULONG_MAX
 
 #define lu_value_round round 
 #define lu_value_abs fabs
-#define LU_VALUE_MIN DBL_MIN
-#define LU_VALUE_MAX DBL_MAX
+#define LU__VALUE_MIN DBL_MIN
+#define LU__VALUE_MAX DBL_MAX
 
 struct lu_size_range {
 	lu_size begin;

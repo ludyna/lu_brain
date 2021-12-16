@@ -2,7 +2,7 @@
 	Copyright © 2021 Oleh Ihorovych Novosad 
 */
 
-lu_bool g_user_assert = LU_USER_ASSERT_DEFAULT;
+lu_bool g_user_assert = LU__USER_ASSERT_DEFAULT;
 
 void lu__throw_internal(enum lu_e e, const char* file, int line)
 {

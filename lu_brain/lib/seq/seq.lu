@@ -218,12 +218,12 @@
 				{
 					d2 = lu_seq_first_non_null_data(self, rec_i);
 					if (d2 == NULL) break; 	// nema danyh dlia rec_i vzahali
-					lu_data_shallow_copy(d1, d2);
+					lu_data__shallow_copy(d1, d2);
 				}
 				else
 				{
 					d2 = lu_seq_data_get(self, rec_i, lu_l_node__prev(curr));
-					lu_data_shallow_copy(d1, d2);
+					lu_data__shallow_copy(d1, d2);
 				}
 
 				end:

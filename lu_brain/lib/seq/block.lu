@@ -21,7 +21,7 @@
  		for(lu_size i = 0; i < self->datum_size; i++)
  		{
  			data = &self->datum[i];
- 			lu_data_init_default(data);
+ 			lu_data__init_default(data);
  		}
 
 		return self;

@@ -11,24 +11,24 @@
 #define lu_catch Catch
 
 // entity NULL
-#define ENT_NULL 0
+#define LU__ENT_NULL 0
 
 // Exceptions list
 enum lu_e {
-	LU_E_FIRST = 6000, 
+	LU_E__FIRST = 6000, 
 	
 	// Lu_Mem 
-	LU_E_MEM_ALLOC_FAIL, 
+	LU_E__MEM_ALLOC_FAIL, 
 
 	// Brain
-	LU_E_BRAIN_OPTS_REQUIRED, 
-	LU_E_BRAIN_RECS_REQUIRED, 
+	LU_E__BRAIN_OPTS_REQUIRED, 
+	LU_E__BRAIN_RECS_REQUIRED, 
 
-	LU_E_LAST
+	LU_E__LAST
 };
 
-#ifndef LU_USER_ASSERT_DEFAULT
-#define LU_USER_ASSERT_DEFAULT 1
+#ifndef LU__USER_ASSERT_DEFAULT
+#define LU__USER_ASSERT_DEFAULT 1
 #endif 
 
 extern lu_bool g_user_assert;
@@ -50,7 +50,7 @@ void* lu__user_debug_args_internal(const char* func, const char* file, int line,
 
 #define lu__user_assert(exp, msg) if(!(exp)) return g_user_assert ? lu__user_debug(msg) : NULL;
 #define lu__user_assert_void(exp, msg) if(!(exp)) { if (g_user_assert) lu__user_debug(msg); return; }
-#define lu__user_assert_ent(exp, msg) if(!(exp)) { if (g_user_assert) lu__user_debug(msg); return ENT_NULL; }
+#define lu__user_assert_ent(exp, msg) if(!(exp)) { if (g_user_assert) lu__user_debug(msg); return LU__ENT_NULL; }
 #define lu__user_assert_ext(exp, msg, func, file, line) if(!(exp)) return g_user_assert ? lu__user_debug_internal(func, file, line, msg) : NULL;
 #define lu__user_assert_void_ext(exp, msg, func, file, line) if(!(exp)) { if (g_user_assert) lu__user_debug_internal(func, file, line, msg); return; }
 #define lu__user_assert_ent_ext(exp, msg, func, file, line) if(!(exp)) { if (g_user_assert) lu__user_debug_internal(func, file, line, msg); return EXT_NULL; }

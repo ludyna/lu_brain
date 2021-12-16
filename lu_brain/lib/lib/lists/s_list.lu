@@ -225,7 +225,7 @@ void s_list_debug(Lu_S_List self)
 	Lu_S_Node curr;
 
 	lu_size i = self->level_size - 1;
-	lu_debug_message("======= SLIST ======");
+	lu__debug_message("======= SLIST ======");
 	while (head)
 	{
 		lu__debug("\n%ld:  ", i);

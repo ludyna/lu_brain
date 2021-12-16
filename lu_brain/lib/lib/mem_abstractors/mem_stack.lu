@@ -36,13 +36,13 @@
 
 	lu_p_byte lu_mem_stack_realloc_internal(Lu_Mem self, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
-		lu_debug_message_internal(file, line, "MEM PERM REALLOC NOT IMPLEMENTED");
+		lu__debug_message_internal(file, line, "MEM PERM REALLOC NOT IMPLEMENTED");
 		return NULL;
 	}
 
 	void lu_mem_stack_free_internal(Lu_Mem self, lu_p_byte p, const char* func, const char* file, int line)
 	{
-		lu_debug_message_internal(file, line, "MEM PERM FREE NOT IMPLEMENTED");
+		lu__debug_message_internal(file, line, "MEM PERM FREE NOT IMPLEMENTED");
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

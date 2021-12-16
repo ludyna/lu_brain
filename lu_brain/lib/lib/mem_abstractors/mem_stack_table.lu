@@ -31,7 +31,7 @@
 		int line
 	)
 	{
-		lu_debug_message("NOT IMPLEMENTED");
+		lu__debug_message("NOT IMPLEMENTED");
 	}
 
 	Lu_Mem lu_mem_stack_table_mem_get(Lu_Mem_Table self)

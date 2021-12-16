@@ -94,7 +94,7 @@
 	{
 		if (address == NULL) 
 		{
-			lu_debug_message_internal(file, line, "\nMem_Debugger: Alloc failed!");
+			lu__debug_message_internal(file, line, "\nMem_Debugger: Alloc failed!");
 			return;
 		} 
 
@@ -153,7 +153,7 @@
 	{
 		if (address == NULL) 
 		{
-			lu_debug_message_internal(file, line, "\nMem_Debugger: Realloc failed!");
+			lu__debug_message_internal(file, line, "\nMem_Debugger: Realloc failed!");
 			return;
 		} 
 
@@ -165,7 +165,7 @@
 	{
 		if (address == NULL) 
 		{
-			lu_debug_message_internal(file, line, "\nMem_Debugger: Trying to free NULL!");
+			lu__debug_message_internal(file, line, "\nMem_Debugger: Trying to free NULL!");
 			return;
 		}
 
@@ -181,7 +181,7 @@
 
 		if (item == NULL)
 		{
-			lu_debug_message_internal(file, line, "\nMem_Debugger: Double free?! Seems pointer was already freed.");
+			lu__debug_message_internal(file, line, "\nMem_Debugger: Double free?! Seems pointer was already freed.");
 			return;
 		} 
 
@@ -199,7 +199,7 @@
 
 			if (item == NULL)
 			{
-				lu_debug_message_internal(file, line, "\nMem_Debugger: Double free?! Seems pointer was already freed.");
+				lu__debug_message_internal(file, line, "\nMem_Debugger: Double free?! Seems pointer was already freed.");
 				return;
 			}
 		}

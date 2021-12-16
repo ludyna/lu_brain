@@ -30,39 +30,39 @@ void tearDown(void)
 
 void test_lu_data_create_via_shift(void)
 {
-	Lu_Data data_1 = lu_data_create_via_shift(lu_g_mem, &data_0, -1, 0);
+	Lu_Data data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, -1, 0);
 
-	// lu_data_debug(data_1);
+	// lu_data__debug(data_1);
 
-	TEST_ASSERT(lu_data_value_get(data_1, 0, 0, 0) == 1);
-	TEST_ASSERT(lu_data_value_get(data_1, 1, 1, 0) == 4);
+	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 1);
+	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 4);
 
-	lu_data_destroy(data_1, lu_g_mem);
+	lu_data__destroy(data_1, lu_g_mem);
 
-	data_1 = lu_data_create_via_shift(lu_g_mem, &data_0, 1, 0);
+	data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, 1, 0);
 
-	// lu_data_debug(data_1);
+	// lu_data__debug(data_1);
 
-	TEST_ASSERT(lu_data_value_get(data_1, 0, 0, 0) == 2);
-	TEST_ASSERT(lu_data_value_get(data_1, 1, 1, 0) == 6);
+	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 2);
+	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 6);
 
-	lu_data_destroy(data_1, lu_g_mem);
+	lu_data__destroy(data_1, lu_g_mem);
 
-	data_1 = lu_data_create_via_shift(lu_g_mem, &data_0, 0, -1);
+	data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, 0, -1);
 
-	// lu_data_debug(data_1);
+	// lu_data__debug(data_1);
 
-	TEST_ASSERT(lu_data_value_get(data_1, 0, 0, 0) == 1);
-	TEST_ASSERT(lu_data_value_get(data_1, 1, 1, 0) == 2);
+	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 1);
+	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 2);
 
-	lu_data_destroy(data_1, lu_g_mem);
+	lu_data__destroy(data_1, lu_g_mem);
 
-	data_1 = lu_data_create_via_shift(lu_g_mem, &data_0, 1, 1);
+	data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, 1, 1);
 
-	// lu_data_debug(data_1);
+	// lu_data__debug(data_1);
 
-	TEST_ASSERT(lu_data_value_get(data_1, 0, 0, 0) == 5);
-	TEST_ASSERT(lu_data_value_get(data_1, 1, 1, 0) == 9);
+	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 5);
+	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 9);
 
-	lu_data_destroy(data_1, lu_g_mem);
+	lu_data__destroy(data_1, lu_g_mem);
 }
