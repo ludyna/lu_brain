@@ -8,7 +8,7 @@
 	struct lu_n_config {
 		lu_size names_size;
 
-		struct hnn_config hnn_config;
+		struct lu_hnn_config hnn_config;
 	};
 
 	static inline Lu_N_Config lu_n_mem_config_validate(Lu_N_Config self)

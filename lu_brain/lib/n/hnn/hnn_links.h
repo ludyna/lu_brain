@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	struct hnn_links {
+	struct lu_hnn_links {
 		Lu_Mem mem;
 		Hnn_Table table_1;
 		Hnn_Table table_2;

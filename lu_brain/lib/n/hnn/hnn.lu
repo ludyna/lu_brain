@@ -5,11 +5,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Hnn hnn_create(Lu_Mem mem, struct hnn_config config)
+	Hnn hnn_create(Lu_Mem mem, struct lu_hnn_config config)
 	{
 		lu__assert(mem);
 
-		Hnn self = (Hnn) lu_mem__alloc(mem, sizeof(struct hnn));
+		Hnn self = (Hnn) lu_mem__alloc(mem, sizeof(struct lu_hnn));
 		lu__assert(self);
 
 		self->mem = mem;

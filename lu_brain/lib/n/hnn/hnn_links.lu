@@ -9,7 +9,7 @@
 	{
 		lu__assert(mem);
 
-		Hnn_Links self = (Hnn_Links) lu_mem__alloc(mem, sizeof(struct hnn_links));
+		Hnn_Links self = (Hnn_Links) lu_mem__alloc(mem, sizeof(struct lu_hnn_links));
 		lu__assert(self);
 
 		self->mem = mem;

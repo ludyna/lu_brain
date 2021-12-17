@@ -5,14 +5,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Table_Node
 
-	struct hnn_table_node {
+	struct lu_hnn_table_node {
 		Hnn_Table_Node prev;
 		Hnn_Cell_0 cell;
 	};
 
 	static inline Hnn_Table_Node hnn_table_node_create(Lu_Mem mem, Hnn_Cell_0 cell, Hnn_Table_Node prev)
 	{
-		Hnn_Table_Node self = (Hnn_Table_Node) lu_mem__alloc(mem, sizeof(struct hnn_table_node));
+		Hnn_Table_Node self = (Hnn_Table_Node) lu_mem__alloc(mem, sizeof(struct lu_hnn_table_node));
 
 		self->prev = prev;
 		self->cell = cell;
@@ -26,7 +26,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Table 
 
-	struct hnn_table {
+	struct lu_hnn_table {
 		Lu_Mem mem;
 		Hnn_Table_Node* units; // unit might contain more than one node
 		lu_size size_in_cells;

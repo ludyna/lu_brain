@@ -14,7 +14,7 @@
 		HNN_CT_4
 	};
 
-	struct hnn_cell_0 {
+	struct lu_hnn_cell_0 {
 		lu_byte type;
 	};
 	
@@ -29,8 +29,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_Value
 
-	struct hnn_cell_value {
-		struct hnn_cell_0 super;
+	struct lu_hnn_cell_value {
+		struct lu_hnn_cell_0 super;
 
 		lu_value value;
 	};
@@ -38,8 +38,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_1
 
-	struct hnn_cell_1 {
-		struct hnn_cell_0 super;
+	struct lu_hnn_cell_1 {
+		struct lu_hnn_cell_0 super;
 
 		Hnn_Cell_0 top_left;
 	};
@@ -56,8 +56,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_2
 
-	struct hnn_cell_2 {
-		struct hnn_cell_1 super;
+	struct lu_hnn_cell_2 {
+		struct lu_hnn_cell_1 super;
 
 		Hnn_Cell_0 top_right;
 	};
@@ -74,8 +74,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_3
 
-	struct hnn_cell_3 {
-		struct hnn_cell_2 super;
+	struct lu_hnn_cell_3 {
+		struct lu_hnn_cell_2 super;
 
 		Hnn_Cell_0 bottom_left;
 	};
@@ -92,8 +92,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Hnn_Cell_4
 
-	struct hnn_cell_4 {
-		struct hnn_cell_3 super;
+	struct lu_hnn_cell_4 {
+		struct lu_hnn_cell_3 super;
 
 		Hnn_Cell_0 bottom_right;
 	}; 

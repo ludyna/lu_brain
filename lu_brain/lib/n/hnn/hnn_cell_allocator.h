@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	struct hnn_cell_allocator {
+	struct lu_hnn_cell_allocator {
 
 		Lu_Mem mem;
 		Lu_Mem_Table 	mt_cell_0;

@@ -33,7 +33,7 @@
 		if (size_in_cells == 0)
 			return NULL;
 
-		Hnn_Table self = (Hnn_Table) lu_mem__alloc(mem, sizeof(struct hnn_table));
+		Hnn_Table self = (Hnn_Table) lu_mem__alloc(mem, sizeof(struct lu_hnn_table));
 		lu__assert(self);
 
 		self->mem = mem;
