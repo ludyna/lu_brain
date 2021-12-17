@@ -57,7 +57,7 @@
 				rec = (Lu_Rec) lu_arr__get(self->recs, i);
 
 				if (rec)
-					lu_rec_destroy(rec, self->brain_mem);
+					lu_rec__destroy(rec, self->brain_mem);
 			}
 
 		lu_arr__destroy(self->recs);

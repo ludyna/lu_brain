@@ -7,9 +7,9 @@
 
 	
 	enum lu_wave_type {
-		LU_WAVE_TYPE_SAVE,
-		LU_WAVE_TYPE_FIND,
-		LU_WAVE_TYPE_RESTORE
+		LU_WAVE_TYPE__SAVE,
+		LU_WAVE_TYPE__FIND,
+		LU_WAVE_TYPE__RESTORE
 	};
 
 	//
@@ -41,7 +41,7 @@
 		void (*process)(Lu_Wave);
 	};
 
-	static inline Lu_Wave lu_wave_init(
+	static inline Lu_Wave lu_wave__init(
 		Lu_Wave self, 
 		enum lu_wave_type type, 
 		lu_size id, 
@@ -66,9 +66,9 @@
 		self->process = NULL;
 	}
 
-	static inline lu_bool lu_wave_is_save(Lu_Wave self) { return self->type == LU_WAVE_TYPE_SAVE; }
-	static inline lu_bool lu_wave_is_find(Lu_Wave self) { return self->type == LU_WAVE_TYPE_FIND; }
-	static inline lu_bool lu_wave_is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE_RESTORE; }
+	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE_TYPE__SAVE; }
+	static inline lu_bool lu_wave__is_find(Lu_Wave self) { return self->type == LU_WAVE_TYPE__FIND; }
+	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE__RESTORE; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Seq_Rg
@@ -86,8 +86,8 @@
 		Lu_Cell* cells;
 	};
 
-	static Lu_Layer lu_layer_create(Lu_Mem mem);
-	static void lu_layer_destroy(Lu_Layer self, Lu_Mem mem);
+	static Lu_Layer lu_layer__create(Lu_Mem mem);
+	static void lu_layer__destroy(Lu_Layer self, Lu_Mem mem);
 
 	struct lu_rec_rg {
 
@@ -96,8 +96,8 @@
 		struct lu_layer* pyralu_m_layers;
 	};
 
-	static Lu_Rec_Rg lu_block_rec_layer_create(Lu_Mem mem);
-	static void lu_block_rec_layer_destroy(Lu_Rec_Rg self, Lu_Mem mem);
+	static Lu_Rec_Rg lu_rec_rg__create(Lu_Mem mem);
+	static void lu_rec_rg__destroy(Lu_Rec_Rg self, Lu_Mem mem);
 
 	struct lu_seq_rg {
 		Lu_Mem mem;
@@ -113,8 +113,8 @@
 		Lu_Cell cell; // resulting block_layer cell	
 	};
 
-	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_S s);
-	static void lu_seq_rg_destroy(Lu_Seq_Rg self);
+	static Lu_Seq_Rg lu_seq_rg__create(Lu_Mem mem, Lu_S s);
+	static void lu_seq_rg__destroy(Lu_Seq_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Block lu_block_create(Lu_Mem mem, lu_size recs_size)
+	static Lu_Block lu_block__create(Lu_Mem mem, lu_size recs_size)
 	{	
 		lu__assert(mem);
 		lu__assert(recs_size > 0);
@@ -27,7 +27,7 @@
 		return self;
 	}
 
-	static void lu_block_destroy(Lu_Block self)
+	static void lu_block__destroy(Lu_Block self)
 	{
 		lu__assert(self);
 

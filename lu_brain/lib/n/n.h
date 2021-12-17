@@ -11,7 +11,7 @@
 		struct lu_hnn_config hnn_config;
 	};
 
-	static inline Lu_N_Config lu_n_mem_config_validate(Lu_N_Config self)
+	static inline Lu_N_Config lu_n_config__validate(Lu_N_Config self)
 	{
 		lu__assert(self);
 		lu__assert(self->names_size > 0);

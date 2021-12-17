@@ -6,8 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config
 
- 	static Lu_Wave_Config lu_wave_config_init(Lu_Wave_Config self);
- 	static inline lu_bool lu_wave_config_is_set(Lu_Wave_Config self) { return self->flags != 0; }
+ 	static Lu_Wave_Config lu_wave_config__init(Lu_Wave_Config self);
+ 	static inline lu_bool lu_wave_config__is_set(Lu_Wave_Config self) { return self->flags != 0; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config Predefined 

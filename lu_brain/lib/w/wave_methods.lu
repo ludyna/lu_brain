@@ -38,10 +38,10 @@
 	static void lu_save_wave_block_begin_virtual(Lu_Wave self)
 	{
 		lu__assert(self);
-		lu__assert(lu_wave_is_save(self));
+		lu__assert(lu_wave__is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_seq_block_begin(save_wave->seq);
+		lu_seq__block_begin(save_wave->seq);
 	} 
 
 	static void lu_find_wave_block_begin_virtual(Lu_Wave self)
@@ -69,10 +69,10 @@
 	static void lu_save_wave_block_end_virtual(Lu_Wave self)
 	{
 		lu__assert(self);
-		lu__assert(lu_wave_is_save(self));
+		lu__assert(lu_wave__is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_seq_block_end(save_wave->seq);
+		lu_seq__block_end(save_wave->seq);
 	} 
 
 	static void lu_find_wave_block_end_virtual(Lu_Wave self)
@@ -102,10 +102,10 @@
 	static void lu_save_wave_push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)
 	{
 		lu__assert(self);
-		lu__assert(lu_wave_is_save(self));
+		lu__assert(lu_wave__is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_seq_push(save_wave->seq, rec, data);
+		lu_seq__push(save_wave->seq, rec, data);
 	}
 
 	static void lu_find_wave_push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Rec_Rg lu_block_rec_layer_create(Lu_Mem mem)
+	static Lu_Rec_Rg lu_rec_rg__create(Lu_Mem mem)
 	{
 		lu__assert(mem);
 
@@ -15,7 +15,7 @@
 		return self;
 	}
 
-	static void lu_block_rec_layer_destroy(Lu_Rec_Rg self, Lu_Mem mem)
+	static void lu_rec_rg__destroy(Lu_Rec_Rg self, Lu_Mem mem)
 	{
 		lu__assert(self);
 		lu__assert(mem);

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave_Config 
 
-    static Lu_Wave_Config lu_wave_config_init(Lu_Wave_Config self)
+    static Lu_Wave_Config lu_wave_config__init(Lu_Wave_Config self)
     {
         self->flags                 = 0;
         self->contrast_vs_color     = 0.5;

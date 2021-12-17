@@ -53,7 +53,7 @@ int main()
 	Lu_Wave wave 				= lu_wave_create(brain);
 	lu__assert(wave);
 
-	Lu_Seq seq 				= lu_seq_create(brain);
+	Lu_Seq seq 				= lu_seq__create(brain);
 	lu__assert(seq);
 
 	Lu_Neu name 				= NULL;
@@ -79,9 +79,9 @@ int main()
 	{
 		d = smn_training_samples[i];
 
-		lu_seq_push(seq, image_rec, d->pixels);
+		lu_seq__push(seq, image_rec, d->pixels);
 		lu_wave_save_with_name(wave, seq, d->name); 
-		lu_seq_reset(seq);
+		lu_seq__reset(seq);
 
 		printf("\rTraining samples.. %lu trained.", i + 1);
 		fflush(stdout);
@@ -99,7 +99,7 @@ int main()
 	for (i = 0; i < 1; i++)
 	{
 		d = smn_test_samples[i];
-		lu_seq_push(seq, image_rec, d->pixels);
+		lu_seq__push(seq, image_rec, d->pixels);
 		wave = lu_wave_find(wave, seq);
 
 		name = lu_wave_top_name_get(wave);
@@ -109,7 +109,7 @@ int main()
 		else 
 			++failed_count;
 
-		lu_seq_reset(seq);
+		lu_seq__reset(seq);
 
 		printf("\rTesting samples.. %lu tested.", i + 1);
 		fflush(stdout);
@@ -124,9 +124,9 @@ int main()
 
 	// Destroy brain and related  
 
-	lu_seq_destroy(seq);
+	lu_seq__destroy(seq);
 	lu_wave__destroy(wave);
-	lu_rec_destroy(image_rec);
+	lu_rec__destroy(image_rec);
 	lu_brain__destroy(brain);
 
 	// Clean up memory for data

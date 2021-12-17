@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Seq_Rg lu_seq_rg_create(Lu_Mem mem, Lu_S s)
+	static Lu_Seq_Rg lu_seq_rg__create(Lu_Mem mem, Lu_S s)
 	{
 		lu__assert(mem);
 		// lu__assert(s);
@@ -26,14 +26,14 @@
 		// 	lu_m_rec_rg = (Lu_S_Rec_Rg) lu_arr__get(s->recs, i);
 		// 	lu__assert(lu_m_rec_rg);
 
-		// 	rec = lu_block_rec_layer_create(mem, lu_m_rec_rg);
+		// 	rec = lu_rec_rg__create(mem, lu_m_rec_rg);
 		// 	lu_arr__append(self->recs, rec);
 		// }
 
 		return self;
 	}
 
-	static void lu_seq_rg_destroy(Lu_Seq_Rg self)
+	static void lu_seq_rg__destroy(Lu_Seq_Rg self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
@@ -45,7 +45,7 @@
 		// 	{
 		// 		rec = (Lu_Rec_Rg) lu_arr__get(self->recs, i);
 		// 		if (rec)
-		// 			lu_block_rec_layer_destroy(rec, self->mem);
+		// 			lu_rec_rg__destroy(rec, self->mem);
 		// 	}
 
 		// lu_arr__destroy(self->recs);

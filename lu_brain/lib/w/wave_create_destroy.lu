@@ -20,9 +20,9 @@
 
 		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(mem, sizeof(struct lu_save_wave));
 
-		lu_wave_init(
+		lu_wave__init(
 			&self->super, 
-			LU_WAVE_TYPE_SAVE, 
+			LU_WAVE_TYPE__SAVE, 
 			0,
 			mem,
 			brain, 
@@ -39,7 +39,7 @@
 		self->super.step = lu_save_wave_step_virtual;
 		self->super.process = lu_save_wave_process_virtual;
 
-		self->seq = lu_seq_create(mem, lu_brain__recs_size(brain)); 
+		self->seq = lu_seq__create(mem, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
 		self->block_layers = lu_lim_list__create(mem, self->super.config.block_layers_size);
@@ -87,20 +87,20 @@
 		lu_p_void value = lu_l_node__value(node);
 		lu__assert(value);
 
-		lu_seq_rg_destroy((Lu_Seq_Rg) value);
+		lu_seq_rg__destroy((Lu_Seq_Rg) value);
 	}
 
 	static void lu_save_wave_destroy_virtual(Lu_Wave wave)
 	{
 		lu__assert(wave);
-		lu__assert(lu_wave_is_save(wave));
+		lu__assert(lu_wave__is_save(wave));
 
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
 
 		lu_lim_list__clear(self->block_layers);
 
 		lu_lim_list__destroy(self->block_layers);
-		lu_seq_destroy(self->seq);
+		lu_seq__destroy(self->seq);
 	}
 
 	// Find
@@ -110,7 +110,7 @@
 		lu__assert(wave);
 		Lu_Find_Wave self = (Lu_Find_Wave) wave;
 
-		lu_seq_destroy(self->seq);
+		lu_seq__destroy(self->seq);
 	}
 
 	// Restore
