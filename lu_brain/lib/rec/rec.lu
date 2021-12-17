@@ -6,9 +6,9 @@
 // Init, create and destroy
 
 	// 
-	// It is actually lu_brain_rec_create_and_add, but lu_brain_rec_add for shortness.
+	// It is actually lu_brain_rec_create_and_add, but lu_brain__rec_add for shortness.
 	//
-	Lu_Rec lu_brain_rec_add(Lu_Brain brain, lu_size width, lu_size height, lu_size depth, struct lu_rec_config config)
+	Lu_Rec lu_brain__rec_add(Lu_Brain brain, lu_size width, lu_size height, lu_size depth, struct lu_rec_config config)
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
 		lu__user_assert(width, "widht should be greater than 0");
@@ -33,7 +33,7 @@
 		return self;
 	}
 
-	void lu_brain_rec_remove(Lu_Rec self)
+	void lu_brain__rec_remove(Lu_Rec self)
 	{
 		if (self->brain)
 			lu_brain__rec_detach(self->brain, self);

@@ -159,7 +159,7 @@
 	// Lu_Rec 
 	//
 
-	Lu_Rec lu_brain_rec_add(
+	Lu_Rec lu_brain__rec_add(
 		Lu_Brain brain, 
 		lu_size width, 
 		lu_size height, 
@@ -168,7 +168,7 @@
 	);		
 
 	// MVP out of scope
-	// void lu_brain_rec_remove(Lu_Rec self);
+	// void lu_brain__rec_remove(Lu_Rec self);
  
 	lu_size lu_rec__get_id(Lu_Rec self);
 
