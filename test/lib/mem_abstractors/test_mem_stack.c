@@ -13,7 +13,7 @@ void tearDown(void)
 
 void test_mem_stack_1(void)
 {
-	Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 512);
+	Lu_Mem mem = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 512);
 
     TEST_ASSERT(mem);
 

@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 
@@ -73,7 +73,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_With_Stats Create
 
-	Lu_Mem_With_Stats lu_mem_with_stats_create(Lu_Mem parent_mem)
+	Lu_Mem_With_Stats lu_mem_with_stats__create(Lu_Mem parent_mem)
 	{
 		Lu_Mem_With_Stats self = (Lu_Mem_With_Stats) lu_mem__alloc(parent_mem, sizeof(struct lu_mem_with_stats));
 		lu__assert(self);

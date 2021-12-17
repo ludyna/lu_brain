@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 
 	Map:													
 		(x Y y) = max(x - 1, 1) * max(y - 1, 1)

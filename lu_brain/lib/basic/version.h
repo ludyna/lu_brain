@@ -1,5 +1,5 @@
 /**
-*	Copyright © 2021 Oleh Ihorovych Novosad
+*	Copyright © 2022 Oleh Ihorovych Novosad
 */
 #ifndef LU_BRAIN__VERSION
 

@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 
 	Slot is a structure with a pointer to one item or many items.
 */

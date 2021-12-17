@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -64,7 +64,7 @@
 			// x * (ps + is) = a - sisa
 			// x = (a - sisa)/(ps + is)
 
-			lu_size a = lu_mem_stack_avail(mem_stack) * percent  / 100.0;
+			lu_size a = lu_mem_stack__avail(mem_stack) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
 			if (flags & MTF_FREEABLE) 

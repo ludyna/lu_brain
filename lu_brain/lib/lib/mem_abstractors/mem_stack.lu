@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -81,19 +81,19 @@
 
 	lu_size lu_mem_stack_preallocated_internal(Lu_Mem self)
 	{
-		return lu_mem_stack_preallocated((Lu_Mem_Stack) self);
+		return lu_mem_stack__preallocated((Lu_Mem_Stack) self);
 	}
 
 	lu_size lu_mem_stack_used_internal(Lu_Mem self)
 	{
-		return lu_mem_stack_used((Lu_Mem_Stack) self);
+		return lu_mem_stack__used((Lu_Mem_Stack) self);
 	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Stack Create
 
-	Lu_Mem_Stack lu_mem_stack_create(Lu_Mem parent_mem, lu_size size_in_bytes)
+	Lu_Mem_Stack lu_mem_stack__create	(Lu_Mem parent_mem, lu_size size_in_bytes)
 	{
 		lu__assert(size_in_bytes > sizeof(struct lu_mem_stack));
 

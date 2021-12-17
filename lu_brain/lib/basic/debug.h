@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad
+	Copyright © 2022 Oleh Ihorovych Novosad
 */
 #ifndef _LU_DEBUG_H
 #define _LU_DEBUG_H

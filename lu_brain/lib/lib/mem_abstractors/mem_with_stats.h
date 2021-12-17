@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -20,9 +20,9 @@
 		lu_size free_size;
 	};
 
-	static inline size_t lu_mem_with_stats_allocated_size(void * ptr) 
+	static inline size_t lu_mem_with_stats__allocated_size(void * ptr) 
 	{
 		return ((size_t*)ptr)[-1];
 	}
 
-	Lu_Mem_With_Stats lu_mem_with_stats_create(Lu_Mem parent_mem);
+	Lu_Mem_With_Stats lu_mem_with_stats__create(Lu_Mem parent_mem);

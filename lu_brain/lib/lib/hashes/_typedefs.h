@@ -1,9 +1,8 @@
- /**
+/**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Includes
+// 
 
- 	#include "rec_config.lu"
- 	#include "rec.lu"
+	typedef struct lu_simple_hash* 		Lu_Simple_Hash;

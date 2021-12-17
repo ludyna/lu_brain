@@ -11,7 +11,7 @@ void tearDown(void)
 
 void test_arr1(void)
 {
-    Lu_Mem mem  = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
+    Lu_Mem mem  = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
     Lu_Arr arr1 = lu_arr__create(mem, 5, true);
     Lu_Arr arr2 = lu_arr__create(mem, 2, true);
 
@@ -37,7 +37,7 @@ void test_arr1(void)
 
 void test_arr2(void)
 {
-    Lu_Mem mem = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
+    Lu_Mem mem = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
     Lu_Arr arr1 = lu_arr__create(mem, 5, true);
 
     lu_arr__set(arr1, 0, NULL);

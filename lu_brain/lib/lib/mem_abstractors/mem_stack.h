@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -16,9 +16,9 @@
 	};
 
 
-	Lu_Mem_Stack lu_mem_stack_create(Lu_Mem parent_mem, lu_size size_in_bytes);
+	Lu_Mem_Stack lu_mem_stack__create	(Lu_Mem parent_mem, lu_size size_in_bytes);
 
-	static inline lu_bool lu_mem_stack_is_out_of_mem(Lu_Mem_Stack self)
+	static inline lu_bool lu_mem_stack__is_out_of_mem(Lu_Mem_Stack self)
 	{
 		if (self->buff_pos >= self->buff_end)
 			return true;
@@ -26,13 +26,13 @@
 		return false;
 	}
 
-	static inline lu_size lu_mem_stack_avail(Lu_Mem_Stack self)
+	static inline lu_size lu_mem_stack__avail(Lu_Mem_Stack self)
 	{
 		return self->buff_end - self->buff_pos;
 	}
 
-	static inline lu_size lu_mem_stack_preallocated(Lu_Mem_Stack self) { return self->size_in_bytes; }
-	static inline lu_size lu_mem_stack_used(Lu_Mem_Stack self) { return self->buff_pos - self->buff_start; }
+	static inline lu_size lu_mem_stack__preallocated(Lu_Mem_Stack self) { return self->size_in_bytes; }
+	static inline lu_size lu_mem_stack__used(Lu_Mem_Stack self) { return self->buff_pos - self->buff_start; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Mem_Perm_Table

@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad (Novossaad)
+	Copyright © 2022 Oleh Ihorovych Novosad (Novossaad)
 */
 
 #define LU_RAND_BITS_SIZE 2048

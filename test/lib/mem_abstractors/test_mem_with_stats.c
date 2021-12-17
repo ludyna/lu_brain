@@ -5,7 +5,7 @@ Lu_Mem g_mem;
 
 void setUp(void)
 {
-	g_mem = (Lu_Mem) lu_mem_with_stats_create(lu_g_mem);
+	g_mem = (Lu_Mem) lu_mem_with_stats__create(lu_g_mem);
 	TEST_ASSERT(g_mem);
 	lu__user_assert_off();
 }

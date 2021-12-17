@@ -1,5 +1,5 @@
 /**
-	Copyright © 2021 Oleh Ihorovych Novosad 
+	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 	static void lu_save_wave_block_layer_node_before_destroy(Lu_Lim_List, Lu_L_Node);

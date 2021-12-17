@@ -18,7 +18,7 @@ typedef struct test1* Test1;
 
 void test_mem_table1(void)
 {
-    Lu_Mem mem        = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 512);
+    Lu_Mem mem        = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 512);
     Lu_Mem_Table mt   = lu_mem_table__create(
         /*Lu_Mem*/                  mem, 
         /*record_size_in_bytes*/    sizeof(struct test1), 

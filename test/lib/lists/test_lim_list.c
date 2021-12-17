@@ -21,7 +21,7 @@ void test_lim_list(void)
 {
     Mem_Debugger md = mem_debugger_create(lu_g_mem);
 
-    Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
+    Lu_Mem mem     = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
 
     Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
@@ -86,7 +86,7 @@ void test_lim_list(void)
 void test_lim_list_max_size(void)
 {
     Mem_Debugger md = mem_debugger_create(lu_g_mem);
-    Lu_Mem mem     = (Lu_Mem) lu_mem_stack_create(lu_g_mem, 2048);
+    Lu_Mem mem     = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
 
     Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
     Neu n2 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));

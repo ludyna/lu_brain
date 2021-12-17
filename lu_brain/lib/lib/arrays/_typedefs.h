@@ -1,9 +1,9 @@
- /**
+/**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Includes
+// 
 
- 	#include "rec_config.lu"
- 	#include "rec.lu"
+	typedef struct lu_arr* Lu_Arr;
+	typedef struct arr2* Arr2;
