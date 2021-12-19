@@ -14,20 +14,20 @@
 	//
 
 	enum lu_s_layer_type {
-		LU_S_LT_COMP,
-		LU_S_LT_FRAME,
-		LU_S_LT_LAYER,
-		LU_S_LT_END
+		LU_S_LT__COMP,
+		LU_S_LT__FRAME,
+		LU_S_LT__LAYER,
+		LU_S_LT__END
 	};
 
 	enum lu_s_comp_view_type {
-		LU_S_VLT_V,
-		LU_S_VLT_P
+		LU_S_CVT__V,
+		LU_S_CVT__P
 	};
 
 	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
 	typedef struct lu_s_comp_layer* Lu_S_Comp_Layer;
-	typedef struct lu_s_frame_layer* Lu_S_Frame_Layer;
+	typedef struct lu_s_rexel_layer* Lu_S_Rexel_Layer;
 	typedef struct lu_s_layer* Lu_S_Layer;
 
 	//

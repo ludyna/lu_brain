@@ -81,8 +81,8 @@
 
 				Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) apex->item;
 
-				// Last layer should be always LU_S_LT_LAYER
-				lu__assert(layer_base->type == LU_S_LT_LAYER);
+				// Last layer should be always LU_S_LT__LAYER
+				lu__assert(layer_base->type == LU_S_LT__LAYER);
 
 				lu_s__destroy_fractal(self->mem, layer_base);
 			}
@@ -126,14 +126,14 @@
 //
 // "Minimal" start:
 //
-// 		level3, story(vertically 1-n4)
-// 		level2, scene(vertically 1-n3)
-// 		level1, event (vertically 1-n2)
-// 		layer seq (vertically 1-n1)
-// 		layer recs (vertically rec_count)
-// 		layer frames (vertically w Y h)
-// 		frame(1)
-// 		comp1 comp2 comp3 (horizontally comp_count or d)
+// 		6 level3, story(vertically 1-n4)
+// 		5 level2, scene(vertically 1-n3)
+// 		4 level1, event (vertically 1-n2)
+// 		3 layer seq (vertically 1-n1)
+// 		2 layer recs (vertically rec_count)
+// 		1 layer rexel (vertically w Y h)
+// 		0 frame(vertically 1) 
+// 		- comp1 comp2 comp3 (horizontally comp_count or d)
 //
 // 
 //
@@ -159,6 +159,18 @@
 //	 /       \
 //	/         \
 // / / /      \ \ \ (sv 1, sh: comp_count, n independent of each other)
+
+
+	static void lu_s__add_v_layer(Lu_S self, lu_size level)
+	{
+		
+	}
+
+	static void lu_s__add_rexel_layer(Lu_S self, Lu_Rec rec)
+	{
+
+	}
+
 
 	static void lu_s__create_story_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs)
 	{  
@@ -284,7 +296,7 @@
 
 	}
 
-	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Frame_Layer p, Lu_Arr apexes, Lu_Rec rec)
+	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Rexel_Layer p, Lu_Arr apexes, Lu_Rec rec)
 	{
 
 	}
