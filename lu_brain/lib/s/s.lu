@@ -21,18 +21,6 @@
 		self->config = *v_config;
 		self->mem = mem;
 
-		//
-		// Cell_Mem_Config
-		//
-
-		// struct lu_s_layer_mem_config cell_mem_config;
-
-		// lu_s_cell_mem_config__init(&cell_mem_config);
-
-		//
-		// 
-		//
-
 		lu__assert(self->config.frames_size >= lu_arr__count(recs));
 
 		self->frames = lu_arr__create(mem, self->config.frames_size, true);
@@ -42,12 +30,44 @@
 		lu__assert(self->apexes);
 
 
-		lu_s__create_story_fractal(self->mem, NULL, self->apexes, self->frames, recs);
+		// (x Y y) = max(x - 1, 1) * max(y - 1, 1) 
 
-		// IMPORTANT: reverse self->apexes
-		lu_arr__reverse(self->apexes);
-	
-		// we start apexes from frame, since 
+		Lu_Rec rec;
+		lu_size i;
+		lu_size j;
+		Lu_S_Map fractal;
+		Lu_S_Map story_map;
+		Lu_S_Frame_Layer frame;
+
+			// story_map = lu_s_map__create_story_map_with_fractal(mem); 
+			// lu__assert(story_map);
+			// lu__assert(story_map->bases);
+			// lu__assert(story_map->apexes);
+
+			// Lu_Slot_Base slot = lu_arr__get(story_map->bases, 0);
+			// lu__assert(slot);
+			// lu__assert(slot->type == LU_ST_ONE);
+			// Lu_Slot_One one = (Lu_Slot_One) slot;
+
+			// Lu_S_Layer recs_base = (Lu_S_Layer) one->item;
+			// lu__assert(recs__base);
+
+
+			// for (i = 0; i < lu_arr__count(recs); i++)
+			// {
+			// 	rec = (Lu_Rec) lu_arr__get(recs, i);
+			// 	lu__assert(rec);
+
+			// 	fractal = lu_s_map__create_rec_fractal(mem, rec);
+			// 	lu__assert(fractal);
+
+			// 	frame = lu_s_map__get_frame(fractal);
+			// 	lu__assert(frame);
+
+			// 	// save pointer to frame
+			// 	lu_arr__set(self->frames, i, (lu_p_void) frame);
+			// }
+
 
 		return self;
 	}
@@ -131,7 +151,7 @@
 // 		4 level1, event (vertically 1-n2)
 // 		3 layer seq (vertically 1-n1)
 // 		2 layer recs (vertically rec_count)
-// 		1 layer rexel (vertically w Y h)
+// 		1 layer rixel (vertically w Y h)
 // 		0 frame(vertically 1) 
 // 		- comp1 comp2 comp3 (horizontally comp_count or d)
 //
@@ -163,14 +183,18 @@
 
 	static void lu_s__add_v_layer(Lu_S self, lu_size level)
 	{
-		
+
 	}
 
-	static void lu_s__add_rexel_layer(Lu_S self, Lu_Rec rec)
+	static void lu_s__add_h_layer(Lu_S self, lu_size level)
 	{
 
 	}
 
+	static void lu_s__add_frame(Lu_S self, Lu_Rec rec)
+	{
+
+	}
 
 	static void lu_s__create_story_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs)
 	{  
@@ -296,7 +320,7 @@
 
 	}
 
-	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Rexel_Layer p, Lu_Arr apexes, Lu_Rec rec)
+	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Frame_Layer p, Lu_Arr apexes, Lu_Rec rec)
 	{
 
 	}

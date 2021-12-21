@@ -7,14 +7,14 @@
 
 		"Minimal" start:
 
-		level3, story(vertically 1-n4)
-		level2, scene(vertically 1-n3)
-		level1, event (vertically 1-n2)
-		layer seq (vertically 1-n1)
-		layer recs (vertically rec_count)
-			layer rexels (vertically w Y h)
-			rexels frame(1)
-			comp1 comp2 comp3 (horizontally comp_count or d)
+		4 level3, story(vertically 1-n4)
+		3 level2, scene(vertically 1-n3)
+		2 level1, event (vertically 1-n2)
+		1 layer seq (vertically 1-n1)
+		0 layer recs (vertically rec_count)
+			2 layer rixels (vertically w Y h)
+			1 rixels FRAME (1)
+			0 comp1 comp2 comp3 (horizontally comp_count or d)
 
 	r1 r2 r3 r4
 	r1 r2 r3 r4
@@ -150,22 +150,21 @@
 		struct lu_s_comp_view p_view;
 	};
 
-	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Rexel_Layer frame, Lu_Rec_Comp_Config config);
+	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Frame_Layer frame, Lu_Rec_Comp_Config config);
 	static void lu_s_comp_layer__destroy(Lu_S_Layer_Base self, Lu_Mem);
 
 	//
-	// Lu_S_Rexel_Layer
-	// Rexel = receiver element
+	// Lu_S_Frame_Layer
 	//
 
-	struct lu_s_rexel_layer {
+	struct lu_s_frame_layer {
 		struct lu_s_layer_base super;
 
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Rexel_Layer lu_s_rexel_layer__create(Lu_Mem mem, Lu_Rec rec);
-	static void lu_s_rexel_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem);
+	static Lu_S_Frame_Layer lu_s_frame_layer__create(Lu_Mem mem, Lu_Rec rec);
+	static void lu_s_frame_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem);
 
 	//
 	// Lu_S_Layer
@@ -182,27 +181,36 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// "Virtual" Regions
+// Lu_S_Map 
 //
 
-	
+	struct lu_s_map {
+		Lu_Mem mem;
+
+		Lu_Arr apexes;
+		Lu_Arr bases;
+
+		Lu_S_Map p;
+		Lu_Slot_Base c;
+	};
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Space_Config 
 //
 
-	#define LU_S_CONF_FRAMES_MIN_SIZE 256
-	#define LU_S_CONF_APEXES_MIN_SIZE 256
+	#define LU_S_CONF__FRAMES_MIN_SIZE 256
+	#define LU_S_CONF__APEXES_MIN_SIZE 256
 
 	static inline Lu_Space_Config lu_space_config__validate(Lu_Space_Config self)
 	{
 		lu__user_assert(
-			self->frames_size >= LU_S_CONF_FRAMES_MIN_SIZE, 
+			self->frames_size >= LU_S_CONF__FRAMES_MIN_SIZE, 
 			"frames_size is too low in struct lu_space_config"
 		);
 
 		lu__user_assert(
-			self->apexes_size >= LU_S_CONF_APEXES_MIN_SIZE, 
+			self->apexes_size >= LU_S_CONF__APEXES_MIN_SIZE, 
 			"apexes_sixe is too low in struct lu_space_config"
 		);
 
@@ -222,6 +230,8 @@
 		Lu_Arr 					frames;
 		Lu_Arr 					apexes;
 
+		Lu_S_Map fractal;
+
 	};
 	
 	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
@@ -237,7 +247,7 @@
 	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
-	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Rexel_Layer p, Lu_Arr apexes, Lu_Rec rec);
+	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Frame_Layer p, Lu_Arr apexes, Lu_Rec rec);
 
 	static void lu_s__destroy_fractal(Lu_Mem, Lu_S_Layer_Base layer);
 
@@ -248,7 +258,7 @@
 	static void lu_s__add_v_layer(Lu_S self, lu_size level);
 	static void lu_s__add_h_layer(Lu_S self, lu_size level);
 
-	static void lu_s__add_rexel_layer(Lu_S self, Lu_Rec rec);
+	static void lu_s__add_rixel_layer(Lu_S self, Lu_Rec rec);
 	
 
 	#define lu_s__add_seq(self) lu_s__add_v_layer(self, 0)

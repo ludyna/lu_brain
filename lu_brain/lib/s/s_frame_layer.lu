@@ -5,15 +5,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Rexel_Layer lu_s_rexel_layer__create(Lu_Mem mem, Lu_Rec rec)
+	static Lu_S_Frame_Layer lu_s_frame_layer__create(Lu_Mem mem, Lu_Rec rec)
 	{
 		lu__assert(mem);
 		lu__assert(rec);
 
-		Lu_S_Rexel_Layer self = (Lu_S_Rexel_Layer) lu_mem__alloc(mem, sizeof(struct lu_s_rexel_layer));
+		Lu_S_Frame_Layer self = (Lu_S_Frame_Layer) lu_mem__alloc(mem, sizeof(struct lu_s_frame_layer));
 		lu__assert(self);
 
-		lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT__FRAME, 1, NULL, rec->depth, lu_s_rexel_layer__destroy);
+		lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT__FRAME, 1, NULL, rec->depth, lu_s_frame_layer__destroy);
 
 		self->rec = rec;
 
@@ -34,13 +34,13 @@
 		return self;
 	}
 
-	static void lu_s_rexel_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
+	static void lu_s_frame_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
 	{
 		lu__assert(self);
 		lu__assert(mem);
 		lu__assert(self->type == LU_S_LT__FRAME);
 
-		Lu_S_Rexel_Layer frame = (Lu_S_Rexel_Layer) self;
+		Lu_S_Frame_Layer frame = (Lu_S_Frame_Layer) self;
 
 		lu__assert(frame->rec);
 		// lu__assert(self->children);

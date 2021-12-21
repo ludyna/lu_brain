@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Rexel_Layer frame, Lu_Rec_Comp_Config config)
+	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Frame_Layer frame, Lu_Rec_Comp_Config config)
 	{
 		Lu_S_Comp_Layer self = (Lu_S_Comp_Layer) lu_mem__alloc(mem, sizeof(struct lu_s_comp_layer));
 		lu__assert(self);

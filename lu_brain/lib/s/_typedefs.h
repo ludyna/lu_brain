@@ -27,8 +27,14 @@
 
 	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
 	typedef struct lu_s_comp_layer* Lu_S_Comp_Layer;
-	typedef struct lu_s_rexel_layer* Lu_S_Rexel_Layer;
+	typedef struct lu_s_frame_layer* Lu_S_Frame_Layer;
 	typedef struct lu_s_layer* Lu_S_Layer;
+
+	// 
+	// Lu_S_Map
+	// 
+
+	typedef struct lu_s_map* Lu_S_Map;
 
 	//
 	// S

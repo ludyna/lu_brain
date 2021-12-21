@@ -31,7 +31,7 @@ Lu_Brain main features:
 
 Q: **Why C?**
 
-A: In short, it is the best language for the job. Also, it can be gratifying if used right.
+A: In short, C is **the best** language for the job. Also, C is very enjoyable when used in the way we do :).
 
 ## Legal
 
