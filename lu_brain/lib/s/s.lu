@@ -35,39 +35,46 @@
 		Lu_Rec rec;
 		lu_size i;
 		lu_size j;
-		Lu_S_Map fractal;
+		Lu_S_Map frame_map;
 		Lu_S_Map story_map;
 		Lu_S_Frame_Layer frame;
 
-			// story_map = lu_s_map__create_story_map_with_fractal(mem); 
-			// lu__assert(story_map);
-			// lu__assert(story_map->bases);
-			// lu__assert(story_map->apexes);
+		story_map = lu_s_map__create_story_fractal_and_map(mem); 
+		lu__assert(story_map);
+		lu__assert(story_map->bases);
+		lu__assert(story_map->apexes);
 
-			// Lu_Slot_Base slot = lu_arr__get(story_map->bases, 0);
-			// lu__assert(slot);
-			// lu__assert(slot->type == LU_ST_ONE);
-			// Lu_Slot_One one = (Lu_Slot_One) slot;
+		// Lu_Slot_Base slot = lu_arr__get(story_map->bases, 0);
+		// lu__assert(slot);
+		// lu__assert(slot->type == LU_ST_ONE);
+		// Lu_Slot_One one = (Lu_Slot_One) slot;
 
-			// Lu_S_Layer recs_base = (Lu_S_Layer) one->item;
-			// lu__assert(recs__base);
+		Lu_S_Layer_Base recs_base = lu_s_map__get_base(story_map);
+		lu__assert(recs_base);
 
 
-			// for (i = 0; i < lu_arr__count(recs); i++)
-			// {
-			// 	rec = (Lu_Rec) lu_arr__get(recs, i);
-			// 	lu__assert(rec);
+		Lu_S_Layer_Base frame_apex;
+		for (i = 0; i < lu_arr__count(recs); i++)
+		{
+			rec = (Lu_Rec) lu_arr__get(recs, i);
+			lu__assert(rec);
 
-			// 	fractal = lu_s_map__create_rec_fractal(mem, rec);
-			// 	lu__assert(fractal);
+			frame_map = lu_s_map__create_frame_fractal_and_map(mem, rec);
+			lu__assert(frame_map);
 
-			// 	frame = lu_s_map__get_frame(fractal);
-			// 	lu__assert(frame);
+			frame = lu_s_map__get_frame(frame_map);
+			lu__assert(frame);
 
-			// 	// save pointer to frame
-			// 	lu_arr__set(self->frames, i, (lu_p_void) frame);
-			// }
+			// save pointer to frame
+			lu_arr__set(self->frames, i, (lu_p_void) frame);
 
+			// connect layers
+			frame_apex = lu_s_map__get_apex(frame_map);
+			lu_s_layer_base__connect(recs_base, frame_apex);
+
+			// connect maps
+			lu_s_map__connect(story_map, frame_map);
+		}
 
 		return self;
 	}
@@ -87,7 +94,7 @@
 			if (apexes_count)
 			{
 				//
-				// Destroy s fractal
+				// Destroy s frame_map
 				//
 
 				slot_base = (Lu_Slot_Base) lu_arr__last(self->apexes);
@@ -164,7 +171,7 @@
 //
 //
 //		|  
-//		| layer seq: sv: seq_count (for min fractal seq_count = 1)
+//		| layer seq: sv: seq_count (for min frame_map seq_count = 1)
 //		|
 //		- (we could do //// sh: seq_count but we want seqs be independent of seq position
 //		|
