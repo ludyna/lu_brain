@@ -44,11 +44,6 @@
 		lu__assert(story_map->bases);
 		lu__assert(story_map->apexes);
 
-		// Lu_Slot_Base slot = lu_arr__get(story_map->bases, 0);
-		// lu__assert(slot);
-		// lu__assert(slot->type == LU_ST_ONE);
-		// Lu_Slot_One one = (Lu_Slot_One) slot;
-
 		Lu_S_Layer_Base recs_base = lu_s_map__get_base(story_map);
 		lu__assert(recs_base);
 

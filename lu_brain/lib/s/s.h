@@ -194,6 +194,16 @@
 		Lu_Slot_Base c;
 	};
 
+	static Lu_S_Map lu_s_map__create_story_fractal_and_map(Lu_Mem);
+	static Lu_S_Map lu_s_map__create_frame_fractal_and_map(Lu_Mem, Lu_Rec);
+	static void lu_s_map__destroy(Lu_S_Map);
+
+	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map self);
+	static Lu_S_Layer_Base lu_s_map__get_apex(Lu_S_Map self);
+	static Lu_S_Frame_Layer lu_s_map__get_frame(Lu_S_Map self);
+
+	static void lu_s_map__connect(Lu_S_Map p, Lu_S_Map c);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Space_Config 
