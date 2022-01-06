@@ -20,8 +20,8 @@
 	r1 r2 r3 r4
 	r1 r2 r3 r4
 
-	r1 r2 r3 r4
 
+	r1 r2 r3 r4
 	
 	Koly my dobavliayemo novyy sequence to my mozhemo chy ce novyy event, chy ce nova scena 
 	Faktychno sequence ce zavzhdy vyznacheno. Novi rivni poza seq ce vhe problemy avtora (programista).
@@ -192,11 +192,22 @@
 
 		Lu_S_Map p;
 		Lu_Slot_Base c;
+
+		// virtual destructor
+		void (*destroy)(Lu_S_Map);
 	};
 
-	static Lu_S_Map lu_s_map__create_story_fractal_and_map(Lu_Mem);
-	static Lu_S_Map lu_s_map__create_frame_fractal_and_map(Lu_Mem, Lu_Rec);
-	static void lu_s_map__destroy(Lu_S_Map);
+	// story
+	static Lu_S_Map lu_s_map__create_story_map(Lu_Mem, lu_size recs_count); 
+	static void lu_s_map__destroy_story_map(Lu_S_Map);
+	static void lu_s_map__make_story_fractal(Lu_S_Map);
+	static void lu_s_map__unmake_story_fractal(Lu_S_Map);
+
+	// frame
+	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem, Lu_Rec);
+	static void lu_s_map__destroy_frame_map(Lu_S_Map);
+	static void lu_s_map__make_frame_map(Lu_S_Map);
+	static void lu_s_map__unmake_frame_map(Lu_S_Map);
 
 	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map self);
 	static Lu_S_Layer_Base lu_s_map__get_apex(Lu_S_Map self);

@@ -5,12 +5,27 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Map lu_s_map__create_story_fractal_and_map(Lu_Mem mem)
+
+	static Lu_S_Map lu_s_map__create_story_map(Lu_Mem mem, lu_size recs_count)
 	{
-		return NULL;
+		Lu_S_Map self = (Lu_S_Map) lu_mem__alloc(mem, sizeof(struct lu_s_map));
+		lu__assert(self);
+
+		self->apexes = lu_arr__create(mem, 3, true);
+		lu__assert(self->apexes);
+
+		self->bases = lu_arr__create(mem, 3, true);
+		lu__assert(self->bases);
+
+		self->p = NULL;
+
+		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, recs_count, true);
+		lu__assert(self->c);
+
+		return self;
 	}
 
-	static Lu_S_Map lu_s_map__create_frame_fractal_and_map(Lu_Mem mem, Lu_Rec rec)
+	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem mem, Lu_Rec rec)
 	{
 		return NULL;
 	}
