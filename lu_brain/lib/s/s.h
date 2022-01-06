@@ -197,18 +197,28 @@
 		void (*destroy)(Lu_S_Map);
 	};
 
-	// story
+	//
+	// Story
+	//
+
 	static Lu_S_Map lu_s_map__create_story_map(Lu_Mem, lu_size recs_count); 
 	static void lu_s_map__destroy_story_map(Lu_S_Map);
 	static void lu_s_map__make_story_fractal(Lu_S_Map);
 	static void lu_s_map__unmake_story_fractal(Lu_S_Map);
 
-	// frame
+	//
+	// Frame
+	//
+
 	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem, Lu_Rec);
 	static void lu_s_map__destroy_frame_map(Lu_S_Map);
-	static void lu_s_map__make_frame_map(Lu_S_Map);
-	static void lu_s_map__unmake_frame_map(Lu_S_Map);
+	static void lu_s_map__make_frame_fractal(Lu_S_Map);
+	static void lu_s_map__unmake_frame_fractal(Lu_S_Map);
 
+	//
+	// Map
+	//
+	
 	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map self);
 	static Lu_S_Layer_Base lu_s_map__get_apex(Lu_S_Map self);
 	static Lu_S_Frame_Layer lu_s_map__get_frame(Lu_S_Map self);
