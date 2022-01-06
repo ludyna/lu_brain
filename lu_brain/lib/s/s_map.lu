@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Story
 
 
 	static Lu_S_Map lu_s_map__create_story_map(Lu_Mem mem, lu_size recs_count)
@@ -25,18 +25,46 @@
 		return self;
 	}
 
-	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem mem, Lu_Rec rec)
+	static void lu_s_map__destroy_story_map(Lu_S_Map self)
 	{
-		return NULL;
+
 	}
 
-	static void lu_s_map__destroy(Lu_S_Map self)
+	static void lu_s_map__make_story_fractal(Lu_S_Map self)
+	{
+
+	}
+
+	static void lu_s_map__unmake_story_fractal(Lu_S_Map self)
 	{
 
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Frame
+
+	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem mem, Lu_Rec rec)
+	{
+		return NULL;
+	}
+
+	static void lu_s_map__destroy_frame_map(Lu_S_Map self)
+	{
+
+	}
+
+	static void lu_s_map__make_frame_fractal(Lu_S_Map self)
+	{
+
+	}
+
+	static void lu_s_map__unmake_frame_fractal(Lu_S_Map self)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Map
 
 	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map self) 
 	{
