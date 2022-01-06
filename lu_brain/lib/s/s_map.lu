@@ -11,10 +11,10 @@
 		Lu_S_Map self = (Lu_S_Map) lu_mem__alloc(mem, sizeof(struct lu_s_map));
 		lu__assert(self);
 
-		self->apexes = lu_arr__create(mem, 3, true);
+		self->apexes = lu_arr__create(mem, 5, true);
 		lu__assert(self->apexes);
 
-		self->bases = lu_arr__create(mem, 3, true);
+		self->bases = lu_arr__create(mem, 5, true);
 		lu__assert(self->bases);
 
 		self->p = NULL;
@@ -27,11 +27,58 @@
 
 	static void lu_s_map__destroy_story_map(Lu_S_Map self)
 	{
+		lu__assert(self);
+		lu__assert(self->p == NULL);
+		lu__assert(self->c);
+		lu__assert(self->mem);
 
+		lu_slot_arr__destroy((Lu_Slot_Base) self->c, self->mem);
+		self->c = NULL;
+
+		lu_arr__destroy(self->bases);
+		self->bases = NULL;
+
+		lu_arr__destroy(self->apexes);
+		self->apexes = NULL;
+
+		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 	static void lu_s_map__make_story_fractal(Lu_S_Map self)
 	{
+		lu__assert(self);
+
+		Lu_Mem mem = self->mem;
+		lu__assert(mem);
+
+		Lu_S_Layer story = lu_s_layer__create(mem, 4, 1);
+		Lu_S_Layer scene = lu_s_layer__create(mem, 3, 1);
+		Lu_S_Layer event = lu_s_layer__create(mem, 2, 1);
+		Lu_S_Layer seq = lu_s_layer__create(mem, 1, 1);
+		Lu_S_Layer recs = lu_s_layer__create(mem, 0, 1);
+
+		lu__assert(story);
+		lu__assert(scene);
+		lu__assert(event);
+		lu__assert(seq);
+		lu__assert(recs);
+
+		lu_s_layer_base__connect((Lu_S_Layer_Base) story, (Lu_S_Layer_Base) scene);
+		lu_s_layer_base__connect((Lu_S_Layer_Base) scene, (Lu_S_Layer_Base) event);
+		lu_s_layer_base__connect((Lu_S_Layer_Base) event, (Lu_S_Layer_Base) seq);
+		lu_s_layer_base__connect((Lu_S_Layer_Base) seq, (Lu_S_Layer_Base) recs);
+
+		lu_arr__set(self->bases, 0, (lu_p_void) recs);
+		lu_arr__set(self->bases, 1, (lu_p_void) seq);
+		lu_arr__set(self->bases, 2, (lu_p_void) event);
+		lu_arr__set(self->bases, 3, (lu_p_void) scene);
+		lu_arr__set(self->bases, 4, (lu_p_void) story);
+
+		lu_arr__set(self->apexes, 0, (lu_p_void) recs);
+		lu_arr__set(self->apexes, 1, (lu_p_void) seq);
+		lu_arr__set(self->apexes, 2, (lu_p_void) event);
+		lu_arr__set(self->apexes, 3, (lu_p_void) scene);
+		lu_arr__set(self->apexes, 4, (lu_p_void) story);
 
 	}
 
