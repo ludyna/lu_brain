@@ -210,7 +210,7 @@
 	// Frame
 	//
 
-	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem, Lu_Rec);
+	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem, Lu_Rec, Lu_S_Map p);
 	static void lu_s_map__destroy_frame_map(Lu_S_Map);
 	static void lu_s_map__make_frame_fractal(Lu_S_Map);
 	static void lu_s_map__unmake_frame_fractal(Lu_S_Map);
