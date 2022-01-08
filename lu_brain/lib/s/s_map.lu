@@ -30,46 +30,6 @@
 		return self;
 	} 
 
-	static void lu_s_map__destroy_story_map(Lu_S_Map self)
-	{
-		lu__assert(self);
-		lu__assert(self->p == NULL);
-		lu__assert(self->c);
-		lu__assert(self->mem);
-
-		lu_size i;
-		Lu_S_Layer_Base layer_base;
-
-		// destroy bases slots
-		for (i = 0; i < lu_arr__count(self->bases); i++)
-		{
-			layer_base = (Lu_S_Layer_Base) lu_arr__get(self->bases, i);
-			lu__assert(layer_base);
-
-			layer_base->destroy(layer_base, self->mem);
-		}
-
-		// destroy apexes slots
-		for (i = 0; i < lu_arr__count(self->apexes); i++)
-		{
-			layer_base = (Lu_S_Layer_Base) lu_arr__get(self->apexes, i);
-			lu__assert(layer_base);
-
-			layer_base->destroy(layer_base, self->mem);
-		}
-
-		lu_slot_arr__destroy((Lu_Slot_Base) self->c, self->mem);
-		self->c = NULL;
-
-		lu_arr__destroy(self->bases);
-		self->bases = NULL;
-
-		lu_arr__destroy(self->apexes);
-		self->apexes = NULL;
-
-		lu_mem__free(self->mem, (lu_p_byte) self);
-	}
-
 	static void lu_s_map__make_story_fractal(Lu_S_Map self)
 	{
 		lu__assert(self);
@@ -162,6 +122,51 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Map
+	
+	static void lu_s_map__destroy(Lu_S_Map self)
+	{
+		lu__assert(self);
+		lu__assert(self->p == NULL);
+		lu__assert(self->c);
+		lu__assert(self->mem);
+
+		lu_size i;
+		Lu_S_Layer_Base layer_base;
+
+		// destroy bases slots
+		for (i = 0; i < lu_arr__count(self->bases); i++)
+		{
+			layer_base = (Lu_S_Layer_Base) lu_arr__get(self->bases, i);
+			lu__assert(layer_base);
+
+			layer_base->destroy(layer_base, self->mem);
+		}
+
+		// destroy apexes slots
+		for (i = 0; i < lu_arr__count(self->apexes); i++)
+		{
+			layer_base = (Lu_S_Layer_Base) lu_arr__get(self->apexes, i);
+			lu__assert(layer_base);
+
+			layer_base->destroy(layer_base, self->mem);
+		}
+
+		self->p = NULL;
+
+		if (self->c)
+		{
+			lu_slot_arr__destroy((Lu_Slot_Base) self->c, self->mem);
+			self->c = NULL;
+		}
+
+		lu_arr__destroy(self->bases);
+		self->bases = NULL;
+
+		lu_arr__destroy(self->apexes);
+		self->apexes = NULL;
+
+		lu_mem__free(self->mem, (lu_p_byte) self);
+	}
 
 	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map self) 
 	{
