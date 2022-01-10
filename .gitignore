@@ -6,7 +6,8 @@
 
 
 /build
-sub.sublime-project
+*.sublime-project
+*.sublime-workspace
 
 notes.md
 

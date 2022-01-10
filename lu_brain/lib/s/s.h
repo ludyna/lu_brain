@@ -12,7 +12,7 @@
 		2 level1, event (vertically 1-n2)
 		1 layer seq (vertically 1-n1)
 		0 layer recs (vertically rec_count)
-			2 layer rixels (vertically w Y h)
+			2 layer pixels (vertically w Y h)
 			1 rixels FRAME (1)
 			0 comp1 comp2 comp3 (horizontally comp_count or d)
 
@@ -56,7 +56,6 @@
 	C rahuyetsia vidnosno poperednioho frame.
 	Tobto potribno yak minimum 2 frame z shiftom shob maty C.
 */
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Comp_View
@@ -255,13 +254,28 @@
 		struct lu_space_config config;
 
 		Lu_Mem 					mem;
-
 		Lu_Arr 					frames;
-		Lu_Arr 					apexes;
 
 		Lu_S_Map fractal;
 
 	};
+
+	// (x Y y) = max(x - 1, 1) * max(y - 1, 1)
+	static inline lu_size lu_s__Y(lu_size w, lu_size h)
+	{
+		lu__assert(w);
+		lu__assert(h);
+
+		if (w > 1) --w;
+		if (h > 1) --h;
+
+		lu_size Y = w * h;
+		return Y;
+	}
+
+	//
+	// S
+	//
 	
 	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
