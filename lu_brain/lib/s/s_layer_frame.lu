@@ -5,26 +5,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Frame_Layer lu_s_frame_layer__create(Lu_Mem mem, Lu_Rec rec)
+	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Mem mem, Lu_Rec rec)
 	{
 		lu__assert(mem);
 		lu__assert(rec);
 
-		Lu_S_Frame_Layer self = (Lu_S_Frame_Layer) lu_mem__alloc(mem, sizeof(struct lu_s_frame_layer));
+		Lu_S_Layer_Frame self = (Lu_S_Layer_Frame) lu_mem__alloc(mem, sizeof(struct lu_s_layer_frame));
 		lu__assert(self);
 
-		lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT__FRAME, 1, NULL, rec->depth, lu_s_frame_layer__destroy);
+		lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT__FRAME, 1, NULL, rec->depth, lu_s_layer_frame__destroy);
 
 		self->rec = rec;
 
 		// self->children = lu_arr__create(mem, rec->depth, true);
 		// lu__assert(self->children);
 
-		// Lu_S_Comp_Layer comp_layer;
+		// Lu_S_Layer_Comp comp_layer;
 		// lu_size i;
 		// for(i = 0; i < rec->depth; i++)
 		// { 
-		// 	comp_layer = lu_s_comp_layer__create(mem, self, &rec->config.comp_config);
+		// 	comp_layer = lu_s_layer_comp__create(mem, self, &rec->config.comp_config);
 		// 	lu__assert(comp_layer);
 
 		// 	lu_arr__append(self->children, comp_layer);
@@ -34,24 +34,24 @@
 		return self;
 	}
 
-	static void lu_s_frame_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
+	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
 	{
 		lu__assert(self);
 		lu__assert(mem);
 		lu__assert(self->type == LU_S_LT__FRAME);
 
-		Lu_S_Frame_Layer frame = (Lu_S_Frame_Layer) self;
+		Lu_S_Layer_Frame frame = (Lu_S_Layer_Frame) self;
 
 		lu__assert(frame->rec);
 		// lu__assert(self->children);
 
-		// Lu_S_Comp_Layer comp_layer;
+		// Lu_S_Layer_Comp comp_layer;
 		// for (lu_size i = 0; i < lu_arr__count(self->children); i++)
 		// {
-		// 	comp_layer = (Lu_S_Comp_Layer) lu_arr__get(self->children, i);
+		// 	comp_layer = (Lu_S_Layer_Comp) lu_arr__get(self->children, i);
 		// 	lu__assert(comp_layer);
 
-		// 	lu_s_comp_layer__destroy(comp_layer, mem);
+		// 	lu_s_layer_comp__destroy(comp_layer, mem);
 		// }
 
 		// lu_arr__destroy(self->children);

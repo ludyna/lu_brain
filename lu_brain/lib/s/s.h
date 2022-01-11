@@ -60,12 +60,12 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Comp_View
+// Lu_S_View_Comp
 //
 
 	// can be v or p
-	struct lu_s_comp_view {
-		enum lu_s_comp_view_type view_type;
+	struct lu_s_view_comp {
+		enum lu_s_view_comp_type view_type;
 
 		lu_value 				orig_min;
 		lu_value 				orig_max;
@@ -79,14 +79,14 @@
 		Hnn_Cell_Value* cells;
 	};
 
-	static Lu_S_Comp_View lu_s_comp_view__init(Lu_S_Comp_Layer, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
-	static void lu_s_comp_view__deinit(Lu_S_Comp_Layer self);
+	static Lu_S_View_Comp lu_s_view_comp__init(Lu_S_Layer_Comp, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_view_comp__deinit(Lu_S_Layer_Comp self);
 
-	static inline lu_value lu_s_comp_view__norm(Lu_S_Comp_Layer self, lu_value request);
-	static inline lu_size lu_s_comp_view__ix(Lu_S_Comp_Layer self, lu_value val);
-	static inline struct lu_size_range lu_s_comp_view__ix_range(Lu_S_Comp_Layer self, lu_value val, lu_size nsc);
-	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_Layer self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_Layer self);
+	static inline lu_value lu_s_view_comp__norm(Lu_S_Layer_Comp self, lu_value request);
+	static inline lu_size lu_s_view_comp__ix(Lu_S_Layer_Comp self, lu_value val);
+	static inline struct lu_size_range lu_s_view_comp__ix_range(Lu_S_Layer_Comp self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_view_comp__calc_sig(Lu_S_Layer_Comp self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_view_comp__step_norm_dist(Lu_S_Layer_Comp self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Layers
@@ -141,31 +141,31 @@
 	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c);
 
 	//
-	// Lu_S_Comp_Layer 
+	// Lu_S_Layer_Comp 
 	// 
 
-	struct lu_s_comp_layer {
+	struct lu_s_layer_comp {
 		struct lu_s_layer_base super;
 
-		struct lu_s_comp_view v_view;
-		struct lu_s_comp_view p_view;
+		struct lu_s_view_comp v_view;
+		struct lu_s_view_comp p_view;
 	};
 
-	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Frame_Layer frame, Lu_Rec_Comp_Config config);
-	static void lu_s_comp_layer__destroy(Lu_S_Layer_Base self, Lu_Mem);
+	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Mem mem, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
+	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self, Lu_Mem);
 
 	//
-	// Lu_S_Frame_Layer
+	// Lu_S_Layer_Frame
 	//
 
-	struct lu_s_frame_layer {
+	struct lu_s_layer_frame {
 		struct lu_s_layer_base super;
 
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Frame_Layer lu_s_frame_layer__create(Lu_Mem mem, Lu_Rec rec);
-	static void lu_s_frame_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem);
+	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Mem mem, Lu_Rec rec);
+	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self, Lu_Mem mem);
 
 	//
 	// Lu_S_Layer
@@ -182,10 +182,13 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Map_Base 
+// Maps
 //
 
 	struct lu_s_map_base {
+
+		enum lu_s_map_type type;
+
 		Lu_Mem mem;
 
 		Lu_Arr apexes;
@@ -199,40 +202,40 @@
 	};
 
 
-	static void lu_s_map__destroy(Lu_S_Map_Base);
-	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map_Base self);
-	static Lu_S_Layer_Base lu_s_map__get_apex(Lu_S_Map_Base self);
-	static Lu_S_Frame_Layer lu_s_map__get_frame(Lu_S_Map_Base self);
+	static void lu_s_map_base__destroy(Lu_S_Map_Base);
+	static Lu_S_Layer_Base lu_s_map_base__get_base(Lu_S_Map_Base self);
+	static Lu_S_Layer_Base lu_s_map_base__get_apex(Lu_S_Map_Base self);
+	static Lu_S_Layer_Frame lu_s_map_base__get_frame(Lu_S_Map_Base self);
 
-	static void lu_s_map__connect(Lu_S_Map_Base p, Lu_S_Map_Base c);
+	static void lu_s_map_base__connect(Lu_S_Map_Base p, Lu_S_Map_Base c);
 
 	//
 	// Story
 	//
 
-	struct lu_s_story_map {
+	struct lu_s_map_story {
 		struct lu_s_map_base super;
 
 		lu_size recs_count;
 	};
 
-	static Lu_S_Map_Base lu_s_story_map__create(Lu_Mem, lu_size recs_count); 
-	static void lu_s_story_map__make_fractal(Lu_S_Map_Base);
-	static void lu_s_story_map__unmake_fractal(Lu_S_Map_Base);
+	static Lu_S_Map_Story lu_s_map_story__create(Lu_Mem, lu_size recs_count); 
+	static void lu_s_map_story__make_fractal(Lu_S_Map_Base);
+	static void lu_s_map_story__unmake_fractal(Lu_S_Map_Base);
 
 	//
 	// Frame
 	//
 
-	struct lu_s_frame_map {
+	struct lu_s_map_frame {
 		struct lu_s_map_base super;
 
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Map_Base lu_s_frame_map__create(Lu_Mem, Lu_Rec, Lu_S_Map_Base p);
-	static void lu_s_frame_map__make_fractal(Lu_S_Map_Base);
-	static void lu_s_frame_map__unmake_fractal(Lu_S_Map_Base);
+	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Mem, Lu_Rec, Lu_S_Map_Base p);
+	static void lu_s_map_frame__make_fractal(Lu_S_Map_Base);
+	static void lu_s_map_frame__unmake_fractal(Lu_S_Map_Base);
 
 
 
@@ -311,7 +314,7 @@
 	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
-	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Frame_Layer p, Lu_Arr apexes, Lu_Rec rec);
+	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Layer_Frame p, Lu_Arr apexes, Lu_Rec rec);
 
 	static void lu_s__destroy_fractal(Lu_Mem, Lu_S_Layer_Base layer);
 

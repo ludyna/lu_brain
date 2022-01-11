@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Comp_Layer lu_s_comp_layer__create(Lu_Mem mem, Lu_S_Frame_Layer frame, Lu_Rec_Comp_Config config)
+	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Mem mem, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config)
 	{
-		Lu_S_Comp_Layer self = (Lu_S_Comp_Layer) lu_mem__alloc(mem, sizeof(struct lu_s_comp_layer));
+		Lu_S_Layer_Comp self = (Lu_S_Layer_Comp) lu_mem__alloc(mem, sizeof(struct lu_s_layer_comp));
 		lu__assert(self);
 
 		lu_s_layer_base__init_with_no_c_slot(
@@ -15,13 +15,13 @@
 			LU_S_LT__COMP, 
 			0, 
 			(Lu_S_Layer_Base)frame, 
-			lu_s_comp_layer__destroy
+			lu_s_layer_comp__destroy
 		);
 
 		return self;
 	}
 
-	static void lu_s_comp_layer__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
+	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
 	{
 		lu__assert(self);
 		lu__assert(mem);

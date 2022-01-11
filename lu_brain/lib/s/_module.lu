@@ -2,10 +2,12 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
+#include "s_view_comp.lu"
 #include "s_layer_base.lu"
-#include "s_comp_view.lu"
-#include "s_comp_layer.lu"
-#include "s_frame_layer.lu"
+#include "s_layer_comp.lu"
+#include "s_layer_frame.lu"
 #include "s_layer.lu"
-#include "s_map.lu"
+#include "s_map_base.lu"
+#include "s_map_frame.lu"
+#include "s_map_story.lu"
 #include "s.lu"
