@@ -7,6 +7,8 @@
 
 		"Minimal" start:
 
+		Last level should always have ONE layer.
+
 		4 level3, story(vertically 1-n4)
 		3 level2, scene(vertically 1-n3)
 		2 level1, event (vertically 1-n2)
@@ -180,47 +182,58 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Map 
+// Lu_S_Map_Base 
 //
 
-	struct lu_s_map {
+	struct lu_s_map_base {
 		Lu_Mem mem;
 
 		Lu_Arr apexes;
 		Lu_Arr bases;
 
-		Lu_S_Map p;
+		Lu_S_Map_Base p;
 		Lu_Slot_Base c;
 
 		// virtual destructor
-		void (*destroy)(Lu_S_Map);
+		void (*destroy)(Lu_S_Map_Base);
 	};
+
+
+	static void lu_s_map__destroy(Lu_S_Map_Base);
+	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map_Base self);
+	static Lu_S_Layer_Base lu_s_map__get_apex(Lu_S_Map_Base self);
+	static Lu_S_Frame_Layer lu_s_map__get_frame(Lu_S_Map_Base self);
+
+	static void lu_s_map__connect(Lu_S_Map_Base p, Lu_S_Map_Base c);
 
 	//
 	// Story
 	//
 
-	static Lu_S_Map lu_s_map__create_story_map(Lu_Mem, lu_size recs_count); 
-	static void lu_s_map__make_story_fractal(Lu_S_Map);
-	static void lu_s_map__unmake_story_fractal(Lu_S_Map);
+	struct lu_s_story_map {
+		struct lu_s_map_base super;
+
+		lu_size recs_count;
+	};
+
+	static Lu_S_Map_Base lu_s_story_map__create(Lu_Mem, lu_size recs_count); 
+	static void lu_s_story_map__make_fractal(Lu_S_Map_Base);
+	static void lu_s_story_map__unmake_fractal(Lu_S_Map_Base);
 
 	//
 	// Frame
 	//
 
-	static Lu_S_Map lu_s_map__create_frame_map(Lu_Mem, Lu_Rec, Lu_S_Map p);
-	static void lu_s_map__make_frame_fractal(Lu_S_Map);
-	static void lu_s_map__unmake_frame_fractal(Lu_S_Map);
+	struct lu_s_frame_map {
+		struct lu_s_map_base super;
 
-	//
-	// Map
-	//
-	static void lu_s_map__destroy(Lu_S_Map);
-	static Lu_S_Layer_Base lu_s_map__get_base(Lu_S_Map self);
-	static Lu_S_Layer_Base lu_s_map__get_apex(Lu_S_Map self);
-	static Lu_S_Frame_Layer lu_s_map__get_frame(Lu_S_Map self);
+		Lu_Rec rec;
+	};
 
-	static void lu_s_map__connect(Lu_S_Map p, Lu_S_Map c);
+	static Lu_S_Map_Base lu_s_frame_map__create(Lu_Mem, Lu_Rec, Lu_S_Map_Base p);
+	static void lu_s_frame_map__make_fractal(Lu_S_Map_Base);
+	static void lu_s_frame_map__unmake_fractal(Lu_S_Map_Base);
+
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -256,11 +269,14 @@
 		Lu_Mem 					mem;
 		Lu_Arr 					frames;
 
-		Lu_S_Map fractal;
+		Lu_S_Map_Base fractal;
 
 	};
 
-	// (x Y y) = max(x - 1, 1) * max(y - 1, 1)
+	//
+	// (x Y y) = max(x - 1, 1) * max(y - 1, 1) - 1
+	// This calculation is only correct for "intersected squares" "cortex" type or similar 
+	// 
 	static inline lu_size lu_s__Y(lu_size w, lu_size h)
 	{
 		lu__assert(w);
@@ -270,6 +286,11 @@
 		if (h > 1) --h;
 
 		lu_size Y = w * h;
+
+		// minus one because apex is in the base layer of the next level
+		// Highest level should always have one layer.
+		if (Y > 1) --Y;
+
 		return Y;
 	}
 
@@ -277,7 +298,7 @@
 	// S
 	//
 	
-	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
+	static Lu_S lu_s__create_intersected_squares_cortex(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
 	static void lu_s__destroy(Lu_S self);
 
 	//

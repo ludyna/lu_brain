@@ -31,10 +31,12 @@
 	typedef struct lu_s_layer* Lu_S_Layer;
 
 	// 
-	// Lu_S_Map
+	// Map
 	// 
 
-	typedef struct lu_s_map* Lu_S_Map;
+	typedef struct lu_s_map_base* Lu_S_Map_Base;
+	typedef struct lu_s_story_map* Lu_S_Story_Map;
+	typedef struct lu_s_frame_map* Lu_S_Frame_Map;
 
 	//
 	// S

@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Create & Destroy
 
-	static Lu_S lu_s__create(Lu_Mem mem, struct lu_space_config config, Lu_Arr recs)
+	static Lu_S lu_s__create_intersected_squares_cortex(Lu_Mem mem, struct lu_space_config config, Lu_Arr recs)
 	{
 		lu__assert(mem);
 		lu__assert(recs);
@@ -23,19 +23,17 @@
 
 		lu__assert(self->config.frames_size >= lu_arr__count(recs));
 
-		// (x Y y) = max(x - 1, 1) * max(y - 1, 1) 
-
 		Lu_Rec rec;
 		lu_size i;
 		lu_size j;
-		Lu_S_Map frame_map;
-		Lu_S_Map story_map;
+		Lu_S_Map_Base frame_map;
+		Lu_S_Map_Base story_map;
 		Lu_S_Frame_Layer frame;
 
-		story_map = lu_s_map__create_story_map(mem, lu_arr__count(recs)); 
+		story_map = lu_s_story_map__create(mem, lu_arr__count(recs)); 
 		lu__assert(story_map);
 
-		lu_s_map__make_story_fractal(story_map);
+		lu_s_story_map__make_fractal(story_map);
 
 		Lu_S_Layer_Base recs_base = lu_s_map__get_base(story_map);
 		lu__assert(recs_base);
@@ -47,10 +45,10 @@
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			frame_map = lu_s_map__create_frame_map(mem, rec, story_map);
+			frame_map = lu_s_frame_map__create(mem, rec, story_map);
 			lu__assert(frame_map);
 
-			lu_s_map__make_frame_fractal(frame_map);
+			lu_s_frame_map__make_fractal(frame_map);
 
 			frame = lu_s_map__get_frame(frame_map);
 			lu__assert(frame);
