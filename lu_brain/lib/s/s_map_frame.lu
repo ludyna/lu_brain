@@ -35,7 +35,7 @@
 		Lu_Mem mem = self->mem;
 		lu__assert(mem);
 
-		Lu_S_Layer_A pixels = lu_s_layer_a__create(mem, 2, 1);
+		Lu_S_Layer pixels = lu_s_layer__create(mem, 2, 1);
 	}
 
 	static void lu_s_map_frame__unmake_fractal(Lu_S_Map_Frame self)

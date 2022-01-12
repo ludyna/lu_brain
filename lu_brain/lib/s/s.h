@@ -168,19 +168,17 @@
 	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self, Lu_Mem mem);
 
 	//
-	// Lu_S_Layer_A
-	//
-	// "A" stands for abstract.
+	// Lu_S_Layer
 	//
 
-	struct lu_s_layer_a {
+	struct lu_s_layer {
 		struct lu_s_layer_abs_base super;
 
 		Lu_S_Layer_Base child;
 	};
 
-	static Lu_S_Layer_A lu_s_layer_a__create(Lu_Mem mem, lu_size level, lu_size children_count);
-	static void lu_s_layer_a__destroy(Lu_S_Layer_Base self, Lu_Mem);
+	static Lu_S_Layer lu_s_layer__create(Lu_Mem mem, lu_size level, lu_size children_count);
+	static void lu_s_layer__destroy(Lu_S_Layer_Base self, Lu_Mem);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -310,12 +308,12 @@
 	// S Fractals
 	//
 
-	static void lu_s__create_story_fractal(Lu_Mem, Lu_S_Layer_A p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_scene_fractal(Lu_Mem mem, Lu_S_Layer_A p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_S_Layer_A p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer_A p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer_A p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer_A p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
+	static void lu_s__create_story_fractal(Lu_Mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_scene_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
+	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
 	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Layer_Frame p, Lu_Arr apexes, Lu_Rec rec);
 
 	static void lu_s__destroy_fractal(Lu_Mem, Lu_S_Layer_Base layer);
