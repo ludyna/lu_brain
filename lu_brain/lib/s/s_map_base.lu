@@ -5,6 +5,32 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	static Lu_S_Map_Base lu_s_map_base__init(
+		Lu_S_Map_Base self, 
+		Lu_Mem mem, 
+		lu_size apexes_size,
+		lu_size bases_size, 
+		Lu_S_Map_Base p
+	)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+
+		self->mem = mem;
+
+		self->apexes = lu_arr__create(mem, apexes_size, true);
+		lu__assert(self->apexes);
+
+		self->bases = lu_arr__create(mem, bases_size, true);
+		lu__assert(self->bases);
+
+		self->p = p;
+		self->c = NULL;
+
+		return self;
+	}
+
+
 	static void lu_s_map_base__destroy(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
@@ -37,7 +63,9 @@
 
 		if (self->c)
 		{
-			lu_slot_arr__destroy((Lu_Slot_Base) self->c, self->mem);
+			lu__assert(self->c->destroy);
+			
+			self->c->destroy((Lu_Slot_Base) self->c, self->mem);
 			self->c = NULL;
 		}
 

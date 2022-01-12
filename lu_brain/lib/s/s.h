@@ -201,6 +201,14 @@
 		void (*destroy)(Lu_S_Map_Base);
 	};
 
+	static Lu_S_Map_Base lu_s_map_base__init(
+		Lu_S_Map_Base self,
+		Lu_Mem mem, 
+		lu_size apexes_size,
+		lu_size bases_size, 
+		Lu_S_Map_Base p
+	);
+
 
 	static void lu_s_map_base__destroy(Lu_S_Map_Base);
 	static Lu_S_Layer_Base lu_s_map_base__get_base(Lu_S_Map_Base self);
