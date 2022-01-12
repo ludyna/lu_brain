@@ -26,8 +26,8 @@
 		Lu_Rec rec;
 		lu_size i;
 		lu_size j;
-		Lu_S_Map_Base frame_map;
-		Lu_S_Map_Base story_map;
+		Lu_S_Map_Frame frame_map;
+		Lu_S_Map_Story story_map;
 		Lu_S_Layer_Frame frame;
 
 		story_map = lu_s_map_story__create(mem, lu_arr__count(recs)); 
@@ -35,7 +35,7 @@
 
 		lu_s_map_story__make_fractal(story_map);
 
-		Lu_S_Layer_Base recs_base = lu_s_map_base__get_base(story_map);
+		Lu_S_Layer_Base recs_base = lu_s_map_base__get_base((Lu_S_Map_Base) story_map);
 		lu__assert(recs_base);
 
 
@@ -45,23 +45,23 @@
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			frame_map = lu_s_map_frame__create(mem, rec, story_map);
+			frame_map = lu_s_map_frame__create(mem, rec, (Lu_S_Map_Base) story_map);
 			lu__assert(frame_map);
 
 			lu_s_map_frame__make_fractal(frame_map);
 
-			frame = lu_s_map_base__get_frame(frame_map);
+			frame = lu_s_map_base__get_frame((Lu_S_Map_Base) frame_map);
 			lu__assert(frame);
 
 			// save pointer to frame
 			lu_arr__set(self->frames, i, (lu_p_void) frame);
 
 			// connect layers
-			frame_apex = lu_s_map_base__get_apex(frame_map);
+			frame_apex = lu_s_map_base__get_apex((Lu_S_Map_Base) frame_map);
 			lu_s_layer_base__connect(recs_base, frame_apex);
 
 			// connect maps
-			lu_s_map_base__connect(story_map, frame_map);
+			lu_s_map_base__connect((Lu_S_Map_Base) story_map, (Lu_S_Map_Base) frame_map);
 		}
 
 		return self;
