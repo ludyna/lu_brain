@@ -10,7 +10,7 @@
 		lu__assert(mem);
 		lu__assert(rec);
 
-		Lu_S_Layer_Frame self = (Lu_S_Layer_Frame) lu_mem__alloc(mem, sizeof(struct lu_s_layer_frame));
+		Lu_S_Layer_Frame self = (Lu_S_Layer_Frame) lu_mem__alloc(mem, sizeof(struct lu_s_layer_abs_frame));
 		lu__assert(self);
 
 		lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT__FRAME, 1, NULL, rec->depth, lu_s_layer_frame__destroy);

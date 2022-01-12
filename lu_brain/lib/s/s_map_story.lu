@@ -36,11 +36,11 @@
 		Lu_Mem mem = self->mem;
 		lu__assert(mem);
 
-		Lu_S_Layer story = lu_s_layer__create(mem, 4, 1);
-		Lu_S_Layer scene = lu_s_layer__create(mem, 3, 1);
-		Lu_S_Layer event = lu_s_layer__create(mem, 2, 1);
-		Lu_S_Layer seq = lu_s_layer__create(mem, 1, 1);
-		Lu_S_Layer recs = lu_s_layer__create(mem, 0, 1);
+		Lu_S_Layer_A story = lu_s_layer_a__create(mem, 4, 1);
+		Lu_S_Layer_A scene = lu_s_layer_a__create(mem, 3, 1);
+		Lu_S_Layer_A event = lu_s_layer_a__create(mem, 2, 1);
+		Lu_S_Layer_A seq = lu_s_layer_a__create(mem, 1, 1);
+		Lu_S_Layer_A recs = lu_s_layer_a__create(mem, 0, 1);
 
 		lu__assert(story);
 		lu__assert(scene);
