@@ -5,8 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-
-
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_no_c_slot(
 		Lu_S_Layer_Base self, 
 		enum lu_s_layer_type type, 
@@ -123,4 +121,76 @@
 			default:
 				lu__assert(0);
 		}
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Fractals
+
+	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_count)
+	{
+		lu__assert(self);
+		lu__assert(self->apexes);
+		lu__assert(self->bases);
+
+		Lu_Mem mem = self->mem;
+		lu__assert(mem);
+
+		Lu_S_Layer story = lu_s_layer__create(mem, 4, 1);
+		Lu_S_Layer scene = lu_s_layer__create(mem, 3, 1);
+		Lu_S_Layer event = lu_s_layer__create(mem, 2, 1);
+		Lu_S_Layer seq = lu_s_layer__create(mem, 1, 1);
+
+		lu__assert(story);
+		lu__assert(scene);
+		lu__assert(event);
+		lu__assert(seq);
+
+		Lu_S_Layer recs_base = NULL;
+		Lu_S_Layer recs;
+		Lu_S_Layer prev = NULL;
+
+		for(lu_size i = 0; i < recs_layers_count; i++)
+		{
+			recs = lu_s_layer__create(mem, 0, 1);
+			lu__assert(recs);
+
+			if (i == 0) recs_base = recs;
+
+			if (prev) 
+			{
+				lu_s_layer_base__connect((Lu_S_Layer_Base) recs, (Lu_S_Layer_Base) prev);
+			}
+
+			prev = recs;
+		}
+
+		lu_s_layer_base__connect((Lu_S_Layer_Base) story, (Lu_S_Layer_Base) scene);
+		lu_s_layer_base__connect((Lu_S_Layer_Base) scene, (Lu_S_Layer_Base) event);
+		lu_s_layer_base__connect((Lu_S_Layer_Base) event, (Lu_S_Layer_Base) seq);
+		lu_s_layer_base__connect((Lu_S_Layer_Base) seq, (Lu_S_Layer_Base) recs);
+
+		lu_arr__set(self->bases, 0, (lu_p_void) lu_slot_one__create(mem, recs_base));
+		lu_arr__set(self->bases, 1, (lu_p_void) lu_slot_one__create(mem, seq));
+		lu_arr__set(self->bases, 2, (lu_p_void) lu_slot_one__create(mem, event));
+		lu_arr__set(self->bases, 3, (lu_p_void) lu_slot_one__create(mem, scene));
+		lu_arr__set(self->bases, 4, (lu_p_void) lu_slot_one__create(mem, story));
+
+		lu_arr__set(self->apexes, 0, (lu_p_void) lu_slot_one__create(mem, recs));
+		lu_arr__set(self->apexes, 1, (lu_p_void) lu_slot_one__create(mem, seq));
+		lu_arr__set(self->apexes, 2, (lu_p_void) lu_slot_one__create(mem, event));
+		lu_arr__set(self->apexes, 3, (lu_p_void) lu_slot_one__create(mem, scene));
+		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(mem, story));
+	}
+
+		static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base self)
+	{
+		lu__assert(self);
+		lu__assert(self->apexes);
+		lu__assert(self->mem);
+
+		Lu_S_Layer_Base apex = (Lu_S_Layer_Base) lu_arr__last(self->apexes);
+		lu__assert(apex);
+
+		apex->destroy(apex, self->mem);
 	}
