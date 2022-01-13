@@ -209,6 +209,15 @@
 		Lu_S_Map_Base p
 	);
 
+	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
+		Lu_S_Map_Base self,
+		Lu_Mem mem, 
+		lu_size apexes_size,
+		lu_size bases_size, 
+		Lu_S_Map_Base p, 
+		lu_size childs_size
+	);
+
 	static void lu_s_map_base__destroy(Lu_S_Map_Base);
 
 	static Lu_S_Layer_Base lu_s_map_base__get_base(Lu_S_Map_Base self);
@@ -221,7 +230,7 @@
 	// Fractals
 	//
 
-	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_count);
+	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_size);
 	static void lu_s_map_base__make_frame_fractal(Lu_S_Map_Base self, Lu_Rec rec, Lu_S_Map_Base p);
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base);
 
@@ -235,7 +244,7 @@
 		lu_size recs_count;
 	};
 
-	static Lu_S_Map_Story lu_s_map_story__create(Lu_Mem, lu_size recs_count); 
+	static Lu_S_Map_Story lu_s_map_story__create(Lu_Mem, lu_size recs_size); 
 	static void lu_s_map_story__make_fractal(Lu_S_Map_Story);
 
 	//

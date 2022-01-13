@@ -127,7 +127,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Fractals
 
-	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_count)
+	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_size)
 	{
 		lu__assert(self);
 		lu__assert(self->apexes);
@@ -150,7 +150,7 @@
 		Lu_S_Layer recs;
 		Lu_S_Layer prev = NULL;
 
-		for(lu_size i = 0; i < recs_layers_count; i++)
+		for(lu_size i = 0; i < recs_layers_size; i++)
 		{
 			recs = lu_s_layer__create(mem, 0, 1);
 			lu__assert(recs);
@@ -183,7 +183,7 @@
 		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(mem, story));
 	}
 
-		static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base self)
+	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
 		lu__assert(self->apexes);

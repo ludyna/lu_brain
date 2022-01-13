@@ -31,6 +31,22 @@
 	}
 
 
+	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
+		Lu_S_Map_Base self,
+		Lu_Mem mem, 
+		lu_size apexes_size,
+		lu_size bases_size, 
+		Lu_S_Map_Base p, 
+		lu_size childs_size
+	)
+	{
+		self = lu_s_map_base__init(self, mem, apexes_size, bases_size, p);
+		lu__assert(self);
+
+		
+	}
+
+
 	static void lu_s_map_base__destroy(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
