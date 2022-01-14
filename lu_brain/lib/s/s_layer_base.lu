@@ -74,7 +74,6 @@
 		return self;
 	}
 
-
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self, Lu_Mem mem)
 	{
 		lu__assert(self);
@@ -181,6 +180,20 @@
 		lu_arr__set(self->apexes, 2, (lu_p_void) lu_slot_one__create(mem, event));
 		lu_arr__set(self->apexes, 3, (lu_p_void) lu_slot_one__create(mem, scene));
 		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(mem, story));
+	}
+
+	static void lu_s_map_base__make_frame_fractal(Lu_S_Map_Base self, Lu_Rec rec)
+	{
+		lu__assert(self);
+		lu__assert(rec);
+		lu__assert(self->bases);
+
+		Lu_Mem mem = self->mem;
+		lu__assert(mem);
+		
+		lu_size pixels_layers_size = lu_s__Y(rec->width, rec->height);
+
+		
 	}
 
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base self)

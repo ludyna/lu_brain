@@ -231,7 +231,7 @@
 	//
 
 	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_size);
-	static void lu_s_map_base__make_frame_fractal(Lu_S_Map_Base self, Lu_Rec rec, Lu_S_Map_Base p);
+	static void lu_s_map_base__make_frame_fractal(Lu_S_Map_Base self, Lu_Rec rec);
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base);
 
 	//

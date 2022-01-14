@@ -23,7 +23,7 @@ Lu_Brain main features:
 
 Pattern storage speed: O(C)
 
-Pattern recognition/search: O(C)
+Pattern recognition/search/match speed: O(C)
 
 ## Goals  
 
