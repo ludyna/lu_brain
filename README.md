@@ -21,9 +21,15 @@ Lu_Brain main features:
 - organizing patterns into hierarchies
 - transparent access to all data and data manipulation
 
-Pattern storage speed: O(C)
+## Speed 
+
+Pattern storage speed: O(C) (no gradient descent/ascent)
 
 Pattern recognition/search/match speed: O(C)
+
+where C is constant.
+
+How is it possible? It is possible, your brain works like that too.
 
 ## Goals  
 
