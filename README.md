@@ -23,13 +23,13 @@ Lu_Brain main features:
 
 ## Speed 
 
-Pattern storage speed: O(C) (no gradient descent/ascent)
+Pattern storage speed: **O(C)** (no gradient descent/ascent)
 
-Pattern recognition/search/match speed: O(C)
+Pattern recognition/search/match speed: **O(C)**
 
 where C is constant.
 
-How is it possible? It is possible, your brain works like that too.
+How is it possible? It is possible. Your brain works like that too.
 
 ## Goals  
 
