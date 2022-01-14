@@ -22,6 +22,7 @@ Lu_Brain main features:
 - transparent access to all data and data manipulation
 
 Pattern storage speed: O(C)
+
 Pattern recognition/search: O(C)
 
 ## Goals  
