@@ -43,7 +43,10 @@
 		self = lu_s_map_base__init(self, mem, apexes_size, bases_size, p);
 		lu__assert(self);
 
-		
+		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, childs_size, true);
+		lu__assert(self->c);
+
+		return self;
 	}
 
 

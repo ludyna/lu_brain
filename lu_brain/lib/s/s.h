@@ -298,8 +298,8 @@
 	};
 
 	//
-	// (x Y y) = max(x - 1, 1) * max(y - 1, 1) - 1
-	// This calculation is only correct for "intersected squares" "cortex" type or similar 
+	// (x Y y) = max(max(x - 1, 1) * max(y - 1, 1) - 1, 1)
+	// This calculation is only correct for "intersected squares cortex" type or similar 
 	// 
 	static inline lu_size lu_s__Y(lu_size w, lu_size h)
 	{

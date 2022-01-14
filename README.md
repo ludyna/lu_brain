@@ -21,6 +21,9 @@ Lu_Brain main features:
 - organizing patterns into hierarchies
 - transparent access to all data and data manipulation
 
+Pattern storage speed: O(C)
+Pattern recognition/search: O(C)
+
 ## Goals  
 
 1. The fastest pattern recognition and manipulation in the World
