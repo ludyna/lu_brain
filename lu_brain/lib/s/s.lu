@@ -33,7 +33,7 @@
 		story_map = lu_s_map_story__create(mem, lu_arr__count(recs)); 
 		lu__assert(story_map);
 
-		lu_s_map_story__make_fractal(story_map);
+		lu_s_map_base__make_story_fractal((Lu_S_Map_Base) story_map, story_map->recs_count);
 
 		Lu_S_Layer_Base recs_base = lu_s_map_base__get_base((Lu_S_Map_Base) story_map);
 		lu__assert(recs_base);
@@ -48,7 +48,7 @@
 			frame_map = lu_s_map_frame__create(mem, rec, (Lu_S_Map_Base) story_map);
 			lu__assert(frame_map);
 
-			lu_s_map_frame__make_fractal(frame_map);
+			lu_s_map_base__make_frame_fractal((Lu_S_Map_Base) frame_map, frame_map->rec);
 
 			frame = lu_s_map_base__get_frame((Lu_S_Map_Base) frame_map);
 			lu__assert(frame);

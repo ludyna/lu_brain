@@ -21,12 +21,4 @@
 		return self;
 	}
 
-	static void lu_s_map_story__make_fractal(Lu_S_Map_Story self)
-	{
-		lu__assert(self);
-
-		lu_size recs_layers_count = lu_s__Y(self->recs_count, 1);
-		
-		lu_s_map_base__make_story_fractal(&self->super, recs_layers_count);
-	}
 

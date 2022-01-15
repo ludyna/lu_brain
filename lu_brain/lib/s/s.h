@@ -96,7 +96,7 @@
 	// Base
 	//
 
-	struct lu_s_layer_abs_base {
+	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
 		lu_size level;
 
@@ -144,8 +144,8 @@
 	// Lu_S_Layer_Comp 
 	// 
 
-	struct lu_s_layer_abs_comp {
-		struct lu_s_layer_abs_base super;
+	struct lu_s_layer_comp {
+		struct lu_s_layer_base super;
 
 		struct lu_s_view_comp v_view;
 		struct lu_s_view_comp p_view;
@@ -158,8 +158,8 @@
 	// Lu_S_Layer_Frame
 	//
 
-	struct lu_s_layer_abs_frame {
-		struct lu_s_layer_abs_base super;
+	struct lu_s_layer_frame {
+		struct lu_s_layer_base super;
 
 		Lu_Rec rec;
 	};
@@ -172,7 +172,7 @@
 	//
 
 	struct lu_s_layer {
-		struct lu_s_layer_abs_base super;
+		struct lu_s_layer_base super;
 
 		Lu_S_Layer_Base child;
 	};
@@ -245,7 +245,6 @@
 	};
 
 	static Lu_S_Map_Story lu_s_map_story__create(Lu_Mem, lu_size recs_size); 
-	static void lu_s_map_story__make_fractal(Lu_S_Map_Story);
 
 	//
 	// Frame
@@ -258,7 +257,6 @@
 	};
 
 	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Mem, Lu_Rec, Lu_S_Map_Base p);
-	static void lu_s_map_frame__make_fractal(Lu_S_Map_Frame);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Space_Config 

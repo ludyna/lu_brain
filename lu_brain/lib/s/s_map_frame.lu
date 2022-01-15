@@ -21,15 +21,3 @@
 
 		return self;
 	}
-
-	static void lu_s_map_frame__make_fractal(Lu_S_Map_Frame self)
-	{
-		lu__assert(self);
-
-		lu_s_map_base__make_frame_fractal((Lu_S_Map_Base) self, self->rec);
-	}
-
-	static void lu_s_map_frame__unmake_fractal(Lu_S_Map_Frame self)
-	{
-
-	}

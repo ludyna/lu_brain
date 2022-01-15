@@ -25,9 +25,9 @@
 		LU_S_CVT__P
 	};
 
-	typedef struct lu_s_layer_abs_base* Lu_S_Layer_Base;
-	typedef struct lu_s_layer_abs_comp* Lu_S_Layer_Comp;
-	typedef struct lu_s_layer_abs_frame* Lu_S_Layer_Frame;
+	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
+	typedef struct lu_s_layer_comp* Lu_S_Layer_Comp;
+	typedef struct lu_s_layer_frame* Lu_S_Layer_Frame;
 	typedef struct lu_s_layer* Lu_S_Layer;
 
 	// 

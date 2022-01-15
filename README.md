@@ -29,7 +29,7 @@ Pattern recognition/search/match speed: **O(C)**
 
 where C is constant.
 
-How is it possible? It is possible. Your brain works like that too.
+How is it possible? It is possible. Your mind works like that too.
 
 ## Goals  
 
