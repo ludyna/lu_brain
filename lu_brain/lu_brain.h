@@ -138,6 +138,7 @@
 	};
 
 	Lu_Rec_Config lu_rec_config__validate(Lu_Rec_Config self);
+	Lu_Rec_Comp_Config lu_rec_config__get_comp_config(Lu_Rec_Config self, lu_size comp_index);
 
 	//
 	// Lu_Rec_Config predefined 

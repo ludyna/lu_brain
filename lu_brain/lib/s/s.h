@@ -14,8 +14,7 @@
 		2 level1, event (vertically 1-n2)
 		1 layer seq (vertically 1-n1)
 		0 layer recs (vertically rec_count)
-			2 layer pixels (vertically w Y h)
-			1 rixels FRAME (1)
+			1 frame layers (vertically w Y h), base layer is frame layer
 			0 comp1 comp2 comp3 (horizontally comp_count or d)
 
 	r1 r2 r3 r4
