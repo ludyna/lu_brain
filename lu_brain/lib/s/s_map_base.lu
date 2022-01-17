@@ -8,6 +8,7 @@
 	static Lu_S_Map_Base lu_s_map_base__init(
 		Lu_S_Map_Base self, 
 		Lu_Mem mem, 
+		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
 		Lu_S_Map_Base p
@@ -16,6 +17,7 @@
 		lu__assert(self);
 		lu__assert(mem);
 
+		self->type = type;
 		self->mem = mem;
 
 		self->apexes = lu_arr__create(mem, apexes_size, true);
@@ -34,13 +36,14 @@
 	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
 		Lu_S_Map_Base self,
 		Lu_Mem mem, 
+		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
 		Lu_S_Map_Base p, 
 		lu_size childs_size
 	)
 	{
-		self = lu_s_map_base__init(self, mem, apexes_size, bases_size, p);
+		self = lu_s_map_base__init(self, mem, type, apexes_size, bases_size, p);
 		lu__assert(self);
 
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, childs_size, true);
@@ -177,6 +180,7 @@
 
 		Lu_S_Layer_Frame frame_base = lu_s_layer_frame__create(mem, rec);
 		lu__assert(frame_base);
+		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
 
 		//
 		// Create comp layers
@@ -212,14 +216,27 @@
 		}
 
 		// 
-		// Fill map
+		// Fill bases
 		// 
 
 		lu_arr__set(self->bases, 0, (lu_p_void) slot_arr);
-		lu_arr__set(self->bases, 1, (lu_p_void) lu_slot_one__create(mem, frame_base));
+
+		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
+		Lu_Slot_One slot_one = lu_slot_one__create(mem, frame_base);
+		lu__assert(slot_one);
+		
+		lu_arr__set(self->bases, 1,(lu_p_void) slot_one);
+
+		// 
+		// Fill apexes
+		// 
 
 		lu_arr__set(self->apexes, 0, (lu_p_void) slot_arr);
-		lu_arr__set(self->bases, 1, (lu_p_void) lu_slot_one__create(mem, frame));
+
+		slot_one = lu_slot_one__create(mem, frame);
+		lu__assert(slot_one);
+
+		lu_arr__set(self->bases, 1, (lu_p_void) slot_one);
 	}
 
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base self)
@@ -275,8 +292,11 @@
 
 		Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) one->item;
 		lu__assert(layer_base);
+
+		lu__assert(layer_base->type == LU_S_LT__LAYER);
+		lu__assert(layer_base->type == LU_S_LT__COMP);
 		lu__assert(layer_base->type == LU_S_LT__FRAME);
-		
+
 		return (Lu_S_Layer_Frame) one->item;
 	}
 

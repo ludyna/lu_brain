@@ -203,6 +203,7 @@
 	static Lu_S_Map_Base lu_s_map_base__init(
 		Lu_S_Map_Base self,
 		Lu_Mem mem, 
+		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
 		Lu_S_Map_Base p
@@ -211,6 +212,7 @@
 	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
 		Lu_S_Map_Base self,
 		Lu_Mem mem, 
+		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
 		Lu_S_Map_Base p, 

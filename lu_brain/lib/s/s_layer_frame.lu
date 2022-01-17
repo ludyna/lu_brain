@@ -16,21 +16,7 @@
 		lu_s_layer_base__init_with_arr_c_slot(&self->super, mem, LU_S_LT__FRAME, 1, NULL, rec->depth, lu_s_layer_frame__destroy);
 
 		self->rec = rec;
-
-		// self->children = lu_arr__create(mem, rec->depth, true);
-		// lu__assert(self->children);
-
-		// Lu_S_Layer_Comp comp_layer;
-		// lu_size i;
-		// for(i = 0; i < rec->depth; i++)
-		// { 
-		// 	comp_layer = lu_s_layer_comp__create(mem, self, &rec->config.comp_config);
-		// 	lu__assert(comp_layer);
-
-		// 	lu_arr__append(self->children, comp_layer);
-		// }
-
-	
+		
 		return self;
 	}
 

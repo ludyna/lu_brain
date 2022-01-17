@@ -14,7 +14,7 @@
 		Lu_S_Map_Frame self = (Lu_S_Map_Frame) lu_mem__alloc(mem, sizeof(struct lu_s_map_frame));
 		lu__assert(self);
 
-		Lu_S_Map_Base base = lu_s_map_base__init(&self->super, mem, 5, 5, p);
+		Lu_S_Map_Base base = lu_s_map_base__init(&self->super, mem, LU_S_MT__FRAME, 5, 5, p);
 		lu__assert(base);
 
 		self->rec = rec;

@@ -36,7 +36,7 @@
 
 	enum lu_s_map_type {
 		LU_S_MT__STORY,
-		LU_S_MT__MAP
+		LU_S_MT__FRAME
 	};
 
 	typedef struct lu_s_map_base* Lu_S_Map_Base;
