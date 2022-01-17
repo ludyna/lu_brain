@@ -22,7 +22,7 @@
 	)
 	{
 		lu__assert(self);
-		lu__assert(type < LU_ST_END); 
+		lu__assert(type < LU_ST__END); 
 		lu__assert(destroy);
 
 		self->type = type;

@@ -7,9 +7,9 @@
 //
 
 	enum lu_slot_type {
-		LU_ST_ONE,
-		LU_ST_ARR,
-		LU_ST_END
+		LU_ST__ONE,
+		LU_ST__ARR,
+		LU_ST__END
 	};
 
 	typedef struct lu_slot_base* Lu_Slot_Base;

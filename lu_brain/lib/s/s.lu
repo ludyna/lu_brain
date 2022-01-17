@@ -89,7 +89,7 @@
 		// 		lu__assert(slot_base);
 
 		// 		// Last one should be always SINGLE apex
-		// 		lu__assert(slot_base->type == LU_ST_ONE);
+		// 		lu__assert(slot_base->type == LU_ST__ONE);
 
 		// 		Lu_Slot_One apex = (Lu_Slot_One) slot_base;
 		// 		lu__assert(apex->item);
@@ -328,7 +328,7 @@
 
 		if (layer->c)
 		{
-			if (layer->c->type == LU_ST_ONE)
+			if (layer->c->type == LU_ST__ONE)
 			{
 				Lu_Slot_One one = (Lu_Slot_One) layer->c;
 
@@ -337,7 +337,7 @@
 					lu_s__destroy_fractal(mem, (Lu_S_Layer_Base) one->item);
 				}
 			}
-			else if (layer->c->type == LU_ST_ARR)
+			else if (layer->c->type == LU_ST__ARR)
 			{
 				Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) layer->c;
 

@@ -11,7 +11,7 @@
 // Lu_Brain 
 
 	struct lu_brain {
-		// config copy
+		
 		struct lu_brain_config config;
 
 		// Mems
