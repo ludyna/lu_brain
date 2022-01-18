@@ -206,7 +206,8 @@
 		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
-		Lu_S_Map_Base p
+		Lu_S_Map_Base p,
+		void (*destroy)(Lu_S_Map_Base)
 	);
 
 	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
@@ -216,7 +217,8 @@
 		lu_size apexes_size,
 		lu_size bases_size, 
 		Lu_S_Map_Base p, 
-		lu_size childs_size
+		lu_size childs_size,
+		void (*destroy)(Lu_S_Map_Base)
 	);
 
 	static void lu_s_map_base__destroy(Lu_S_Map_Base);
@@ -246,6 +248,7 @@
 	};
 
 	static Lu_S_Map_Story lu_s_map_story__create(Lu_Mem, lu_size recs_size); 
+	static void lu_s_map_story__destroy(Lu_S_Map_Base self);
 
 	//
 	// Frame
@@ -258,6 +261,7 @@
 	};
 
 	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Mem, Lu_Rec, Lu_S_Map_Base p);
+	static void lu_s_map_frame__destroy(Lu_S_Map_Base self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Space_Config 

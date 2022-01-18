@@ -11,11 +11,13 @@
 		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
-		Lu_S_Map_Base p
+		Lu_S_Map_Base p, 
+		void (*destroy)(Lu_S_Map_Base)
 	)
 	{
 		lu__assert(self);
 		lu__assert(mem);
+		lu__assert(destroy);
 
 		self->type = type;
 		self->mem = mem;
@@ -29,6 +31,8 @@
 		self->p = p;
 		self->c = NULL;
 
+		self->destroy = destroy;
+
 		return self;
 	}
 
@@ -40,10 +44,11 @@
 		lu_size apexes_size,
 		lu_size bases_size, 
 		Lu_S_Map_Base p, 
-		lu_size childs_size
+		lu_size childs_size,
+		void (*destroy)(Lu_S_Map_Base)
 	)
 	{
-		self = lu_s_map_base__init(self, mem, type, apexes_size, bases_size, p);
+		self = lu_s_map_base__init(self, mem, type, apexes_size, bases_size, p, destroy);
 		lu__assert(self);
 
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, childs_size, true);
