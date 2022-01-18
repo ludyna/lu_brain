@@ -270,9 +270,9 @@
 	static Lu_S_Layer_Base lu_s_map_base__get_apex(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
-		lu__assert(self->bases);
+		lu__assert(self->apexes);
 
-		Lu_Slot_Base slot = (Lu_Slot_Base) lu_arr__get(self->bases, 0);
+		Lu_Slot_Base slot = (Lu_Slot_Base) lu_arr__get(self->apexes, lu_arr__count(self->apexes) - 1);
 		lu__assert(slot);
 		lu__assert(slot->type == LU_ST__ONE);
 		Lu_Slot_One one = (Lu_Slot_One) slot;
