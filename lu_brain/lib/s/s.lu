@@ -51,8 +51,8 @@
 
 			lu_s_map_base__make_frame_fractal((Lu_S_Map_Base) frame_map, frame_map->rec);
 
-			// frame = lu_s_map_base__get_frame((Lu_S_Map_Base) frame_map);
-			// lu__assert(frame);
+			frame = lu_s_map_base__get_frame((Lu_S_Map_Base) frame_map);
+			lu__assert(frame);
 
 			// // save pointer to frame
 			// lu_arr__set(self->frames, i, (lu_p_void) frame);

@@ -225,7 +225,7 @@
 		Lu_Slot_One slot_one = lu_slot_one__create(mem, frame_base);
 		lu__assert(slot_one);
 		
-		lu_arr__set(self->bases, 1,(lu_p_void) slot_one);
+		lu_arr__set(self->bases, 1, (lu_p_void) slot_one);
 
 		// 
 		// Fill apexes
@@ -236,7 +236,7 @@
 		slot_one = lu_slot_one__create(mem, frame);
 		lu__assert(slot_one);
 
-		lu_arr__set(self->bases, 1, (lu_p_void) slot_one);
+		lu_arr__set(self->apexes, 1, (lu_p_void) slot_one);
 	}
 
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base self)
@@ -292,9 +292,6 @@
 
 		Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) one->item;
 		lu__assert(layer_base);
-
-		lu__assert(layer_base->type == LU_S_LT__LAYER);
-		lu__assert(layer_base->type == LU_S_LT__COMP);
 		lu__assert(layer_base->type == LU_S_LT__FRAME);
 
 		return (Lu_S_Layer_Frame) one->item;
