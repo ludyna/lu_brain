@@ -62,6 +62,8 @@
 
 			// connect layers
 			frame_apex = lu_s_map_base__get_apex((Lu_S_Map_Base) frame_map);
+			lu__assert(frame_apex);
+			
 			lu_s_layer_base__connect(recs_base, frame_apex);
 
 			// connect maps

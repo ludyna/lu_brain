@@ -302,5 +302,14 @@
 
 	static void lu_s_map_base__connect(Lu_S_Map_Base p, Lu_S_Map_Base c)
 	{
+		lu__assert(p);
+		lu__assert(c);
+		lu__assert(p->c->type == LU_ST__ARR);
 
+		c->p = p;
+
+		Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) p->c;
+		lu__assert(slot_arr->items);
+
+		lu_arr__append(slot_arr->items, (lu_p_void) c);
 	}
