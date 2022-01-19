@@ -66,27 +66,27 @@
 		lu__assert(self->mem);
 
 		lu_size i;
-		Lu_S_Layer_Base layer_base;
+		Lu_Slot_Base slot;
 
 		// destroy bases slots
 		for (i = 0; i < lu_arr__count(self->bases); i++)
 		{
-			layer_base = (Lu_S_Layer_Base) lu_arr__get(self->bases, i);
-			lu__assert(layer_base);
+			slot = (Lu_Slot_Base) lu_arr__get(self->bases, i);
+			lu__assert(slot);
+			lu__assert(slot->destroy);
 
-			layer_base->destroy(layer_base, self->mem);
+			slot->destroy(slot, self->mem);
 		}
 
 		// destroy apexes slots
 		for (i = 0; i < lu_arr__count(self->apexes); i++)
 		{
-			layer_base = (Lu_S_Layer_Base) lu_arr__get(self->apexes, i);
-			lu__assert(layer_base);
+			slot = (Lu_Slot_Base) lu_arr__get(self->apexes, i);
+			lu__assert(slot);
+			lu__assert(slot->destroy);
 
-			layer_base->destroy(layer_base, self->mem);
+			slot->destroy(slot, self->mem);
 		}
-
-		self->p = NULL;
 
 		if (self->c)
 		{

@@ -70,6 +70,8 @@
 			lu_s_map_base__connect((Lu_S_Map_Base) story_map, (Lu_S_Map_Base) frame_map);
 		}
 
+		self->fractal = (Lu_S_Map_Base) story_map;
+
 		return self;
 	}
 
@@ -78,58 +80,9 @@
 		lu__assert(self);
 		lu__assert(self->mem);
 
-		// if (self->apexes) 
-		// {
-
-		// 	lu_size apexes_count = lu_arr__count(self->apexes);
-
-		// 	Lu_Slot_Base slot_base;
-
-		// 	if (apexes_count)
-		// 	{
-		// 		//
-		// 		// Destroy s frame_map
-		// 		//
-
-		// 		slot_base = (Lu_Slot_Base) lu_arr__last(self->apexes);
-		// 		lu__assert(slot_base);
-
-		// 		// Last one should be always SINGLE apex
-		// 		lu__assert(slot_base->type == LU_ST__ONE);
-
-		// 		Lu_Slot_One apex = (Lu_Slot_One) slot_base;
-		// 		lu__assert(apex->item);
-
-		// 		Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) apex->item;
-
-		// 		// Last layer should be always LU_S_LT__LAYER
-		// 		lu__assert(layer_base->type == LU_S_LT__LAYER);
-
-		// 		lu_s__destroy_fractal(self->mem, layer_base);
-		// 	}
-
-		// 	//
-		// 	// Destroy apexes
-		// 	//
-
-		// 	for (lu_size i = 0; i < apexes_count; i++)
-		// 	{
-		// 		slot_base = (Lu_Slot_Base) lu_arr__get(self->apexes, i); 
-		// 		lu__assert(slot_base);
-		// 		lu__assert(slot_base->destroy);
-
-		// 		slot_base->destroy(slot_base, self->mem);
-		// 	}
-
-		// 	//
-		// 	// Destroy array
-		// 	//
-
-		// 	lu_arr__destroy(self->apexes);
-		// }
-
-		if (self->fractal)
+		if (self->fractal && self->fractal->destroy)
 			self->fractal->destroy(self->fractal);
+		
 
 		if (self->frames)
 			lu_arr__destroy(self->frames);
