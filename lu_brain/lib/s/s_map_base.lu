@@ -112,7 +112,6 @@
 		lu_arr__destroy(self->apexes);
 		self->apexes = NULL;
 
-		lu__debug("\n\n\n TTTTTT \n\n\n");
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
@@ -211,6 +210,8 @@
 		{
 			comp = lu_s_layer_comp__create(mem, frame_base, lu_rec_config__get_comp_config(&rec->config, i));
 			lu__assert(comp);
+
+			lu_s_layer_base__connect((Lu_S_Layer_Base) frame_base, (Lu_S_Layer_Base) comp);
 
 			lu_arr__append(slot_arr->items, (lu_p_void) comp);
 		}
