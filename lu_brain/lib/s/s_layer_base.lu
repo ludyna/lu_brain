@@ -123,26 +123,25 @@
 	}
 
 
-	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer, Lu_Mem mem)
+	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base self, Lu_Mem mem)
 	{
 		lu__assert(mem);
-		lu__assert(layer);
-		lu__assert(layer->destroy);
-
-		if (layer->c)
+		lu__assert(self);
+		
+		if (self->c)
 		{
-			if (layer->c->type == LU_ST__ONE)
+			if (self->c->type == LU_ST__ONE)
 			{
-				Lu_Slot_One one = (Lu_Slot_One) layer->c;
+				Lu_Slot_One one = (Lu_Slot_One) self->c;
 
 				if (one->item)
 				{
 					lu_s_layer_base__recursive_destroy((Lu_S_Layer_Base) one->item, mem);
 				}
 			}
-			else if (layer->c->type == LU_ST__ARR)
+			else if (self->c->type == LU_ST__ARR)
 			{
-				Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) layer->c;
+				Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) self->c;
 
 				if (slot_arr->items)
 				{
@@ -165,5 +164,6 @@
 			}
 		}
 
-		layer->destroy(layer, mem);
+		lu__assert(self->destroy);
+		self->destroy(self, mem);
 	}

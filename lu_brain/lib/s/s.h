@@ -229,6 +229,7 @@
 	static Lu_S_Layer_Frame lu_s_map_base__get_frame(Lu_S_Map_Base self);
 
 	static void lu_s_map_base__connect(Lu_S_Map_Base p, Lu_S_Map_Base c);
+	static void lu_s_map_base__recursive_destroy(Lu_S_Map_Base self);
 
 	//
 	// Fractals

@@ -61,20 +61,27 @@
 	static void lu_s_map_base__destroy(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
-		lu__assert(self->p == NULL);
-		lu__assert(self->c);
 		lu__assert(self->mem);
 
 		lu_size i;
 		Lu_Slot_Base slot;
+		Lu_Slot_Base slot_2;
 
 		// destroy bases slots
 		for (i = 0; i < lu_arr__count(self->bases); i++)
 		{
 			slot = (Lu_Slot_Base) lu_arr__get(self->bases, i);
 			lu__assert(slot);
-			lu__assert(slot->destroy);
 
+			// Because apexes could contain same slot (if level has only one layer, which 
+			// is both base and apex), we should set it to NULL in other apexes
+
+			slot_2 = (Lu_Slot_Base) lu_arr__get(self->apexes, i);
+
+			if (slot == slot_2)
+				lu_arr__set(self->apexes, i, NULL);
+
+			lu__assert(slot->destroy);
 			slot->destroy(slot, self->mem);
 		}
 
@@ -82,10 +89,13 @@
 		for (i = 0; i < lu_arr__count(self->apexes); i++)
 		{
 			slot = (Lu_Slot_Base) lu_arr__get(self->apexes, i);
-			lu__assert(slot);
-			lu__assert(slot->destroy);
+			
+			if (slot)
+			{
+				lu__assert(slot->destroy);
 
-			slot->destroy(slot, self->mem);
+				slot->destroy(slot, self->mem);
+			}
 		}
 
 		if (self->c)
@@ -102,6 +112,7 @@
 		lu_arr__destroy(self->apexes);
 		self->apexes = NULL;
 
+		lu__debug("\n\n\n TTTTTT \n\n\n");
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
@@ -317,4 +328,49 @@
 		lu__assert(slot_arr->items);
 
 		lu_arr__append(slot_arr->items, (lu_p_void) c);
+	}
+
+	static void lu_s_map_base__recursive_destroy(Lu_S_Map_Base self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem);
+		
+		if (self->c)
+		{
+			if (self->c->type == LU_ST__ONE)
+			{
+				Lu_Slot_One one = (Lu_Slot_One) self->c;
+
+				if (one->item)
+				{
+					lu_s_map_base__recursive_destroy((Lu_S_Map_Base) one->item);
+				}
+			}
+			else if (self->c->type == LU_ST__ARR)
+			{
+				Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) self->c;
+
+				if (slot_arr->items)
+				{
+
+					Lu_Arr arr = slot_arr->items;
+
+					for (lu_size i = 0; i < lu_arr__count(arr); i++)
+					{
+						Lu_S_Map_Base c_map = (Lu_S_Map_Base) lu_arr__get(arr, i);
+						if (c_map)
+						{
+							lu_s_map_base__recursive_destroy(c_map);
+						}
+					}
+				}
+			}
+			else
+			{
+				lu__assert(0);
+			}
+		}
+
+		lu__assert(self->destroy);
+		self->destroy(self);
 	}

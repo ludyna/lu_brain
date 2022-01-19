@@ -91,8 +91,10 @@
 				lu_s_layer_base__recursive_destroy(layer_base, self->mem);
 			}
 
-			lu__assert(self->fractal->destroy);
-			self->fractal->destroy(self->fractal);
+			lu_s_map_base__recursive_destroy(self->fractal);
+
+			// lu__assert(self->fractal->destroy);
+			// self->fractal->destroy(self->fractal);
 		}
 
 		if (self->frames)
