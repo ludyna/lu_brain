@@ -122,3 +122,48 @@
 		}
 	}
 
+
+	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer, Lu_Mem mem)
+	{
+		lu__assert(mem);
+		lu__assert(layer);
+		lu__assert(layer->destroy);
+
+		if (layer->c)
+		{
+			if (layer->c->type == LU_ST__ONE)
+			{
+				Lu_Slot_One one = (Lu_Slot_One) layer->c;
+
+				if (one->item)
+				{
+					lu_s_layer_base__recursive_destroy((Lu_S_Layer_Base) one->item, mem);
+				}
+			}
+			else if (layer->c->type == LU_ST__ARR)
+			{
+				Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) layer->c;
+
+				if (slot_arr->items)
+				{
+
+					Lu_Arr arr = slot_arr->items;
+
+					for (lu_size i = 0; i < lu_arr__count(arr); i++)
+					{
+						Lu_S_Layer_Base c_layer = (Lu_S_Layer_Base) lu_arr__get(arr, i);
+						if (c_layer)
+						{
+							lu_s_layer_base__recursive_destroy(c_layer, mem);
+						}
+					}
+				}
+			}
+			else
+			{
+				lu__assert(0);
+			}
+		}
+
+		layer->destroy(layer, mem);
+	}

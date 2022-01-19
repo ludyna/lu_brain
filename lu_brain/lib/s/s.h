@@ -138,6 +138,7 @@
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self, Lu_Mem mem);
 
 	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c);
+	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer, Lu_Mem mem);
 
 	//
 	// Lu_S_Layer_Comp 
@@ -339,8 +340,6 @@
 	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
 	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Layer_Frame p, Lu_Arr apexes, Lu_Rec rec);
-
-	static void lu_s__destroy_fractal(Lu_Mem, Lu_S_Layer_Base layer);
 
 	//
 	// 
