@@ -174,7 +174,7 @@
 		struct lu_n_config n_config;
 		n_config.names_size = self->config.net.names_size;
 
-		self->n = lu_n__create(self, n_config);
+		self->n = lu_n__create(self->n_mem, n_config);
 		lu__user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
 
 		return self;

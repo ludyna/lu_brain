@@ -24,12 +24,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N  
 	
-	struct lu_n {
+	struct lu_n { 
 
 		struct lu_n_config config;
-
-		// vlasnyk
-		Lu_Brain brain;
+		Lu_Mem mem;
 
 		Names_List names;
 
@@ -39,7 +37,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N Create & Destroy
 
-	static Lu_N lu_n__create(Lu_Brain brain, struct lu_n_config config);
+	static Lu_N lu_n__create(Lu_Mem mem, struct lu_n_config config);
 	static void lu_n__destroy(Lu_N self);
 
 ///////////////////////////////////////////////////////////////////////////////
