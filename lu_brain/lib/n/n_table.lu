@@ -1,0 +1,213 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  N_Table_Node
+
+	static void n_table_node__destroy(N_Table_Node self, Lu_Mem mem)
+	{
+		N_Table_Node prev;
+		while (self)
+		{
+			prev = self->prev;
+
+			// we don't care about destroying sefl->cell here because they all are 
+			// destroyed (freed) in n_cell_allocator
+			// vydaliaty komirky ce skladna tema (bo ye zviazky z inshymy i td)
+			// ye inshi sposoby robyty "defragmentaciyu" komirok
+
+			lu_mem__free(mem, (lu_p_byte) self);
+
+			self = prev;
+		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+//  N_Table Create And Destroy
+
+	static N_Table n_table__create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type)
+	{
+		lu__assert(mem);
+
+		if (size_in_cells == 0)
+			return NULL;
+
+		N_Table self = (N_Table) lu_mem__alloc(mem, sizeof(struct lu_n_table));
+		lu__assert(self);
+
+		self->mem = mem;
+		self->size_in_cells = size_in_cells;
+		self->cell_type = cell_type;
+		
+		lu_size bytes_size = sizeof(N_Table_Node) * self->size_in_cells;
+		
+		self->units = (N_Table_Node*) lu_mem__alloc(mem, bytes_size);
+
+		memset(self->units, 0, bytes_size);
+
+		lu__assert(self->units);
+
+		return self;
+	}
+
+	static void n_table__destroy(N_Table self)
+	{
+		lu__assert(self);
+
+		Lu_Mem mem = self->mem;
+
+		N_Table_Node unit = NULL;
+		N_Table_Node next = NULL;
+
+		if (self->units) {
+			
+			for (lu_size i = 0; i < self->size_in_cells; i++)
+			{
+				unit = self->units[i];
+
+				if (unit == NULL) continue;
+				
+				n_table_node__destroy(unit, mem);
+			}
+			
+			lu_mem__free(mem, (lu_p_byte) self->units);
+		}
+
+		self->size_in_cells = 0;
+		self->units = NULL;
+		self->mem = NULL;
+		lu_mem__free(mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+//  N_Table Main Methods
+
+	static N_Table_Node n_table__node_find(N_Table self, N_Cell_0 cell, lu_size hash)
+	{
+		lu__assert(self);
+		lu__assert(cell);
+
+		lu_size index = n_table__hash_to_index(self, hash);
+
+		N_Table_Node node = self->units[index];
+
+		while (node && node->cell != cell) node = node->prev;
+
+		return node;
+	}
+
+	static void n_table__cell_remove(N_Table self, lu_size hash, N_Cell_0 dest)
+	{
+		lu__assert(self);
+		lu__assert(dest);
+		
+		lu__user_assert_void(false, "NOT IMPLEMENTED");
+	}
+
+	static N_Cell_0 n_table__cell_get_1(N_Table self, lu_size hash, N_Cell_0 top_left)
+	{
+		lu__assert(self);
+		lu__assert(top_left);
+		lu__assert(self->cell_type == N_CT__1);
+
+		lu_size index = n_table__hash_to_index(self, hash);
+
+		N_Table_Node node = self->units[index];
+
+		while (node && node->cell && !n_cell__parent_eq_1((N_Cell_1) node->cell, top_left)) node = node->prev;
+
+		if (node) return node->cell;
+
+		return NULL;
+	}
+
+ 	static N_Cell_0 n_table__cell_get_2(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right)
+ 	{
+		lu__assert(self);
+		lu__assert(top_left);
+		lu__assert(top_right);
+		lu__assert(self->cell_type == N_CT__2);
+
+		lu_size index = n_table__hash_to_index(self, hash);
+
+		N_Table_Node node = self->units[index];
+
+		while (node && node->cell && !n_cell__parent_eq_2((N_Cell_2) node->cell, top_left, top_right)) node = node->prev;
+
+		if (node) return node->cell;
+
+		return NULL;
+ 	}
+
+ 	static N_Cell_0 n_table__cell_get_3(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right, N_Cell_0 bottom_left)
+ 	{
+		lu__assert(self);
+		lu__assert(top_left);
+		lu__assert(top_right);
+		lu__assert(bottom_left);
+		lu__assert(self->cell_type == N_CT__3);
+
+		lu_size index = n_table__hash_to_index(self, hash);
+
+		N_Table_Node node = self->units[index];
+
+		while (node && node->cell && !n_cell__parent_eq_3((N_Cell_3) node->cell, top_left, top_right, bottom_left)) node = node->prev;
+
+		if (node) return node->cell;
+
+		return NULL;
+ 	}
+
+ 	static N_Cell_0 n_table__cell_get_4(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right, N_Cell_0 bottom_left, N_Cell_0 bottom_right)
+ 	{
+		lu__assert(self);
+		lu__assert(top_left);
+		lu__assert(top_right);
+		lu__assert(bottom_left);
+		lu__assert(self->cell_type == N_CT__4);
+
+		lu_size index = n_table__hash_to_index(self, hash);
+
+		N_Table_Node node = self->units[index];
+
+		while (node && node->cell && !n_cell__parent_eq_4((N_Cell_4) node->cell, top_left, top_right, bottom_left, bottom_right)) node = node->prev;
+
+		if (node) return node->cell;
+
+		return NULL;
+ 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// N_Table Utility    
+
+	static void n_table__print_distribution(N_Table self)
+	{
+		lu__assert(self);
+		
+		lu_size i;
+		lu_size count;
+		lu_size total_count = 0;
+		N_Table_Node node;
+
+		printf("\n Table distribution:");
+		for (i = 0; i < self->size_in_cells; i++)
+		{
+			node = self->units[i];
+
+			if (node == NULL) continue;
+
+			count = 0;
+			while (node) 
+			{
+				++count;
+				node = node->prev;
+			}
+
+			total_count += count;
+			printf("\n [%lu]: %lu", i, count);
+		}
+
+		printf("\n Total count: %lu", total_count);
+	}

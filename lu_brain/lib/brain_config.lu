@@ -18,7 +18,7 @@
 			.net.size_in_cell_2			= 10000, 
 			.net.size_in_cell_3			= 10000, 
 			.net.size_in_cell_4			= 10000, 
-			.net.hnn_table_mod			= 2,
+			.net.n_table_mod			= 2,
 
 			.space.frames_size 			= 256,
 			.space.apexes_size 			= 256,
@@ -45,7 +45,7 @@
 		lu__user_assert(config->net.size_in_cell_2 > 0, "net.size_in_cell_2 should be greater than 0");
 		lu__user_assert(config->net.size_in_cell_3 > 0, "net.size_in_cell_3 should be greater than 0");
 		lu__user_assert(config->net.size_in_cell_4 > 0, "net.size_in_cell_4 should be greater than 0");
-		lu__user_assert(config->net.hnn_table_mod > 1, "net.hnn_table_mod should be greater than 1");
+		lu__user_assert(config->net.n_table_mod > 1, "net.n_table_mod should be greater than 1");
 
 		return config;
 	}

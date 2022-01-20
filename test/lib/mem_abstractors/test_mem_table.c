@@ -24,7 +24,7 @@ void test_mem_table1(void)
         /*record_size_in_bytes*/    sizeof(struct test1), 
         /*table_size_in_records*/   3, 
         /*percent*/                 0, 
-        /*flags*/                   MTF_FREEABLE
+        /*flags*/                   LU_MFT__FREEABLE
     );
 
     TEST_ASSERT( ((Lu_Mem_Stack_Table)mt)->mem_stack == (Lu_Mem_Stack) mem );

@@ -69,7 +69,7 @@ Lu_S_List lu_s_list__create(Lu_Mem mem, lu_size limit_size, lu_fp_compare compar
 							sizeof(struct lu_s_node), 
 							self->limit_size * 3 + self->level_size, 
 							0, 
-							MTF_FREEABLE
+							LU_MFT__FREEABLE
 						);
 
 	lu__assert(self->mem_table != NULL);

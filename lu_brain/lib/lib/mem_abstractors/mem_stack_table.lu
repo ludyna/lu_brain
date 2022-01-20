@@ -67,7 +67,7 @@
 			lu_size a = lu_mem_stack__avail(mem_stack) * percent  / 100.0;
 
 			lu_size fis = record_size_in_bytes;
-			if (flags & MTF_FREEABLE) 
+			if (flags & LU_MFT__FREEABLE) 
 				fis += sizeof(lu_p_byte);
 
 			table_size_in_records = (a - sizeof(struct lu_mem_stack_table)) / fis;
@@ -75,7 +75,7 @@
 
 		lu_size full_size = sizeof(struct lu_mem_stack_table) + record_size_in_bytes * table_size_in_records;
 		
-		if (flags & MTF_FREEABLE) 
+		if (flags & LU_MFT__FREEABLE) 
 			full_size += sizeof(lu_p_byte) * table_size_in_records;
 
 		Lu_Mem mem = (Lu_Mem) mem_stack;

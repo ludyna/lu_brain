@@ -75,7 +75,7 @@
 
 	struct lu_cell {
 		Lu_Layer layer;
-		Hnn_Cell_0 hnn_cell_0;
+		N_Cell_0 n_cell_0;
 		lu_value sig;
 	};
 

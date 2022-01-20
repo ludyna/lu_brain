@@ -3,5 +3,7 @@
 */
 
 #include "names/_module.lu"
-#include "hnn/_module.lu"
+#include "n_cell.lu"
+#include "n_cell_allocator.lu"
+#include "n_table.lu"
 #include "n.lu"

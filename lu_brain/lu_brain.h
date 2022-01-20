@@ -59,7 +59,7 @@
 		lu_size size_in_cell_3; 
 		lu_size size_in_cell_4;
 
-		lu_size hnn_table_mod;				
+		lu_size n_table_mod;				
 	};
 
 	struct lu_brain_config {

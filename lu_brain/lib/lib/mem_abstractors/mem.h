@@ -88,7 +88,8 @@
 // Lu_Mem_Table
 
 	enum lu_mem_table_flags {
-		MTF_FREEABLE = 1
+		LU_MFT__DEFAULT = 0,
+		LU_MFT__FREEABLE = 1
 	};
 
 	struct lu_mem_table {

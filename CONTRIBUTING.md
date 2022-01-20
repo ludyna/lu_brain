@@ -59,8 +59,8 @@ Opposite to "create" is "destroy".
 
 When creation of object(struct) is "controlled" by other object (other than Mem) you can also use spawn() and die():
 
-	Hnn_Cell hnn_cell_spawn(Hnn self, lu_size type); // here Hnn_Cell creation is controlled by Hnn object
-	void hnn_cell_die(Hnn_self, Hnn_Cell cell);
+	N_Cell n_cell_spawn(Hnn self, lu_size type); // here N_Cell creation is controlled by Hnn object
+	void n_cell_die(N_self, N_Cell cell);
 
 Initialiazators (initialize data structure but not allocate) look like this:
 

@@ -3,12 +3,17 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Table
+
+	
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_N Config 
 
 	struct lu_n_config {
 		lu_size names_size;
 
-		struct lu_hnn_config hnn_config;
+		//struct lu_n_config n_config;
 	};
 
 	static inline Lu_N_Config lu_n_config__validate(Lu_N_Config self)
@@ -16,7 +21,7 @@
 		lu__assert(self);
 		lu__assert(self->names_size > 0);
 
-		hnn_config_validate(&self->hnn_config);
+		//n_config_validate(&self->n_config);
 
 		return self;
 	}
@@ -31,7 +36,7 @@
 
 		Names_List names;
 
-		Hnn hnn;
+		//Hnn hnn;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -18,7 +18,7 @@
 
 Hnn g_hnn = NULL;
 Mem_Debugger g_md = NULL;
-struct lu_hnn_config g_config = {
+struct lu_n_config g_config = {
         .size_in_cell_0 = INPUT_WIDTH * INPUT_HEIGHT * INPUT_DEAPTH, 
         .size_in_cell_1 = 5,
         .size_in_cell_2 = 5, 
@@ -40,14 +40,14 @@ void setUp(void)
     g_md = mem_debugger_create(lu_g_mem);
     TEST_ASSERT(g_md);
 
-    g_hnn = hnn_create(lu_g_mem, g_config);
+    g_hnn = n_create(lu_g_mem, g_config);
     TEST_ASSERT(g_hnn);
 }
 
 void tearDown(void)
 {	
 	lu__debug("\ntearDown");
-    hnn_destroy(g_hnn);
+    n_destroy(g_hnn);
 
     mem_debugger_print(g_md);
     if(!mem_debugger_is_all_clear(g_md))
@@ -61,13 +61,13 @@ void tearDown(void)
 ///////////////////////////////////////////////////////////////////////////////
 // Tests
 
-Hnn_Cell_4 spawn_4(Hnn_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH], lu_size x, lu_size y, lu_size d)
+N_Cell_4 spawn_4(N_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH], lu_size x, lu_size y, lu_size d)
 {
     if (x + 1 >= INPUT_WIDTH) return NULL;
     if (y + 1 >= INPUT_HEIGHT) return NULL;
     if (d + 1 >= INPUT_DEAPTH) return NULL;
 
-    return hnn_cell_spawn_connect_4(
+    return n_cell_spawn_connect_4(
         g_hnn, 
         inputs[x][y][d], 
         inputs[x + 1][y][d], 
@@ -78,7 +78,7 @@ Hnn_Cell_4 spawn_4(Hnn_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH], l
 
 void test_distribution(void) 
 {
-	Hnn_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH];
+	N_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH];
 
     lu_size y;
     lu_size x;
@@ -87,10 +87,10 @@ void test_distribution(void)
         for(y = 0; y < INPUT_HEIGHT; y++)
             for(x = 0; x < INPUT_WIDTH; x++)
             {
-                inputs[x][y][d] = hnn_cell_spawn(g_hnn, HNN_CT_0);
+                inputs[x][y][d] = n_cell_spawn(g_hnn, N_CT__0);
             }
 
-    Hnn_Cell_4 cell;
+    N_Cell_4 cell;
     for(d = 0; d < INPUT_DEAPTH; d++) 
         for(y = 0; y < INPUT_HEIGHT; y++)
             for(x = 0; x < INPUT_WIDTH; x++)
@@ -98,5 +98,5 @@ void test_distribution(void)
                 cell = spawn_4(inputs, x, y, d);
             }
 
-    hnn_print_distribution(g_hnn, HNN_CT_4);
+    n_print_distribution(g_hnn, N_CT__4);
 }

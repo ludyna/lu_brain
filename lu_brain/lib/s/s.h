@@ -75,7 +75,7 @@
 		lu_size 				cells_size;
 
 		// w x h x cells_size_i, empty by default
-		Hnn_Cell_Value* cells;
+		N_Cell_Value* cells;
 	};
 
 	static Lu_S_View_Comp lu_s_view_comp__init(Lu_S_Layer_Comp, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
