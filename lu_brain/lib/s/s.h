@@ -92,24 +92,30 @@
 //
 
 	//
-	// Base
+	// Lu_S_Layer_Base
 	//
 
 	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
 		lu_size level;
 
+		Lu_Mem mem;
+		Lu_Mem n_mem;
+		Lu_Mem w_mem;
+
 		Lu_S_Layer_Base p;
 		Lu_Slot_Base c;
 
-		// n_table
+		N_Table n_table;
+		Lu_Mem_Table w_tables;
 
 		// virtual destructor
 		void (*destroy)(Lu_S_Layer_Base, Lu_Mem);
 	};
 
-	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_no_c_slot(
+	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
+		Lu_Mem mem,
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p,
@@ -139,6 +145,19 @@
 
 	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c);
 	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer, Lu_Mem mem);
+
+	static void lu_s_layer_base__create_n_table(
+		Lu_S_Layer_Base self, 
+		Lu_Mem mem, 
+		lu_size size_in_cells, 
+		lu_byte cell_type
+	);
+
+	static void lu_s_layer_base__create_w_tables(
+		Lu_S_Layer_Base self, 
+		Lu_Mem mem
+	);
+
 
 	//
 	// Lu_S_Layer_Comp 

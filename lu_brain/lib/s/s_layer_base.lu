@@ -5,8 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_no_c_slot(
+	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
+		Lu_Mem mem,
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p,
@@ -22,6 +23,9 @@
 		self->c = NULL;
 		self->destroy = destroy;
 
+		self->n_table = NULL;
+		self->w_tables = NULL;
+
 		return self;
 	}
 
@@ -34,17 +38,11 @@
 		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
 	)
 	{
+		self = lu_s_layer_base__init(self, mem, type, level, p, destroy);
 		lu__assert(self);
-		lu__assert(type < LU_S_LT__END);
-
-		self->type = type;
-		self->level = level;
-		self->p = p;
 		
 		self->c = (Lu_Slot_Base) lu_slot_one__create(mem, NULL);
 		lu__assert(self->c);
-
-		self->destroy = destroy;
 
 		return self;
 	}
@@ -59,17 +57,11 @@
 		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
 	)
 	{
+		self = lu_s_layer_base__init(self, mem, type, level, p, destroy);
 		lu__assert(self);
-		lu__assert(type < LU_S_LT__END);
-
-		self->type = type;
-		self->level = level;
-		self->p = p;
  
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, children_count, true);
 		lu__assert(self->c);
-
-		self->destroy = destroy;
 
 		return self;
 	}
