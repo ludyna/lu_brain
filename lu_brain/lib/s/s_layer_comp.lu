@@ -22,12 +22,12 @@
 		return self;
 	}
 
-	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self, Lu_Mem mem)
+	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self)
 	{
 		lu__assert(self);
-		lu__assert(mem);
+		lu__assert(self->s_mem);
 
-		lu_s_layer_base__deinit(self, mem);
+		lu_s_layer_base__deinit(self);
 
-		lu_mem__free(mem, (lu_p_byte) self);
+		lu_mem__free(self->s_mem, (lu_p_byte) self);
 	}

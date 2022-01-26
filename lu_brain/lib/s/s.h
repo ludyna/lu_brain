@@ -88,18 +88,26 @@
 	static inline lu_value lu_s_view_comp__step_norm_dist(Lu_S_Layer_Comp self);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Layers
+// Lu_S_Layer_Base
 //
 
-	//
-	// Lu_S_Layer_Base
-	//
+	struct lu_s_layer_base_config {
+		
+		Lu_Mem s_mem;
+		Lu_Mem n_mem;
+		Lu_Mem w_mem;
+
+		enum lu_s_layer_type type;
+		lu_size level;
+
+		void (*destroy)(Lu_S_Layer_Base, Lu_Mem);
+	};
 
 	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
 		lu_size level;
 
-		Lu_Mem mem;
+		Lu_Mem s_mem;
 		Lu_Mem n_mem;
 		Lu_Mem w_mem;
 
@@ -110,7 +118,7 @@
 		Lu_Mem_Table w_tables;
 
 		// virtual destructor
-		void (*destroy)(Lu_S_Layer_Base, Lu_Mem);
+		void (*destroy)(Lu_S_Layer_Base);
 	};
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
@@ -119,7 +127,7 @@
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p,
-		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
@@ -128,7 +136,7 @@
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p,
-		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
@@ -138,26 +146,41 @@
 		lu_size level,
 		Lu_S_Layer_Base p,
 		lu_size children_count,
-		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
-	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self, Lu_Mem mem);
+	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self);
 
 	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c);
-	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer, Lu_Mem mem);
+	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer);
+
+	//
+	// Lu_S_Layer_Base n_table
+	//
 
 	static void lu_s_layer_base__create_n_table(
 		Lu_S_Layer_Base self, 
-		Lu_Mem mem, 
+		Lu_Mem n_mem, 
 		lu_size size_in_cells, 
 		lu_byte cell_type
 	);
 
+	static void lu_s_layer_base__destroy_n_table(Lu_S_Layer_Base self);
+
+	//
+	// Lu_S_Layer_Base w_tables
+	//
+
 	static void lu_s_layer_base__create_w_tables(
 		Lu_S_Layer_Base self, 
-		Lu_Mem mem
+		Lu_Mem w_mem
 	);
 
+	static void lu_s_layer_base__destroy_w_tables(Lu_S_Layer_Base self);
+
+///////////////////////////////////////////////////////////////////////////////
+// Layers
+//
 
 	//
 	// Lu_S_Layer_Comp 
@@ -171,7 +194,7 @@
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Mem mem, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
-	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self, Lu_Mem);
+	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
 	//
 	// Lu_S_Layer_Frame
@@ -184,7 +207,7 @@
 	};
 
 	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Mem mem, Lu_Rec rec);
-	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self, Lu_Mem mem);
+	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self);
 
 	//
 	// Lu_S_Layer
@@ -197,7 +220,7 @@
 	};
 
 	static Lu_S_Layer lu_s_layer__create(Lu_Mem mem, lu_size level, lu_size children_count);
-	static void lu_s_layer__destroy(Lu_S_Layer_Base self, Lu_Mem);
+	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
 
 ///////////////////////////////////////////////////////////////////////////////

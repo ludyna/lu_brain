@@ -7,15 +7,18 @@
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
-		Lu_Mem mem,
+		Lu_Mem s_mem,
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p,
-		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
 		lu__assert(self);
+		lu__assert(s_mem);
 		lu__assert(type < LU_S_LT__END);
+
+		self->s_mem = s_mem;
 
 		self->type = type;
 		self->level = level;
@@ -35,7 +38,7 @@
 		enum lu_s_layer_type type, 
 		lu_size level,
 		Lu_S_Layer_Base p,
-		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
 		self = lu_s_layer_base__init(self, mem, type, level, p, destroy);
@@ -54,7 +57,7 @@
 		lu_size level,
 		Lu_S_Layer_Base p,
 		lu_size children_count,
-		void (*destroy)(Lu_S_Layer_Base, Lu_Mem)
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
 		self = lu_s_layer_base__init(self, mem, type, level, p, destroy);
@@ -66,14 +69,14 @@
 		return self;
 	}
 
-	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self, Lu_Mem mem)
+	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self)
 	{
 		lu__assert(self);
-		lu__assert(mem);
+		lu__assert(self->s_mem);
 
 		if (self->c)
 		{
-			self->c->destroy(self->c, mem);
+			self->c->destroy(self->c, self->s_mem);
 			self->c = NULL;
 		}
 
@@ -115,10 +118,10 @@
 	}
 
 
-	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base self, Lu_Mem mem)
+	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base self)
 	{
-		lu__assert(mem);
 		lu__assert(self);
+		lu__assert(self->s_mem);
 		
 		if (self->c)
 		{
@@ -128,7 +131,7 @@
 
 				if (one->item)
 				{
-					lu_s_layer_base__recursive_destroy((Lu_S_Layer_Base) one->item, mem);
+					lu_s_layer_base__recursive_destroy((Lu_S_Layer_Base) one->item);
 				}
 			}
 			else if (self->c->type == LU_ST__ARR)
@@ -145,7 +148,7 @@
 						Lu_S_Layer_Base c_layer = (Lu_S_Layer_Base) lu_arr__get(arr, i);
 						if (c_layer)
 						{
-							lu_s_layer_base__recursive_destroy(c_layer, mem);
+							lu_s_layer_base__recursive_destroy(c_layer);
 						}
 					}
 				}
@@ -157,5 +160,28 @@
 		}
 
 		lu__assert(self->destroy);
-		self->destroy(self, mem);
+		self->destroy(self);
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// n_table
+
+	static void lu_s_layer_base__create_n_table(
+		Lu_S_Layer_Base self, 
+		Lu_Mem n_mem, 
+		lu_size size_in_cells, 
+		lu_byte cell_type
+	);
+
+	static void lu_s_layer_base__destroy_n_table(Lu_S_Layer_Base self);
+
+///////////////////////////////////////////////////////////////////////////////
+// w_tables
+
+	static void lu_s_layer_base__create_w_tables(
+		Lu_S_Layer_Base self, 
+		Lu_Mem w_mem
+	);
+
+	static void lu_s_layer_base__destroy_w_tables(Lu_S_Layer_Base self);

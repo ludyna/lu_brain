@@ -265,7 +265,7 @@
 		Lu_S_Layer_Base apex = (Lu_S_Layer_Base) lu_arr__last(self->apexes);
 		lu__assert(apex);
 
-		apex->destroy(apex, self->mem);
+		apex->destroy(apex);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
