@@ -5,6 +5,16 @@
 typedef struct lu_n_config* 		Lu_N_Config;
 typedef struct lu_n* 				Lu_N;
 
+enum n_cell_type {
+	N_CT__0,
+	N_CT__VALUE,
+	N_CT__1,
+	N_CT__2,
+	N_CT__3,
+	N_CT__4,
+	N_CT__END
+};
+
 typedef struct lu_n_cell_0* N_Cell_0; 
 typedef struct lu_n_cell_value* N_Cell_Value;
 typedef struct lu_n_cell_1* N_Cell_1;

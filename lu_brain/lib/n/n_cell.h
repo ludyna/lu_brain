@@ -5,15 +5,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // N_Cell_0
 
-	enum n_cell_type {
-		N_CT__0,
-		N_CT__VALUE,
-		N_CT__1,
-		N_CT__2,
-		N_CT__3,
-		N_CT__4
-	};
-
 	struct lu_n_cell_0 {
 		lu_byte type;
 	};

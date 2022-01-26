@@ -7,24 +7,20 @@
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
-		Lu_Mem s_mem,
-		enum lu_s_layer_type type, 
-		lu_size level,
-		Lu_S_Layer_Base p,
-		void (*destroy)(Lu_S_Layer_Base)
+		Lu_S_Layer_Base_Config config, 
+		Lu_S_Layer_Base p
 	)
 	{
-		lu__assert(self);
-		lu__assert(s_mem);
-		lu__assert(type < LU_S_LT__END);
+		config = lu_s_layer_base_config__validate(config);
+		lu__assert(config);
 
-		self->s_mem = s_mem;
+		self->s_mem = config->s_mem;
 
-		self->type = type;
-		self->level = level;
+		self->type = config->type;
+		self->level = config->level;
 		self->p = p;
 		self->c = NULL;
-		self->destroy = destroy;
+		self->destroy = config->destroy;
 
 		self->n_table = NULL;
 		self->w_tables = NULL;
@@ -34,17 +30,14 @@
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
 		Lu_S_Layer_Base self, 
-		Lu_Mem mem,
-		enum lu_s_layer_type type, 
-		lu_size level,
-		Lu_S_Layer_Base p,
-		void (*destroy)(Lu_S_Layer_Base)
+		Lu_S_Layer_Base_Config config, 
+		Lu_S_Layer_Base p
 	)
 	{
-		self = lu_s_layer_base__init(self, mem, type, level, p, destroy);
+		self = lu_s_layer_base__init(self, config, p);
 		lu__assert(self);
 		
-		self->c = (Lu_Slot_Base) lu_slot_one__create(mem, NULL);
+		self->c = (Lu_Slot_Base) lu_slot_one__create(self->s_mem, NULL);
 		lu__assert(self->c);
 
 		return self;
@@ -52,18 +45,15 @@
 	
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
 		Lu_S_Layer_Base self, 
-		Lu_Mem mem,
-		enum lu_s_layer_type type, 
-		lu_size level,
+		Lu_S_Layer_Base_Config config, 
 		Lu_S_Layer_Base p,
-		lu_size children_count,
-		void (*destroy)(Lu_S_Layer_Base)
+		lu_size children_count
 	)
 	{
-		self = lu_s_layer_base__init(self, mem, type, level, p, destroy);
+		self = lu_s_layer_base__init(self, config, p);
 		lu__assert(self);
  
-		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, children_count, true);
+		self->c = (Lu_Slot_Base) lu_slot_arr__create(self->s_mem, children_count, true);
 		lu__assert(self->c);
 
 		return self;

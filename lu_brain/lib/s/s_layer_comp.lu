@@ -10,13 +10,20 @@
 		Lu_S_Layer_Comp self = (Lu_S_Layer_Comp) lu_mem__alloc(mem, sizeof(struct lu_s_layer_comp));
 		lu__assert(self);
 
+		struct lu_s_layer_base_config c;
+
+		lu_s_layer_base_config__init(&c);
+
+		c.s_mem = mem;
+		c.type = LU_S_LT__COMP;
+		c.level = 0;
+		c.destroy = lu_s_layer_comp__destroy;
+
+
 		lu_s_layer_base__init(
 			&self->super, 
-			mem, 
-			LU_S_LT__COMP, 
-			0, 
-			(Lu_S_Layer_Base)frame, 
-			lu_s_layer_comp__destroy
+			&c, 
+			(Lu_S_Layer_Base)frame 
 		);
 
 		return self;
