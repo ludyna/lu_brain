@@ -4,36 +4,25 @@ Lu_Brain is a _pattern database_ open-source C library.
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
-## About
+## Why Lu_Brain
 
-A _pattern_ is a piece of repeatable (but not necessarily exact) information in the flow of information. Thus, patterns emerge from the flow of information. For example, our ability to recognize objects from visual information flows and words from auditory information flows are pattern recognitions.
+#### Dynamicity
 
-Lu_Brain is a _pattern database_ which means it can extract, match and store patterns in an optimal way. 
+Lu_Brain allows "learning on the fly" without retraining of ANN. With Lu_Brain, it is natural to "forget" and "learn" new patterns dynamically. It also allows the creation of AI that learns while it functions. Imagine game AI that learns new tricks from players while they play.
 
-Lu_Brain main features:
+#### Transparency and Control
 
-- pattern recognition
-- pattern search
-- pattern storage
-- pattern restoration
-- pattern removal 
-- pattern operations
-- organizing patterns into hierarchies
-- transparent access to all data and data manipulation
+When working with "classic" artificial neural networks(ANN), information is in weights, but it is hard to understand where. Lu_Brain gives you a complete understanding of where information is. You can ask Lu_Brain to forget specific patterns or replace them with new ones. You can see a complete path that led to a specific decision. It means that you have complete data transparency and control over how AI works.
 
-## Speed 
+#### Speed
 
-Pattern storage speed: **O(C)** (no gradient descent/ascent)
+Learning speed does not depend on the number of already learned patterns, which means that dynamic learning speed is O(1). 
+Pattern recognition speed is also O(1).
 
-Pattern recognition/search/match speed: **O(C)**
-
-where C is constant.
-
-How is it possible? It is possible. Your mind works like that too.
 
 ## Goals  
 
-1. The fastest pattern recognition and manipulation in the World
+1. The fastest dynamic pattern learning and manipulation in the World
 2. Pattern database with complete data transparency and ease of access
 3. Easy to use, well designed and architected, fast and bug-free, enjoyable to contribute software
 
@@ -41,11 +30,10 @@ How is it possible? It is possible. Your mind works like that too.
 
 Q: **Why C?**
 
-A: In short, C is **the best** language for the job. Also, C is very enjoyable when used in the way we do :).
+A: In short, C is **the best** language for the job (not C++, Go, Rust, etc.). 
 
 ## Legal
 
 ___The library is free to use by everyone with good intentions (MIT_LICENSE).___
 
 The library is our expression of goodwill and good intention towards humanity.
-
