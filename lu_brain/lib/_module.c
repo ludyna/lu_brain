@@ -18,5 +18,6 @@
 #include "seq/_module.lu"
 #include "w/_module.lu" 
 #include "s/_module.lu"
+#include "wave/_module.lu"
 
 #include "brain.lu"

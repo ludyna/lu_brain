@@ -23,7 +23,7 @@
 		self->destroy = config->destroy;
 
 		self->n_table = NULL;
-		self->w_tables = NULL;
+		self->w_table = NULL;
 
 		return self;
 	}

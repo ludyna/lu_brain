@@ -31,15 +31,17 @@
 		lu_size size_in_cells;
 		lu_byte cell_type;
 	};
- 
-///////////////////////////////////////////////////////////////////////////////
-// N_Table Create And Destroy
+
+	//
+	// Create & destroy
+	// 
 
 	static N_Table n_table__create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type);
 	static void n_table__destroy(N_Table self);
 
-///////////////////////////////////////////////////////////////////////////////
-// N_Table Main Methods
+	//
+	// Main methods
+	//
 
 	static inline lu_size n_table__hash_to_index(N_Table self, lu_size hash)
 	{
@@ -72,7 +74,8 @@
  	static N_Cell_0 n_table__cell_get_3(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right, N_Cell_0 bottom_left);
  	static N_Cell_0 n_table__cell_get_4(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right, N_Cell_0 bottom_left, N_Cell_0 bottom_right);
 
-///////////////////////////////////////////////////////////////////////////////
-// N_Table Utility    
+	//
+	// Utility
+	//  
 
 	static void n_table__print_distribution(N_Table self);

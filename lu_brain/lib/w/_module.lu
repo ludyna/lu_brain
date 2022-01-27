@@ -2,12 +2,3 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-#include "cell.lu"
-#include "neu.lu" 
-#include "layer.lu"
-#include "block_rec_layer.lu"
-#include "block_layer.lu"
-#include "wave_config.lu"
-#include "wave_methods.lu"
-#include "wave_process.lu"
-#include "wave_create_destroy.lu"
