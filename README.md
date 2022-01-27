@@ -12,7 +12,7 @@ Lu_Brain allows "learning on the fly" without retraining of artificial neural ne
 
 #### Transparency and Control
 
-When working with "classic" ANN, information is in weights, but it is hard to understand where. Lu_Brain gives you a complete understanding of where information is. You can ask Lu_Brain to forget specific patterns or replace them with new ones. You can see a complete path that led to a specific decision. It means that you have complete data transparency and control over how AI works.
+When working with "classic" ANN, information is in weights, but it is hard to understand where. Lu_Brain gives you a complete understanding of where information is. You can ask Lu_Brain to forget specific patterns or replace them with new ones dynamically. You can see a complete path that led to a specific decision. It means that you have complete data transparency and control over how AI works.
 
 #### Speed
 
