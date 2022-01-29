@@ -7,7 +7,7 @@
 
 	static Lu_S_Map_Base lu_s_map_base__init(
 		Lu_S_Map_Base self, 
-		Lu_Mem mem, 
+		Lu_Res res, 
 		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
@@ -16,16 +16,16 @@
 	)
 	{
 		lu__assert(self);
-		lu__assert(mem);
+		lu__assert(res);
 		lu__assert(destroy);
 
 		self->type = type;
-		self->mem = mem;
+		self->res = res;
 
-		self->apexes = lu_arr__create(mem, apexes_size, true);
+		self->apexes = lu_arr__create(res->s_mem, apexes_size, true);
 		lu__assert(self->apexes);
 
-		self->bases = lu_arr__create(mem, bases_size, true);
+		self->bases = lu_arr__create(res->s_mem, bases_size, true);
 		lu__assert(self->bases);
 
 		self->p = p;
@@ -39,7 +39,7 @@
 
 	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
 		Lu_S_Map_Base self,
-		Lu_Mem mem, 
+		Lu_Res res, 
 		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
@@ -48,10 +48,10 @@
 		void (*destroy)(Lu_S_Map_Base)
 	)
 	{
-		self = lu_s_map_base__init(self, mem, type, apexes_size, bases_size, p, destroy);
+		self = lu_s_map_base__init(self, res, type, apexes_size, bases_size, p, destroy);
 		lu__assert(self);
 
-		self->c = (Lu_Slot_Base) lu_slot_arr__create(mem, childs_size, true);
+		self->c = (Lu_Slot_Base) lu_slot_arr__create(res->s_mem, childs_size, true);
 		lu__assert(self->c);
 
 		return self;
@@ -61,7 +61,10 @@
 	static void lu_s_map_base__destroy(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
-		lu__assert(self->mem);
+		lu__assert(self->res);
+		lu__assert(self->res->s_mem);
+
+		Lu_Mem s_mem = self->res->s_mem;
 
 		lu_size i;
 		Lu_Slot_Base slot;
@@ -82,7 +85,7 @@
 				lu_arr__set(self->apexes, i, NULL);
 
 			lu__assert(slot->destroy);
-			slot->destroy(slot, self->mem);
+			slot->destroy(slot, s_mem);
 		}
 
 		// destroy apexes slots
@@ -94,7 +97,7 @@
 			{
 				lu__assert(slot->destroy);
 
-				slot->destroy(slot, self->mem);
+				slot->destroy(slot, s_mem);
 			}
 		}
 
@@ -102,7 +105,7 @@
 		{
 			lu__assert(self->c->destroy);
 			
-			self->c->destroy((Lu_Slot_Base) self->c, self->mem);
+			self->c->destroy((Lu_Slot_Base) self->c, s_mem);
 			self->c = NULL;
 		}
 
@@ -112,7 +115,7 @@
 		lu_arr__destroy(self->apexes);
 		self->apexes = NULL;
 
-		lu_mem__free(self->mem, (lu_p_byte) self);
+		lu_mem__free(s_mem, (lu_p_byte) self);
 	}
 
 
@@ -124,8 +127,10 @@
 		lu__assert(self);
 		lu__assert(self->apexes);
 		lu__assert(self->bases);
+		lu__assert(self->res);
+		lu__assert(self->res->s_mem);
 
-		Lu_Mem mem = self->mem;
+		Lu_Mem mem = self->res->s_mem;
 		lu__assert(mem);
 
 		//
@@ -185,8 +190,10 @@
 		lu__assert(rec);
 		lu__assert(self->bases);
 		lu__assert(self->apexes);
+		lu__assert(self->res);
+		lu__assert(self->res->s_mem);
 
-		Lu_Mem mem = self->mem;
+		Lu_Mem mem = self->res->s_mem;
 		lu__assert(mem);
 
 		//
@@ -260,7 +267,6 @@
 	{
 		lu__assert(self);
 		lu__assert(self->apexes);
-		lu__assert(self->mem);
 
 		Lu_S_Layer_Base apex = (Lu_S_Layer_Base) lu_arr__last(self->apexes);
 		lu__assert(apex);
@@ -334,7 +340,6 @@
 	static void lu_s_map_base__recursive_destroy(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
-		lu__assert(self->mem);
 		
 		if (self->c)
 		{

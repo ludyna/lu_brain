@@ -17,6 +17,7 @@
 // App
 
 #include "_typedefs.h"
+#include "res/_module.h"
 #include "data/_module.h"
 #include "n/_module.h"
 #include "w/_module.h"

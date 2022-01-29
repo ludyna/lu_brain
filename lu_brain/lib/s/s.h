@@ -58,6 +58,8 @@
 	Tobto potribno yak minimum 2 frame z shiftom shob maty C.
 */
 
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Comp_View
 //
@@ -332,7 +334,7 @@
 
 		enum lu_s_map_type type;
 
-		Lu_Mem mem;
+		Lu_Res res;
 
 		Lu_Arr apexes;
 		Lu_Arr bases;
@@ -346,7 +348,7 @@
 
 	static Lu_S_Map_Base lu_s_map_base__init(
 		Lu_S_Map_Base self,
-		Lu_Mem mem, 
+		Lu_Res res, 
 		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
@@ -356,7 +358,7 @@
 
 	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
 		Lu_S_Map_Base self,
-		Lu_Mem mem, 
+		Lu_Res res, 
 		enum lu_s_map_type type, 
 		lu_size apexes_size,
 		lu_size bases_size, 
@@ -392,7 +394,7 @@
 		lu_size recs_count;
 	};
 
-	static Lu_S_Map_Story lu_s_map_story__create(Lu_Mem, lu_size recs_size); 
+	static Lu_S_Map_Story lu_s_map_story__create(Lu_Res, lu_size recs_size); 
 	static void lu_s_map_story__destroy(Lu_S_Map_Base self);
 
 	//
@@ -405,7 +407,7 @@
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Mem, Lu_Rec, Lu_S_Map_Base p);
+	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Res, Lu_Rec, Lu_S_Map_Base p);
 	static void lu_s_map_frame__destroy(Lu_S_Map_Base self);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -438,7 +440,8 @@
 
 		struct lu_space_config config;
 
-		Lu_Mem mem;
+		Lu_Res res;
+		
 		Lu_Arr frames;
 
 		Lu_S_Map_Base fractal;
@@ -470,7 +473,12 @@
 	// S
 	//
 	
-	static Lu_S lu_s__create_intersected_squares_cortex(Lu_Mem mem, struct lu_space_config config, Lu_Arr lu_recs);
+	static Lu_S lu_s__create_intersected_squares_cortex(
+		Lu_Res res,
+		struct lu_space_config config, 
+		Lu_Arr lu_recs
+	);
+
 	static void lu_s__destroy(Lu_S self);
 
 	//

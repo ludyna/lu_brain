@@ -11,6 +11,7 @@
 
 // App
 
+#include "res/_module.lu"
 #include "brain_config.lu" 
 #include "data/_module.lu"
 #include "n/_module.lu"

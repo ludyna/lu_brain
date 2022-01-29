@@ -5,16 +5,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Frame
 
-	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Mem mem, Lu_Rec rec, Lu_S_Map_Base p)
+	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Res res, Lu_Rec rec, Lu_S_Map_Base p)
 	{
-		lu__assert(mem);
+		lu__assert(res);
 		lu__assert(rec);
 		lu__assert(p);
+		lu__assert(res->s_mem);
 
-		Lu_S_Map_Frame self = (Lu_S_Map_Frame) lu_mem__alloc(mem, sizeof(struct lu_s_map_frame));
+		Lu_S_Map_Frame self = (Lu_S_Map_Frame) lu_mem__alloc(res->s_mem, sizeof(struct lu_s_map_frame));
 		lu__assert(self);
 
-		Lu_S_Map_Base base = lu_s_map_base__init(&self->super, mem, LU_S_MT__FRAME, 5, 5, p, lu_s_map_frame__destroy);
+		Lu_S_Map_Base base = lu_s_map_base__init(&self->super, res, LU_S_MT__FRAME, 5, 5, p, lu_s_map_frame__destroy);
 		lu__assert(base);
 
 		self->rec = rec;

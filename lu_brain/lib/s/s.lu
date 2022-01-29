@@ -6,24 +6,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S Create & Destroy
 
-	static Lu_S lu_s__create_intersected_squares_cortex(Lu_Mem mem, struct lu_space_config config, Lu_Arr recs)
+	static Lu_S lu_s__create_intersected_squares_cortex(
+		Lu_Res res, 
+		struct lu_space_config config, 
+		Lu_Arr recs
+	)
 	{
-		lu__assert(mem);
+		lu__assert(res);
 		lu__assert(recs);
 		lu__assert(lu_arr__count(recs) > 0);
 
-		Lu_S self = (Lu_S) lu_mem__alloc(mem, sizeof(struct lu_s));
+		Lu_S self = (Lu_S) lu_mem__alloc(res->s_mem, sizeof(struct lu_s));
 		lu__assert(self);
 
 		Lu_Space_Config v_config = lu_space_config__validate(&config);
 		lu__assert(v_config);
 
 		self->config = *v_config;
-		self->mem = mem;
+		self->res = res;
 
 		lu__assert(self->config.frames_size >= lu_arr__count(recs));
 
-		self->frames = lu_arr__create(self->mem, self->config.frames_size, true);
+		self->frames = lu_arr__create(res->s_mem, self->config.frames_size, true);
 		lu__assert(self->frames);
 
 		Lu_Rec rec;
@@ -33,7 +37,7 @@
 		Lu_S_Map_Story story_map;
 		Lu_S_Layer_Frame frame;
 
-		story_map = lu_s_map_story__create(mem, lu_arr__count(recs)); 
+		story_map = lu_s_map_story__create(res, lu_arr__count(recs)); 
 		lu__assert(story_map);
 
 		lu_s_map_base__make_story_fractal((Lu_S_Map_Base) story_map, story_map->recs_count);
@@ -48,7 +52,7 @@
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			frame_map = lu_s_map_frame__create(mem, rec, (Lu_S_Map_Base) story_map);
+			frame_map = lu_s_map_frame__create(res, rec, (Lu_S_Map_Base) story_map);
 			lu__assert(frame_map->super.type == LU_S_MT__FRAME);
 			lu__assert(frame_map);
 
@@ -78,7 +82,8 @@
 	static void lu_s__destroy(Lu_S self)
 	{
 		lu__assert(self);
-		lu__assert(self->mem);
+		lu__assert(self->res);
+		lu__assert(self->res->s_mem);
 
 		if (self->fractal)
 		{
@@ -100,7 +105,7 @@
 		if (self->frames)
 			lu_arr__destroy(self->frames);
 
-		lu_mem__free(self->mem, (lu_p_byte) self);
+		lu_mem__free(self->res->s_mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
