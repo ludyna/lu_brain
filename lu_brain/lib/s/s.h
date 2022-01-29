@@ -59,12 +59,13 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_View_Comp
+// Lu_S_Comp_View
 //
 
 	// can be v or p
 	struct lu_s_view_comp {
-		enum lu_s_view_comp_type view_type;
+		Lu_Mem mem;
+		enum lu_s_comp_view_type view_type;
 
 		lu_value 				orig_min;
 		lu_value 				orig_max;
@@ -78,14 +79,14 @@
 		N_Cell_Value* cells;
 	};
 
-	static Lu_S_View_Comp lu_s_view_comp__init(Lu_S_Layer_Comp, Lu_Mem mem, lu_value min, lu_value max, lu_size cells_size);
-	static void lu_s_view_comp__deinit(Lu_S_Layer_Comp self);
+	static Lu_S_Comp_View lu_s_comp_view__init(Lu_S_Comp_View, Lu_Mem mem, enum lu_s_comp_view_type view_type, lu_value min, lu_value max, lu_size cells_size);
+	static void lu_s_comp_view__deinit(Lu_S_Comp_View self);
 
-	static inline lu_value lu_s_view_comp__norm(Lu_S_Layer_Comp self, lu_value request);
-	static inline lu_size lu_s_view_comp__ix(Lu_S_Layer_Comp self, lu_value val);
-	static inline struct lu_size_range lu_s_view_comp__ix_range(Lu_S_Layer_Comp self, lu_value val, lu_size nsc);
-	static inline lu_value lu_s_view_comp__calc_sig(Lu_S_Layer_Comp self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_s_view_comp__step_norm_dist(Lu_S_Layer_Comp self);
+	static inline lu_value lu_s_comp_view__norm(Lu_S_Comp_View self, lu_value request);
+	static inline lu_size lu_s_comp_view__ix(Lu_S_Comp_View self, lu_value val);
+	static inline struct lu_size_range lu_s_comp_view__ix_range(Lu_S_Comp_View self, lu_value val, lu_size nsc);
+	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_View self, lu_size val_step_i, lu_value val);
+	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_View self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Layer Config 
@@ -208,8 +209,6 @@
 		lu_size level;
 
 		Lu_Mem s_mem;
-		Lu_Mem n_mem;
-		Lu_Mem w_mem;
 
 		Lu_S_Layer_Base p;
 		Lu_Slot_Base c;
@@ -306,6 +305,7 @@
 
 	struct lu_s_layer {
 		struct lu_s_layer_base super;
+
 
 		Lu_S_Layer_Base child;
 	};

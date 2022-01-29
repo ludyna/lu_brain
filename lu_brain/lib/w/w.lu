@@ -1,0 +1,17 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// W_Table 
+
+
+	static W_Table w_table__create(Lu_Mem mem)
+	{
+		return NULL;
+	}	
+
+	static void w_table__destroy(W_Table self)
+	{
+
+	}
