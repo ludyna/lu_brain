@@ -4,7 +4,7 @@ Lu_Brain is a _pattern database_ open-source C library.
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
-## Why Lu_Brain
+## Why Lu_Brain?
 
 #### Dynamicity
 
@@ -12,7 +12,7 @@ Lu_Brain allows "learning on the fly" without retraining of artificial neural ne
 
 #### Transparency and Control
 
-When working with "classic" ANN, information is in weights, but it is hard to understand where. Lu_Brain gives you a complete understanding of where information is. You can ask Lu_Brain to forget specific patterns or replace them with new ones dynamically. You can see a complete path that led to a specific decision. It means that you have complete data transparency and control over how AI works.
+When working with "classic" ANN, information is in weights, but it is hard to understand where. Lu_Brain gives you a complete understanding of where information is. You can ask Lu_Brain to forget specific patterns or replace them with new ones dynamically. You can see a complete path that led to a specific decision. It means that you have complete data transparency and control over how AI works. No more unexplainable magic (output). 
 
 #### Speed
 
@@ -30,7 +30,7 @@ Pattern recognition speed is also O(1).
 
 Q: **Why C?**
 
-A: In short, C is **the best** language for the job (not C++, Rust, Go, Python, etc.). 
+A: Lu_Brain is a low-level library, and, in short, C is the best language for the job (not C++, Rust, Go, Python, etc.). Later we will create wrappers for higher-level languages.
 
 ## Legal
 

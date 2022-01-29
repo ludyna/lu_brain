@@ -26,8 +26,30 @@
 			(Lu_S_Layer_Base)frame 
 		);
 
-		lu_s_comp_view__init(&self->v_view, mem, LU_S_CVT__V, config->v_min, config->v_max, config->v_neu_size);
-		lu_s_comp_view__init(&self->p_view, mem, LU_S_CVT__P, config->v_min, config->v_max, config->p_neu_size);
+		Lu_Rec rec = frame->rec;
+		lu__assert(rec);
+
+		lu_s_comp_view__init(
+			&self->v_view, 
+			mem, 
+			LU_S_CVT__V, 
+			rec->width, 
+			rec->height, 
+			config->v_min, 
+			config->v_max, 
+			config->v_neu_size
+		);
+
+		lu_s_comp_view__init(
+			&self->p_view, 
+			mem, 
+			LU_S_CVT__P, 
+			rec->width, 
+			rec->height, 
+			config->v_min, 
+			config->v_max, 
+			config->p_neu_size
+		);
 
 		return self;
 	}

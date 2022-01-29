@@ -63,7 +63,7 @@
 //
 
 	// can be v or p
-	struct lu_s_view_comp {
+	struct lu_s_comp_view {
 		Lu_Mem mem;
 		enum lu_s_comp_view_type view_type;
 
@@ -75,11 +75,21 @@
 		lu_value*				steps;  		// preobchysleni kroky
 		lu_size 				cells_size;
 
-		// w x h x cells_size_i, empty by default
-		N_Cell_Value* cells;
+		// w x h x cells_size, empty by default
+		struct n_cell_value*** cells;
 	};
 
-	static Lu_S_Comp_View lu_s_comp_view__init(Lu_S_Comp_View, Lu_Mem mem, enum lu_s_comp_view_type view_type, lu_value min, lu_value max, lu_size cells_size);
+	static Lu_S_Comp_View lu_s_comp_view__init(
+		Lu_S_Comp_View, 
+		Lu_Mem mem, 
+		enum lu_s_comp_view_type view_type,
+		lu_size width, 
+		lu_size height, 
+		lu_value min, 
+		lu_value max, 
+		lu_size cells_size
+	);
+	
 	static void lu_s_comp_view__deinit(Lu_S_Comp_View self);
 
 	static inline lu_value lu_s_comp_view__norm(Lu_S_Comp_View self, lu_value request);
@@ -279,8 +289,8 @@
 	struct lu_s_layer_comp {
 		struct lu_s_layer_base super;
 
-		struct lu_s_view_comp v_view;
-		struct lu_s_view_comp p_view;
+		struct lu_s_comp_view v_view;
+		struct lu_s_comp_view p_view;
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Mem mem, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
