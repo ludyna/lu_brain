@@ -26,6 +26,9 @@
 			(Lu_S_Layer_Base)frame 
 		);
 
+		lu_s_comp_view__init(&self->v_view, mem, LU_S_CVT__V, config->v_min, config->v_max, config->v_neu_size);
+		lu_s_comp_view__init(&self->p_view, mem, LU_S_CVT__P, config->v_min, config->v_max, config->p_neu_size);
+
 		return self;
 	}
 
@@ -33,6 +36,12 @@
 	{
 		lu__assert(self);
 		lu__assert(self->s_mem);
+		lu__assert(self->type == LU_S_LT__COMP);
+
+		Lu_S_Layer_Comp layer_comp = (Lu_S_Layer_Comp) self;
+
+		lu_s_comp_view__deinit(&layer_comp->v_view);
+		lu_s_comp_view__deinit(&layer_comp->p_view);
 
 		lu_s_layer_base__deinit(self);
 
