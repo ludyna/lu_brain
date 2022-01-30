@@ -66,7 +66,9 @@
 
 	// can be v or p
 	struct lu_s_comp_view {
-		Lu_Mem mem;
+		Lu_Mem s_mem;
+		Lu_Mem n_mem;
+
 		enum lu_s_comp_view_type view_type;
 
 		lu_value 				orig_min;
@@ -83,7 +85,8 @@
 
 	static Lu_S_Comp_View lu_s_comp_view__init(
 		Lu_S_Comp_View, 
-		Lu_Mem mem, 
+		Lu_Mem s_mem, 
+		Lu_Mem n_mem,
 		enum lu_s_comp_view_type view_type,
 		lu_size width, 
 		lu_size height, 
@@ -295,7 +298,7 @@
 		struct lu_s_comp_view p_view;
 	};
 
-	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Mem mem, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
+	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Res res, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
 	//
@@ -308,7 +311,7 @@
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Mem mem, Lu_Rec rec);
+	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Res res, Lu_Rec rec);
 	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self);
 
 	//
@@ -322,7 +325,7 @@
 		Lu_S_Layer_Base child;
 	};
 
-	static Lu_S_Layer lu_s_layer__create(Lu_Mem mem, lu_size level, lu_size children_count);
+	static Lu_S_Layer lu_s_layer__create(Lu_Res res, lu_size level, lu_size children_count);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
 

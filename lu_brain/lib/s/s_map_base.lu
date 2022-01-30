@@ -128,26 +128,26 @@
 		lu__assert(self->apexes);
 		lu__assert(self->bases);
 		lu__assert(self->res);
-		lu__assert(self->res->s_mem);
 
-		Lu_Mem mem = self->res->s_mem;
-		lu__assert(mem);
+		Lu_Res res = self->res;
+		Lu_Mem s_mem = self->res->s_mem;
+		lu__assert(s_mem);
 
 		//
 		// Create and connect layers
 		//
 
-		Lu_S_Layer story = lu_s_layer__create(mem, 4, 1);
-		Lu_S_Layer scene = lu_s_layer__create(mem, 3, 1);
-		Lu_S_Layer event = lu_s_layer__create(mem, 2, 1);
-		Lu_S_Layer seq = lu_s_layer__create(mem, 1, 1);
+		Lu_S_Layer story = lu_s_layer__create(res, 4, 1);
+		Lu_S_Layer scene = lu_s_layer__create(res, 3, 1);
+		Lu_S_Layer event = lu_s_layer__create(res, 2, 1);
+		Lu_S_Layer seq = lu_s_layer__create(res, 1, 1);
 
 		lu__assert(story);
 		lu__assert(scene);
 		lu__assert(event);
 		lu__assert(seq);
 
-		Lu_S_Layer prev = lu_s_layer__create(mem, 0, recs_count);
+		Lu_S_Layer prev = lu_s_layer__create(res, 0, recs_count);
 		lu__assert(prev);
 		Lu_S_Layer recs_base = prev;
 		Lu_S_Layer recs = recs_base;
@@ -155,7 +155,7 @@
 		lu_size recs_layers_size = lu_s__Y(recs_count, 1);
 		for(lu_size i = 1; i < recs_layers_size; i++)
 		{
-			recs = lu_s_layer__create(mem, 0, 1);
+			recs = lu_s_layer__create(res, 0, 1);
 			lu__assert(recs);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) recs, (Lu_S_Layer_Base) prev);
@@ -171,17 +171,17 @@
 		// Fill map
 		//
 
-		lu_arr__set(self->bases, 0, (lu_p_void) lu_slot_one__create(mem, recs_base));
-		lu_arr__set(self->bases, 1, (lu_p_void) lu_slot_one__create(mem, seq));
-		lu_arr__set(self->bases, 2, (lu_p_void) lu_slot_one__create(mem, event));
-		lu_arr__set(self->bases, 3, (lu_p_void) lu_slot_one__create(mem, scene));
-		lu_arr__set(self->bases, 4, (lu_p_void) lu_slot_one__create(mem, story));
+		lu_arr__set(self->bases, 0, (lu_p_void) lu_slot_one__create(s_mem, recs_base));
+		lu_arr__set(self->bases, 1, (lu_p_void) lu_slot_one__create(s_mem, seq));
+		lu_arr__set(self->bases, 2, (lu_p_void) lu_slot_one__create(s_mem, event));
+		lu_arr__set(self->bases, 3, (lu_p_void) lu_slot_one__create(s_mem, scene));
+		lu_arr__set(self->bases, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
 
-		lu_arr__set(self->apexes, 0, (lu_p_void) lu_slot_one__create(mem, recs));
-		lu_arr__set(self->apexes, 1, (lu_p_void) lu_slot_one__create(mem, seq));
-		lu_arr__set(self->apexes, 2, (lu_p_void) lu_slot_one__create(mem, event));
-		lu_arr__set(self->apexes, 3, (lu_p_void) lu_slot_one__create(mem, scene));
-		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(mem, story));
+		lu_arr__set(self->apexes, 0, (lu_p_void) lu_slot_one__create(s_mem, recs));
+		lu_arr__set(self->apexes, 1, (lu_p_void) lu_slot_one__create(s_mem, seq));
+		lu_arr__set(self->apexes, 2, (lu_p_void) lu_slot_one__create(s_mem, event));
+		lu_arr__set(self->apexes, 3, (lu_p_void) lu_slot_one__create(s_mem, scene));
+		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
 	}
 
 	static void lu_s_map_base__make_frame_fractal(Lu_S_Map_Base self, Lu_Rec rec)
@@ -191,16 +191,16 @@
 		lu__assert(self->bases);
 		lu__assert(self->apexes);
 		lu__assert(self->res);
-		lu__assert(self->res->s_mem);
 
-		Lu_Mem mem = self->res->s_mem;
-		lu__assert(mem);
+		Lu_Res res = self->res;
+		Lu_Mem s_mem = self->res->s_mem;
+		lu__assert(s_mem);
 
 		//
 		// Frame
 		//
 
-		Lu_S_Layer_Frame frame_base = lu_s_layer_frame__create(mem, rec);
+		Lu_S_Layer_Frame frame_base = lu_s_layer_frame__create(res, rec);
 		lu__assert(frame_base);
 		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
 
@@ -208,14 +208,14 @@
 		// Create comp layers
 		//
 
-		Lu_Slot_Arr slot_arr = lu_slot_arr__create(mem, rec->depth, true);
+		Lu_Slot_Arr slot_arr = lu_slot_arr__create(s_mem, rec->depth, true);
 		lu__assert(slot_arr);
 
 		lu_size i;
 		Lu_S_Layer_Comp comp = NULL;
 		for (i = 0; i < rec->depth; i++)
 		{
-			comp = lu_s_layer_comp__create(mem, frame_base, lu_rec_config__get_comp_config(&rec->config, i));
+			comp = lu_s_layer_comp__create(res, frame_base, lu_rec_config__get_comp_config(&rec->config, i));
 			lu__assert(comp);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) frame_base, (Lu_S_Layer_Base) comp);
@@ -232,7 +232,7 @@
 		lu_size frames_layers_size = lu_s__Y(rec->width, rec->height);
 		for (i = 1; i < frames_layers_size; i++)
 		{
-			frame = lu_s_layer__create(mem, 0, 1);
+			frame = lu_s_layer__create(res, 0, 1);
 			lu__assert(frame);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) frame, prev);
@@ -246,7 +246,7 @@
 		lu_arr__set(self->bases, 0, (lu_p_void) slot_arr);
 
 		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
-		Lu_Slot_One slot_one = lu_slot_one__create(mem, frame_base);
+		Lu_Slot_One slot_one = lu_slot_one__create(s_mem, frame_base);
 		lu__assert(slot_one);
 		
 		lu_arr__set(self->bases, 1, (lu_p_void) slot_one);
@@ -257,7 +257,7 @@
 
 		lu_arr__set(self->apexes, 0, (lu_p_void) slot_arr);
 
-		slot_one = lu_slot_one__create(mem, frame);
+		slot_one = lu_slot_one__create(s_mem, frame);
 		lu__assert(slot_one);
 
 		lu_arr__set(self->apexes, 1, (lu_p_void) slot_one);
