@@ -58,14 +58,13 @@
 	Tobto potribno yak minimum 2 frame z shiftom shob maty C.
 */
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Comp_View
 //
 
 	// can be v or p
 	struct lu_s_comp_view {
+		
 		Lu_Mem s_mem;
 		Lu_Mem n_mem;
 
@@ -296,6 +295,8 @@
 
 		struct lu_s_comp_view v_view;
 		struct lu_s_comp_view p_view;
+
+		// w_comps
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Res res, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);

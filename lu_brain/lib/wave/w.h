@@ -3,6 +3,17 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_Rec_Config
+
+ 	static Lu_Wave_Config lu_wave_config__init(Lu_Wave_Config self);
+ 	static inline lu_bool lu_wave_config__is_set(Lu_Wave_Config self) { return self->flags != 0; }
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Rec_Config Predefined 
+
+	extern struct lu_wave_config lu_g_wc_predefined[LU_WAVE_CONFIG_END];
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave 
 
 	
@@ -45,26 +56,9 @@
 		Lu_Wave self, 
 		enum lu_wave_type type, 
 		lu_size id, 
-		Lu_Mem mem, 
 		Lu_Brain brain, 
 		struct lu_wave_config config
-	)
-	{
-		self->type = type;
-		self->id = id;
-		self->mem = mem;
-		self->brain = brain;
-		self->config = config;
-
-		self->destroy = NULL;
-		self->block_begin = NULL;
-		self->block_end = NULL;
-		self->push = NULL;
-		self->push_neu = NULL;
-		self->reset = NULL;
-		self->step = NULL;
-		self->process = NULL;
-	}
+	);
 
 	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE_TYPE__SAVE; }
 	static inline lu_bool lu_wave__is_find(Lu_Wave self) { return self->type == LU_WAVE_TYPE__FIND; }

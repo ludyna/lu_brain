@@ -1,6 +1,6 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad
-	Ludyna Brain API
+	Lu_Brain Public Interface
 */
 #ifndef _LU_BRAIN_PUB_H
 #define _LU_BRAIN_PUB_H
@@ -206,9 +206,9 @@
 	// Sync Create
 	//
 
-	Lu_Wave lu_save_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config); 
-	Lu_Wave lu_match_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config);
-	Lu_Wave lu_restore_wave__create(Lu_Mem, Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_save_wave__create(Lu_Brain, struct lu_wave_config); 
+	Lu_Wave lu_match_wave__create(Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_restore_wave__create(Lu_Brain, struct lu_wave_config);
 
 	//
 	// Destroy

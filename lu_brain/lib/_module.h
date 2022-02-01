@@ -14,9 +14,8 @@
 #include "basic/_module.h"
 #include "lib/_module.h"
 
-// App
+// Modules
 
-#include "_typedefs.h"
 #include "res/_module.h"
 #include "data/_module.h"
 #include "n/_module.h"
@@ -25,6 +24,9 @@
 #include "seq/_module.h"
 #include "s/_module.h"
 #include "wave/_module.h"
+
+// Lu_Brain
+
 #include "brain.h"
 
 #endif // _LU_SRC_BRAIN_H

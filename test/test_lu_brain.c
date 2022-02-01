@@ -103,7 +103,7 @@ void test_lu_brain_basics(void)
 
 	lu_brain__print_info(brain);
 
-	Lu_Wave wave = lu_save_wave__create(lu_g_mem, brain, lu_wave_config__get_by_id(LU_WC_SAVE_DEFAULT)); 
+	Lu_Wave wave = lu_save_wave__create(brain, lu_wave_config__get_by_id(LU_WC_SAVE_DEFAULT)); 
 
 		lu_wave__push(wave, rec_0, data_0);
 
@@ -128,7 +128,7 @@ void test_lu_brain_basics(void)
 	// /////////////////////////////////////////////////////////
 	// // Find
 
-	wave = lu_match_wave__create(lu_g_mem, brain, lu_wave_config__get_by_id(LU_WC_FIND_FULL_CONTRAST));
+	wave = lu_match_wave__create(brain, lu_wave_config__get_by_id(LU_WC_FIND_FULL_CONTRAST));
 
 			lu_wave__push(wave, rec_0, data_0);
 
