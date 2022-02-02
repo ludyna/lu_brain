@@ -7,8 +7,7 @@
 
 	static inline Lu_S_Comp_View lu_s_comp_view__init(
 		Lu_S_Comp_View self, 
-		Lu_Mem s_mem, 
-		Lu_Mem n_mem,
+		Lu_Res res, 
 		enum lu_s_comp_view_type view_type, 
 		lu_size width,
 		lu_size height,
@@ -18,11 +17,11 @@
 	)
 	{
 		lu__assert(self);
-		lu__assert(s_mem);
-		lu__assert(n_mem);
+		lu__assert(res);
+		lu__assert(res->s_mem);
 
-		self->s_mem 			= s_mem;
-		self->n_mem 			= n_mem;
+
+		self->res 				= res;
 		self->view_type 		= view_type;
 		self->cells_size  		= cells_size; // value depth in indexes
 		self->orig_min 			= min;
@@ -34,7 +33,7 @@
 		//self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
 
 	 	// Kroky preobchysleni (vertical)
-		self->steps 		= (lu_value*) lu_mem__alloc(self->s_mem, sizeof(lu_value) * self->cells_size);
+		self->steps 		= (lu_value*) lu_mem__alloc(self->res->s_mem, sizeof(lu_value) * self->cells_size);
 		lu__assert(self->steps);
 	
 		lu_size i;
@@ -42,10 +41,10 @@
 			self->steps[i] = (lu_value)i * self->step;
 
 		// w x h x cells_size, empty by default
-		self->cells = (struct n_cell_value***) lu_mem__alloc(
-			self->n_mem, 
-			sizeof(struct n_cell_value) * width * height * self->cells_size
-		);
+		// self->cells = (struct n_cell_value***) lu_mem__alloc(
+		// 	self->n_mem, 
+		// 	sizeof(struct n_cell_value) * width * height * self->cells_size
+		// );
 
 		return self;
 	}
@@ -53,9 +52,10 @@
 	static inline void lu_s_comp_view__deinit(Lu_S_Comp_View self)
 	{
 		lu__assert(self);
+		lu__assert(self->res);
 
-		lu_mem__free(self->n_mem, (lu_p_byte) self->cells);
-		lu_mem__free(self->s_mem, (lu_p_byte) self->steps);
+		// lu_mem__free(self->n_mem, (lu_p_byte) self->cells);
+		lu_mem__free(self->res->s_mem, (lu_p_byte) self->steps);
 		
 		self->steps = NULL;
 	}

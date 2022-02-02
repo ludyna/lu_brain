@@ -48,8 +48,7 @@
 
 		lu_s_comp_view__init(
 			&self->v_view, 
-			res->s_mem, 
-			res->n_mem,
+			res,
 			LU_S_CVT__V, 
 			rec->width, 
 			rec->height, 
@@ -60,8 +59,7 @@
 
 		lu_s_comp_view__init(
 			&self->p_view, 
-			res->s_mem, 
-			res->n_mem, 
+			res, 
 			LU_S_CVT__P, 
 			rec->width, 
 			rec->height, 

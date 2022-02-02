@@ -64,9 +64,8 @@
 
 	// can be v or p
 	struct lu_s_comp_view {
-		
-		Lu_Mem s_mem;
-		Lu_Mem n_mem;
+
+		Lu_Res res;
 
 		enum lu_s_comp_view_type view_type;
 
@@ -80,12 +79,14 @@
 
 		// w x h x cells_size, empty by default
 		struct n_cell_value*** cells;
+
+		Lu_N_Space n_space;
+		Lu_W_Space w_space; // similar to n_space, but most methods have wave_id as parameter (and t? t=1 dostatnio dlia pochatku)
 	};
 
 	static Lu_S_Comp_View lu_s_comp_view__init(
 		Lu_S_Comp_View, 
-		Lu_Mem s_mem, 
-		Lu_Mem n_mem,
+		Lu_Res res, 
 		enum lu_s_comp_view_type view_type,
 		lu_size width, 
 		lu_size height, 
@@ -295,8 +296,6 @@
 
 		struct lu_s_comp_view v_view;
 		struct lu_s_comp_view p_view;
-
-		// w_comps
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Res res, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
