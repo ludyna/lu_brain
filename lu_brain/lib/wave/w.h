@@ -68,47 +68,10 @@
 // Lu_Seq_Rg
 
 	struct lu_cell {
-		Lu_Layer layer;
 		N_Cell_0 n_cell_0;
 		lu_value sig;
 	};
 
-	// static Lu_Cell lu_cell_create
-
-	struct lu_layer {
-
-		Lu_Cell* cells;
-	};
-
-	static Lu_Layer lu_layer__create(Lu_Mem mem);
-	static void lu_layer__destroy(Lu_Layer self, Lu_Mem mem);
-
-	struct lu_rec_rg {
-
-		struct lu_layer componentlu_m_layer;
-		struct lu_layer pixellu_m_layer;
-		struct lu_layer* pyralu_m_layers;
-	};
-
-	static Lu_Rec_Rg lu_rec_rg__create(Lu_Mem mem);
-	static void lu_rec_rg__destroy(Lu_Rec_Rg self, Lu_Mem mem);
-
-	struct lu_seq_rg {
-		Lu_Mem mem;
-		Lu_S s;
-	
-		Lu_Arr recs;
-
-		// block (time) index, we dont save reference to Lu_Block
-		// because they might be destroyed and we don't want to copy it
-		// (for space/speed performance)
-		lu_size seq_index; 	
-							
-		Lu_Cell cell; // resulting block_layer cell	
-	};
-
-	static Lu_Seq_Rg lu_seq_rg__create(Lu_Mem mem, Lu_S s);
-	static void lu_seq_rg__destroy(Lu_Seq_Rg self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
@@ -117,11 +80,6 @@
 		struct lu_wave super;
 
 		Lu_Seq seq;
-
-		Lu_Lim_List block_layers;
-
-		// max size is lu_lim_list__size(self->block_layers)
-		struct lu_layer* block_layer_layers; // !!! WRONG
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

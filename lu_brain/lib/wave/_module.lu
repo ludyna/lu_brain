@@ -2,7 +2,5 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-#include "block_rec_layer.lu"
-#include "block_layer.lu"
 #include "wave_config.lu"
 #include "wave.lu"

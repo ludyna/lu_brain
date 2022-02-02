@@ -2,7 +2,6 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-	static void lu_save_wave_block_layer_node_before_destroy(Lu_Lim_List, Lu_L_Node);
 	static void lu_save_wave__destroy_virtual(Lu_Wave wave);
 	static void lu_find_wave_destroy_virtual(Lu_Wave wave);
 	static void lu_restore_wave_destroy_virtual(Lu_Wave wave);
@@ -150,10 +149,6 @@
 	{
 		lu__assert(self);
 		lu__assert(block);
-
-		Lu_Seq_Rg shot = lu_seq_rg__create(self->super.mem, self->super.brain->s);
-
-		lu_lim_list__append(self->block_layers, shot);
 		
 		lu__debug("\n YOOOOOOOOOO \n");
 
@@ -228,6 +223,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Process
 
+	//
+	// Wave
+	//
+
 	void lu_wave__process(Lu_Wave self)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
@@ -236,6 +235,10 @@
 			self->process(self);
 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
 	}
+
+	//
+	// Save
+	//
 
 	static void lu_save_wave__process_virtual(Lu_Wave self)
 	{
@@ -250,11 +253,19 @@
 			lu_save_wave__process_block(save_wave, block);
 	}
 
+	//
+	// Find
+	//
+
 	static void lu_find_wave_process_virtual(Lu_Wave self)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_find(self));
 	}
+
+	//
+	// Restore
+	//
 
 	static void lu_restore_wave_process_virtual(Lu_Wave self)
 	{
@@ -311,11 +322,6 @@
 		self->seq = lu_seq__create(mem, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
-		self->block_layers = lu_lim_list__create(mem, self->super.config.block_layers_size);
-		lu__assert(self->block_layers);
-
-		self->block_layers->node_before_destroy = lu_save_wave_block_layer_node_before_destroy;
-
 		return (Lu_Wave) self;
 	}
 	
@@ -345,18 +351,9 @@
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	} 
 
+	//
 	// Save
-
-	static void lu_save_wave_block_layer_node_before_destroy(Lu_Lim_List list, Lu_L_Node node)
-	{
-		lu__assert(list);
-		lu__assert(node);
-
-		lu_p_void value = lu_l_node__value(node);
-		lu__assert(value);
-
-		lu_seq_rg__destroy((Lu_Seq_Rg) value);
-	}
+	//
 
 	static void lu_save_wave__destroy_virtual(Lu_Wave wave)
 	{
@@ -364,14 +361,13 @@
 		lu__assert(lu_wave__is_save(wave));
 
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
-
-		lu_lim_list__clear(self->block_layers);
-
-		lu_lim_list__destroy(self->block_layers);
+		
 		lu_seq__destroy(self->seq);
 	}
 
+	//
 	// Find
+	//
 
 	static void lu_find_wave_destroy_virtual(Lu_Wave wave)
 	{
@@ -381,7 +377,9 @@
 		lu_seq__destroy(self->seq);
 	}
 
+	//
 	// Restore
+	//
 
 	static void lu_restore_wave_destroy_virtual(Lu_Wave wave)
 	{
