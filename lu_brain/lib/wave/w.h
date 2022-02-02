@@ -29,8 +29,8 @@
 	struct lu_wave {
 		enum lu_wave_type type;
 
-		// user can set it, default 0
-		lu_size id;		
+		// set by system
+		lu_size id;
 
 		Lu_Mem mem;
 		Lu_Brain brain;

@@ -228,7 +228,7 @@
 		Lu_Slot_Base c;
 
 		N_Table n_table;
-		W_Table w_table;
+		Lu_W_Table w_table;
 
 		// virtual destructor
 		void (*destroy)(Lu_S_Layer_Base);

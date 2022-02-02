@@ -3,13 +3,14 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// W_Table 
+// Lu_W_Table 
 
-	struct w_table {
+	// always 2D
+	struct lu_w_table {
 		Lu_Mem mem;
 
 
 	};
 
-	static W_Table w_table__create(Lu_Mem mem);
-	static void w_table__destroy(W_Table self);
+	static Lu_W_Table lu_w_table__create(Lu_Mem mem);
+	static void lu_w_table__destroy(Lu_W_Table self);
