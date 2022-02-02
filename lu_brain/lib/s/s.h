@@ -473,7 +473,7 @@
 	}
 
 	//
-	// S
+	// Create and destroy
 	//
 	
 	static Lu_S lu_s__create_intersected_squares_cortex(
@@ -502,7 +502,6 @@
 
 	static void lu_s__add_v_layer(Lu_S self, lu_size level);
 	static void lu_s__add_h_layer(Lu_S self, lu_size level);
-
 	static void lu_s__add_rixel_layer(Lu_S self, Lu_Rec rec);
 	
 
@@ -511,7 +510,14 @@
 	#define lu_s__add_chapter(self) lu_s__add_v_layer(self, 2)
 	#define lu_s__add_story(self) lu_s__add_v_layer(self, 3)
 
-
+	//
+	//
+	// 
 
 	static void lu_s__print_info(Lu_S self);
 
+	//
+	//
+	//
+
+	static void lu_s__save_data(lu_size wave_id, Lu_Data data);

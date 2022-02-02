@@ -111,7 +111,8 @@
 	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size);
 	static void lu_data_block__destroy(Lu_Data_Block self);
 
-	static inline Lu_Data lu_data_block__data_get(Lu_Data_Block self, lu_size index) { return &self->datum[index]; }
+	static inline lu_size lu_data_block__get_size(Lu_Data_Block self) { return self->datum_size; }
+	static inline Lu_Data lu_data_block__get_data(Lu_Data_Block self, lu_size index) { return &self->datum[index]; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Data_Seq 

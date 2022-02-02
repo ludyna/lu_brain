@@ -44,9 +44,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Properties
 
-	struct lu_wave_config lu_wave_config__get(Lu_Wave self)
+	struct lu_wave_config lu_wave__get_config(Lu_Wave self)
 	{
 
+	}
+
+	lu_size lu_wave__get_id(Lu_Wave self)
+	{
+		return self->id;
 	}
 
 	// lu_size lu_wave_block_count(Lu_Wave self)
@@ -148,10 +153,28 @@
 		lu__assert(self);
 		lu__assert(block);
 
-		Lu_Data data = lu_data_block__data_get(block, 0);
-		lu__assert(data);
+		Lu_Wave wave = (Lu_Wave) self;
+		Lu_Brain brain = wave->brain;
+		lu__assert(brain);
 
-		lu_data__debug(data);
+		Lu_S s = brain->s;
+		lu__assert(s);
+
+		lu_size i;
+		lu_size size = lu_data_block__get_size(block);
+		Lu_Data data;
+		for (i = 0; i < size; i++)
+		{
+			data = lu_data_block__get_data(block, i);
+			lu__assert(data);
+
+			if (lu_data__is_empty(data)) continue;
+
+			lu_s__save_data(lu_wave__get_id(wave), data);
+
+			lu_data__debug(data);
+		}
+		 
 
 	}
 

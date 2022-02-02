@@ -197,7 +197,7 @@
 		LU_WAVE_CONFIG_END			
 	};
 
-	struct lu_wave_config lu_wave_config__get_by_id(lu_size id);
+	struct lu_wave_config lu_wave__get_config_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave  
@@ -263,7 +263,8 @@
 	// Properties
 	//
 
-	struct lu_wave_config lu_wave_config__get(Lu_Wave);
+	struct lu_wave_config lu_wave__get_config(Lu_Wave);
+	lu_size lu_wave__get_id(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Neu 
