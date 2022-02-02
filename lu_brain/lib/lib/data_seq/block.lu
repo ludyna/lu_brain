@@ -5,13 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Block lu_block__create(Lu_Mem mem, lu_size recs_size)
+	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size)
 	{	
 		lu__assert(mem);
 		lu__assert(recs_size > 0);
 
 
-		Lu_Block self = (Lu_Block) lu_mem__alloc(mem, sizeof(struct lu_block));
+		Lu_Data_Block self = (Lu_Data_Block) lu_mem__alloc(mem, sizeof(struct lu_data_block));
  
  		self->mem = mem;
  		self->datum_size = recs_size;
@@ -27,7 +27,7 @@
 		return self;
 	}
 
-	static void lu_block__destroy(Lu_Block self)
+	static void lu_data_block__destroy(Lu_Data_Block self)
 	{
 		lu__assert(self);
 

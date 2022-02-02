@@ -17,11 +17,9 @@
 // Modules
 
 #include "res/_module.h"
-#include "data/_module.h"
 #include "n/_module.h"
 #include "w/_module.h"
 #include "rec/_module.h"
-#include "seq/_module.h"
 #include "s/_module.h"
 #include "wave/_module.h"
 

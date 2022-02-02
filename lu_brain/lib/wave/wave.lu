@@ -78,7 +78,7 @@
 		lu__assert(lu_wave__is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_seq__block_begin(save_wave->seq);
+		lu_data_seq__block_begin(save_wave->seq);
 	} 
 
 	static void lu_find_wave_block_begin_virtual(Lu_Wave self)
@@ -109,7 +109,7 @@
 		lu__assert(lu_wave__is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_seq__block_end(save_wave->seq);
+		lu_data_seq__block_end(save_wave->seq);
 	} 
 
 	static void lu_find_wave_block_end_virtual(Lu_Wave self)
@@ -140,17 +140,18 @@
 
 	}
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // Process block
 
-	static void lu_save_wave__process_block(Lu_Save_Wave self, Lu_Block block)
+	static void lu_save_wave__process_block(Lu_Save_Wave self, Lu_Data_Block block)
 	{
 		lu__assert(self);
 		lu__assert(block);
-		
-		lu__debug("\n YOOOOOOOOOO \n");
+
+		Lu_Data data = lu_data_block__data_get(block, 0);
+		lu__assert(data);
+
+		lu_data__debug(data);
 
 	}
 
@@ -174,7 +175,7 @@
 		lu__assert(lu_wave__is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_seq__push(save_wave->seq, rec, data);
+		lu_data_seq__push(save_wave->seq, rec, data);
 	}
 
 	static void lu_find_wave_push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)
@@ -202,7 +203,7 @@
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
 
-		Lu_Block block = lu_seq__next_block_get(save_wave->seq);
+		Lu_Data_Block block = lu_data_seq__next_block_get(save_wave->seq);
 		if (!block) return; // nothing to process
 
 		lu_save_wave__process_block(save_wave, block);
@@ -247,9 +248,9 @@
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
 
-		Lu_Block block = NULL;
+		Lu_Data_Block block = NULL;
 
-		while(block = lu_seq__next_block_get(save_wave->seq))
+		while(block = lu_data_seq__next_block_get(save_wave->seq))
 			lu_save_wave__process_block(save_wave, block);
 	}
 
@@ -319,7 +320,7 @@
 		self->super.step = lu_save_wave__step_virtual;
 		self->super.process = lu_save_wave__process_virtual;
 
-		self->seq = lu_seq__create(mem, lu_brain__recs_size(brain)); 
+		self->seq = lu_data_seq__create(mem, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
 		return (Lu_Wave) self;
@@ -361,8 +362,8 @@
 		lu__assert(lu_wave__is_save(wave));
 
 		Lu_Save_Wave self = (Lu_Save_Wave) wave;
-		
-		lu_seq__destroy(self->seq);
+
+		lu_data_seq__destroy(self->seq);
 	}
 
 	//
@@ -374,7 +375,7 @@
 		lu__assert(wave);
 		Lu_Find_Wave self = (Lu_Find_Wave) wave;
 
-		lu_seq__destroy(self->seq);
+		lu_data_seq__destroy(self->seq);
 	}
 
 	//

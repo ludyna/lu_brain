@@ -1,8 +1,0 @@
-/**
-	Copyright © 2022 Oleh Ihorovych Novosad 
-*/
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Data
-
-	typedef struct lu_data* 				Lu_Data;

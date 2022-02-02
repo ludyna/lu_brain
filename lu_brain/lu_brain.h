@@ -253,10 +253,10 @@
 	void lu_wave__step(Lu_Wave);
 
 	// Process Async (IMPLEMENT LATER)
-	// void lu_wave_process_async(Lu_Wave, Lu_Seq);
+	// void lu_wave_process_async(Lu_Wave, Lu_Data_Seq);
 	// void lu_wave_restore_process_async(Lu_Wave, Lu_Neu);
-	// void lu_wave_step_async(Lu_Wave, Lu_Seq);
-	// void lu_wave_restore_step_async(Lu_Wave, Lu_Seq);
+	// void lu_wave_step_async(Lu_Wave, Lu_Data_Seq);
+	// void lu_wave_restore_step_async(Lu_Wave, Lu_Data_Seq);
 	// void lu_wave_join(Lu_Wave);
 
 	//

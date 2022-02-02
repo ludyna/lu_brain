@@ -2,5 +2,5 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-#include "block.lu"
-#include "seq.lu"
+#include "_typedefs.h"
+#include "data_seq.h"
