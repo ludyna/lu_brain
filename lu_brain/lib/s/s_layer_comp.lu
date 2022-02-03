@@ -90,10 +90,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 	
-	static void lu_s_layer_comp__save_data(Lu_S_Layer_Comp self, lu_size wave_id, lu_size z, Lu_Data data)
+	static void lu_s_layer_comp__save_data(
+		Lu_S_Layer_Comp self, 
+		lu_size wave_id, 
+		lu_size z, 
+		Lu_Data data, 
+		Lu_Process_Config config
+	)
 	{
 		lu__assert(self);
 		lu__assert(data);
+		lu__assert(config);
+
+		
 
 		
 	}

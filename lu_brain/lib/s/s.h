@@ -301,7 +301,13 @@
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Res res, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
-	static void lu_s_layer_comp__save_data(Lu_S_Layer_Comp self, lu_size wave_id, lu_size z, Lu_Data data);
+	static void lu_s_layer_comp__save_data(
+		Lu_S_Layer_Comp self, 
+		lu_size wave_id, 
+		lu_size z, 
+		Lu_Data data, 
+		Lu_Process_Config config
+	);
 
 	//
 	// Lu_S_Layer_Frame
@@ -316,7 +322,13 @@
 	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Res res, Lu_Rec rec);
 	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self);
 
-	static void lu_s_layer_frame__save_data(Lu_S_Layer_Frame self, lu_size wave_id, lu_size rec_id, Lu_Data data);
+	static void lu_s_layer_frame__save_data(
+		Lu_S_Layer_Frame self, 
+		lu_size wave_id, 
+		lu_size rec_id, 
+		Lu_Data data,
+		Lu_Process_Config config
+	);
 
 	//
 	// Lu_S_Layer
@@ -540,4 +552,4 @@
 	//
 	//
 
-	static void lu_s__save_data(Lu_S self, lu_size wave_id, lu_size rec_id, Lu_Data data);
+	static void lu_s__save_data(Lu_S self, lu_size wave_id, lu_size rec_id, Lu_Data data, Lu_Process_Config);

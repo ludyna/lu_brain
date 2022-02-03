@@ -249,8 +249,8 @@
 	// Process
 	//
 
+	void lu_wave__step(Lu_Wave, struct lu_process_config);
 	void lu_wave__process(Lu_Wave, struct lu_process_config);
-	void lu_wave__step(Lu_Wave);
 
 	// Process Async (IMPLEMENT LATER)
 	// void lu_wave_process_async(Lu_Wave, Lu_Data_Seq);

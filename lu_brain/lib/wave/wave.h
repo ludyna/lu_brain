@@ -48,8 +48,8 @@
 
 		void (*reset)(Lu_Wave);
 
-		void (*step)(Lu_Wave);
-		void (*process)(Lu_Wave);
+		void (*step)(Lu_Wave, Lu_Process_Config);
+		void (*process)(Lu_Wave, Lu_Process_Config);
 	};
 
 	static inline Lu_Wave lu_wave__init(

@@ -121,12 +121,12 @@ void test_lu_brain_basics(void)
 		lu_wave__push(wave, rec_1, data_5);
 		lu_wave__block_end(wave);
 
-	lu_wave__step(wave);
+	lu_wave__step(wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
 
 	lu_wave__destroy(wave); 
 
-	// /////////////////////////////////////////////////////////
-	// // Find
+	/////////////////////////////////////////////////////////
+	// Find
 
 	wave = lu_match_wave__create(brain);
 
@@ -146,7 +146,7 @@ void test_lu_brain_basics(void)
 			lu_wave__push(wave, rec_1, data_5);
 			lu_wave__block_end(wave); 
 
-	lu_wave__step(wave);
+	lu_wave__step(wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
 
 	lu_wave__destroy(wave);
 
