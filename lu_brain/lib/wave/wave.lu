@@ -170,7 +170,7 @@
 
 			if (lu_data__is_empty(data)) continue;
 
-			lu_s__save_data(lu_wave__get_id(wave), data);
+			lu_s__save_data(s, lu_wave__get_id(wave), i, data);
 
 			lu_data__debug(data);
 		}

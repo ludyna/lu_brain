@@ -18,7 +18,10 @@
 	//
 
 	static inline void lu_data__value_set(Lu_Data d, lu_size x, lu_size y, lu_size z, lu_value value) { d->values[z * d->w * d->h + y * d->w + x] = value; }
+
+	// WARNING: Reading values in cycle using this method is bad due to a lot of multiplications for each value.
 	static inline lu_value lu_data__value_get(Lu_Data d, lu_size x, lu_size y, lu_size z) { return d->values[z * d->w * d->h + y * d->w + x]; }
+
 	static inline lu_bool lu_data__is_empty(Lu_Data self) { return self->values == NULL; }
  
 	//

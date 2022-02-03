@@ -195,7 +195,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s__save_data(lu_size wave_id, Lu_Data data)
+	static void lu_s__save_data(Lu_S self, lu_size wave_id, lu_size rec_id, Lu_Data data)
 	{
+		lu__assert(self);
+		Lu_S_Layer_Frame frame = lu_s__get_frame(self, rec_id);
+		lu__assert(frame);
 
+		lu_s_layer_frame__save_data(frame, wave_id, rec_id, data);
 	}

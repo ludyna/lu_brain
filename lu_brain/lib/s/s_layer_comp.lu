@@ -86,3 +86,11 @@
 
 		lu_mem__free(self->s_mem, (lu_p_byte) self);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+	
+	static void lu_s_layer_comp__save_data(Lu_S_Layer_Comp self, lu_size wave_id, lu_size z, Lu_Data data)
+	{
+
+	}

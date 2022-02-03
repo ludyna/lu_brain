@@ -301,6 +301,8 @@
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Res res, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
+	static void lu_s_layer_comp__save_data(Lu_S_Layer_Comp self, lu_size wave_id, lu_size z, Lu_Data data);
+
 	//
 	// Lu_S_Layer_Frame
 	//
@@ -313,6 +315,8 @@
 
 	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Res res, Lu_Rec rec);
 	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self);
+
+	static void lu_s_layer_frame__save_data(Lu_S_Layer_Frame self, lu_size wave_id, lu_size rec_id, Lu_Data data);
 
 	//
 	// Lu_S_Layer
@@ -452,6 +456,10 @@
 	};
 
 	//
+	// Utility
+	//
+
+	//
 	// (x Y y) = max(max(x - 1, 1) * max(y - 1, 1) - 1, 1)
 	// This calculation is only correct for "intersected squares cortex" type or similar 
 	// 
@@ -470,6 +478,18 @@
 		if (Y > 1) --Y;
 
 		return Y;
+	}
+
+	//
+	// Properties
+	//
+
+	static inline Lu_S_Layer_Frame lu_s__get_frame(Lu_S self, lu_size rec_id)
+	{
+		lu__assert(self);
+		lu__assert(self->frames);
+
+		return (Lu_S_Layer_Frame) lu_arr__get(self->frames, rec_id);
 	}
 
 	//
@@ -520,4 +540,4 @@
 	//
 	//
 
-	static void lu_s__save_data(lu_size wave_id, Lu_Data data);
+	static void lu_s__save_data(Lu_S self, lu_size wave_id, lu_size rec_id, Lu_Data data);

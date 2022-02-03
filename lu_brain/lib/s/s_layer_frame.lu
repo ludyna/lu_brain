@@ -51,20 +51,36 @@
 		Lu_S_Layer_Frame frame = (Lu_S_Layer_Frame) self;
 
 		lu__assert(frame->rec);
-		// lu__assert(self->children);
-
-		// Lu_S_Layer_Comp comp_layer;
-		// for (lu_size i = 0; i < lu_arr__count(self->children); i++)
-		// {
-		// 	comp_layer = (Lu_S_Layer_Comp) lu_arr__get(self->children, i);
-		// 	lu__assert(comp_layer);
-
-		// 	lu_s_layer_comp__destroy(comp_layer, mem);
-		// }
-
-		// lu_arr__destroy(self->children);
-
 		lu_s_layer_base__deinit(self);
 
 		lu_mem__free(self->s_mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_s_layer_frame__save_data(Lu_S_Layer_Frame self, lu_size wave_id, lu_size rec_id, Lu_Data data)
+	{
+		lu__assert(self);
+		lu__assert(self->rec);
+
+		Lu_S_Layer_Base base = &self->super;
+
+		Lu_Slot_Base slot_base = base->c;
+		lu__assert(slot_base);
+		lu__assert(slot_base->type == LU_ST__ARR);
+
+		Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) slot_base;
+
+		lu__assert(self->rec->depth == lu_arr__count(slot_arr->items));
+
+		for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
+		{
+			Lu_S_Layer_Comp comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
+			lu__assert(comp->super.type == LU_S_LT__COMP);
+
+			lu_s_layer_comp__save_data(comp, wave_id, z, data);
+		}
+
+		// continue saving to higher levels recursively (wave)
 	}
