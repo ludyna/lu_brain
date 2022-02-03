@@ -2,5 +2,5 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-#include "wave_config.lu"
+#include "process_config.lu"
 #include "wave.lu"

@@ -3,9 +3,9 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Wave_Config 
+// Lu_Process_Config 
 
-    static Lu_Wave_Config lu_wave_config__init(Lu_Wave_Config self)
+    static Lu_Process_Config lu_wave_config__init(Lu_Process_Config self)
     {
         self->flags                 = 0;
         self->contrast_vs_color     = 0.5;
@@ -16,35 +16,36 @@
     }   
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Wave_Config predefined
-    struct lu_wave_config lu_g_wc_predefined[LU_WAVE_CONFIG_END] = { 
-    	// LU_WC_SAVE_DEFAULT
+// Lu_Process_Config predefined
+    
+    struct lu_process_config lu_g_wc_predefined[LU_PCT__END] = { 
+    	// LU_PCT__SAVE_DEFAULT
     	{
             .flags                        = 0,
     		.contrast_vs_color            = 0.5,  	// nemaye znachenia dlia save
     		.fire_breakpoint              = 0.9,  	// potribna povna kopiya
             .block_layers_size            = 50
     	},
-    	// LU_WC_FIND_FULL_CONTRAST
+    	// LU_PCT__FIND_FULL_CONTRAST
     	{
 
     	},
-    	// LU_WC_FIND_FULL_COLOR
+    	// LU_PCT__FIND_FULL_COLOR
     	{
 
     	}
     };
 
-  	struct lu_wave_config lu_wave__get_config_by_id(lu_size id)
+  	struct lu_process_config lu_process_config__get_by_id(lu_size id)
   	{
-  		lu__assert(id < LU_WAVE_CONFIG_END);
+  		lu__assert(id < LU_PCT__END);
   		return lu_g_wc_predefined[id];
   	}
 
 ///////////////////////////////////////////////////////////////////////////////
-//  Lu_Wave_Config
+//  Lu_Process_Config
 
-  	Lu_Wave_Config lu_wave_config__validate(Lu_Wave_Config self) 
+  	Lu_Process_Config lu_process_config__validate(Lu_Process_Config self) 
   	{
   		lu__user_assert(self->contrast_vs_color >= 0 && self->contrast_vs_color <= 1, "contrast_vs_color should be in [0, 1]");
   		lu__user_assert(self->fire_breakpoint > 0 && self->fire_breakpoint < 1, "fire_breakpoint should be in (0, 1)");

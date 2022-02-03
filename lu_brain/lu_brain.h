@@ -36,7 +36,7 @@
 
 	typedef struct lu_data* 			Lu_Data;
 	typedef struct lu_neu* 				Lu_Neu;
-	typedef struct lu_wave_config*		Lu_Wave_Config;
+	typedef struct lu_process_config*		Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -174,9 +174,9 @@
 	Lu_Rec lu_brain__get_rec_by_id(Lu_Brain brain, lu_size rec_id);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Wave_Config 
+// Lu_Process_Config 
 
-	struct lu_wave_config {
+	struct lu_process_config {
 		lu_flags 				flags;						// 0 oznachaye not set
 		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
 		lu_value 				fire_breakpoint;
@@ -184,20 +184,20 @@
 															// Oldest ones are destroyed once limit is reached (FIFO).
 	};
 
-	Lu_Wave_Config lu_wave_config__validate(Lu_Wave_Config self);
+	Lu_Process_Config lu_process_config__validate(Lu_Process_Config self);
 	
 	//
-	// Lu_Wave_Config Predefined
+	// Lu_Process_Config Predefined
 	//
 
-	enum lu_wc_predefined_type {
-		LU_WC_SAVE_DEFAULT = 0,
-		LU_WC_FIND_FULL_CONTRAST, 
-		LU_WC_FIND_FULL_COLOR,
-		LU_WAVE_CONFIG_END			
+	enum lu_process_config_type {
+		LU_PCT__SAVE_DEFAULT = 0,
+		LU_PCT__FIND_FULL_CONTRAST, 
+		LU_PCT__FIND_FULL_COLOR,
+		LU_PCT__END			
 	};
 
-	struct lu_wave_config lu_wave__get_config_by_id(lu_size id);
+	struct lu_process_config lu_process_config__get_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Wave  
@@ -206,9 +206,9 @@
 	// Sync Create
 	//
 
-	Lu_Wave lu_save_wave__create(Lu_Brain, struct lu_wave_config); 
-	Lu_Wave lu_match_wave__create(Lu_Brain, struct lu_wave_config);
-	Lu_Wave lu_restore_wave__create(Lu_Brain, struct lu_wave_config);
+	Lu_Wave lu_save_wave__create(Lu_Brain); 
+	Lu_Wave lu_match_wave__create(Lu_Brain);
+	Lu_Wave lu_restore_wave__create(Lu_Brain);
 
 	//
 	// Destroy
@@ -249,7 +249,7 @@
 	// Process
 	//
 
-	void lu_wave__process(Lu_Wave);
+	void lu_wave__process(Lu_Wave, struct lu_process_config);
 	void lu_wave__step(Lu_Wave);
 
 	// Process Async (IMPLEMENT LATER)
@@ -263,7 +263,7 @@
 	// Properties
 	//
 
-	struct lu_wave_config lu_wave__get_config(Lu_Wave);
+	struct lu_process_config lu_wave__get_process_config(Lu_Wave);
 	lu_size lu_wave__get_id(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////

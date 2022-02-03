@@ -12,8 +12,7 @@
 		Lu_Wave self, 
 		enum lu_wave_type type, 
 		lu_size id, 
-		Lu_Brain brain, 
-		struct lu_wave_config config
+		Lu_Brain brain
 	)
 	{
 		lu__assert(self);
@@ -29,6 +28,12 @@
 		self->mem = res->w_mem;
 
 		self->brain = brain;
+
+		// Setting last proccess config to default
+		struct lu_process_config config = lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT);
+		Lu_Process_Config p_config = lu_process_config__validate(&config);
+		lu__assert(p_config);
+
 		self->config = config;
 
 		self->destroy = NULL;
@@ -44,7 +49,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Properties
 
-	struct lu_wave_config lu_wave__get_config(Lu_Wave self)
+	struct lu_process_config lu_wave__get_process_config(Lu_Wave self)
 	{
 
 	}
@@ -251,9 +256,12 @@
 	// Wave
 	//
 
-	void lu_wave__process(Lu_Wave self)
+	void lu_wave__process(Lu_Wave self, struct lu_process_config config)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
+
+		Lu_Process_Config p_config = lu_process_config__validate(&config);
+		lu__user_assert_void(p_config, "Lu_Process_Config is invalid");
 
 		if (self->process)
 			self->process(self);
@@ -313,12 +321,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create
 
-	Lu_Wave lu_save_wave__create(Lu_Brain brain, struct lu_wave_config config) 
+	Lu_Wave lu_save_wave__create(Lu_Brain brain) 
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
-
-		Lu_Wave_Config p_config = lu_wave_config__validate(&config);
-		lu__user_assert(p_config, "struct lu_wave_config is invalid");
 
 		Lu_Mem mem = brain->res.w_mem;
 		lu__assert(mem);
@@ -329,8 +334,7 @@
 			&self->super, 
 			LU_WAVE_TYPE__SAVE, 
 			0,
-			brain, 
-			config
+			brain
 		); 
 
 		self->super.destroy = lu_save_wave__destroy_virtual;
@@ -352,13 +356,13 @@
 	//
 	// Match is more generalized "find".
 	// 
-	Lu_Wave lu_match_wave__create(Lu_Brain brain, struct lu_wave_config config)
+	Lu_Wave lu_match_wave__create(Lu_Brain brain)
 	{
 		return NULL;
 	}
 
 
-	Lu_Wave lu_restore_wave__create(Lu_Brain brain, struct lu_wave_config config)
+	Lu_Wave lu_restore_wave__create(Lu_Brain brain)
 	{
 		return NULL;
 	}
