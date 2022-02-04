@@ -101,3 +101,17 @@
 	{
 		return 1.0 / self->cells_size;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_s_comp_view__save_data(
+		Lu_S_Comp_View self, 
+		lu_size wave_id, 
+		lu_size z, 
+		Lu_Data data, 
+		Lu_Process_Config config
+	)
+	{
+		
+	}

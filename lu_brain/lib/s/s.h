@@ -103,6 +103,8 @@
 	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_View self, lu_size val_step_i, lu_value val);
 	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_View self);
 
+	static void lu_s_comp_view__save_data(Lu_S_Comp_View self, lu_size wave_id, lu_size z, Lu_Data data, Lu_Process_Config config);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Layer Config 
 //
