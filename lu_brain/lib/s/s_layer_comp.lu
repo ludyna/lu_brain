@@ -92,7 +92,7 @@
 	
 	static void lu_s_layer_comp__save_data(
 		Lu_S_Layer_Comp self, 
-		lu_size wave_id, 
+		Lu_Wave wave, 
 		lu_size z, 
 		Lu_Data data, 
 		Lu_Process_Config config
@@ -104,11 +104,11 @@
 
 		if (!lu_value_eq_with_signif(config->contrast_vs_color, 1.0, config->min_potency))
 		{
-			lu_s_comp_view__save_data(&self->v_view, wave_id, z, data, config);
+			lu_s_comp_view__save_data(&self->v_view, wave, z, data, config);
 		}
 
 		if (!lu_value_eq_with_signif(config->contrast_vs_color, 0.0, config->min_potency))
 		{
-			lu_s_comp_view__save_data(&self->p_view, wave_id, z, data, config);
+			lu_s_comp_view__save_data(&self->p_view, wave, z, data, config);
 		}
 	}

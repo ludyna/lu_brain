@@ -80,8 +80,8 @@
 		// w x h x cells_size, empty by default
 		struct n_cell_value*** cells;
 
-		Lu_N_Space n_space;
-		Lu_W_Space w_space; // similar to n_space, but most methods have wave_id as parameter (and t? t=1 dostatnio dlia pochatku)
+		Lu_N_Comp_Table n_comp_table;
+		Lu_Arr w_comp_tables;
 	};
 
 	static Lu_S_Comp_View lu_s_comp_view__init(
@@ -103,7 +103,7 @@
 	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_View self, lu_size val_step_i, lu_value val);
 	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_View self);
 
-	static void lu_s_comp_view__save_data(Lu_S_Comp_View self, lu_size wave_id, lu_size z, Lu_Data data, Lu_Process_Config config);
+	static void lu_s_comp_view__save_data(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Layer Config 
@@ -305,7 +305,7 @@
 
 	static void lu_s_layer_comp__save_data(
 		Lu_S_Layer_Comp self, 
-		lu_size wave_id, 
+		Lu_Wave wave, 
 		lu_size z, 
 		Lu_Data data, 
 		Lu_Process_Config config
@@ -326,7 +326,7 @@
 
 	static void lu_s_layer_frame__save_data(
 		Lu_S_Layer_Frame self, 
-		lu_size wave_id, 
+		Lu_Wave wave, 
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config
@@ -554,4 +554,4 @@
 	//
 	//
 
-	static void lu_s__save_data(Lu_S self, lu_size wave_id, lu_size rec_id, Lu_Data data, Lu_Process_Config);
+	static void lu_s__save_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config);

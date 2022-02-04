@@ -61,7 +61,7 @@
 
 	static void lu_s_layer_frame__save_data(
 		Lu_S_Layer_Frame self, 
-		lu_size wave_id, 
+		Lu_Wave wave, 
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config
@@ -85,7 +85,7 @@
 			Lu_S_Layer_Comp comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
 			lu__assert(comp->super.type == LU_S_LT__COMP);
 
-			lu_s_layer_comp__save_data(comp, wave_id, z, data, config);
+			lu_s_layer_comp__save_data(comp, wave, z, data, config);
 		}
 
 		// continue saving to higher levels recursively (wave)

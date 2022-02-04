@@ -29,8 +29,8 @@
 	struct lu_wave {
 		enum lu_wave_type type;
 
-		// set by system
 		lu_size id;
+		lu_size space_index;
 
 		Lu_Mem mem;
 		Lu_Brain brain;

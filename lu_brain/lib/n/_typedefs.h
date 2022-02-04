@@ -27,7 +27,7 @@ typedef struct lu_n_table_node* N_Table_Node;
 typedef struct lu_n_table* N_Table;
 typedef struct lu_n_links* N_Links;
 
-typedef struct lu_n_space* Lu_N_Space;
+typedef struct lu_n_comp_table* Lu_N_Comp_Table;
 
 // typedef struct lu_n_config* N_Config;
 // typedef struct lu_n* N;
