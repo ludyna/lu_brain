@@ -179,7 +179,8 @@
 	struct lu_process_config {
 		lu_flags 				flags;						// 0 oznachaye not set
 		lu_value 				contrast_vs_color;			// blyzhche do 1 ce contrast
-		lu_value 				fire_breakpoint;
+		lu_value 				min_potency;				// ignore potencies below this value
+		lu_value 				min_fire_potency;			// fire neurons with potency above this value
 		lu_size 				block_layers_size;			// How many wave block_layers should we hold.
 															// Oldest ones are destroyed once limit is reached (FIFO).
 	};

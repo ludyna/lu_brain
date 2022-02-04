@@ -9,7 +9,7 @@
     {
         self->flags                 = 0;
         self->contrast_vs_color     = 0.5;
-        self->fire_breakpoint       = 0.9;
+        self->min_fire_potency       = 0.9;
         self->block_layers_size     = 50;
 
         return self;
@@ -22,8 +22,9 @@
     	// LU_PCT__SAVE_DEFAULT
     	{
             .flags                        = 0,
-    		.contrast_vs_color            = 0.5,  	// nemaye znachenia dlia save
-    		.fire_breakpoint              = 0.9,  	// potribna povna kopiya
+    		.contrast_vs_color            = 1.0,  	// nemaye znachenia dlia save mayzhe
+            .min_potency                  = 0.05,
+    		.min_fire_potency             = 0.9,  	// potribna povna kopiya
             .block_layers_size            = 50
     	},
     	// LU_PCT__FIND_FULL_CONTRAST
@@ -48,7 +49,7 @@
   	Lu_Process_Config lu_process_config__validate(Lu_Process_Config self) 
   	{
   		lu__user_assert(self->contrast_vs_color >= 0 && self->contrast_vs_color <= 1, "contrast_vs_color should be in [0, 1]");
-  		lu__user_assert(self->fire_breakpoint > 0 && self->fire_breakpoint < 1, "fire_breakpoint should be in (0, 1)");
+  		lu__user_assert(self->min_fire_potency > 0 && self->min_fire_potency < 1, "min_fire_potency should be in (0, 1)");
 
   		return self;
   	}

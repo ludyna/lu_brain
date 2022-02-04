@@ -14,9 +14,16 @@
 */
 void lu_free(void **p);
 
+static inline lu_bool lu_value_eq_with_signif(lu_value a, lu_value b, lu_value signif)
+{
+	return lu_value_abs(a - b) < signif;
+}
+
 static inline lu_bool lu_value_eq(lu_value a, lu_value b)
 {
-	return lu_value_abs(a - b) < LU__NON_SIGNF;
+	return lu_value_eq_with_signif(a, b, LU__NON_SIGNF);
 }
+
+
 
 #endif // _LU_UTIL_Hy

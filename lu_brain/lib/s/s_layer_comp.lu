@@ -103,6 +103,14 @@
 		lu__assert(config);
 
 		
+		if (!lu_value_eq_with_signif(config->contrast_vs_color, 1.0, config->min_potency))
+		{
+			// color
+		}
 
-		
+		if (!lu_value_eq_with_signif(config->contrast_vs_color, 0.0, config->min_potency))
+		{
+			// contrast
+		}
+
 	}
