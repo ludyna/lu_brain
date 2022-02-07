@@ -15,3 +15,12 @@
 	{
 
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_w_table__save_data(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config)
+	{
+		
+	}
+	

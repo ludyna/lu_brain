@@ -1,0 +1,11 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/ 
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_n_comp_table__update(Lu_N_Comp_Table self, Lu_W_Table w_table, Lu_Process_Config config)
+	{
+		
+	}

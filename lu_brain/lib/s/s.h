@@ -81,7 +81,7 @@
 		struct n_cell_value*** cells;
 
 		Lu_N_Comp_Table n_comp_table;
-		Lu_Arr w_comp_tables;
+		Lu_W_Space w_space;
 	};
 
 	static Lu_S_Comp_View lu_s_comp_view__init(
