@@ -63,22 +63,14 @@
 //
 
 	// can be v or p
+	// Has shared calculations for w_table and n_table
 	struct lu_s_comp_view {
 
 		Lu_Res res;
 
 		enum lu_s_comp_view_type view_type;
 
-		lu_value 				orig_min;
-		lu_value 				orig_max;
-		lu_value 				max;
-
-		lu_value 				step;
-		lu_value*				steps;  		// preobchysleni kroky
-		lu_size 				cells_size;
-
-		// w x h x cells_size, empty by default
-		struct n_cell_value*** cells;
+		struct lu_comp_calc comp_calc;
 
 		Lu_N_Comp_Table n_comp_table;
 		Lu_W_Space w_space;
@@ -96,13 +88,6 @@
 	);
 	
 	static void lu_s_comp_view__deinit(Lu_S_Comp_View self);
-
-	static inline lu_value lu_s_comp_view__norm(Lu_S_Comp_View self, lu_value request);
-	static inline lu_size lu_s_comp_view__ix(Lu_S_Comp_View self, lu_value val);
-	static inline struct lu_size_range lu_s_comp_view__ix_range(Lu_S_Comp_View self, lu_value val, lu_size nsc);
-	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_View self, lu_size val_step_i, lu_value val);
-	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_View self);
-
 	static void lu_s_comp_view__save_data(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
 
 ///////////////////////////////////////////////////////////////////////////////

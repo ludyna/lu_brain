@@ -19,32 +19,15 @@
 		lu__assert(self);
 		lu__assert(res);
 		lu__assert(res->s_mem);
-
+		lu__assert(res->n_mem);
 
 		self->res 				= res;
 		self->view_type 		= view_type;
-		self->cells_size  		= cells_size; // value depth in indexes
-		self->orig_min 			= min;
-		self->orig_max 			= max;
-		self->max 				= self->orig_max - self->orig_min;
-		self->step 				= self->max / (lu_value) self->cells_size;
 
-		// my robymo tochni znachennia, tomu ce zakomentano
-		//self->nsc 				= nsc; //(lu_size) lu_value_round(self->max_val * rec->val_nsc / self->step); // nsc in indexes
-
-	 	// Kroky preobchysleni (vertical)
-		self->steps 		= (lu_value*) lu_mem__alloc(self->res->s_mem, sizeof(lu_value) * self->cells_size);
-		lu__assert(self->steps);
+		lu_comp_calc__init(&self->comp_calc, res->s_mem, min, max, cells_size);
 	
-		lu_size i;
-		for (i = 0; i < self->cells_size; i++)
-			self->steps[i] = (lu_value)i * self->step;
-
-		// w x h x cells_size, empty by default
-		// self->cells = (struct n_cell_value***) lu_mem__alloc(
-		// 	self->n_mem, 
-		// 	sizeof(struct n_cell_value) * width * height * self->cells_size
-		// );
+		self->n_comp_table = lu_n_comp_table__create(self->res->n_mem, &self->comp_calc, width, height);
+		lu__assert(self->n_comp_table);
 
 		return self;
 	}
@@ -52,54 +35,14 @@
 	static inline void lu_s_comp_view__deinit(Lu_S_Comp_View self)
 	{
 		lu__assert(self);
-		lu__assert(self->res);
 
-		// lu_mem__free(self->n_mem, (lu_p_byte) self->cells);
-		lu_mem__free(self->res->s_mem, (lu_p_byte) self->steps);
+		lu_n_comp_table__destroy(self->n_comp_table);
+
+		lu_comp_calc__deinit(&self->comp_calc);
 		
-		self->steps = NULL;
-	}
-
-	static inline lu_value lu_s_comp_view__norm(Lu_S_Comp_View self, lu_value request)
-	{
-		lu_value val = request - self->orig_min;
-		if (val < 0) val = 0;
-		if (val > self->max) val = self->max;
-
-		return val;
-	}
-
-	static inline lu_size lu_s_comp_view__ix(Lu_S_Comp_View self, lu_value val)
-	{
-		return (lu_size) lu_value_round(val / self->step);
-	}
-
-	static inline struct lu_size_range lu_s_comp_view__ix_range(Lu_S_Comp_View self, lu_value val, lu_size nsc)
-	{
-		lu_size orig_i = lu_s_comp_view__ix(self, val);
-
-		long begin, end;
-
-		begin = orig_i - nsc;
-		if (begin < 0) begin = 0;
-
-		end = orig_i + nsc;
-		if (end > (self->cells_size - 1)) end = self->cells_size - 1; 
-
-		struct lu_size_range r;
-		r.begin = (lu_size) begin;
-		r.end = (lu_size) end;
-		return r;
-	}
-
-	static inline lu_value lu_s_comp_view__calc_sig(Lu_S_Comp_View self, lu_size val_step_i, lu_value val)
-	{ 
-		return 1.0 - lu_value_abs(self->steps[val_step_i] - val) / self->max;
-	}
-
-	static inline lu_value lu_s_comp_view__step_norm_dist(Lu_S_Comp_View self)
-	{
-		return 1.0 / self->cells_size;
+		self->res = NULL; 
+		self->n_comp_table = NULL;
+		self->w_space = NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -114,7 +57,7 @@
 	)
 	{
 		lu__assert(self);
-		lu__assert(data);
+		lu__assert( data);
 		lu__assert(config);
 
 		lu__assert(self->w_space);

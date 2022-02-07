@@ -11,8 +11,17 @@
 // Lu_N_Comp_Table
 
 	struct lu_n_comp_table {
+		Lu_Mem mem;
+		Lu_Comp_Calc cc;
+		lu_size width;
+		lu_size height;
 
+		// w x h x cells_size, empty by default
+		struct n_cell_value*** cells;
 	};
+
+	static Lu_N_Comp_Table lu_n_comp_table__create(Lu_Mem mem, Lu_Comp_Calc cc, lu_size width, lu_size height);
+	static void lu_n_comp_table__destroy(Lu_N_Comp_Table self);
 
 	static void lu_n_comp_table__update(Lu_N_Comp_Table self, Lu_W_Table w_table, Lu_Process_Config config);
 
