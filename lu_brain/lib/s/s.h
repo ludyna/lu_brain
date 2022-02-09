@@ -93,91 +93,27 @@
 // Layer Config 
 //
 
- 	//
- 	// N Config
-	//
-
-	struct lu_s_layer_base_n_config {
-		Lu_Mem n_mem;
-
-		lu_size size_in_cells;
-		lu_byte cell_type; 
-	};
-
-
-	static inline Lu_S_Layer_Base_N_Config lu_s_layer_base_n_config__init(Lu_S_Layer_Base_N_Config self)
-	{
-		lu__assert(self);
-
-		self->n_mem = NULL;
-		self->size_in_cells = 0;
-		self->cell_type = N_CT__END;
-
-		return self;
-	}
-
-	static inline Lu_S_Layer_Base_N_Config lu_s_layer_base_n_config__validate(Lu_S_Layer_Base_N_Config self)
-	{
-		lu__assert(self);
-		lu__assert(self->n_mem);
-		lu__assert(self->cell_type < N_CT__END);
-
-		return self;
-	}
-
-	//
-	// W Config 
-	// 
-
-	struct lu_s_layer_base_w_config {
-		Lu_Mem w_mem;
-	};
-
-	static inline Lu_S_Layer_Base_W_Config lu_s_layer_base_w_config__init(Lu_S_Layer_Base_W_Config self)
-	{
-		lu__assert(self);
-
-		self->w_mem = NULL;
-
-		return self;
-	}
-
-	static inline Lu_S_Layer_Base_W_Config lu_s_layer_base_w_config__validate(Lu_S_Layer_Base_W_Config self)
-	{
-		lu__assert(self);
-
-		return self;
-	}
-
 	//
 	// Lu_S_Layer_Base_Config 
 	//
 
 	struct lu_s_layer_base_config {
-		
-		Lu_Mem s_mem;
+		Lu_Brain_Config brain_config;
 
 		enum lu_s_layer_type type;
 		lu_size level;
 
 		void (*destroy)(Lu_S_Layer_Base);
-
-		struct lu_s_layer_base_n_config n_config;
-
-		struct lu_s_layer_base_w_config w_config;
 	};
 
 	static inline Lu_S_Layer_Base_Config lu_s_layer_base_config__init(Lu_S_Layer_Base_Config self)
 	{
 		lu__assert(self);
 
-		self->s_mem = NULL;
+		self->brain_config = NULL;
 		self->type = LU_S_LT__END;
 		self->level = 0;
 		self->destroy = NULL;
-
-		lu_s_layer_base_n_config__init(&self->n_config);
-		lu_s_layer_base_w_config__init(&self->w_config);
 
 		return self;
 	}
@@ -185,18 +121,9 @@
 	static inline Lu_S_Layer_Base_Config lu_s_layer_base_config__validate(Lu_S_Layer_Base_Config self)
 	{
 		lu__assert(self);
-		lu__assert(self->s_mem);
+		lu__assert(self->brain_config);
 		lu__assert(self->type < LU_S_LT__END);
 		lu__assert(self->destroy);
-
-		if (self->n_config.size_in_cells > 0)
-		{
-			Lu_S_Layer_Base_N_Config n_config = lu_s_layer_base_n_config__validate(&self->n_config);
-			lu__assert(n_config);
-		}
-
-		Lu_S_Layer_Base_W_Config w_config = lu_s_layer_base_w_config__validate(&self->w_config);
-		lu__assert(w_config);
 
 		return self;
 	}

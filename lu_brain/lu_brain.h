@@ -20,8 +20,6 @@
 	// Brain  
 	//
  
- 	typedef struct lu_space_config*  	Lu_Space_Config;
- 	typedef struct lu_net_config*		Lu_Net_Config;
 	typedef struct lu_brain_config* 	Lu_Brain_Config;
 
 	typedef struct lu_brain* 			Lu_Brain;	
@@ -42,30 +40,38 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain_Config 
 
-	struct lu_space_config {
-		lu_size frames_size; 				// initial maximum number of frames
-		lu_size apexes_size;				// initial maximum number of apexes
-	};
-
-	struct lu_net_config {
-		lu_size names_size; 				// initial maximum number of names
-
-		lu_size size_in_cell_0;
-		lu_size size_in_cell_1;
-		lu_size size_in_cell_2;
-		lu_size size_in_cell_3; 
-		lu_size size_in_cell_4;
-
-		lu_size n_table_mod;				
-	};
-
 	struct lu_brain_config {
-		lu_size id;							// optional, to identify brain by unique id
-		lu_size recs_size;					// initial maximum number of recs 
-		lu_size max_seq_size_in_blocks; 	// max seq size in blocks
+		//
+		// Brain level
+		//
+		Lu_Mem b_mem;						// if NULL initialize to default
+		lu_size b_id;						// optional, to identify brain by unique id
+		lu_size b_recs_size;				// initial maximum number of recs 
+		lu_size b_max_seq_size_in_blocks; 	// max seq size in blocks
 
-		struct lu_space_config space;		// initial values
-		struct lu_net_config net;			// initial values
+		//
+		// Structure level
+		//
+		Lu_Mem s_mem;						// if NULL initialize to default
+		lu_size s_frames_size; 				// initial maximum number of frames
+		lu_size s_apexes_size;				// initial maximum number of apexes
+
+		//
+		// Network level
+		//
+		Lu_Mem n_mem;						// if NULL initialize to default
+		lu_size n_names_size; 				// initial maximum number of names
+		lu_size n_size_in_cell_0;
+		lu_size n_size_in_cell_1;
+		lu_size n_size_in_cell_2;
+		lu_size n_size_in_cell_3; 
+		lu_size n_size_in_cell_4;
+		lu_size n_table_mod;	
+
+		//
+		// Waves level
+		//
+		Lu_Mem w_mem;						// if NULL initialize to default
 	};
 
 	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config);

@@ -49,6 +49,7 @@ void* lu__user_debug_args_internal(const char* func, const char* file, int line,
 #define lu__user_debug_args(msg, ...) lu__user_debug_args_internal	(__func__, __FILE__, __LINE__, msg, __VA_ARGS__)
 
 #define lu__user_assert(exp, msg) if(!(exp)) return g_user_assert ? lu__user_debug(msg) : NULL;
+#define lu__null_assert(exp) if(!(exp)) return NULL;
 #define lu__user_assert_void(exp, msg) if(!(exp)) { if (g_user_assert) lu__user_debug(msg); return; }
 #define lu__user_assert_ent(exp, msg) if(!(exp)) { if (g_user_assert) lu__user_debug(msg); return LU__ENT_NULL; }
 #define lu__user_assert_ext(exp, msg, func, file, line) if(!(exp)) return g_user_assert ? lu__user_debug_internal(func, file, line, msg) : NULL;

@@ -8,20 +8,38 @@
 	struct lu_brain_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END] = {
 		{
 			// LU_BC_DEFAULT
-			.id							= 0,					
-			.recs_size					= 16, 
-			.max_seq_size_in_blocks 	= 16,
 
-			.net.names_size				= 128,
-			.net.size_in_cell_0			= 10000, 
-			.net.size_in_cell_1			= 10000,
-			.net.size_in_cell_2			= 10000, 
-			.net.size_in_cell_3			= 10000, 
-			.net.size_in_cell_4			= 10000, 
-			.net.n_table_mod			= 2,
+			//
+			// Brain level
+			//
+			.b_mem = lu_g_mem,					
+			.b_id = 0, 						
+			.b_recs_size = 16,				
+			.b_max_seq_size_in_blocks = 16,
 
-			.space.frames_size 			= 256,
-			.space.apexes_size 			= 256,
+			//
+			// Structure level
+			//
+			.s_mem = lu_g_mem, 
+			.s_frames_size = 256, 				
+			.s_apexes_size = 256,		
+
+			//
+			// Network level
+			//
+			.n_mem = lu_g_mem,		
+			.n_names_size = 128,  			
+			.n_size_in_cell_0 = 10000,
+			.n_size_in_cell_1 = 10000,
+			.n_size_in_cell_2 = 10000,
+			.n_size_in_cell_3 = 10000,
+			.n_size_in_cell_4 = 10000,
+			.n_table_mod = 2, 
+
+			//
+			// Waves level
+			//
+			w_mem = lu_g_mem						
 		},
 	};		
 
@@ -38,14 +56,38 @@
 
 	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config)
 	{
-		lu__user_assert(config->recs_size > 0, "recs_size should be greater than 0");
-		lu__user_assert(config->net.names_size > 0, "net.names_size should be greater than 0");
-		lu__user_assert(config->net.size_in_cell_0 > 0, "net.size_in_cell_0 should be greater than 0");
-		lu__user_assert(config->net.size_in_cell_1 > 0, "net.size_in_cell_1 should be greater than 0");
-		lu__user_assert(config->net.size_in_cell_2 > 0, "net.size_in_cell_2 should be greater than 0");
-		lu__user_assert(config->net.size_in_cell_3 > 0, "net.size_in_cell_3 should be greater than 0");
-		lu__user_assert(config->net.size_in_cell_4 > 0, "net.size_in_cell_4 should be greater than 0");
-		lu__user_assert(config->net.n_table_mod > 1, "net.n_table_mod should be greater than 1");
+		//
+		// Brain level
+		//
+
+		lu__user_assert(config->b_mem, "b_mem is NULL");
+		lu__user_assert(config->b_recs_size > 0, "recs_size should be greater than 0");
+
+		//
+		// Structure level
+		//
+
+		lu__user_assert(config->s_mem, "s_mem is NULL");
+
+		//
+		// Network level
+		//
+
+		lu__user_assert(config->n_mem, "n_mem is NULL");
+
+		lu__user_assert(config->n_names_size > 0, "net.names_size should be greater than 0");
+		lu__user_assert(config->n_size_in_cell_0 > 0, "net.size_in_cell_0 should be greater than 0");
+		lu__user_assert(config->n_size_in_cell_1 > 0, "net.size_in_cell_1 should be greater than 0");
+		lu__user_assert(config->n_size_in_cell_2 > 0, "net.size_in_cell_2 should be greater than 0");
+		lu__user_assert(config->n_size_in_cell_3 > 0, "net.size_in_cell_3 should be greater than 0");
+		lu__user_assert(config->n_size_in_cell_4 > 0, "net.size_in_cell_4 should be greater than 0");
+		lu__user_assert(config->n_n_table_mod > 1, "net.n_table_mod should be greater than 1");
+
+		//
+		// Waves level
+		//
+
+		lu__user_assert(config->w_mem, "w_mem is NULL");
 
 		return config;
 	}

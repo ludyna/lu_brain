@@ -14,7 +14,7 @@
 		config = lu_s_layer_base_config__validate(config);
 		lu__assert(config);
 
-		self->s_mem = config->s_mem;
+		self->s_mem = config->brain_config->res->s_mem;
 
 		self->type = config->type;
 		self->level = config->level;

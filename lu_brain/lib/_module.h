@@ -16,7 +16,6 @@
 
 // Modules
 
-#include "res/_module.h"
 #include "calcs/_module.h"
 #include "w/_module.h"
 #include "n/_module.h"

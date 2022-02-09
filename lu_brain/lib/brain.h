@@ -14,8 +14,6 @@
 		
 		struct lu_brain_config config;
 
-		struct lu_res res;
-
 		Lu_Arr	recs; // receivers
 
 		Lu_S s;
@@ -25,4 +23,12 @@
 	static lu_size lu_brain__rec_attach(Lu_Brain self, Lu_Rec rec);
 	static void lu_brain__rec_detach(Lu_Brain self, Lu_Rec rec);
 
-	
+	static inline Lu_Mem lu_brain__mem(Lu_Brain self) 
+	{ 
+		lu__assert(self);
+		lu__assert(self->config.res);
+		lu__assert(self->config.res->brain_mem);
+
+		return self->config.res->brain_mem;
+	}
+

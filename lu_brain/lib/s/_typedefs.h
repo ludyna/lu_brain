@@ -24,8 +24,6 @@
 		LU_S_CVT__P
 	};
 
-	typedef struct lu_s_layer_base_n_config* Lu_S_Layer_Base_N_Config;
-	typedef struct lu_s_layer_base_w_config* Lu_S_Layer_Base_W_Config;
 	typedef struct lu_s_layer_base_config* Lu_S_Layer_Base_Config;
 
 	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
