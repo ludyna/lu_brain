@@ -5,18 +5,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Map_Story lu_s_map_story__create(Lu_Res res, lu_size recs_count, Lu_Brain_Config config)
+	static Lu_S_Map_Story lu_s_map_story__create(lu_size recs_count, Lu_Config config)
 	{
-		lu__assert(res);
+		lu__assert(config);
 		lu__assert(recs_count > 0);
-		lu__assert(res->s_mem);
+		lu__assert(config->s_mem);
 
-		Lu_S_Map_Story self = (Lu_S_Map_Story) lu_mem__alloc(res->s_mem, sizeof(struct lu_s_map_story));
+		Lu_S_Map_Story self = (Lu_S_Map_Story) lu_mem__alloc(config->s_mem, sizeof(struct lu_s_map_story));
 		lu__assert(self);
 
 		Lu_S_Map_Base base = lu_s_map_base__init_with_childs(
 			&self->super, 
-			res, 
 			LU_S_MT__STORY, 
 			config,
 			NULL, 

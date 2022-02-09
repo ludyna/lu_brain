@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Brain API
 
-	Lu_Brain lu_brain__create(struct lu_brain_config config)
+	Lu_Brain lu_brain__create(struct lu_config config)
 	{
-		Lu_Brain_Config p_config = lu_brain_config__validate(&config);
-		lu__user_assert(p_config, "Lu_Brain_Config validation failed");
+		Lu_Config p_config = lu_config__validate(&config);
+		lu__user_assert(p_config, "Lu_Config validation failed");
 
 		if (p_config->res == NULL)
 		{
@@ -82,14 +82,14 @@
  		// 		lu_n__print_info(self->n);
 	}
 
-	struct lu_brain_config lu_brain_config_get(Lu_Brain self)
+	struct lu_config lu_brain_config_get(Lu_Brain self)
 	{
 		lu__assert(self);
 
 		return self->config;
 	}
 
-	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_brain_config config)
+	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_config config)
 	{
 		lu__user_assert(NULL, "Not implemented yet");
 	}

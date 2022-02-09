@@ -20,7 +20,7 @@
 	// Brain  
 	//
  
-	typedef struct lu_brain_config* 	Lu_Brain_Config;
+	typedef struct lu_config* 	Lu_Config;
 
 	typedef struct lu_brain* 			Lu_Brain;	
 	
@@ -38,9 +38,9 @@
 	typedef struct lu_wave* 			Lu_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Brain_Config 
+// Lu_Config 
 
-	struct lu_brain_config {
+	struct lu_config {
 		//
 		// Brain level
 		//
@@ -74,10 +74,10 @@
 		Lu_Mem w_mem;						// if NULL initialize to default
 	};
 
-	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config);
+	Lu_Config lu_config__validate(Lu_Config config);
 
 	//
-	// Lu_Brain_Config predefined 
+	// Lu_Config predefined 
 	//
 
 	enum lu_bc_predefined_type {
@@ -85,17 +85,17 @@
 		LU_BRAIN_CONFIG_END 				
 	};
 
-	struct lu_brain_config lu_brain_config__get_by_id(lu_size id);
+	struct lu_config lu_config__get_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain 
 
-	Lu_Brain lu_brain__create(Lu_Mem, struct lu_brain_config config);
+	Lu_Brain lu_brain__create(Lu_Mem, struct lu_config config);
 	void lu_brain__destroy(Lu_Brain);
 
 	void lu_brain__print_info(Lu_Brain self);
 
-	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_brain_config config);
+	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_config config);
 
 	lu_size lu_brain__recs_size(Lu_Brain self); 
 

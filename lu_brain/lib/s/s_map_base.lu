@@ -7,27 +7,24 @@
 
 	static Lu_S_Map_Base lu_s_map_base__init(
 		Lu_S_Map_Base self, 
-		Lu_Res res, 
 		enum lu_s_map_type type, 
-		Lu_Brain_Config config,
+		Lu_Config config,
 		Lu_S_Map_Base p, 
 		void (*destroy)(Lu_S_Map_Base)
 	)
 	{
 		lu__assert(self);
-		lu__assert(res);
 		lu__assert(config);
 		lu__assert(destroy);
 
 		self->type = type;
-		self->res = res;
 		self->config = config;
 
-		self->apexes = lu_arr__create(res->s_mem, config->space.apexes_size, true);
+		self->apexes = lu_arr__create(config->s_mem, config->space.apexes_size, true);
 		lu__assert(self->apexes);
 
 		// bases size = apexes size
-		self->bases = lu_arr__create(res->s_mem, config->space.apexes_size, true);
+		self->bases = lu_arr__create(config->s_mem, config->space.apexes_size, true);
 		lu__assert(self->bases);
 
 		self->p = p;
@@ -41,18 +38,17 @@
 
 	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
 		Lu_S_Map_Base self,
-		Lu_Res res, 
 		enum lu_s_map_type type, 
-		Lu_Brain_Config config,
+		Lu_Config config,
 		Lu_S_Map_Base p, 
 		lu_size childs_size,
 		void (*destroy)(Lu_S_Map_Base)
 	)
 	{
-		self = lu_s_map_base__init(self, res, type, config, p, destroy);
+		self = lu_s_map_base__init(self, type, config, p, destroy);
 		lu__assert(self);
 
-		self->c = (Lu_Slot_Base) lu_slot_arr__create(res->s_mem, childs_size, true);
+		self->c = (Lu_Slot_Base) lu_slot_arr__create(config->s_mem, childs_size, true);
 		lu__assert(self->c);
 
 		return self;
@@ -62,10 +58,9 @@
 	static void lu_s_map_base__destroy(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
-		lu__assert(self->res);
-		lu__assert(self->res->s_mem);
 
-		Lu_Mem s_mem = self->res->s_mem;
+		Lu_Mem s_mem = self->config->s_mem;
+		lu__assert(s_mem);
 
 		lu_size i;
 		Lu_Slot_Base slot;

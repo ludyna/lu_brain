@@ -3,16 +3,16 @@
 */
  
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Brain_Config predefined 
+// Lu_Config predefined 
 
-	struct lu_brain_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END] = {
+	struct lu_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END] = {
 		{
 			// LU_BC_DEFAULT
 
 			//
 			// Brain level
 			//
-			.b_mem = lu_g_mem,					
+			.b_mem = NULL,					
 			.b_id = 0, 						
 			.b_recs_size = 16,				
 			.b_max_seq_size_in_blocks = 16,
@@ -20,14 +20,14 @@
 			//
 			// Structure level
 			//
-			.s_mem = lu_g_mem, 
+			.s_mem = NULL, 
 			.s_frames_size = 256, 				
 			.s_apexes_size = 256,		
 
 			//
 			// Network level
 			//
-			.n_mem = lu_g_mem,		
+			.n_mem = NULL,		
 			.n_names_size = 128,  			
 			.n_size_in_cell_0 = 10000,
 			.n_size_in_cell_1 = 10000,
@@ -39,11 +39,11 @@
 			//
 			// Waves level
 			//
-			w_mem = lu_g_mem						
+			.w_mem = NULL						
 		},
 	};		
 
-	struct lu_brain_config lu_brain_config__get_by_id(lu_size id)
+	struct lu_config lu_config__get_by_id(lu_size id)
 	{
 		lu__assert(id < LU_BRAIN_CONFIG_END);
 
@@ -51,10 +51,10 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Brain_Config
+// Lu_Config
 
 
-	Lu_Brain_Config lu_brain_config__validate(Lu_Brain_Config config)
+	Lu_Config lu_config__validate(Lu_Config config)
 	{
 		//
 		// Brain level
@@ -81,7 +81,7 @@
 		lu__user_assert(config->n_size_in_cell_2 > 0, "net.size_in_cell_2 should be greater than 0");
 		lu__user_assert(config->n_size_in_cell_3 > 0, "net.size_in_cell_3 should be greater than 0");
 		lu__user_assert(config->n_size_in_cell_4 > 0, "net.size_in_cell_4 should be greater than 0");
-		lu__user_assert(config->n_n_table_mod > 1, "net.n_table_mod should be greater than 1");
+		lu__user_assert(config->n_table_mod > 1, "net.n_table_mod should be greater than 1");
 
 		//
 		// Waves level

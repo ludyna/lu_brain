@@ -7,23 +7,21 @@
 // Lu_S Create & Destroy
 
 	static Lu_S lu_s__create_intersected_squares_cortex(
-		Lu_Res res, 
-		Lu_Brain_Config config, 
+		Lu_Config config, 
 		Lu_Arr recs
 	)
 	{
-		lu__assert(res);
+		lu__assert(config);
 		lu__assert(recs);
 		lu__assert(lu_arr__count(recs) > 0);
 
-		Lu_S self = (Lu_S) lu_mem__alloc(res->s_mem, sizeof(struct lu_s));
+		Lu_S self = (Lu_S) lu_mem__alloc(config->s_mem, sizeof(struct lu_s));
 		lu__assert(self);
 
-		Lu_Brain_Config v_config = lu_brain_config__validate(config);
+		Lu_Config v_config = lu_config__validate(config);
 		lu__assert(v_config);
 
-		self->config = *v_config;
-		self->res = res;
+		self->config = v_config;
 
 		lu__assert(self->config.space.frames_size >= lu_arr__count(recs));
 
@@ -81,8 +79,7 @@
 	static void lu_s__destroy(Lu_S self)
 	{
 		lu__assert(self);
-		lu__assert(self->res);
-		lu__assert(self->res->s_mem);
+		lu__assert(self->config);
 
 		if (self->fractal)
 		{
@@ -101,7 +98,7 @@
 		if (self->frames)
 			lu_arr__destroy(self->frames);
 
-		lu_mem__free(self->res->s_mem, (lu_p_byte) self);
+		lu_mem__free(self->config->s_mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

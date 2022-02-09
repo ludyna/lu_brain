@@ -64,9 +64,6 @@
 
 	// can be v or p
 	struct lu_s_comp_view {
-
-		Lu_Res res;
-
 		enum lu_s_comp_view_type view_type;
 
 		struct lu_comp_calc comp_calc;
@@ -77,7 +74,7 @@
 
 	static Lu_S_Comp_View lu_s_comp_view__init(
 		Lu_S_Comp_View, 
-		Lu_Res res, 
+		Lu_Config config, 
 		enum lu_s_comp_view_type view_type,
 		lu_size width, 
 		lu_size height, 
@@ -98,7 +95,7 @@
 	//
 
 	struct lu_s_layer_base_config {
-		Lu_Brain_Config brain_config;
+		Lu_Config brain_config;
 
 		enum lu_s_layer_type type;
 		lu_size level;
@@ -211,7 +208,7 @@
 		struct lu_s_comp_view p_view;
 	};
 
-	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Res res, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config);
+	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config rc_config);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
 	static void lu_s_layer_comp__save_data(
@@ -232,7 +229,7 @@
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Res res, Lu_Rec rec);
+	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Config config, Lu_Rec rec);
 	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self);
 
 	static void lu_s_layer_frame__save_data(
@@ -254,7 +251,7 @@
 		Lu_S_Layer_Base child;
 	};
 
-	static Lu_S_Layer lu_s_layer__create(Lu_Res res, lu_size level, lu_size children_count);
+	static Lu_S_Layer lu_s_layer__create(Lu_Config config, lu_size level, lu_size children_count);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
 
@@ -266,9 +263,7 @@
 
 		enum lu_s_map_type type;
 
-		Lu_Res res;
-
-		Lu_Brain_Config config;
+		Lu_Config config;
 
 		Lu_Arr apexes;
 		Lu_Arr bases;
@@ -282,18 +277,16 @@
 
 	static Lu_S_Map_Base lu_s_map_base__init(
 		Lu_S_Map_Base self,
-		Lu_Res res, 
 		enum lu_s_map_type type, 
-		Lu_Brain_Config config,
+		Lu_Config config,
 		Lu_S_Map_Base p,
 		void (*destroy)(Lu_S_Map_Base)
 	);
 
 	static Lu_S_Map_Base lu_s_map_base__init_with_childs(
 		Lu_S_Map_Base self,
-		Lu_Res res, 
 		enum lu_s_map_type type, 
-		Lu_Brain_Config config,
+		Lu_Config config,
 		Lu_S_Map_Base p, 
 		lu_size childs_size,
 		void (*destroy)(Lu_S_Map_Base)
@@ -326,7 +319,7 @@
 		lu_size recs_count;
 	};
 
-	static Lu_S_Map_Story lu_s_map_story__create(Lu_Res, lu_size recs_size, Lu_Brain_Config config); 
+	static Lu_S_Map_Story lu_s_map_story__create(lu_size recs_size, Lu_Config config); 
 	static void lu_s_map_story__destroy(Lu_S_Map_Base self);
 
 	//
@@ -339,30 +332,9 @@
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Res, Lu_Rec, Lu_S_Map_Base p, Lu_Brain_Config config);
+	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Rec, Lu_S_Map_Base p, Lu_Config config);
 	static void lu_s_map_frame__destroy(Lu_S_Map_Base self);
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Space_Config 
-//
-
-	#define LU_S_CONF__FRAMES_MIN_SIZE 256
-	#define LU_S_CONF__APEXES_MIN_SIZE 256
-
-	static inline Lu_Space_Config lu_space_config__validate(Lu_Space_Config self)
-	{
-		lu__user_assert(
-			self->frames_size >= LU_S_CONF__FRAMES_MIN_SIZE, 
-			"frames_size is too low in struct lu_space_config"
-		);
-
-		lu__user_assert(
-			self->apexes_size >= LU_S_CONF__APEXES_MIN_SIZE, 
-			"apexes_sixe is too low in struct lu_space_config"
-		);
-
-		return self;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S
@@ -370,9 +342,7 @@
 
 	struct lu_s {
 
-		struct lu_brain_config config;
-
-		Lu_Res res;
+		Lu_Config config;
 		
 		Lu_Arr frames;
 
@@ -422,8 +392,7 @@
 	//
 	
 	static Lu_S lu_s__create_intersected_squares_cortex(
-		Lu_Res res,
-		Lu_Brain_Config config, 
+		Lu_Config config, 
 		Lu_Arr lu_recs
 	);
 

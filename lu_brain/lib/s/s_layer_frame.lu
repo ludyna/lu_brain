@@ -5,35 +5,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Res res, Lu_Rec rec)
+	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Config brain_config, Lu_Rec rec)
 	{
-		lu__assert(res);
-		lu__assert(res->s_mem);
-		lu__assert(rec);
+		lu__assert(brain_config);
+		lu__assert(brain_config->s_mem);
 
-		Lu_S_Layer_Frame self = (Lu_S_Layer_Frame) lu_mem__alloc(res->s_mem, sizeof(struct lu_s_layer_frame));
+		Lu_S_Layer_Frame self = (Lu_S_Layer_Frame) lu_mem__alloc(brain_config->s_mem, sizeof(struct lu_s_layer_frame));
 		lu__assert(self);
 
 		struct lu_s_layer_base_config c;
 
 		lu_s_layer_base_config__init(&c);
 
-		c.s_mem = res->s_mem;
+		c.brain_config = brain_config;
 		c.type = LU_S_LT__FRAME;
 		c.level = 1;
 		c.destroy = lu_s_layer_frame__destroy;
-
-		//
-		// n_config
-		//
-
-		c.n_config.n_mem = res->n_mem;
-
-		//
-		// w_config
-		//
-		
-		c.w_config.w_mem = res->w_mem;
 
 		lu_s_layer_base__init_with_arr_c_slot(&self->super, &c, NULL, rec->depth);
 

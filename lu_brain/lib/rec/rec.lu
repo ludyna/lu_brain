@@ -11,6 +11,7 @@
 	Lu_Rec lu_brain__rec_add(Lu_Brain brain, lu_size width, lu_size height, lu_size depth, struct lu_rec_config config)
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
+		lu__user_assert(brain->config.b_mem, "b_mem is NULL");
 		lu__user_assert(width, "widht should be greater than 0");
 		lu__user_assert(height, "widht should be greater than 0");
 		lu__user_assert(depth, "widht should be greater than 0");
@@ -18,7 +19,7 @@
 	 	Lu_Rec_Config p_config 	= lu_rec_config__validate(&config);
 	 	lu__user_assert(p_config, "Lu_Rec_Config validation failed");
 
-		Lu_Rec self = (Lu_Rec) lu_mem__alloc(lu_brain__mem(brain), sizeof(struct lu_rec));
+		Lu_Rec self = (Lu_Rec) lu_mem__alloc(brain->config.b_mem, sizeof(struct lu_rec));
 		lu__user_assert(self, "Cannot allocate lu_rec");
 
 		// Initialize

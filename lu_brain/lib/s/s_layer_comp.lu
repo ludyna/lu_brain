@@ -5,21 +5,20 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Res res, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config config)
+	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config brain_config, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config rc_config)
 	{
-		lu__assert(res);
-		lu__assert(res->s_mem);
+		lu__assert(brain_config);
 		lu__assert(frame);
-		lu__assert(config);
+		lu__assert(rc_config);
 
-		Lu_S_Layer_Comp self = (Lu_S_Layer_Comp) lu_mem__alloc(res->s_mem, sizeof(struct lu_s_layer_comp));
+		Lu_S_Layer_Comp self = (Lu_S_Layer_Comp) lu_mem__alloc(brain_config->s_mem, sizeof(struct lu_s_layer_comp));
 		lu__assert(self);
 
 		struct lu_s_layer_base_config c;
 
 		lu_s_layer_base_config__init(&c);
 
-		c.s_mem = res->s_mem;
+		c.brain_config = brain_config;
 		c.type = LU_S_LT__COMP;
 		c.level = 0;
 		c.destroy = lu_s_layer_comp__destroy;
@@ -48,24 +47,24 @@
 
 		lu_s_comp_view__init(
 			&self->v_view, 
-			res,
+			brain_config,
 			LU_S_CVT__V, 
 			rec->width, 
 			rec->height, 
-			config->v_min, 
-			config->v_max, 
-			config->v_neu_size
+			rc_config->v_min, 
+			rc_config->v_max, 
+			rc_config->v_neu_size
 		);
 
 		lu_s_comp_view__init(
 			&self->p_view, 
-			res, 
+			brain_config, 
 			LU_S_CVT__P, 
 			rec->width, 
 			rec->height, 
-			config->v_min, 
-			config->v_max, 
-			config->p_neu_size
+			rc_config->v_min, 
+			rc_config->v_max, 
+			rc_config->p_neu_size
 		);
 
 		return self;
