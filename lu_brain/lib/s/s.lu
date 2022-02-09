@@ -8,7 +8,7 @@
 
 	static Lu_S lu_s__create_intersected_squares_cortex(
 		Lu_Res res, 
-		struct lu_space_config config, 
+		Lu_Brain_Config config, 
 		Lu_Arr recs
 	)
 	{
@@ -19,15 +19,15 @@
 		Lu_S self = (Lu_S) lu_mem__alloc(res->s_mem, sizeof(struct lu_s));
 		lu__assert(self);
 
-		Lu_Space_Config v_config = lu_space_config__validate(&config);
+		Lu_Brain_Config v_config = lu_brain_config__validate(config);
 		lu__assert(v_config);
 
 		self->config = *v_config;
 		self->res = res;
 
-		lu__assert(self->config.frames_size >= lu_arr__count(recs));
+		lu__assert(self->config.space.frames_size >= lu_arr__count(recs));
 
-		self->frames = lu_arr__create(res->s_mem, self->config.frames_size, true);
+		self->frames = lu_arr__create(res->s_mem, self->config.space.frames_size, true);
 		lu__assert(self->frames);
 
 		Lu_Rec rec;
@@ -37,7 +37,7 @@
 		Lu_S_Map_Story story_map;
 		Lu_S_Layer_Frame frame;
 
-		story_map = lu_s_map_story__create(res, lu_arr__count(recs)); 
+		story_map = lu_s_map_story__create(res, lu_arr__count(recs), config); 
 		lu__assert(story_map);
 
 		lu_s_map_base__make_story_fractal((Lu_S_Map_Base) story_map, story_map->recs_count);
@@ -45,14 +45,13 @@
 		Lu_S_Layer_Base recs_base = lu_s_map_base__get_base((Lu_S_Map_Base) story_map);
 		lu__assert(recs_base);
 
-
 		Lu_S_Layer_Base frame_apex;
 		for (i = 0; i < lu_arr__count(recs); i++)
 		{
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			frame_map = lu_s_map_frame__create(res, rec, (Lu_S_Map_Base) story_map);
+			frame_map = lu_s_map_frame__create(res, rec, (Lu_S_Map_Base) story_map, config);
 			lu__assert(frame_map->super.type == LU_S_MT__FRAME);
 			lu__assert(frame_map);
 
@@ -97,9 +96,6 @@
 			}
 
 			lu_s_map_base__recursive_destroy(self->fractal);
-
-			// lu__assert(self->fractal->destroy);
-			// self->fractal->destroy(self->fractal);
 		}
 
 		if (self->frames)

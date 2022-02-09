@@ -63,7 +63,6 @@
 //
 
 	// can be v or p
-	// Has shared calculations for w_table and n_table
 	struct lu_s_comp_view {
 
 		Lu_Res res;
@@ -342,6 +341,8 @@
 
 		Lu_Res res;
 
+		Lu_Brain_Config config;
+
 		Lu_Arr apexes;
 		Lu_Arr bases;
 
@@ -356,8 +357,7 @@
 		Lu_S_Map_Base self,
 		Lu_Res res, 
 		enum lu_s_map_type type, 
-		lu_size apexes_size,
-		lu_size bases_size, 
+		Lu_Brain_Config config,
 		Lu_S_Map_Base p,
 		void (*destroy)(Lu_S_Map_Base)
 	);
@@ -366,8 +366,7 @@
 		Lu_S_Map_Base self,
 		Lu_Res res, 
 		enum lu_s_map_type type, 
-		lu_size apexes_size,
-		lu_size bases_size, 
+		Lu_Brain_Config config,
 		Lu_S_Map_Base p, 
 		lu_size childs_size,
 		void (*destroy)(Lu_S_Map_Base)
@@ -400,7 +399,7 @@
 		lu_size recs_count;
 	};
 
-	static Lu_S_Map_Story lu_s_map_story__create(Lu_Res, lu_size recs_size); 
+	static Lu_S_Map_Story lu_s_map_story__create(Lu_Res, lu_size recs_size, Lu_Brain_Config config); 
 	static void lu_s_map_story__destroy(Lu_S_Map_Base self);
 
 	//
@@ -413,7 +412,7 @@
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Res, Lu_Rec, Lu_S_Map_Base p);
+	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Res, Lu_Rec, Lu_S_Map_Base p, Lu_Brain_Config config);
 	static void lu_s_map_frame__destroy(Lu_S_Map_Base self);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -444,7 +443,7 @@
 
 	struct lu_s {
 
-		struct lu_space_config config;
+		struct lu_brain_config config;
 
 		Lu_Res res;
 		
@@ -497,7 +496,7 @@
 	
 	static Lu_S lu_s__create_intersected_squares_cortex(
 		Lu_Res res,
-		struct lu_space_config config, 
+		Lu_Brain_Config config, 
 		Lu_Arr lu_recs
 	);
 

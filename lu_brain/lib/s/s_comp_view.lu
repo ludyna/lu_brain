@@ -29,6 +29,8 @@
 		self->n_comp_table = lu_n_comp_table__create(self->res->n_mem, &self->comp_calc, width, height);
 		lu__assert(self->n_comp_table);
 
+		//self->w_space = lu_w_space__create();
+
 		return self;
 	}
 

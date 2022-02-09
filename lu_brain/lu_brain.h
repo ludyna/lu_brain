@@ -36,12 +36,11 @@
 
 	typedef struct lu_data* 			Lu_Data;
 	typedef struct lu_neu* 				Lu_Neu;
-	typedef struct lu_process_config*		Lu_Process_Config;
+	typedef struct lu_process_config*	Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain_Config 
-
 
 	struct lu_space_config {
 		lu_size frames_size; 				// initial maximum number of frames

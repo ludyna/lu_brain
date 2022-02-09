@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Map_Story lu_s_map_story__create(Lu_Res res, lu_size recs_count)
+	static Lu_S_Map_Story lu_s_map_story__create(Lu_Res res, lu_size recs_count, Lu_Brain_Config config)
 	{
 		lu__assert(res);
 		lu__assert(recs_count > 0);
@@ -18,8 +18,7 @@
 			&self->super, 
 			res, 
 			LU_S_MT__STORY, 
-			5, 
-			5, 
+			config,
 			NULL, 
 			recs_count,
 			lu_s_map_story__destroy
