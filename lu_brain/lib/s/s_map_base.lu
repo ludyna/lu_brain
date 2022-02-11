@@ -20,11 +20,11 @@
 		self->type = type;
 		self->config = config;
 
-		self->apexes = lu_arr__create(config->s_mem, config->space.apexes_size, true);
+		self->apexes = lu_arr__create(config->s_mem, config->s_apexes_size, true);
 		lu__assert(self->apexes);
 
 		// bases size = apexes size
-		self->bases = lu_arr__create(config->s_mem, config->space.apexes_size, true);
+		self->bases = lu_arr__create(config->s_mem, config->s_apexes_size, true);
 		lu__assert(self->bases);
 
 		self->p = p;

@@ -6,49 +6,42 @@
 // 
 
 	static Lu_S_Layer lu_s_layer__create(
-		Lu_Res res,
-		lu_size level,
+		Lu_Config config, 
+		lu_size level, 
 		lu_size children_count
 	)
 	{
-		lu__assert(res);
-		lu__assert(res->s_mem);
-		Lu_S_Layer self = (Lu_S_Layer) lu_mem__alloc(res->s_mem, sizeof(struct lu_s_layer));
+		lu__assert(config);
+		lu__assert(config->s_mem);
+		Lu_S_Layer self = (Lu_S_Layer) lu_mem__alloc(config->s_mem, sizeof(struct lu_s_layer));
 		lu__assert(self);
-
-		struct lu_s_layer_base_config c;
-
-		lu_s_layer_base_config__init(&c);
-
-		c.s_mem = res->s_mem;
-		c.type = LU_S_LT__LAYER;
-		c.level = level;
-		c.destroy = lu_s_layer__destroy;
-
-		//
-		// n_config
-		//
-
-		c.n_config.n_mem = res->n_mem;
-
-		//
-		// w_config
-		//
-
-		c.w_config.w_mem = res->w_mem;
-
 
 		if (children_count == 0)
 		{
-			lu_s_layer_base__init(&self->super, &c, NULL); 
+			lu_s_layer_base__init(&self->super, NULL, config, LU_S_LT__LAYER, level, lu_s_layer__destroy); 
 		}
 		else if (children_count == 1)
 		{
-			lu_s_layer_base__init_with_one_c_slot(&self->super, &c, NULL);
+			lu_s_layer_base__init_with_one_c_slot(
+				&self->super, 
+				NULL, 
+				config, 
+				LU_S_LT__LAYER, 
+				level, 
+				lu_s_layer__destroy
+			);
 		}
 		else
 		{
-			lu_s_layer_base__init_with_arr_c_slot(&self->super, &c, NULL, children_count);
+			lu_s_layer_base__init_with_arr_c_slot(
+				&self->super, 
+				NULL, 
+				children_count, 
+				config, 
+				LU_S_LT__LAYER, 
+				level, 
+				lu_s_layer__destroy
+			);
 		}
 
 		return self;
