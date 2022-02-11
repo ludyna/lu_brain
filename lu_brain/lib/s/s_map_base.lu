@@ -123,27 +123,27 @@
 		lu__assert(self);
 		lu__assert(self->apexes);
 		lu__assert(self->bases);
-		lu__assert(self->res);
+		lu__assert(self->config);
 
-		Lu_Res res = self->res;
-		Lu_Mem s_mem = self->res->s_mem;
+		Lu_Config config = self->config;
+		Lu_Mem s_mem = config->s_mem;
 		lu__assert(s_mem);
 
 		//
 		// Create and connect layers
 		//
 
-		Lu_S_Layer story = lu_s_layer__create(res, 4, 1);
-		Lu_S_Layer scene = lu_s_layer__create(res, 3, 1);
-		Lu_S_Layer event = lu_s_layer__create(res, 2, 1);
-		Lu_S_Layer seq = lu_s_layer__create(res, 1, 1);
+		Lu_S_Layer story = lu_s_layer__create(config, 4, 1);
+		Lu_S_Layer scene = lu_s_layer__create(config, 3, 1);
+		Lu_S_Layer event = lu_s_layer__create(config, 2, 1);
+		Lu_S_Layer seq = lu_s_layer__create(config, 1, 1);
 
 		lu__assert(story);
 		lu__assert(scene);
 		lu__assert(event);
 		lu__assert(seq);
 
-		Lu_S_Layer prev = lu_s_layer__create(res, 0, recs_count);
+		Lu_S_Layer prev = lu_s_layer__create(config, 0, recs_count);
 		lu__assert(prev);
 		Lu_S_Layer recs_base = prev;
 		Lu_S_Layer recs = recs_base;
@@ -151,7 +151,7 @@
 		lu_size recs_layers_size = lu_s__Y(recs_count, 1);
 		for(lu_size i = 1; i < recs_layers_size; i++)
 		{
-			recs = lu_s_layer__create(res, 0, 1);
+			recs = lu_s_layer__create(config, 0, 1);
 			lu__assert(recs);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) recs, (Lu_S_Layer_Base) prev);
@@ -186,17 +186,18 @@
 		lu__assert(rec);
 		lu__assert(self->bases);
 		lu__assert(self->apexes);
-		lu__assert(self->res);
 
-		Lu_Res res = self->res;
-		Lu_Mem s_mem = self->res->s_mem;
+		Lu_Config config = self->config;
+		lu__assert(config);
+
+		Lu_Mem s_mem = config->s_mem;
 		lu__assert(s_mem);
 
 		//
 		// Frame
 		//
 
-		Lu_S_Layer_Frame frame_base = lu_s_layer_frame__create(res, rec);
+		Lu_S_Layer_Frame frame_base = lu_s_layer_frame__create(config, rec);
 		lu__assert(frame_base);
 		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
 
@@ -211,7 +212,7 @@
 		Lu_S_Layer_Comp comp = NULL;
 		for (i = 0; i < rec->depth; i++)
 		{
-			comp = lu_s_layer_comp__create(res, frame_base, lu_rec_config__get_comp_config(&rec->config, i));
+			comp = lu_s_layer_comp__create(config, frame_base, lu_rec_config__get_comp_config(&rec->config, i));
 			lu__assert(comp);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) frame_base, (Lu_S_Layer_Base) comp);
@@ -228,7 +229,7 @@
 		lu_size frames_layers_size = lu_s__Y(rec->width, rec->height);
 		for (i = 1; i < frames_layers_size; i++)
 		{
-			frame = lu_s_layer__create(res, 0, 1);
+			frame = lu_s_layer__create(config, 0, 1);
 			lu__assert(frame);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) frame, prev);

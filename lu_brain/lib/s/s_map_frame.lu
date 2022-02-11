@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Frame
 
-	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Res res, Lu_Rec rec, Lu_S_Map_Base p, Lu_Config config)
+	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Rec rec, Lu_S_Map_Base p, Lu_Config config)
 	{
 		lu__assert(rec);
 		lu__assert(p);

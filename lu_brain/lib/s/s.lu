@@ -23,9 +23,9 @@
 
 		self->config = v_config;
 
-		lu__assert(self->config.space.frames_size >= lu_arr__count(recs));
+		lu__assert(self->config->s_frames_size >= lu_arr__count(recs));
 
-		self->frames = lu_arr__create(res->s_mem, self->config.space.frames_size, true);
+		self->frames = lu_arr__create(config->s_mem, self->config->s_frames_size, true);
 		lu__assert(self->frames);
 
 		Lu_Rec rec;
@@ -35,7 +35,7 @@
 		Lu_S_Map_Story story_map;
 		Lu_S_Layer_Frame frame;
 
-		story_map = lu_s_map_story__create(res, lu_arr__count(recs), config); 
+		story_map = lu_s_map_story__create(lu_arr__count(recs), config); 
 		lu__assert(story_map);
 
 		lu_s_map_base__make_story_fractal((Lu_S_Map_Base) story_map, story_map->recs_count);
@@ -49,7 +49,7 @@
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			frame_map = lu_s_map_frame__create(res, rec, (Lu_S_Map_Base) story_map, config);
+			frame_map = lu_s_map_frame__create(config, rec, (Lu_S_Map_Base) story_map, config);
 			lu__assert(frame_map->super.type == LU_S_MT__FRAME);
 			lu__assert(frame_map);
 
