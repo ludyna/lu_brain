@@ -86,44 +86,6 @@
 	static void lu_s_comp_view__deinit(Lu_S_Comp_View self);
 	static void lu_s_comp_view__save_data(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
 
-///////////////////////////////////////////////////////////////////////////////
-// Layer Config 
-//
-
-	//
-	// Lu_S_Layer_Base_Config 
-	//
-
-	struct lu_s_layer_base_config {
-		Lu_Config brain_config;
-
-		enum lu_s_layer_type type;
-		lu_size level;
-
-		void (*destroy)(Lu_S_Layer_Base);
-	};
-
-	static inline Lu_S_Layer_Base_Config lu_s_layer_base_config__init(Lu_S_Layer_Base_Config self)
-	{
-		lu__assert(self);
-
-		self->brain_config = NULL;
-		self->type = LU_S_LT__END;
-		self->level = 0;
-		self->destroy = NULL;
-
-		return self;
-	}
-
-	static inline Lu_S_Layer_Base_Config lu_s_layer_base_config__validate(Lu_S_Layer_Base_Config self)
-	{
-		lu__assert(self);
-		lu__assert(self->brain_config);
-		lu__assert(self->type < LU_S_LT__END);
-		lu__assert(self->destroy);
-
-		return self;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Base
@@ -147,21 +109,30 @@
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
-		Lu_S_Layer_Base_Config config,
-		Lu_S_Layer_Base p
+		Lu_S_Layer_Base p,
+		Lu_Config config,
+		enum lu_s_layer_type type,
+		lu_size level,
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
 		Lu_S_Layer_Base self, 
-		Lu_S_Layer_Base_Config config,
-		Lu_S_Layer_Base p
+		Lu_S_Layer_Base p,
+		Lu_Config config,
+		enum lu_s_layer_type type,
+		lu_size level,
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
 		Lu_S_Layer_Base self, 
-		Lu_S_Layer_Base_Config config,
 		Lu_S_Layer_Base p,
-		lu_size children_count
+		lu_size children_count,
+		Lu_Config config,
+		enum lu_s_layer_type type,
+		lu_size level,
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self);

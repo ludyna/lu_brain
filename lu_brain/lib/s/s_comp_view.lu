@@ -7,7 +7,7 @@
 
 	static inline Lu_S_Comp_View lu_s_comp_view__init(
 		Lu_S_Comp_View self, 
-		Lu_Res res, 
+		Lu_Config config, 
 		enum lu_s_comp_view_type view_type, 
 		lu_size width,
 		lu_size height,
@@ -17,16 +17,15 @@
 	)
 	{
 		lu__assert(self);
-		lu__assert(res);
-		lu__assert(res->s_mem);
-		lu__assert(res->n_mem);
+		lu__assert(config);
+		lu__assert(config->s_mem);
+		lu__assert(config->n_mem);
 
-		self->res 				= res;
-		self->view_type 		= view_type;
+		self->view_type = view_type;
 
-		lu_comp_calc__init(&self->comp_calc, res->s_mem, min, max, cells_size);
+		lu_comp_calc__init(&self->comp_calc, config->s_mem, min, max, cells_size);
 	
-		self->n_comp_table = lu_n_comp_table__create(self->res->n_mem, &self->comp_calc, width, height);
+		self->n_comp_table = lu_n_comp_table__create(config->n_mem, &self->comp_calc, width, height);
 		lu__assert(self->n_comp_table);
 
 		//self->w_space = lu_w_space__create();
@@ -42,7 +41,6 @@
 
 		lu_comp_calc__deinit(&self->comp_calc);
 		
-		self->res = NULL; 
 		self->n_comp_table = NULL;
 		self->w_space = NULL;
 	}

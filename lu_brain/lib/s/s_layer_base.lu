@@ -7,20 +7,23 @@
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init(
 		Lu_S_Layer_Base self, 
-		Lu_S_Layer_Base_Config config, 
-		Lu_S_Layer_Base p
+		Lu_S_Layer_Base p,
+		Lu_Config config,
+		enum lu_s_layer_type type,
+		lu_size level,
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
-		config = lu_s_layer_base_config__validate(config);
 		lu__assert(config);
+		lu__assert(config->s_mem);
 
-		self->s_mem = config->brain_config->res->s_mem;
+		self->s_mem = config->s_mem;
 
-		self->type = config->type;
-		self->level = config->level;
+		self->type = type;
+		self->level = level;
 		self->p = p;
 		self->c = NULL;
-		self->destroy = config->destroy;
+		self->destroy = destroy;
 
 		self->n_table = NULL;
 		self->w_table = NULL;
@@ -30,11 +33,14 @@
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
 		Lu_S_Layer_Base self, 
-		Lu_S_Layer_Base_Config config, 
-		Lu_S_Layer_Base p
+		Lu_S_Layer_Base p,
+		Lu_Config config,
+		enum lu_s_layer_type type,
+		lu_size level,
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
-		self = lu_s_layer_base__init(self, config, p);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy);
 		lu__assert(self);
 		
 		self->c = (Lu_Slot_Base) lu_slot_one__create(self->s_mem, NULL);
@@ -45,12 +51,15 @@
 	
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
 		Lu_S_Layer_Base self, 
-		Lu_S_Layer_Base_Config config, 
 		Lu_S_Layer_Base p,
-		lu_size children_count
+		lu_size children_count,
+		Lu_Config config,
+		enum lu_s_layer_type type,
+		lu_size level,
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
-		self = lu_s_layer_base__init(self, config, p);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy);
 		lu__assert(self);
  
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(self->s_mem, children_count, true);

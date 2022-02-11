@@ -20,7 +20,7 @@
 		lu__user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->config 		= *p_config;
-		self->recs 			= lu_arr__temp_create(p_config->recs_size, false);
+		self->recs 			= lu_arr__temp_create(p_config->b_recs_size, false);
 
 		self->s 			= NULL;
 		self->n 			= NULL;
