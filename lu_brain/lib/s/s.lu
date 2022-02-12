@@ -49,7 +49,7 @@
 			rec = (Lu_Rec) lu_arr__get(recs, i);
 			lu__assert(rec);
 
-			frame_map = lu_s_map_frame__create(config, rec, (Lu_S_Map_Base) story_map, config);
+			frame_map = lu_s_map_frame__create(rec, (Lu_S_Map_Base) story_map, config);
 			lu__assert(frame_map->super.type == LU_S_MT__FRAME);
 			lu__assert(frame_map);
 

@@ -18,14 +18,14 @@
 		lu__assert(self);
 		lu__assert(brain);
 
-		Lu_Res res = &brain->res;
-		lu__assert(res);
+		Lu_Config b_config = &brain->config;
+		lu__assert(b_config);
 
 		self->type = type;
 		self->id = id;
 
-		lu__assert(res->w_mem);
-		self->mem = res->w_mem;
+		lu__assert(b_config->w_mem);
+		self->mem = b_config->w_mem;
 
 		self->brain = brain;
 
@@ -332,8 +332,9 @@
 	Lu_Wave lu_save_wave__create(Lu_Brain brain) 
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
+		lu__user_assert(brain->config, "Lu_Brain config is not set");
 
-		Lu_Mem mem = brain->res.w_mem;
+		Lu_Mem mem = brain->config->w_mem;
 		lu__assert(mem);
 
 		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(mem, sizeof(struct lu_save_wave));
