@@ -7,6 +7,8 @@
 
 	extern struct lu_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END];
 
+	static void lu_config__set_defaults(Lu_Config self);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain 
 

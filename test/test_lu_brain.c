@@ -56,7 +56,7 @@ void setUp(void)
 { 
 	md = mem_debugger_create(lu_g_mem);
 
-	brain 				= lu_brain__create(lu_g_mem, lu_config__get_by_id(LU_BC_DEFAULT));
+	brain 				= lu_brain__create(lu_config__get_by_id(LU_BC_DEFAULT));
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 

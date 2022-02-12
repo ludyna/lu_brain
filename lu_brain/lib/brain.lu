@@ -7,16 +7,12 @@
 
 	Lu_Brain lu_brain__create(struct lu_config config)
 	{
+		lu_config__set_defaults(&config);
+
 		Lu_Config p_config = lu_config__validate(&config);
 		lu__user_assert(p_config, "Lu_Config validation failed");
 
-		if (p_config->res == NULL)
-		{
-			p_config->res = lu_res__create_default();
-			lu__user_assert(p_config->res, "Something is wrong, cannot create Lu_Res");
-		}
-
-		Lu_Brain self 		= (Lu_Brain) lu_mem__alloc(p_config->res->brain_mem, sizeof(struct lu_brain));
+		Lu_Brain self 		= (Lu_Brain) lu_mem__alloc(p_config->b_mem, sizeof(struct lu_brain));
 		lu__user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->config 		= *p_config;
@@ -31,9 +27,9 @@
 	void lu_brain__destroy(Lu_Brain self)
 	{
 		lu__assert(self);
-		lu__assert(self->res.brain_mem);
-
-		Lu_Mem brain_mem = self->res.brain_mem;
+	
+		Lu_Mem b_mem = self->config.b_mem;
+		lu__assert(b_mem);
 
 		lu__user_assert_void(self, "Lu_Brain is NULL");
 
@@ -56,24 +52,26 @@
 				rec = (Lu_Rec) lu_arr__get(self->recs, i);
 
 				if (rec)
-					lu_rec__destroy(rec, brain_mem);
+					lu_rec__destroy(rec, b_mem);
 			}
 
 		lu_arr__destroy(self->recs);
 
-		lu_res__deinit(&self->res);
-
-		lu_mem__free(brain_mem, (lu_p_byte) self);
+		lu_mem__free(b_mem, (lu_p_byte) self);
 	}
 
 	void lu_brain__print_info(Lu_Brain self)
 	{
 		lu__user_assert_void(self, "Lu_Brain is NULL");
-		lu__user_assert_void(self->res.brain_mem, "Lu_Mem is NULL");
 
-		lu__debug("\n\n=========> Brain #%lu Info <=========", self->config.id);
-		lu__debug("\nMemory allocated (bytes): %lu", lu_mem__preallocated(self->res.brain_mem));
-		lu__debug("\nMemory used (bytes): %lu", lu_mem__used(self->res.brain_mem));
+		Lu_Mem b_mem = self->config.b_mem;
+		lu__assert(b_mem);
+
+		lu__user_assert_void(b_mem, "b_mem is NULL");
+
+		lu__debug("\n\n=========> Brain #%lu Info <=========", self->config.b_id);
+		lu__debug("\nMemory allocated (bytes): %lu", lu_mem__preallocated(b_mem));
+		lu__debug("\nMemory used (bytes): %lu", lu_mem__used(b_mem));
 
  		if (self->s)
  			lu_s__print_info(self->s);
@@ -166,21 +164,10 @@
  
  		// (Lu_Mem mem, Lu_S_Layer_Mem cell_mem, Lu_Arr lu_recs);
 		self->s = lu_s__create_intersected_squares_cortex(
-			&self->res,
 			&self->config, 
 			self->recs
 		);
 		lu__user_assert(self->s, "Cannot create Lu_S. Not enough memory?");
-
-		//
-		// Create N
-		//
-
-		struct lu_n_config n_config;
-		n_config.names_size = self->config.net.names_size;
-
-		self->n = lu_n__create(self->res.n_mem, n_config);
-		lu__user_assert(self->n, "Cannot create Lu_N. Not enough memory?");
 
 		return self;
 	}

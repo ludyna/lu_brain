@@ -332,12 +332,11 @@
 	Lu_Wave lu_save_wave__create(Lu_Brain brain) 
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
-		lu__user_assert(brain->config, "Lu_Brain config is not set");
 
-		Lu_Mem mem = brain->config->w_mem;
-		lu__assert(mem);
+		Lu_Mem w_mem = brain->config.w_mem;
+		lu__assert(w_mem);
 
-		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(mem, sizeof(struct lu_save_wave));
+		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_save_wave));
 
 		lu_wave__init(
 			&self->super, 
@@ -356,7 +355,7 @@
 		self->super.step = lu_save_wave__step_virtual;
 		self->super.process = lu_save_wave__process_virtual;
 
-		self->seq = lu_data_seq__create(mem, lu_brain__recs_size(brain)); 
+		self->seq = lu_data_seq__create(w_mem, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
 		return (Lu_Wave) self;

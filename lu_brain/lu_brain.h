@@ -90,7 +90,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain 
 
-	Lu_Brain lu_brain__create(Lu_Mem, struct lu_config config);
+	Lu_Brain lu_brain__create(struct lu_config config);
 	void lu_brain__destroy(Lu_Brain);
 
 	void lu_brain__print_info(Lu_Brain self);
