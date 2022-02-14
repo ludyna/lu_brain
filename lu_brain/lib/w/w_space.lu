@@ -5,11 +5,34 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Space
 
+	static Lu_W_Space lu_w_space__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
+	{
+		lu__assert(config);
+		lu__assert(config->w_mem);
+		lu__assert(comp_calc);
+
+		Lu_W_Space self = (Lu_W_Space) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_space));
+		lu__assert(self);
+
+		self->mem = config->w_mem;
+		self->tables = lu_arr__create(self->mem, config->w_waves_size, false);
+		lu__assert(self->tables);
+
+		return self;
+	}
+
+	static void lu_w_space__destroy(Lu_W_Space self)
+	{
+		lu__assert(self);
+
+		lu_arr__destroy(self->tables);
+		lu_mem__free(self->mem, (lu_p_byte) self);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
  
  	static Lu_W_Table lu_w_space__get_table(Lu_W_Space self, Lu_Wave wave)
  	{
-
+ 		return NULL;
  	}

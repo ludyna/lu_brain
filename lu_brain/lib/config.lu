@@ -39,7 +39,8 @@
 			//
 			// Waves level
 			//
-			.w_mem = NULL						
+			.w_mem = NULL,	
+			.w_waves_size = 3				
 		},
 	};		
 
@@ -118,6 +119,7 @@
 		//
 
 		lu__user_assert(self->w_mem, "w_mem is NULL");
+		lu__user_assert(self->w_waves_size > 0, "w_waves_size should be greater than 0");
 
 		return self;
 	}

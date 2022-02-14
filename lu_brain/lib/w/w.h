@@ -8,7 +8,7 @@
 	// always 2D
 	struct lu_w_table {
 		Lu_Mem mem;
-
+		Lu_Wave wave;
 
 	};
 
@@ -23,8 +23,8 @@
 	struct lu_w_space {
 		Lu_Mem mem;
 
-		Lu_Wave wave;
-		Lu_Arr w_comp_tables;
+		Lu_Arr tables;
 	};
 
+	static Lu_W_Space lu_w_space__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
 	static Lu_W_Table lu_w_space__get_table(Lu_W_Space self, Lu_Wave wave);

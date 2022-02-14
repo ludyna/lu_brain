@@ -72,6 +72,7 @@
 		// Waves level
 		//
 		Lu_Mem w_mem;						// if NULL initialize to default
+		lu_size w_waves_size;				// waves size
 	};
 
 	Lu_Config lu_config__validate(Lu_Config config);
