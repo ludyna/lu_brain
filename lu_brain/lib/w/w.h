@@ -12,7 +12,7 @@
 
 	};
 
-	static Lu_W_Table lu_w_table__create(Lu_Mem mem);
+	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
 	static void lu_w_table__destroy(Lu_W_Table self);
 
 	static void lu_w_table__save_data(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config);
@@ -27,4 +27,6 @@
 	};
 
 	static Lu_W_Space lu_w_space__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
+	static void lu_w_space__destroy(Lu_W_Space self);
+
 	static Lu_W_Table lu_w_space__get_table(Lu_W_Space self, Lu_Wave wave);

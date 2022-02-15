@@ -6,7 +6,7 @@
 // Lu_W_Table 
 
 
-	static Lu_W_Table lu_w_table__create(Lu_Mem mem)
+	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
 	{
 		return NULL;
 	}	
