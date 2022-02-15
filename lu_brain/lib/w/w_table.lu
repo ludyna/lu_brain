@@ -8,12 +8,20 @@
 
 	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
 	{
-		return NULL;
+		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table));
+		lu__assert(self);
+
+		self->mem = config->w_mem;
+
+		return self;
 	}	
 
 	static void lu_w_table__destroy(Lu_W_Table self)
 	{
+		lu__assert(self);
+		lu__assert(self->mem);
 
+		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
