@@ -19,7 +19,7 @@
 		self->height = height;
 
 		// w x h x cells_size, empty by default
-		self->cells = (struct n_cell_value***) lu_mem__alloc(
+		self->cells = (struct n_cell_value*) lu_mem__alloc(
 			self->mem, 
 			sizeof(struct n_cell_value) * self->width * self->height * self->cc->cells_size
 		);

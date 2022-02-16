@@ -9,7 +9,12 @@
 	struct lu_w_table {
 		Lu_Mem mem;
 		Lu_Wave wave;
+		Lu_Comp_Calc comp_calc;
 
+		lu_size width;
+		lu_size height;
+
+		
 	};
 
 	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);

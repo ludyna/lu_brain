@@ -8,10 +8,19 @@
 
 	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
 	{
+		lu__assert(config);
+		lu__assert(comp_calc);
+		lu__assert(width > 0);
+		lu__assert(height > 0);
+
 		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table));
 		lu__assert(self);
 
 		self->mem = config->w_mem;
+		self->wave = NULL;
+		self->comp_calc = comp_calc;
+		self->width = width;
+		self->height = height;
 
 		return self;
 	}	

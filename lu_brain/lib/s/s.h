@@ -12,10 +12,12 @@
 		4 level3, story(vertically 1-n4)
 		3 level2, scene(vertically 1-n3)
 		2 level1, event (vertically 1-n2)
-		1 layer seq (vertically 1-n1)
-		0 layer recs (vertically rec_count)
-			1 frame layers (vertically w Y h), base layer is frame layer
+		1 layer seq (vertically 1-n1) (de n1 ce kilkist kadrykiv v sequence)
+		0 layer recs (vertically rec_count Y 2) (t1, t2, etc. nema v S, tilky virtnualno v N)
+			1 V frame layers (vertically w Y h)
 			0 comp1 comp2 comp3 (horizontally comp_count or d)
+
+			1 P frame layers (vertically w Y h) base layer is frame layer,
 
 	r1 r2 r3 r4
 	r1 r2 r3 r4

@@ -23,9 +23,9 @@
 		LU_WAVE_TYPE__RESTORE
 	};
 
-	//
-	// One wave is one seq. Create another wave to create another seq.
-	//
+	/*
+		One wave is one seq. Create another wave to create another seq.
+	*/
 	struct lu_wave {
 		enum lu_wave_type type;
 

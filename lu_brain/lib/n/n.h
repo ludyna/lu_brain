@@ -16,8 +16,8 @@
 		lu_size width;
 		lu_size height;
 
-		// w x h x cells_size, empty by default
-		struct n_cell_value*** cells;
+		// w x h x cc->cells_size, empty by default
+		struct n_cell_value* cells;
 	};
 
 	static Lu_N_Comp_Table lu_n_comp_table__create(Lu_Config config, Lu_Comp_Calc cc, lu_size width, lu_size height);
