@@ -6,7 +6,7 @@ Lu_Brain is an [AI2 technology](ai2tech.org) _pattern database_ open-source C li
 
 ## Why Lu_Brain?
 
-Lu_Brain is AI2 technology.
+Lu_Brain is an AI2 technology.
 
 #### Dynamicity
 
