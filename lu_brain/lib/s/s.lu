@@ -33,7 +33,7 @@
 		lu_size j;
 		Lu_S_Map_Frame frame_map;
 		Lu_S_Map_Story story_map;
-		Lu_S_Layer_Frame frame;
+		Lu_S_Layer_Rec frame;
 
 		story_map = lu_s_map_story__create(lu_arr__count(recs), config); 
 		lu__assert(story_map);
@@ -191,8 +191,8 @@
 	static void lu_s__save_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config config)
 	{
 		lu__assert(self);
-		Lu_S_Layer_Frame frame = lu_s__get_frame(self, rec_id);
+		Lu_S_Layer_Rec frame = lu_s__get_frame(self, rec_id);
 		lu__assert(frame);
 
-		lu_s_layer_frame__save_data(frame, wave, rec_id, data, config);
+		lu_s_layer_rec__save_data(frame, wave, rec_id, data, config);
 	}

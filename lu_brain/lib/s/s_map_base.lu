@@ -197,7 +197,7 @@
 		// Frame
 		//
 
-		Lu_S_Layer_Frame frame_base = lu_s_layer_frame__create(config, rec);
+		Lu_S_Layer_Rec frame_base = lu_s_layer_rec__create(config, rec);
 		lu__assert(frame_base);
 		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
 
@@ -300,7 +300,7 @@
 		return (Lu_S_Layer_Base) one->item;
 	}
 
-	static Lu_S_Layer_Frame lu_s_map_base__get_frame(Lu_S_Map_Base self)
+	static Lu_S_Layer_Rec lu_s_map_base__get_frame(Lu_S_Map_Base self)
 	{
 		lu__assert(self);
 		lu__assert(self->bases);
@@ -314,7 +314,7 @@
 		lu__assert(layer_base);
 		lu__assert(layer_base->type == LU_S_LT__FRAME);
 
-		return (Lu_S_Layer_Frame) one->item;
+		return (Lu_S_Layer_Rec) one->item;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

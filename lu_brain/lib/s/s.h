@@ -13,11 +13,14 @@
 		3 level2, scene(vertically 1-n3)
 		2 level1, event (vertically 1-n2)
 		1 layer seq (vertically 1-n1) (de n1 ce kilkist kadrykiv v sequence)
-		0 layer recs (vertically rec_count Y 2) (t1, t2, etc. nema v S, tilky virtnualno v N)
-			1 V frame layers (vertically w Y h)
+		0 layer rec frames (vertically rec_count) (t1, t2, etc. nema v S, tilky virtnualno v N)
+			1 P rec layers (vertically w Y h) base layer is frame layer, apex layer is pixel in recs
 			0 comp1 comp2 comp3 (horizontally comp_count or d)
 
-			1 P frame layers (vertically w Y h) base layer is frame layer,
+			1 V rec layers (vertically w Y h) base layer is frame layer
+			0 comp1 comp2 comp3 (horizontally comp_count or d)
+
+
 
 	r1 r2 r3 r4
 	r1 r2 r3 r4
@@ -181,7 +184,7 @@
 		struct lu_s_comp_view p_view;
 	};
 
-	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Frame frame, Lu_Rec_Comp_Config rc_config);
+	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Rec frame, Lu_Rec_Comp_Config rc_config);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
 	static void lu_s_layer_comp__save_data(
@@ -193,20 +196,20 @@
 	);
 
 	//
-	// Lu_S_Layer_Frame
+	// Lu_S_Layer_Rec
 	//
 
-	struct lu_s_layer_frame {
+	struct lu_s_layer_rec {
 		struct lu_s_layer_base super;
 
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Config config, Lu_Rec rec);
-	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self);
+	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec);
+	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self);
 
-	static void lu_s_layer_frame__save_data(
-		Lu_S_Layer_Frame self, 
+	static void lu_s_layer_rec__save_data(
+		Lu_S_Layer_Rec self, 
 		Lu_Wave wave, 
 		lu_size rec_id, 
 		Lu_Data data,
@@ -269,7 +272,7 @@
 
 	static Lu_S_Layer_Base lu_s_map_base__get_base(Lu_S_Map_Base self);
 	static Lu_S_Layer_Base lu_s_map_base__get_apex(Lu_S_Map_Base self);
-	static Lu_S_Layer_Frame lu_s_map_base__get_frame(Lu_S_Map_Base self);
+	static Lu_S_Layer_Rec lu_s_map_base__get_frame(Lu_S_Map_Base self);
 
 	static void lu_s_map_base__connect(Lu_S_Map_Base p, Lu_S_Map_Base c);
 	static void lu_s_map_base__recursive_destroy(Lu_S_Map_Base self);
@@ -352,12 +355,12 @@
 	// Properties
 	//
 
-	static inline Lu_S_Layer_Frame lu_s__get_frame(Lu_S self, lu_size rec_id)
+	static inline Lu_S_Layer_Rec lu_s__get_frame(Lu_S self, lu_size rec_id)
 	{
 		lu__assert(self);
 		lu__assert(self->frames);
 
-		return (Lu_S_Layer_Frame) lu_arr__get(self->frames, rec_id);
+		return (Lu_S_Layer_Rec) lu_arr__get(self->frames, rec_id);
 	}
 
 	//
@@ -381,7 +384,7 @@
 	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
 	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
-	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Layer_Frame p, Lu_Arr apexes, Lu_Rec rec);
+	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Layer_Rec p, Lu_Arr apexes, Lu_Rec rec);
 
 	//
 	// 

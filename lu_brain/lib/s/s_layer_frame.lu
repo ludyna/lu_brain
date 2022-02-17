@@ -5,12 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Layer_Frame lu_s_layer_frame__create(Lu_Config config, Lu_Rec rec)
+	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec)
 	{
 		lu__assert(config);
 		lu__assert(config->s_mem);
 
-		Lu_S_Layer_Frame self = (Lu_S_Layer_Frame) lu_mem__alloc(config->s_mem, sizeof(struct lu_s_layer_frame));
+		Lu_S_Layer_Rec self = (Lu_S_Layer_Rec) lu_mem__alloc(config->s_mem, sizeof(struct lu_s_layer_rec));
 		lu__assert(self);
 		
 		lu_s_layer_base__init_with_arr_c_slot(
@@ -20,7 +20,7 @@
 			config,
 			LU_S_LT__FRAME,
 			1,
-			lu_s_layer_frame__destroy
+			lu_s_layer_rec__destroy
 		);
 
 		self->rec = rec;
@@ -28,13 +28,13 @@
 		return self;
 	}
 
-	static void lu_s_layer_frame__destroy(Lu_S_Layer_Base self)
+	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self)
 	{
 		lu__assert(self);
 		lu__assert(self->s_mem);
 		lu__assert(self->type == LU_S_LT__FRAME);
 
-		Lu_S_Layer_Frame frame = (Lu_S_Layer_Frame) self;
+		Lu_S_Layer_Rec frame = (Lu_S_Layer_Rec) self;
 
 		lu__assert(frame->rec);
 		lu_s_layer_base__deinit(self);
@@ -45,8 +45,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_layer_frame__save_data(
-		Lu_S_Layer_Frame self, 
+	static void lu_s_layer_rec__save_data(
+		Lu_S_Layer_Rec self, 
 		Lu_Wave wave, 
 		lu_size rec_id, 
 		Lu_Data data,
