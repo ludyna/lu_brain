@@ -282,7 +282,7 @@
 	//
 
 	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_size);
-	static void lu_s_map_base__make_frame_fractal(Lu_S_Map_Base self, Lu_Rec rec);
+	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec);
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base);
 
 	//
@@ -320,7 +320,7 @@
 
 		Lu_Config config;
 		
-		Lu_Arr frames;
+		Lu_Arr v_recs;
 
 		Lu_S_Map_Base fractal;
 
@@ -358,9 +358,9 @@
 	static inline Lu_S_Layer_Rec lu_s__get_frame(Lu_S self, lu_size rec_id)
 	{
 		lu__assert(self);
-		lu__assert(self->frames);
+		lu__assert(self->v_recs);
 
-		return (Lu_S_Layer_Rec) lu_arr__get(self->frames, rec_id);
+		return (Lu_S_Layer_Rec) lu_arr__get(self->v_recs, rec_id);
 	}
 
 	//

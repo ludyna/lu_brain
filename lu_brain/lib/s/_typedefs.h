@@ -14,7 +14,7 @@
 
 	enum lu_s_layer_type {
 		LU_S_LT__COMP,
-		LU_S_LT__FRAME,
+		LU_S_LT__REC,
 		LU_S_LT__LAYER,
 		LU_S_LT__END
 	};

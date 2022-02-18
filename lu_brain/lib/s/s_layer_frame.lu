@@ -18,7 +18,7 @@
 			NULL, 
 			rec->depth,
 			config,
-			LU_S_LT__FRAME,
+			LU_S_LT__REC,
 			1,
 			lu_s_layer_rec__destroy
 		);
@@ -32,7 +32,7 @@
 	{
 		lu__assert(self);
 		lu__assert(self->s_mem);
-		lu__assert(self->type == LU_S_LT__FRAME);
+		lu__assert(self->type == LU_S_LT__REC);
 
 		Lu_S_Layer_Rec frame = (Lu_S_Layer_Rec) self;
 

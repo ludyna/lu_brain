@@ -180,7 +180,7 @@
 		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
 	}
 
-	static void lu_s_map_base__make_frame_fractal(Lu_S_Map_Base self, Lu_Rec rec)
+	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec)
 	{
 		lu__assert(self);
 		lu__assert(rec);
@@ -197,9 +197,9 @@
 		// Frame
 		//
 
-		Lu_S_Layer_Rec frame_base = lu_s_layer_rec__create(config, rec);
-		lu__assert(frame_base);
-		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
+		Lu_S_Layer_Rec rec_base = lu_s_layer_rec__create(config, rec);
+		lu__assert(rec_base);
+		lu__assert(rec_base->super.type == LU_S_LT__REC);
 
 		//
 		// Create comp layers
@@ -212,10 +212,10 @@
 		Lu_S_Layer_Comp comp = NULL;
 		for (i = 0; i < rec->depth; i++)
 		{
-			comp = lu_s_layer_comp__create(config, frame_base, lu_rec_config__get_comp_config(&rec->config, i));
+			comp = lu_s_layer_comp__create(config, rec_base, lu_rec_config__get_comp_config(&rec->config, i));
 			lu__assert(comp);
 
-			lu_s_layer_base__connect((Lu_S_Layer_Base) frame_base, (Lu_S_Layer_Base) comp);
+			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_base, (Lu_S_Layer_Base) comp);
 
 			lu_arr__append(slot_arr->items, (lu_p_void) comp);
 		}
@@ -224,7 +224,7 @@
 		// Create frame layers
 		//
 
-		Lu_S_Layer_Base prev = (Lu_S_Layer_Base) frame_base;
+		Lu_S_Layer_Base prev = (Lu_S_Layer_Base) rec_base;
 		Lu_S_Layer frame;
 		lu_size frames_layers_size = lu_s__Y(rec->width, rec->height);
 		for (i = 1; i < frames_layers_size; i++)
@@ -242,8 +242,8 @@
 
 		lu_arr__set(self->bases, 0, (lu_p_void) slot_arr);
 
-		lu__assert(frame_base->super.type == LU_S_LT__FRAME);
-		Lu_Slot_One slot_one = lu_slot_one__create(s_mem, frame_base);
+		lu__assert(rec_base->super.type == LU_S_LT__REC);
+		Lu_Slot_One slot_one = lu_slot_one__create(s_mem, rec_base);
 		lu__assert(slot_one);
 		
 		lu_arr__set(self->bases, 1, (lu_p_void) slot_one);
@@ -312,7 +312,7 @@
 
 		Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) one->item;
 		lu__assert(layer_base);
-		lu__assert(layer_base->type == LU_S_LT__FRAME);
+		lu__assert(layer_base->type == LU_S_LT__REC);
 
 		return (Lu_S_Layer_Rec) one->item;
 	}

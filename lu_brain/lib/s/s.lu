@@ -23,10 +23,8 @@
 
 		self->config = v_config;
 
-		lu__assert(self->config->s_frames_size >= lu_arr__count(recs));
-
-		self->frames = lu_arr__create(config->s_mem, self->config->s_frames_size, true);
-		lu__assert(self->frames);
+		self->v_recs = lu_arr__create(config->s_mem, lu_arr__count(recs), true);
+		lu__assert(self->v_recs);
 
 		Lu_Rec rec;
 		lu_size i;
@@ -53,13 +51,13 @@
 			lu__assert(frame_map->super.type == LU_S_MT__FRAME);
 			lu__assert(frame_map);
 
-			lu_s_map_base__make_frame_fractal((Lu_S_Map_Base) frame_map, frame_map->rec);
+			lu_s_map_base__make_rec_fractal((Lu_S_Map_Base) frame_map, frame_map->rec);
 
 			frame = lu_s_map_base__get_frame((Lu_S_Map_Base) frame_map);
 			lu__assert(frame);
 
 			// save pointer to frame
-			lu_arr__set(self->frames, i, (lu_p_void) frame);
+			lu_arr__set(self->v_recs, i, (lu_p_void) frame);
 
 			// connect layers
 			frame_apex = lu_s_map_base__get_apex((Lu_S_Map_Base) frame_map);
@@ -95,8 +93,8 @@
 			lu_s_map_base__recursive_destroy(self->fractal);
 		}
 
-		if (self->frames)
-			lu_arr__destroy(self->frames);
+		if (self->v_recs)
+			lu_arr__destroy(self->v_recs);
 
 		lu_mem__free(self->config->s_mem, (lu_p_byte) self);
 	}
