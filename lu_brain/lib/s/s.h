@@ -13,14 +13,10 @@
 		3 level2, scene(vertically 1-n3)
 		2 level1, event (vertically 1-n2)
 		1 layer seq (vertically 1-n1) (de n1 ce kilkist kadrykiv v sequence)
-		0 layer rec frames (vertically rec_count) (t1, t2, etc. nema v S, tilky virtnualno v N)
-			1 P rec layers (vertically w Y h) base layer is frame layer, apex layer is pixel in recs
-			0 comp1 comp2 comp3 (horizontally comp_count or d)
-
-			1 V rec layers (vertically w Y h) base layer is frame layer
-			0 comp1 comp2 comp3 (horizontally comp_count or d)
-
-
+		0 layer frames (vertically rec_count) (t1, t2, etc. nema v S, tilky virtnualno v N)
+			1 PV rec layers (vertically w Y h) base layer is rec layer, apex layer is "pixel" in frames
+				0 P_comp1 P_comp2 P_comp3 (horizontally comp_count or d), connected to "P pixel" in rec
+				0 V_comp1 V_comp2 V_comp3 (horizontally comp_count or d), connected to "V pixel" in rec
 
 	r1 r2 r3 r4
 	r1 r2 r3 r4
@@ -321,6 +317,7 @@
 		Lu_Config config;
 		
 		Lu_Arr v_recs;
+		Lu_Arr p_recs;
 
 		Lu_S_Map_Base fractal;
 
@@ -355,7 +352,7 @@
 	// Properties
 	//
 
-	static inline Lu_S_Layer_Rec lu_s__get_frame(Lu_S self, lu_size rec_id)
+	static inline Lu_S_Layer_Rec lu_s__get_v_rec(Lu_S self, lu_size rec_id)
 	{
 		lu__assert(self);
 		lu__assert(self->v_recs);

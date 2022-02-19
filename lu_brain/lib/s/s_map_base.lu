@@ -221,19 +221,19 @@
 		}
 
 		//
-		// Create frame layers
+		// Create rec layers
 		//
 
 		Lu_S_Layer_Base prev = (Lu_S_Layer_Base) rec_base;
-		Lu_S_Layer frame;
+		Lu_S_Layer rec_layer;
 		lu_size frames_layers_size = lu_s__Y(rec->width, rec->height);
 		for (i = 1; i < frames_layers_size; i++)
 		{
-			frame = lu_s_layer__create(config, 0, 1);
-			lu__assert(frame);
+			rec_layer = lu_s_layer__create(config, 0, 1);
+			lu__assert(rec_layer);
 
-			lu_s_layer_base__connect((Lu_S_Layer_Base) frame, prev);
-			prev = (Lu_S_Layer_Base) frame;
+			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_layer, prev);
+			prev = (Lu_S_Layer_Base) rec_layer;
 		}
 
 		// 
@@ -254,7 +254,7 @@
 
 		lu_arr__set(self->apexes, 0, (lu_p_void) slot_arr);
 
-		slot_one = lu_slot_one__create(s_mem, frame);
+		slot_one = lu_slot_one__create(s_mem, rec_layer);
 		lu__assert(slot_one);
 
 		lu_arr__set(self->apexes, 1, (lu_p_void) slot_one);
