@@ -8,8 +8,9 @@
     static Lu_Process_Config lu_wave_config__init(Lu_Process_Config self)
     {
         self->flags                 = 0;
-        self->contrast_vs_color     = 0.5;
-        self->min_fire_potency       = 0.9;
+        self->p_potency             = 1.0,    
+        self->v_potency             = 1.0,
+        self->min_fire_potency      = 0.9;
         self->block_layers_size     = 50;
 
         return self;
@@ -22,7 +23,8 @@
     	// LU_PCT__SAVE_DEFAULT
     	{
             .flags                        = 0,
-    		.contrast_vs_color            = 1.0,  	// nemaye znachenia dlia save mayzhe
+    		.p_potency                    = 1.0,  	
+            .v_potency                    = 1.0,
             .min_potency                  = 0.05,
     		.min_fire_potency             = 0.9,  	// potribna povna kopiya
             .block_layers_size            = 50
@@ -48,7 +50,8 @@
 
   	Lu_Process_Config lu_process_config__validate(Lu_Process_Config self) 
   	{
-  		lu__user_assert(self->contrast_vs_color >= 0 && self->contrast_vs_color <= 1, "contrast_vs_color should be in [0, 1]");
+  		lu__user_assert(self->p_potency >= 0 && self->p_potency <= 1, "p_potency should be in [0, 1]");
+        lu__user_assert(self->v_potency >= 0 && self->v_potency <= 1, "p_potency should be in [0, 1]");
   		lu__user_assert(self->min_fire_potency > 0 && self->min_fire_potency < 1, "min_fire_potency should be in (0, 1)");
 
   		return self;

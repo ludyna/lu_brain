@@ -86,12 +86,13 @@
 		lu__assert(data);
 		lu__assert(config);
 
-		if (!lu_value_eq_with_signif(config->contrast_vs_color, 1.0, config->min_potency))
+
+		if (!lu_value_eq_with_signif(config->v_potency, 0.0, config->min_potency))
 		{
 			lu_s_comp_view__save_data(&self->v_view, wave, z, data, config);
 		}
 
-		if (!lu_value_eq_with_signif(config->contrast_vs_color, 0.0, config->min_potency))
+		if (!lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency))
 		{
 			lu_s_comp_view__save_data(&self->p_view, wave, z, data, config);
 		}
