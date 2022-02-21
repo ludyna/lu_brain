@@ -87,7 +87,8 @@
 	static void lu_s_comp_view__deinit(Lu_S_Comp_View self);
 	static void lu_s_comp_view__save_data(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
 
-
+	static Lu_Data lu_s_comp_view__last_data(Lu_S_Comp_View self, Lu_Wave wave);
+	
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Base
 //
@@ -178,6 +179,8 @@
 
 		struct lu_s_comp_view v_view;
 		struct lu_s_comp_view p_view;
+
+		Lu_Data p_data;
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Rec frame, Lu_Rec_Comp_Config rc_config);

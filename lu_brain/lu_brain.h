@@ -211,7 +211,7 @@
 	struct lu_process_config lu_process_config__get_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Wave  
+// Lu_Wave  
 
 	//
 	// Sync Create

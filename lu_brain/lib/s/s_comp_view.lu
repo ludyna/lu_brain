@@ -71,3 +71,8 @@
 
 		lu_n_comp_table__update(self->n_comp_table, w_table, config);
 	}
+
+	static Lu_Data lu_s_comp_view__last_data(Lu_S_Comp_View self, Lu_Wave wave)
+	{
+		return NULL;
+	}

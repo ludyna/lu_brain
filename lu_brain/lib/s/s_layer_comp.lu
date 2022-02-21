@@ -86,14 +86,20 @@
 		lu__assert(data);
 		lu__assert(config);
 
+ 	// 	// will be empty if no prev data
+		// Lu_Data prev_data = lu_s_comp_view__last_data(&self->v_view, wave);
 
-		if (!lu_value_eq_with_signif(config->v_potency, 0.0, config->min_potency))
-		{
-			lu_s_comp_view__save_data(&self->v_view, wave, z, data, config);
-		}
+		// // we save first because a) we need to save it somewhere b) we need to "digitalize" data
+		// lu_s_comp_view__save_data(&self->v_view, wave, z, data, config);
 
-		if (!lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency))
-		{
-			lu_s_comp_view__save_data(&self->p_view, wave, z, data, config);
-		}
+		// // digitalized
+		// Lu_Data curr_data = lu_s_comp_view__last_data(&self->v_view, wave);
+
+		// // self->p_data is preallocated, so we dont allocate memory every time
+		// lu_data__calc_p_data(self->p_data, prev_data, curr_data);
+
+		// if (!lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency))
+		// {
+		// 	lu_s_comp_view__save_data(&self->p_view, wave, z, self->p_data, config);
+		// }
 	}

@@ -108,7 +108,7 @@
 
 		if (start == NULL) return NULL;
 
-		Lu_Mem_Table self 				= (Lu_Mem_Table) start;
+		Lu_Mem_Table self 			= (Lu_Mem_Table) start;
 
 		self->reset 				= lu_mem_table_reset_default;
 		self->realloc 				= lu_mem_table_realloc_default;

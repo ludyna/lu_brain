@@ -20,6 +20,8 @@
 
 		Lu_S s;
 		Lu_N n;		
+
+		Lu_Mem_Table waves;
 	};	
 
 	static lu_size lu_brain__rec_attach(Lu_Brain self, Lu_Rec rec);
