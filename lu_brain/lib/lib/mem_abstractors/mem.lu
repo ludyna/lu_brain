@@ -75,7 +75,7 @@
 // Lu_Mem table defaults
 
 	// declaration 
-	Lu_Mem_Table lu_mem_table_create_default(
+	Lu_Mem_Table lu_mem_table__create_default(
 		Lu_Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
@@ -86,7 +86,7 @@
 		int line
 	);
 
-	void lu_mem_table_destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line);
+	void lu_mem_table__destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Globals
@@ -105,7 +105,7 @@
 		.used 				= lu_mem_used_default, 
 
 		// table 
-		.table_create 		= lu_mem_table_create_default,
+		.table_create 		= lu_mem_table__create_default,
 
 		// debugger
 		.debugger 			= NULL
