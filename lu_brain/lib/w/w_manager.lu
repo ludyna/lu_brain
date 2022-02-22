@@ -3,7 +3,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Manager
+// 
 
 	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, lu_size w_waves_size)
 	{
@@ -28,4 +28,39 @@
 
 		lu_mem_table__destroy(self->waves);
 		lu_mem__free(self->mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static bool lu_w_manager__register_wave(Lu_W_Manager self, Lu_Wave wave)
+	{
+		lu__assert(self);
+		lu__assert(wave);
+		lu__assert(self->waves);
+
+		wave->manager_addr = lu_mem_record__alloc(self->waves);
+		
+		if (!wave->manager_addr)
+		{
+			return false;
+		}
+
+		Lu_Wave* wave_addr = (Lu_Wave*) wave->manager_addr;
+
+		*wave_addr = wave;
+
+		wave->id = lu_mem_table__record_ix(self->waves, wave->manager_addr);
+
+		return true;
+	}
+
+	static void lu_w_manager__unregister_wave(Lu_W_Manager self, Lu_Wave wave)
+	{
+		lu__assert(self);
+		lu__assert(wave);
+		lu__assert(self->waves);
+
+		lu_mem_record__free(self->waves, lu_mem_table__get(self->waves, wave->id));
+
 	}

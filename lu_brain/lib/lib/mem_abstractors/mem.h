@@ -141,3 +141,8 @@
 
 		return (lu_size) (record_addr - self->records_start);
 	}
+
+	static inline lu_size lu_mem_table__record_ix(Lu_Mem_Table self, lu_p_byte record_addr)
+	{
+		return lu_mem_table__record_shift(self, record_addr) / self->record_size_in_bytes;
+	}

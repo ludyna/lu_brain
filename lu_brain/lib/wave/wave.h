@@ -30,7 +30,7 @@
 		enum lu_wave_type type;
 
 		lu_size id;
-		lu_size space_ix;
+		lu_p_byte manager_addr;
 
 		Lu_Mem mem;
 		Lu_Brain brain;
@@ -55,15 +55,12 @@
 	static inline Lu_Wave lu_wave__init(
 		Lu_Wave self, 
 		enum lu_wave_type type, 
-		lu_size id, 
 		Lu_Brain brain
 	);
 
 	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE_TYPE__SAVE; }
 	static inline lu_bool lu_wave__is_find(Lu_Wave self) { return self->type == LU_WAVE_TYPE__FIND; }
 	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE__RESTORE; }
-
-	static inline lu_size lu_wave__space_ix(Lu_Wave self) { return self->space_ix; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Seq_Rg

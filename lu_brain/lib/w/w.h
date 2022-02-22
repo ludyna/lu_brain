@@ -46,4 +46,9 @@
 	};
 
 	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, lu_size w_waves_size);
-	static void lu_w_manager__destroy(Lu_W_Manager self);
+	static void lu_w_manager__destroy(Lu_W_Manager self); 
+
+	static bool lu_w_manager__register_wave(Lu_W_Manager self, Lu_Wave wave);
+	static void lu_w_manager__unregister_wave(Lu_W_Manager self, Lu_Wave wave);
+
+	 

@@ -11,7 +11,6 @@
 	static inline Lu_Wave lu_wave__init(
 		Lu_Wave self, 
 		enum lu_wave_type type, 
-		lu_size id, 
 		Lu_Brain brain
 	)
 	{
@@ -22,7 +21,7 @@
 		lu__assert(b_config);
 
 		self->type = type;
-		self->id = id;
+		self->id = 0;
 
 		lu__assert(b_config->w_mem);
 		self->mem = b_config->w_mem;
@@ -341,7 +340,6 @@
 		lu_wave__init(
 			&self->super, 
 			LU_WAVE_TYPE__SAVE, 
-			0,
 			brain
 		); 
 
