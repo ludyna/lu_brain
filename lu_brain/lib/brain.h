@@ -18,10 +18,9 @@
 
 		Lu_Arr	recs; // receivers
 
-		Lu_S s;
-		Lu_N n;		
+		Lu_S s;	
 
-		Lu_Mem_Table waves;
+		Lu_W_Manager w_manager;
 	};	
 
 	static lu_size lu_brain__rec_attach(Lu_Brain self, Lu_Rec rec);

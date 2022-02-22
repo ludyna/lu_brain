@@ -99,3 +99,4 @@
 		struct lu_wave super;
 
 	};
+

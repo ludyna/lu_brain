@@ -1,0 +1,31 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Manager
+
+	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, lu_size w_waves_size)
+	{
+		lu__assert(mem);
+		lu__assert(w_waves_size > 0);
+
+		Lu_W_Manager self = (Lu_W_Manager) lu_mem__alloc(mem, sizeof(struct lu_w_manager));
+		lu__assert(self);
+
+		self->mem = mem;
+		self->waves = lu_mem_table__create(mem, sizeof(Lu_Wave), w_waves_size, 0, LU_MFT__FREEABLE);
+		lu__assert(self->waves);
+
+		return self;
+	}
+
+	static void lu_w_manager__destroy(Lu_W_Manager self)
+	{
+		lu__assert(self);
+		lu__assert(self->waves);
+		lu__assert(self->mem);
+
+		lu_mem_table__destroy(self->waves);
+		lu_mem__free(self->mem, (lu_p_byte) self);
+	}

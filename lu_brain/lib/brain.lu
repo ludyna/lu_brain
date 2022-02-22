@@ -19,7 +19,8 @@
 		self->recs 			= lu_arr__temp_create(p_config->b_recs_size, false);
 
 		self->s 			= NULL;
-		self->n 			= NULL;
+		self->w_manager 	= lu_w_manager__create(p_config->b_mem, p_config->w_waves_size);
+		lu__assert(self->w_manager);
 
 		return self;
 	}
@@ -33,16 +34,16 @@
 
 		lu__user_assert_void(self, "Lu_Brain is NULL");
 
-		if (self->n) 
-		{
-			lu_n__destroy(self->n);
-			self->n = NULL;
-		}
-
 		if (self->s) 
 		{	
 			lu_s__destroy(self->s);
 			self->s = NULL;
+		}
+
+		if (self->w_manager)
+		{
+			lu_w_manager__destroy(self->w_manager);
+			self->w_manager = NULL;
 		}
 
 		Lu_Rec rec;
@@ -150,12 +151,6 @@
 		{
 			lu_s__destroy(self->s);
 			self->s = NULL;
-		}
-
-		if (self->n)
-		{
-			lu_n__destroy(self->n);
-			self->n = NULL;
 		}
 
 		//

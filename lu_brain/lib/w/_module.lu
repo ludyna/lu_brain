@@ -4,3 +4,4 @@
 
 	#include "w_table.lu"
 	#include "w_space.lu"
+	#include "w_manager.lu"
