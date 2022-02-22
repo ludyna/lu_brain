@@ -129,6 +129,8 @@
 	#define lu_mem_table__size_in_bytes(mt) mt->size_in_bytes(mt)
 	#define lu_mem_table__mem_get(mt) mt->mem_get(mt)
 
+	#define lu_mem_table__records_count(mt) mt->records_count
+
 	static inline lu_p_byte lu_mem_table__get(Lu_Mem_Table self, lu_size index)
 	{
 		return (self->records_start + index * self->record_size_in_bytes); 

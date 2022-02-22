@@ -7,7 +7,7 @@
 // Lu_Mem_With_Stats 
 
 	// Alloc, realloc and free
-	lu_p_byte lu_mem_with_stats_alloc_internal(Lu_Mem mem, lu_size size, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_with_stats__alloc_internal(Lu_Mem mem, lu_size size, const char* func, const char* file, int line)
 	{
 		Lu_Mem_With_Stats self = (Lu_Mem_With_Stats) mem;
 		lu_size s = sizeof(lu_size) + size;
@@ -23,7 +23,7 @@
 		return (lu_p_byte) &ret[1];
 	}
 
-	lu_p_byte lu_mem_with_stats_realloc_internal(Lu_Mem mem, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
+	lu_p_byte lu_mem_with_stats__realloc_internal(Lu_Mem mem, lu_p_byte p, lu_size size_in_bytes, const char* func, const char* file, int line)
 	{
 		Lu_Mem_With_Stats self = (Lu_Mem_With_Stats) mem;
 
@@ -44,7 +44,7 @@
 		return (lu_p_byte) &new_p_size[1];
 	}
 
-	void lu_mem_with_stats_free_internal(Lu_Mem mem, lu_p_byte p, const char* func, const char* file, int line)
+	void lu_mem_with_stats__free_internal(Lu_Mem mem, lu_p_byte p, const char* func, const char* file, int line)
 	{
 		Lu_Mem_With_Stats self = (Lu_Mem_With_Stats) mem;
 
@@ -56,7 +56,7 @@
 
 	// Memory stats
 
-	lu_size lu_mem_with_stats_used_internal(Lu_Mem mem)
+	lu_size lu_mem_with_stats__used_internal(Lu_Mem mem)
 	{
 		Lu_Mem_With_Stats self = (Lu_Mem_With_Stats) mem;
 
@@ -64,7 +64,7 @@
 	}
 
 	// Destroy memory
-	void lu_mem_with_stats_destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
+	void lu_mem_with_stats__destroy_internal(Lu_Mem self, Lu_Mem parent_mem, const char* func, const char* file, int line)
 	{
 		lu_mem__free(parent_mem, (lu_p_byte) self);
 	}
@@ -87,16 +87,16 @@
 		self->free_size 		= 0;
 
 		// alloc, realloc, free
-		self->super.alloc 			= lu_mem_with_stats_alloc_internal;
-		self->super.realloc 		= lu_mem_with_stats_realloc_internal;
-		self->super.free 			= lu_mem_with_stats_free_internal;
+		self->super.alloc 			= lu_mem_with_stats__alloc_internal;
+		self->super.realloc 		= lu_mem_with_stats__realloc_internal;
+		self->super.free 			= lu_mem_with_stats__free_internal;
 
 		// destroy
-		self->super.destroy 		= lu_mem_with_stats_destroy_internal;
+		self->super.destroy 		= lu_mem_with_stats__destroy_internal;
 
 		// stats
 		self->super.preallocated 	= self->parent_mem->preallocated;
-		self->super.used 			= lu_mem_with_stats_used_internal;
+		self->super.used 			= lu_mem_with_stats__used_internal;
 
 		// table create
 		self->super.table_create 	= self->parent_mem->table_create;

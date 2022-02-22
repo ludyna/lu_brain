@@ -28,11 +28,18 @@
 	void lu_brain__destroy(Lu_Brain self)
 	{
 		lu__assert(self);
-	
-		Lu_Mem b_mem = self->config.b_mem;
-		lu__assert(b_mem);
 
 		lu__user_assert_void(self, "Lu_Brain is NULL");
+		if (self->w_manager)
+		{
+			lu__user_assert_void(
+				lu_w_manager__is_empty(self->w_manager), 
+				"Cannot destroy Lu_Brain. It still has registered Lu_Wave(s)."
+			);
+		}
+
+		Lu_Mem b_mem = self->config.b_mem;
+		lu__assert(b_mem);
 
 		if (self->s) 
 		{	
@@ -42,7 +49,6 @@
 
 		if (self->w_manager)
 		{
-			//if (w
 
 			lu_w_manager__destroy(self->w_manager);
 			self->w_manager = NULL;

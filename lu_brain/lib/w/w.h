@@ -51,4 +51,12 @@
 	static bool lu_w_manager__register_wave(Lu_W_Manager self, Lu_Wave wave);
 	static void lu_w_manager__unregister_wave(Lu_W_Manager self, Lu_Wave wave);
 
+	static inline bool lu_w_manager__is_empty(Lu_W_Manager self) 
+	{
+		lu__assert(self);
+		lu__assert(self->waves);
+
+		return lu_mem_table__records_count(self->waves) == 0;
+	}
+
 	 
