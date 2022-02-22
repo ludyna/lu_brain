@@ -105,6 +105,11 @@ void test_lu_brain_basics(void)
 
 	Lu_Wave wave = lu_save_wave__create(brain); 
 
+		TEST_ASSERT(wave);
+		TEST_ASSERT(lu_wave__get_id(wave) == 0);
+
+		TEST_ASSERT(lu_brain__get_wave_by_id(brain, lu_wave__get_id(wave)) == wave);
+
 		lu_wave__push(wave, rec_0, data_0);
 
 		lu_wave__block_begin(wave);

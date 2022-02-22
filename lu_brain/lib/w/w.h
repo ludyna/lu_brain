@@ -59,4 +59,11 @@
 		return lu_mem_table__records_count(self->waves) == 0;
 	}
 
+	static inline Lu_Wave lu_w_manager__get_wave_by_id(Lu_W_Manager self, lu_size id)
+	{
+		lu__assert(self);
+		lu__assert(self->waves);
+
+		return *((Lu_Wave*) lu_mem_table__get(self->waves, id));
+	}
 	 

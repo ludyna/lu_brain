@@ -50,7 +50,12 @@
 
 		*wave_addr = wave;
 
+		lu__assert(*wave_addr == wave);
+
 		wave->id = lu_mem_table__record_ix(self->waves, wave->manager_addr);
+
+		// to double check
+		lu__assert(lu_w_manager__get_wave_by_id(self, wave->id) == wave);
 
 		return true;
 	}

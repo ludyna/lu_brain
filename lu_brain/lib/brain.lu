@@ -175,4 +175,13 @@
 		return self;
 	}
 
+
+	Lu_Wave lu_brain__get_wave_by_id(Lu_Brain self, lu_size id)
+	{
+		lu__user_assert(self, "Lu_Brain is NULL");
+		lu__user_assert(self->w_manager, "Something went wrong. Lu_W_Manager is not set.");
+
+		return lu_w_manager__get_wave_by_id(self->w_manager, id);
+	}
+
 	

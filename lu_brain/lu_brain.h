@@ -104,6 +104,8 @@
 	// Method returns NULL if build failed.
 	Lu_Brain lu_brain__build(Lu_Brain self);
 
+	Lu_Wave lu_brain__get_wave_by_id(Lu_Brain self, lu_size id);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec  
 
