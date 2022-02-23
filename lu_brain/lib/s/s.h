@@ -85,9 +85,17 @@
 	);
 	
 	static void lu_s_comp_view__deinit(Lu_S_Comp_View self);
-	static void lu_s_comp_view__save_data(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
+	static void lu_s_comp_view__save_p(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_W_Table v_w_table, Lu_Data data, Lu_Process_Config config);
+	static void lu_s_comp_view__save(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
 
-	static Lu_Data lu_s_comp_view__last_data(Lu_S_Comp_View self, Lu_Wave wave);
+	static inline Lu_W_Table lu_s_comp_view__get_w_table(Lu_S_Comp_View self, lu_size id)
+	{
+		lu__assert(self);
+		lu__assert(self->w_space);
+
+		return lu_w_space__get_w_table(self->w_space, id);
+	}
+
 	
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Base

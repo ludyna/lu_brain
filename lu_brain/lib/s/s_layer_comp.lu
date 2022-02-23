@@ -86,20 +86,31 @@
 		lu__assert(data);
 		lu__assert(config);
 
- 	// 	// will be empty if no prev data
-		// Lu_Data prev_data = lu_s_comp_view__last_data(&self->v_view, wave);
+		bool process_v = !lu_value_eq_with_signif(config->v_potency, 0.0, config->min_potency);
+		bool process_p = !lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency);
 
-		// // we save first because a) we need to save it somewhere b) we need to "digitalize" data
-		// lu_s_comp_view__save_data(&self->v_view, wave, z, data, config);
+		Lu_W_Table v_w_table = NULL;
+		lu_size wave_id = lu_wave__get_id(wave);
+ 
+		if (process_p || process_v)
+		{
+			v_w_table = lu_s_comp_view__get_w_table(&self->v_view, wave_id);
+			lu__assert(v_w_table);
 
-		// // digitalized
-		// Lu_Data curr_data = lu_s_comp_view__last_data(&self->v_view, wave);
+			// same digitalized data can be used in p and v
+			lu_comp_calc__digitalize_data(v_w_table->comp_calc, data, z);
+		}
 
-		// // self->p_data is preallocated, so we dont allocate memory every time
-		// lu_data__calc_p_data(self->p_data, prev_data, curr_data);
+		if (process_p)
+		{ 
+			Lu_W_Table p_w_table = lu_s_comp_view__get_w_table(&self->p_view, wave_id);
+			lu__assert(p_w_table);
 
-		// if (!lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency))
-		// {
-		// 	lu_s_comp_view__save_data(&self->p_view, wave, z, self->p_data, config);
-		// }
+			lu_w_table__save_p(p_w_table, z, v_w_table, data, config);
+		}
+		
+		if (process_v)
+		{
+			lu_w_table__save(v_w_table, z, data, config);
+		}
 	}

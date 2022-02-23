@@ -48,8 +48,3 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
- 
- 	static Lu_W_Table lu_w_space__get_table(Lu_W_Space self, Lu_Wave wave)
- 	{
- 		return NULL;
- 	}

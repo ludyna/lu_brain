@@ -20,7 +20,16 @@
 	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
 	static void lu_w_table__destroy(Lu_W_Table self);
 
-	static void lu_w_table__save_data(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config);
+	
+	static void lu_w_table__save_p(
+		Lu_W_Table self, 
+		lu_size z, 
+		Lu_W_Table v_w_table, 
+		Lu_Data data, 
+		Lu_Process_Config config
+	);
+
+	static void lu_w_table__save(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Space
@@ -34,8 +43,14 @@
 	static Lu_W_Space lu_w_space__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
 	static void lu_w_space__destroy(Lu_W_Space self);
 
-	static Lu_W_Table lu_w_space__get_table(Lu_W_Space self, Lu_Wave wave);
+	static inline Lu_W_Table lu_w_space__get_w_table(Lu_W_Space self, lu_size ix)
+	{
+		lu__assert(self);
+		lu__assert(self->tables);
+		lu__assert(ix < lu_arr__count(self->tables));
 
+		return (Lu_W_Table) lu_arr__get(self->tables, ix);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Manager

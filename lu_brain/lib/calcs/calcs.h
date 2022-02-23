@@ -32,3 +32,5 @@
 	static inline struct lu_size_range lu_comp_calc__ix_range(Lu_Comp_Calc self, lu_value val, lu_size nsc);
 	static inline lu_value lu_comp_calc__calc_sig(Lu_Comp_Calc self, lu_size val_step_i, lu_value val);
 	static inline lu_value lu_comp_calc__step_norm_dist(Lu_Comp_Calc self);
+
+	static void lu_comp_calc__digitalize_data(Lu_Comp_Calc self, Lu_Data data, lu_size z);

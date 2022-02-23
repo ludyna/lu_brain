@@ -205,7 +205,7 @@
 
 	enum lu_process_config_type {
 		LU_PCT__SAVE_DEFAULT = 0,
-		LU_PCT__FIND_FULL_CONTRAST, 
+		LU_PCT__MATCH_FULL_CONTRAST, 
 		LU_PCT__FIND_FULL_COLOR,
 		LU_PCT__END			
 	};

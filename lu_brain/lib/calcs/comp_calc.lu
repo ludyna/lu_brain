@@ -91,3 +91,8 @@
 	{
 		return 1.0 / self->cells_size;
 	}
+
+	static void lu_comp_calc__digitalize_data(Lu_Comp_Calc self, Lu_Data data, lu_size z)
+	{
+
+	}

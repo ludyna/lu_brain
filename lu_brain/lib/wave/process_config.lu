@@ -29,7 +29,7 @@
     		.min_fire_potency             = 0.9,  	// potribna povna kopiya
             .block_layers_size            = 50
     	},
-    	// LU_PCT__FIND_FULL_CONTRAST
+    	// LU_PCT__MATCH_FULL_CONTRAST
     	{
 
     	},
