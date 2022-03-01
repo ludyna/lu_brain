@@ -92,7 +92,38 @@
 		return 1.0 / self->cells_size;
 	}
 
+	static inline lu_value lu_comp_calc__digitalize_value(Lu_Comp_Calc self, lu_value v)
+	{
+		v = lu_comp_calc__norm(self, v);
+
+		return self->steps[lu_comp_calc__ix(self, v)];
+	}
+
 	static void lu_comp_calc__digitalize_data(Lu_Comp_Calc self, Lu_Data data, lu_size z)
 	{
+		lu__assert(self);
+		lu__assert(data);
+		lu__assert(z < data->d);
+
+		lu_size z_shift = z * data->w * data->h;
+
+		lu_size x;
+		lu_size y;
+		lu_size y_shift;
+		lu_value v;
+		lu_size ix;
+
+		for (y = 0; y < data->h; y++)
+		{
+			y_shift = y * data->w;
+
+			for (x = 0; x < data->w; x++)
+			{
+				ix = z_shift + y_shift + x;
+				v = data->values[ix];
+
+				data->values[ix] = lu_comp_calc__digitalize_value(self, v);
+			}
+		}
 
 	}
