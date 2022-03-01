@@ -5,7 +5,31 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Init, create, destroy
 
-	static Lu_Data lu_data__create_via_deep_copy_internal(Lu_Mem mem, Lu_Data src, const char* func, const char* file, int line)
+	Lu_Data lu_data__create_via_mem_copy_internal(Lu_Mem mem, lu_p_value src, lu_size w, lu_size h, lu_size d, const char* func, const char* file, int line)
+	{
+		lu__assert(mem);
+		lu__assert(src);
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+		lu__assert(d > 0);
+
+		Lu_Data self = (Lu_Data) mem->alloc(mem, sizeof(struct lu_data), func, file, line);
+		lu__assert(self);
+
+		self->w 		= w;
+		self->h 		= h;
+		self->d 		= d;
+
+		lu_size size = sizeof(lu_value) * self->w * self->h * self->d;
+
+		self->values 	= (lu_p_value) mem->alloc(mem, size, func, file, line);
+
+		memcpy((lu_p_void) self->values, (lu_p_void) src, size);
+
+		return self;
+	}
+
+	Lu_Data lu_data__create_via_deep_copy_internal(Lu_Mem mem, Lu_Data src, const char* func, const char* file, int line)
 	{
 		lu__assert(mem);
 		lu_data__validate_exists(src);
@@ -16,15 +40,12 @@
 		self->w 		= src->w;
 		self->h 		= src->h;
 		self->d 		= src->d;
-		self->values 	= (lu_p_value) mem->alloc(mem, sizeof(lu_value) * self->w * self->h * self->d, func, file, line);
 
-		lu_size x;
-		lu_size y;
-		lu_size z;
-		for(z = 0; z < src->d; z++)
-			for (y = 0; y < src->h; y++)
-				for(x = 0; x < src->w; x++)
-					lu_data__value_set(self, x, y, z, lu_data__value_get(src, x, y, z));
+		lu_size size = sizeof(lu_value) * self->w * self->h * self->d;
+
+		self->values 	= (lu_p_value) mem->alloc(mem, size, func, file, line);
+
+		memcpy((lu_p_void) self->values, (lu_p_void) src->values, size);
 
 		return self;
 	}
@@ -124,6 +145,8 @@
 			lu_size y;
 			lu_size z;
 			for (z = 0; z < self->d; z++)
+			{
+				lu__debug("\n\t");
 				for (y = 0; y < self->h; y++)
 				{
 					lu__debug("\n\t");
@@ -132,6 +155,7 @@
 						lu__debug("%.2f, ", lu_data__value_get(self, x, y, z));
 					}
 				}
+			}
 		}
 		else
 		{

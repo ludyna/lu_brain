@@ -22,10 +22,12 @@
 		d->values[z * d->w * d->h + y * d->w + x] = value; 
 	}
 
-	// WARNING: Reading values in cycle using this method is bad due to a lot of multiplications for each value.
+	
+	#define lu_data__get(d, x, y, z) d->values[z * d->w * d->h + y * d->w + x]
 	static inline lu_value lu_data__value_get(Lu_Data d, lu_size x, lu_size y, lu_size z) 
 	{ 
-		return d->values[z * d->w * d->h + y * d->w + x]; 
+		// WARNING: Reading values in cycle using this method is bad due to a lot of multiplications for each value.
+		return lu_data__get(d, x, y, z); 
 	}
 
 	static inline lu_bool lu_data__is_empty(Lu_Data self) { return self->values == NULL; }
@@ -57,16 +59,40 @@
 	}
 
 	//
-	// Create, destroy
+	// Create / Destroy
 	//
 
-	static Lu_Data lu_data__create_via_deep_copy_internal(Lu_Mem, Lu_Data src, const char* func, const char* file, int line);
+	Lu_Data lu_data__create_via_mem_copy_internal(
+		Lu_Mem mem, 
+		lu_p_value src, 
+		lu_size w, 
+		lu_size h, 
+		lu_size d, 
+		const char* func, 
+		const char* file, 
+		int line
+	);
 
-	#define lu_data__create_via_deep_copy(mem, src) lu_data__create_via_deep_copy_internal(mem, src, __func__, __FILE__, __LINE__)
+	#define lu_data__create_via_mem_copy(mem, src, w, h, d) \
+		lu_data__create_via_mem_copy_internal(mem, src, w, h, d, __func__, __FILE__, __LINE__)
 
-	Lu_Data lu_data__create_via_shift_internal(Lu_Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line);
+	Lu_Data lu_data__create_via_deep_copy_internal(Lu_Mem, Lu_Data src, const char* func, const char* file, int line);
 
-	#define lu_data__create_via_shift(mem, src, x_shift, y_shift) lu_data__create_via_shift_internal(mem, src, x_shift, y_shift,  __func__, __FILE__, __LINE__)
+	#define lu_data__create_via_deep_copy(mem, src) \
+		lu_data__create_via_deep_copy_internal(mem, src, __func__, __FILE__, __LINE__)
+
+	Lu_Data lu_data__create_via_shift_internal(
+		Lu_Mem mem, 
+		Lu_Data src, 
+		lu_int x_shift, 
+		lu_int y_shift, 
+		const char* func, 
+		const char* file, 
+		int line
+	);
+
+	#define lu_data__create_via_shift(mem, src, x_shift, y_shift) \
+		lu_data__create_via_shift_internal(mem, src, x_shift, y_shift,  __func__, __FILE__, __LINE__)
 
 	void lu_data__destroy(Lu_Data, Lu_Mem);
 

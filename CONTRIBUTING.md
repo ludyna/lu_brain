@@ -17,7 +17,7 @@
 For data received from or passed to methods that are from outside libraries use types appropriate for 
 these libraries. Don't assume lu_size is uint. "Wrap" these methods with our own methods when possible:
 
-	#define lu_value_round round 
+	#define lu_round round 
 	#define lu_value_abs fabs
 
 ## NAMING 
