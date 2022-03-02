@@ -8,9 +8,13 @@ BONUS:
 
 By learning this style, you will also:
 
-- Learn how to program large applications in C
-- Learn how to program OOP in C
-- Develop taste to good programming style
+- Learn how to program large applications in C.
+- Learn how to program OOP in C.
+- Develop a taste for a good programming style.
+- Become one major step closer to becoming a master of C.
+
+## Why C?
+
 
 
 WORK IN PROGRESS
