@@ -23,14 +23,14 @@
 		self->height = height;
 
 		lu_size cells_size = sizeof(struct lu_cell) * width * height;
-		
+
 		self->cells = (struct lu_cell*) lu_mem__alloc(config->w_mem, cells_size);
 		lu__assert(self->cells);
 
 		memset((lu_p_void) self->cells, 0, cells_size);
 
 		return self;
-	}	
+	}
 
 	static void lu_w_table__destroy(Lu_W_Table self)
 	{
@@ -52,10 +52,30 @@
 		Lu_Process_Config config
 	)
 	{
+		lu__assert(self);
+		lu__assert(v_w_table);
+		lu__assert(data);
+		lu__assert(config);
+
 
 	}
 	
 	static void lu_w_table__save(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config)
 	{
+		lu__assert(self);
+		lu__assert(data);
+		lu__assert(config);
 
+		lu_size z_shift = z * data->w * data->h;
+		lu_size y_shift;
+		lu_size x;
+		lu_size y;
+
+		for (y = 0; y < data->h; y++)
+		{
+			for (x = 0; x < data->w; x++)
+			{
+
+			}
+		}
 	}

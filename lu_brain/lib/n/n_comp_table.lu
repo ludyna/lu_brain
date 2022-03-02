@@ -5,23 +5,25 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_N_Comp_Table lu_n_comp_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
+	static Lu_N_Comp_Table lu_n_comp_table__create(Lu_Config config, lu_size width, lu_size height, lu_size depth)
 	{
 		lu__assert(config);
-		lu__assert(comp_calc);
+		lu__assert(width > 0);
+		lu__assert(height > 0);
+		lu__assert(depth > 0);
+	
 
 		Lu_N_Comp_Table self = (Lu_N_Comp_Table) lu_mem__alloc(config->n_mem, sizeof(struct lu_n_comp_table));
 		lu__assert(self);
 
 		self->mem = config->n_mem;
-		self->cc = comp_calc;
-		self->width = width;
-		self->height = height;
+		self->w = width;
+		self->h = height;
+		self->d = depth;
 
-		// w x h x cells_size, empty by default
 		self->cells = (struct n_cell_value*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct n_cell_value) * self->width * self->height * self->cc->cells_size
+			sizeof(struct n_cell_value) * self->w * self->h * self->d
 		);
 
 		return self;

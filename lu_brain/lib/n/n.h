@@ -12,15 +12,15 @@
 
 	struct lu_n_comp_table {
 		Lu_Mem mem;
-		Lu_Comp_Calc cc;
-		lu_size width;
-		lu_size height;
+		lu_size w;
+		lu_size h;
+		lu_size d;
 
-		// w x h x cc->cells_size, empty by default
+		// w x h x d, empty by default
 		struct n_cell_value* cells;
 	};
 
-	static Lu_N_Comp_Table lu_n_comp_table__create(Lu_Config config, Lu_Comp_Calc cc, lu_size width, lu_size height);
+	static Lu_N_Comp_Table lu_n_comp_table__create(Lu_Config config, lu_size width, lu_size height, lu_size depth);
 	static void lu_n_comp_table__destroy(Lu_N_Comp_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
