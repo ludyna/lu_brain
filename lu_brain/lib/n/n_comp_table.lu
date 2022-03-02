@@ -21,9 +21,9 @@
 		self->h = height;
 		self->d = depth;
 
-		self->cells = (struct n_cell_value*) lu_mem__alloc(
+		self->cells = (struct lu_n_cell_v*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct n_cell_value) * self->w * self->h * self->d
+			sizeof(struct lu_n_cell_v) * self->w * self->h * self->d
 		);
 
 		return self;

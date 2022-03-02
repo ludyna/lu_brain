@@ -3,11 +3,11 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-//  N_Table_Node
+//  Lu_N_Table_Node
 
-	static void n_table_node__destroy(N_Table_Node self, Lu_Mem mem)
+	static void n_table_node__destroy(Lu_N_Table_Node self, Lu_Mem mem)
 	{
-		N_Table_Node prev;
+		Lu_N_Table_Node prev;
 		while (self)
 		{
 			prev = self->prev;
@@ -24,25 +24,25 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-//  N_Table Create And Destroy
+//  Lu_N_Table Create And Destroy
 
-	static N_Table n_table__create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type)
+	static Lu_N_Table n_table__create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type)
 	{
 		lu__assert(mem);
 
 		if (size_in_cells == 0)
 			return NULL;
 
-		N_Table self = (N_Table) lu_mem__alloc(mem, sizeof(struct lu_n_table));
+		Lu_N_Table self = (Lu_N_Table) lu_mem__alloc(mem, sizeof(struct lu_n_table));
 		lu__assert(self);
 
 		self->mem = mem;
 		self->size_in_cells = size_in_cells;
 		self->cell_type = cell_type;
 		
-		lu_size bytes_size = sizeof(N_Table_Node) * self->size_in_cells;
+		lu_size bytes_size = sizeof(Lu_N_Table_Node) * self->size_in_cells;
 		
-		self->units = (N_Table_Node*) lu_mem__alloc(mem, bytes_size);
+		self->units = (Lu_N_Table_Node*) lu_mem__alloc(mem, bytes_size);
 
 		memset(self->units, 0, bytes_size);
 
@@ -51,14 +51,14 @@
 		return self;
 	}
 
-	static void n_table__destroy(N_Table self)
+	static void n_table__destroy(Lu_N_Table self)
 	{
 		lu__assert(self);
 
 		Lu_Mem mem = self->mem;
 
-		N_Table_Node unit = NULL;
-		N_Table_Node next = NULL;
+		Lu_N_Table_Node unit = NULL;
+		Lu_N_Table_Node next = NULL;
 
 		if (self->units) {
 			
@@ -81,23 +81,23 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-//  N_Table Main Methods
+//  Lu_N_Table Main Methods
 
-	static N_Table_Node n_table__node_find(N_Table self, N_Cell_0 cell, lu_size hash)
+	static Lu_N_Table_Node n_table__node_find(Lu_N_Table self, Lu_N_Cell_0 cell, lu_size hash)
 	{
 		lu__assert(self);
 		lu__assert(cell);
 
 		lu_size index = n_table__hash_to_index(self, hash);
 
-		N_Table_Node node = self->units[index];
+		Lu_N_Table_Node node = self->units[index];
 
 		while (node && node->cell != cell) node = node->prev;
 
 		return node;
 	}
 
-	static void n_table__cell_remove(N_Table self, lu_size hash, N_Cell_0 dest)
+	static void n_table__cell_remove(Lu_N_Table self, lu_size hash, Lu_N_Cell_0 dest)
 	{
 		lu__assert(self);
 		lu__assert(dest);
@@ -105,7 +105,7 @@
 		lu__user_assert_void(false, "NOT IMPLEMENTED");
 	}
 
-	static N_Cell_0 n_table__cell_get_1(N_Table self, lu_size hash, N_Cell_0 top_left)
+	static Lu_N_Cell_0 n_table__cell_get_1(Lu_N_Table self, lu_size hash, Lu_N_Cell_0 top_left)
 	{
 		lu__assert(self);
 		lu__assert(top_left);
@@ -113,16 +113,16 @@
 
 		lu_size index = n_table__hash_to_index(self, hash);
 
-		N_Table_Node node = self->units[index];
+		Lu_N_Table_Node node = self->units[index];
 
-		while (node && node->cell && !n_cell__parent_eq_1((N_Cell_1) node->cell, top_left)) node = node->prev;
+		while (node && node->cell && !n_cell__parent_eq_1((Lu_N_Cell_1) node->cell, top_left)) node = node->prev;
 
 		if (node) return node->cell;
 
 		return NULL;
 	}
 
- 	static N_Cell_0 n_table__cell_get_2(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right)
+ 	static Lu_N_Cell_0 n_table__cell_get_2(Lu_N_Table self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right)
  	{
 		lu__assert(self);
 		lu__assert(top_left);
@@ -131,16 +131,16 @@
 
 		lu_size index = n_table__hash_to_index(self, hash);
 
-		N_Table_Node node = self->units[index];
+		Lu_N_Table_Node node = self->units[index];
 
-		while (node && node->cell && !n_cell__parent_eq_2((N_Cell_2) node->cell, top_left, top_right)) node = node->prev;
+		while (node && node->cell && !n_cell__parent_eq_2((Lu_N_Cell_2) node->cell, top_left, top_right)) node = node->prev;
 
 		if (node) return node->cell;
 
 		return NULL;
  	}
 
- 	static N_Cell_0 n_table__cell_get_3(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right, N_Cell_0 bottom_left)
+ 	static Lu_N_Cell_0 n_table__cell_get_3(Lu_N_Table self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left)
  	{
 		lu__assert(self);
 		lu__assert(top_left);
@@ -150,16 +150,16 @@
 
 		lu_size index = n_table__hash_to_index(self, hash);
 
-		N_Table_Node node = self->units[index];
+		Lu_N_Table_Node node = self->units[index];
 
-		while (node && node->cell && !n_cell__parent_eq_3((N_Cell_3) node->cell, top_left, top_right, bottom_left)) node = node->prev;
+		while (node && node->cell && !n_cell__parent_eq_3((Lu_N_Cell_3) node->cell, top_left, top_right, bottom_left)) node = node->prev;
 
 		if (node) return node->cell;
 
 		return NULL;
  	}
 
- 	static N_Cell_0 n_table__cell_get_4(N_Table self, lu_size hash, N_Cell_0 top_left, N_Cell_0 top_right, N_Cell_0 bottom_left, N_Cell_0 bottom_right)
+ 	static Lu_N_Cell_0 n_table__cell_get_4(Lu_N_Table self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left, Lu_N_Cell_0 bottom_right)
  	{
 		lu__assert(self);
 		lu__assert(top_left);
@@ -169,9 +169,9 @@
 
 		lu_size index = n_table__hash_to_index(self, hash);
 
-		N_Table_Node node = self->units[index];
+		Lu_N_Table_Node node = self->units[index];
 
-		while (node && node->cell && !n_cell__parent_eq_4((N_Cell_4) node->cell, top_left, top_right, bottom_left, bottom_right)) node = node->prev;
+		while (node && node->cell && !n_cell__parent_eq_4((Lu_N_Cell_4) node->cell, top_left, top_right, bottom_left, bottom_right)) node = node->prev;
 
 		if (node) return node->cell;
 
@@ -180,16 +180,16 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// N_Table Utility    
+// Lu_N_Table Utility    
 
-	static void n_table__print_distribution(N_Table self)
+	static void n_table__print_distribution(Lu_N_Table self)
 	{
 		lu__assert(self);
 		
 		lu_size i;
 		lu_size count;
 		lu_size total_count = 0;
-		N_Table_Node node;
+		Lu_N_Table_Node node;
 
 		printf("\n Table distribution:");
 		for (i = 0; i < self->size_in_cells; i++)

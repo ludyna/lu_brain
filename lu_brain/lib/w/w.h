@@ -6,7 +6,7 @@
 // Lu_Cell 
 
 	struct lu_cell {
-		N_Cell_0 n_cell_0;
+		Lu_N_Cell_0 n_cell_0;
 		lu_value sig;
 		lu_size wave_id;
 	};

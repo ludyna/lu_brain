@@ -60,19 +60,19 @@ void tearDown(void)
 void test_spawn_and_die(void) 
 {
 	
-    N_Cell_0 c1 = n_cell_spawn(g_hnn, N_CT__1);
+    Lu_N_Cell_0 c1 = n_cell_spawn(g_hnn, N_CT__1);
     TEST_ASSERT(c1);
     TEST_ASSERT(c1->type == N_CT__1); 
 
-    N_Cell_0 c2 = n_cell_spawn(g_hnn, N_CT__2);
+    Lu_N_Cell_0 c2 = n_cell_spawn(g_hnn, N_CT__2);
     TEST_ASSERT(c2);
     TEST_ASSERT(c2->type == N_CT__2);
 
-    N_Cell_0 c3 = n_cell_spawn(g_hnn, N_CT__3);
+    Lu_N_Cell_0 c3 = n_cell_spawn(g_hnn, N_CT__3);
     TEST_ASSERT(c3);
     TEST_ASSERT(c3->type == N_CT__3);
 
-    N_Cell_0 c4 = n_cell_spawn(g_hnn, N_CT__4);
+    Lu_N_Cell_0 c4 = n_cell_spawn(g_hnn, N_CT__4);
     TEST_ASSERT(c4);
     TEST_ASSERT(c4->type == N_CT__4);
 
@@ -86,45 +86,45 @@ void test_spawn_connect_and_get(void)
 {
     // Cell Spawn
 
-    N_Cell_0 top_left = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_0 top_left = n_cell_spawn(g_hnn, N_CT__0);
     TEST_ASSERT(top_left);
     TEST_ASSERT(top_left->type == N_CT__0); 
 
-    N_Cell_0 top_right = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_0 top_right = n_cell_spawn(g_hnn, N_CT__0);
     TEST_ASSERT(top_right);
     TEST_ASSERT(top_right->type == N_CT__0);
 
-    N_Cell_0 bottom_left = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_0 bottom_left = n_cell_spawn(g_hnn, N_CT__0);
     TEST_ASSERT(bottom_left);
     TEST_ASSERT(bottom_left->type == N_CT__0);
 
-    N_Cell_0 bottom_right = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_0 bottom_right = n_cell_spawn(g_hnn, N_CT__0);
     TEST_ASSERT(bottom_right);
     TEST_ASSERT(bottom_right->type == N_CT__0);
 
     // Cell Spawn Connect 
 
-    N_Cell_0 t = NULL;
+    Lu_N_Cell_0 t = NULL;
 
-    N_Cell_0 child_1 = (N_Cell_0) n_cell_spawn_connect_1(g_hnn, top_left);
+    Lu_N_Cell_0 child_1 = (Lu_N_Cell_0) n_cell_spawn_connect_1(g_hnn, top_left);
     TEST_ASSERT(child_1);
     t = n_cell_get_1(g_hnn, top_left);
     TEST_ASSERT(t);
     TEST_ASSERT(child_1 == t);
 
-    N_Cell_0 child_2 = (N_Cell_0) n_cell_spawn_connect_2(g_hnn, top_left, top_right);
+    Lu_N_Cell_0 child_2 = (Lu_N_Cell_0) n_cell_spawn_connect_2(g_hnn, top_left, top_right);
     TEST_ASSERT(child_2);
     t = n_cell_get_2(g_hnn, top_left, top_right);
     TEST_ASSERT(t);
     TEST_ASSERT(child_2 == t);
 
-    N_Cell_0 child_3 = (N_Cell_0) n_cell_spawn_connect_3(g_hnn, top_left, top_right, bottom_left);
+    Lu_N_Cell_0 child_3 = (Lu_N_Cell_0) n_cell_spawn_connect_3(g_hnn, top_left, top_right, bottom_left);
     TEST_ASSERT(child_3);
     t = n_cell_get_3(g_hnn, top_left, top_right, bottom_left);
     TEST_ASSERT(t);
     TEST_ASSERT(child_3 == t);
 
-    N_Cell_0 child_4 = (N_Cell_0) n_cell_spawn_connect_4(g_hnn, top_left, top_right, bottom_left, bottom_right);
+    Lu_N_Cell_0 child_4 = (Lu_N_Cell_0) n_cell_spawn_connect_4(g_hnn, top_left, top_right, bottom_left, bottom_right);
     TEST_ASSERT(child_4);
     t = n_cell_get_4(g_hnn, top_left, top_right, bottom_left, bottom_right);
     TEST_ASSERT(t);

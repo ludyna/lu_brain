@@ -61,7 +61,7 @@ void tearDown(void)
 ///////////////////////////////////////////////////////////////////////////////
 // Tests
 
-N_Cell_4 spawn_4(N_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH], lu_size x, lu_size y, lu_size d)
+Lu_N_Cell_4 spawn_4(Lu_N_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH], lu_size x, lu_size y, lu_size d)
 {
     if (x + 1 >= INPUT_WIDTH) return NULL;
     if (y + 1 >= INPUT_HEIGHT) return NULL;
@@ -78,7 +78,7 @@ N_Cell_4 spawn_4(N_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH], lu_si
 
 void test_distribution(void) 
 {
-	N_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH];
+	Lu_N_Cell_0 inputs[INPUT_WIDTH][INPUT_HEIGHT][INPUT_DEAPTH];
 
     lu_size y;
     lu_size x;
@@ -90,7 +90,7 @@ void test_distribution(void)
                 inputs[x][y][d] = n_cell_spawn(g_hnn, N_CT__0);
             }
 
-    N_Cell_4 cell;
+    Lu_N_Cell_4 cell;
     for(d = 0; d < INPUT_DEAPTH; d++) 
         for(y = 0; y < INPUT_HEIGHT; y++)
             for(x = 0; x < INPUT_WIDTH; x++)
