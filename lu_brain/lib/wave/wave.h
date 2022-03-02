@@ -62,14 +62,6 @@
 	static inline lu_bool lu_wave__is_find(Lu_Wave self) { return self->type == LU_WAVE_TYPE__FIND; }
 	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE__RESTORE; }
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Seq_Rg
-
-	struct lu_cell {
-		N_Cell_0 n_cell_0;
-		lu_value sig;
-	};
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 

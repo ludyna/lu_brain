@@ -22,6 +22,10 @@
 		self->width = width;
 		self->height = height;
 
+
+		self->cells = (struct lu_cell*) lu_mem__alloc(config->w_mem, sizeof(struct lu_cell) * width * height);
+		lu__assert(self->cells);
+
 		return self;
 	}	
 
@@ -30,6 +34,7 @@
 		lu__assert(self);
 		lu__assert(self->mem);
 
+		lu_mem__free(self->mem, (lu_p_byte) self->cells);
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 

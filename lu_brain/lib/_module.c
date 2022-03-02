@@ -13,8 +13,8 @@
 
 #include "calcs/_module.lu"
 #include "config.lu" 
-#include "w/_module.lu" 
 #include "n/_module.lu"
+#include "w/_module.lu" 
 #include "rec/_module.lu"
 #include "s/_module.lu"
 #include "wave/_module.lu"

@@ -3,6 +3,15 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_Cell 
+
+	struct lu_cell {
+		N_Cell_0 n_cell_0;
+		lu_value sig;
+		lu_size wave_id;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Table 
 
 	// always 2D
@@ -14,7 +23,7 @@
 		lu_size width;
 		lu_size height;
 
-		
+		struct lu_cell* cells;
 	};
 
 	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
