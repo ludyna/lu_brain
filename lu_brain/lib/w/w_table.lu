@@ -22,9 +22,12 @@
 		self->width = width;
 		self->height = height;
 
-
-		self->cells = (struct lu_cell*) lu_mem__alloc(config->w_mem, sizeof(struct lu_cell) * width * height);
+		lu_size cells_size = sizeof(struct lu_cell) * width * height;
+		
+		self->cells = (struct lu_cell*) lu_mem__alloc(config->w_mem, cells_size);
 		lu__assert(self->cells);
+
+		memset((lu_p_void) self->cells, 0, cells_size);
 
 		return self;
 	}	
