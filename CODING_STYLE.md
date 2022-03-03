@@ -11,7 +11,7 @@ By learning this style, you will also:
 - Learn how to program large applications in C.
 - Learn how to program OOP in C.
 - Develop a taste for a good programming style.
-- Become one major step closer to becoming a master of C.
+- Become one major step closer to becoming a master of C and a master of programming in general.
 
 ## Why C?
 

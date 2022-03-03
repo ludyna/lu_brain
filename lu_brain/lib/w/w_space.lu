@@ -21,7 +21,7 @@
 		Lu_W_Table w_table;
 		for (lu_size i = 0; i < config->w_waves_size; i++)
 		{
-			w_table = lu_w_table__create(config, comp_calc, width, height);
+			w_table = lu_w_comp_table__create(config, comp_calc, width, height);
 			lu__assert(w_table);
 			
 			lu_arr__set(self->tables, i, (lu_p_void) w_table);
@@ -39,7 +39,7 @@
 		for (lu_size i = 0; i < lu_arr__count(self->tables); i++)
 		{
 			w_table = (Lu_W_Table) lu_arr__get(self->tables, i);
-			lu_w_table__destroy(w_table);
+			lu_w_comp_table__destroy(w_table);
 		}
 
 		lu_arr__destroy(self->tables);

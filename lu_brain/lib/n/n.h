@@ -29,7 +29,22 @@
 		lu_size z;
 	};
 
-	//static inline Lu_N_Cell_V n_cell_value__init(Lu_N_Cell_V
+	static inline Lu_N_Cell_V n_cell_value__init(
+		Lu_N_Cell_V self, 
+		lu_byte type, 
+		lu_value value,
+		lu_size x,
+		lu_size y,
+		lu_size z
+	)
+	{
+		n_cell_0__init((Lu_N_Cell_0) self, type);
+
+		self->value = value;
+		self->x = x;
+		self->y = y;
+		self->z = z;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell_1
@@ -290,6 +305,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table 
 
+
+	// tut bude po inshomu, tut mozhna optymizuvaty
+	// bo naspavdi, ce bude w x h cells
+	// i kozhna vertycalna cell ne bude peretynatys z inshymy, vidpovidno
+	// Lu_N_Table_Node* units; bude okreymyy dlia kozhnoho vertykalna cell
+ 
 	struct lu_n_table {
 		Lu_Mem mem;
 		Lu_N_Table_Node* units; // unit might contain more than one node

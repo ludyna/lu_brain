@@ -15,7 +15,7 @@
 // Lu_W_Table 
 
 	// always 2D
-	struct lu_w_table {
+	struct lu_w_comp_table {
 		Lu_Mem mem;
 		Lu_Wave wave;
 		Lu_Comp_Calc comp_calc;
@@ -26,11 +26,11 @@
 		struct lu_cell* cells;
 	};
 
-	static Lu_W_Table lu_w_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
-	static void lu_w_table__destroy(Lu_W_Table self);
+	static Lu_W_Table lu_w_comp_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height);
+	static void lu_w_comp_table__destroy(Lu_W_Table self);
 
 	
-	static void lu_w_table__save_p(
+	static void lu_w_comp_table__save_p(
 		Lu_W_Table self, 
 		lu_size z, 
 		Lu_W_Table v_w_table, 
@@ -38,7 +38,7 @@
 		Lu_Process_Config config
 	);
 
-	static void lu_w_table__save(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config);
+	static void lu_w_comp_table__save(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Space

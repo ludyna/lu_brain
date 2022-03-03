@@ -68,7 +68,7 @@
 
 		// Lu_W_Table w_table = lu_w_space__get_table(self->w_space, wave);
 
-		// lu_w_table__save_data(w_table, z, data, config);
+		// lu_w_comp_table__save_data(w_table, z, data, config);
 
 		// lu_n_comp_table__update(self->n_comp_table, w_table, config);
 	}
