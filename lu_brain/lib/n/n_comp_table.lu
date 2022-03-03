@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_N_Comp_Table lu_n_comp_table__create(Lu_Config config, lu_size width, lu_size height, lu_size depth)
+	static Lu_N_Table_Comp lu_n_table_comp__create(Lu_Config config, lu_size width, lu_size height, lu_size depth)
 	{
 		lu__assert(config);
 		lu__assert(width > 0);
@@ -13,7 +13,7 @@
 		lu__assert(depth > 0);
 	
 
-		Lu_N_Comp_Table self = (Lu_N_Comp_Table) lu_mem__alloc(config->n_mem, sizeof(struct lu_n_comp_table));
+		Lu_N_Table_Comp self = (Lu_N_Table_Comp) lu_mem__alloc(config->n_mem, sizeof(struct lu_n_table_comp));
 		lu__assert(self);
 
 		self->mem = config->n_mem;
@@ -29,7 +29,7 @@
 		return self;
 	}
 
-	static void lu_n_comp_table__destroy(Lu_N_Comp_Table self)
+	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);

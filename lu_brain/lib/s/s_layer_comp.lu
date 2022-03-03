@@ -111,11 +111,11 @@
 
 			p_w_table->wave = wave;
 
-			lu_w_comp_table__save_p(p_w_table, z, v_w_table, data, config);
+			lu_w_table_comp__save_p(p_w_table, z, v_w_table, data, config);
 		}
 		
 		if (process_v)
 		{
-			lu_w_comp_table__save(v_w_table, z, data, config);
+			lu_w_table_comp__save(v_w_table, z, data, config);
 		}
 	}

@@ -69,7 +69,7 @@
 
 		struct lu_comp_calc comp_calc;
 
-		Lu_N_Comp_Table n_comp_table;
+		Lu_N_Table_Comp n_comp_table;
 		Lu_W_Space w_space;
 	};
 
@@ -110,7 +110,7 @@
 		Lu_S_Layer_Base p;
 		Lu_Slot_Base c;
 
-		Lu_N_Table n_table;
+		Lu_N_Column n_table;
 		Lu_W_Table w_table;
 
 		// virtual destructor

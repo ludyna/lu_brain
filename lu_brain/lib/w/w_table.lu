@@ -6,14 +6,14 @@
 // Lu_W_Table 
 
 
-	static Lu_W_Table lu_w_comp_table__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
+	static Lu_W_Table lu_w_table_comp__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
 	{
 		lu__assert(config);
 		lu__assert(comp_calc);
 		lu__assert(width > 0);
 		lu__assert(height > 0);
 
-		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_comp_table));
+		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_comp));
 		lu__assert(self);
 
 		self->mem = config->w_mem;
@@ -32,7 +32,7 @@
 		return self;
 	}
 
-	static void lu_w_comp_table__destroy(Lu_W_Table self)
+	static void lu_w_table_comp__destroy(Lu_W_Table self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
@@ -44,7 +44,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_w_comp_table__save_p(
+	static void lu_w_table_comp__save_p(
 		Lu_W_Table self, 
 		lu_size z, 
 		Lu_W_Table v_w_table, 
@@ -60,7 +60,7 @@
 
 	}
 	
-	static void lu_w_comp_table__save(Lu_W_Table self, lu_size z, Lu_Data d, Lu_Process_Config config)
+	static void lu_w_table_comp__save(Lu_W_Table self, lu_size z, Lu_Data d, Lu_Process_Config config)
 	{
 		lu__assert(self);
 		lu__assert(d);

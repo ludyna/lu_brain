@@ -23,11 +23,11 @@ typedef struct lu_n_cell_3* Lu_N_Cell_3;
 typedef struct lu_n_cell_4* Lu_N_Cell_4;
 typedef struct lu_n_cell_allocator* Lu_N_Cell_Allocator;
 
-typedef struct lu_n_table_node* Lu_N_Table_Node;
-typedef struct lu_n_table* Lu_N_Table;
+typedef struct lu_n_column_node* Lu_N_Column_Node;
+typedef struct lu_n_column* Lu_N_Column;
 typedef struct lu_n_links* Lu_N_Links;
 
-typedef struct lu_n_comp_table* Lu_N_Comp_Table;
+typedef struct lu_n_table_comp* Lu_N_Table_Comp;
 
 // typedef struct lu_n_config* N_Config;
 // typedef struct lu_n* N;
