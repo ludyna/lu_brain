@@ -93,29 +93,24 @@
 		Lu_W_Table v_w_table = NULL;
 		lu_size wave_id = lu_wave__get_id(wave);
  
-		if (process_p || process_v)
-		{
-			v_w_table = lu_s_comp_view__get_w_table(&self->v_view, wave_id);
-			lu__assert(v_w_table);
+		v_w_table = lu_s_comp_view__get_w_table(&self->v_view, wave_id);
+		lu__assert(v_w_table);
 
-			v_w_table->wave = wave;
+		// same digitalized data can be used in p and v
+		lu_comp_calc__digitalize_data(v_w_table->comp_calc, data, z);
 
-			// same digitalized data can be used in p and v
-			lu_comp_calc__digitalize_data(v_w_table->comp_calc, data, z);
-		}
+		Lu_W_Table p_w_table = lu_s_comp_view__get_w_table(&self->p_view, wave_id);
+		lu__assert(p_w_table);
 
 		if (process_p)
 		{ 
-			Lu_W_Table p_w_table = lu_s_comp_view__get_w_table(&self->p_view, wave_id);
-			lu__assert(p_w_table);
-
 			p_w_table->wave = wave;
-
 			lu_w_table_comp__save_p(p_w_table, z, v_w_table, data, config);
 		}
 		
 		if (process_v)
 		{
-			lu_w_table_comp__save(v_w_table, z, data, config);
+			v_w_table->wave = wave;
+			lu_w_table_comp__save(v_w_table, z, p_w_table, data, config);
 		}
 	}

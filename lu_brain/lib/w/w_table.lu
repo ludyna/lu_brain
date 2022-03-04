@@ -18,6 +18,7 @@
 		lu__assert(comp_calc);
 		lu__assert(width > 0);
 		lu__assert(height > 0);
+		lu__assert(n_table_comp);
 
 		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_comp));
 		lu__assert(self);
@@ -27,6 +28,7 @@
 		self->comp_calc = comp_calc;
 		self->width = width;
 		self->height = height;
+		self->n_table_comp = n_table_comp;
 
 		lu_size cells_size = sizeof(struct lu_cell) * width * height;
 
@@ -63,10 +65,16 @@
 		lu__assert(data);
 		lu__assert(config);
 
-
+		
 	}
 	
-	static void lu_w_table_comp__save(Lu_W_Table self, lu_size z, Lu_Data d, Lu_Process_Config config)
+	static void lu_w_table_comp__save(
+		Lu_W_Table self, 
+		lu_size z, 
+		Lu_W_Table p_w_table, 
+		Lu_Data d, 
+		Lu_Process_Config config
+	)
 	{
 		lu__assert(self);
 		lu__assert(d);

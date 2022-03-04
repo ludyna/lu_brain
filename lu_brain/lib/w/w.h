@@ -47,7 +47,13 @@
 		Lu_Process_Config config
 	);
 
-	static void lu_w_table_comp__save(Lu_W_Table self, lu_size z, Lu_Data data, Lu_Process_Config config);
+	static void lu_w_table_comp__save(
+		Lu_W_Table self, 
+		lu_size z, 
+		Lu_W_Table p_w_table, 
+		Lu_Data d, 
+		Lu_Process_Config config
+	);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Space
