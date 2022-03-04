@@ -266,27 +266,6 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Table_Comp
-
-	struct lu_n_table_base {
-		Lu_Mem mem;
-	};
-
-	struct lu_n_table_comp {
-		Lu_Mem mem;
-		lu_size w;
-		lu_size h;
-		lu_size d;
-
-		// w x h x d, empty by default
-		struct lu_n_cell_v* cells;
-	};
-
-	static Lu_N_Table_Comp lu_n_table_comp__create(Lu_Config config, lu_size width, lu_size height, lu_size depth);
-	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
-
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column_Node
 
 	struct lu_n_column_node {
@@ -360,12 +339,54 @@
 	static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 cell);
  
  	static Lu_N_Cell_0 lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left);
- 	static Lu_N_Cell_0 lu_n_column__cell_get_2(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right);
- 	static Lu_N_Cell_0 lu_n_column__cell_get_3(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left);
- 	static Lu_N_Cell_0 lu_n_column__cell_get_4(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left, Lu_N_Cell_0 bottom_right);
+ 	static Lu_N_Cell_0 lu_n_column__cell_get_2(
+ 		Lu_N_Column self, 
+ 		lu_size hash, 
+ 		Lu_N_Cell_0 top_left, 
+ 		Lu_N_Cell_0 top_right
+ 	);
+ 	static Lu_N_Cell_0 lu_n_column__cell_get_3(
+ 		Lu_N_Column self, 
+ 		lu_size hash, 
+ 		Lu_N_Cell_0 top_left, 
+ 		Lu_N_Cell_0 top_right, 
+ 		Lu_N_Cell_0 bottom_left
+ 	);
+ 	static Lu_N_Cell_0 lu_n_column__cell_get_4(
+ 		Lu_N_Column self, 
+ 		lu_size hash, 
+ 		Lu_N_Cell_0 top_left, 
+ 		Lu_N_Cell_0 top_right, 
+ 		Lu_N_Cell_0 bottom_left, 
+ 		Lu_N_Cell_0 bottom_right
+ 	);
 
 	//
 	// Utility
 	//  
 
 	static void lu_n_column__print_distribution(Lu_N_Column self);
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Table_Comp
+//
+// n_tables are always "3d"
+
+	struct lu_n_table_base {
+		Lu_Mem mem;
+	};
+
+	struct lu_n_table_comp {
+		Lu_Mem mem;
+		lu_size w;
+		lu_size h;
+		lu_size d;
+
+		// w x h x d, empty by default
+		struct lu_n_cell_v* cells;
+	};
+
+	static Lu_N_Table_Comp lu_n_table_comp__create(Lu_Config config, lu_size width, lu_size height, lu_size depth);
+	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
+
+

@@ -5,11 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Space
 
-	static Lu_W_Space lu_w_space__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
+	static Lu_W_Space lu_w_space__create(
+		Lu_Config config, 
+		Lu_Comp_Calc comp_calc, 
+		lu_size width, 
+		lu_size height,
+		Lu_N_Table_Comp n_table_comp
+	)
 	{
 		lu__assert(config);
 		lu__assert(config->w_mem);
 		lu__assert(comp_calc);
+		lu__assert(n_table_comp);
 
 		Lu_W_Space self = (Lu_W_Space) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_space));
 		lu__assert(self);
@@ -21,7 +28,7 @@
 		Lu_W_Table w_table;
 		for (lu_size i = 0; i < config->w_waves_size; i++)
 		{
-			w_table = lu_w_table_comp__create(config, comp_calc, width, height);
+			w_table = lu_w_table_comp__create(config, comp_calc, width, height, n_table_comp);
 			lu__assert(w_table);
 			
 			lu_arr__set(self->tables, i, (lu_p_void) w_table);

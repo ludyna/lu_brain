@@ -6,7 +6,13 @@
 // Lu_W_Table 
 
 
-	static Lu_W_Table lu_w_table_comp__create(Lu_Config config, Lu_Comp_Calc comp_calc, lu_size width, lu_size height)
+	static Lu_W_Table lu_w_table_comp__create(
+		Lu_Config config, 
+		Lu_Comp_Calc comp_calc, 
+		lu_size width, 
+		lu_size height,
+		Lu_N_Table_Comp n_table_comp
+	)
 	{
 		lu__assert(config);
 		lu__assert(comp_calc);
