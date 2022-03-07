@@ -121,23 +121,24 @@
 
 		// treba vse taky rozdilyty lu_s_view_p na lu_s_comp_p and lu_s_comp_v
 
+		Lu_S_View_P p_view = &self->p_view;
+		Lu_S_View_V v_view = &self->v_view;
 
-		// lu_s_view_p__register_for_p(self->p_view, z, data, wave_id);
+		lu_s_view_p__register(p_view, z, data, wave_id);
 
-		// if (lu_s_view_p__is_ready(self->p_view))
-		// {
+		if (lu_s_view_p__is_ready(p_view))
+		{
 
-		// 	if (process_p) lu_s_view_p__save(self->p_view, wave_id);
+			if (process_p) lu_s_view_p__save(p_view, wave_id, config);
 
-		// 	if (process_v)
-		// 	{
-		// 		Lu_Data mask = lu_s_view_p__get_mask(self->p_view, wave_id);
+			if (process_v) 
+			{
+				lu_s_view_v__register(v_view, z, data, wave_id, p_view);
 
-		// 		lu_s_view_p__register_for_v(self->v_view, z, data, wave_id, mask);
+				lu_s_view_v__save(v_view, wave_id, config);
+			}
 
-		// 	}
-
-		// }
+		}
 
  
 		// Lu_W_Table v_w_table = lu_s_view_p__get_w_table(&self->v_view, wave_id);

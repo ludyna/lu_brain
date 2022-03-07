@@ -84,7 +84,12 @@
 	);
 	
 	static void lu_s_view_p__deinit(Lu_S_View_P self);
-	static void lu_s_view_p__save(Lu_S_View_P self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
+
+	static void lu_s_view_p__register(Lu_S_View_P self, lu_size z, Lu_Data data, lu_size wave_id);
+
+	static lu_bool lu_s_view_p__is_ready(Lu_S_View_P self);
+
+	static void lu_s_view_p__save(Lu_S_View_P self, lu_size wave_id, Lu_Process_Config config);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_V
@@ -111,7 +116,10 @@
 	);
 	
 	static void lu_s_view_v__deinit(Lu_S_View_V self);
-	static void lu_s_view_v__save(Lu_S_View_V self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
+
+	static void lu_s_view_v__register(Lu_S_View_V self, lu_size z, Lu_Data data, lu_size wave_id, Lu_S_View_P p_view);
+
+	static void lu_s_view_v__save(Lu_S_View_V self, lu_size wave_id, Lu_Process_Config config);
 
 
 	
@@ -207,7 +215,7 @@
 		struct lu_s_layer_base super;
 
 		struct lu_s_view_p p_view;
-		struct lu_s_view_p v_view;
+		struct lu_s_view_v v_view;
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Rec frame, Lu_Rec_Comp_Config rc_config);

@@ -50,26 +50,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-
-	static void lu_v_view_p__save(
-		Lu_S_View_V self, 
-		Lu_Wave wave, 
-		lu_size z, 
-		Lu_Data data, 
-		Lu_Process_Config config
-	)
+	static void lu_s_view_v__register(Lu_S_View_V self, lu_size z, Lu_Data data, lu_size wave_id, Lu_S_View_P p_view)
 	{
-		// lu__assert(self);
-		// lu__assert( data);
-		// lu__assert(config);
 
-		// lu__assert(self->w_space);
-		// lu__assert(self->n_comp_table);
-
-		// Lu_W_Table w_table = lu_w_space__get_table(self->w_space, wave);
-
-		// lu_w_table_comp__save_data(w_table, z, data, config);
-
-		// lu_n_table_comp__update(self->n_comp_table, w_table, config);
 	}
 
+	static void lu_s_view_v__save(Lu_S_View_V self, lu_size wave_id, Lu_Process_Config config)
+	{
+
+	}
