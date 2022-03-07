@@ -86,6 +86,33 @@
 	static void lu_s_view_p__deinit(Lu_S_View_P self);
 	static void lu_s_view_p__save(Lu_S_View_P self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_S_View_V
+//
+
+	struct lu_s_view_v {
+		enum lu_s_view_p_type view_type;
+
+		struct lu_comp_calc comp_calc;
+
+		Lu_N_Table_Comp n_comp_table;
+		Lu_W_Space w_space;
+	};
+
+	static Lu_S_View_V lu_s_view_v__init(
+		Lu_S_View_V, 
+		Lu_Config config, 
+		enum lu_s_view_p_type view_type,
+		lu_size width, 
+		lu_size height, 
+		lu_value min, 
+		lu_value max, 
+		lu_size cells_size
+	);
+	
+	static void lu_s_view_v__deinit(Lu_S_View_V self);
+	static void lu_s_view_v__save(Lu_S_View_V self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
+
 
 	
 ///////////////////////////////////////////////////////////////////////////////

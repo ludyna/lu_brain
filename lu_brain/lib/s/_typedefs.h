@@ -7,6 +7,7 @@
 // S
 
 	typedef struct lu_s_view_p* Lu_S_View_P;
+	typedef struct lu_s_view_v* Lu_S_View_V;
 
 	//
 	// Layers

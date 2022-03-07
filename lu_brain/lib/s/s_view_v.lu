@@ -1,0 +1,75 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static inline Lu_S_View_V lu_s_view_v__init(
+		Lu_S_View_V self, 
+		Lu_Config config, 
+		enum lu_s_view_p_type view_type, 
+		lu_size width,
+		lu_size height,
+		lu_value min, 
+		lu_value max, 
+		lu_size cells_size
+	)
+	{
+		lu__assert(self);
+		lu__assert(config);
+		lu__assert(config->s_mem);
+		lu__assert(config->n_mem);
+
+		self->view_type = view_type;
+
+		lu_comp_calc__init(&self->comp_calc, config->s_mem, min, max, cells_size);
+	
+		self->n_comp_table = lu_n_table_comp__create(config, width, height, cells_size);
+		lu__assert(self->n_comp_table);
+
+		self->w_space = lu_w_space__create(config, &self->comp_calc, width, height);
+		lu__assert(self->w_space);
+
+		return self;
+	}
+
+	static inline void lu_s_view_v__deinit(Lu_S_View_V self)
+	{
+		lu__assert(self);
+
+		lu_n_table_comp__destroy(self->n_comp_table);
+		lu_w_space__destroy(self->w_space);
+
+		lu_comp_calc__deinit(&self->comp_calc);
+		
+		self->n_comp_table = NULL;
+		self->w_space = NULL;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+
+	static void lu_v_view_p__save(
+		Lu_S_View_V self, 
+		Lu_Wave wave, 
+		lu_size z, 
+		Lu_Data data, 
+		Lu_Process_Config config
+	)
+	{
+		// lu__assert(self);
+		// lu__assert( data);
+		// lu__assert(config);
+
+		// lu__assert(self->w_space);
+		// lu__assert(self->n_comp_table);
+
+		// Lu_W_Table w_table = lu_w_space__get_table(self->w_space, wave);
+
+		// lu_w_table_comp__save_data(w_table, z, data, config);
+
+		// lu_n_table_comp__update(self->n_comp_table, w_table, config);
+	}
+

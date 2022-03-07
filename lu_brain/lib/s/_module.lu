@@ -3,6 +3,7 @@
 */
 
 #include "s_view_p.lu"
+#include "s_view_v.lu"
 #include "s_layer_base.lu"
 #include "s_layer_comp.lu"
 #include "s_layer_rec.lu"
