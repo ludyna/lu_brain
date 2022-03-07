@@ -60,12 +60,11 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Comp_View
+// Lu_S_View_P
 //
 
-	// can be v or p
-	struct lu_s_comp_base {
-		enum lu_s_comp_base_type view_type;
+	struct lu_s_view_p {
+		enum lu_s_view_p_type view_type;
 
 		struct lu_comp_calc comp_calc;
 
@@ -73,10 +72,10 @@
 		Lu_W_Space w_space;
 	};
 
-	static Lu_S_Comp_View lu_s_comp_base__init(
-		Lu_S_Comp_View, 
+	static Lu_S_View_P lu_s_view_p__init(
+		Lu_S_View_P, 
 		Lu_Config config, 
-		enum lu_s_comp_base_type view_type,
+		enum lu_s_view_p_type view_type,
 		lu_size width, 
 		lu_size height, 
 		lu_value min, 
@@ -84,25 +83,10 @@
 		lu_size cells_size
 	);
 	
-	static void lu_s_comp_base__deinit(Lu_S_Comp_View self);
-	static void lu_s_comp_base__save_p(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_W_Table v_w_table, Lu_Data data, Lu_Process_Config config);
-	static void lu_s_comp_base__save(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
+	static void lu_s_view_p__deinit(Lu_S_View_P self);
+	static void lu_s_view_p__save(Lu_S_View_P self, Lu_Wave wave, lu_size z, Lu_Data data, Lu_Process_Config config);
 
-	static inline Lu_W_Table lu_s_comp_base__get_w_table(Lu_S_Comp_View self, lu_size id)
-	{
-		lu__assert(self);
-		lu__assert(self->w_space);
 
-		return lu_w_space__get_w_table(self->w_space, id);
-	}
-
-	struct lu_s_comp_p {
-		struct lu_s_comp_base super;
-	};
-
-	struct lu_s_comp_v {
-		struct lu_s_comp_base super;
-	};
 	
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Base
@@ -195,18 +179,8 @@
 	struct lu_s_layer_comp {
 		struct lu_s_layer_base super;
 
-		// same for p and v
-		struct lu_comp_calc comp_calc;
-
-		Lu_N_Table_Comp n_table_comp_p;
-		Lu_N_Table_Comp n_table_comp_v;
-
-		Lu_W_Space w_space_p;
-		Lu_W_Space w_space_v;
-
-		// struct lu_s_comp_base v_view;
-		// struct lu_s_comp_base p_view;
-
+		struct lu_s_view_p p_view;
+		struct lu_s_view_p v_view;
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Rec frame, Lu_Rec_Comp_Config rc_config);

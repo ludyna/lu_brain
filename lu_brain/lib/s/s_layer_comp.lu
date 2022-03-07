@@ -30,7 +30,7 @@
 		Lu_Rec rec = frame->rec;
 		lu__assert(rec);
 
-		// lu_s_comp_base__init(
+		// lu_s_view_p__init(
 		// 	&self->v_view, 
 		// 	config,
 		// 	LU_S_CVT__V, 
@@ -41,7 +41,7 @@
 		// 	rc_config->v_neu_size
 		// );
 
-		// lu_s_comp_base__init(
+		// lu_s_view_p__init(
 		// 	&self->p_view, 
 		// 	config, 
 		// 	LU_S_CVT__P, 
@@ -63,8 +63,8 @@
 
 		Lu_S_Layer_Comp layer_comp = (Lu_S_Layer_Comp) self;
 
-		// lu_s_comp_base__deinit(&layer_comp->v_view);
-		// lu_s_comp_base__deinit(&layer_comp->p_view);
+		// lu_s_view_p__deinit(&layer_comp->v_view);
+		// lu_s_view_p__deinit(&layer_comp->p_view);
 
 		lu_s_layer_base__deinit(self);
 
@@ -115,17 +115,38 @@
 		// if (register_p_ready)
 		//    if (process_p) w_table_p.save
 
-		//    if (process_v) w_table_v.save(B, lu_s_comp_p)
+		//    if (process_v) w_table_v.save(B, lu_s_comp_p) 
+		// 	  	- lu_s_comp_p tut potribni tilki koordynaty komirok, znachennia ne mayut znachenia
+		//	v digitalize and p_digitalize rizni
 
-		// treba vse taky rozdilyty lu_s_comp_base na lu_s_comp_p and lu_s_comp_v
+		// treba vse taky rozdilyty lu_s_view_p na lu_s_comp_p and lu_s_comp_v
+
+
+		// lu_s_view_p__register_for_p(self->p_view, z, data, wave_id);
+
+		// if (lu_s_view_p__is_ready(self->p_view))
+		// {
+
+		// 	if (process_p) lu_s_view_p__save(self->p_view, wave_id);
+
+		// 	if (process_v)
+		// 	{
+		// 		Lu_Data mask = lu_s_view_p__get_mask(self->p_view, wave_id);
+
+		// 		lu_s_view_p__register_for_v(self->v_view, z, data, wave_id, mask);
+
+		// 	}
+
+		// }
+
  
-		// Lu_W_Table v_w_table = lu_s_comp_base__get_w_table(&self->v_view, wave_id);
+		// Lu_W_Table v_w_table = lu_s_view_p__get_w_table(&self->v_view, wave_id);
 		// lu__assert(v_w_table);
 
-		// Lu_W_Table p_w_table = lu_s_comp_base__get_w_table(&self->p_view, wave_id);
+		// Lu_W_Table p_w_table = lu_s_view_p__get_w_table(&self->p_view, wave_id);
 		// lu__assert(p_w_table);
 
-		// // same digitalized data can be used in p and v
+		// // same digitalized data can be used in p and v (ce nepravda)
 		// lu_comp_calc__digitalize_data(v_w_table->comp_calc, data, z);
 
 		// if (process_p)
