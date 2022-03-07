@@ -30,27 +30,27 @@
 		Lu_Rec rec = frame->rec;
 		lu__assert(rec);
 
-		lu_s_comp_base__init(
-			&self->v_view, 
-			config,
-			LU_S_CVT__V, 
-			rec->width, 
-			rec->height, 
-			rc_config->v_min, 
-			rc_config->v_max, 
-			rc_config->v_neu_size
-		);
+		// lu_s_comp_base__init(
+		// 	&self->v_view, 
+		// 	config,
+		// 	LU_S_CVT__V, 
+		// 	rec->width, 
+		// 	rec->height, 
+		// 	rc_config->v_min, 
+		// 	rc_config->v_max, 
+		// 	rc_config->v_neu_size
+		// );
 
-		lu_s_comp_base__init(
-			&self->p_view, 
-			config, 
-			LU_S_CVT__P, 
-			rec->width, 
-			rec->height, 
-			rc_config->v_min, 
-			rc_config->v_max, 
-			rc_config->p_neu_size
-		);
+		// lu_s_comp_base__init(
+		// 	&self->p_view, 
+		// 	config, 
+		// 	LU_S_CVT__P, 
+		// 	rec->width, 
+		// 	rec->height, 
+		// 	rc_config->v_min, 
+		// 	rc_config->v_max, 
+		// 	rc_config->p_neu_size
+		// );
 
 		return self;
 	}
@@ -63,8 +63,8 @@
 
 		Lu_S_Layer_Comp layer_comp = (Lu_S_Layer_Comp) self;
 
-		lu_s_comp_base__deinit(&layer_comp->v_view);
-		lu_s_comp_base__deinit(&layer_comp->p_view);
+		// lu_s_comp_base__deinit(&layer_comp->v_view);
+		// lu_s_comp_base__deinit(&layer_comp->p_view);
 
 		lu_s_layer_base__deinit(self);
 
@@ -113,32 +113,32 @@
 
 		// tobto my robymo register_p(A), registre_p(B)
 		// if (register_p_ready)
-		//    if (process_p) save_p
+		//    if (process_p) w_table_p.save
 
-		//    if (process_v) save_v(B, lu_s_comp_p)
+		//    if (process_v) w_table_v.save(B, lu_s_comp_p)
 
 		// treba vse taky rozdilyty lu_s_comp_base na lu_s_comp_p and lu_s_comp_v
  
-		Lu_W_Table v_w_table = lu_s_comp_base__get_w_table(&self->v_view, wave_id);
-		lu__assert(v_w_table);
+		// Lu_W_Table v_w_table = lu_s_comp_base__get_w_table(&self->v_view, wave_id);
+		// lu__assert(v_w_table);
 
-		Lu_W_Table p_w_table = lu_s_comp_base__get_w_table(&self->p_view, wave_id);
-		lu__assert(p_w_table);
+		// Lu_W_Table p_w_table = lu_s_comp_base__get_w_table(&self->p_view, wave_id);
+		// lu__assert(p_w_table);
 
-		// same digitalized data can be used in p and v
-		lu_comp_calc__digitalize_data(v_w_table->comp_calc, data, z);
+		// // same digitalized data can be used in p and v
+		// lu_comp_calc__digitalize_data(v_w_table->comp_calc, data, z);
 
-		if (process_p)
-		{ 
-			p_w_table->wave = wave;
-			lu_w_table_comp__save_p(p_w_table, z, v_w_table, data, config);
-		}
+		// if (process_p)
+		// { 
+		// 	p_w_table->wave = wave;
+		// 	lu_w_table_comp__save_p(p_w_table, z, v_w_table, data, config);
+		// }
 		
-		if (process_v)
-		{
-			v_w_table->wave = wave;
-			lu_w_table_comp__save(v_w_table, z, p_w_table, data, config);
-		}
+		// if (process_v)
+		// {
+		// 	v_w_table->wave = wave;
+		// 	lu_w_table_comp__save(v_w_table, z, p_w_table, data, config);
+		// }
 
 
 		

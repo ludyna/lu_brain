@@ -187,15 +187,26 @@
 
 	//
 	// Lu_S_Layer_Comp 
-	// 
+	//
 
+	/*
+		Layer for every comp.
+	*/
 	struct lu_s_layer_comp {
 		struct lu_s_layer_base super;
 
-		struct lu_s_comp_base v_view;
-		struct lu_s_comp_base p_view;
+		// same for p and v
+		struct lu_comp_calc comp_calc;
 
-		Lu_Data p_data;
+		Lu_N_Table_Comp n_table_comp_p;
+		Lu_N_Table_Comp n_table_comp_v;
+
+		Lu_W_Space w_space_p;
+		Lu_W_Space w_space_v;
+
+		// struct lu_s_comp_base v_view;
+		// struct lu_s_comp_base p_view;
+
 	};
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Rec frame, Lu_Rec_Comp_Config rc_config);
