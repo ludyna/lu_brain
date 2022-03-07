@@ -30,7 +30,7 @@
 		Lu_Rec rec = frame->rec;
 		lu__assert(rec);
 
-		lu_s_comp_view__init(
+		lu_s_comp_base__init(
 			&self->v_view, 
 			config,
 			LU_S_CVT__V, 
@@ -41,7 +41,7 @@
 			rc_config->v_neu_size
 		);
 
-		lu_s_comp_view__init(
+		lu_s_comp_base__init(
 			&self->p_view, 
 			config, 
 			LU_S_CVT__P, 
@@ -63,8 +63,8 @@
 
 		Lu_S_Layer_Comp layer_comp = (Lu_S_Layer_Comp) self;
 
-		lu_s_comp_view__deinit(&layer_comp->v_view);
-		lu_s_comp_view__deinit(&layer_comp->p_view);
+		lu_s_comp_base__deinit(&layer_comp->v_view);
+		lu_s_comp_base__deinit(&layer_comp->p_view);
 
 		lu_s_layer_base__deinit(self);
 
@@ -90,17 +90,43 @@
 		bool process_v = !lu_value_eq_with_signif(config->v_potency, 0.0, config->min_potency);
 		bool process_p = !lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency);
 
-		Lu_W_Table v_w_table = NULL;
 		lu_size wave_id = lu_wave__get_id(wave);
+
+		// tut p zalezhyt vid v, i v zalezhyt vid p
+		// A i B sytuaciyi
+		// yaksho tilky A - nichoho ne robymo
+		// robymo tilky koly A i B
+		// same prostishe yaksho my budemo maty cash dlia A, B, C, D i td i operuvaty z nioho
+		// save_p ( ce prosto dlia A i B)
+		// save_v (B, i vrahovuyemo perepady z save_p)
+
+		// save_p (B i C)
+		// save_v (C, i perepady z save_p(A, B))
+
+		// save_p(C, D)
+		// save_v(C, save_p(C,D))
+
+		// tobto spysok A, B, C, D ce FIFO spysok (list?)
+
+		// tobto shob save_v nam treba save_p
+		// mozhna rozdilyty save_v, save_p i register_v, register_p
+
+		// tobto my robymo register_p(A), registre_p(B)
+		// if (register_p_ready)
+		//    if (process_p) save_p
+
+		//    if (process_v) save_v(B, lu_s_comp_p)
+
+		// treba vse taky rozdilyty lu_s_comp_base na lu_s_comp_p and lu_s_comp_v
  
-		v_w_table = lu_s_comp_view__get_w_table(&self->v_view, wave_id);
+		Lu_W_Table v_w_table = lu_s_comp_base__get_w_table(&self->v_view, wave_id);
 		lu__assert(v_w_table);
+
+		Lu_W_Table p_w_table = lu_s_comp_base__get_w_table(&self->p_view, wave_id);
+		lu__assert(p_w_table);
 
 		// same digitalized data can be used in p and v
 		lu_comp_calc__digitalize_data(v_w_table->comp_calc, data, z);
-
-		Lu_W_Table p_w_table = lu_s_comp_view__get_w_table(&self->p_view, wave_id);
-		lu__assert(p_w_table);
 
 		if (process_p)
 		{ 
@@ -113,4 +139,8 @@
 			v_w_table->wave = wave;
 			lu_w_table_comp__save(v_w_table, z, p_w_table, data, config);
 		}
+
+
+		
+
 	}

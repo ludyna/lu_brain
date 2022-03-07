@@ -5,10 +5,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static inline Lu_S_Comp_View lu_s_comp_view__init(
+	static inline Lu_S_Comp_View lu_s_comp_base__init(
 		Lu_S_Comp_View self, 
 		Lu_Config config, 
-		enum lu_s_comp_view_type view_type, 
+		enum lu_s_comp_base_type view_type, 
 		lu_size width,
 		lu_size height,
 		lu_value min, 
@@ -34,7 +34,7 @@
 		return self;
 	}
 
-	static inline void lu_s_comp_view__deinit(Lu_S_Comp_View self)
+	static inline void lu_s_comp_base__deinit(Lu_S_Comp_View self)
 	{
 		lu__assert(self);
 
@@ -51,7 +51,7 @@
 // 
 
 
-	static void lu_s_comp_view__save(
+	static void lu_s_comp_base__save(
 		Lu_S_Comp_View self, 
 		Lu_Wave wave, 
 		lu_size z, 

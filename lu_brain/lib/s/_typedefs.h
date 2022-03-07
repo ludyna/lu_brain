@@ -6,7 +6,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S
 
-	typedef struct lu_s_comp_view* Lu_S_Comp_View;
+	typedef struct lu_s_comp_base* Lu_S_Comp_View;
 
 	//
 	// Layers
@@ -19,7 +19,7 @@
 		LU_S_LT__END
 	};
 
-	enum lu_s_comp_view_type {
+	enum lu_s_comp_base_type {
 		LU_S_CVT__V,
 		LU_S_CVT__P
 	};
