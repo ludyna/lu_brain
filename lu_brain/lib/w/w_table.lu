@@ -9,16 +9,14 @@
 	static Lu_W_Table lu_w_table_comp__create(
 		Lu_Config config, 
 		Lu_Comp_Calc comp_calc, 
-		lu_size width, 
-		lu_size height,
-		Lu_N_Table_Comp n_table_comp
+		lu_size w, 
+		lu_size h
 	)
 	{
 		lu__assert(config);
 		lu__assert(comp_calc);
-		lu__assert(width > 0);
-		lu__assert(height > 0);
-		lu__assert(n_table_comp);
+		lu__assert(w > 0);
+		lu__assert(h > 0);
 
 		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_comp));
 		lu__assert(self);
@@ -26,11 +24,10 @@
 		self->mem = config->w_mem;
 		self->wave = NULL;
 		self->comp_calc = comp_calc;
-		self->width = width;
-		self->height = height;
-		self->n_table_comp = n_table_comp;
+		self->w = w;
+		self->h = h;
 
-		lu_size cells_size = sizeof(struct lu_cell) * width * height;
+		lu_size cells_size = sizeof(struct lu_cell) * self->w * self->h;
 
 		self->cells = (struct lu_cell*) lu_mem__alloc(config->w_mem, cells_size);
 		lu__assert(self->cells);
@@ -81,21 +78,21 @@
 		lu__assert(d->values);
 		lu__assert(config);
 
-		lu_size z_shift = z * d->w * d->h;
-		lu_size y_shift;
-		lu_size x;
-		lu_size y;
-		lu_value v;
+		// lu_size z_shift = z * d->w * d->h;
+		// lu_size y_shift;
+		// lu_size x;
+		// lu_size y;
+		// lu_value v;
 
-		for (y = 0; y < d->h; y++)
-		{
-			y_shift = y * d->w;
+		// for (y = 0; y < d->h; y++)
+		// {
+		// 	y_shift = y * d->w;
 
-			for (x = 0; x < d->w; x++)
-			{
-				v = d->values[z_shift + y_shift + x];
+		// 	for (x = 0; x < d->w; x++)
+		// 	{
+		// 		v = d->values[z_shift + y_shift + x];
 
 
-			}
-		}
+		// 	}
+		// }
 	}

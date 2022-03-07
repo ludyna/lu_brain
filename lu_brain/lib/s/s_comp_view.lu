@@ -28,7 +28,7 @@
 		self->n_comp_table = lu_n_table_comp__create(config, width, height, cells_size);
 		lu__assert(self->n_comp_table);
 
-		self->w_space = lu_w_space__create(config, &self->comp_calc, width, height, self->n_comp_table);
+		self->w_space = lu_w_space__create(config, &self->comp_calc, width, height);
 		lu__assert(self->w_space);
 
 		return self;

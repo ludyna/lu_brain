@@ -19,21 +19,18 @@
 		Lu_Wave wave;
 		Lu_Comp_Calc comp_calc;
 
-		lu_size width;
-		lu_size height;
+		lu_size w;
+		lu_size h;
 
 		// always "2D"
 		struct lu_cell* cells;
-
-		Lu_N_Table_Comp n_table_comp;
 	};
 
 	static Lu_W_Table lu_w_table_comp__create(
 		Lu_Config config, 
 		Lu_Comp_Calc comp_calc, 
 		lu_size width, 
-		lu_size height,
-		Lu_N_Table_Comp n_table_comp
+		lu_size height
 	);
 
 	static void lu_w_table_comp__destroy(Lu_W_Table self);
@@ -68,8 +65,7 @@
 		Lu_Config config, 
 		Lu_Comp_Calc comp_calc, 
 		lu_size width, 
-		lu_size height,
-		Lu_N_Table_Comp n_table_comp
+		lu_size height
 	);
 	static void lu_w_space__destroy(Lu_W_Space self);
 

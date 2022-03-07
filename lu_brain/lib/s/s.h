@@ -82,7 +82,7 @@
 		lu_value min, 
 		lu_value max, 
 		lu_size cells_size
-	);1
+	);
 	
 	static void lu_s_comp_base__deinit(Lu_S_Comp_View self);
 	static void lu_s_comp_base__save_p(Lu_S_Comp_View self, Lu_Wave wave, lu_size z, Lu_W_Table v_w_table, Lu_Data data, Lu_Process_Config config);
@@ -96,6 +96,13 @@
 		return lu_w_space__get_w_table(self->w_space, id);
 	}
 
+	struct lu_s_comp_p {
+		struct lu_s_comp_base super;
+	};
+
+	struct lu_s_comp_v {
+		struct lu_s_comp_base super;
+	};
 	
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Base
