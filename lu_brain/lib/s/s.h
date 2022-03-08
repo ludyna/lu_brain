@@ -87,6 +87,8 @@
 
 	static void lu_s_view_p__register(Lu_S_View_P self, lu_size z, Lu_Data data, lu_size wave_id);
 
+	static Lu_W_Table_P lu_s_view_p__get_w_table(Lu_S_View_P self, lu_size wave_id);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_V
 //
@@ -112,6 +114,8 @@
 	);
 	
 	static void lu_s_view_v__deinit(Lu_S_View_V self);
+
+	static Lu_W_Table_V lu_s_view_v__get_w_table(Lu_S_View_V self, lu_size wave_id);
 
 	
 ///////////////////////////////////////////////////////////////////////////////

@@ -52,6 +52,22 @@
 		Lu_Process_Config config
 	);
 
+	struct lu_w_table_p {
+		lu_size w;
+		lu_size h;
+
+		// always "2D"
+		struct lu_cell* cells;
+	};
+
+	struct lu_w_table_w {
+		lu_size w;
+		lu_size h;
+
+		// always "2D"
+		struct lu_cell* cells;
+	};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Space
 
