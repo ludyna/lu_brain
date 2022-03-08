@@ -131,45 +131,35 @@
 		Lu_W_Table_V v_table = lu_s_view_v__get_w_table(v_view, wave_id);
 		lu__assert(v_table);
 
-		// lu_comp_calc__digitalize_data(p_view->comp_calc, data, z);
-
-		// lu_w_table_p__register(p_table, data, z, config);
-
-		// if (lu_w_table_p__is_ready(p_table))
-		// {
-		// 	if (save_p) lu_w_table_p__save(p_table, config);
-
-		// 	if (save_v)
-		// 	{
-		// 		lu_w_table_v__register(v_table, data, z, config);
-
-		// 		if (lu_w_table_v__is_ready(v_table)) lu_w_table_v__save(v_table, config,);
-		// 	}
-		// }
-
 		lu_size z_shift = z * data->w * data->h;
 
 		lu_size x;
 		lu_size y;
-		lu_size y_shift;
+		lu_size zy_shift;
 		lu_value p;
 		lu_value v;
 		lu_size ix;
 
-		// for (y = 0; y < data->h; y++)
-		// {
-		// 	y_shift = y * data->w;
+		// mozhlyvo potribno bude she block_id, ale ne vpevnenyy, pobachymo
 
-		// 	for (x = 0; x < data->w; x++)
-		// 	{
-		// 		ix = z_shift + y_shift + x;
-		// 		p = lu_comp_calc__digitalize_value(p_view->comp_calc, data->values[ix]);
+		for (y = 0; y < data->h; y++)
+		{
+			zy_shift = z_shift + y * data->w;
 
-		// 		lu_w_table_p__register(p_table, x, y, p, config);
+			lu__debug("\n");
 
-		// 		if (lu_w_table_p__is_ready(p_table, x, y))
-		// 		{
-		// 			if (save_p) lu_w_table_p__save(p_table, x, y, config);
+			for (x = 0; x < data->w; x++)
+			{
+				ix = zy_shift + x;
+
+				lu__debug("	%.1f", data->values[ix]);
+		 		p = lu_comp_calc__digitalize_value(&p_view->comp_calc, data->values[ix]);
+
+				lu_w_table_p__register(p_table, wave_id, x, y, p, config);
+
+				if (lu_w_table_p__is_ready(p_table, wave_id, x, y))
+				{
+					if (save_p) lu_w_table_p__save(p_table, wave_id, x, y, config);
 
 		// 			if (save_v)
 		// 			{
@@ -181,9 +171,9 @@
 		// 					lu_w_table_v__save(v_table, config);
 		// 				}
 		// 			}
-		// 		}
-		// 	}
-		// }
+				}
+			}
+		}
 
 
 
