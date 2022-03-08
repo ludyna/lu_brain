@@ -28,8 +28,8 @@
 		self->n_comp_table = lu_n_table_comp__create(config, width, height, cells_size);
 		lu__assert(self->n_comp_table);
 
-		self->w_space = lu_w_space__create(config, &self->comp_calc, width, height);
-		lu__assert(self->w_space);
+		// self->w_space = lu_w_space__create(config, &self->comp_calc, width, height);
+		// lu__assert(self->w_space);
 
 		return self;
 	}
@@ -39,30 +39,14 @@
 		lu__assert(self);
 
 		lu_n_table_comp__destroy(self->n_comp_table);
-		lu_w_space__destroy(self->w_space);
+		// lu_w_space__destroy(self->w_space);
 
 		lu_comp_calc__deinit(&self->comp_calc);
 		
 		self->n_comp_table = NULL;
-		self->w_space = NULL;
+		self->w_tables = NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-
-	static void lu_s_view_p__register(Lu_S_View_P self, lu_size z, Lu_Data data, lu_size wave_id)
-	{
-
-	}
-
-	static lu_bool lu_s_view_p__is_ready(Lu_S_View_P self)
-	{
-		return false;
-	}
-
-
-	static void lu_s_view_p__save(Lu_S_View_P self, lu_size wave_id, Lu_Process_Config config)
-	{
-
-	}
 

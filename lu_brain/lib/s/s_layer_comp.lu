@@ -87,8 +87,8 @@
 		lu__assert(data);
 		lu__assert(config);
 
-		bool process_v = !lu_value_eq_with_signif(config->v_potency, 0.0, config->min_potency);
-		bool process_p = !lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency);
+		bool save_v = !lu_value_eq_with_signif(config->v_potency, 0.0, config->min_potency);
+		bool save_p = !lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency);
 
 		lu_size wave_id = lu_wave__get_id(wave);
 
@@ -113,9 +113,9 @@
 
 		// tobto my robymo register_p(A), registre_p(B)
 		// if (register_p_ready)
-		//    if (process_p) w_table_p.save
+		//    if (save_p) w_table_p.save
 
-		//    if (process_v) w_table_v.save(B, lu_s_comp_p) 
+		//    if (save_v) w_table_v.save(B, lu_s_comp_p) 
 		// 	  	- lu_s_comp_p tut potribni tilki koordynaty komirok, znachennia ne mayut znachenia
 		//	v digitalize and p_digitalize rizni
 
@@ -124,20 +124,25 @@
 		Lu_S_View_P p_view = &self->p_view;
 		Lu_S_View_V v_view = &self->v_view;
 
-		lu_s_view_p__register(p_view, z, data, wave_id);
+		// Lu_W_Table_P p_table = lu_s_view_p__get_w_table(p_view, wave_id);
+		// lu__assert(p_table);
 
-		if (lu_s_view_p__is_ready(p_view))
-		{
+		// LU_W_Table_V v_table = lu_s_view_v__get_w_table(v_view, wave_id);
+		// lu__assert(v_table);
 
-			if (process_p) lu_s_view_p__save(p_view, wave_id, config);
+		// lu_comp_calc__digitalize_data(p_view->comp_calc, data, z);
 
-			if (process_v) 
-			{
-				lu_s_view_v__register(v_view, z, data, wave_id, p_view);
+		// lu_w_table_p__register(p_table, data, z, config);
 
-				lu_s_view_v__save(v_view, wave_id, config);
-			}
+		// if (lu_w_table_p__is_ready(p_table))
+		// {
+		// 	if (save_p) lu_w_table_p__save(p_table, config);
 
-		}
+		// 	if (save_v)
+		// 	{
+		// 		lu_w_table_v__register(v_table, data, z, config);
 
+		// 		if (lu_w_table_v__is_ready(v_table)) lu_w_table_v__save(v_table, config);
+		// 	}
+		// }
 	}

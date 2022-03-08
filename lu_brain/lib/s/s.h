@@ -69,7 +69,7 @@
 		struct lu_comp_calc comp_calc;
 
 		Lu_N_Table_Comp n_comp_table;
-		Lu_W_Space w_space;
+		Lu_Arr w_tables;
 	};
 
 	static Lu_S_View_P lu_s_view_p__init(
@@ -87,10 +87,6 @@
 
 	static void lu_s_view_p__register(Lu_S_View_P self, lu_size z, Lu_Data data, lu_size wave_id);
 
-	static lu_bool lu_s_view_p__is_ready(Lu_S_View_P self);
-
-	static void lu_s_view_p__save(Lu_S_View_P self, lu_size wave_id, Lu_Process_Config config);
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_V
 //
@@ -101,7 +97,7 @@
 		struct lu_comp_calc comp_calc;
 
 		Lu_N_Table_Comp n_comp_table;
-		Lu_W_Space w_space;
+		Lu_Arr w_tables;
 	};
 
 	static Lu_S_View_V lu_s_view_v__init(
@@ -116,11 +112,6 @@
 	);
 	
 	static void lu_s_view_v__deinit(Lu_S_View_V self);
-
-	static void lu_s_view_v__register(Lu_S_View_V self, lu_size z, Lu_Data data, lu_size wave_id, Lu_S_View_P p_view);
-
-	static void lu_s_view_v__save(Lu_S_View_V self, lu_size wave_id, Lu_Process_Config config);
-
 
 	
 ///////////////////////////////////////////////////////////////////////////////
@@ -208,9 +199,6 @@
 	// Lu_S_Layer_Comp 
 	//
 
-	/*
-		Layer for every comp.
-	*/
 	struct lu_s_layer_comp {
 		struct lu_s_layer_base super;
 
