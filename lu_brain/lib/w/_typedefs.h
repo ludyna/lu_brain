@@ -6,7 +6,7 @@
 
 	typedef struct lu_w_table_comp* Lu_W_Table;
 	typedef struct lu_w_table_p* Lu_W_Table_P;
-	typedef struct lu_w_table_w* Lu_W_Table_V;
+	typedef struct lu_w_table_v* Lu_W_Table_V;
 
 	typedef struct lu_w_space* Lu_W_Space;
 	typedef struct lu_w_manager* Lu_W_Manager;

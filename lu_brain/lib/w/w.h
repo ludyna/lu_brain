@@ -12,6 +12,85 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
+//  
+
+
+	struct lu_w_table_p {
+		lu_size w;
+		lu_size h;
+
+		// always "2D"
+		struct lu_cell* cells;
+	};
+
+	static inline void lu_w_table_p__register(
+		Lu_W_Table_P self, 
+		lu_size wave_id,
+		lu_size x, 
+		lu_size y, 
+		lu_value v, 
+		Lu_Process_Config config
+	)
+	{
+
+	}
+
+	static inline lu_bool lu_w_table_p__is_ready(Lu_W_Table_P self, lu_size wave_id, lu_size x, lu_size y)
+	{
+		return false;
+	}
+
+	static inline void lu_w_table_p__save(
+		Lu_W_Table_P self, 
+		lu_size wave_id, 
+		lu_size x, 
+		lu_size y,
+		Lu_Process_Config config
+	)
+	{
+
+	} 
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+
+	struct lu_w_table_v {
+		lu_size w;
+		lu_size h;
+
+		// always "2D"
+		struct lu_cell* cells;
+	};
+
+	static inline void lu_w_table_v__register(
+		Lu_W_Table_V self, 
+		lu_size wave_id,
+		lu_size x, 
+		lu_size y, 
+		lu_value v, 
+		Lu_Process_Config config
+	)
+	{
+
+	}
+
+	static inline lu_bool lu_w_table_v__is_ready(Lu_W_Table_V self, lu_size wave_id, lu_size x, lu_size y)
+	{
+		return false;
+	}
+
+	static inline void lu_w_table_v__save(
+		Lu_W_Table_V self, 
+		lu_size wave_id, 
+		lu_size x, 
+		lu_size y,
+		Lu_Process_Config config
+	)
+	{
+
+	} 
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Table 
 
 	struct lu_w_table_comp {
@@ -51,50 +130,6 @@
 		Lu_Data d, 
 		Lu_Process_Config config
 	);
-
-	struct lu_w_table_p {
-		lu_size w;
-		lu_size h;
-
-		// always "2D"
-		struct lu_cell* cells;
-	};
-
-	static inline void lu_w_table_p__register(
-		Lu_W_Table_P self, 
-		lu_size wave_id,
-		lu_size x, 
-		lu_size y, 
-		lu_value v, 
-		Lu_Process_Config config
-	)
-	{
-
-	}
-
-	static inline lu_bool lu_w_table_p__is_ready(Lu_W_Table_P self, lu_size wave_id, lu_size x, lu_size y)
-	{
-		return false;
-	}
-
-	static inline void lu_w_table_p__save(
-		Lu_W_Table_P self, 
-		lu_size wave_id, 
-		lu_size x, 
-		lu_size y,
-		Lu_Process_Config config
-	)
-	{
-
-	} 
-
-	struct lu_w_table_w {
-		lu_size w;
-		lu_size h;
-
-		// always "2D"
-		struct lu_cell* cells;
-	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Space

@@ -161,16 +161,17 @@
 				{
 					if (save_p) lu_w_table_p__save(p_table, wave_id, x, y, config);
 
-		// 			if (save_v)
-		// 			{
-		// 				v = lu_w_table_v__register(v_table, x, y, data->values[ix], config);
-		// 				lu_w_talbe__register(v_table);
+					if (save_v)
+					{
+						v = lu_comp_calc__digitalize_value(&v_view->comp_calc, data->values[ix]);
 
-		// 				if (lu_w_table_v__is_ready(v_table, x, y))
-		// 				{
-		// 					lu_w_table_v__save(v_table, config);
-		// 				}
-		// 			}
+						lu_w_table_v__register(v_table, wave_id, x, y, v, config);
+
+						if (lu_w_table_v__is_ready(v_table, wave_id, x, y))
+						{
+		 					lu_w_table_v__save(v_table,  wave_id, x, y, config);
+						}
+					}
 				}
 			}
 		}
