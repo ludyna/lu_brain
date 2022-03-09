@@ -6,9 +6,17 @@
 // Lu_Cell 
 
 	struct lu_cell {
-		Lu_N_Cell_0 n_cell_0;
+		Lu_N_Cell_Base n_cell_0;
 		lu_value sig;
 		lu_size wave_id;
+	};
+
+	struct lu_cell_p {
+		
+	};
+
+	struct lu_cell_v {
+
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -37,7 +45,7 @@
 
 	static inline lu_bool lu_w_table_p__is_ready(Lu_W_Table_P self, lu_size wave_id, lu_size x, lu_size y)
 	{
-		return false;
+		return true;
 	}
 
 	static inline void lu_w_table_p__save(
@@ -76,7 +84,7 @@
 
 	static inline lu_bool lu_w_table_v__is_ready(Lu_W_Table_V self, lu_size wave_id, lu_size x, lu_size y)
 	{
-		return false;
+		return true;
 	}
 
 	static inline void lu_w_table_v__save(

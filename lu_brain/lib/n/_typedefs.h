@@ -15,7 +15,7 @@ enum n_cell_type {
 	N_CT__END
 };
 
-typedef struct lu_n_cell_0* Lu_N_Cell_0; 
+typedef struct lu_n_cell_base* Lu_N_Cell_Base; 
 typedef struct lu_n_cell_v* Lu_N_Cell_V;
 typedef struct lu_n_cell_1* Lu_N_Cell_1;
 typedef struct lu_n_cell_2* Lu_N_Cell_2; 

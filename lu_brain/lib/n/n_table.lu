@@ -83,7 +83,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_N_Column Main Methods
 
-	static Lu_N_Column_Node lu_n_column__node_find(Lu_N_Column self, Lu_N_Cell_0 cell, lu_size hash)
+	static Lu_N_Column_Node lu_n_column__node_find(Lu_N_Column self, Lu_N_Cell_Base cell, lu_size hash)
 	{
 		lu__assert(self);
 		lu__assert(cell);
@@ -97,7 +97,7 @@
 		return node;
 	}
 
-	static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 dest)
+	static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base dest)
 	{
 		lu__assert(self);
 		lu__assert(dest);
@@ -105,7 +105,7 @@
 		lu__user_assert_void(false, "NOT IMPLEMENTED");
 	}
 
-	static Lu_N_Cell_0 lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left)
+	static Lu_N_Cell_Base lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left)
 	{
 		lu__assert(self);
 		lu__assert(top_left);
@@ -122,7 +122,7 @@
 		return NULL;
 	}
 
- 	static Lu_N_Cell_0 lu_n_column__cell_get_2(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right)
+ 	static Lu_N_Cell_Base lu_n_column__cell_get_2(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right)
  	{
 		lu__assert(self);
 		lu__assert(top_left);
@@ -140,7 +140,7 @@
 		return NULL;
  	}
 
- 	static Lu_N_Cell_0 lu_n_column__cell_get_3(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left)
+ 	static Lu_N_Cell_Base lu_n_column__cell_get_3(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right, Lu_N_Cell_Base bottom_left)
  	{
 		lu__assert(self);
 		lu__assert(top_left);
@@ -159,7 +159,7 @@
 		return NULL;
  	}
 
- 	static Lu_N_Cell_0 lu_n_column__cell_get_4(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left, Lu_N_Cell_0 bottom_right)
+ 	static Lu_N_Cell_Base lu_n_column__cell_get_4(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right, Lu_N_Cell_Base bottom_left, Lu_N_Cell_Base bottom_right)
  	{
 		lu__assert(self);
 		lu__assert(top_left);

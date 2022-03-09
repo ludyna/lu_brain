@@ -88,39 +88,10 @@
 		lu__assert(z < data->d);
 		lu__assert(config);
 
-		bool save_v = !lu_value_eq_with_signif(config->v_potency, 0.0, config->min_potency);
-		bool save_p = !lu_value_eq_with_signif(config->p_potency, 0.0, config->min_potency);
+		bool save_v = !lu_value__eq_with_signif(config->v_potency, 0.0, config->min_potency);
+		bool save_p = !lu_value__eq_with_signif(config->p_potency, 0.0, config->min_potency);
 
 		lu_size wave_id = lu_wave__get_id(wave);
-
-		// tut p zalezhyt vid v, i v zalezhyt vid p
-		// A i B sytuaciyi
-		// yaksho tilky A - nichoho ne robymo
-		// robymo tilky koly A i B
-		// same prostishe yaksho my budemo maty cash dlia A, B, C, D i td i operuvaty z nioho
-		// save_p ( ce prosto dlia A i B)
-		// save_v (B, i vrahovuyemo perepady z save_p)
-
-		// save_p (B i C)
-		// save_v (C, i perepady z save_p(A, B))
-
-		// save_p(C, D)
-		// save_v(C, save_p(C,D))
-
-		// tobto spysok A, B, C, D ce FIFO spysok (list?)
-
-		// tobto shob save_v nam treba save_p
-		// mozhna rozdilyty save_v, save_p i register_v, register_p
-
-		// tobto my robymo register_p(A), registre_p(B)
-		// if (register_p_ready)
-		//    if (save_p) w_table_p.save
-
-		//    if (save_v) w_table_v.save(B, lu_s_comp_p) 
-		// 	  	- lu_s_comp_p tut potribni tilki koordynaty komirok, znachennia ne mayut znachenia
-		//	v digitalize and p_digitalize rizni
-
-		// treba vse taky rozdilyty lu_s_view_p na lu_s_comp_p and lu_s_comp_v
 
 		Lu_S_View_P p_view = &self->p_view;
 		Lu_S_View_V v_view = &self->v_view;
@@ -152,8 +123,10 @@
 			{
 				ix = zy_shift + x;
 
-				lu__debug("	%.1f", data->values[ix]);
-		 		p = lu_comp_calc__digitalize_value(&p_view->comp_calc, data->values[ix]);
+				v = data->values[ix];
+				lu__debug("	%.1f", v);
+
+		 		p = lu_comp_calc__digitalize_value(&p_view->comp_calc, v);
 
 				lu_w_table_p__register(p_table, wave_id, x, y, p, config);
 
@@ -163,7 +136,7 @@
 
 					if (save_v)
 					{
-						v = lu_comp_calc__digitalize_value(&v_view->comp_calc, data->values[ix]);
+						v = lu_comp_calc__digitalize_value(&v_view->comp_calc, v);
 
 						lu_w_table_v__register(v_table, wave_id, x, y, v, config);
 
@@ -175,8 +148,5 @@
 				}
 			}
 		}
-
-
-
 
 	}

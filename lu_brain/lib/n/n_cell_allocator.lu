@@ -28,7 +28,7 @@
 
 		if (size_in_cell_0 > 0)
 		{
-			self->mt_cell_0 = lu_mem_table__create(self->mem, sizeof(struct lu_n_cell_0), size_in_cell_0, 0, LU_MFT__FREEABLE);
+			self->mt_cell_0 = lu_mem_table__create(self->mem, sizeof(struct lu_n_cell_base), size_in_cell_0, 0, LU_MFT__FREEABLE);
 			lu__assert(self->mt_cell_0);
 		}
 
@@ -103,15 +103,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Alloc
 
-	Lu_N_Cell_0 n_cell__alloc_0(Lu_N_Cell_Allocator self)
+	Lu_N_Cell_Base n_cell__alloc_0(Lu_N_Cell_Allocator self)
 	{
 		lu__assert(self);
 		lu__assert(self->mt_cell_0);
 
-		Lu_N_Cell_0 cell = (Lu_N_Cell_0) lu_mem_record__alloc(self->mt_cell_0);
+		Lu_N_Cell_Base cell = (Lu_N_Cell_Base) lu_mem_record__alloc(self->mt_cell_0);
 		lu__assert(cell);
 
-		n_cell_0__init(cell, N_CT__0);
+		lu_n_cell_base__init(cell, N_CT__0);
 
 		return cell;
 	}
@@ -171,7 +171,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Free
 
-	void n_cell__free_0(Lu_N_Cell_Allocator self, Lu_N_Cell_0 cell)
+	void n_cell__free_0(Lu_N_Cell_Allocator self, Lu_N_Cell_Base cell)
 	{
 		lu__assert(self);
 		lu__assert(self->mt_cell_0);
@@ -180,7 +180,7 @@
 		lu_mem_record__free(self->mt_cell_0, (lu_p_byte) cell);
 	}
 
-	void n_cell__free_1(Lu_N_Cell_Allocator self, Lu_N_Cell_0 cell)
+	void n_cell__free_1(Lu_N_Cell_Allocator self, Lu_N_Cell_Base cell)
 	{
 		lu__assert(self);
 		lu__assert(self->mt_cell_1);

@@ -3,13 +3,13 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell_0
+// Lu_N_Cell_Base
 
-	struct lu_n_cell_0 {
+	struct lu_n_cell_base {
 		lu_byte type;
 	};
 	
-	static inline Lu_N_Cell_0 n_cell_0__init(Lu_N_Cell_0 self, lu_byte type)
+	static inline Lu_N_Cell_Base lu_n_cell_base__init(Lu_N_Cell_Base self, lu_byte type)
 	{
 		lu__assert(self);
 		self->type = type;
@@ -21,7 +21,7 @@
 // Lu_N_Cell_V
 
 	struct lu_n_cell_v {
-		struct lu_n_cell_0 super;
+		struct lu_n_cell_base super;
 
 		lu_value value; 
 		lu_size x;
@@ -38,7 +38,7 @@
 		lu_size z
 	)
 	{
-		n_cell_0__init((Lu_N_Cell_0) self, type);
+		lu_n_cell_base__init((Lu_N_Cell_Base) self, type);
 
 		self->value = value;
 		self->x = x;
@@ -50,14 +50,14 @@
 // Lu_N_Cell_1
 
 	struct lu_n_cell_1 {
-		struct lu_n_cell_0 super;
+		struct lu_n_cell_base super;
 
-		Lu_N_Cell_0 top_left;
+		Lu_N_Cell_Base top_left;
 	};
 
 	static inline Lu_N_Cell_1 n_cell_1__init(Lu_N_Cell_1 self, lu_byte type)
 	{
-		n_cell_0__init((Lu_N_Cell_0) self, type);
+		lu_n_cell_base__init((Lu_N_Cell_Base) self, type);
 
 		self->top_left = NULL;
 
@@ -70,7 +70,7 @@
 	struct lu_n_cell_2 {
 		struct lu_n_cell_1 super;
 
-		Lu_N_Cell_0 top_right;
+		Lu_N_Cell_Base top_right;
 	};
 
 	static inline Lu_N_Cell_2 n_cell_2__init(Lu_N_Cell_2 self, lu_byte type)
@@ -88,7 +88,7 @@
 	struct lu_n_cell_3 {
 		struct lu_n_cell_2 super;
 
-		Lu_N_Cell_0 bottom_left;
+		Lu_N_Cell_Base bottom_left;
 	};
 
 	static inline Lu_N_Cell_3 n_cell_3__init(Lu_N_Cell_3 self, lu_byte type)
@@ -106,7 +106,7 @@
 	struct lu_n_cell_4 {
 		struct lu_n_cell_3 super;
 
-		Lu_N_Cell_0 bottom_right;
+		Lu_N_Cell_Base bottom_right;
 	}; 
 
 	static inline Lu_N_Cell_4 n_cell_4__init(Lu_N_Cell_4 self, lu_byte type)
@@ -121,8 +121,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Macro
 
-	#define n_cell__type_get(c) (((Lu_N_Cell_0)c)->type)
-	#define n_cell__top_left_get(c) (((Lu_N_Cell_0)c)->top_left)
+	#define n_cell__type_get(c) (((Lu_N_Cell_Base)c)->type)
+	#define n_cell__top_left_get(c) (((Lu_N_Cell_Base)c)->top_left)
 	#define n_cell__top_right_get(c) (((Lu_N_Cell_2)c)->top_right)
 	#define n_cell__bottom_left_get(c) (((Lu_N_Cell_3)c)->bottom_left)
 	#define n_cell__bottom_right_get(c) (((Lu_N_Cell_4)c)->bottom_right)
@@ -130,22 +130,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Parent Equality
 
-	static inline lu_bool n_cell__parent_eq_1(Lu_N_Cell_1 self, Lu_N_Cell_0 top_left)
+	static inline lu_bool n_cell__parent_eq_1(Lu_N_Cell_1 self, Lu_N_Cell_Base top_left)
 	{
 		return self->top_left == top_left;
 	}
 
-	static inline lu_bool n_cell__parent_eq_2(Lu_N_Cell_2 self, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right)
+	static inline lu_bool n_cell__parent_eq_2(Lu_N_Cell_2 self, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right)
 	{
 		return self->top_right == top_right && n_cell__parent_eq_1((Lu_N_Cell_1) self, top_left);
 	}
 
-	static inline lu_bool n_cell__parent_eq_3(Lu_N_Cell_3 self, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left)
+	static inline lu_bool n_cell__parent_eq_3(Lu_N_Cell_3 self, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right, Lu_N_Cell_Base bottom_left)
 	{
 		return self->bottom_left == bottom_left && n_cell__parent_eq_2((Lu_N_Cell_2) self, top_left, top_right);
 	}
 
-	static inline lu_bool n_cell__parent_eq_4(Lu_N_Cell_4 self, Lu_N_Cell_0 top_left, Lu_N_Cell_0 top_right, Lu_N_Cell_0 bottom_left, Lu_N_Cell_0 bottom_right)
+	static inline lu_bool n_cell__parent_eq_4(Lu_N_Cell_4 self, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right, Lu_N_Cell_Base bottom_left, Lu_N_Cell_Base bottom_right)
 	{
 		self->bottom_right == bottom_right && n_cell__parent_eq_3((Lu_N_Cell_3) self, top_left, top_right, bottom_left);
 	}
@@ -181,11 +181,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Cell Allocators
 
-	Lu_N_Cell_0 n_cell__alloc_0(Lu_N_Cell_Allocator self);
-	void n_cell__free_0(Lu_N_Cell_Allocator self, Lu_N_Cell_0 cell);
+	Lu_N_Cell_Base n_cell__alloc_0(Lu_N_Cell_Allocator self);
+	void n_cell__free_0(Lu_N_Cell_Allocator self, Lu_N_Cell_Base cell);
 
 	Lu_N_Cell_1 n_cell__alloc_1(Lu_N_Cell_Allocator self);
-	void n_cell__free_1(Lu_N_Cell_Allocator self, Lu_N_Cell_0 cell);
+	void n_cell__free_1(Lu_N_Cell_Allocator self, Lu_N_Cell_Base cell);
 
 	Lu_N_Cell_2 n_cell__alloc_2(Lu_N_Cell_Allocator self);
 	void n_cell__free_2(Lu_N_Cell_Allocator self, Lu_N_Cell_2 cell);
@@ -199,7 +199,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Shifts
 
-	static inline lu_size n_cell__shift_0(Lu_N_Cell_Allocator self, Lu_N_Cell_0 cell)
+	static inline lu_size n_cell__shift_0(Lu_N_Cell_Allocator self, Lu_N_Cell_Base cell)
 	{
 		lu__assert(self);
 		lu__assert(cell);
@@ -207,7 +207,7 @@
 		return lu_mem_table__record_shift(self->mt_cell_0, (lu_p_byte) cell);
 	}
 
-	static inline lu_size n_cell__shift_1(Lu_N_Cell_Allocator self, Lu_N_Cell_0 cell)
+	static inline lu_size n_cell__shift_1(Lu_N_Cell_Allocator self, Lu_N_Cell_Base cell)
 	{
 		lu__assert(self);
 		lu__assert(cell);
@@ -239,7 +239,7 @@
 		return lu_mem_table__record_shift(self->mt_cell_4, (lu_p_byte) cell);
 	}
 
-	static inline lu_size n_cell__shift(Lu_N_Cell_Allocator self, Lu_N_Cell_0 cell)
+	static inline lu_size n_cell__shift(Lu_N_Cell_Allocator self, Lu_N_Cell_Base cell)
 	{
 		lu__assert(self);
 		lu__assert(cell);
@@ -270,10 +270,10 @@
 
 	struct lu_n_column_node {
 		Lu_N_Column_Node prev;
-		Lu_N_Cell_0 cell;
+		Lu_N_Cell_Base cell;
 	};
 
-	static inline Lu_N_Column_Node lu_n_column_node__create(Lu_Mem mem, Lu_N_Cell_0 cell, Lu_N_Column_Node prev)
+	static inline Lu_N_Column_Node lu_n_column_node__create(Lu_Mem mem, Lu_N_Cell_Base cell, Lu_N_Column_Node prev)
 	{
 		Lu_N_Column_Node self = (Lu_N_Column_Node) lu_mem__alloc(mem, sizeof(struct lu_n_column_node));
 
@@ -317,7 +317,7 @@
 		return hash % self->size_in_cells;
 	}
 
-	static inline Lu_N_Column_Node lu_n_column__cell_add(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 new_cell)
+	static inline Lu_N_Column_Node lu_n_column__cell_add(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base new_cell)
 	{
 		lu__assert(self);
 		lu__assert(new_cell);
@@ -334,31 +334,31 @@
 		return node;
 	}
 
-	static Lu_N_Column_Node lu_n_column__node_find(Lu_N_Column self, Lu_N_Cell_0 cell, lu_size hash);
+	static Lu_N_Column_Node lu_n_column__node_find(Lu_N_Column self, Lu_N_Cell_Base cell, lu_size hash);
 
-	static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 cell);
+	static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base cell);
  
- 	static Lu_N_Cell_0 lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_0 top_left);
- 	static Lu_N_Cell_0 lu_n_column__cell_get_2(
+ 	static Lu_N_Cell_Base lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left);
+ 	static Lu_N_Cell_Base lu_n_column__cell_get_2(
  		Lu_N_Column self, 
  		lu_size hash, 
- 		Lu_N_Cell_0 top_left, 
- 		Lu_N_Cell_0 top_right
+ 		Lu_N_Cell_Base top_left, 
+ 		Lu_N_Cell_Base top_right
  	);
- 	static Lu_N_Cell_0 lu_n_column__cell_get_3(
+ 	static Lu_N_Cell_Base lu_n_column__cell_get_3(
  		Lu_N_Column self, 
  		lu_size hash, 
- 		Lu_N_Cell_0 top_left, 
- 		Lu_N_Cell_0 top_right, 
- 		Lu_N_Cell_0 bottom_left
+ 		Lu_N_Cell_Base top_left, 
+ 		Lu_N_Cell_Base top_right, 
+ 		Lu_N_Cell_Base bottom_left
  	);
- 	static Lu_N_Cell_0 lu_n_column__cell_get_4(
+ 	static Lu_N_Cell_Base lu_n_column__cell_get_4(
  		Lu_N_Column self, 
  		lu_size hash, 
- 		Lu_N_Cell_0 top_left, 
- 		Lu_N_Cell_0 top_right, 
- 		Lu_N_Cell_0 bottom_left, 
- 		Lu_N_Cell_0 bottom_right
+ 		Lu_N_Cell_Base top_left, 
+ 		Lu_N_Cell_Base top_right, 
+ 		Lu_N_Cell_Base bottom_left, 
+ 		Lu_N_Cell_Base bottom_right
  	);
 
 	//
