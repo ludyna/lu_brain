@@ -6,6 +6,9 @@
 // Lu_Data
 
 	struct lu_data {
+		lu_size wave_id;
+		lu_size block_id;
+
 		lu_size w;
 		lu_size h;
 		lu_size d;
@@ -36,8 +39,19 @@
 	// Init
 	//
 
-	static inline Lu_Data lu_data_set(Lu_Data self, lu_size w, lu_size h, lu_size d, lu_p_value values)
+	static inline Lu_Data lu_data__set(
+		Lu_Data self, 
+		lu_size wave_id,
+		lu_size block_id,
+		lu_size w, 
+		lu_size h, 
+		lu_size d, 
+		lu_p_value values
+	)
 	{
+		self->wave_id 	= wave_id;
+		self->block_id 	= block_id;
+
 		self->w 		= w;
 		self->h 		= h;
 		self->d 		= d;
@@ -48,15 +62,12 @@
 
 	static inline Lu_Data lu_data__init_default(Lu_Data self)
 	{
-		lu_data_set(self, 0, 0, 0, NULL);
+		lu_data__set(self, LU_SIZE__MAX, LU_SIZE__MAX, 0, 0, 0, NULL);
 
 		return self;
 	}
 
-	static inline void lu_data__reset(Lu_Data self)
-	{
-		lu_data_set(self, 0, 0, 0, NULL);
-	}
+	#define lu_data__reset(d) lu_data__init_default(d)
 
 	//
 	// Create / Destroy
@@ -117,7 +128,7 @@
 
 	static inline Lu_Data lu_data__shallow_copy(Lu_Data dest, Lu_Data src)
 	{
-		lu_data_set(dest, src->w, src->h, src->d, src->values);
+		lu_data__set(dest, src->wave_id, src->block_id, src->w, src->h, src->d, src->values);
 
 		return dest;
 	}
@@ -154,6 +165,8 @@
 
 	struct lu_data_seq {
 		Lu_Mem 				mem;
+		lu_size 			wave_id;
+
 		lu_size 			recs_size;
 
 		Lu_List 			blocks;
@@ -165,7 +178,7 @@
 
 	static inline lu_size lu_data_seq__block_count(Lu_Data_Seq self) { return lu_list__count(self->blocks); }
 
-	Lu_Data_Seq lu_data_seq__create(Lu_Mem mem, lu_size recs_size);
+	Lu_Data_Seq lu_data_seq__create(Lu_Mem mem, lu_size wave_id, lu_size recs_size);
 	void lu_data_seq__destroy(Lu_Data_Seq self);
 
 	Lu_Data_Seq lu_data_seq__validate(Lu_Data_Seq);

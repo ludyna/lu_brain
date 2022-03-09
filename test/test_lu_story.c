@@ -119,7 +119,7 @@ void tearDown(void)
 void test_lu_seq_1(void)
 { 
 	lu_p_value d;
-	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, lu_brain__recs_size(brain)); 
+	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, 0, lu_brain__recs_size(brain)); 
 
  		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 0);
  		TEST_ASSERT(lu_data_seq__last_values(seq, 0) == NULL);

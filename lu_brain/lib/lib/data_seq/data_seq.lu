@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create and destroy
 
-	Lu_Data_Seq lu_data_seq__create(Lu_Mem mem, lu_size recs_size)
+	Lu_Data_Seq lu_data_seq__create(Lu_Mem mem, lu_size wave_id, lu_size recs_size)
 	{
 		lu__assert(mem);
 		lu__assert(recs_size);
@@ -14,6 +14,7 @@
 
 		// Initialize
 		self->mem 						= mem;
+		self->wave_id					= wave_id;
 		self->recs_size 				= recs_size;
 		self->blocks 					= lu_list__create(self->mem);
 		self->start_block_on_next_data 	= false;  
@@ -148,7 +149,7 @@
 		lu__assert(data);
 		lu__assert(data->values == NULL);
 
-	 	lu_data_set(data, rec->width, rec->height, rec->depth, values);
+	 	lu_data__set(data, self->wave_id, data->block_id, rec->width, rec->height, rec->depth, values);
 	}
 
 	static lu_bool lu_seq_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)

@@ -1,13 +1,15 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
+
+	NOTE: not working at this moment, WORK IN PROGRESS
+
+	Execute with 
+	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function main.c -o ./build/semeion -lm; ./build/semeion   
+
 */
 
 #include "semeion.h"
 #include "semeion.c"
-
-///////////////////////////////////////////////////////////////////////////////
-// Execute with 
-// $  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function main.c -o ./build/semeion -lm; ./build/semeion   
 
 int main()
 {
@@ -99,7 +101,7 @@ int main()
 	for (i = 0; i < 1; i++)
 	{
 		d = smn_test_samples[i];
-		lu_data_seq__push(seq, image_rec, d->pixels);
+		lu_data_seq__push(seq, 0, 0, image_rec, d->pixels);
 		wave = lu_wave_find(wave, seq);
 
 		name = lu_wave_top_name_get(wave);
