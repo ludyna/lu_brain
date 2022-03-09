@@ -173,10 +173,10 @@
 			lu__assert(data);
 
 			if (lu_data__is_empty(data)) continue;
+			
+			lu_data__debug(data);
 
 			lu_s__save_data(s, wave, i, data, config);
-
-			lu_data__debug(data);
 		}
 		 
 

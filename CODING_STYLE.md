@@ -17,6 +17,8 @@ By learning this style, you will also:
 
 
 
-WORK IN PROGRESS
+## WORK IN PROGRESS
 
+PLEASE NOTE THAT THE CODEBASE IS NOT IN A PERFECT STATE RIGHT NOW WHILE WORK IS IN PROGRESS.
+When we finish the main functionality, we will polish the codebase and coding style and remove inconsistencies.
 

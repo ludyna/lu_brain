@@ -23,6 +23,8 @@
  		{
  			data = &self->datum[i];
  			lu_data__init_default(data);
+
+ 			data->block_id = self->block_id;
  		}
 
 		return self;
