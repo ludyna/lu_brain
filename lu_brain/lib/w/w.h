@@ -11,11 +11,21 @@
 		lu_size wave_id;
 	};
 
-	struct lu_cell_p {
-		
+	struct lu_w_cell_p {
+
 	};
 
-	struct lu_cell_v {
+	static inline void lu_w_cell_p__register(
+		Lu_W_Cell_P self, 
+		lu_size wave_id, 
+		lu_value value, 
+		Lu_Process_Config config
+	)
+	{
+
+	}
+
+	struct lu_w_cell_v {
 
 	};
 
@@ -31,6 +41,11 @@
 		struct lu_cell* cells;
 	};
 
+	static inline Lu_W_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size x, lu_size y)
+	{
+
+	}
+
 	static inline void lu_w_table_p__register(
 		Lu_W_Table_P self, 
 		lu_size wave_id,
@@ -40,7 +55,10 @@
 		Lu_Process_Config config
 	)
 	{
+		Lu_W_Cell_P cell_p = lu_w_table_p__get_cell(self, x, y);
+		lu__assert(cell_p);
 
+		lu_w_cell_p__register(cell_p, wave_id, v, config);
 	}
 
 	static inline lu_bool lu_w_table_p__is_ready(Lu_W_Table_P self, lu_size wave_id, lu_size x, lu_size y)
@@ -58,6 +76,8 @@
 	{
 
 	} 
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
