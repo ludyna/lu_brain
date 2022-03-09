@@ -99,8 +99,9 @@
 	static Lu_Data_Block lu_data_seq__block_add(Lu_Data_Seq self)
 	{
 		lu__assert(self);
+		lu__assert(self->blocks);
 
-		Lu_Data_Block block = lu_data_block__create(self->mem, self->recs_size);
+		Lu_Data_Block block = lu_data_block__create(self->mem, self->recs_size, lu_list__count(self->blocks));
 		lu__assert(block);
 
 		lu_list__append(self->blocks, (lu_p_void) block);

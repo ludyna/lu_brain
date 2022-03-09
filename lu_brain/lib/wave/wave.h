@@ -29,7 +29,7 @@
 	struct lu_wave {
 		enum lu_wave_type type;
 
-		lu_size id;
+		lu_size wave_id;
 		lu_p_byte manager_addr;
 
 		Lu_Mem mem;

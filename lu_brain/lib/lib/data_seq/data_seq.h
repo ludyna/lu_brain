@@ -135,15 +135,15 @@
 
 	struct lu_data_block {
 		Lu_Mem mem;
-		lu_size 			datum_size;
 
-		// Using "struct lu_data*" here istead of Lu_Data to point out that 
-		// datum is array of "struct lu_data"
+		lu_size block_id;
+
+		lu_size 			datum_size;
 		struct lu_data* 	datum;
 
 	};
 
-	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size);
+	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size block_id);
 	static void lu_data_block__destroy(Lu_Data_Block self);
 
 	static inline lu_size lu_data_block__get_size(Lu_Data_Block self) { return self->datum_size; }

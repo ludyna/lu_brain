@@ -11,7 +11,11 @@
 		lu_size wave_id;
 	};
 
+///////////////////////////////////////////////////////////////////////////////
+//  
+
 	struct lu_w_cell_p {
+		struct lu_cell super;
 
 	};
 
@@ -22,7 +26,10 @@
 		Lu_Process_Config config
 	)
 	{
-
+		// if (self->wave_id != wave_id)
+		// {
+		// 	self->wave_id
+		// }
 	}
 
 	struct lu_w_cell_v {
@@ -31,7 +38,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
-
 
 	struct lu_w_table_p {
 		lu_size w;

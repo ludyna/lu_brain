@@ -21,7 +21,7 @@
 		lu__assert(b_config);
 
 		self->type = type;
-		self->id = 0;
+		self->wave_id = 0;
 
 		lu__assert(b_config->w_mem);
 		self->mem = b_config->w_mem;
@@ -55,7 +55,7 @@
 
 	lu_size lu_wave__get_id(Lu_Wave self)
 	{
-		return self->id;
+		return self->wave_id;
 	}
 
 	// lu_size lu_wave_block_count(Lu_Wave self)

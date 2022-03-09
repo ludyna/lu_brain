@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size)
+	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size block_id)
 	{	
 		lu__assert(mem);
 		lu__assert(recs_size > 0);
@@ -14,6 +14,7 @@
 		Lu_Data_Block self = (Lu_Data_Block) lu_mem__alloc(mem, sizeof(struct lu_data_block));
  
  		self->mem = mem;
+ 		self->block_id = block_id;
  		self->datum_size = recs_size;
  		self->datum = (struct lu_data*) lu_mem__alloc(self->mem, sizeof(struct lu_data) * self->datum_size);
 

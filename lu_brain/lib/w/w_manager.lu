@@ -52,10 +52,10 @@
 
 		lu__assert(*wave_addr == wave);
 
-		wave->id = lu_mem_table__record_ix(self->waves, wave->manager_addr);
+		wave->wave_id = lu_mem_table__record_ix(self->waves, wave->manager_addr);
 
 		// to double check
-		lu__assert(lu_w_manager__get_wave_by_id(self, wave->id) == wave);
+		lu__assert(lu_w_manager__get_wave_by_id(self, wave->wave_id) == wave);
 
 		return true;
 	}
@@ -66,6 +66,6 @@
 		lu__assert(wave);
 		lu__assert(self->waves);
 
-		lu_mem_record__free(self->waves, lu_mem_table__get(self->waves, wave->id));
+		lu_mem_record__free(self->waves, lu_mem_table__get(self->waves, wave->wave_id));
 
 	}
