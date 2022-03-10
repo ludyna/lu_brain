@@ -55,6 +55,7 @@
 	static inline void lu_w_table_p__register(
 		Lu_W_Table_P self, 
 		lu_size wave_id,
+		lu_size block_id, 
 		lu_size x, 
 		lu_size y, 
 		lu_value v, 
@@ -67,14 +68,19 @@
 		lu_w_cell_p__register(cell_p, wave_id, v, config);
 	}
 
-	static inline lu_bool lu_w_table_p__is_ready(Lu_W_Table_P self, lu_size wave_id, lu_size x, lu_size y)
+	static inline lu_bool lu_w_table_p__is_ready(
+		Lu_W_Table_P self, 
+		lu_size wave_id, 
+		lu_size block_id,
+		lu_size x, 
+		lu_size y
+	)
 	{
 		return true;
 	}
 
 	static inline void lu_w_table_p__save(
 		Lu_W_Table_P self, 
-		lu_size wave_id, 
 		lu_size x, 
 		lu_size y,
 		Lu_Process_Config config
@@ -99,6 +105,7 @@
 	static inline void lu_w_table_v__register(
 		Lu_W_Table_V self, 
 		lu_size wave_id,
+		lu_size block_id,
 		lu_size x, 
 		lu_size y, 
 		lu_value v, 
@@ -108,14 +115,19 @@
 
 	}
 
-	static inline lu_bool lu_w_table_v__is_ready(Lu_W_Table_V self, lu_size wave_id, lu_size x, lu_size y)
+	static inline lu_bool lu_w_table_v__is_ready(
+		Lu_W_Table_V self, 
+		lu_size wave_id, 
+		lu_size block_id,
+		lu_size x, 
+		lu_size y
+	)
 	{
 		return true;
 	}
 
 	static inline void lu_w_table_v__save(
 		Lu_W_Table_V self, 
-		lu_size wave_id, 
 		lu_size x, 
 		lu_size y,
 		Lu_Process_Config config

@@ -92,6 +92,7 @@
 		bool save_p = !lu_value__eq_with_signif(config->p_potency, 0.0, config->min_potency);
 
 		lu_size wave_id = lu_wave__get_id(wave);
+		lu_size block_id = data->block_id;
 
 		Lu_S_View_P p_view = &self->p_view;
 		Lu_S_View_V v_view = &self->v_view;
@@ -128,21 +129,21 @@
 
 		 		p = lu_comp_calc__digitalize_value(&p_view->comp_calc, v);
 
-				lu_w_table_p__register(p_table, wave_id, x, y, p, config);
+				lu_w_table_p__register(p_table, wave_id, block_id, x, y, p, config);
 
-				if (lu_w_table_p__is_ready(p_table, wave_id, x, y))
+				if (lu_w_table_p__is_ready(p_table, wave_id, block_id, x, y))
 				{
-					if (save_p) lu_w_table_p__save(p_table, wave_id, x, y, config);
+					if (save_p) lu_w_table_p__save(p_table, x, y, config);
 
 					if (save_v)
 					{
 						v = lu_comp_calc__digitalize_value(&v_view->comp_calc, v);
 
-						lu_w_table_v__register(v_table, wave_id, x, y, v, config);
+						lu_w_table_v__register(v_table, wave_id, block_id, x, y, v, config);
 
-						if (lu_w_table_v__is_ready(v_table, wave_id, x, y))
+						if (lu_w_table_v__is_ready(v_table, wave_id, block_id, x, y))
 						{
-		 					lu_w_table_v__save(v_table,  wave_id, x, y, config);
+		 					lu_w_table_v__save(v_table, x, y, config);
 						}
 					}
 				}
