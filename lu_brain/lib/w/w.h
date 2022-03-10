@@ -89,6 +89,15 @@
 
 	} 
 
+	static inline void lu_w_table_p__reset(
+		Lu_W_Table_P self, 
+		lu_size x, 
+		lu_size y,
+		Lu_Process_Config config
+	)
+	{
+
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -135,6 +144,16 @@
 	{
 
 	} 
+
+	static inline void lu_w_table_v__reset(
+		Lu_W_Table_V self, 
+		lu_size x, 
+		lu_size y,
+		Lu_Process_Config config
+	)
+	{
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Table 

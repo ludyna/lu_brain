@@ -145,7 +145,16 @@
 						{
 		 					lu_w_table_v__save(v_table, x, y, config);
 						}
+						else
+						{
+							lu_w_table_v__reset(v_table, x, y, config);
+						}
 					}
+				}
+				else
+				{
+					lu_w_table_p__reset(p_table, x, y, config);
+					lu_w_table_v__reset(v_table, x, y, config);
 				}
 			}
 		}

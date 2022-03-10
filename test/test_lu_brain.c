@@ -111,21 +111,21 @@ void test_lu_brain_basics(void)
 
 		lu_wave__push(s_wave, rec_0, data_0);
 
-		lu_wave__block_begin(s_wave);
-		lu_wave__push(s_wave, rec_0, data_01);
-		lu_wave__push(s_wave, rec_1, data_2);
-		lu_wave__block_end(s_wave);
+		// lu_wave__block_begin(s_wave);
+		// lu_wave__push(s_wave, rec_0, data_01);
+		// lu_wave__push(s_wave, rec_1, data_2);
+		// lu_wave__block_end(s_wave);
 
-		lu_wave__push(s_wave, rec_0, data_3);
+		// lu_wave__push(s_wave, rec_0, data_3);
  
 	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
 
-		lu_wave__block_begin(s_wave);
-		lu_wave__push(s_wave, rec_0, data_4);
-		lu_wave__push(s_wave, rec_1, data_5);
-		lu_wave__block_end(s_wave);
+		// 	lu_wave__block_begin(s_wave);
+		// 	lu_wave__push(s_wave, rec_0, data_4);
+		// 	lu_wave__push(s_wave, rec_1, data_5);
+		// 	lu_wave__block_end(s_wave);
 
-	lu_wave__step(s_wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
+		// lu_wave__step(s_wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
 
 	/////////////////////////////////////////////////////////
 	// Match
