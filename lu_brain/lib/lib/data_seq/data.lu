@@ -137,6 +137,7 @@
 		lu__debug("\nData: ");
 		lu__debug("\n\twave_id: %d", self->wave_id); 
 		lu__debug("\n\tblock_id: %d", self->block_id);
+		lu__debug("\n\trec_id: %d", self->rec_id);
 		lu__debug("\n\tw: %d", self->w); 
 		lu__debug("\n\th: %d", self->h);
 		lu__debug("\n\td: %d", self->d);

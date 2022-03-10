@@ -5,9 +5,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Data
 
+	#define LU_WAVE_ID__NOT_SET LU_SIZE__MAX
+	#define LU_BLOCK_ID__NOT_SET LU_SIZE__MAX
+	#define LU_REC_ID__NOT_SET LU_SIZE__MAX
+
 	struct lu_data {
 		lu_size wave_id;
 		lu_size block_id;
+		lu_size rec_id;
 
 		lu_size w;
 		lu_size h;
@@ -43,6 +48,7 @@
 		Lu_Data self, 
 		lu_size wave_id,
 		lu_size block_id,
+		lu_size rec_id, 
 		lu_size w, 
 		lu_size h, 
 		lu_size d, 
@@ -51,6 +57,7 @@
 	{
 		self->wave_id 	= wave_id;
 		self->block_id 	= block_id;
+		self->rec_id 	= rec_id;
 
 		self->w 		= w;
 		self->h 		= h;
@@ -62,7 +69,16 @@
 
 	static inline Lu_Data lu_data__init_default(Lu_Data self)
 	{
-		lu_data__set(self, LU_SIZE__MAX, LU_SIZE__MAX, 0, 0, 0, NULL);
+		lu_data__set(
+			self, 
+			LU_WAVE_ID__NOT_SET, 
+			LU_BLOCK_ID__NOT_SET, 
+			LU_REC_ID__NOT_SET, 
+			0, 
+			0, 
+			0, 
+			NULL
+		);
 
 		return self;
 	}
@@ -128,7 +144,7 @@
 
 	static inline Lu_Data lu_data__shallow_copy(Lu_Data dest, Lu_Data src)
 	{
-		lu_data__set(dest, src->wave_id, src->block_id, src->w, src->h, src->d, src->values);
+		lu_data__set(dest, src->wave_id, src->block_id, src->rec_id, src->w, src->h, src->d, src->values);
 
 		return dest;
 	}
