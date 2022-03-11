@@ -8,7 +8,6 @@
 	struct lu_cell {
 		Lu_N_Cell_Base n_cell_0;
 		lu_value sig;
-		lu_size wave_id;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,7 +33,7 @@
 
 	}
 
-	static inline void lu_w_cell_p__save(Lu_W_Cell_P self, Lu_Process_Config config)
+	static inline void lu_w_cell_p__save(Lu_W_Cell_P self, Lu_Comp_Calc comp_calc, Lu_Process_Config config)
 	{
 
 	}
@@ -59,7 +58,7 @@
 
 	}
 
-	static inline void lu_w_cell_v__save(Lu_W_Cell_V self, Lu_Process_Config config)
+	static inline void lu_w_cell_v__save(Lu_W_Cell_V self, Lu_Comp_Calc comp_calc, Lu_Process_Config config)
 	{
 
 	}

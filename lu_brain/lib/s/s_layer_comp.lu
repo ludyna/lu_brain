@@ -139,27 +139,23 @@
 				v = data->values[ix];
 				lu__debug("	%.1f", v);
 
-		 		p = lu_comp_calc__digitalize_value(&p_view->comp_calc, v);
-
 		 		p_cell = lu_w_table_p__get_cell(p_table, x, y);
 
 				lu_w_cell_p__register(p_cell, is_reset, p, config);
 
 				if (lu_w_cell_p__is_ready(p_cell))
 				{
-					if (save_p) lu_w_cell_p__save(p_cell, config);
+					if (save_p) lu_w_cell_p__save(p_cell, &p_view->comp_calc, config);
 
 					if (save_v)
 					{
-						v = lu_comp_calc__digitalize_value(&v_view->comp_calc, v);
-
 						v_cell = lu_w_table_v__get_cell(v_table, x, y);
 
 						lu_w_cell_v__register(v_cell, is_reset, v, config);
 
 						if (lu_w_cell_v__is_ready(v_cell))
 						{
-		 					lu_w_cell_v__save(v_cell, config);
+		 					lu_w_cell_v__save(v_cell, &v_view->comp_calc, config);
 						}
 					}
 				}
