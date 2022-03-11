@@ -113,6 +113,18 @@
 		lu_size ix;
 
 		// mozhlyvo potribno bude she block_id, ale ne vpevnenyy, pobachymo
+		// treba vynysty check wave_id = wave_id i block_id = block_id na riven 
+		// p_table i v_table
+
+		// koroche tut mozhe buty lyshe dva rezhyma na rivni table: abo my nakopychuyemo abo ce povnyy reset
+
+		lu_bool is_reset = !(p_table->wave_id == wave_id && p_table->block_id == block_id);
+
+		p_table->wave_id = wave_id;
+		p_table->block_id = block_id;
+
+		Lu_W_Cell_P p_cell;
+		Lu_W_Cell_V v_cell;
 
 		for (y = 0; y < data->h; y++)
 		{
@@ -129,34 +141,30 @@
 
 		 		p = lu_comp_calc__digitalize_value(&p_view->comp_calc, v);
 
-				lu_w_table_p__register(p_table, wave_id, block_id, x, y, p, config);
+		 		p_cell = lu_w_table_p__get_cell(p_table, x, y);
 
-				if (lu_w_table_p__is_ready(p_table, wave_id, block_id, x, y))
+				lu_w_cell_p__register(p_cell, is_reset, p, config);
+
+				if (lu_w_cell_p__is_ready(p_cell))
 				{
-					if (save_p) lu_w_table_p__save(p_table, x, y, config);
+					if (save_p) lu_w_cell_p__save(p_cell, config);
 
 					if (save_v)
 					{
 						v = lu_comp_calc__digitalize_value(&v_view->comp_calc, v);
 
-						lu_w_table_v__register(v_table, wave_id, block_id, x, y, v, config);
+						v_cell = lu_w_table_v__get_cell(v_table, x, y);
 
-						if (lu_w_table_v__is_ready(v_table, wave_id, block_id, x, y))
+						lu_w_cell_v__register(v_cell, is_reset, v, config);
+
+						if (lu_w_cell_v__is_ready(v_cell))
 						{
-		 					lu_w_table_v__save(v_table, x, y, config);
-						}
-						else
-						{
-							lu_w_table_v__reset(v_table, x, y, config);
+		 					lu_w_cell_v__save(v_cell, config);
 						}
 					}
 				}
-				else
-				{
-					lu_w_table_p__reset(p_table, x, y, config);
-					lu_w_table_v__reset(v_table, x, y, config);
-				}
-			}
-		}
+
+			}  // for (x = 0
+		} // for (y = 0
 
 	}

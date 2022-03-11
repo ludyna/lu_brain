@@ -21,20 +21,48 @@
 
 	static inline void lu_w_cell_p__register(
 		Lu_W_Cell_P self, 
-		lu_size wave_id, 
-		lu_value value, 
+		lu_bool is_reset,
+		lu_value p, 
 		Lu_Process_Config config
 	)
 	{
-		// if (self->wave_id != wave_id)
-		// {
-		// 	self->wave_id
-		// }
+
+	}
+
+	static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self)
+	{
+
+	}
+
+	static inline void lu_w_cell_p__save(Lu_W_Cell_P self, Lu_Process_Config config)
+	{
+
 	}
 
 	struct lu_w_cell_v {
 
 	};
+
+
+	static inline void lu_w_cell_v__register(
+		Lu_W_Cell_V self, 
+		lu_bool is_reset,
+		lu_value v, 
+		Lu_Process_Config config
+	)
+	{
+
+	}
+
+	static inline lu_bool lu_w_cell_v__is_ready(Lu_W_Cell_V self)
+	{
+
+	}
+
+	static inline void lu_w_cell_v__save(Lu_W_Cell_V self, Lu_Process_Config config)
+	{
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  
@@ -45,56 +73,12 @@
 
 		// always "2D"
 		struct lu_cell* cells;
+
+		lu_size wave_id;
+		lu_size block_id;
 	};
 
 	static inline Lu_W_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size x, lu_size y)
-	{
-
-	}
-
-	static inline void lu_w_table_p__register(
-		Lu_W_Table_P self, 
-		lu_size wave_id,
-		lu_size block_id, 
-		lu_size x, 
-		lu_size y, 
-		lu_value v, 
-		Lu_Process_Config config
-	)
-	{
-		Lu_W_Cell_P cell_p = lu_w_table_p__get_cell(self, x, y);
-		lu__assert(cell_p);
-
-		lu_w_cell_p__register(cell_p, wave_id, v, config);
-	}
-
-	static inline lu_bool lu_w_table_p__is_ready(
-		Lu_W_Table_P self, 
-		lu_size wave_id, 
-		lu_size block_id,
-		lu_size x, 
-		lu_size y
-	)
-	{
-		return true;
-	}
-
-	static inline void lu_w_table_p__save(
-		Lu_W_Table_P self, 
-		lu_size x, 
-		lu_size y,
-		Lu_Process_Config config
-	)
-	{
-
-	} 
-
-	static inline void lu_w_table_p__reset(
-		Lu_W_Table_P self, 
-		lu_size x, 
-		lu_size y,
-		Lu_Process_Config config
-	)
 	{
 
 	}
@@ -111,46 +95,7 @@
 		struct lu_cell* cells;
 	};
 
-	static inline void lu_w_table_v__register(
-		Lu_W_Table_V self, 
-		lu_size wave_id,
-		lu_size block_id,
-		lu_size x, 
-		lu_size y, 
-		lu_value v, 
-		Lu_Process_Config config
-	)
-	{
-
-	}
-
-	static inline lu_bool lu_w_table_v__is_ready(
-		Lu_W_Table_V self, 
-		lu_size wave_id, 
-		lu_size block_id,
-		lu_size x, 
-		lu_size y
-	)
-	{
-		return true;
-	}
-
-	static inline void lu_w_table_v__save(
-		Lu_W_Table_V self, 
-		lu_size x, 
-		lu_size y,
-		Lu_Process_Config config
-	)
-	{
-
-	} 
-
-	static inline void lu_w_table_v__reset(
-		Lu_W_Table_V self, 
-		lu_size x, 
-		lu_size y,
-		Lu_Process_Config config
-	)
+	static inline Lu_W_Cell_V lu_w_table_v__get_cell(Lu_W_Table_V self, lu_size x, lu_size y)
 	{
 
 	}
