@@ -20,7 +20,7 @@
 	// Brain  
 	//
  
-	typedef struct lu_config* 	Lu_Config;
+	typedef struct lu_config* 			Lu_Config;
 
 	typedef struct lu_brain* 			Lu_Brain;	
 	

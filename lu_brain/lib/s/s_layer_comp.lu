@@ -112,13 +112,7 @@
 		lu_value v;
 		lu_size ix;
 
-		// mozhlyvo potribno bude she block_id, ale ne vpevnenyy, pobachymo
-		// treba vynysty check wave_id = wave_id i block_id = block_id na riven 
-		// p_table i v_table
-
-		// koroche tut mozhe buty lyshe dva rezhyma na rivni table: abo my nakopychuyemo abo ce povnyy reset
-
-		lu_bool is_reset = !(p_table->wave_id == wave_id && p_table->block_id == block_id);
+		lu_bool is_reset = !(p_table->wave_id == wave_id && (block_id - p_table->block_id > 1));
 
 		p_table->wave_id = wave_id;
 		p_table->block_id = block_id;
