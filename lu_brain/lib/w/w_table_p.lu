@@ -19,7 +19,11 @@
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->block_id = LU_BLOCK_ID__NOT_SET;
 
-		self->cells = NULL;
+		self->cells = (struct lu_w_cell_p*) lu_mem__alloc(
+			config->w_mem, 
+			sizeof(struct lu_w_cell_p) * self->w * self->h
+		);
+		lu__assert(self->cells);
 
 		return self;
 	}
@@ -27,6 +31,11 @@
 	static void lu_w_table_p__destroy(Lu_W_Table_P self)
 	{
 		lu__assert(self);
+		lu__assert(self->cells);
+
+		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+		
+		self->cells = NULL;
 
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}

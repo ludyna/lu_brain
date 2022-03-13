@@ -73,7 +73,7 @@
 		lu_size h;
 
 		// always "2D"
-		struct lu_cell* cells;
+		struct lu_w_cell_p* cells;
 
 		lu_size wave_id;
 		lu_size block_id;
