@@ -16,7 +16,14 @@
 	struct lu_w_cell_p {
 		struct lu_cell super;
 
+		lu_byte state;
+		lu_value p1;
+		lu_value p2;
 	};
+
+	#define LU_W_CELL_P__STATE_START 0
+	#define LU_W_CELL_P__STATE_ONE 1
+	#define LU_W_CELL_P__STATE_READY 2
 
 	static inline void lu_w_cell_p__register(
 		Lu_W_Cell_P self, 
@@ -25,12 +32,17 @@
 		Lu_Process_Config config
 	)
 	{
+		is_reset && (self->state = LU_W_CELL_P__STATE_START);
+		self->state == LU_W_CELL_P__STATE_START && (self->p1 = p);
+		self->state == LU_W_CELL_P__STATE_ONE && (self->p2 = p); 
+		++self->state; 
 
+		lu__assert(self->state <= LU_W_CELL_P__STATE_READY);
 	}
 
 	static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self)
 	{
-
+		return self->state == LU_W_CELL_P__STATE_READY;
 	}
 
 	static inline void lu_w_cell_p__save(Lu_W_Cell_P self, Lu_Comp_Calc comp_calc, Lu_Process_Config config)

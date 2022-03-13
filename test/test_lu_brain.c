@@ -162,6 +162,17 @@ void test_lu_brain_basics(void)
 	// lu_wave__destroy(m_wave);
 
 
+	// lu_byte state = 3;
+	// lu_value p1 = 0;
+	// lu_value p2 = 0;
+	// lu_value p3 = 0;
+
+	// state == 1 && (p1 = 0.1);
+	// state == 2 && (p2 = 0.2);
+	// state == 3 && (p3 = 0.3);
+	// lu__debug("\n\n %f | %f | %f \n\n", p1, p2, p3);
+
+
 
 	/////////////////////////////////////////////////////////
 	// Lu_Name
