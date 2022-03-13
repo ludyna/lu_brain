@@ -5,12 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 	
-	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size width, lu_size height)
+	static Lu_W_Table_V lu_w_table_v__create(Lu_Config config, lu_size width, lu_size height)
 	{
 		lu__assert(config);
 		lu__assert(config->w_mem);
 
-		Lu_W_Table_P self = (Lu_W_Table_P) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_p)); 
+		Lu_W_Table_V self = (Lu_W_Table_V) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_v)); 
 		lu__assert(self);
 
 		self->mem = config->w_mem;
@@ -21,16 +21,16 @@
 
 		lu_size size =  self->w * self->h;
 
-		self->cells = (struct lu_w_cell_p*) lu_mem__alloc(
+		self->cells = (struct lu_w_cell_v*) lu_mem__alloc(
 			config->w_mem, 
-			sizeof(struct lu_w_cell_p) * size
+			sizeof(struct lu_w_cell_v) * size
 		);
 		lu__assert(self->cells);
 
 		return self;
 	}
 
-	static void lu_w_table_p__destroy(Lu_W_Table_P self)
+	static void lu_w_table_v__destroy(Lu_W_Table_V self)
 	{
 		lu__assert(self);
 		lu__assert(self->cells);

@@ -4,5 +4,6 @@
 
 	#include "w_table.lu" 
 	#include "w_table_p.lu"
+	#include "w_table_v.lu"
 	#include "w_space.lu"
 	#include "w_manager.lu"
