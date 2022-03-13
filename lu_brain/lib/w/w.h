@@ -67,6 +67,8 @@
 //  
 
 	struct lu_w_table_p {
+		Lu_Mem mem;
+
 		lu_size w;
 		lu_size h;
 
@@ -76,6 +78,9 @@
 		lu_size wave_id;
 		lu_size block_id;
 	};
+
+	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size width, lu_size height);
+	static void lu_w_table_p__destroy(Lu_W_Table_P self);
 
 	static inline Lu_W_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size x, lu_size y)
 	{

@@ -112,7 +112,7 @@
 		lu_value v;
 		lu_size ix;
 
-		lu_bool is_reset = !(p_table->wave_id == wave_id && (block_id - p_table->block_id > 1));
+		lu_bool is_reset = p_table->wave_id != wave_id || ((block_id - p_table->block_id) > 1);
 
 		p_table->wave_id = wave_id;
 		p_table->block_id = block_id;

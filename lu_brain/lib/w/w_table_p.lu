@@ -5,3 +5,28 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 	
+	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size width, lu_size height)
+	{
+		lu__assert(config);
+		lu__assert(config->w_mem);
+
+		Lu_W_Table_P self = (Lu_W_Table_P) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_p)); 
+		lu__assert(self);
+
+		self->mem = config->w_mem;
+		self->w = width;
+		self->h = height;
+		self->wave_id = LU_WAVE_ID__NOT_SET;
+		self->block_id = LU_BLOCK_ID__NOT_SET;
+
+		self->cells = NULL;
+
+		return self;
+	}
+
+	static void lu_w_table_p__destroy(Lu_W_Table_P self)
+	{
+		lu__assert(self);
+
+		lu_mem__free(self->mem, (lu_p_byte) self);
+	}

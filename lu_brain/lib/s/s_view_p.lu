@@ -20,6 +20,7 @@
 		lu__assert(config);
 		lu__assert(config->s_mem);
 		lu__assert(config->n_mem);
+		lu__assert(config->w_mem);
 
 		self->view_type = view_type;
 
@@ -28,8 +29,17 @@
 		self->n_comp_table = lu_n_table_comp__create(config, width, height, cells_size);
 		lu__assert(self->n_comp_table);
 
-		// self->w_space = lu_w_space__create(config, &self->comp_calc, width, height);
-		// lu__assert(self->w_space);
+		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
+		lu__assert(self->w_tables);
+
+		Lu_W_Table_P w_table;
+		for (lu_size i = 0; i < lu_arr__size(self->w_tables); i++)
+		{
+			w_table = lu_w_table_p__create(config, width, height);
+			lu__assert(w_table);
+			
+			lu_arr__set(self->w_tables, i, (lu_p_void) w_table);
+		}
 
 		return self;
 	}
@@ -39,7 +49,15 @@
 		lu__assert(self);
 
 		lu_n_table_comp__destroy(self->n_comp_table);
-		// lu_w_space__destroy(self->w_space);
+
+		Lu_W_Table_P w_table;
+		for (lu_size i = 0; i < lu_arr__count(self->w_tables); i++)
+		{
+			w_table = (Lu_W_Table_P) lu_arr__get(self->w_tables, i);
+			lu_w_table_p__destroy(w_table);
+		}
+
+		lu_arr__destroy(self->w_tables);
 
 		lu_comp_calc__deinit(&self->comp_calc);
 		
