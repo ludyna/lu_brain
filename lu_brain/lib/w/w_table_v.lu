@@ -20,6 +20,9 @@
 		self->block_id = LU_BLOCK_ID__NOT_SET;
 
 		lu_size size =  self->w * self->h;
+		lu__assert(size > 0);
+
+		self->cells = NULL;
 
 		self->cells = (struct lu_w_cell_v*) lu_mem__alloc(
 			config->w_mem, 
@@ -33,9 +36,9 @@
 	static void lu_w_table_v__destroy(Lu_W_Table_V self)
 	{
 		lu__assert(self);
-		lu__assert(self->cells);
 
-		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+		if (self->cells)
+			lu_mem__free(self->mem, (lu_p_byte) self->cells);
 		
 		self->cells = NULL;
 

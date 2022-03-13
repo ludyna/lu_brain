@@ -20,6 +20,7 @@
 		self->block_id = LU_BLOCK_ID__NOT_SET;
 
 		lu_size size =  self->w * self->h;
+		lu__assert(size > 0);
 
 		self->cells = (struct lu_w_cell_p*) lu_mem__alloc(
 			config->w_mem, 

@@ -39,7 +39,7 @@
 	}
 
 	struct lu_w_cell_v {
-
+		struct lu_cell super;
 	};
 
 

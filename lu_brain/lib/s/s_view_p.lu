@@ -21,6 +21,8 @@
 		lu__assert(config->s_mem);
 		lu__assert(config->n_mem);
 		lu__assert(config->w_mem);
+		lu__assert(width > 0);
+		lu__assert(height > 0);
 
 		self->view_type = view_type;
 
