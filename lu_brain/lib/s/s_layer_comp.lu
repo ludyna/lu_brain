@@ -117,6 +117,9 @@
 		p_table->wave_id = wave_id;
 		p_table->block_id = block_id;
 
+		v_table->wave_id = wave_id;
+		v_table->block_id = block_id;
+
 		Lu_W_Cell_P p_cell;
 		Lu_W_Cell_V v_cell;
 
