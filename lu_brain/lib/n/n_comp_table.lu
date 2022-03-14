@@ -14,10 +14,11 @@
 	)
 	{
 		lu__assert(config);
+		lu__assert(comp_calc);
 		lu__assert(width > 0);
 		lu__assert(height > 0);
 		lu__assert(depth > 0);
-	
+		lu__assert(comp_calc->cells_size == depth);
 
 		Lu_N_Table_Comp self = (Lu_N_Table_Comp) lu_mem__alloc(config->n_mem, sizeof(struct lu_n_table_comp));
 		lu__assert(self);
@@ -50,17 +51,11 @@
 				for (x = 0; x < width; x++)
 				{
 					cell = &self->cells[zy_shift + x]; 
-		// 					Lu_N_Cell_V self, 
-		// lu_byte type, 
-		// lu_value value,
-		// lu_size x,
-		// lu_size y,
-		// lu_size z
-					lu_n_cell_v__init(cell, N_CT__V, 0, x, y, z);
+
+					lu_n_cell_v__init(cell, N_CT__V, comp_calc->steps[z], x, y, z);
 				} 
 			}
 		}
-
 
 		return self;
 	}
