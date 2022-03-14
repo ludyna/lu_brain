@@ -7,7 +7,8 @@
 
 enum n_cell_type {
 	N_CT__0,
-	N_CT__VALUE,
+	N_CT__V, 
+	N_CT__P,
 	N_CT__1,
 	N_CT__2,
 	N_CT__3,

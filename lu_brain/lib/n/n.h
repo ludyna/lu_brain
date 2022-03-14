@@ -29,7 +29,7 @@
 		lu_size z;
 	};
 
-	static inline Lu_N_Cell_V n_cell_value__init(
+	static inline Lu_N_Cell_V lu_n_cell_v__init(
 		Lu_N_Cell_V self, 
 		lu_byte type, 
 		lu_value value,
@@ -55,7 +55,7 @@
 		Lu_N_Cell_Base top_left;
 	};
 
-	static inline Lu_N_Cell_1 n_cell_1__init(Lu_N_Cell_1 self, lu_byte type)
+	static inline Lu_N_Cell_1 lu_n_cell_1__init(Lu_N_Cell_1 self, lu_byte type)
 	{
 		lu_n_cell_base__init((Lu_N_Cell_Base) self, type);
 
@@ -73,9 +73,9 @@
 		Lu_N_Cell_Base top_right;
 	};
 
-	static inline Lu_N_Cell_2 n_cell_2__init(Lu_N_Cell_2 self, lu_byte type)
+	static inline Lu_N_Cell_2 lu_n_cell_2__init(Lu_N_Cell_2 self, lu_byte type)
 	{
-		n_cell_1__init((Lu_N_Cell_1) self, type);
+		lu_n_cell_1__init((Lu_N_Cell_1) self, type);
 
 		self->top_right = NULL;
 
@@ -91,9 +91,9 @@
 		Lu_N_Cell_Base bottom_left;
 	};
 
-	static inline Lu_N_Cell_3 n_cell_3__init(Lu_N_Cell_3 self, lu_byte type)
+	static inline Lu_N_Cell_3 lu_n_cell_3__init(Lu_N_Cell_3 self, lu_byte type)
 	{
-		n_cell_2__init((Lu_N_Cell_2) self, type);
+		lu_n_cell_2__init((Lu_N_Cell_2) self, type);
 
 		self->bottom_left = NULL;
 
@@ -109,9 +109,9 @@
 		Lu_N_Cell_Base bottom_right;
 	}; 
 
-	static inline Lu_N_Cell_4 n_cell_4__init(Lu_N_Cell_4 self, lu_byte type)
+	static inline Lu_N_Cell_4 lu_n_cell_4__init(Lu_N_Cell_4 self, lu_byte type)
 	{
-		n_cell_3__init((Lu_N_Cell_3) self, type);
+		lu_n_cell_3__init((Lu_N_Cell_3) self, type);
 
 		self->bottom_right = NULL;
 
@@ -386,7 +386,14 @@
 		struct lu_n_cell_v* cells;
 	};
 
-	static Lu_N_Table_Comp lu_n_table_comp__create(Lu_Config config, lu_size width, lu_size height, lu_size depth);
+	static Lu_N_Table_Comp lu_n_table_comp__create(
+		Lu_Config config, 
+		Lu_Comp_Calc comp_calc, 
+		lu_size width, 
+		lu_size height, 
+		lu_size depth 
+	);
+
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
 
 	static inline Lu_N_Cell_V lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)

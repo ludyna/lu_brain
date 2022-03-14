@@ -124,7 +124,7 @@
 		Lu_N_Cell_1 cell = (Lu_N_Cell_1) lu_mem_record__alloc(self->mt_cell_1);
 		lu__assert(cell);
 
-		n_cell_1__init(cell, N_CT__1);
+		lu_n_cell_1__init(cell, N_CT__1);
 
 		return cell;
 	}
@@ -137,7 +137,7 @@
 		Lu_N_Cell_2 cell = (Lu_N_Cell_2) lu_mem_record__alloc(self->mt_cell_2);
 		lu__assert(cell);
 
-		n_cell_2__init(cell, N_CT__2);
+		lu_n_cell_2__init(cell, N_CT__2);
 
 		return cell;
 	}
@@ -150,7 +150,7 @@
 		Lu_N_Cell_3 cell = (Lu_N_Cell_3) lu_mem_record__alloc(self->mt_cell_3);
 		lu__assert(cell);
 
-		n_cell_3__init(cell, N_CT__3);
+		lu_n_cell_3__init(cell, N_CT__3);
 
 		return cell;
 	}
@@ -163,7 +163,7 @@
 		Lu_N_Cell_4 cell = (Lu_N_Cell_4) lu_mem_record__alloc(self->mt_cell_4);
 		lu__assert(cell);
 
-		n_cell_4__init(cell, N_CT__4);
+		lu_n_cell_4__init(cell, N_CT__4);
 
 		return cell;
 	}

@@ -26,9 +26,11 @@
 
 		self->view_type = view_type;
 
-		lu_comp_calc__init(&self->comp_calc, config->s_mem, min, max, cells_size);
+		Lu_Comp_Calc comp_calc = &self->comp_calc;
+
+		lu_comp_calc__init(comp_calc, config->s_mem, min, max, cells_size);
 	
-		self->n_comp_table = lu_n_table_comp__create(config, width, height, cells_size);
+		self->n_comp_table = lu_n_table_comp__create(config, comp_calc, width, height, cells_size);
 		lu__assert(self->n_comp_table);
 
 		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
