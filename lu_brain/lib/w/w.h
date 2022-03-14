@@ -47,7 +47,14 @@
 		return self->state == LU_W_CELL_P__STATE_READY;
 	}
 
-	static inline void lu_w_cell_p__save(Lu_W_Cell_P self, Lu_Comp_Calc comp_calc, Lu_Process_Config config)
+	static inline void lu_w_cell_p__save(
+		Lu_W_Cell_P self, 
+		lu_size x,
+		lu_size y, 
+		Lu_Comp_Calc comp_calc, 
+		Lu_N_Table_Comp n_table,
+		Lu_Process_Config config
+	)
 	{
 		lu_value p = self->p2 - self->p1;
 		p < 0 && (p = -p); 
@@ -55,8 +62,11 @@
 
 		lu_size ix = lu_comp_calc__ix(comp_calc, p);
 
-		
-		
+		Lu_N_Cell_V n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
+		lu__debug_assert(n_cell);
+
+		self->super.n_cell_0 = (Lu_N_Cell_Base) n_cell;
+		self->super.sig = 1.0;
 	}
 
 	struct lu_w_cell_v {

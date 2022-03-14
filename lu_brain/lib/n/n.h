@@ -389,4 +389,9 @@
 	static Lu_N_Table_Comp lu_n_table_comp__create(Lu_Config config, lu_size width, lu_size height, lu_size depth);
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
 
+	static inline Lu_N_Cell_V lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
+	{
+		return &self->cells[z * self->w * self->h + y * self->w + x];
+	}
+
 

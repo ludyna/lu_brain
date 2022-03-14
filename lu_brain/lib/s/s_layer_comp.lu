@@ -144,7 +144,15 @@
 
 				if (lu_w_cell_p__is_ready(p_cell))
 				{
-					if (save_p) lu_w_cell_p__save(p_cell, &p_view->comp_calc, config);
+					if (save_p) 
+						lu_w_cell_p__save(
+							p_cell, 
+							x, 
+							y, 
+							&p_view->comp_calc, 
+							p_view->n_comp_table,
+							config
+						);
 
 					if (save_v)
 					{
@@ -162,6 +170,6 @@
 			}  // for (x = 0
 		} // for (y = 0
 
-		
+
 
 	}
