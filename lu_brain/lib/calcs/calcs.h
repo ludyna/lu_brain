@@ -39,15 +39,20 @@
 	static inline lu_value lu_comp_calc__norm(Lu_Comp_Calc self, lu_value request)
 	{
 		lu_value val = request - self->orig_min;
-		if (val < 0) val = 0;
-		if (val > self->max) val = self->max;
+		val < 0 && (val = 0);
+		val > self->max && (val = self->max);
 
 		return val;
 	}
 
 	static inline lu_size lu_comp_calc__ix(Lu_Comp_Calc self, lu_value val)
 	{
-		return (lu_size) lu_floor(val / self->step);
+		lu_size ix = (lu_size) lu_floor(val / self->step);
+		ix >= self->cells_size && (ix = ix - 1);
+
+		lu__debug_assert(ix < self->cells_size);
+
+		return ix;
 	}
 
 	static inline struct lu_size_range lu_comp_calc__ix_range(Lu_Comp_Calc self, lu_value val, lu_size nsc)
@@ -83,9 +88,7 @@
 		v = lu_comp_calc__norm(self, v);
 
 		lu_size ix = lu_comp_calc__ix(self, v);
-		if (ix >= self->cells_size) --ix;
 
-		lu__assert(ix < self->cells_size);
 		return self->steps[ix];
 	}
 

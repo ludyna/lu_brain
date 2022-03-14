@@ -19,7 +19,6 @@
 		lu_byte state;
 		lu_value p1;
 		lu_value p2;
-		lu_value p;
 	};
 
 	#define LU_W_CELL_P__STATE_START 0
@@ -39,7 +38,7 @@
 
 		++self->state; 
 
-		// lu__assert(self->state <= LU_W_CELL_P__STATE_READY);
+		lu__debug_assert(self->state <= LU_W_CELL_P__STATE_READY);
 		// self->state > LU_W_CELL_P__STATE_READY && self->state == LU_W_CELL_P__STATE_START;
 	}
 
@@ -50,9 +49,14 @@
 
 	static inline void lu_w_cell_p__save(Lu_W_Cell_P self, Lu_Comp_Calc comp_calc, Lu_Process_Config config)
 	{
-		self->p = self->p2 - self->p1;
-		self->p < 0 && (self->p = -self->p); 
-		self->p = lu_comp_calc__digitalize_value(comp_calc, self->p);
+		lu_value p = self->p2 - self->p1;
+		p < 0 && (p = -p); 
+		p = lu_comp_calc__norm(comp_calc, p);
+
+		lu_size ix = lu_comp_calc__ix(comp_calc, p);
+
+		
+		
 	}
 
 	struct lu_w_cell_v {

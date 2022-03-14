@@ -23,6 +23,12 @@ void lu__debug_message_internal(const char* file, int line, const char * message
 
 #define lu__assert assert
 
+#ifdef LU__PRODUCTION
+	#define lu__debug_assert 
+#else
+	#define lu__debug_assert lu__assert
+#endif 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Label gen
 
