@@ -162,7 +162,14 @@
 
 						if (lu_w_cell_v__is_ready(v_cell))
 						{
-		 					lu_w_cell_v__save(v_cell, &v_view->comp_calc, config);
+		 					lu_w_cell_v__save(
+		 						v_cell, 
+		 						x,
+		 						y,
+		 						&v_view->comp_calc, 
+		 						v_view->n_comp_table,
+		 						config
+		 					);
 						}
 					}
 				}

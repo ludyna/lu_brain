@@ -71,6 +71,8 @@
 
 	struct lu_w_cell_v {
 		struct lu_cell super;
+
+		lu_value v;
 	};
 
 
@@ -81,17 +83,32 @@
 		Lu_Process_Config config
 	)
 	{
-
+		self->v = v;
 	}
 
 	static inline lu_bool lu_w_cell_v__is_ready(Lu_W_Cell_V self)
 	{
-
+		return true;
 	}
 
-	static inline void lu_w_cell_v__save(Lu_W_Cell_V self, Lu_Comp_Calc comp_calc, Lu_Process_Config config)
+	static inline void lu_w_cell_v__save(
+		Lu_W_Cell_V self, 
+		lu_size x,
+		lu_size y, 
+		Lu_Comp_Calc comp_calc, 
+		Lu_N_Table_Comp n_table,
+		Lu_Process_Config config
+	)
 	{
+		lu_value v = self->v;
+		v = lu_comp_calc__norm(comp_calc, v);
+		lu_size ix = lu_comp_calc__ix(comp_calc, v);
 
+		Lu_N_Cell_V n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
+		lu__debug_assert(n_cell);
+
+		self->super.n_cell_0 = (Lu_N_Cell_Base) n_cell;
+		self->super.sig = 1.0;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
