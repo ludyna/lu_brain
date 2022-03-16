@@ -21,6 +21,12 @@ void tearDown(void)
 
 }
 
+lu_size foo()
+{
+	lu__debug("\n  \n");
+	return 25;
+}
+
 void test_lu_brain_basics(void) 
 { 
 	// lu_byte state = 3;
@@ -46,12 +52,12 @@ void test_lu_brain_basics(void)
 
 	lu_w_cell_p__register(cell, 1, .3, NULL);
 	TEST_ASSERT(cell->p1 == .3);
-	TEST_ASSERT(cell->state == LU_W_CELL_P__STATE_ONE);
+	TEST_ASSERT(cell->state == LU_W_CELL_P__ONE);
 
 	lu_w_cell_p__register(cell, 0, .4, NULL);
 	TEST_ASSERT(cell->p1 == .3);
 	TEST_ASSERT(cell->p2 == .4);
-	TEST_ASSERT(cell->state == LU_W_CELL_P__STATE_READY);
+	TEST_ASSERT(cell->state == LU_W_CELL_P__READY);
 
 	TEST_ASSERT(lu_w_cell_p__is_ready(cell) == true);
 
@@ -64,4 +70,9 @@ void test_lu_brain_basics(void)
 	TEST_ASSERT(cell->p1 == .5);
 	TEST_ASSERT(cell->p2 == .6);
 	TEST_ASSERT(lu_w_cell_p__is_ready(cell) == true);
+
+	lu_size a = true && foo();
+	TEST_ASSERT(a == true);
+
+	false && foo();
 }

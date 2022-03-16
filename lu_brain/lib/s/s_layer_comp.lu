@@ -125,6 +125,9 @@
 		Lu_W_Cell_P p_cell;
 		Lu_W_Cell_V v_cell;
 
+		Lu_Comp_Calc p_comp_calc = &p_view->comp_calc;
+		Lu_Comp_Calc v_comp_calc = &v_view->comp_calc;
+
 		for (y = 0; y < data->h; y++)
 		{
 			zy_shift = z_shift + y * data->w;
@@ -139,6 +142,7 @@
 				lu__debug("	%.1f", v);
 
 		 		p_cell = lu_w_table_p__get_cell(p_table, x, y);
+		 		v_cell = lu_w_table_v__get_cell(v_table, x, y);
 
 				lu_w_cell_p__register(p_cell, is_reset, p, config);
 
@@ -149,15 +153,12 @@
 							p_cell, 
 							x, 
 							y, 
-							&p_view->comp_calc, 
-							p_view->n_comp_table,
-							config
+							p_comp_calc, 
+							p_view->n_comp_table
 						);
 
 					if (save_v)
 					{
-						v_cell = lu_w_table_v__get_cell(v_table, x, y);
-
 						lu_w_cell_v__register(v_cell, is_reset, v, config);
 
 						if (lu_w_cell_v__is_ready(v_cell))
@@ -166,13 +167,16 @@
 		 						v_cell, 
 		 						x,
 		 						y,
-		 						&v_view->comp_calc, 
-		 						v_view->n_comp_table,
-		 						config
+		 						v_comp_calc, 
+		 						v_view->n_comp_table
 		 					);
+
+		 					continue;
 						}
 					}
 				}
+
+				lu_w_cell_v__reset(v_cell);
 
 			}  // for (x = 0
 		} // for (y = 0
