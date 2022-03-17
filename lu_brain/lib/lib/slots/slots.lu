@@ -13,7 +13,7 @@
 		Lu_Slot_One self = (Lu_Slot_One) lu_mem__alloc(mem, sizeof(struct lu_slot_one));
 		lu__assert(self);
 
-		lu_slot_base__init(&self->super, LU_ST__ONE, lu_slot_one__destroy);
+		lu_slot_base__init(&self->super, LU_SLOT__ONE, lu_slot_one__destroy);
 
 		self->item = item;
 
@@ -24,7 +24,7 @@
 	{
 		lu__assert(self);
 		lu__assert(mem);
-		lu__assert(self->type == LU_ST__ONE);
+		lu__assert(self->type == LU_SLOT__ONE);
 
 		lu_mem__free(mem, (lu_p_void) self);
 	}
@@ -39,7 +39,7 @@
 		Lu_Slot_Arr self = (Lu_Slot_Arr) lu_mem__alloc(mem, sizeof(struct lu_slot_arr));
 		lu__assert(self);
 
-		lu_slot_base__init(&self->super, LU_ST__ARR, lu_slot_arr__destroy);
+		lu_slot_base__init(&self->super, LU_SLOT__ARR, lu_slot_arr__destroy);
 		
 		self->items = lu_arr__create(mem, items_count, allow_realloc);
 
@@ -50,7 +50,7 @@
 	{
 		lu__assert(self);
 		lu__assert(mem);
-		lu__assert(self->type == LU_ST__ARR);
+		lu__assert(self->type == LU_SLOT__ARR);
 
 		Lu_Slot_Arr arr = (Lu_Slot_Arr) self;
 

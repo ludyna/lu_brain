@@ -199,7 +199,7 @@
 
 		Lu_S_Layer_Rec rec_base = lu_s_layer_rec__create(config, rec);
 		lu__assert(rec_base);
-		lu__assert(rec_base->super.type == LU_S_LT__REC);
+		lu__assert(rec_base->super.type == LU_S_LAYER__REC);
 
 		//
 		// Create comp layers
@@ -242,7 +242,7 @@
 
 		lu_arr__set(self->bases, 0, (lu_p_void) slot_arr);
 
-		lu__assert(rec_base->super.type == LU_S_LT__REC);
+		lu__assert(rec_base->super.type == LU_S_LAYER__REC);
 		Lu_Slot_One slot_one = lu_slot_one__create(s_mem, rec_base);
 		lu__assert(slot_one);
 		
@@ -281,7 +281,7 @@
 
 		Lu_Slot_Base slot = (Lu_Slot_Base) lu_arr__get(self->bases, 0);
 		lu__assert(slot);
-		lu__assert(slot->type == LU_ST__ONE);
+		lu__assert(slot->type == LU_SLOT__ONE);
 		Lu_Slot_One one = (Lu_Slot_One) slot;
 
 		return (Lu_S_Layer_Base) one->item;
@@ -294,7 +294,7 @@
 
 		Lu_Slot_Base slot = (Lu_Slot_Base) lu_arr__get(self->apexes, lu_arr__count(self->apexes) - 1);
 		lu__assert(slot);
-		lu__assert(slot->type == LU_ST__ONE);
+		lu__assert(slot->type == LU_SLOT__ONE);
 		Lu_Slot_One one = (Lu_Slot_One) slot;
 
 		return (Lu_S_Layer_Base) one->item;
@@ -307,12 +307,12 @@
 
 		Lu_Slot_Base slot = (Lu_Slot_Base) lu_arr__get(self->bases, 1);
 		lu__assert(slot);
-		lu__assert(slot->type == LU_ST__ONE);
+		lu__assert(slot->type == LU_SLOT__ONE);
 		Lu_Slot_One one = (Lu_Slot_One) slot;
 
 		Lu_S_Layer_Base layer_base = (Lu_S_Layer_Base) one->item;
 		lu__assert(layer_base);
-		lu__assert(layer_base->type == LU_S_LT__REC);
+		lu__assert(layer_base->type == LU_S_LAYER__REC);
 
 		return (Lu_S_Layer_Rec) one->item;
 	}
@@ -324,7 +324,7 @@
 	{
 		lu__assert(p);
 		lu__assert(c);
-		lu__assert(p->c->type == LU_ST__ARR);
+		lu__assert(p->c->type == LU_SLOT__ARR);
 
 		c->p = p;
 
@@ -340,7 +340,7 @@
 		
 		if (self->c)
 		{
-			if (self->c->type == LU_ST__ONE)
+			if (self->c->type == LU_SLOT__ONE)
 			{
 				Lu_Slot_One one = (Lu_Slot_One) self->c;
 
@@ -349,7 +349,7 @@
 					lu_s_map_base__recursive_destroy((Lu_S_Map_Base) one->item);
 				}
 			}
-			else if (self->c->type == LU_ST__ARR)
+			else if (self->c->type == LU_SLOT__ARR)
 			{
 				Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) self->c;
 

@@ -5,9 +5,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Config predefined 
 
-	struct lu_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END] = {
+	struct lu_config lu_g_bc_predefined[LU_CONFIG__END] = {
 		{
-			// LU_BC_DEFAULT
+			// LU_CONFIG__DEFAULT
 
 			//
 			// Brain level
@@ -46,7 +46,7 @@
 
 	struct lu_config lu_config__get_by_id(lu_size id)
 	{
-		lu__assert(id < LU_BRAIN_CONFIG_END);
+		lu__assert(id < LU_CONFIG__END);
 
 		return lu_g_bc_predefined[id];
 	}

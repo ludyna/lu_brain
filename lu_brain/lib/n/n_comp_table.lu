@@ -52,7 +52,7 @@
 				{
 					cell = &self->cells[zy_shift + x]; 
 
-					lu_n_cell_v__init(cell, N_CT__V, comp_calc->steps[z], x, y, z);
+					lu_n_cell_v__init(cell, LU_N_CELL__V, comp_calc->steps[z], x, y, z);
 				} 
 			}
 		}

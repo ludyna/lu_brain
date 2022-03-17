@@ -48,7 +48,7 @@
 			lu__assert(rec);
 
 			frame_map = lu_s_map_frame__create(rec, (Lu_S_Map_Base) story_map, config);
-			lu__assert(frame_map->super.type == LU_S_MT__FRAME);
+			lu__assert(frame_map->super.type == LU_S_MAP__FRAME);
 			lu__assert(frame_map);
 
 			lu_s_map_base__make_rec_fractal((Lu_S_Map_Base) frame_map, frame_map->rec);

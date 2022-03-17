@@ -60,21 +60,21 @@ void tearDown(void)
 void test_spawn_and_die(void) 
 {
 	
-    Lu_N_Cell_Base c1 = n_cell_spawn(g_hnn, N_CT__1);
+    Lu_N_Cell_Base c1 = n_cell_spawn(g_hnn, LU_N_CELL__1);
     TEST_ASSERT(c1);
-    TEST_ASSERT(c1->type == N_CT__1); 
+    TEST_ASSERT(c1->type == LU_N_CELL__1); 
 
-    Lu_N_Cell_Base c2 = n_cell_spawn(g_hnn, N_CT__2);
+    Lu_N_Cell_Base c2 = n_cell_spawn(g_hnn, LU_N_CELL__2);
     TEST_ASSERT(c2);
-    TEST_ASSERT(c2->type == N_CT__2);
+    TEST_ASSERT(c2->type == LU_N_CELL__2);
 
-    Lu_N_Cell_Base c3 = n_cell_spawn(g_hnn, N_CT__3);
+    Lu_N_Cell_Base c3 = n_cell_spawn(g_hnn, LU_N_CELL__3);
     TEST_ASSERT(c3);
-    TEST_ASSERT(c3->type == N_CT__3);
+    TEST_ASSERT(c3->type == LU_N_CELL__3);
 
-    Lu_N_Cell_Base c4 = n_cell_spawn(g_hnn, N_CT__4);
+    Lu_N_Cell_Base c4 = n_cell_spawn(g_hnn, LU_N_CELL__4);
     TEST_ASSERT(c4);
-    TEST_ASSERT(c4->type == N_CT__4);
+    TEST_ASSERT(c4->type == LU_N_CELL__4);
 
     n_cell_die(g_hnn, c1);
     n_cell_die(g_hnn, c2);
@@ -86,21 +86,21 @@ void test_spawn_connect_and_get(void)
 {
     // Cell Spawn
 
-    Lu_N_Cell_Base top_left = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_Base top_left = n_cell_spawn(g_hnn, LU_N_CELL__0);
     TEST_ASSERT(top_left);
-    TEST_ASSERT(top_left->type == N_CT__0); 
+    TEST_ASSERT(top_left->type == LU_N_CELL__0); 
 
-    Lu_N_Cell_Base top_right = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_Base top_right = n_cell_spawn(g_hnn, LU_N_CELL__0);
     TEST_ASSERT(top_right);
-    TEST_ASSERT(top_right->type == N_CT__0);
+    TEST_ASSERT(top_right->type == LU_N_CELL__0);
 
-    Lu_N_Cell_Base bottom_left = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_Base bottom_left = n_cell_spawn(g_hnn, LU_N_CELL__0);
     TEST_ASSERT(bottom_left);
-    TEST_ASSERT(bottom_left->type == N_CT__0);
+    TEST_ASSERT(bottom_left->type == LU_N_CELL__0);
 
-    Lu_N_Cell_Base bottom_right = n_cell_spawn(g_hnn, N_CT__0);
+    Lu_N_Cell_Base bottom_right = n_cell_spawn(g_hnn, LU_N_CELL__0);
     TEST_ASSERT(bottom_right);
-    TEST_ASSERT(bottom_right->type == N_CT__0);
+    TEST_ASSERT(bottom_right->type == LU_N_CELL__0);
 
     // Cell Spawn Connect 
 

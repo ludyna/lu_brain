@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Config predefined 
 
-	extern struct lu_config lu_g_bc_predefined[LU_BRAIN_CONFIG_END];
+	extern struct lu_config lu_g_bc_predefined[LU_CONFIG__END];
 
 	static void lu_config__set_defaults(Lu_Config self);
 

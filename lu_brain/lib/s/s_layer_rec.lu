@@ -18,7 +18,7 @@
 			NULL, 
 			rec->depth,
 			config,
-			LU_S_LT__REC,
+			LU_S_LAYER__REC,
 			1,
 			lu_s_layer_rec__destroy
 		);
@@ -32,7 +32,7 @@
 	{
 		lu__assert(self);
 		lu__assert(self->s_mem);
-		lu__assert(self->type == LU_S_LT__REC);
+		lu__assert(self->type == LU_S_LAYER__REC);
 
 		Lu_S_Layer_Rec frame = (Lu_S_Layer_Rec) self;
 
@@ -60,7 +60,7 @@
 
 		Lu_Slot_Base slot_base = base->c;
 		lu__assert(slot_base);
-		lu__assert(slot_base->type == LU_ST__ARR);
+		lu__assert(slot_base->type == LU_SLOT__ARR);
 
 		Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) slot_base;
 
@@ -69,10 +69,14 @@
 		for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
 		{
 			Lu_S_Layer_Comp comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
-			lu__assert(comp->super.type == LU_S_LT__COMP);
+			lu__assert(comp->super.type == LU_S_LAYER__COMP);
 
 			lu_s_layer_comp__save_data(comp, wave, z, data, config);
+
+			// fire?
+			
 		}
 
 		// continue saving to higher levels recursively (wave)
+
 	}

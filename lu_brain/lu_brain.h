@@ -81,9 +81,9 @@
 	// Lu_Config predefined 
 	//
 
-	enum lu_bc_predefined_type {
-		LU_BC_DEFAULT 	= 0,
-		LU_BRAIN_CONFIG_END 				
+	enum lu_config_type {
+		LU_CONFIG__DEFAULT 	= 0,
+		LU_CONFIG__END 				
 	};
 
 	struct lu_config lu_config__get_by_id(lu_size id);
@@ -130,8 +130,8 @@
 	//
 
 	enum lu_trans_algorithm {
-		LU_TA_NONE = 0,
-		LU_TA_STATIC_IMAGE = 1
+		LU_ALGORITHM__NONE = 0,
+		LU_ALGORITHM__IMAGE = 1
 	};
 
 	struct lu_rec_config {
@@ -150,14 +150,14 @@
 	// Lu_Rec_Config predefined 
 	//
 
-	enum lu_rc_predefined_type {
-		LU_RC_MONOCHROME1_IMAGE = 0,
-		LU_RC_MONOCHROME8_IMAGE,
-		LU_RC_RBG8_IMAGE,
-		LU_RC_RBG16_IMAGE, 
-		LU_RC_RBG32_IMAGE,
-		LU_RC_TEST1,
-		LU_REC_CONFIG_END 				
+	enum lu_rec_config_type {
+		LU_REC__MONO1_IMAGE = 0,
+		LU_REC__MONO8_IMAGE,
+		LU_REC__RBG8_IMAGE,
+		LU_REC__RBG16_IMAGE, 
+		LU_REC__RBG32_IMAGE,
+		LU_REC__TEST1,
+		LU_REC__END 				
 	};
 
 	struct lu_rec_config lu_rec_config__get_by_id(lu_size id);

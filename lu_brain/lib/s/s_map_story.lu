@@ -16,7 +16,7 @@
 
 		Lu_S_Map_Base base = lu_s_map_base__init_with_childs(
 			&self->super, 
-			LU_S_MT__STORY, 
+			LU_S_MAP__STORY, 
 			config,
 			NULL, 
 			recs_count,

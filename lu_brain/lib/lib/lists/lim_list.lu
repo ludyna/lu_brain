@@ -20,7 +20,7 @@
 			sizeof(struct lu_l_node),
 			max_size_in_items,
 			0,
-			LU_MFT__FREEABLE
+			LU_MEM_TABLE__FREEABLE
 		);
 		lu__assert(self->mem_table);
 

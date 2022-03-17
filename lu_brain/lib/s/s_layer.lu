@@ -18,7 +18,7 @@
 
 		if (children_count == 0)
 		{
-			lu_s_layer_base__init(&self->super, NULL, config, LU_S_LT__LAYER, level, lu_s_layer__destroy); 
+			lu_s_layer_base__init(&self->super, NULL, config, LU_S_LAYER__LAYER, level, lu_s_layer__destroy); 
 		}
 		else if (children_count == 1)
 		{
@@ -26,7 +26,7 @@
 				&self->super, 
 				NULL, 
 				config, 
-				LU_S_LT__LAYER, 
+				LU_S_LAYER__LAYER, 
 				level, 
 				lu_s_layer__destroy
 			);
@@ -38,7 +38,7 @@
 				NULL, 
 				children_count, 
 				config, 
-				LU_S_LT__LAYER, 
+				LU_S_LAYER__LAYER, 
 				level, 
 				lu_s_layer__destroy
 			);

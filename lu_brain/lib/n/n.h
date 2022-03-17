@@ -246,15 +246,15 @@
 
 		switch(cell->type)
 		{
-			case N_CT__0:
+			case LU_N_CELL__0:
 				return n_cell__shift_0(self, cell);
-			case N_CT__1:
+			case LU_N_CELL__1:
 				return n_cell__shift_1(self, cell);
-			case N_CT__2:
+			case LU_N_CELL__2:
 				return n_cell__shift_2(self, (Lu_N_Cell_2) cell);
-			case N_CT__3:
+			case LU_N_CELL__3:
 				return n_cell__shift_3(self, (Lu_N_Cell_3) cell);
-			case N_CT__4:
+			case LU_N_CELL__4:
 				return n_cell__shift_4(self, (Lu_N_Cell_4) cell);			
 			default:
 				lu__assert(false);

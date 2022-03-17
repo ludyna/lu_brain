@@ -40,7 +40,7 @@ int main()
 
 	Lu_Brain brain 				= lu_brain_create_from_predefined(
 		/*memory in bytes*/ 	1024 * 1024, 
-		/*predefined config*/ 	LU_BC_DEFAULT
+		/*predefined config*/ 	LU_CONFIG__DEFAULT
 	);  
 	lu__assert(brain);
 	
@@ -48,7 +48,7 @@ int main()
 		/*belongs to*/			brain, 
 		/*width*/				16, 
 		/*height*/				16, 
-		/*predefined config */ 	LU_RC_MONOCHROME1_IMAGE
+		/*predefined config */ 	LU_REC__MONO1_IMAGE
 	);	
 	lu__assert(image_rec);
 

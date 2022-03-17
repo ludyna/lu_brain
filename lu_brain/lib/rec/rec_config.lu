@@ -5,11 +5,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config predefined
  
- 	struct lu_rec_config lu_g_rc_predefined[LU_REC_CONFIG_END] = {
+ 	struct lu_rec_config lu_g_rc_predefined[LU_REC__END] = {
 		{
-			// LU_RC_MONOCHROME1_IMAGE
+			// LU_REC__MONO1_IMAGE
 			.hold_blocks_size 	= 2, 
-			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
+			.transf_algorithm 	= LU_ALGORITHM__IMAGE,
 			
 			.comp_config.v_min 				= 0,
 			.comp_config.v_max 				= 1,
@@ -17,12 +17,12 @@
 			.comp_config.p_neu_size			= 2,
 		},
 		{
-			// LU_RC_MONOCHROME8_IMAGE
+			// LU_REC__MONO8_IMAGE
 		},
 		{
-			// LU_RC_RBG8_IMAGE
+			// LU_REC__RBG8_IMAGE
 			.hold_blocks_size 	= 4, 
-			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
+			.transf_algorithm 	= LU_ALGORITHM__IMAGE,
 			
 			.comp_config.v_min 				= 0,
 			.comp_config.v_max 				= 255,
@@ -30,15 +30,15 @@
 			.comp_config.p_neu_size			= 128,
 		},
 		{
-			// LU_RC_RBG16_IMAGE
+			// LU_REC__RBG16_IMAGE
 		},
 		{
-			// LU_RC_RBG32_IMAGE
+			// LU_REC__RBG32_IMAGE
 		},
 		{
-			// LU_RC_TEST1
+			// LU_REC__TEST1
 			.hold_blocks_size 	= 4, 
-			.transf_algorithm 	= LU_TA_STATIC_IMAGE,
+			.transf_algorithm 	= LU_ALGORITHM__IMAGE,
 			
 			.comp_config.v_min 				= 0,
 			.comp_config.v_max 				= 10,
@@ -58,7 +58,7 @@
 
 	struct lu_rec_config lu_rec_config__get_by_id(lu_size id)
 	{
-		lu__assert(id < LU_REC_CONFIG_END);
+		lu__assert(id < LU_REC__END);
 		return lu_g_rc_predefined[id];
 	}
 

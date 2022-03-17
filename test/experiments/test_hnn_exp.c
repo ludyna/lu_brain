@@ -87,7 +87,7 @@ void test_distribution(void)
         for(y = 0; y < INPUT_HEIGHT; y++)
             for(x = 0; x < INPUT_WIDTH; x++)
             {
-                inputs[x][y][d] = n_cell_spawn(g_hnn, N_CT__0);
+                inputs[x][y][d] = n_cell_spawn(g_hnn, LU_N_CELL__0);
             }
 
     Lu_N_Cell_4 cell;
@@ -98,5 +98,5 @@ void test_distribution(void)
                 cell = spawn_4(inputs, x, y, d);
             }
 
-    n_print_distribution(g_hnn, N_CT__4);
+    n_print_distribution(g_hnn, LU_N_CELL__4);
 }

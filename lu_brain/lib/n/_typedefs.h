@@ -6,14 +6,13 @@
 // typedef struct lu_n* 				Lu_N;
 
 enum n_cell_type {
-	N_CT__0,
-	N_CT__V, 
-	N_CT__P,
-	N_CT__1,
-	N_CT__2,
-	N_CT__3,
-	N_CT__4,
-	N_CT__END
+	LU_N_CELL__0,
+	LU_N_CELL__V, // for p and v
+	LU_N_CELL__1,
+	LU_N_CELL__2,
+	LU_N_CELL__3,
+	LU_N_CELL__4,
+	LU_N_CELL__END
 };
 
 typedef struct lu_n_cell_base* Lu_N_Cell_Base; 

@@ -82,7 +82,7 @@ lu_value			data_16[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	brain 				= lu_brain__create(lu_g_mem, lu_config__get_by_id(LU_BC_DEFAULT));
+	brain 				= lu_brain__create(lu_g_mem, lu_config__get_by_id(LU_CONFIG__DEFAULT));
 
 	TEST_ASSERT(brain);
 
@@ -91,7 +91,7 @@ void setUp(void)
 		/*width*/				3, 
 		/*height*/				3, 
 		/*depth*/				1,
-		/*config*/ 				lu_rec_config__get_by_id(LU_RC_TEST1)
+		/*config*/ 				lu_rec_config__get_by_id(LU_REC__TEST1)
 	);	
 
 	TEST_ASSERT(rec_0);
@@ -101,7 +101,7 @@ void setUp(void)
 		/*width*/				2, 
 		/*height*/				2, 
 		/*depth*/				1,
-		/*config*/ 				lu_rec_config__get_by_id(LU_RC_TEST1)
+		/*config*/ 				lu_rec_config__get_by_id(LU_REC__TEST1)
 	);	
 
 	TEST_ASSERT(rec_1);

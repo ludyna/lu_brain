@@ -14,7 +14,7 @@
 		lu__assert(self);
 
 		self->mem = mem;
-		self->waves = lu_mem_table__create(mem, sizeof(Lu_Wave), w_waves_size, 0, LU_MFT__FREEABLE);
+		self->waves = lu_mem_table__create(mem, sizeof(Lu_Wave), w_waves_size, 0, LU_MEM_TABLE__FREEABLE);
 		lu__assert(self->waves);
 
 		return self;

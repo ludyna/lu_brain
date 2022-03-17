@@ -99,12 +99,12 @@
 
 		switch(p->c->type)
 		{
-			case LU_ST__ONE :
+			case LU_SLOT__ONE :
 				one = (Lu_Slot_One) p->c;
 				lu__assert(one->item == NULL);
 				one->item = (lu_p_void) c;
 				break;
-			case LU_ST__ARR :
+			case LU_SLOT__ARR :
 				arr = (Lu_Slot_Arr) p->c;
 				Lu_Arr items = arr->items;
 
@@ -124,7 +124,7 @@
 		
 		if (self->c)
 		{
-			if (self->c->type == LU_ST__ONE)
+			if (self->c->type == LU_SLOT__ONE)
 			{
 				Lu_Slot_One one = (Lu_Slot_One) self->c;
 
@@ -133,7 +133,7 @@
 					lu_s_layer_base__recursive_destroy((Lu_S_Layer_Base) one->item);
 				}
 			}
-			else if (self->c->type == LU_ST__ARR)
+			else if (self->c->type == LU_SLOT__ARR)
 			{
 				Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) self->c;
 
