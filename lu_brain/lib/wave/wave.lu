@@ -29,7 +29,7 @@
 		self->brain = brain;
 
 		// Setting last proccess config to default
-		struct lu_process_config config = lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT);
+		struct lu_process_config config = lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT);
 		Lu_Process_Config p_config = lu_process_config__validate(&config);
 		lu__assert(p_config);
 
@@ -339,7 +339,7 @@
 
 		lu_wave__init(
 			&self->super, 
-			LU_WAVE_TYPE__SAVE, 
+			LU_WAVE__SAVE, 
 			brain
 		); 
 

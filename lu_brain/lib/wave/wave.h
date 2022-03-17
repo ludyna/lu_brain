@@ -1,4 +1,4 @@
-/**
+7/**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
@@ -11,16 +11,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config Predefined 
 
-	extern struct lu_process_config lu_g_wc_predefined[LU_PCT__END];
+	extern struct lu_process_config lu_g_wc_predefined[LU_PROCESS__END];
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave 
 
 	
 	enum lu_wave_type {
-		LU_WAVE_TYPE__SAVE,
-		LU_WAVE_TYPE__FIND,
-		LU_WAVE_TYPE__RESTORE
+		LU_WAVE__SAVE,
+		LU_WAVE__MATCH,
+		LU_WAVE__RESTORE
 	};
 
 	/*
@@ -58,9 +58,9 @@
 		Lu_Brain brain
 	);
 
-	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE_TYPE__SAVE; }
-	static inline lu_bool lu_wave__is_find(Lu_Wave self) { return self->type == LU_WAVE_TYPE__FIND; }
-	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE_TYPE__RESTORE; }
+	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE__SAVE; }
+	static inline lu_bool lu_wave__is_find(Lu_Wave self) { return self->type == LU_WAVE__MATCH; }
+	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE__RESTORE; }
 
 
 ///////////////////////////////////////////////////////////////////////////////

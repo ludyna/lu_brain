@@ -204,10 +204,10 @@
 	//
 
 	enum lu_process_config_type {
-		LU_PCT__SAVE_DEFAULT = 0,
-		LU_PCT__MATCH_FULL_CONTRAST, 
-		LU_PCT__FIND_FULL_COLOR,
-		LU_PCT__END			
+		LU_PROCESS__SAVE_DEFAULT = 0,
+		LU_PROCESS__MATCH_DIFF_ONLY, 
+		LU_PROCESS__MATCH_VALUE_ONLY,
+		LU_PROCESS__END			
 	};
 
 	struct lu_process_config lu_process_config__get_by_id(lu_size id);

@@ -118,14 +118,14 @@ void test_lu_brain_basics(void)
 
 		// lu_wave__push(s_wave, rec_0, data_3);
  
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
+	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
 		// 	lu_wave__block_begin(s_wave);
 		// 	lu_wave__push(s_wave, rec_0, data_4);
 		// 	lu_wave__push(s_wave, rec_1, data_5);
 		// 	lu_wave__block_end(s_wave);
 
-		// lu_wave__step(s_wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
+		// lu_wave__step(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
 	/////////////////////////////////////////////////////////
 	// Match
@@ -145,14 +145,14 @@ void test_lu_brain_basics(void)
 
 	// 	lu_wave__push(m_wave, rec_0, data_3);
 
-	// lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PCT__MATCH_FULL_CONTRAST));
+	// lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
 	// 	lu_wave__block_begin(m_wave);
 	// 	lu_wave__push(m_wave, rec_0, data_4);
 	// 	lu_wave__push(m_wave, rec_1, data_5);
 	// 	lu_wave__block_end(m_wave); 
 
-	// lu_wave__step(m_wave, lu_process_config__get_by_id(LU_PCT__SAVE_DEFAULT));
+	// lu_wave__step(m_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
 
 	/////////////////////////////////////////////////////////

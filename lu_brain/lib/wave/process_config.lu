@@ -19,8 +19,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Process_Config predefined
     
-    struct lu_process_config lu_g_wc_predefined[LU_PCT__END] = { 
-    	// LU_PCT__SAVE_DEFAULT
+    struct lu_process_config lu_g_wc_predefined[LU_PROCESS__END] = { 
+    	// LU_PROCESS__SAVE_DEFAULT
     	{
             .flags                        = 0,
     		.p_potency                    = 1.0,  	
@@ -29,11 +29,11 @@
     		.min_fire_potency             = 0.9,  	// potribna povna kopiya
             .block_layers_size            = 50
     	},
-    	// LU_PCT__MATCH_FULL_CONTRAST
+    	// LU_PROCESS__MATCH_DIFF_ONLY
     	{
 
     	},
-    	// LU_PCT__FIND_FULL_COLOR
+    	// LU_PROCESS__MATCH_VALUE_ONLY
     	{
 
     	}
@@ -41,7 +41,7 @@
 
   	struct lu_process_config lu_process_config__get_by_id(lu_size id)
   	{
-  		lu__assert(id < LU_PCT__END);
+  		lu__assert(id < LU_PROCESS__END);
   		return lu_g_wc_predefined[id];
   	}
 
