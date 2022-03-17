@@ -101,7 +101,6 @@
 			z_shift = z * data->w * data->h;
 
 			lu_bool is_reset = p_table->wave_id != wave_id || ((block_id - p_table->block_id) > 1);
-
 			lu__debug("\n IS_RESET: %d ", is_reset);
 
 			p_table->wave_id = wave_id;

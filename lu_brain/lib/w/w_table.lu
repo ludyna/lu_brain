@@ -6,93 +6,34 @@
 // Lu_W_Table 
 
 
-	static Lu_W_Table lu_w_table_comp__create(
+	static Lu_W_Table lu_w_table__create(
 		Lu_Config config, 
-		Lu_Comp_Calc comp_calc, 
 		lu_size w, 
 		lu_size h
 	)
 	{
 		lu__assert(config);
-		lu__assert(comp_calc);
 		lu__assert(w > 0);
 		lu__assert(h > 0);
 
-		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_comp));
+		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table));
 		lu__assert(self);
 
 		self->mem = config->w_mem;
-		self->wave = NULL;
-		self->comp_calc = comp_calc;
 		self->w = w;
 		self->h = h;
-
-		lu_size cells_size = sizeof(struct lu_cell) * self->w * self->h;
-
-		self->cells = (struct lu_cell*) lu_mem__alloc(config->w_mem, cells_size);
-		lu__assert(self->cells);
-
-		memset((lu_p_void) self->cells, 0, cells_size);
 
 		return self;
 	}
 
-	static void lu_w_table_comp__destroy(Lu_W_Table self)
+	static void lu_w_table__destroy(Lu_W_Table self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
 
-		lu_mem__free(self->mem, (lu_p_byte) self->cells);
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_w_table_comp__save_p(
-		Lu_W_Table self, 
-		lu_size z, 
-		Lu_W_Table v_w_table, 
-		Lu_Data data, 
-		Lu_Process_Config config
-	)
-	{
-		lu__assert(self);
-		lu__assert(v_w_table);
-		lu__assert(data);
-		lu__assert(config);
-
-		
-	}
-	
-	static void lu_w_table_comp__save(
-		Lu_W_Table self, 
-		lu_size z, 
-		Lu_W_Table p_w_table, 
-		Lu_Data d, 
-		Lu_Process_Config config
-	)
-	{
-		lu__assert(self);
-		lu__assert(d);
-		lu__assert(d->values);
-		lu__assert(config);
-
-		// lu_size z_shift = z * d->w * d->h;
-		// lu_size y_shift;
-		// lu_size x;
-		// lu_size y;
-		// lu_value v;
-
-		// for (y = 0; y < d->h; y++)
-		// {
-		// 	y_shift = y * d->w;
-
-		// 	for (x = 0; x < d->w; x++)
-		// 	{
-		// 		v = d->values[z_shift + y_shift + x];
-
-
-		// 	}
-		// }
-	}
