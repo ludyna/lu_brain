@@ -4,7 +4,7 @@
 	Map:													
 		(x Y y) = max(x - 1, 1) * max(y - 1, 1)
 
-
+ 
 		"Minimal" start:
 
 		Last level should always have ONE layer.
@@ -15,8 +15,8 @@
 		1 layer seq (vertically 1-n1) (de n1 ce kilkist kadrykiv v sequence)
 		0 layer frames (vertically rec_count) (t1, t2, etc. nema v S, tilky virtnualno v N)
 			1 PV rec layers (vertically w Y h) base layer is rec layer, apex layer is "pixel" in frames
-				0 P_comp1 P_comp2 P_comp3 (horizontally comp_count or d), connected to "P pixel" in rec
-				0 V_comp1 V_comp2 V_comp3 (horizontally comp_count or d), connected to "V pixel" in rec
+				0 P_comp1 P_comp2 P_comp3 (horizontally comp_count or d), connected to "pixel" in rec
+				0 V_comp1 V_comp2 V_comp3 (horizontally comp_count or d), connected to "pixel" in rec
 
 	r1 r2 r3 r4
 	r1 r2 r3 r4
@@ -212,14 +212,6 @@
 
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Rec frame, Lu_Rec_Comp_Config rc_config);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
-
-	static void lu_s_layer_comp__save_data(
-		Lu_S_Layer_Comp self, 
-		Lu_Wave wave, 
-		lu_size z, 
-		Lu_Data data, 
-		Lu_Process_Config config
-	);
 
 	//
 	// Lu_S_Layer_Rec

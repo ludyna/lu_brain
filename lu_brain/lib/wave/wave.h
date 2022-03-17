@@ -1,4 +1,4 @@
-7/**
+/**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
