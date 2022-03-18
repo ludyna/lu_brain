@@ -38,7 +38,6 @@
 			lu_arr__set(self->w_tables, i, (lu_p_void) w_table);
 		}
 
-
 		return self;
 	}
 

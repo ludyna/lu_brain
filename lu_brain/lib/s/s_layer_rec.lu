@@ -77,55 +77,65 @@
 
 		lu_size x;
 		lu_size y;
-		lu_size zy_shift;
+		lu_size y_shift;
 		lu_value p;
 		lu_value v;
-		lu_size ix;
-		lu_size z_shift;
+		lu_size xy_shift;
+		Lu_S_Layer_Comp comp;
 
-		for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
+		lu_size wh = data->h * data->w;
+
+		Lu_S_View_P p_view;
+		Lu_S_View_V v_view;
+
+		Lu_W_Table_P p_table;
+		Lu_W_Table_V v_table;
+
+		lu_bool is_reset;
+
+		Lu_W_Cell_P p_cell;
+		Lu_W_Cell_V v_cell;
+
+		Lu_Comp_Calc p_comp_calc;
+		Lu_Comp_Calc v_comp_calc;
+
+		for (y = 0; y < data->h; y++)
 		{
-			Lu_S_Layer_Comp comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
-			lu__assert(comp->super.type == LU_S_LAYER__COMP);
+			y_shift = y * data->w;
 
+			lu__debug("\n");
 
-			Lu_S_View_P p_view = &comp->p_view;
-			Lu_S_View_V v_view = &comp->v_view;
-
-			Lu_W_Table_P p_table = lu_s_view_p__get_w_table(p_view, wave_id);
-			lu__assert(p_table);
-
-			Lu_W_Table_V v_table = lu_s_view_v__get_w_table(v_view, wave_id);
-			lu__assert(v_table);
-
-			z_shift = z * data->w * data->h;
-
-			lu_bool is_reset = p_table->wave_id != wave_id || ((block_id - p_table->block_id) > 1);
-			lu__debug("\n IS_RESET: %d ", is_reset);
-
-			p_table->wave_id = wave_id;
-			p_table->block_id = block_id;
-
-			v_table->wave_id = wave_id;
-			v_table->block_id = block_id;
-
-			Lu_W_Cell_P p_cell;
-			Lu_W_Cell_V v_cell;
-
-			Lu_Comp_Calc p_comp_calc = &p_view->comp_calc;
-			Lu_Comp_Calc v_comp_calc = &v_view->comp_calc;
-
-			for (y = 0; y < data->h; y++)
+			for (x = 0; x < data->w; x++)
 			{
-				zy_shift = z_shift + y * data->w;
+				xy_shift = y_shift + x;
 
-				lu__debug("\n");
-
-				for (x = 0; x < data->w; x++)
+				for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
 				{
-					ix = zy_shift + x;
+					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
+					lu__assert(comp->super.type == LU_S_LAYER__COMP);
 
-					v = data->values[ix];
+					p_view = &comp->p_view;
+					v_view = &comp->v_view;
+
+					p_table = lu_s_view_p__get_w_table(p_view, wave_id);
+					lu__assert(p_table);
+
+					v_table = lu_s_view_v__get_w_table(v_view, wave_id);
+					lu__assert(v_table);
+
+					is_reset = p_table->wave_id != wave_id || ((block_id - p_table->block_id) > 1);
+					lu__debug("\n IS_RESET: %d ", is_reset);
+
+					p_table->wave_id = wave_id;
+					p_table->block_id = block_id;
+
+					v_table->wave_id = wave_id;
+					v_table->block_id = block_id;
+
+					p_comp_calc = &p_view->comp_calc;
+					v_comp_calc = &v_view->comp_calc;
+
+					v = data->values[z * wh + xy_shift];
 					lu__debug("	%.1f", v);
 
 			 		p_cell = lu_w_table_p__get_cell(p_table, x, y);
@@ -165,10 +175,10 @@
 
 					lu_w_cell_v__reset(v_cell);
 
-				}  // for (x = 0
-			} // for (y = 0
+				} // for (lu_size z = 0
 
-		} // for (lu_size z = 0
+			}  // for (x = 0
+		} // for (y = 0
 
 		// continue saving to higher levels recursively (wave)
 
