@@ -171,10 +171,6 @@
 	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c);
 	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer);
 
-	//
-	// Lu_S_Layer_Base n_table
-	//
-
 	static void lu_s_layer_base__create_n_table(
 		Lu_S_Layer_Base self, 
 		Lu_Mem n_mem, 
@@ -184,16 +180,14 @@
 
 	static void lu_s_layer_base__destroy_n_table(Lu_S_Layer_Base self);
 
-	//
-	// Lu_S_Layer_Base w_tables
-	//
+	static inline Lu_W_Table lu_s_layer_base__get_w_table(Lu_S_Layer_Base self, lu_size wave_id)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(self->w_tables);
+		lu__debug_assert(wave_id < lu_arr__size(self->w_tables));
 
-	static void lu_s_layer_base__create_w_tables(
-		Lu_S_Layer_Base self, 
-		Lu_Mem w_mem
-	);
-
-	static void lu_s_layer_base__destroy_w_tables(Lu_S_Layer_Base self);
+		return lu_arr__get(self->w_tables, wave_id);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Layers

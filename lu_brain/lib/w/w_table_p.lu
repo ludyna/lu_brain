@@ -16,8 +16,6 @@
 		self->mem = config->w_mem;
 		self->w = width;
 		self->h = height;
-		self->wave_id = LU_WAVE_ID__NOT_SET;
-		self->block_id = LU_BLOCK_ID__NOT_SET;
 
 		lu_size size =  self->w * self->h;
 		lu__assert(size > 0);

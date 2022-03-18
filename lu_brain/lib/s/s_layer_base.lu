@@ -194,12 +194,3 @@
 
 	static void lu_s_layer_base__destroy_n_table(Lu_S_Layer_Base self);
 
-///////////////////////////////////////////////////////////////////////////////
-// w_tables
-
-	static void lu_s_layer_base__create_w_tables(
-		Lu_S_Layer_Base self, 
-		Lu_Mem w_mem
-	);
-
-	static void lu_s_layer_base__destroy_w_tables(Lu_S_Layer_Base self);

@@ -131,9 +131,6 @@
 
 		// always "2D"
 		struct lu_w_cell_p* cells;
-
-		lu_size wave_id;
-		lu_size block_id;
 	};
 
 	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size width, lu_size height);
@@ -155,9 +152,6 @@
 
 		// always "2D"
 		struct lu_w_cell_v* cells;
-
-		lu_size wave_id;
-		lu_size block_id;
 	};
 
 	static inline Lu_W_Cell_V lu_w_table_v__get_cell(Lu_W_Table_V self, lu_size x, lu_size y)
@@ -171,9 +165,11 @@
 	struct lu_w_table {
 		Lu_Mem mem;
 
+		lu_size wave_id;
+		lu_size block_id;
+
 		lu_size w;
 		lu_size h;
-
 	};
 
 	static Lu_W_Table lu_w_table__create(

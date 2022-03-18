@@ -99,6 +99,15 @@
 		Lu_Comp_Calc p_comp_calc;
 		Lu_Comp_Calc v_comp_calc;
 
+		Lu_W_Table rec_table = lu_s_layer_base__get_w_table(&self->super, wave_id);
+		lu__assert(rec_table);
+
+		is_reset = rec_table->wave_id != wave_id || ((block_id - rec_table->block_id) > 1);
+		lu__debug("\n IS_RESET: %d ", is_reset);
+
+		rec_table->wave_id = wave_id;
+		rec_table->block_id = block_id;
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -122,15 +131,6 @@
 
 					v_table = lu_s_view_v__get_w_table(v_view, wave_id);
 					lu__assert(v_table);
-
-					is_reset = p_table->wave_id != wave_id || ((block_id - p_table->block_id) > 1);
-					lu__debug("\n IS_RESET: %d ", is_reset);
-
-					p_table->wave_id = wave_id;
-					p_table->block_id = block_id;
-
-					v_table->wave_id = wave_id;
-					v_table->block_id = block_id;
 
 					p_comp_calc = &p_view->comp_calc;
 					v_comp_calc = &v_view->comp_calc;

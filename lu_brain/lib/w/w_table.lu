@@ -22,7 +22,9 @@
 		self->mem = config->w_mem;
 		self->w = w;
 		self->h = h;
-
+		self->wave_id = LU_WAVE_ID__NOT_SET;
+		self->block_id = LU_BLOCK_ID__NOT_SET;
+		
 		return self;
 	}
 
