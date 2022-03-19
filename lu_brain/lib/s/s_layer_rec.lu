@@ -108,6 +108,10 @@
 		rec_table->wave_id = wave_id;
 		rec_table->block_id = block_id;
 
+		Lu_W_Cell w_cell;
+
+		lu_bool v_reset;
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -118,8 +122,12 @@
 			{
 				xy_shift = y_shift + x;
 
+				w_cell = lu_w_table__get_cell(rec_table, x, y);
+
 				for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
 				{
+					v_reset = true;
+
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
 					lu__assert(comp->super.type == LU_S_LAYER__COMP);
 
@@ -168,14 +176,18 @@
 			 						v_view->n_comp_table
 			 					);
 
-			 					continue;
+			 					v_reset = false;
 							}
 						}
 					}
 
-					lu_w_cell_v__reset(v_cell);
+					if (v_reset)
+						lu_w_cell_v__reset(v_cell);
+
 
 				} // for (lu_size z = 0
+
+				// 
 
 			}  // for (x = 0
 		} // for (y = 0

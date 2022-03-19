@@ -3,18 +3,18 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Cell 
+// Lu_W_Cell 
 
-	struct lu_cell {
+	struct lu_w_cell {
 		Lu_N_Cell_Base n_cell_0;
 		lu_value sig;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-//  
+// Lu_W_Cell_P
 
 	struct lu_w_cell_p {
-		struct lu_cell super;
+		struct lu_w_cell super;
 
 		lu_byte state;
 		lu_value p1;
@@ -68,11 +68,14 @@
 		self->super.sig = 1.0;
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Cell_V
+
 	#define LU_W_CELL_V__NOT_SET 0
 	#define LU_W_CELL_V__READY 1
 
 	struct lu_w_cell_v {
-		struct lu_cell super;
+		struct lu_w_cell super;
 
 		lu_byte state;
 		lu_value v;
@@ -170,6 +173,9 @@
 
 		lu_size w;
 		lu_size h;
+
+		// always "2D"
+		struct lu_w_cell* cells;
 	};
 
 	static Lu_W_Table lu_w_table__create(
@@ -179,6 +185,11 @@
 	);
 
 	static void lu_w_table__destroy(Lu_W_Table self);
+
+	static inline Lu_W_Cell lu_w_table__get_cell(Lu_W_Table self, lu_size x, lu_size y)
+	{
+		return &self->cells[y * self->w + x];
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Manager

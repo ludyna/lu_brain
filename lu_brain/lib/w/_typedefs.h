@@ -2,7 +2,7 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
- 	typedef struct lu_cell* Lu_Cell; 
+ 	typedef struct lu_w_cell* Lu_W_Cell; 
  	typedef struct lu_w_cell_p* Lu_W_Cell_P;
  	typedef struct lu_w_cell_v* Lu_W_Cell_V;
 
