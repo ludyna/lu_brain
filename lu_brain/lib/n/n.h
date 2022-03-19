@@ -1,5 +1,7 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
+
+	n_tables are always "3d"
 */
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -18,9 +20,9 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell_V
+// Lu_N_Cell_VP
 
-	struct lu_n_cell_v {
+	struct lu_n_cell_vp {
 		struct lu_n_cell_base super;
 
 		lu_value value; 
@@ -29,8 +31,8 @@
 		lu_size z;
 	};
 
-	static inline Lu_N_Cell_V lu_n_cell_v__init(
-		Lu_N_Cell_V self, 
+	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
+		Lu_N_Cell_VP self, 
 		lu_byte type, 
 		lu_value value,
 		lu_size x,
@@ -319,12 +321,12 @@
 
 	static inline Lu_N_Column_Node lu_n_column__cell_add(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base new_cell)
 	{
-		lu__assert(self);
-		lu__assert(new_cell);
-		lu__assert(self->size_in_cells > 0);
-		lu__assert(self->units);
-		lu__assert(self->mem);
-		lu__assert(self->cell_type == new_cell->type);
+		lu__debug_assert(self);
+		lu__debug_assert(new_cell);
+		lu__debug_assert(self->size_in_cells > 0);
+		lu__debug_assert(self->units);
+		lu__debug_assert(self->mem);
+		lu__debug_assert(self->cell_type == new_cell->type);
 
 		lu_size index = lu_n_column__hash_to_index(self, hash);
 
@@ -370,11 +372,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table_Comp
 //
-// n_tables are always "3d"
-
-	struct lu_n_table_base {
-		Lu_Mem mem;
-	};
 
 	struct lu_n_table_comp {
 		Lu_Mem mem;
@@ -383,7 +380,7 @@
 		lu_size d;
 
 		// w x h x d, empty by default
-		struct lu_n_cell_v* cells;
+		struct lu_n_cell_vp* cells;
 	};
 
 	static Lu_N_Table_Comp lu_n_table_comp__create(
@@ -396,9 +393,24 @@
 
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
 
-	static inline Lu_N_Cell_V lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
+	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
 	{
 		return &self->cells[z * self->w * self->h + y * self->w + x];
 	}
 
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Table
+//
+
+	struct lu_n_table {
+		Lu_Mem mem;
+
+		lu_size w;
+		lu_size h;
+		lu_size d;
+
+		lu_byte cell_type;
+
+
+	};

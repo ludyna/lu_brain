@@ -28,15 +28,15 @@
 		self->h = height;
 		self->d = depth;
 
-		self->cells = (struct lu_n_cell_v*) lu_mem__alloc(
+		self->cells = (struct lu_n_cell_vp*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct lu_n_cell_v) * self->w * self->h * self->d
+			sizeof(struct lu_n_cell_vp) * self->w * self->h * self->d
 		);
 
 		lu_size z;
 		lu_size x;
 		lu_size y;
-		Lu_N_Cell_V cell;
+		Lu_N_Cell_VP cell;
 
 		lu_size wh = width * height;
 		lu_size z_shift;
@@ -52,7 +52,7 @@
 				{
 					cell = &self->cells[zy_shift + x]; 
 
-					lu_n_cell_v__init(cell, LU_N_CELL__V, comp_calc->steps[z], x, y, z);
+					lu_n_cell_vp__init(cell, LU_N_CELL_VP, comp_calc->steps[z], x, y, z);
 				} 
 			}
 		}

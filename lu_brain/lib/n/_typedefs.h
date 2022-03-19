@@ -7,7 +7,7 @@
 
 enum n_cell_type {
 	LU_N_CELL__0,
-	LU_N_CELL__V, // for p and v
+	LU_N_CELL_VP, // for p and v
 	LU_N_CELL__1,
 	LU_N_CELL__2,
 	LU_N_CELL__3,
@@ -16,7 +16,7 @@ enum n_cell_type {
 };
 
 typedef struct lu_n_cell_base* Lu_N_Cell_Base; 
-typedef struct lu_n_cell_v* Lu_N_Cell_V;
+typedef struct lu_n_cell_vp* Lu_N_Cell_VP;
 typedef struct lu_n_cell_1* Lu_N_Cell_1;
 typedef struct lu_n_cell_2* Lu_N_Cell_2; 
 typedef struct lu_n_cell_3* Lu_N_Cell_3;

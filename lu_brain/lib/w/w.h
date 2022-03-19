@@ -61,7 +61,7 @@
 
 		lu_size ix = lu_comp_calc__ix(comp_calc, p);
 
-		Lu_N_Cell_V n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
+		Lu_N_Cell_VP n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
 		lu__debug_assert(n_cell);
 
 		self->super.n_cell_0 = (Lu_N_Cell_Base) n_cell;
@@ -110,7 +110,7 @@
 		v = lu_comp_calc__norm(comp_calc, v);
 		lu_size ix = lu_comp_calc__ix(comp_calc, v);
 
-		Lu_N_Cell_V n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
+		Lu_N_Cell_VP n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
 		lu__debug_assert(n_cell);
 
 		self->super.n_cell_0 = (Lu_N_Cell_Base) n_cell;
