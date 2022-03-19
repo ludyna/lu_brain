@@ -403,6 +403,21 @@
 // Lu_N_Table
 //
 
+	struct lu_n_cell {
+		lu_size next_ix;
+		// lu_size id; nema smyslu davaty id, yaksho my mozhemu vziaty &lu_n_cell - &cells i bude id
+
+		lu_size links_ix; // index to back links strings (zero limited) in previous n_table
+	};
+
+	/*
+		Link strings
+	*/
+	struct lu_n_links {
+
+
+	};
+
 	struct lu_n_table {
 		Lu_Mem mem;
 
@@ -410,7 +425,7 @@
 		lu_size h;
 		lu_size d;
 
-		lu_byte cell_type;
+		lu_byte cell_type; // nema smyslu davaty cell_type v komirku koly to vse povtoruyetsia
 
 
 	};
