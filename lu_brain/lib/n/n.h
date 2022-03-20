@@ -45,6 +45,7 @@
 		self->value = value;
 		self->x = x;
 		self->y = y;
+	
 		self->z = z;
 	}
 
@@ -291,83 +292,83 @@
 // Lu_N_Column 
 
 
-	// tut bude po inshomu, tut mozhna optymizuvaty
-	// bo naspavdi, ce bude w x h cells
-	// i kozhna vertycalna cell ne bude peretynatys z inshymy, vidpovidno
-	// Lu_N_Column_Node* units; bude okreymyy dlia kozhnoho vertykalna cell
+	// // tut bude po inshomu, tut mozhna optymizuvaty
+	// // bo naspavdi, ce bude w x h cells
+	// // i kozhna vertycalna cell ne bude peretynatys z inshymy, vidpovidno
+	// // Lu_N_Column_Node* units; bude okreymyy dlia kozhnoho vertykalna cell
  
-	struct lu_n_column {
-		Lu_Mem mem;
-		Lu_N_Column_Node* units; // unit might contain more than one node
-		lu_size size_in_cells;
-		lu_byte cell_type;
-	};
+	// struct lu_n_column {
+	// 	Lu_Mem mem;
+	// 	Lu_N_Column_Node* units; // unit might contain more than one node
+	// 	lu_size size_in_cells;
+	// 	lu_byte cell_type;
+	// };
 
-	//
-	// Create & destroy
-	// 
+	// //
+	// // Create & destroy
+	// // 
 
-	static Lu_N_Column lu_n_column__create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type);
-	static void lu_n_column__destroy(Lu_N_Column self);
+	// static Lu_N_Column lu_n_column__create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type);
+	// static void lu_n_column__destroy(Lu_N_Column self);
 
-	//
-	// Main methods
-	//
+	// //
+	// // Main methods
+	// //
 
-	static inline lu_size lu_n_column__hash_to_index(Lu_N_Column self, lu_size hash)
-	{
-		return hash % self->size_in_cells;
-	}
+	// static inline lu_size lu_n_column__hash_to_index(Lu_N_Column self, lu_size hash)
+	// {
+	// 	return hash % self->size_in_cells;
+	// }
 
-	static inline Lu_N_Column_Node lu_n_column__cell_add(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base new_cell)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(new_cell);
-		lu__debug_assert(self->size_in_cells > 0);
-		lu__debug_assert(self->units);
-		lu__debug_assert(self->mem);
-		lu__debug_assert(self->cell_type == new_cell->type);
+	// static inline Lu_N_Column_Node lu_n_column__cell_add(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base new_cell)
+	// {
+	// 	lu__debug_assert(self);
+	// 	lu__debug_assert(new_cell);
+	// 	lu__debug_assert(self->size_in_cells > 0);
+	// 	lu__debug_assert(self->units);
+	// 	lu__debug_assert(self->mem);
+	// 	lu__debug_assert(self->cell_type == new_cell->type);
 
-		lu_size index = lu_n_column__hash_to_index(self, hash);
+	// 	lu_size index = lu_n_column__hash_to_index(self, hash);
 
-		Lu_N_Column_Node node = lu_n_column_node__create(self->mem, new_cell, self->units[index]);
-		self->units[index] = node;
+	// 	Lu_N_Column_Node node = lu_n_column_node__create(self->mem, new_cell, self->units[index]);
+	// 	self->units[index] = node;
 
-		return node;
-	}
+	// 	return node;
+	// }
 
-	static Lu_N_Column_Node lu_n_column__node_find(Lu_N_Column self, Lu_N_Cell_Base cell, lu_size hash);
+	// static Lu_N_Column_Node lu_n_column__node_find(Lu_N_Column self, Lu_N_Cell_Base cell, lu_size hash);
 
-	static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base cell);
+	// static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base cell);
  
- 	static Lu_N_Cell_Base lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left);
- 	static Lu_N_Cell_Base lu_n_column__cell_get_2(
- 		Lu_N_Column self, 
- 		lu_size hash, 
- 		Lu_N_Cell_Base top_left, 
- 		Lu_N_Cell_Base top_right
- 	);
- 	static Lu_N_Cell_Base lu_n_column__cell_get_3(
- 		Lu_N_Column self, 
- 		lu_size hash, 
- 		Lu_N_Cell_Base top_left, 
- 		Lu_N_Cell_Base top_right, 
- 		Lu_N_Cell_Base bottom_left
- 	);
- 	static Lu_N_Cell_Base lu_n_column__cell_get_4(
- 		Lu_N_Column self, 
- 		lu_size hash, 
- 		Lu_N_Cell_Base top_left, 
- 		Lu_N_Cell_Base top_right, 
- 		Lu_N_Cell_Base bottom_left, 
- 		Lu_N_Cell_Base bottom_right
- 	);
+ // 	static Lu_N_Cell_Base lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left);
+ // 	static Lu_N_Cell_Base lu_n_column__cell_get_2(
+ // 		Lu_N_Column self, 
+ // 		lu_size hash, 
+ // 		Lu_N_Cell_Base top_left, 
+ // 		Lu_N_Cell_Base top_right
+ // 	);
+ // 	static Lu_N_Cell_Base lu_n_column__cell_get_3(
+ // 		Lu_N_Column self, 
+ // 		lu_size hash, 
+ // 		Lu_N_Cell_Base top_left, 
+ // 		Lu_N_Cell_Base top_right, 
+ // 		Lu_N_Cell_Base bottom_left
+ // 	);
+ // 	static Lu_N_Cell_Base lu_n_column__cell_get_4(
+ // 		Lu_N_Column self, 
+ // 		lu_size hash, 
+ // 		Lu_N_Cell_Base top_left, 
+ // 		Lu_N_Cell_Base top_right, 
+ // 		Lu_N_Cell_Base bottom_left, 
+ // 		Lu_N_Cell_Base bottom_right
+ // 	);
 
-	//
-	// Utility
-	//  
+	// //
+	// // Utility
+	// //  
 
-	static void lu_n_column__print_distribution(Lu_N_Column self);
+	// static void lu_n_column__print_distribution(Lu_N_Column self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table_Comp
@@ -404,7 +405,7 @@
 //
 
 	struct lu_n_cell {
-		lu_size next_ix;
+		lu_size prev_ix;
 		// lu_size id; nema smyslu davaty id, yaksho my mozhemu vziaty &lu_n_cell - &cells i bude id
 
 		// index to back links strings (zero limited) in for prev (child) n_table located in this n_table
@@ -414,10 +415,36 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_String
 
+	#define LU_N_STRING__END LU_SIZE__MAX
+
 	struct lu_n_string {
+		lu_size pos;
 		lu_p_size p;
 	};
 
+	static inline void lu_n_string__init(Lu_N_String self, lu_p_size p)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(p);
+
+		self->pos = 0;
+		self->p = p;
+	}
+
+	static inline void lu_n_string__reset(Lu_N_String self)
+	{
+		lu__debug_assert(self);
+		self->p = NULL;
+		self->pos = 0;
+	}
+
+	static inline lu_size lu_n_string__get(Lu_N_String self)
+	{
+		// I know it can be rewritten with: return p[pos++]
+		lu_size v = self->p[self->pos];
+		++self->pos;
+		return v;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Free_Links
