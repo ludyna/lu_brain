@@ -400,23 +400,51 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Table
+// Lu_N_Cell
 //
 
 	struct lu_n_cell {
 		lu_size next_ix;
 		// lu_size id; nema smyslu davaty id, yaksho my mozhemu vziaty &lu_n_cell - &cells i bude id
 
-		lu_size links_ix; // index to back links strings (zero limited) in previous n_table
+		// index to back links strings (zero limited) in for prev (child) n_table located in this n_table
+		lu_size links_ix; 
 	};
 
-	/*
-		Link strings
-	*/
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_String
+
+	struct lu_n_string {
+		lu_p_size p;
+	};
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Free_Links
+//
+	struct lu_n_free_links {
+		// free (deleted) strings
+		// Ce maye buty okrema structura
+		lu_p_size *free_1;
+		lu_p_size *free_2;
+		lu_p_size *free_4;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Links
+// Mozhe buty dlia vsih n_table, chy krashche zrobyty dlia kozhnoho n_column?
+// Dlia kozhnoho n_column krashche - maksymalna rozparalezaciya
+
 	struct lu_n_links {
+		lu_p_size *p;
 
-
+		struct lu_n_free_links free_links;
 	};
+
+	static lu_p_size lu_n_links__alloc(Lu_N_Links self, lu_size size);
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Table
 
 	struct lu_n_table {
 		Lu_Mem mem;
