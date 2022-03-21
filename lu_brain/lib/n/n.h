@@ -463,26 +463,39 @@
 // Dlia kozhnoho n_column krashche - maksymalna rozparalezaciya
 
 	struct lu_n_links {
-		lu_p_size *p;
+		lu_p_size p;
 
-		struct lu_n_free_links free_links;
+		//struct lu_n_free_links free_links;
 	};
 
-	static lu_p_size lu_n_links__alloc(Lu_N_Links self, lu_size size);
+	static Lu_N_Links lu_n_links__init(Lu_Mem mem, lu_size size);
+	static void lu_n_links__deinit(Lu_N_Links self, Lu_Mem mem);
+
+	static inline lu_p_size lu_n_links__alloc(Lu_N_Links self, lu_size size)
+	{
+
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
 // 
 
+	////
+	// Having separete columns helps with parallelization in the future, but takes a little bit more memory.
 	// my mozhemo vykorystovuvaty columns, ale treba
 	// prosto znaty v yakomu poriadku zberihayemo string, sho prosto
+	// size parne, 0-size/2 cells, size/2-size - free cells
 	struct lu_n_column {
 		lu_size size;
 		struct lu_n_cell* cells;
+
+		// links size is proportional to cells size
+		struct lu_n_links links;
 	};
 
-	
+	static Lu_N_Column lu_n_column__init(Lu_Mem mem, lu_size size);
+	static void lu_n_column__deinit(Lu_N_Column self, Lu_Mem mem);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table
@@ -495,5 +508,8 @@
 
 		lu_byte cell_type; // nema smyslu davaty cell_type v komirku koly to vse povtoruyetsia
 
-
+		struct lu_n_column* columns;
 	};
+
+	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type);
+	static void lu_n_table__destroy(Lu_N_Table self);
