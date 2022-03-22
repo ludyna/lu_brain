@@ -4,3 +4,34 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
+
+
+	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type)
+	{
+		lu__assert(mem);
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+
+		Lu_N_Table self = (Lu_N_Table) lu_mem__alloc(mem, sizeof(struct lu_n_table));
+		lu__alloc_assert(self);
+
+		self->w = w;
+		self->h = h;
+		self->cell_type = cells_type;
+
+		self->columns = (struct lu_n_column*) lu_mem__alloc(mem, sizeof(struct lu_n_column) * w * h);
+		lu__alloc_assert(self->columns);
+
+		return self;
+	}
+
+	static void lu_n_table__destroy(Lu_N_Table self)
+	{
+		lu__assert(self);
+		lu__assert(self->columns);
+
+		lu_mem__free(self->mem, (lu_p_byte) self->columns);
+		self->columns = NULL;
+
+		lu_mem__free(self->mem, (lu_p_byte) self);
+	}
