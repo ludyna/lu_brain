@@ -14,7 +14,7 @@
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
 		lu_size n_h,
-		lu_byte cell_type
+		lu_byte n_cell_type
 	)
 	{
 		lu__assert(config);
@@ -31,7 +31,7 @@
 
 		if (n_w > 0 && n_h > 0)
 		{
-			self->n_table = NULL; //lu_n_table__create(config->n_mem, n_width, n_height, cell_type, Lu_Config);
+			self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, n_cell_type, config);
 		}
 		else
 		{
@@ -62,10 +62,10 @@
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
 		lu_size n_h,
-		lu_byte cell_type
+		lu_byte n_cell_type
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, cell_type);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, n_cell_type);
 		lu__assert(self);
 		
 		self->c = (Lu_Slot_Base) lu_slot_one__create(self->s_mem, NULL);
@@ -84,10 +84,10 @@
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
 		lu_size n_h,
-		lu_byte cell_type
+		lu_byte n_cell_type
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, cell_type);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, n_cell_type);
 		lu__assert(self);
  
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(self->s_mem, children_count, true);
