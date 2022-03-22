@@ -131,7 +131,7 @@
 		Lu_S_Layer_Base p;
 		Lu_Slot_Base c;
 
-		Lu_N_Column n_table;
+		Lu_N_Table n_table;
 		Lu_Arr w_tables;
 
 		// virtual destructor

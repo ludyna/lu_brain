@@ -4,6 +4,6 @@
 
 #include "names/_module.lu"
 #include "n_cell.lu"
-#include "n_table_comp.lu"
 #include "n_column.lu"
-#include "n.lu"
+#include "n_table.lu"
+#include "n_table_comp.lu"

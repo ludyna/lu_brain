@@ -6,21 +6,33 @@
 // 
 
 
-	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type)
+	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type, Lu_Config config)
 	{
 		lu__assert(mem);
 		lu__assert(w > 0);
 		lu__assert(h > 0);
+		lu__assert(config);
 
 		Lu_N_Table self = (Lu_N_Table) lu_mem__alloc(mem, sizeof(struct lu_n_table));
 		lu__alloc_assert(self);
 
+		self->mem = mem;
 		self->w = w;
 		self->h = h;
-		self->cell_type = cells_type;
+		self->cell_type = cell_type;
 
-		self->columns = (struct lu_n_column*) lu_mem__alloc(mem, sizeof(struct lu_n_column) * w * h);
+		lu_size s = w * h;
+
+		self->columns = (struct lu_n_column*) lu_mem__alloc(mem, sizeof(struct lu_n_column) * s);
 		lu__alloc_assert(self->columns);
+
+		Lu_N_Column column;
+		for (lu_size i = 0; i < s; i++)
+		{
+			column = &self->columns[i];
+
+			lu_n_column__init(column, mem, config->n_column_size);
+		}
 
 		return self;
 	}
@@ -29,6 +41,15 @@
 	{
 		lu__assert(self);
 		lu__assert(self->columns);
+
+		Lu_N_Column column;
+		lu_size s = self->w * self->h;
+		for (lu_size i = 0; i < s; i++)
+		{
+			column = &self->columns[i];
+
+			lu_n_column__deinit(column, self->mem);
+		}
 
 		lu_mem__free(self->mem, (lu_p_byte) self->columns);
 		self->columns = NULL;

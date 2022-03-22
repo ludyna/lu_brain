@@ -492,7 +492,7 @@
 		struct lu_n_links links;
 	};
 
-	static Lu_N_Column lu_n_column__init(Lu_Mem mem, lu_size size);
+	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size size);
 	static void lu_n_column__deinit(Lu_N_Column self, Lu_Mem mem);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -509,5 +509,5 @@
 		struct lu_n_column* columns;
 	};
 
-	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type);
+	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type, Lu_Config config);
 	static void lu_n_table__destroy(Lu_N_Table self);

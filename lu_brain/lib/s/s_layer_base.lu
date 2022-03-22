@@ -16,6 +16,7 @@
 	{
 		lu__assert(config);
 		lu__assert(config->s_mem);
+		lu__assert(config->n_mem);
 
 		self->s_mem = config->s_mem;
 
@@ -25,7 +26,7 @@
 		self->c = NULL;
 		self->destroy = destroy;
 
-		self->n_table = NULL;
+		self->n_table = NULL; //lu_n_table__create(config->n_mem, n_width, n_height, cell_type, Lu_Config);
 		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
 		lu__assert(self->w_tables);
 
@@ -95,6 +96,9 @@
 			w_table = (Lu_W_Table) lu_arr__get(self->w_tables, i);
 			lu_w_table__destroy(w_table);
 		}
+
+		if (self->n_table)
+			lu_n_table__destroy(self->n_table);
 
 		lu_arr__destroy(self->w_tables);
 
