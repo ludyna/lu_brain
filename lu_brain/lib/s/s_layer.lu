@@ -8,7 +8,10 @@
 	static Lu_S_Layer lu_s_layer__create(
 		Lu_Config config, 
 		lu_size level, 
-		lu_size children_count
+		lu_size children_count,
+		lu_size n_w,
+		lu_size n_h,
+		lu_size n_cell_type
 	)
 	{
 		lu__assert(config);
@@ -18,7 +21,17 @@
 
 		if (children_count == 0)
 		{
-			lu_s_layer_base__init(&self->super, NULL, config, LU_S_LAYER__LAYER, level, lu_s_layer__destroy); 
+			lu_s_layer_base__init(
+				&self->super, 
+				NULL, 
+				config, 
+				LU_S_LAYER__LAYER, 
+				level, 
+				lu_s_layer__destroy,
+				n_w,
+				n_h,
+				n_cell_type
+			); 
 		}
 		else if (children_count == 1)
 		{
@@ -28,7 +41,10 @@
 				config, 
 				LU_S_LAYER__LAYER, 
 				level, 
-				lu_s_layer__destroy
+				lu_s_layer__destroy, 
+				n_w,
+				n_h,
+				n_cell_type
 			);
 		}
 		else
@@ -40,7 +56,10 @@
 				config, 
 				LU_S_LAYER__LAYER, 
 				level, 
-				lu_s_layer__destroy
+				lu_s_layer__destroy,
+				n_w,
+				n_h,
+				n_cell_type
 			);
 		}
 

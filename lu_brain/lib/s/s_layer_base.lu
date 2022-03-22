@@ -11,7 +11,10 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		lu_size n_w,
+		lu_size n_h,
+		lu_byte cell_type
 	)
 	{
 		lu__assert(config);
@@ -26,7 +29,15 @@
 		self->c = NULL;
 		self->destroy = destroy;
 
-		self->n_table = NULL; //lu_n_table__create(config->n_mem, n_width, n_height, cell_type, Lu_Config);
+		if (n_w > 0 && n_h > 0)
+		{
+			self->n_table = NULL; //lu_n_table__create(config->n_mem, n_width, n_height, cell_type, Lu_Config);
+		}
+		else
+		{
+			self->n_table = NULL; 
+		}
+
 		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
 		lu__assert(self->w_tables);
 
@@ -48,10 +59,13 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		lu_size n_w,
+		lu_size n_h,
+		lu_byte cell_type
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, level, destroy);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, cell_type);
 		lu__assert(self);
 		
 		self->c = (Lu_Slot_Base) lu_slot_one__create(self->s_mem, NULL);
@@ -67,10 +81,13 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		lu_size n_w,
+		lu_size n_h,
+		lu_byte cell_type
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, level, destroy);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, cell_type);
 		lu__assert(self);
  
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(self->s_mem, children_count, true);

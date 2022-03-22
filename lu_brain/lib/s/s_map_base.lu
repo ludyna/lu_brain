@@ -133,17 +133,17 @@
 		// Create and connect layers
 		//
 
-		Lu_S_Layer story = lu_s_layer__create(config, 4, 1);
-		Lu_S_Layer scene = lu_s_layer__create(config, 3, 1);
-		Lu_S_Layer event = lu_s_layer__create(config, 2, 1);
-		Lu_S_Layer seq = lu_s_layer__create(config, 1, 1);
+		Lu_S_Layer story = lu_s_layer__create(config, 4, 1, 1, 1, LU_N_CELL__N);
+		Lu_S_Layer scene = lu_s_layer__create(config, 3, 1, 1, 1, LU_N_CELL__N);
+		Lu_S_Layer event = lu_s_layer__create(config, 2, 1, 1, 1, LU_N_CELL__N);
+		Lu_S_Layer seq = lu_s_layer__create(config, 1, 1, 1, 1, LU_N_CELL__N);
 
 		lu__assert(story);
 		lu__assert(scene);
 		lu__assert(event);
 		lu__assert(seq);
 
-		Lu_S_Layer prev = lu_s_layer__create(config, 0, recs_count);
+		Lu_S_Layer prev = lu_s_layer__create(config, 0, recs_count, 1, 1, LU_N_CELL__N);
 		lu__assert(prev);
 		Lu_S_Layer recs_base = prev;
 		Lu_S_Layer recs = recs_base;
@@ -151,7 +151,7 @@
 		lu_size recs_layers_size = lu_s__Y(recs_count, 1);
 		for(lu_size i = 1; i < recs_layers_size; i++)
 		{
-			recs = lu_s_layer__create(config, 0, 1);
+			recs = lu_s_layer__create(config, 0, 1, 1, 1, LU_N_CELL__N);
 			lu__assert(recs);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) recs, (Lu_S_Layer_Base) prev);
@@ -229,7 +229,7 @@
 		lu_size frames_layers_size = lu_s__Y(rec->width, rec->height);
 		for (i = 1; i < frames_layers_size; i++)
 		{
-			rec_layer = lu_s_layer__create(config, 0, 1);
+			rec_layer = lu_s_layer__create(config, 0, 1, 1, 1, LU_N_CELL__N);
 			lu__assert(rec_layer);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_layer, prev);

@@ -18,17 +18,20 @@
 		Lu_S_Layer_Comp self = (Lu_S_Layer_Comp) lu_mem__alloc(config->s_mem, sizeof(struct lu_s_layer_comp));
 		lu__assert(self);
 
+		Lu_Rec rec = frame->rec;
+		lu__assert(rec);
+
 		lu_s_layer_base__init(
 			&self->super, 
 			(Lu_S_Layer_Base)frame,
 			config,
 			LU_S_LAYER__COMP,
 			0,
-			lu_s_layer_comp__destroy
+			lu_s_layer_comp__destroy,
+			0, 
+			0, 
+			LU_N_CELL_VP
 		);
-
-		Lu_Rec rec = frame->rec;
-		lu__assert(rec);
 
 		lu_s_view_p__init(
 			&self->p_view, 

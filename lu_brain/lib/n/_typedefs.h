@@ -12,6 +12,7 @@ enum n_cell_type {
 	LU_N_CELL__2,
 	LU_N_CELL__3,
 	LU_N_CELL__4,
+	LU_N_CELL__N,
 	LU_N_CELL__END
 };
 

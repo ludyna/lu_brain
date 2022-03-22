@@ -144,7 +144,10 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		lu_size n_w,
+		lu_size n_h,
+		lu_byte cell_type
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
@@ -153,7 +156,10 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		lu_size n_w,
+		lu_size n_h,
+		lu_byte cell_type
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
@@ -163,7 +169,10 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		lu_size n_w,
+		lu_size n_h,
+		lu_byte cell_type
 	);
 
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self);
@@ -239,7 +248,14 @@
 		Lu_S_Layer_Base child;
 	};
 
-	static Lu_S_Layer lu_s_layer__create(Lu_Config config, lu_size level, lu_size children_count);
+	static Lu_S_Layer lu_s_layer__create(
+		Lu_Config config, 
+		lu_size level, 
+		lu_size children_count,
+		lu_size n_w,
+		lu_size n_h,
+		lu_size n_cell_type
+	);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
 

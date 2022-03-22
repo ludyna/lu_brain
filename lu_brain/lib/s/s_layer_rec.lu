@@ -20,7 +20,10 @@
 			config,
 			LU_S_LAYER__REC,
 			1,
-			lu_s_layer_rec__destroy
+			lu_s_layer_rec__destroy,
+			rec->width,
+			rec->height * 2, 
+			LU_N_CELL__N
 		);
 
 		self->rec = rec;
