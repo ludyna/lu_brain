@@ -403,7 +403,10 @@
 // Lu_N_Cell
 //
 
+	#define LU_N__NULL 0
+
 	struct lu_n_cell {
+		// we add +1 when saving index
 		lu_size prev_ix;
 		// lu_size id; nema smyslu davaty id, yaksho my mozhemu vziaty &lu_n_cell - &cells i bude id
 
@@ -413,8 +416,6 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_String
-
-	#define LU_N_STRING__END LU_SIZE__MAX
 
 	struct lu_n_string {
 		lu_size pos;

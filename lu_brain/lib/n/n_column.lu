@@ -215,10 +215,23 @@
 
 	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size size)
 	{
+		lu__assert(self);
+		lu__assert(mem);
 
+		self->size = size;
+		lu_size b_size = sizeof(struct lu_n_cell) * size * 2;
+		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, b_size);
+		lu__alloc_assert(self->cells);
+
+		memset(self->cells, LU_N__NULL, b_size);
+
+		return self;
 	}
 
 	static void lu_n_column__deinit(Lu_N_Column self, Lu_Mem mem)
 	{
-		
+		lu__assert(self);
+		lu__assert(mem);
+
+		lu_mem__free(mem, (lu_p_byte) self->cells);
 	}
