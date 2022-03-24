@@ -179,6 +179,13 @@
 
 	static void lu_s_layer_base__destroy_n_table(Lu_S_Layer_Base self);
 
+	static inline enum lu_s_layer_type lu_s_layer_base__get_type(Lu_S_Layer_Base self)
+	{
+		lu__debug_assert(self);
+
+		return self->type;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Layers
 //
@@ -207,6 +214,20 @@
 		Lu_N_Table n_table;
 		Lu_Arr w_tables;
 	};
+
+	static Lu_S_Layer lu_s_layer__init(
+		Lu_S_Layer self, 
+		Lu_Config config, 
+		enum lu_s_layer_type type,
+		lu_size level, 
+		lu_size children_count,
+		void (*destroy)(Lu_S_Layer_Base),
+		lu_size n_w,
+		lu_size n_h,
+		lu_size n_cell_type
+	);
+
+	static void lu_s_layer__deinit(Lu_S_Layer self);
 
 	static Lu_S_Layer lu_s_layer__create(
 		Lu_Config config, 

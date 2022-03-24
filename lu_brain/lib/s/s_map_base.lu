@@ -199,7 +199,7 @@
 
 		Lu_S_Layer_Rec rec_base = lu_s_layer_rec__create(config, rec);
 		lu__assert(rec_base);
-		lu__assert(rec_base->super.type == LU_S_LAYER__REC);
+		lu__assert(lu_s_layer_base__get_type((Lu_S_Layer_Base) rec_base) == LU_S_LAYER__REC);
 
 		//
 		// Create comp layers
@@ -242,7 +242,7 @@
 
 		lu_arr__set(self->bases, 0, (lu_p_void) slot_arr);
 
-		lu__assert(rec_base->super.type == LU_S_LAYER__REC);
+		lu__assert(lu_s_layer_base__get_type((Lu_S_Layer_Base) rec_base) == LU_S_LAYER__REC);
 		Lu_Slot_One slot_one = lu_slot_one__create(s_mem, rec_base);
 		lu__assert(slot_one);
 		

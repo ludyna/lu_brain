@@ -8,8 +8,10 @@
 	static Lu_S_Layer lu_s_layer__init(
 		Lu_S_Layer self, 
 		Lu_Config config, 
+		enum lu_s_layer_type type,
 		lu_size level, 
 		lu_size children_count,
+		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_cell_type
@@ -26,7 +28,7 @@
 				&self->super, 
 				NULL, 
 				config, 
-				LU_S_LAYER__LAYER, 
+				type, 
 				level, 
 				lu_s_layer__destroy
 			); 
@@ -37,7 +39,7 @@
 				&self->super, 
 				NULL, 
 				config, 
-				LU_S_LAYER__LAYER, 
+				type, 
 				level, 
 				lu_s_layer__destroy
 			);
@@ -49,7 +51,7 @@
 				NULL, 
 				children_count, 
 				config, 
-				LU_S_LAYER__LAYER, 
+				type, 
 				level, 
 				lu_s_layer__destroy
 			);
@@ -76,7 +78,7 @@
 	static void lu_s_layer__deinit(Lu_S_Layer self)
 	{
 		lu__assert(self);
-		
+
 		Lu_W_Table w_table;
 		for (lu_size i = 0; i < lu_arr__count(self->w_tables); i++)
 		{
@@ -108,7 +110,17 @@
 		Lu_S_Layer self = (Lu_S_Layer) lu_mem__alloc(config->s_mem, sizeof(struct lu_s_layer));
 		lu__alloc_assert(self);
 
-		lu_s_layer__init(self, config, level, children_count, n_w, n_h, n_cell_type);
+		lu_s_layer__init(
+			self, 
+			config, 
+			LU_S_LAYER__LAYER, 
+			level, 
+			children_count, 
+			lu_s_layer__destroy, 
+			n_w, 
+			n_h, 
+			n_cell_type
+		);
 
 		return self;
 	}
@@ -118,7 +130,9 @@
 		lu__assert(self);
 		lu__assert(self->s_mem);
 
-		lu_s_layer__deinit(self);
+		lu__assert(self->type == LU_S_LAYER__LAYER);
+
+		lu_s_layer__deinit((Lu_S_Layer) self);
 
 		lu_mem__free(self->s_mem, (lu_p_byte) self);
 	}
