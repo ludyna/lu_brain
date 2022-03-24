@@ -406,7 +406,7 @@
 	#define LU_N__NULL 0
 
 	struct lu_n_cell {
-		// we add +1 when saving index
+		// insead of adding +1 when saving index, we dont use 0 index cells
 		lu_size prev_ix;
 		// lu_size id; nema smyslu davaty id, yaksho my mozhemu vziaty &lu_n_cell - &cells i bude id
 
@@ -440,9 +440,8 @@
 
 	static inline lu_size lu_n_string__get(Lu_N_String self)
 	{
-		// I know it can be rewritten with: return p[pos++]
-		lu_size v = self->p[self->pos];
-		++self->pos;
+		lu_size v = self->p[self->pos]; 
+		v && (++self->pos);
 		return v;
 	}
 

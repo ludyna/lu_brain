@@ -61,6 +61,7 @@
 		lu__assert(wave);
 		lu__assert(data);
 		lu__assert(config);
+		lu__assert(self->super.n_table);
 
 		Lu_S_Layer_Base base = &self->super;
 
@@ -114,6 +115,10 @@
 		Lu_W_Cell w_cell;
 
 		lu_bool v_reset;
+
+		Lu_N_Table rec_n_table = self->super.n_table;
+		Lu_W_Table rec_w_table = lu_s_layer_base__get_w_table(&self->super, wave_id);
+		lu__assert(rec_w_table);
 
 		for (y = 0; y < data->h; y++)
 		{
