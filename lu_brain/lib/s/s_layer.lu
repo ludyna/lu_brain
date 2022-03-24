@@ -30,20 +30,20 @@
 				config, 
 				type, 
 				level, 
-				lu_s_layer__destroy
+				destroy
 			); 
 		}
-		else if (children_count == 1)
-		{
-			lu_s_layer_base__init_with_one_c_slot(
-				&self->super, 
-				NULL, 
-				config, 
-				type, 
-				level, 
-				lu_s_layer__destroy
-			);
-		}
+		// else if (children_count == 1)
+		// {
+		// 	lu_s_layer_base__init_with_one_c_slot(
+		// 		&self->super, 
+		// 		NULL, 
+		// 		config, 
+		// 		type, 
+		// 		level, 
+		// 		lu_s_layer__destroy
+		// 	);
+		// }
 		else
 		{
 			lu_s_layer_base__init_with_arr_c_slot(
@@ -53,7 +53,7 @@
 				config, 
 				type, 
 				level, 
-				lu_s_layer__destroy
+				destroy
 			);
 		}
 
@@ -130,7 +130,9 @@
 		lu__assert(self);
 		lu__assert(self->s_mem);
 
-		lu__assert(self->type == LU_S_LAYER__LAYER);
+		enum lu_s_layer_type type = lu_s_layer_base__get_type(self);
+
+		lu__assert(type == LU_S_LAYER__LAYER);
 
 		lu_s_layer__deinit((Lu_S_Layer) self);
 

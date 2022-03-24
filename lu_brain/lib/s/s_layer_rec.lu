@@ -39,10 +39,11 @@
 		lu__assert(self->s_mem);
 		lu__assert(self->type == LU_S_LAYER__REC);
 
-		Lu_S_Layer_Rec frame = (Lu_S_Layer_Rec) self;
+		Lu_S_Layer_Rec layer = (Lu_S_Layer_Rec) self;
 
-		lu__assert(frame->rec);
-		lu_s_layer_base__deinit(self);
+		lu__assert(layer->rec);
+
+		lu_s_layer__deinit(&layer->super);
 
 		lu_mem__free(self->s_mem, (lu_p_byte) self);
 	}
