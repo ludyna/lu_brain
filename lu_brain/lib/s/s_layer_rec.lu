@@ -106,17 +106,17 @@
 		Lu_Comp_Calc p_comp_calc;
 		Lu_Comp_Calc v_comp_calc;
 
-		Lu_W_Table rec_n_table = lu_s_layer__get_w_table(&self->super, wave_id);
-		lu__assert(rec_n_table);
+		Lu_W_Table rec_w_table = lu_s_layer__get_w_table(&self->super, wave_id);
+		lu__assert(rec_w_table);
 
-		is_reset = rec_n_table->wave_id != wave_id || ((block_id - rec_n_table->block_id) > 1);
+		is_reset = rec_w_table->wave_id != wave_id || ((block_id - rec_w_table->block_id) > 1);
 		lu__debug("\n IS_RESET: %d ", is_reset);
 
-		rec_n_table->wave_id = wave_id;
-		rec_n_table->block_id = block_id;
+		rec_w_table->wave_id = wave_id;
+		rec_w_table->block_id = block_id;
 
-		Lu_W_Cell w_p_cell;
-		Lu_W_Cell w_v_cell;
+		Lu_W_Cell rec_w_p_cell;
+		Lu_W_Cell rec_w_v_cell;
 
 		lu_bool v_reset;
 
@@ -133,8 +133,8 @@
 			{
 				xy_shift = y_shift + x;
 
-				w_p_cell = lu_w_table__get_cell(rec_n_table, x, y);
-				w_v_cell = lu_w_table__get_cell(rec_n_table, x, y + 1);
+				rec_w_p_cell = lu_w_table__get_cell(rec_w_table, x, y);
+				rec_w_v_cell = lu_w_table__get_cell(rec_w_table, x, y + 1);
 
 				for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
 				{
