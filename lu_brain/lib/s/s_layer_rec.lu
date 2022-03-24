@@ -9,6 +9,9 @@
 	{
 		lu__assert(config);
 		lu__assert(config->s_mem);
+		lu__assert(rec);
+		lu__assert(rec->width > 0);
+		lu__assert(rec->height > 0);
 
 		Lu_S_Layer_Rec self = (Lu_S_Layer_Rec) lu_mem__alloc(config->s_mem, sizeof(struct lu_s_layer_rec));
 		lu__assert(self);
@@ -22,7 +25,7 @@
 			1,
 			lu_s_layer_rec__destroy,
 			rec->width,
-			rec->height * 2, 
+			rec->height * 2, /* IMPORTANT MULTIPLIER HERE */
 			LU_N_CELL__N
 		);
 
@@ -103,20 +106,20 @@
 		Lu_Comp_Calc p_comp_calc;
 		Lu_Comp_Calc v_comp_calc;
 
-		Lu_W_Table rec_table = lu_s_layer_base__get_w_table(&self->super, wave_id);
-		lu__assert(rec_table);
+		Lu_W_Table rec_n_table = lu_s_layer_base__get_w_table(&self->super, wave_id);
+		lu__assert(rec_n_table);
 
-		is_reset = rec_table->wave_id != wave_id || ((block_id - rec_table->block_id) > 1);
+		is_reset = rec_n_table->wave_id != wave_id || ((block_id - rec_n_table->block_id) > 1);
 		lu__debug("\n IS_RESET: %d ", is_reset);
 
-		rec_table->wave_id = wave_id;
-		rec_table->block_id = block_id;
+		rec_n_table->wave_id = wave_id;
+		rec_n_table->block_id = block_id;
 
-		Lu_W_Cell w_cell;
+		Lu_W_Cell w_p_cell;
+		Lu_W_Cell w_v_cell;
 
 		lu_bool v_reset;
 
-		Lu_N_Table rec_n_table = self->super.n_table;
 		Lu_W_Table rec_w_table = lu_s_layer_base__get_w_table(&self->super, wave_id);
 		lu__assert(rec_w_table);
 
@@ -130,7 +133,8 @@
 			{
 				xy_shift = y_shift + x;
 
-				w_cell = lu_w_table__get_cell(rec_table, x, y);
+				w_p_cell = lu_w_table__get_cell(rec_n_table, x, y);
+				w_v_cell = lu_w_table__get_cell(rec_n_table, x, y + 1);
 
 				for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
 				{

@@ -187,7 +187,9 @@
 	static void lu_w_table__destroy(Lu_W_Table self);
 
 	static inline Lu_W_Cell lu_w_table__get_cell(Lu_W_Table self, lu_size x, lu_size y)
-	{
+	{ 
+		lu__debug_assert(x < self->w);
+		lu__debug_assert(y < self->h);
 		return &self->cells[y * self->w + x];
 	}
 

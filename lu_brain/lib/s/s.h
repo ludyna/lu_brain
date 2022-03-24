@@ -127,12 +127,11 @@
 		lu_size level;
 
 		Lu_Mem s_mem;
+		Lu_Mem n_mem;
+		Lu_Mem w_mem;
 
 		Lu_S_Layer_Base p;
 		Lu_Slot_Base c;
-
-		Lu_N_Table n_table;
-		Lu_Arr w_tables;
 
 		// virtual destructor
 		void (*destroy)(Lu_S_Layer_Base);
@@ -144,10 +143,7 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base),
-		lu_size n_w,
-		lu_size n_h,
-		lu_byte cell_type
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
@@ -156,10 +152,7 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base),
-		lu_size n_w,
-		lu_size n_h,
-		lu_byte cell_type
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
@@ -169,10 +162,7 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base),
-		lu_size n_w,
-		lu_size n_h,
-		lu_byte cell_type
+		void (*destroy)(Lu_S_Layer_Base)
 	);
 
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self);
@@ -188,15 +178,6 @@
 	);
 
 	static void lu_s_layer_base__destroy_n_table(Lu_S_Layer_Base self);
-
-	static inline Lu_W_Table lu_s_layer_base__get_w_table(Lu_S_Layer_Base self, lu_size wave_id)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(self->w_tables);
-		lu__debug_assert(wave_id < lu_arr__size(self->w_tables));
-
-		return lu_arr__get(self->w_tables, wave_id);
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Layers
@@ -217,11 +198,41 @@
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
 	//
+	// Lu_S_Layer
+	//
+
+	struct lu_s_layer {
+		struct lu_s_layer_base super;
+
+		Lu_N_Table n_table;
+		Lu_Arr w_tables;
+	};
+
+	static Lu_S_Layer lu_s_layer__create(
+		Lu_Config config, 
+		lu_size level, 
+		lu_size children_count,
+		lu_size n_w,
+		lu_size n_h,
+		lu_size n_cell_type
+	);
+	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
+
+	static inline Lu_W_Table lu_s_layer__get_w_table(Lu_S_Layer self, lu_size wave_id)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(self->w_tables);
+		lu__debug_assert(wave_id < lu_arr__size(self->w_tables));
+
+		return lu_arr__get(self->w_tables, wave_id);
+	}
+
+	//
 	// Lu_S_Layer_Rec
 	//
 
 	struct lu_s_layer_rec {
-		struct lu_s_layer_base super;
+		struct lu_s_layer super;
 
 		Lu_Rec rec;
 	};
@@ -237,26 +248,7 @@
 		Lu_Process_Config config
 	);
 
-	//
-	// Lu_S_Layer
-	//
 
-	struct lu_s_layer {
-		struct lu_s_layer_base super;
-
-
-		Lu_S_Layer_Base child;
-	};
-
-	static Lu_S_Layer lu_s_layer__create(
-		Lu_Config config, 
-		lu_size level, 
-		lu_size children_count,
-		lu_size n_w,
-		lu_size n_h,
-		lu_size n_cell_type
-	);
-	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
 
 ///////////////////////////////////////////////////////////////////////////////

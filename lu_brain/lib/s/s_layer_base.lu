@@ -11,10 +11,7 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base),
-		lu_size n_w,
-		lu_size n_h,
-		lu_byte n_cell_type
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
 		lu__assert(config);
@@ -22,33 +19,14 @@
 		lu__assert(config->n_mem);
 
 		self->s_mem = config->s_mem;
+		self->n_mem = config->n_mem;
+		self->w_mem = config->w_mem;
 
 		self->type = type;
 		self->level = level;
 		self->p = p;
 		self->c = NULL;
 		self->destroy = destroy;
-
-		if (n_w > 0 && n_h > 0)
-		{
-			self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, n_cell_type, config);
-		}
-		else
-		{
-			self->n_table = NULL; 
-		}
-
-		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
-		lu__assert(self->w_tables);
-
-		Lu_W_Table w_table;
-		for (lu_size i = 0; i < lu_arr__size(self->w_tables); i++)
-		{
-			w_table = lu_w_table__create(config, 1, 1);
-			lu__assert(w_table);
-			
-			lu_arr__set(self->w_tables, i, (lu_p_void) w_table);
-		}
 
 		return self;
 	}
@@ -59,13 +37,10 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base),
-		lu_size n_w,
-		lu_size n_h,
-		lu_byte n_cell_type
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, n_cell_type);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy);
 		lu__assert(self);
 		
 		self->c = (Lu_Slot_Base) lu_slot_one__create(self->s_mem, NULL);
@@ -81,13 +56,10 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base),
-		lu_size n_w,
-		lu_size n_h,
-		lu_byte n_cell_type
+		void (*destroy)(Lu_S_Layer_Base)
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, level, destroy, n_w, n_h, n_cell_type);
+		self = lu_s_layer_base__init(self, p, config, type, level, destroy);
 		lu__assert(self);
  
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(self->s_mem, children_count, true);
@@ -106,18 +78,6 @@
 			self->c->destroy(self->c, self->s_mem);
 			self->c = NULL;
 		}
-
-		Lu_W_Table w_table;
-		for (lu_size i = 0; i < lu_arr__count(self->w_tables); i++)
-		{
-			w_table = (Lu_W_Table) lu_arr__get(self->w_tables, i);
-			lu_w_table__destroy(w_table);
-		}
-
-		if (self->n_table)
-			lu_n_table__destroy(self->n_table);
-
-		lu_arr__destroy(self->w_tables);
 
 		self->p = NULL;
 	}

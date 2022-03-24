@@ -27,10 +27,7 @@
 			config,
 			LU_S_LAYER__COMP,
 			0,
-			lu_s_layer_comp__destroy,
-			0, 
-			0, 
-			LU_N_CELL_VP
+			lu_s_layer_comp__destroy
 		);
 
 		lu_s_view_p__init(
