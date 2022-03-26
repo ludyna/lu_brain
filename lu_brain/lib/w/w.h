@@ -6,9 +6,20 @@
 // Lu_W_Cell 
 
 	struct lu_w_cell {
-		Lu_N_Cell_Base n_cell_0;
+		lu_p_void n_cell;
 		lu_value sig;
+		lu_size reg;
 	};
+
+	static inline void lu_w_cell__reset(Lu_W_Cell self)
+	{
+		lu__debug_assert(self);
+		self->n_cell = NULL;
+		self->sig = 0;
+		self->reg = 0;
+	}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_P
@@ -64,7 +75,7 @@
 		Lu_N_Cell_VP n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
 		lu__debug_assert(n_cell);
 
-		self->super.n_cell_0 = (Lu_N_Cell_Base) n_cell;
+		self->super.n_cell =  n_cell;
 		self->super.sig = 1.0;
 	}
 
@@ -113,7 +124,7 @@
 		Lu_N_Cell_VP n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
 		lu__debug_assert(n_cell);
 
-		self->super.n_cell_0 = (Lu_N_Cell_Base) n_cell;
+		self->super.n_cell = n_cell;
 		self->super.sig = 1.0;
 	}
 

@@ -120,8 +120,7 @@
 
 		lu_bool v_reset;
 
-		Lu_W_Table rec_w_table = lu_s_layer__get_w_table(&self->super, wave_id);
-		lu__assert(rec_w_table);
+		lu_size rec_y;
 
 		for (y = 0; y < data->h; y++)
 		{
@@ -129,12 +128,17 @@
 
 			lu__debug("\n");
 
+			rec_y = y * 2;
+
 			for (x = 0; x < data->w; x++)
 			{
 				xy_shift = y_shift + x;
 
-				rec_w_p_cell = lu_w_table__get_cell(rec_w_table, x, y);
-				rec_w_v_cell = lu_w_table__get_cell(rec_w_table, x, y + 1);
+				rec_w_p_cell = lu_w_table__get_cell(rec_w_table, x, rec_y);
+				rec_w_v_cell = lu_w_table__get_cell(rec_w_table, x, rec_y + 1);
+
+				lu_w_cell__reset(rec_w_p_cell);
+				lu_w_cell__reset(rec_w_v_cell);
 
 				for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
 				{

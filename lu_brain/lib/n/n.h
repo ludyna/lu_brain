@@ -33,15 +33,12 @@
 
 	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
 		Lu_N_Cell_VP self, 
-		lu_byte type, 
 		lu_value value,
 		lu_size x,
 		lu_size y,
 		lu_size z
 	)
 	{
-		lu_n_cell_base__init((Lu_N_Cell_Base) self, type);
-
 		self->value = value;
 		self->x = x;
 		self->y = y;
