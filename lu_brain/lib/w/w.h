@@ -23,7 +23,8 @@
 	{
 		lu__debug_assert(self);
 
-		
+		self->reg = lu_hash_comb(self->reg, n_cell_ix);
+		self->sig += sig;
 	}
 
 
