@@ -395,6 +395,11 @@
 		return &self->cells[z * self->w * self->h + y * self->w + x];
 	}
 
+	static inline lu_size lu_n_table_comp__get_cell_ix(Lu_N_Table_Comp self, Lu_N_Cell_VP cell)
+	{
+		return cell - self->cells;
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
@@ -491,6 +496,11 @@
 
 	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size size);
 	static void lu_n_column__deinit(Lu_N_Column self, Lu_Mem mem);
+
+	static inline lu_size lu_n_column__get_cell_ix(Lu_N_Column self, Lu_N_Cell cell)
+	{
+		return cell - self->cells;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table
