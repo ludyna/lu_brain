@@ -8,7 +8,6 @@
 	struct lu_w_cell {
 		lu_p_void n_cell;
 		lu_value sig;
-		lu_size reg;
 	};
 
 	static inline void lu_w_cell__reset(Lu_W_Cell self)
@@ -16,15 +15,6 @@
 		lu__debug_assert(self);
 		self->n_cell = NULL;
 		self->sig = 0;
-		self->reg = 0;
-	}
-
-	static inline void lu_w_cell__collect_sig(Lu_W_Cell self, lu_size n_cell_ix, lu_value sig)
-	{
-		lu__debug_assert(self);
-
-		self->reg = lu_hash_comb(self->reg, n_cell_ix);
-		self->sig += sig;
 	}
 
 

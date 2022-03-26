@@ -122,6 +122,13 @@
 
 		lu_size rec_y;
 
+		lu_size depth = self->rec->depth;
+
+		lu_size p_reg;
+		lu_size p_links[depth];
+		lu_size v_reg;
+		lu_size v_links[depth];
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -140,9 +147,14 @@
 				lu_w_cell__reset(rec_w_p_cell);
 				lu_w_cell__reset(rec_w_v_cell);
 
-				for (lu_size z = 0; z < lu_arr__count(slot_arr->items); z++)
+				p_reg = 0;
+				v_reg = 0;
+
+				for (lu_size z = 0; z < depth; z++)
 				{
 					v_reset = true;
+					p_links[z] = 0;
+					v_links[z] = 0;
 
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
 					lu__assert(comp->super.type == LU_S_LAYER__COMP);
@@ -179,11 +191,9 @@
 								p_view->n_comp_table
 							);
 
-							lu_w_cell__collect_sig(
-								rec_w_p_cell, 
-								lu_n_table_comp__get_cell_ix(p_view->n_comp_table, p_cell->n_cell), 
-								p_cell->sig
-							);
+							p_links[z] = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, p_cell->n_cell);
+							p_reg = lu_hash_comb(p_reg, p_links[z]);
+
 						}
 
 						if (save_v)
@@ -200,13 +210,10 @@
 			 						v_view->n_comp_table
 			 					); 
 
-			 					lu_w_cell__collect_sig(
-			 						rec_w_v_cell, 
-			 						lu_n_table_comp__get_cell_ix(p_view->n_comp_table, p_cell->n_cell), 
-			 						v_cell->sig
-			 					);
-
 			 					v_reset = false;
+
+			 					v_links[z] = lu_n_table_comp__get_cell_ix(v_view->n_comp_table, v_cell->n_cell);
+								v_reg = lu_hash_comb(v_reg, v_links[z]);
 							}
 						}
 					}
