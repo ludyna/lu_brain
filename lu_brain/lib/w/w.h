@@ -19,6 +19,10 @@
 		self->reg = 0;
 	}
 
+	static inline void lu_w_cell__collect_sig(Lu_W_Cell self, lu_size n_cell_ix, lu_value sig)
+	{
+
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////////

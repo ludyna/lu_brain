@@ -169,7 +169,8 @@
 
 					if (lu_w_cell_p__is_ready(p_cell))
 					{
-						if (save_p) 
+						if (save_p)
+						{
 							lu_w_cell_p__save(
 								p_cell, 
 								x, 
@@ -177,6 +178,9 @@
 								p_comp_calc, 
 								p_view->n_comp_table
 							);
+
+							lu_w_cell__collect_sig(rec_w_p_cell, 0, p_cell->sig);
+						}
 
 						if (save_v)
 						{
@@ -190,7 +194,9 @@
 			 						y,
 			 						v_comp_calc, 
 			 						v_view->n_comp_table
-			 					);
+			 					); 
+
+			 					lu_w_cell__collect_sig(rec_w_v_cell, 0, v_cell->sig);
 
 			 					v_reset = false;
 							}
