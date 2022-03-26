@@ -45,9 +45,9 @@
 		return val;
 	}
 
-	static inline lu_size lu_comp_calc__ix(Lu_Comp_Calc self, lu_value val)
+	static inline lu_size lu_comp_calc__ix(Lu_Comp_Calc self, lu_value norm_val)
 	{
-		lu_size ix = (lu_size) lu_floor(val / self->step);
+		lu_size ix = (lu_size) lu_floor(norm_val / self->step);
 		ix >= self->cells_size && (ix = ix - 1);
 
 		lu__debug_assert(ix < self->cells_size);
