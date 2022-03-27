@@ -23,13 +23,19 @@
 // Lu_N_Cell_VP
 
 	struct lu_n_cell_vp {
-		struct lu_n_cell_base super;
-
 		lu_value value; 
 		lu_size x;
 		lu_size y;
 		lu_size z;
 	};
+
+	static inline void lu_n_cell__null_init(Lu_N_Cell_VP self)
+	{
+		self->value = 0;
+		self->x = 0;
+		self->y = 0;
+		self->z = 0;
+	}
 
 	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
 		Lu_N_Cell_VP self, 
@@ -71,20 +77,20 @@
 
 	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
 	{
-		return &self->cells[z * self->w * self->h + y * self->w + x];
+		return &(self->cells + 1)[z * self->w * self->h + y * self->w + x];
 	}
 
 	static inline lu_size lu_n_table_comp__get_cell_ix(Lu_N_Table_Comp self, Lu_N_Cell_VP cell)
 	{
 		return cell - self->cells;
 	} 
-	
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
 //
 
-	#define LU_N__NULL 0
+	#define LU_N_IX__NULL 0
 
 	struct lu_n_cell {
 		// insead of adding +1 when saving index, we dont use 0 index cells

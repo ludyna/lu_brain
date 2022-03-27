@@ -224,7 +224,15 @@
 
 				} // for (lu_size z = 0
 
-				// 
+				if (p_links[0])
+				{
+					
+				}
+
+				if (v_links[0])
+				{
+
+				}
 
 			}  // for (x = 0
 		} // for (y = 0
