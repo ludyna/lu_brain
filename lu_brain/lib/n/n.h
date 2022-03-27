@@ -187,6 +187,11 @@
 		return cell - self->cells;
 	}
 
+	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size reg, lu_size* links)
+	{
+
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table
 
@@ -203,3 +208,9 @@
 
 	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type, Lu_Config config);
 	static void lu_n_table__destroy(Lu_N_Table self);
+
+
+	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size reg, lu_size *links)
+	{
+		return lu_n_column__save(&self->columns[y * self->w + x], reg, links);
+	}

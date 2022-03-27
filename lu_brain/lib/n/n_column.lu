@@ -221,6 +221,7 @@
 
 		self->size = size;
 
+		// x2 because of free cells
 		// +1 because of NULL cell
 		lu_size b_size = sizeof(struct lu_n_cell) * (size * 2 + 1);
 

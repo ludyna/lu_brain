@@ -269,7 +269,10 @@
 		Lu_Process_Config config
 	);
 
-
+	static inline Lu_N_Table lu_s_layer_rec__get_n_table(Lu_S_Layer_Rec self)
+	{
+		return self->super.n_table;
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////////

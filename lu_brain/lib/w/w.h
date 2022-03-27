@@ -16,7 +16,11 @@
 		self->n_cell = NULL;
 		self->sig = 0;
 	}
-
+ 	
+ 	static inline void lu_w_cell__save(Lu_W_Cell self, Lu_N_Cell n_cell)
+ 	{
+ 		
+ 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_P
