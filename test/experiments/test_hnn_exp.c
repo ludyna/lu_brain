@@ -17,7 +17,7 @@
 #define INPUT_DEAPTH 10
 
 Hnn g_hnn = NULL;
-Mem_Debugger g_md = NULL;
+Lu_Mem_Debugger g_md = NULL;
 struct lu_n_config g_config = {
         .size_in_cell_0 = INPUT_WIDTH * INPUT_HEIGHT * INPUT_DEAPTH, 
         .size_in_cell_1 = 5,

@@ -3,14 +3,14 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Debugger 
+// Lu_Mem_Debugger 
 
-	Mem_Debugger mem_debugger_create(Lu_Mem mem)
+	Lu_Mem_Debugger mem_debugger_create(Lu_Mem mem)
 	{
 		lu__assert(mem);
 		lu__assert(!mem->debugger); // mem already has debugger
 
-		Mem_Debugger self = (Mem_Debugger) calloc(1, sizeof(struct lu_mem_debugger));
+		Lu_Mem_Debugger self = (Lu_Mem_Debugger) calloc(1, sizeof(struct lu_mem_debugger));
 		lu__assert(self);
 
 		self->super.register_alloc 		= mem_debugger_register_alloc;
@@ -31,7 +31,7 @@
 		return self;
 	}
 
-	void mem_debugger_destroy(Mem_Debugger self, lu_bool deallocate_leaks)
+	void mem_debugger_destroy(Lu_Mem_Debugger self, lu_bool deallocate_leaks)
 	{
 		lu__assert(self);
 		lu__assert(self->mem); // not attached?
@@ -56,11 +56,11 @@
 		free((lu_p_void) self);
 	}
 
-	void mem_debugger_print(Mem_Debugger self)
+	void mem_debugger_print(Lu_Mem_Debugger self)
 	{
 		lu__assert(self);
 
-		lu__debug("\n=========> Mem_Debugger <=========");
+		lu__debug("\n=========> Lu_Mem_Debugger <=========");
 		lu__debug("\n%-12s %lu", "alloc_size:", self->alloc_size);
 		lu__debug("\n%-12s %lu", "freed_size:", self->freed_size);
 		lu__debug("\n%-12s %lu", "alloc_count:", self->alloc_count);
@@ -102,7 +102,7 @@
 		lu__assert(imd);
 		lu__assert(size > 0);
 
-		Mem_Debugger self = (Mem_Debugger) imd;
+		Lu_Mem_Debugger self = (Lu_Mem_Debugger) imd;
 		lu_size i = mem_debugger_index(address);
 		lu__assert(i < LU_MD_HASH_SIZE);
 
@@ -172,7 +172,7 @@
 		//lu__debug("\nMEM DEBUGGER REGISTER FREE");
 		lu__assert(imd);
 
-		Mem_Debugger self	= (Mem_Debugger) imd;
+		Lu_Mem_Debugger self	= (Lu_Mem_Debugger) imd;
 		lu_size i 			= mem_debugger_index(address);
 		lu__assert(i < LU_MD_HASH_SIZE);
 

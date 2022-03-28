@@ -9,7 +9,7 @@
 #include "unity.h"
 #include "lib/_module.h"
 
-Mem_Debugger 		md;
+Lu_Mem_Debugger     md;
 Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;

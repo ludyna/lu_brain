@@ -19,7 +19,7 @@ typedef struct neu* Neu;
 
 void test_lim_list(void)
 {
-    Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
 
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
 
@@ -85,7 +85,7 @@ void test_lim_list(void)
 
 void test_lim_list_max_size(void)
 {
-    Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
 
     Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
@@ -124,7 +124,7 @@ void node_before_destroy(Lu_Lim_List self, Lu_L_Node node)
 
 void test_lim_list_clear(void)
 {
-    Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
 
     Neu n1 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
     Neu n2 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));

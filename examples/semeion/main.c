@@ -13,7 +13,7 @@
 
 int main()
 {
-	Mem_Debugger md = mem_debugger_create(lu_g_mem);
+	Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
 
 	// Radomize rand() with time
 

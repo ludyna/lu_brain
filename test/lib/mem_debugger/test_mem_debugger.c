@@ -13,7 +13,7 @@ void tearDown(void)
 
 void test_mem_debugger(void)
 {
-    Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
     TEST_ASSERT(md);
 
     mem_debugger_destroy(md, true);

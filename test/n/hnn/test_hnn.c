@@ -13,7 +13,7 @@
 // Globals
 
 Hnn g_hnn = NULL;
-Mem_Debugger g_md = NULL;
+Lu_Mem_Debugger g_md = NULL;
 struct lu_n_config g_config = {
         .size_in_cell_0 = 5, 
         .size_in_cell_1 = 5,

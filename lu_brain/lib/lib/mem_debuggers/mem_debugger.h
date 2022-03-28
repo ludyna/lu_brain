@@ -22,7 +22,7 @@
 	void lu_md_item_destroy(Lu_Md_Item, lu_bool deallocate_address);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Mem_Debugger 
+// Lu_Mem_Debugger 
 
 	#define LU_MD_INDEX_MASK 	0xFFFF
 	#define LU_MD_HASH_SIZE 	LU_MD_INDEX_MASK + 1
@@ -47,16 +47,16 @@
 		return addr & LU_MD_INDEX_MASK;
 	}
 
-	static inline lu_bool mem_debugger_is_all_clear(Mem_Debugger self)
+	static inline lu_bool mem_debugger_is_all_clear(Lu_Mem_Debugger self)
 	{
 		return self->alloc_size == self->freed_size;
 	}
 
-	Mem_Debugger mem_debugger_create(Lu_Mem mem);
-	void mem_debugger_destroy(Mem_Debugger self, lu_bool deallocate_leaks);
+	Lu_Mem_Debugger mem_debugger_create(Lu_Mem mem);
+	void mem_debugger_destroy(Lu_Mem_Debugger self, lu_bool deallocate_leaks);
 
 
-	void mem_debugger_print(Mem_Debugger self);
+	void mem_debugger_print(Lu_Mem_Debugger self);
 
 
 	void mem_debugger_register_alloc(	Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  

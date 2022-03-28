@@ -92,13 +92,14 @@
 
 	#define LU_N_IX__NULL 0
 
+	////
+	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell {
-		// insead of adding +1 when saving index, we dont use 0 index cells
-		lu_size prev_ix;
 		// lu_size id; nema smyslu davaty id, yaksho my mozhemu vziaty &lu_n_cell - &cells i bude id
 
 		// index to back links strings (zero limited) in for prev (child) n_table located in this n_table
-		lu_size links_ix; 
+		lu_size p_ix; // either parent ixs string or prev ix dependently on connection type
+		lu_size c_ix; // children ixs string 
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -206,8 +207,8 @@
 		struct lu_n_column* columns;
 	};
 
-	static Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type, Lu_Config config);
-	static void lu_n_table__destroy(Lu_N_Table self);
+	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type, Lu_Config config);
+ 	void lu_n_table__destroy(Lu_N_Table self);
 
 
 	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size reg, lu_size *links)
