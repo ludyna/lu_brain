@@ -54,7 +54,7 @@ lu_value			data_6[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	md = mem_debugger_create(lu_g_mem);
+	md = lu_mem_debugger__create(lu_g_mem);
 
 	brain 				= lu_brain__create(lu_config__get_by_id(LU_CONFIG__DEFAULT));
 	TEST_ASSERT(brain);
@@ -87,10 +87,10 @@ void tearDown(void)
 {	
 	lu_brain__destroy(brain);
 
-	mem_debugger_print(md);
+	lu_mem_debugger__print(md);
 
 	TEST_ASSERT(mem_debugger_is_all_clear(md));
-    mem_debugger_destroy(md, true);
+    lu_mem_debugger__destroy(md, true);
 }
 
 void test_lu_brain_basics(void) 

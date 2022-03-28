@@ -11,7 +11,7 @@ struct lu_config config;
 
 void setUp(void)
 { 
-	md = mem_debugger_create(lu_g_mem);
+	md = lu_mem_debugger__create(lu_g_mem);
 	TEST_ASSERT(md);
 
 	config = lu_config__get_by_id(LU_CONFIG__DEFAULT);
@@ -27,10 +27,10 @@ void tearDown(void)
 {	
 	lu_n_table__destroy(n_table);
 
-	mem_debugger_print(md);
+	lu_mem_debugger__print(md);
 
 	TEST_ASSERT(mem_debugger_is_all_clear(md));
-    mem_debugger_destroy(md, true);
+    lu_mem_debugger__destroy(md, true);
 }
 
 void test_1(void) 

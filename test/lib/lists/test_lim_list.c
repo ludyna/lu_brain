@@ -19,7 +19,7 @@ typedef struct neu* Neu;
 
 void test_lim_list(void)
 {
-    Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem_Debugger md = lu_mem_debugger__create(lu_g_mem);
 
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
 
@@ -77,15 +77,15 @@ void test_lim_list(void)
     lu_lim_list__destroy(list);
     lu_mem__destroy(mem, lu_g_mem);
 
-    //mem_debugger_print(md);
+    //lu_mem_debugger__print(md);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
-    mem_debugger_destroy(md, true);
+    lu_mem_debugger__destroy(md, true);
 }
 
 void test_lim_list_max_size(void)
 {
-    Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem_Debugger md = lu_mem_debugger__create(lu_g_mem);
     Lu_Mem mem     = (Lu_Mem) lu_mem_stack__create	(lu_g_mem, 2048);
 
     Neu n1 = (Neu) lu_mem__alloc(mem, sizeof(struct neu));
@@ -113,7 +113,7 @@ void test_lim_list_max_size(void)
     lu_mem__destroy(mem, lu_g_mem);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
-    mem_debugger_destroy(md, true);
+    lu_mem_debugger__destroy(md, true);
 }
 
 void node_before_destroy(Lu_Lim_List self, Lu_L_Node node)
@@ -124,7 +124,7 @@ void node_before_destroy(Lu_Lim_List self, Lu_L_Node node)
 
 void test_lim_list_clear(void)
 {
-    Lu_Mem_Debugger md = mem_debugger_create(lu_g_mem);
+    Lu_Mem_Debugger md = lu_mem_debugger__create(lu_g_mem);
 
     Neu n1 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
     Neu n2 = (Neu) lu_mem__alloc(lu_g_mem, sizeof(struct neu));
@@ -155,8 +155,8 @@ void test_lim_list_clear(void)
 
     lu_lim_list__destroy(list);
 
-    mem_debugger_print(md);
+    lu_mem_debugger__print(md);
 
     TEST_ASSERT(mem_debugger_is_all_clear(md));
-    mem_debugger_destroy(md, true);
+    lu_mem_debugger__destroy(md, true);
 }

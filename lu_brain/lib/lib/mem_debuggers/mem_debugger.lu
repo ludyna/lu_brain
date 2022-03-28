@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Mem_Debugger 
 
-	Lu_Mem_Debugger mem_debugger_create(Lu_Mem mem)
+	Lu_Mem_Debugger lu_mem_debugger__create(Lu_Mem mem)
 	{
 		lu__assert(mem);
 		lu__assert(!mem->debugger); // mem already has debugger
@@ -31,7 +31,7 @@
 		return self;
 	}
 
-	void mem_debugger_destroy(Lu_Mem_Debugger self, lu_bool deallocate_leaks)
+	void lu_mem_debugger__destroy(Lu_Mem_Debugger self, lu_bool deallocate_leaks)
 	{
 		lu__assert(self);
 		lu__assert(self->mem); // not attached?
@@ -56,7 +56,7 @@
 		free((lu_p_void) self);
 	}
 
-	void mem_debugger_print(Lu_Mem_Debugger self)
+	void lu_mem_debugger__print(Lu_Mem_Debugger self)
 	{
 		lu__assert(self);
 

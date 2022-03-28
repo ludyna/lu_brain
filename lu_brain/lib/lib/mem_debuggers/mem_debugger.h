@@ -52,11 +52,11 @@
 		return self->alloc_size == self->freed_size;
 	}
 
-	Lu_Mem_Debugger mem_debugger_create(Lu_Mem mem);
-	void mem_debugger_destroy(Lu_Mem_Debugger self, lu_bool deallocate_leaks);
+	Lu_Mem_Debugger lu_mem_debugger__create(Lu_Mem mem);
+	void lu_mem_debugger__destroy(Lu_Mem_Debugger self, lu_bool deallocate_leaks);
 
 
-	void mem_debugger_print(Lu_Mem_Debugger self);
+	void lu_mem_debugger__print(Lu_Mem_Debugger self);
 
 
 	void mem_debugger_register_alloc(	Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  

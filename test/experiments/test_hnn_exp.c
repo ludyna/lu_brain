@@ -37,7 +37,7 @@ void setUp(void)
 { 
 	lu__debug("\nsetUp");
 
-    g_md = mem_debugger_create(lu_g_mem);
+    g_md = lu_mem_debugger__create(lu_g_mem);
     TEST_ASSERT(g_md);
 
     g_hnn = n_create(lu_g_mem, g_config);
@@ -49,13 +49,13 @@ void tearDown(void)
 	lu__debug("\ntearDown");
     n_destroy(g_hnn);
 
-    mem_debugger_print(g_md);
+    lu_mem_debugger__print(g_md);
     if(!mem_debugger_is_all_clear(g_md))
     {
-        mem_debugger_destroy(g_md, true);
+        lu_mem_debugger__destroy(g_md, true);
         TEST_ASSERT(false);
     }
-    mem_debugger_destroy(g_md, true);
+    lu_mem_debugger__destroy(g_md, true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
