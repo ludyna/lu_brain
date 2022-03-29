@@ -79,8 +79,8 @@
 
 		lu__assert(self->rec->depth == lu_arr__count(slot_arr->items));
 
-		bool save_v = !lu_value__eq_with_signif(config->v_potency, 0.0, config->min_potency);
 		bool save_p = !lu_value__eq_with_signif(config->p_potency, 0.0, config->min_potency);
+		bool save_v = false; //!lu_value__eq_with_signif(config->v_potency, 0.0, config->min_potency);
 
 		lu_size wave_id = lu_wave__get_id(wave);
 		lu_size block_id = data->block_id;
@@ -172,17 +172,12 @@
 					p_table = lu_s_view_p__get_w_table(p_view, wave_id);
 					lu__assert(p_table);
 
-					v_table = lu_s_view_v__get_w_table(v_view, wave_id);
-					lu__assert(v_table);
-
 					p_comp_calc = &p_view->comp_calc;
-					v_comp_calc = &v_view->comp_calc;
 
 					v = data->values[z * wh + xy_shift];
 					lu__debug("	%.1f", v);
 
 			 		p_cell = lu_w_table_p__get_cell(p_table, x, y);
-			 		v_cell = lu_w_table_v__get_cell(v_table, x, y);
 
 					lu_w_cell_p__register(p_cell, is_reset, p, config);
 
@@ -205,6 +200,14 @@
 
 						if (save_v)
 						{
+
+							v_table = lu_s_view_v__get_w_table(v_view, wave_id);
+							lu__assert(v_table);
+
+							v_comp_calc = &v_view->comp_calc;
+
+					 		v_cell = lu_w_table_v__get_cell(v_table, x, y);
+
 							lu_w_cell_v__register(v_cell, is_reset, v, config);
 
 							if (lu_w_cell_v__is_ready(v_cell))
@@ -237,11 +240,11 @@
 					lu_w_cell__save(rec_w_p_cell, n_cell);
 				}
 
-				if (v_links[0])
-				{
-					n_cell = lu_n_table__save(rec_n_table, x, rec_y + 1, v_reg, v_links);
-					lu_w_cell__save(rec_w_v_cell, n_cell);
-				}
+				// if (v_links[0])
+				// {
+				// 	n_cell = lu_n_table__save(rec_n_table, x, rec_y + 1, v_reg, v_links);
+				// 	lu_w_cell__save(rec_w_v_cell, n_cell);
+				// }
 
 			}  // for (x = 0
 		} // for (y = 0
