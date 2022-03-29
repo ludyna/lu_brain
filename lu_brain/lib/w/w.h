@@ -55,9 +55,10 @@
 		// self->state > LU_W_CELL_P__READY && self->state == LU_W_CELL_P__START;
 	}
 
-	static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self)
+	static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self, lu_value signif_p)
 	{
-		return self->state == LU_W_CELL_P__READY;
+		//lu__debug("\n P STEP: %.1f, P1: %.1f, P2: %.1f, P_DIFF: %.1f", signif_p, self->p1, self->p2, lu_value_abs(self->p1 - self->p2));
+		return self->state == LU_W_CELL_P__READY && lu_value_abs(self->p1 - self->p2) >= signif_p;
 	}
 
 	static inline void lu_w_cell_p__save(
@@ -145,17 +146,17 @@
 
 		lu_size w;
 		lu_size h;
-
-		// always "2D"
+ 
+ 		// 2d because its for one Z layer
 		struct lu_w_cell_p* cells;
 	};
 
-	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size width, lu_size height);
+	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size w, lu_size h);
 	static void lu_w_table_p__destroy(Lu_W_Table_P self);
 
-	static inline Lu_W_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size x, lu_size y)
+	static inline Lu_W_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size ix)
 	{
-		return &self->cells[y * self->w + x];
+		return &self->cells[ix];
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -166,8 +167,8 @@
 
 		lu_size w;
 		lu_size h;
+		lu_size d;
 
-		// always "2D"
 		struct lu_w_cell_v* cells;
 	};
 

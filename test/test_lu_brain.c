@@ -65,7 +65,7 @@ void setUp(void)
 		/*width*/				3, 
 		/*height*/				3, 
 		/*depth*/				1,
-		/*config*/ 				lu_rec_config__get_by_id(LU_REC__TEST1)
+		/*config*/ 				lu_rec_config__get_by_id(LU_REC__MONO1_IMAGE)
 	);	
 	TEST_ASSERT(rec_0);
 
@@ -110,6 +110,7 @@ void test_lu_brain_basics(void)
 		TEST_ASSERT(lu_brain__get_wave_by_id(brain, lu_wave__get_id(s_wave)) == s_wave);
 
 		lu_wave__push(s_wave, rec_0, data_0);
+		lu_wave__push(s_wave, rec_0, data_01);
 
 		// lu_wave__block_begin(s_wave);
 		// lu_wave__push(s_wave, rec_0, data_01);

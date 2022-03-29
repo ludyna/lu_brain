@@ -5,20 +5,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 	
-	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size width, lu_size height)
+	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size w, lu_size h)
 	{
 		lu__assert(config);
 		lu__assert(config->w_mem);
+
+		lu__assert(w > 0);
+		lu__assert(h > 0);
 
 		Lu_W_Table_P self = (Lu_W_Table_P) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table_p)); 
 		lu__assert(self);
 
 		self->mem = config->w_mem;
-		self->w = width;
-		self->h = height;
+		self->w = w;
+		self->h = h;
 
 		lu_size size =  self->w * self->h;
-		lu__assert(size > 0);
 
 		self->cells = (struct lu_w_cell_p*) lu_mem__alloc(
 			config->w_mem, 
