@@ -174,6 +174,7 @@
 	// size parne, 0-size/2 cells, size/2-size - free cells
 	struct lu_n_column {
 		lu_size size;
+		lu_size full_size;
 		struct lu_n_cell* cells;
 
 		// links size is proportional to cells size
@@ -197,8 +198,11 @@
 		{
 			p_reg = lu_hash_comb(p_reg, ix);
 			++p;
-			//lu__debug("\n KOOO \n");
 		}
+
+		ix = p_reg % self->size;
+
+		Lu_N_Cell n_cell = &(self->cells + 1)[ix];
 
 
 

@@ -223,12 +223,12 @@
 
 		// x2 because of free cells
 		// +1 because of NULL cell
-		lu_size b_size = sizeof(struct lu_n_cell) * (size * 2 + 1);
+		self->full_size = sizeof(struct lu_n_cell) * (size * 2 + 1);
 
-		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, b_size);
+		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, self->full_size);
 		lu__alloc_assert(self->cells);
 
-		memset(self->cells, LU_N_IX__NULL, b_size);
+		memset(self->cells, LU_N_IX__NULL, self->full_size);
 
 		return self;
 	}
