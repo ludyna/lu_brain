@@ -188,8 +188,19 @@
 		return cell - self->cells;
 	}
 
-	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size reg, lu_size* links)
+	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* links)
 	{
+		lu_size p_reg = 0;
+		lu_size ix;
+		lu_size *p = links;
+		while((ix = *p))
+		{
+			p_reg = lu_hash_comb(p_reg, ix);
+			++p;
+			//lu__debug("\n KOOO \n");
+		}
+
+
 
 	}
 
@@ -211,7 +222,7 @@
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
-	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size reg, lu_size *links)
+	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links)
 	{
-		return lu_n_column__save(&self->columns[y * self->w + x], reg, links);
+		return lu_n_column__save(&self->columns[y * self->w + x], links);
 	}

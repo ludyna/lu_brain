@@ -82,11 +82,14 @@
 		bool save_p = !lu_value__eq_with_signif(config->p_potency, 0.0, config->min_potency);
 		bool save_v = false; //!lu_value__eq_with_signif(config->v_potency, 0.0, config->min_potency);
 
+		if (!save_p && !save_v) return;
+
 		lu_size wave_id = lu_wave__get_id(wave);
 		lu_size block_id = data->block_id;
 
 		lu_size x;
 		lu_size y;
+		lu_size z;
 		lu_size y_shift;
 		lu_value v;
 		lu_size xy_shift;
@@ -133,6 +136,9 @@
 		lu_size v_links[depth + 1];
 		v_links[depth] = LU_N_IX__NULL;
 
+		lu_bool any_z_p; // true if for any z we saved w_cell_p
+		
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -147,20 +153,14 @@
 
 				lu_w_cell__reset(rec_w_p_cell);
 
-				p_reg = 0;
-				v_reg = 0;
+				any_z_p = false;
 
-				for (lu_size z = 0; z < depth; z++)
+				for (z = 0; z < depth; z++)
 				{
-					v_reset = true;
-					p_links[z] = 0;
-					v_links[z] = 0;
-
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
 					lu__assert(comp->super.type == LU_S_LAYER__COMP);
 
 					p_view = &comp->p_view;
-					v_view = &comp->v_view;
 
 					p_table = lu_s_view_p__get_w_table(p_view, wave_id);
 					lu__assert(p_table);
@@ -174,32 +174,29 @@
 
 					//lu__debug("\n PROCESSING:	%.1f", v);
 
+					p_links[z] = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, p_cell->n_cell);
+
 					if (!is_reset && lu_w_cell_p__is_ready(p_cell, p_comp_calc->step))
 					{
-						if (save_p)
-						{
-							//lu__debug("\n SAVING:	%.1f", v);
+						//lu__debug("\n SAVING:	%.1f", v);
 
-							lu_w_cell_p__save(
-								p_cell, 
-								x, 
-								y, 
-								p_comp_calc, 
-								p_view->n_comp_table
-							);
+						lu_w_cell_p__save(
+							p_cell, 
+							x, 
+							y, 
+							p_comp_calc, 
+							p_view->n_comp_table
+						);
 
-							p_links[z] = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, p_cell->n_cell);
-							p_reg = lu_hash_comb(p_reg, p_links[z]);
-
-						}
+						any_z_p = true;
 					}
 
 				} // for (lu_size z = 0
 
-				if (p_links[0])
+				if (any_z_p)
 				{
 					lu__debug("\n SAVING N_CELL");
-					n_cell = lu_n_table__save(rec_n_table, x, y, p_reg, p_links);
+					n_cell = lu_n_table__save(rec_n_table, x, y, p_links);
 					lu_w_cell__save(rec_w_p_cell, n_cell);
 				}
 
