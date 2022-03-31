@@ -133,9 +133,35 @@
 		return true;
 	}
 
-	static inline void lu_n_string__copy(const lu_size* dest, const lu_size* src)
+	////
+	// This method doesn't check if <dest> has enough space for <src>
+	static inline void lu_n_string__copy(lu_size* dest, const lu_size* src)
 	{
+		while(*src)
+		{
+			*dest = *src;
+			++src;
+			++dest;
+		};
 
+		*dest = 0;
+	}
+
+	static inline void lu_n_string__print(const lu_size* s)
+	{
+		lu__debug("\n N_STRING: {");
+		const lu_size *p = s;
+
+		while(*p)
+		{
+			if (p != s) lu__debug(", ");
+			lu__debug("%d", *p);
+			++p;
+		} 
+		if (p==s) lu__debug("0");
+		else lu__debug(", 0");
+
+		lu__debug("}");
 	}
 
 	////
