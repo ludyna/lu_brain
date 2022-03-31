@@ -196,7 +196,8 @@
 				if (any_z_p)
 				{
 					lu__debug("\n SAVING N_CELL");
-					n_cell = lu_n_table__save(rec_n_table, x, y, p_links);
+					// depth + 1 here to account 0 string ending
+					n_cell = lu_n_table__save(rec_n_table, x, y, p_links, depth + 1);
 					lu_w_cell__save(rec_w_p_cell, n_cell);
 				}
 

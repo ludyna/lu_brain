@@ -95,11 +95,8 @@
 	////
 	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell {
-		// lu_size id; nema smyslu davaty id, yaksho my mozhemu vziaty &lu_n_cell - &cells i bude id
-
-		// index to back links strings (zero limited) in for prev (child) n_table located in this n_table
-		lu_size p_ix; // either parent ixs string or prev ix dependently on connection type
-		lu_size c_ix; // children ixs string 
+		lu_size z; 
+		lu_size y; 
 	};
 
 	static inline lu_bool lu_n_cell_compare(Lu_N_Cell a, Lu_N_Cell b)
@@ -117,6 +114,29 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
 // 
+
+	static inline lu_bool lu_n_string__eq(const lu_size* a, const lu_size* b)
+	{
+		while (1)
+		{
+			if (*a != *b)
+			{
+				return false;
+			}
+
+			if (*a == 0 || *b == 0) break;
+
+			++a;
+			++b;
+		}	
+		
+		return true;
+	}
+
+	static inline void lu_n_string__copy(const lu_size* dest, const lu_size* src)
+	{
+
+	}
 
 	////
 	// Having separete columns helps with parallelization in the future, but takes a little bit more memory.
@@ -156,23 +176,28 @@
 	// 	return cell - self->cells;
 	// }
 
-	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* children)
+	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* s, lu_size str_max_len)
 	{
-		// lu_size p_reg = 0;
-		// lu_size ix;
-		// lu_size *p = children;
-		// while((ix = *p))
-		// {
-		// 	p_reg = lu_hash_comb(p_reg, ix);
-		// 	++p;
-		// }
+		lu__debug_assert(self);
+		lu__debug_assert(self->w >= str_max_len);
 
+		lu_size p_reg = 0;
+		lu_size ix;
+		lu_size *p = s;
+		while((ix = *p))
+		{
+			p_reg = lu_hash_comb(p_reg, ix);
+			++p;
+		}
 
-		// ix = p_reg % self->size;
+		lu_size *strings = self->strings + 1;
 
-		// Lu_N_Cell n_cell = &(self->cells + 1)[ix];
+		// y
+		ix = p_reg % self->h;
 
+		lu_size z = 0;
 
+		// p = &self->strings[z * wh + ix * self->w]
 
 	}
 
@@ -194,7 +219,7 @@
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
-	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links)
+	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links, lu_size str_max_len)
 	{
-		return lu_n_column__save(&self->columns[y * self->w + x], links);
+		return lu_n_column__save(&self->columns[y * self->w + x], links, str_max_len);
 	}

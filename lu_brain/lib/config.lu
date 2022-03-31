@@ -37,7 +37,7 @@
 			.n_table_mod = 2, 
 			.n_column_w = 5, 
 			.n_column_h = 64,
-			.n_column_d = 5,
+			.n_column_d = 3,
 
 			//
 			// Waves level

@@ -13,6 +13,7 @@
 #include <float.h>
 #include <stdarg.h>
 #include <unistd.h> 
+#include <string.h>
 #include <pthread.h>
 
 #include "../vendor/CException.h"

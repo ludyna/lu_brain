@@ -2,7 +2,6 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-
 	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size w, lu_size h, lu_size d)
 	{
 		lu__assert(self);
@@ -52,28 +51,30 @@
 
 	static void lu_n_column__realloc(Lu_N_Column self, lu_size w, lu_size h, lu_size d)
 	{
-		lu__assert(self);
-		lu__assert(self->mem);
-		lu__assert(w > 0);
-		lu__assert(h > 0);
-		lu__assert(d > 0);
+		// lu__assert(self);
+		// lu__assert(self->mem);
+		// lu__assert(w > 0);
+		// lu__assert(h > 0);
+		// lu__assert(d > 0);
 
+		// self->w = w;
+		// self->h = h;
+		// self->d = d;
 
-		self->w = w;
-		self->h = h;
-		self->d = d;
+		// self->strings = (lu_size*) lu_mem__realloc(
+		// 	self->mem, 
+		// 	(lu_p_byte) self->strings, 
+		// 	sizeof(lu_size) * w * h * d + 1
+		// );
+		// lu__alloc_assert(self->strings);
 
-		self->strings = (lu_size*) lu_mem__realloc(
-			self->mem, 
-			(lu_p_byte) self->strings, 
-			sizeof(lu_size) * w * h * d + 1
-		);
-		lu__alloc_assert(self->strings);
+		// self->cells = (struct lu_n_cell*) lu_mem__realloc(
+		// 	self->mem, 
+		// 	(lu_p_byte) self->cells, 
+		// 	sizeof(struct lu_n_cell) * h * d + 1
+		// );
+		// lu__alloc_assert(self->cells);
 
-		self->cells = (struct lu_n_cell*) lu_mem__realloc(
-			self->mem, 
-			(lu_p_byte) self->cells, 
-			sizeof(struct lu_n_cell) * h * d + 1
-		);
-		lu__alloc_assert(self->cells);
+		// relocating just like that is not enough, we will have to move data, because we might changed h
+		// and h is used in p_reg % h
 	}
