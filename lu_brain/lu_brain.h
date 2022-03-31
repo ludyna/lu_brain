@@ -67,7 +67,9 @@
 		lu_size n_size_in_cell_3; 
 		lu_size n_size_in_cell_4;
 		lu_size n_table_mod;	
-		lu_size n_column_size;
+		lu_size n_column_w;
+		lu_size n_column_h;
+		lu_size n_column_d;
 
 		//
 		// Waves level

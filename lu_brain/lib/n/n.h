@@ -102,66 +102,17 @@
 		lu_size c_ix; // children ixs string 
 	};
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_String
-
-	struct lu_n_string {
-		lu_size pos;
-		lu_p_size p;
-	};
-
-	static inline void lu_n_string__init(Lu_N_String self, lu_p_size p)
+	static inline lu_bool lu_n_cell_compare(Lu_N_Cell a, Lu_N_Cell b)
 	{
-		lu__debug_assert(self);
-		lu__debug_assert(p);
+		// a.p_ix != b.p_ix && (return false); 
 
-		self->pos = 0;
-		self->p = p;
+		// // we can make so the same strings have the same index, so comparing 
+		// // string index is enough
+		// a.c_ix != b.c_ix && (return false); 
+
+		return true;
 	}
 
-	static inline void lu_n_string__reset(Lu_N_String self)
-	{
-		lu__debug_assert(self);
-		self->p = NULL;
-		self->pos = 0;
-	}
-
-	static inline lu_size lu_n_string__get(Lu_N_String self)
-	{
-		lu_size v = self->p[self->pos]; 
-		v && (++self->pos);
-		return v;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Free_Links
-//
-	struct lu_n_free_links {
-		// free (deleted) strings
-		// Ce maye buty okrema structura
-		lu_p_size *free_1;
-		lu_p_size *free_2;
-		lu_p_size *free_4;
-	};
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Links
-// Mozhe buty dlia vsih n_table, chy krashche zrobyty dlia kozhnoho n_column?
-// Dlia kozhnoho n_column krashche - maksymalna rozparalezaciya
-
-	struct lu_n_links {
-		lu_p_size p;
-
-		//struct lu_n_free_links free_links;
-	};
-
-	static Lu_N_Links lu_n_links__init(Lu_Mem mem, lu_size size);
-	static void lu_n_links__deinit(Lu_N_Links self, Lu_Mem mem);
-
-	static inline lu_p_size lu_n_links__alloc(Lu_N_Links self, lu_size size)
-	{
-
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
@@ -172,37 +123,54 @@
 	// my mozhemo vykorystovuvaty columns, ale treba
 	// prosto znaty v yakomu poriadku zberihayemo string, sho prosto
 	// size parne, 0-size/2 cells, size/2-size - free cells
-	struct lu_n_column {
-		lu_size size;
-		lu_size full_size;
-		struct lu_n_cell* cells;
+	// p_reg mozhna vykorystaty ya dlia zberihannia string tak i dlia
+	// zberihannia n_cell
+	//   xxxxx
+	// y
+	// y 
+	// y 
+	// y 
 
-		// links size is proportional to cells size
-		struct lu_n_links links;
+	// de y ce index, y x - ce znachenia strichky, prychomu maksymum 4?
+	// mozhna zrobyty z dlia vypadku koly my mayemo povtorennia, 
+	// yasho z > max_z robymo povnyy realloc i vse
+	// , te same dlia komirok
+	// komirka bude maty z i ix, de z i ix toy samyy dlia strichky i dlia komirky
+	struct lu_n_column {
+		Lu_Mem mem;
+
+		lu_size w;
+		lu_size h;
+		lu_size d;
+
+		lu_size *strings;
+		struct lu_n_cell* cells;
 	};
 
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size size);
-	static void lu_n_column__deinit(Lu_N_Column self, Lu_Mem mem);
+	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size w, lu_size h, lu_size d);
+	static void lu_n_column__deinit(Lu_N_Column self);
+	static void lu_n_column__realloc(Lu_N_Column self, lu_size w, lu_size h, lu_size d);
 
-	static inline lu_size lu_n_column__get_cell_ix(Lu_N_Column self, Lu_N_Cell cell)
+	// static inline lu_size lu_n_column__get_cell_ix(Lu_N_Column self, Lu_N_Cell cell)
+	// {
+	// 	return cell - self->cells;
+	// }
+
+	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* children)
 	{
-		return cell - self->cells;
-	}
+		// lu_size p_reg = 0;
+		// lu_size ix;
+		// lu_size *p = children;
+		// while((ix = *p))
+		// {
+		// 	p_reg = lu_hash_comb(p_reg, ix);
+		// 	++p;
+		// }
 
-	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* links)
-	{
-		lu_size p_reg = 0;
-		lu_size ix;
-		lu_size *p = links;
-		while((ix = *p))
-		{
-			p_reg = lu_hash_comb(p_reg, ix);
-			++p;
-		}
 
-		ix = p_reg % self->size;
+		// ix = p_reg % self->size;
 
-		Lu_N_Cell n_cell = &(self->cells + 1)[ix];
+		// Lu_N_Cell n_cell = &(self->cells + 1)[ix];
 
 
 

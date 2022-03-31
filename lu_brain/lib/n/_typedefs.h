@@ -30,9 +30,8 @@ typedef struct lu_n_cell_vp* Lu_N_Cell_VP;
 
 
 typedef struct lu_n_cell* Lu_N_Cell;
-typedef struct lu_n_string* Lu_N_String;
-typedef struct lu_n_links* Lu_N_Links;
-typedef struct lu_n_free_links* Lu_N_Free_Links;
+typedef struct lu_n_strings* Lu_N_Strings;
+typedef struct lu_n_cells* Lu_N_Cells;
 typedef struct lu_n_column* Lu_N_Column;
 typedef struct lu_n_table_comp* Lu_N_Table_Comp;
 typedef struct lu_n_table* Lu_N_Table;

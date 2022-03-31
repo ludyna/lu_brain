@@ -2,241 +2,45 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-///////////////////////////////////////////////////////////////////////////////
-//  Lu_N_Column_Node
 
-// 	static void lu_n_column_node__destroy(Lu_N_Column_Node self, Lu_Mem mem)
-// 	{
-// 		Lu_N_Column_Node prev;
-// 		while (self)
-// 		{
-// 			prev = self->prev;
-
-// 			// we don't care about destroying sefl->cell here because they all are 
-// 			// destroyed (freed) in n_cell_allocator
-// 			// vydaliaty komirky ce skladna tema (bo ye zviazky z inshymy i td)
-// 			// ye inshi sposoby robyty "defragmentaciyu" komirok
-
-// 			lu_mem__free(mem, (lu_p_byte) self);
-
-// 			self = prev;
-// 		}
-// 	}
-
-// ///////////////////////////////////////////////////////////////////////////////
-// //  Lu_N_Column Create And Destroy
-
-// 	static Lu_N_Column lu_n_column__create(Lu_Mem mem, lu_size size_in_cells, lu_byte cell_type)
-// 	{
-// 		lu__assert(mem);
-
-// 		if (size_in_cells == 0)
-// 			return NULL;
-
-// 		Lu_N_Column self = (Lu_N_Column) lu_mem__alloc(mem, sizeof(struct lu_n_column));
-// 		lu__assert(self);
-
-// 		self->mem = mem;
-// 		self->size_in_cells = size_in_cells;
-// 		self->cell_type = cell_type;
-		
-// 		lu_size bytes_size = sizeof(Lu_N_Column_Node) * self->size_in_cells;
-		
-// 		self->units = (Lu_N_Column_Node*) lu_mem__alloc(mem, bytes_size);
-
-// 		memset(self->units, 0, bytes_size);
-
-// 		lu__assert(self->units);
-
-// 		return self;
-// 	}
-
-// 	static void lu_n_column__destroy(Lu_N_Column self)
-// 	{
-// 		lu__assert(self);
-
-// 		Lu_Mem mem = self->mem;
-
-// 		Lu_N_Column_Node unit = NULL;
-// 		Lu_N_Column_Node next = NULL;
-
-// 		if (self->units) {
-			
-// 			for (lu_size i = 0; i < self->size_in_cells; i++)
-// 			{
-// 				unit = self->units[i];
-
-// 				if (unit == NULL) continue;
-				
-// 				lu_n_column_node__destroy(unit, mem);
-// 			}
-			
-// 			lu_mem__free(mem, (lu_p_byte) self->units);
-// 		}
-
-// 		self->size_in_cells = 0;
-// 		self->units = NULL;
-// 		self->mem = NULL;
-// 		lu_mem__free(mem, (lu_p_byte) self);
-// 	}
-
-// ///////////////////////////////////////////////////////////////////////////////
-// //  Lu_N_Column Main Methods
-
-// 	static Lu_N_Column_Node lu_n_column__node_find(Lu_N_Column self, Lu_N_Cell_Base cell, lu_size hash)
-// 	{
-// 		lu__assert(self);
-// 		lu__assert(cell);
-
-// 		lu_size index = lu_n_column__hash_to_index(self, hash);
-
-// 		Lu_N_Column_Node node = self->units[index];
-
-// 		while (node && node->cell != cell) node = node->prev;
-
-// 		return node;
-// 	}
-
-// 	static void lu_n_column__cell_remove(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base dest)
-// 	{
-// 		lu__assert(self);
-// 		lu__assert(dest);
-		
-// 		lu__user_assert_void(false, "NOT IMPLEMENTED");
-// 	}
-
-// 	static Lu_N_Cell_Base lu_n_column__cell_get_1(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left)
-// 	{
-// 		lu__assert(self);
-// 		lu__assert(top_left);
-// 		lu__assert(self->cell_type == LU_N_CELL__1);
-
-// 		lu_size index = lu_n_column__hash_to_index(self, hash);
-
-// 		Lu_N_Column_Node node = self->units[index];
-
-// 		while (node && node->cell && !n_cell__parent_eq_1((Lu_N_Cell_1) node->cell, top_left)) node = node->prev;
-
-// 		if (node) return node->cell;
-
-// 		return NULL;
-// 	}
-
-//  	static Lu_N_Cell_Base lu_n_column__cell_get_2(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right)
-//  	{
-// 		lu__assert(self);
-// 		lu__assert(top_left);
-// 		lu__assert(top_right);
-// 		lu__assert(self->cell_type == LU_N_CELL__2);
-
-// 		lu_size index = lu_n_column__hash_to_index(self, hash);
-
-// 		Lu_N_Column_Node node = self->units[index];
-
-// 		while (node && node->cell && !n_cell__parent_eq_2((Lu_N_Cell_2) node->cell, top_left, top_right)) node = node->prev;
-
-// 		if (node) return node->cell;
-
-// 		return NULL;
-//  	}
-
-//  	static Lu_N_Cell_Base lu_n_column__cell_get_3(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right, Lu_N_Cell_Base bottom_left)
-//  	{
-// 		lu__assert(self);
-// 		lu__assert(top_left);
-// 		lu__assert(top_right);
-// 		lu__assert(bottom_left);
-// 		lu__assert(self->cell_type == LU_N_CELL__3);
-
-// 		lu_size index = lu_n_column__hash_to_index(self, hash);
-
-// 		Lu_N_Column_Node node = self->units[index];
-
-// 		while (node && node->cell && !n_cell__parent_eq_3((Lu_N_Cell_3) node->cell, top_left, top_right, bottom_left)) node = node->prev;
-
-// 		if (node) return node->cell;
-
-// 		return NULL;
-//  	}
-
-//  	static Lu_N_Cell_Base lu_n_column__cell_get_4(Lu_N_Column self, lu_size hash, Lu_N_Cell_Base top_left, Lu_N_Cell_Base top_right, Lu_N_Cell_Base bottom_left, Lu_N_Cell_Base bottom_right)
-//  	{
-// 		lu__assert(self);
-// 		lu__assert(top_left);
-// 		lu__assert(top_right);
-// 		lu__assert(bottom_left);
-// 		lu__assert(self->cell_type == LU_N_CELL__4);
-
-// 		lu_size index = lu_n_column__hash_to_index(self, hash);
-
-// 		Lu_N_Column_Node node = self->units[index];
-
-// 		while (node && node->cell && !n_cell__parent_eq_4((Lu_N_Cell_4) node->cell, top_left, top_right, bottom_left, bottom_right)) node = node->prev;
-
-// 		if (node) return node->cell;
-
-// 		return NULL;
-//  	}
-
-
-// ///////////////////////////////////////////////////////////////////////////////
-// // Lu_N_Column Utility    
-
-// 	static void lu_n_column__print_distribution(Lu_N_Column self)
-// 	{
-// 		lu__assert(self);
-		
-// 		lu_size i;
-// 		lu_size count;
-// 		lu_size total_count = 0;
-// 		Lu_N_Column_Node node;
-
-// 		printf("\n Table distribution:");
-// 		for (i = 0; i < self->size_in_cells; i++)
-// 		{
-// 			node = self->units[i];
-
-// 			if (node == NULL) continue;
-
-// 			count = 0;
-// 			while (node) 
-// 			{
-// 				++count;
-// 				node = node->prev;
-// 			}
-
-// 			total_count += count;
-// 			printf("\n [%lu]: %lu", i, count);
-// 		}
-
-// 		printf("\n Total count: %lu", total_count);
-// 	}
-
-
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size size)
+	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size w, lu_size h, lu_size d)
 	{
 		lu__assert(self);
 		lu__assert(mem);
-		lu__assert(size > 0);
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+		lu__assert(d > 0);
 
-		self->size = size;
+		self->mem = mem;
+		self->w = w;
+		self->h = h;
+		self->d = d;
 
-		// x2 because of free cells
-		// +1 because of NULL cell
-		self->full_size = sizeof(struct lu_n_cell) * (size * 2 + 1);
+		self->strings = (lu_size*) lu_mem__alloc(mem, sizeof(lu_size) * w * h * d);
+		lu__alloc_assert(self->strings);
 
-		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, self->full_size);
+		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(lu_size) * h * d);
 		lu__alloc_assert(self->cells);
-
-		memset(self->cells, LU_N_IX__NULL, self->full_size);
 
 		return self;
 	}
 
-	static void lu_n_column__deinit(Lu_N_Column self, Lu_Mem mem)
+	static void lu_n_column__deinit(Lu_N_Column self)
 	{
 		lu__assert(self);
-		lu__assert(mem);
+		lu__assert(self->mem);
 
-		lu_mem__free(mem, (lu_p_byte) self->cells);
+		lu_mem__free(self->mem, (lu_p_byte) self->strings);
+		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+		
+		self->strings = NULL;
+		self->w = 0;
+		self->h = 0;
+		self->d = 0;
+		self->mem = NULL;
+	}
+
+	static void lu_n_column__realloc(Lu_N_Column self, lu_size w, lu_size h, lu_size d)
+	{
+
 	}
