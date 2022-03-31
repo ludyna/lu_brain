@@ -16,11 +16,21 @@
 		self->h = h;
 		self->d = d;
 
-		self->strings = (lu_size*) lu_mem__alloc(mem, sizeof(lu_size) * w * h * d);
+		// +1 for NULL cell
+		lu_size s = sizeof(lu_size) * w * h * d + 1;
+
+		self->strings = (lu_size*) lu_mem__alloc(mem, s);
 		lu__alloc_assert(self->strings);
 
-		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(lu_size) * h * d);
+		memset(self->strings, LU_N_IX__NULL, s); 
+
+		// +1 for NULL cell
+		s = sizeof(struct lu_n_cell) * h * d + 1;
+
+		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, s);
 		lu__alloc_assert(self->cells);
+
+		memset(self->cells, LU_N_IX__NULL, s); 
 
 		return self;
 	}
@@ -42,5 +52,28 @@
 
 	static void lu_n_column__realloc(Lu_N_Column self, lu_size w, lu_size h, lu_size d)
 	{
+		lu__assert(self);
+		lu__assert(self->mem);
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+		lu__assert(d > 0);
 
+
+		self->w = w;
+		self->h = h;
+		self->d = d;
+
+		self->strings = (lu_size*) lu_mem__realloc(
+			self->mem, 
+			(lu_p_byte) self->strings, 
+			sizeof(lu_size) * w * h * d + 1
+		);
+		lu__alloc_assert(self->strings);
+
+		self->cells = (struct lu_n_cell*) lu_mem__realloc(
+			self->mem, 
+			(lu_p_byte) self->cells, 
+			sizeof(struct lu_n_cell) * h * d + 1
+		);
+		lu__alloc_assert(self->cells);
 	}
