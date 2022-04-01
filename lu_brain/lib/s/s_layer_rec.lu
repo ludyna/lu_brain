@@ -65,6 +65,7 @@
 		lu__assert(data);
 		lu__assert(config);
 
+
 		Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
 
 		lu__assert(rec_n_table);
@@ -127,7 +128,10 @@
 
 		lu_bool v_reset;
 
-		lu_size depth = self->rec->depth;
+		lu_size depth = self->rec->depth; 
+
+		// Currently we support max 3 components
+		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
 		lu_size p_reg;
 		lu_size p_links[depth + 1];
@@ -196,8 +200,7 @@
 				if (any_z_p)
 				{
 					lu__debug("\n SAVING N_CELL");
-					// depth + 1 here to account 0 string ending
-					n_cell = lu_n_table__save(rec_n_table, x, y, p_links, depth + 1);
+					n_cell = lu_n_table__save(rec_n_table, x, y, p_links);
 					lu_w_cell__save(rec_w_p_cell, n_cell);
 				}
 

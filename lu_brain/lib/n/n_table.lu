@@ -31,7 +31,7 @@
 		{
 			column = &self->columns[i];
 
-			lu_n_column__init(column, mem, config->n_column_w, config->n_column_h, config->n_column_d);
+			lu_n_column__init(column, mem, config->n_column_h, config->n_column_d);
 		}
 
 		return self;

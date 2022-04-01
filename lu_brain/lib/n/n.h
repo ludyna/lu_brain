@@ -87,33 +87,8 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell
+// Lu_N_String
 //
-
-	#define LU_N_IX__NULL 0
-
-	////
-	// Insead of adding +1 when saving index, we dont use 0 index cells
-	struct lu_n_cell {
-		lu_size z; 
-		lu_size y; 
-	};
-
-	static inline lu_bool lu_n_cell_compare(Lu_N_Cell a, Lu_N_Cell b)
-	{
-		// a.p_ix != b.p_ix && (return false); 
-
-		// // we can make so the same strings have the same index, so comparing 
-		// // string index is enough
-		// a.c_ix != b.c_ix && (return false); 
-
-		return true;
-	}
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Column
-// 
 
 	static inline lu_bool lu_n_string__eq(const lu_size* a, const lu_size* b)
 	{
@@ -164,6 +139,39 @@
 		lu__debug("}");
 	}
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Cell
+//
+
+	#define LU_N_IX__NULL 0 
+	#define LU_N_CELL__LINKS_MAX 4
+
+	////
+	// Insead of adding +1 when saving index, we dont use 0 index cells
+	struct lu_n_cell {
+		lu_size label; 		// every cell potentially can be labeled for something
+		lu_size links[LU_N_CELL__LINKS_MAX];
+	};
+
+	static inline lu_bool lu_n_cell_compare(Lu_N_Cell a, Lu_N_Cell b)
+	{
+		// a.p_ix != b.p_ix && (return false); 
+
+		// // we can make so the same strings have the same index, so comparing 
+		// // string index is enough
+		// a.c_ix != b.c_ix && (return false); 
+
+		return true;
+	}
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Column
+// 
+
+
 	////
 	// Having separete columns helps with parallelization in the future, but takes a little bit more memory.
 	// my mozhemo vykorystovuvaty columns, ale treba
@@ -185,27 +193,24 @@
 	struct lu_n_column {
 		Lu_Mem mem;
 
-		lu_size w;
 		lu_size h;
 		lu_size d;
 
-		lu_size *strings;
 		struct lu_n_cell* cells;
 	};
 
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size w, lu_size h, lu_size d);
+	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d);
 	static void lu_n_column__deinit(Lu_N_Column self);
-	static void lu_n_column__realloc(Lu_N_Column self, lu_size w, lu_size h, lu_size d);
+	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d);
 
 	// static inline lu_size lu_n_column__get_cell_ix(Lu_N_Column self, Lu_N_Cell cell)
 	// {
 	// 	return cell - self->cells;
 	// }
 
-	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* s, lu_size str_max_len)
+	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* s)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert(self->w >= str_max_len);
 
 		lu_size p_reg = 0;
 		lu_size ix;
@@ -216,7 +221,7 @@
 			++p;
 		}
 
-		lu_size *strings = self->strings + 1;
+		struct lu_n_cell* cells = self->cells + 1;
 
 		// y
 		ix = p_reg % self->h;
@@ -245,7 +250,7 @@
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
-	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links, lu_size str_max_len)
+	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links)
 	{
-		return lu_n_column__save(&self->columns[y * self->w + x], links, str_max_len);
+		return lu_n_column__save(&self->columns[y * self->w + x], links);
 	}
