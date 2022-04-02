@@ -202,7 +202,6 @@
 // Lu_N_Column
 // 
 
-
 	////
 	// Having separete columns helps with parallelization in the future, but takes a little bit more memory.
 	// my mozhemo vykorystovuvaty columns, ale treba
@@ -274,6 +273,7 @@
 
 		// should replace with column reallocation, should not normally happen
 		lu__assert(false);
+		return NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
