@@ -253,7 +253,13 @@
 		return self->super.type;
 	}
 
-	static void lu_s_layer__save(Lu_S_Layer self, lu_size wave_id, lu_size block_id, Lu_W_Table prev_w_table);
+	static void lu_s_layer__save(
+		Lu_S_Layer self, 
+		lu_size wave_id, 
+		lu_size block_id, 
+		Lu_W_Table prev_w_table,
+		Lu_Process_Config config
+	);
 
 	//
 	// Lu_S_Layer_Rec

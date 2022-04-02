@@ -142,7 +142,35 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_layer__save(Lu_S_Layer self, lu_size wave_id, lu_size block_id, Lu_W_Table prev_w_table)
+	static void lu_s_layer__save(Lu_S_Layer self, lu_size wave_id, lu_size block_id, Lu_W_Table prev_w_table, Lu_Process_Config config)
 	{
+		lu__assert(self);
+		lu__assert(prev_w_table);
 
+		lu__assert(prev_w_table->wave_id == wave_id);
+		lu__assert(prev_w_table->block_id == block_id);
+
+		lu_size x;
+		lu_size y;
+
+		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(self, wave_id);
+		lu__assert(curr_w_table);
+
+		lu_bool is_reset = prev_w_table->wave_id != wave_id || ((block_id - prev_w_table->block_id) > 1);
+
+		Lu_N_Table n_table = self->n_table;
+		lu__assert(n_table);
+
+		lu__assert(n_table->w == curr_w_table->w);
+		lu__assert(n_table->h == curr_w_table->h);
+
+		lu_size children[LU_N_CELL__LINKS_MAX];
+
+		for (y = 0; y < curr_w_table->h; y++)
+		{
+			for (x = 0; x < curr_w_table->w; x++)
+			{
+
+			}
+		}
 	}

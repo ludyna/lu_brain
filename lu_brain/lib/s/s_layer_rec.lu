@@ -135,10 +135,10 @@
 
 		lu_size p_reg;
 		lu_size p_links[depth + 1];
-		p_links[depth] = LU_N_IX__NULL; // null ended string
+		p_links[depth] = LU_N_COLUMN__NULL; // null ended string
 		lu_size v_reg;
 		lu_size v_links[depth + 1];
-		v_links[depth] = LU_N_IX__NULL;
+		v_links[depth] = LU_N_COLUMN__NULL;
 
 		lu_bool any_z_p; // true if for any z we saved w_cell_p
 		
@@ -218,5 +218,5 @@
 
 		lu__assert(lu_s_layer__get_type(next_layer) == LU_S_LAYER__LAYER);
 
-		lu_s_layer__save(next_layer, wave_id, block_id, rec_w_table);
+		lu_s_layer__save(next_layer, wave_id, block_id, rec_w_table, config);
 	}

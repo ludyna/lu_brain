@@ -170,7 +170,9 @@
 // Lu_N_Cell
 //
 
-	#define LU_N_IX__NULL 0 
+	#define LU_N_COLUMN__NULL 0  
+	#define LU_N_COLUMN__INACTIVE 1
+
 	#define LU_N_CELL__LINKS_MAX 4
 
 	////
@@ -184,7 +186,7 @@
 
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
-		return self->children[0] == LU_N_IX__NULL;
+		return self->children[0] == LU_N_COLUMN__NULL;
 	}
 
 	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, lu_size* children)
@@ -201,6 +203,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
 // 
+
 
 	////
 	// Having separete columns helps with parallelization in the future, but takes a little bit more memory.
@@ -240,7 +243,7 @@
 
 	static inline lu_size lu_n_column__hash_to_ix(Lu_N_Column self, lu_size hash)
 	{
-		return hash % self->h + 1; // always skip "NULL" cell
+		return hash % self->h + 2; // always skip "NULL" and "NO FIRE" cells
 	}
 
 	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)
