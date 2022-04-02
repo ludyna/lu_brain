@@ -179,20 +179,23 @@
 		///lu_size label_ix; 	// every cell potentially can be labeled for something
 								// ale ne na cioumu rivni?
 
-		lu_size links[LU_N_CELL__LINKS_MAX];
+		lu_size children[LU_N_CELL__LINKS_MAX];
 	};
 
-	static inline lu_bool lu_n_cell_compare(Lu_N_Cell a, Lu_N_Cell b)
+	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
-		// a.p_ix != b.p_ix && (return false); 
-
-		// // we can make so the same strings have the same index, so comparing 
-		// // string index is enough
-		// a.c_ix != b.c_ix && (return false); 
-
-		return true;
+		return self->children[0] == LU_N_IX__NULL;
 	}
 
+	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, lu_size* children)
+	{
+		return lu_n_string__eq(self->children, children);
+	}
+
+	static inline void lu_n_cell__save(Lu_N_Cell self, const lu_size* children)
+	{
+		lu_n_string__copy(self->children, children);
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -241,13 +244,36 @@
 		return hash % self->h + 1; // always skip "NULL" cell
 	}
 
+	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)
+	{
+		return &self->cells[z * self->h + ix];
+	}
+
 	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* children)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert(*s);
+		lu__debug_assert(*children);
 
+		lu_size ix = lu_n_string__hash_comb(children);
+		ix = lu_n_column__hash_to_ix(self, ix);
 
+		for (lu_size z = 0; z < self->d; z++)
+		{
+			Lu_N_Cell cell = lu_n_column__get_cell(self, z, ix);
 
+			if (lu_n_cell__is_blank(cell))
+			{
+				lu_n_cell__save(cell, children);
+				return cell;
+			}
+			else if (lu_n_cell__eq(cell, children)) 
+			{
+				return cell; // no need to do anything, we already have that cell
+			}
+		}
+
+		// should replace with column reallocation, should not normally happen
+		lu__assert(false);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
