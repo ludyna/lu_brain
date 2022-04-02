@@ -248,6 +248,13 @@
 		return lu_arr__get(self->w_tables, wave_id);
 	}
 
+	static inline enum lu_s_layer_type lu_s_layer__get_type(Lu_S_Layer self)
+	{
+		return self->super.type;
+	}
+
+	static void lu_s_layer__save(Lu_S_Layer self, lu_size wave_id, lu_size block_id, Lu_W_Table prev_w_table);
+
 	//
 	// Lu_S_Layer_Rec
 	//
@@ -261,7 +268,7 @@
 	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec);
 	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self);
 
-	static void lu_s_layer_rec__save_data(
+	static void lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
 		Lu_Wave wave, 
 		lu_size rec_id, 
@@ -274,6 +281,10 @@
 		return self->super.n_table;
 	}
 
+	static inline Lu_S_Layer_Base lu_s_layer_rec__get_parent(Lu_S_Layer_Rec self)
+	{
+		return self->super.super.p;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Maps

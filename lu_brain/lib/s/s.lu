@@ -192,5 +192,5 @@
 		Lu_S_Layer_Rec frame = lu_s__get_v_rec(self, rec_id);
 		lu__assert(frame);
 
-		lu_s_layer_rec__save_data(frame, wave, rec_id, data, config);
+		lu_s_layer_rec__save(frame, wave, rec_id, data, config);
 	}

@@ -248,13 +248,17 @@
 		return &self->cells[z * self->h + ix];
 	}
 
+	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, lu_size* children)
+	{
+		return lu_n_column__hash_to_ix(self, lu_n_string__hash_comb(children));
+	}
+
 	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* children)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(*children);
 
-		lu_size ix = lu_n_string__hash_comb(children);
-		ix = lu_n_column__hash_to_ix(self, ix);
+		lu_size ix = lu_n_column__children_to_ix(self, children);
 
 		for (lu_size z = 0; z < self->d; z++)
 		{

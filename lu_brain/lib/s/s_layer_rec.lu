@@ -51,7 +51,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_layer_rec__save_data(
+	static void lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
 		Lu_Wave wave, 
 		lu_size rec_id, 
@@ -200,13 +200,23 @@
 				if (any_z_p)
 				{
 					lu__debug("\n SAVING N_CELL");
+					
 					n_cell = lu_n_table__save(rec_n_table, x, y, p_links);
+					lu__debug_assert(n_cell);
+
 					lu_w_cell__save(rec_w_p_cell, n_cell);
 				}
 
 			}  // for (x = 0
 		} // for (y = 0
 
-		// continue saving to higher levels recursively (wave)
+		//
+		// Continue saving recursively (wave) until one cell
+		//
 
+		Lu_S_Layer next_layer = (Lu_S_Layer) lu_s_layer_rec__get_parent(self);
+
+		lu__assert(lu_s_layer__get_type(next_layer) == LU_S_LAYER__LAYER);
+
+		lu_s_layer__save(next_layer, wave_id, block_id, rec_w_table);
 	}

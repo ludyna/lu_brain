@@ -19,7 +19,8 @@
  	
  	static inline void lu_w_cell__save(Lu_W_Cell self, Lu_N_Cell n_cell)
  	{
- 		
+ 		self->n_cell = n_cell;
+ 		self->sig = 1;
  	}
 
 ///////////////////////////////////////////////////////////////////////////////
