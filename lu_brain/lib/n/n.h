@@ -139,6 +139,32 @@
 		lu__debug("}");
 	}
 
+	static inline lu_size lu_n_string__hash_comb(lu_p_size p)
+	{
+		lu_size p_reg = 0;
+		while(*p)
+		{
+			p_reg = lu_hash_comb(p_reg, *p);
+			++p;
+		}
+
+		return p_reg;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Label
+//
+
+	struct lu_n_address {
+		lu_size layer_ix;
+		lu_size column_ix;
+		lu_size cell_ix;
+	};
+
+	struct lu_n_label {
+		struct lu_n_address links[1000]; // dlia prostoty ce mozhe buty
+	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
@@ -150,7 +176,9 @@
 	////
 	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell {
-		lu_size label; 		// every cell potentially can be labeled for something
+		///lu_size label_ix; 	// every cell potentially can be labeled for something
+								// ale ne na cioumu rivni?
+
 		lu_size links[LU_N_CELL__LINKS_MAX];
 	};
 
@@ -208,27 +236,17 @@
 	// 	return cell - self->cells;
 	// }
 
-	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* s)
+	static inline lu_size lu_n_column__hash_to_ix(Lu_N_Column self, lu_size hash)
+	{
+		return hash % self->h + 1; // always skip "NULL" cell
+	}
+
+	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* children)
 	{
 		lu__debug_assert(self);
+		lu__debug_assert(*s);
 
-		lu_size p_reg = 0;
-		lu_size ix;
-		lu_size *p = s;
-		while((ix = *p))
-		{
-			p_reg = lu_hash_comb(p_reg, ix);
-			++p;
-		}
 
-		struct lu_n_cell* cells = self->cells + 1;
-
-		// y
-		ix = p_reg % self->h;
-
-		lu_size z = 0;
-
-		// p = &self->strings[z * wh + ix * self->w]
 
 	}
 

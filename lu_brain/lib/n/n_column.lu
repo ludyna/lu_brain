@@ -13,7 +13,7 @@
 		self->h = h;
 		self->d = d;
 
-		// +1 for NULL cell
+		// +1 for "NULL" cell
 		lu_size s = sizeof(struct lu_n_cell) * h * d + 1;
 
 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, s);
