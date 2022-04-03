@@ -4,35 +4,43 @@
 
 // typedef struct lu_n_config* 		Lu_N_Config;
 // typedef struct lu_n* 				Lu_N;
+ 
+	enum lu_n_cell_special {
+		LU_N_CELL__NULL = 0,
+		LU_N_CELL__INACTIVE = 1,
+		LU_N_CELL__SPEIAL_CELLS_SKIP
+	};
+	
+	#define LU_N_CELL__LINKS_MAX 5
 
-enum n_cell_type {
-	LU_N_CELL__0,
-	LU_N_CELL_VP, // for p and v
-	LU_N_CELL__1,
-	LU_N_CELL__2,
-	LU_N_CELL__3,
-	LU_N_CELL__4,
-	LU_N_CELL__N,
-	LU_N_CELL__END
-};
+	enum n_cell_type {
+		LU_N_CELL__0,
+		LU_N_CELL_VP, // for p and v
+		LU_N_CELL__1,
+		LU_N_CELL__2,
+		LU_N_CELL__3,
+		LU_N_CELL__4,
+		LU_N_CELL__N,
+		LU_N_CELL__END
+	};
 
-typedef struct lu_n_cell_base* Lu_N_Cell_Base; 
-typedef struct lu_n_cell_vp* Lu_N_Cell_VP;
-// typedef struct lu_n_cell_1* Lu_N_Cell_1;
-// typedef struct lu_n_cell_2* Lu_N_Cell_2; 
-// typedef struct lu_n_cell_3* Lu_N_Cell_3;
-// typedef struct lu_n_cell_4* Lu_N_Cell_4;
-// typedef struct lu_n_cell_allocator* Lu_N_Cell_Allocator;
+	typedef struct lu_n_cell_base* Lu_N_Cell_Base; 
+	typedef struct lu_n_cell_vp* Lu_N_Cell_VP;
+	// typedef struct lu_n_cell_1* Lu_N_Cell_1;
+	// typedef struct lu_n_cell_2* Lu_N_Cell_2; 
+	// typedef struct lu_n_cell_3* Lu_N_Cell_3;
+	// typedef struct lu_n_cell_4* Lu_N_Cell_4;
+	// typedef struct lu_n_cell_allocator* Lu_N_Cell_Allocator;
 
-// typedef struct lu_n_column_node* Lu_N_Column_Node;
-
-
+	// typedef struct lu_n_column_node* Lu_N_Column_Node;
 
 
-typedef struct lu_n_cell* Lu_N_Cell;
-typedef struct lu_n_strings* Lu_N_Strings;
-typedef struct lu_n_cells* Lu_N_Cells;
-typedef struct lu_n_column* Lu_N_Column;
-typedef struct lu_n_table_comp* Lu_N_Table_Comp;
-typedef struct lu_n_table* Lu_N_Table;
+
+
+	typedef struct lu_n_cell* Lu_N_Cell;
+	typedef struct lu_n_strings* Lu_N_Strings;
+	typedef struct lu_n_cells* Lu_N_Cells;
+	typedef struct lu_n_column* Lu_N_Column;
+	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
+	typedef struct lu_n_table* Lu_N_Table;
 

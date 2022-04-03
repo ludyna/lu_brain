@@ -6,20 +6,20 @@
 // Lu_W_Cell 
 
 	struct lu_w_cell {
-		lu_p_void n_cell;
+		lu_size n_cell_ix;
 		lu_value sig;
 	};
 
 	static inline void lu_w_cell__reset(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
-		self->n_cell = NULL;
+		self->n_cell_ix = LU_N_CELL__NULL;
 		self->sig = 0;
 	}
  	
- 	static inline void lu_w_cell__save(Lu_W_Cell self, Lu_N_Cell n_cell)
+ 	static inline void lu_w_cell__save(Lu_W_Cell self, lu_size n_cell_ix)
  	{
- 		self->n_cell = n_cell;
+ 		self->n_cell_ix = n_cell_ix;
  		self->sig = 1;
  	}
 
@@ -27,7 +27,7 @@
 // Lu_W_Cell_P
 
 	struct lu_w_cell_p {
-		lu_p_void n_cell;
+		lu_size n_cell_ix;
 		lu_value sig;
 
 		lu_byte state;
@@ -76,10 +76,7 @@
 
 		lu_size ix = lu_comp_calc__ix(comp_calc, p);
 
-		Lu_N_Cell_VP n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
-		lu__debug_assert(n_cell);
-
-		self->n_cell = n_cell;
+		self->n_cell_ix = lu_n_table_comp__get_cell_ix(n_table, x, y, ix);
 		self->sig = 1.0;
 	}
 
@@ -90,7 +87,7 @@
 	#define LU_W_CELL_V__READY 1
 
 	struct lu_w_cell_v {
-		lu_p_void n_cell;
+		lu_size n_cell_ix;
 		lu_value sig;
 
 		lu_byte state;
@@ -126,10 +123,7 @@
 		v = lu_comp_calc__norm(comp_calc, v);
 		lu_size ix = lu_comp_calc__ix(comp_calc, v);
 
-		Lu_N_Cell_VP n_cell = lu_n_table_comp__get_cell(n_table, x, y, ix);
-		lu__debug_assert(n_cell);
-
-		self->n_cell = n_cell;
+		self->n_cell_ix = lu_n_table_comp__get_cell_ix(n_table, x, y, ix);
 		self->sig = 1.0;
 	}
 
@@ -209,8 +203,10 @@
 		return &self->cells[y * self->w + x];
 	} 
 
-	static inline lu_bool lu_w_table__calc_children(Lu_W_Table self, lu_size x, lu_size y, lu_size* children)
+	static inline lu_bool lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, lu_size* children)
 	{
+		// order is important, we'll use the same order to decipher string
+
 		return false;
 	}
 

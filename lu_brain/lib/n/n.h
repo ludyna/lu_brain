@@ -75,16 +75,17 @@
 
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
 
-	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
+	static inline lu_size lu_n_table_comp__get_cell_ix(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
 	{
-		return &(self->cells + 1)[z * self->w * self->h + y * self->w + x];
+		return z * self->w * self->h + y * self->w + x + LU_N_CELL__SPEIAL_CELLS_SKIP;
 	}
 
-	static inline lu_size lu_n_table_comp__get_cell_ix(Lu_N_Table_Comp self, Lu_N_Cell_VP cell)
+	static inline Lu_N_Cell_VP lu_n_table_comp__cell_ix_to_cell(Lu_N_Table_Comp self, lu_size cell_ix)
 	{
-		return cell - self->cells;
-	} 
+		lu__debug_assert(cell_ix >= LU_N_CELL__SPEIAL_CELLS_SKIP);
 
+		return &self->cells[cell_ix - LU_N_CELL__SPEIAL_CELLS_SKIP];
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_String
@@ -170,11 +171,6 @@
 // Lu_N_Cell
 //
 
-	#define LU_N_COLUMN__NULL 0  
-	#define LU_N_COLUMN__INACTIVE 1
-
-	#define LU_N_CELL__LINKS_MAX 4
-
 	////
 	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell {
@@ -186,7 +182,7 @@
 
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
-		return self->children[0] == LU_N_COLUMN__NULL;
+		return self->children[0] == LU_N_CELL__NULL;
 	}
 
 	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, lu_size* children)
@@ -243,7 +239,7 @@
 
 	static inline lu_size lu_n_column__hash_to_ix(Lu_N_Column self, lu_size hash)
 	{
-		return hash % self->h + 2; // always skip "NULL" and "NO FIRE" cells
+		return hash % self->h + LU_N_CELL__SPEIAL_CELLS_SKIP; // always skip "NULL" and "NO FIRE" cells
 	}
 
 	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)
@@ -256,7 +252,12 @@
 		return lu_n_column__hash_to_ix(self, lu_n_string__hash_comb(children));
 	}
 
-	static Lu_N_Cell lu_n_column__save(Lu_N_Column self, lu_size* children)
+	static inline lu_size lu_n_column__cell_address_to_ix(Lu_N_Column self, Lu_N_Cell cell)
+	{
+		return ((cell - self->cells) / sizeof(struct lu_n_cell));
+	}
+
+	static lu_size lu_n_column__save(Lu_N_Column self, lu_size* children)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(*children);
@@ -270,17 +271,17 @@
 			if (lu_n_cell__is_blank(cell))
 			{
 				lu_n_cell__save(cell, children);
-				return cell;
+				return lu_n_column__cell_address_to_ix(self, cell);
 			}
 			else if (lu_n_cell__eq(cell, children)) 
 			{
-				return cell; // no need to do anything, we already have that cell
+				return lu_n_column__cell_address_to_ix(self, cell); // no need to do anything, we already have that cell
 			}
 		}
 
 		// should replace with column reallocation, should not normally happen
 		lu__assert(false);
-		return NULL;
+		return LU_N_CELL__NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -301,7 +302,7 @@
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
-	static inline Lu_N_Cell lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links)
+	static inline lu_size lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links)
 	{
 		return lu_n_column__save(&self->columns[y * self->w + x], links);
 	}
