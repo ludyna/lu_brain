@@ -106,7 +106,7 @@
 
 		lu_bool is_reset;
 
-		Lu_W_Cell_P p_cell;
+		Lu_W_Cell_P w_p_cell;
 		Lu_W_Cell_V v_cell;
 
 		Lu_Comp_Calc p_comp_calc;
@@ -159,6 +159,7 @@
 
 				any_z_p = false;
 
+				// iterate all layer comps and save result in rec_layer(which is also s_layer)
 				for (z = 0; z < depth; z++)
 				{
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
@@ -170,22 +171,22 @@
 					lu__assert(p_table);
 
 					p_comp_calc = &p_view->comp_calc;
-					p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
+					w_p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
 
 					v = data->values[z * wh + xy_shift];
 
-					lu_w_cell_p__register(p_cell, is_reset, v, config);
+					lu_w_cell_p__register(w_p_cell, is_reset, v, config);
 
 					//lu__debug("\n PROCESSING:	%.1f", v);
 
 					p_links[z] = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, x, y, z);
 
-					if (!is_reset && lu_w_cell_p__is_ready(p_cell, p_comp_calc->step))
+					if (!is_reset && lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
 						//lu__debug("\n SAVING:	%.1f", v);
 
 						lu_w_cell_p__save(
-							p_cell, 
+							w_p_cell, 
 							x, 
 							y, 
 							p_comp_calc, 
@@ -209,7 +210,8 @@
 		} // for (y = 0
 
 		//
-		// Continue saving recursively (wave) until one cell
+		// Continue saving recursively (wave) until one cell, 
+		// passing rec_layer w_table as previous w info
 		//
 
 		Lu_S_Layer next_layer = (Lu_S_Layer) lu_s_layer_rec__get_parent(self);

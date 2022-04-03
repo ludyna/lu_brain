@@ -13,7 +13,7 @@
 	static inline void lu_w_cell__reset(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
-		self->n_cell_ix = LU_N_CELL__NULL;
+		self->n_cell_ix = LU_N_CELL__INACTIVE;
 		self->sig = 0;
 	}
  	
@@ -203,9 +203,25 @@
 		return &self->cells[y * self->w + x];
 	} 
 
+	static inline lu_size lu_w_table__get_n_cell_ix(Lu_W_Table self, lu_size x, lu_size y)
+	{ 
+		lu__debug_assert(x < self->w); // should never happen
+		lu__debug_assert(y < self->h);
+
+		return self->cells[y * self->w + x].n_cell_ix;
+	}
+
 	static inline lu_bool lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, lu_size* children)
 	{
 		// order is important, we'll use the same order to decipher string
+		lu__debug_assert(x + 1 < self->w); // should always be true
+		lu__debug_assert(y + 1 < self->h);
+
+
+		children[0] = lu_w_table__get_n_cell_ix(self, x, y);
+		children[1] = lu_w_table__get_n_cell_ix(self, x + 1, y);
+		children[2] = lu_w_table__get_n_cell_ix(self, x + 1, y + 1);
+		children[3] = lu_w_table__get_n_cell_ix(self, x, y + 1);
 
 		return false;
 	}
