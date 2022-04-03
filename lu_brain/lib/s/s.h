@@ -253,6 +253,15 @@
 		return self->super.type;
 	}
 
+	static inline Lu_S_Layer lu_s_layer__get_parent(Lu_S_Layer self)
+	{
+		Lu_S_Layer_Base layer_base = self->super.p;
+		lu__assert(layer_base->type == LU_S_LAYER__LAYER);
+
+		return (Lu_S_Layer) layer_base;
+	}
+
+
 	static void lu_s_layer__save(
 		Lu_S_Layer self, 
 		lu_size wave_id, 

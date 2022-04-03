@@ -142,7 +142,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_layer__save(Lu_S_Layer self, lu_size wave_id, lu_size block_id, Lu_W_Table prev_w_table, Lu_Process_Config config)
+	static void lu_s_layer__save(
+		Lu_S_Layer self, 
+		lu_size wave_id, 
+		lu_size block_id, 
+		Lu_W_Table prev_w_table, 
+		Lu_Process_Config config
+	)
 	{
 		lu__assert(self);
 		lu__assert(prev_w_table);
@@ -158,19 +164,45 @@
 
 		lu_bool is_reset = prev_w_table->wave_id != wave_id || ((block_id - prev_w_table->block_id) > 1);
 
-		Lu_N_Table n_table = self->n_table;
-		lu__assert(n_table);
+		Lu_N_Table curr_n_table = self->n_table;
+		lu__assert(curr_n_table);
 
-		lu__assert(n_table->w == curr_w_table->w);
-		lu__assert(n_table->h == curr_w_table->h);
+		lu__assert(curr_n_table->w == curr_w_table->w);
+		lu__assert(curr_n_table->h == curr_w_table->h);
 
 		lu_size children[LU_N_CELL__LINKS_MAX];
+
+		lu_size cells_saved_count = 0;
+		lu_bool any_cell_active;
+
+		Lu_W_Cell curr_w_cell;
+		Lu_N_Cell n_cell;
 
 		for (y = 0; y < curr_w_table->h; y++)
 		{
 			for (x = 0; x < curr_w_table->w; x++)
 			{
+				curr_w_cell = lu_w_table__get_cell(curr_w_table, x, y);
+				lu__debug_assert(curr_w_cell);
 
+				lu_w_cell__reset(curr_w_cell);
+
+				any_cell_active = lu_w_table__calc_children(prev_w_table, x, y, children);
+
+				if (any_cell_active)
+				{
+					n_cell = lu_n_table__save(curr_n_table, x, y, children);
+					lu__debug_assert(n_cell);
+
+					lu_w_cell__save(curr_w_cell, n_cell);
+					++cells_saved_count;
+				}
 			}
+		}
+
+		if (cells_saved_count)
+		{
+			Lu_S_Layer parent_layer = lu_s_layer__get_parent(self);
+			//lu_s_layer__save(parent_layer, wave_id, block_id, curr_w_table, config);
 		}
 	}

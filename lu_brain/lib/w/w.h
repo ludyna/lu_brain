@@ -207,6 +207,11 @@
 		lu__debug_assert(x < self->w);
 		lu__debug_assert(y < self->h);
 		return &self->cells[y * self->w + x];
+	} 
+
+	static inline lu_bool lu_w_table__calc_children(Lu_W_Table self, lu_size x, lu_size y, lu_size* children)
+	{
+		return false;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
