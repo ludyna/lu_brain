@@ -13,7 +13,7 @@
 	static inline void lu_w_cell__reset(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
-		self->n_cell_ix = LU_N_CELL__INACTIVE;
+		self->n_cell_ix = LU_N_CELL__NULL;
 		self->sig = 0;
 	}
  	
@@ -218,6 +218,7 @@
 		lu__debug_assert(y + 1 < self->h);
 
 
+		children[0] = LU_N_CELL__NULL;
 		children[0] = lu_w_table__get_n_cell_ix(self, x, y);
 		children[1] = lu_w_table__get_n_cell_ix(self, x + 1, y);
 		children[2] = lu_w_table__get_n_cell_ix(self, x + 1, y + 1);

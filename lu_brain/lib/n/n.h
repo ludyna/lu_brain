@@ -7,11 +7,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell_Base
 
+	union lu_n_ix {
+		struct {
+			lu_byte pos : 4;
+			lu_size ix : 60;
+		};
+		lu_size value;
+	};
+
 	struct lu_n_cell_base {
 		lu_byte type;
 	};
 	
-	static inline Lu_N_Cell_Base lu_n_cell_base__init(Lu_N_Cell_Base self, lu_byte type)
+	static inline Lu_N_Cell_Base lu_n_cell_base__in7it(Lu_N_Cell_Base self, lu_byte type)
 	{
 		lu__assert(self);
 		self->type = type;
