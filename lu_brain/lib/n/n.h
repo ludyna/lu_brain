@@ -265,10 +265,10 @@
 		return ((cell - self->cells) / sizeof(struct lu_n_cell));
 	}
 
-	static lu_size lu_n_column__save(Lu_N_Column self, lu_size* children)
+	static lu_size lu_n_column__save(Lu_N_Column self, union lu_n_ix* children)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert(*children);
+		lu__debug_assert((*children).value);
 
 		lu_size ix = lu_n_column__children_to_ix(self, children);
 
@@ -310,7 +310,7 @@
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
-	static inline lu_size lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, lu_size *links)
+	static inline lu_size lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, union lu_n_ix *links)
 	{
 		return lu_n_column__save(&self->columns[y * self->w + x], links);
 	}

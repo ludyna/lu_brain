@@ -130,15 +130,15 @@
 
 		lu_size depth = self->rec->depth; 
 
-		// Currently we support max 3 components
+		// Currently we support max 4 components
 		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
 		lu_size p_reg;
-		lu_size p_links[depth + 1];
-		p_links[depth] = LU_N_CELL__NULL; // null ended string
-		lu_size v_reg;
-		lu_size v_links[depth + 1];
-		v_links[depth] = LU_N_CELL__NULL;
+		union lu_n_ix p_links[depth + 1];
+		p_links[depth].value = LU_N_CELL__NULL; // null ended string
+		// lu_size v_reg;
+		// lu_size v_links[depth + 1];
+		// v_links[depth] = LU_N_CELL__NULL;
 
 		lu_bool any_z_p; // true if for any z we saved w_cell_p
 		
@@ -191,7 +191,8 @@
 							p_view->n_comp_table
 						);
 
-						p_links[z] = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, x, y, z);
+						p_links[z].pos = z;
+						p_links[z].ix = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, x, y, z);
 
 						any_z_p = true;
 					}
