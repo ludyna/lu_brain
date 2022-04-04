@@ -9,8 +9,8 @@
 
 	union lu_n_ix {
 		struct {
-			lu_byte pos : 4;
-			lu_size ix : 60;
+			lu_byte pos : 2;
+			lu_size ix : 62;
 		};
 		lu_size value;
 	};
@@ -99,16 +99,16 @@
 // Lu_N_String
 //
 
-	static inline lu_bool lu_n_string__eq(const lu_size* a, const lu_size* b)
+	static inline lu_bool lu_n_string__eq(const union lu_n_ix* a, const union lu_n_ix* b)
 	{
 		while (1)
 		{
-			if (*a != *b)
+			if ((*a).value != (*b).value)
 			{
 				return false;
 			}
 
-			if (*a == 0 || *b == 0) break;
+			if ((*a).value == 0 || (*b).value == 0) break;
 
 			++a;
 			++b;
@@ -119,27 +119,27 @@
 
 	////
 	// This method doesn't check if <dest> has enough space for <src>
-	static inline void lu_n_string__copy(lu_size* dest, const lu_size* src)
+	static inline void lu_n_string__copy(union lu_n_ix* dest, const union lu_n_ix* src)
 	{
-		while(*src)
+		while((*src).value)
 		{
 			*dest = *src;
 			++src;
 			++dest;
 		};
 
-		*dest = 0;
+		(*dest).value = 0;
 	}
 
-	static inline void lu_n_string__print(const lu_size* s)
+	static inline void lu_n_string__print(const union lu_n_ix* s)
 	{
 		lu__debug("\n N_STRING: {");
-		const lu_size *p = s;
+		const union lu_n_ix *p = s;
 
-		while(*p)
+		while((*p).value)
 		{
 			if (p != s) lu__debug(", ");
-			lu__debug("%d", *p);
+			lu__debug("%d:%d", (*p).pos, (*p).ix);
 			++p;
 		} 
 		if (p==s) lu__debug("0");
@@ -148,12 +148,12 @@
 		lu__debug("}");
 	}
 
-	static inline lu_size lu_n_string__hash_comb(lu_p_size p)
+	static inline lu_size lu_n_string__hash_comb(const union lu_n_ix* p)
 	{
 		lu_size p_reg = 0;
-		while(*p)
+		while((*p).value)
 		{
-			p_reg = lu_hash_comb(p_reg, *p);
+			p_reg = lu_hash_comb(p_reg, (*p).value);
 			++p;
 		}
 

@@ -94,7 +94,6 @@ void test_string__eq(void)
 
 	TEST_ASSERT(ix.pos == 1);
 	TEST_ASSERT(ix.ix == 3);
-	TEST_ASSERT(ix.value == 49);
 }
 
 
