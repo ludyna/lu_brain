@@ -213,7 +213,6 @@
 
 	static inline void lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, union lu_n_ix* children)
 	{
-		// order is important, we'll use the same order to decipher string
 		lu__debug_assert(x + 1 < self->w); // should always be true
 		lu__debug_assert(y + 1 < self->h);
 
@@ -255,6 +254,8 @@
 			children[pos].pos = pos;
 			++pos;
 		}
+
+		lu_n_ix__set_to_null(&children[pos]);
 
 	}
 

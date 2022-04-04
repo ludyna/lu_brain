@@ -173,7 +173,6 @@
 		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
 
 		lu_size cells_saved_count = 0;
-		lu_bool any_cell_active;
 
 		Lu_W_Cell curr_w_cell;
 		union lu_n_ix n_cell_ix;

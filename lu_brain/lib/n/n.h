@@ -25,6 +25,11 @@
 		return (self->value != LU_N_CELL__NULL);
 	}
 
+	static inline void lu_n_ix__set_to_null(Lu_N_Ix self)
+	{
+		self->value = LU_N_CELL__NULL;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell_Base
 
