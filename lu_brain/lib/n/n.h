@@ -260,12 +260,15 @@
 		return lu_n_column__hash_to_ix(self, lu_n_string__hash_comb(children));
 	}
 
-	static inline lu_size lu_n_column__cell_address_to_ix(Lu_N_Column self, Lu_N_Cell cell)
-	{
-		return ((cell - self->cells) / sizeof(struct lu_n_cell));
+	static inline union lu_n_ix lu_n_column__cell_to_ix(Lu_N_Column self, Lu_N_Cell cell)
+	{ 
+		union lu_n_ix ix;
+		ix.pos = 0;
+		ix.ix = ((cell - self->cells) / sizeof(struct lu_n_cell));
+		return ix;
 	}
 
-	static lu_size lu_n_column__save(Lu_N_Column self, union lu_n_ix* children)
+	static union lu_n_ix lu_n_column__save(Lu_N_Column self, union lu_n_ix* children)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert((*children).value);
@@ -279,17 +282,17 @@
 			if (lu_n_cell__is_blank(cell))
 			{
 				lu_n_cell__save(cell, children);
-				return lu_n_column__cell_address_to_ix(self, cell);
+				return lu_n_column__cell_to_ix(self, cell);
 			}
 			else if (lu_n_cell__eq(cell, children)) 
 			{
-				return lu_n_column__cell_address_to_ix(self, cell); // no need to do anything, we already have that cell
+				return lu_n_column__cell_to_ix(self, cell); // no need to do anything, we already have that cell
 			}
 		}
 
 		// should replace with column reallocation, should not normally happen
 		lu__assert(false);
-		return LU_N_CELL__NULL;
+		return (union lu_n_ix) (lu_size) LU_N_CELL__NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -310,7 +313,7 @@
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
-	static inline lu_size lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, union lu_n_ix *links)
+	static inline union lu_n_ix lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, union lu_n_ix *links)
 	{
 		return lu_n_column__save(&self->columns[y * self->w + x], links);
 	}

@@ -124,7 +124,7 @@
 		Lu_W_Cell rec_w_p_cell;
 		Lu_W_Cell rec_w_v_cell;
 
-		lu_size n_cell_ix;
+		union lu_n_ix n_cell_ix;
 
 		lu_bool v_reset;
 

@@ -176,7 +176,7 @@
 		lu_bool any_cell_active;
 
 		Lu_W_Cell curr_w_cell;
-		lu_size n_cell_ix;
+		union lu_n_ix n_cell_ix;
 
 		for (y = 0; y < curr_w_table->h; y++)
 		{
