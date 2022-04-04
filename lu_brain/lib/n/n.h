@@ -185,20 +185,20 @@
 		///lu_size label_ix; 	// every cell potentially can be labeled for something
 								// ale ne na cioumu rivni?
 
-		lu_size children[LU_N_CELL__LINKS_MAX];
+		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
 	};
 
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
-		return self->children[0] == LU_N_CELL__NULL;
+		return self->children[0].value == LU_N_CELL__NULL;
 	}
 
-	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, lu_size* children)
+	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_ix* children)
 	{
 		return lu_n_string__eq(self->children, children);
 	}
 
-	static inline void lu_n_cell__save(Lu_N_Cell self, const lu_size* children)
+	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_ix* children)
 	{
 		lu_n_string__copy(self->children, children);
 	}
@@ -255,7 +255,7 @@
 		return &self->cells[z * self->h + ix];
 	}
 
-	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, lu_size* children)
+	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, union lu_n_ix* children)
 	{
 		return lu_n_column__hash_to_ix(self, lu_n_string__hash_comb(children));
 	}

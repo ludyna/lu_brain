@@ -170,7 +170,7 @@
 		lu__assert(curr_n_table->w == curr_w_table->w);
 		lu__assert(curr_n_table->h == curr_w_table->h);
 
-		lu_size children[LU_N_CELL__LINKS_MAX];
+		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
 
 		lu_size cells_saved_count = 0;
 		lu_bool any_cell_active;
