@@ -5,6 +5,8 @@
 // typedef struct lu_n_config* 		Lu_N_Config;
 // typedef struct lu_n* 				Lu_N;
  
+	typedef union lu_n_ix* Lu_N_Ix;
+
 	enum lu_n_cell_special {
 		LU_N_CELL__NULL = 0,
 		LU_N_CELL__INACTIVE = 1,

@@ -5,7 +5,7 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell_Base
+// union lu_n_ix
 
 	union lu_n_ix {
 		struct {
@@ -14,6 +14,19 @@
 		};
 		lu_size value;
 	};
+
+	static inline lu_bool lu_n_ix__is_blank(Lu_N_Ix self)
+	{
+		return (self->value == LU_N_CELL__NULL);
+	}
+
+	static inline lu_bool lu_n_ix__is_present(Lu_N_Ix self)
+	{
+		return (self->value != LU_N_CELL__NULL);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Cell_Base
 
 	struct lu_n_cell_base {
 		lu_byte type;

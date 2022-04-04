@@ -187,9 +187,9 @@
 
 				lu_w_cell__reset(curr_w_cell);
 
-				any_cell_active = lu_w_table__cipher_children(prev_w_table, x, y, children);
+				lu_w_table__cipher_children(prev_w_table, x, y, children);
 
-				if (any_cell_active)
+				if (lu_n_ix__is_present(&children[0]))
 				{
 					n_cell_ix = lu_n_table__save(curr_n_table, x, y, children);
 					lu_w_cell__save(curr_w_cell, n_cell_ix);

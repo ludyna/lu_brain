@@ -211,20 +211,51 @@
 		return self->cells[y * self->w + x].n_cell_ix;
 	}
 
-	static inline lu_bool lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, union lu_n_ix* children)
+	static inline void lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, union lu_n_ix* children)
 	{
 		// order is important, we'll use the same order to decipher string
 		lu__debug_assert(x + 1 < self->w); // should always be true
 		lu__debug_assert(y + 1 < self->h);
 
+		lu_byte pos = 0;
+		union lu_n_ix ix;
 
-		// children[0] = LU_N_CELL__NULL;
-		// children[0] = lu_w_table__get_n_cell_ix(self, x, y);
-		// children[1] = lu_w_table__get_n_cell_ix(self, x + 1, y);
-		// children[2] = lu_w_table__get_n_cell_ix(self, x + 1, y + 1);
-		// children[3] = lu_w_table__get_n_cell_ix(self, x, y + 1);
+		ix = lu_w_table__get_n_cell_ix(self, x, y);
+		
+		if (lu_n_ix__is_present(&ix))
+		{
+			children[pos] = ix;
+			children[pos].pos = pos;
+			++pos;
+		}
 
-		return false;
+		ix = lu_w_table__get_n_cell_ix(self, x + 1, y);
+		
+		if (lu_n_ix__is_present(&ix))
+		{
+			children[pos] = ix;
+			children[pos].pos = pos;
+			++pos;
+		}
+
+		ix = lu_w_table__get_n_cell_ix(self, x + 1, y + 1);
+		
+		if (lu_n_ix__is_present(&ix))
+		{
+			children[pos] = ix;
+			children[pos].pos = pos;
+			++pos;
+		}
+
+		ix = lu_w_table__get_n_cell_ix(self, x, y + 1);
+		
+		if (lu_n_ix__is_present(&ix))
+		{
+			children[pos] = ix;
+			children[pos].pos = pos;
+			++pos;
+		}
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
