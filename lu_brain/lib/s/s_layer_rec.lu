@@ -179,8 +179,6 @@
 
 					//lu__debug("\n PROCESSING:	%.1f", v);
 
-					p_links[z] = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, x, y, z);
-
 					if (!is_reset && lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
 						//lu__debug("\n SAVING:	%.1f", v);
@@ -192,6 +190,8 @@
 							p_comp_calc, 
 							p_view->n_comp_table
 						);
+
+						p_links[z] = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, x, y, z);
 
 						any_z_p = true;
 					}
