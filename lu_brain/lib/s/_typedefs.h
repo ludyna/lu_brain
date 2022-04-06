@@ -20,6 +20,19 @@
 		LU_S_LAYER__END
 	};
 
+	enum lu_s_layer_tag {
+		LU_S_TAQ__NULL,
+		LU_S_TAG__COMP,
+		LU_S_TAG__REC_BASE,
+		LU_S_TAG__FRAME_BASE,
+		LU_S_TAG__SEQ_BASE,
+		LU_S_TAG__EVENT_BASE,
+		LU_S_TAG__SCENE_BASE,
+		LU_S_TAG__STORY_BASE,
+		LU_S_TAG__OTHER_BASE,
+		LU_S_TAG__END
+	};
+
 	enum lu_s_view_p_type {
 		LU_S_VIEW__V,
 		LU_S_VIEW__P
@@ -47,5 +60,5 @@
 	// S
 	//
 	
-	typedef struct lu_s* 				Lu_S;
+	typedef struct lu_s* Lu_S;
 

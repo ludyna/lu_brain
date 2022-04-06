@@ -227,9 +227,19 @@
 		Lu_S_Layer_Base prev = (Lu_S_Layer_Base) rec_base;
 		Lu_S_Layer rec_layer;
 		lu_size frames_layers_size = lu_s__Y(rec->width, rec->height);
+
+		Lu_N_Table n_table = lu_s_layer_rec__get_n_table(rec_base);
+		lu__assert(n_table);
+
+		lu_size w = n_table->w;
+		lu_size h = n_table->h;
+
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+
 		for (i = 1; i < frames_layers_size; i++)
 		{
-			rec_layer = lu_s_layer__create(config, 0, 1, 1, 1, LU_N_CELL__N);
+			rec_layer = lu_s_layer__create(config, i + 1, 1, 1, 1, LU_N_CELL__N);
 			lu__assert(rec_layer);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_layer, prev);

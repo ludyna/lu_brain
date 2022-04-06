@@ -211,13 +211,13 @@
 		} // for (y = 0
 
 		//
-		// Continue saving recursively (wave) until one cell, 
+		// Continue saving until first frames layer
 		// passing rec_layer w_table as previous w info
 		//
 
-		Lu_S_Layer next_layer = (Lu_S_Layer) lu_s_layer_rec__get_parent(self);
+		Lu_S_Layer parent_layer = (Lu_S_Layer) lu_s_layer_rec__get_parent(self);
 
-		lu__assert(lu_s_layer__get_type(next_layer) == LU_S_LAYER__LAYER);
+		lu__assert(lu_s_layer__get_type(parent_layer) == LU_S_LAYER__LAYER);
 
-		lu_s_layer__save(next_layer, wave_id, block_id, rec_w_table, config);
+		lu_s_layer__save(parent_layer, wave_id, block_id, rec_w_table, config);
 	}
