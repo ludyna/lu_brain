@@ -118,7 +118,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Fractals
 
-	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_count)
+	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_count, Lu_S s)
 	{
 		lu__assert(self);
 		lu__assert(self->apexes);
@@ -133,17 +133,17 @@
 		// Create and connect layers
 		//
 
-		Lu_S_Layer story = lu_s_layer__create(config, 4, 1, 1, 1, LU_N_CELL__N);
-		Lu_S_Layer scene = lu_s_layer__create(config, 3, 1, 1, 1, LU_N_CELL__N);
-		Lu_S_Layer event = lu_s_layer__create(config, 2, 1, 1, 1, LU_N_CELL__N);
-		Lu_S_Layer seq = lu_s_layer__create(config, 1, 1, 1, 1, LU_N_CELL__N);
+		Lu_S_Layer story = lu_s__create_layer(s, config, 1, 1, 1);
+		Lu_S_Layer scene = lu_s__create_layer(s, config, 1, 1, 1);
+		Lu_S_Layer event = lu_s__create_layer(s, config, 1, 1, 1);
+		Lu_S_Layer seq = lu_s__create_layer(s, config, 1, 1, 1);
 
 		lu__assert(story);
 		lu__assert(scene);
 		lu__assert(event);
 		lu__assert(seq);
 
-		Lu_S_Layer prev = lu_s_layer__create(config, 0, recs_count, 1, 1, LU_N_CELL__N);
+		Lu_S_Layer prev = lu_s__create_layer(s, config, recs_count, 1, 1);
 		lu__assert(prev);
 		Lu_S_Layer recs_base = prev;
 		Lu_S_Layer recs = recs_base;
@@ -151,7 +151,7 @@
 		lu_size recs_layers_size = lu_s__Y(recs_count, 1);
 		for(lu_size i = 1; i < recs_layers_size; i++)
 		{
-			recs = lu_s_layer__create(config, 0, 1, 1, 1, LU_N_CELL__N);
+			recs = lu_s__create_layer(s, config, 1, 1, 1);
 			lu__assert(recs);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) recs, (Lu_S_Layer_Base) prev);
@@ -197,7 +197,7 @@
 		// Frame
 		//
 
-		Lu_S_Layer_Rec rec_base = lu_s_layer_rec__create(config, rec);
+		Lu_S_Layer_Rec rec_base = lu_s__create_layer_rec(s, config, rec);
 		lu__assert(rec_base);
 		lu__assert(lu_s_layer_base__get_type((Lu_S_Layer_Base) rec_base) == LU_S_LAYER__REC);
 
@@ -239,7 +239,7 @@
 
 		for (i = 1; i < frames_layers_size; i++)
 		{
-			rec_layer = lu_s_layer__create(config, i + 1, 1, 1, 1, LU_N_CELL__N);
+			rec_layer = lu_s__create_layer(s, config, i + 1, 1, 1);
 			lu__assert(rec_layer);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_layer, prev);

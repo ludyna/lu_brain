@@ -149,7 +149,6 @@
 
 	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
-		lu_size level;
 		lu_size layer_ix;
 
 		Lu_Mem s_mem;
@@ -250,23 +249,21 @@
 		Lu_S_Layer self, 
 		Lu_Config config, 
 		enum lu_s_layer_type type,
-		lu_size level, 
+		lu_size layer_ix, 
 		lu_size children_count,
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
-		lu_size n_h,
-		lu_size n_cell_type
+		lu_size n_h
 	);
 
 	static void lu_s_layer__deinit(Lu_S_Layer self);
 
 	static Lu_S_Layer lu_s_layer__create(
 		Lu_Config config, 
-		lu_size level, 
+		lu_size layer_ix, 
 		lu_size children_count,
 		lu_size n_w,
-		lu_size n_h,
-		lu_size n_cell_type
+		lu_size n_h
 	);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
@@ -311,7 +308,7 @@
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec);
+	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix);
 	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self);
 
 	static void lu_s_layer_rec__save(
@@ -382,7 +379,7 @@
 	// Fractals
 	//
 
-	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_size);
+	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_size, Lu_S s);
 	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec, Lu_S s);
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base);
 
@@ -462,6 +459,17 @@
 	//
 	// S Layers Factory
 	//
+
+	static inline Lu_S_Layer_Base lu_s__register_layer(Lu_S self, Lu_S_Layer_Base layer)
+	{
+		lu__debug_assert(self);
+		
+		self->layers[self->layers_count] = (Lu_S_Layer_Base) layer;
+		++self->layers_count;
+
+		return layer;
+	}
+	
 	static Lu_S_Layer_Comp lu_s__create_layer_comp(
 		Lu_S self, 
 		Lu_Config config, 
@@ -471,12 +479,10 @@
 
 	static Lu_S_Layer lu_s__create_layer(
 		Lu_S self, 
-		Lu_Config config, 
-		lu_size level, 
+		Lu_Config config,  
 		lu_size children_count,
 		lu_size n_w,
-		lu_size n_h,
-		lu_size n_cell_type
+		lu_size n_h
 	);
 
 	static Lu_S_Layer_Rec lu_s__create_layer_rec(Lu_S self, Lu_Config config, Lu_Rec rec);

@@ -9,12 +9,11 @@
 		Lu_S_Layer self, 
 		Lu_Config config, 
 		enum lu_s_layer_type type,
-		lu_size level, 
+		lu_size layer_ix, 
 		lu_size children_count,
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
-		lu_size n_h,
-		lu_size n_cell_type
+		lu_size n_h
 	)
 	{
 		lu__assert(self);
@@ -29,21 +28,10 @@
 				NULL, 
 				config, 
 				type, 
-				level, 
+				layer_ix, 
 				destroy
 			); 
 		}
-		// else if (children_count == 1)
-		// {
-		// 	lu_s_layer_base__init_with_one_c_slot(
-		// 		&self->super, 
-		// 		NULL, 
-		// 		config, 
-		// 		type, 
-		// 		level, 
-		// 		lu_s_layer__destroy
-		// 	);
-		// }
 		else
 		{
 			lu_s_layer_base__init_with_arr_c_slot(
@@ -52,12 +40,12 @@
 				children_count, 
 				config, 
 				type, 
-				level, 
+				layer_ix, 
 				destroy
 			);
 		}
 
-		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, n_cell_type, config);
+		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, config);
 		lu__alloc_assert(self->n_table);
 
 		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
@@ -97,11 +85,10 @@
 
 	static Lu_S_Layer lu_s_layer__create(
 		Lu_Config config, 
-		lu_size level, 
+		lu_size layer_ix, 
 		lu_size children_count,
 		lu_size n_w,
-		lu_size n_h,
-		lu_size n_cell_type
+		lu_size n_h
 	)
 	{
 		lu__assert(config);
@@ -114,12 +101,11 @@
 			self, 
 			config, 
 			LU_S_LAYER__LAYER, 
-			level, 
+			layer_ix, 
 			children_count, 
 			lu_s_layer__destroy, 
 			n_w, 
-			n_h, 
-			n_cell_type
+			n_h
 		);
 
 		return self;

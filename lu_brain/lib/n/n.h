@@ -328,7 +328,7 @@
 		struct lu_n_column* columns;
 	};
 
-	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_byte cell_type, Lu_Config config);
+	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config);
  	void lu_n_table__destroy(Lu_N_Table self);
 
 

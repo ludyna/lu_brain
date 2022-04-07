@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec)
+	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix)
 	{
 		lu__assert(config);
 		lu__assert(config->s_mem);
@@ -20,12 +20,11 @@
 			&self->super, 
 			config,
 			LU_S_LAYER__REC, // type
-			1, //level
+			layer_ix, 
 			rec->depth, //children
 			lu_s_layer_rec__destroy,
 			rec->width,
-			rec->height, 
-			LU_N_CELL__N
+			rec->height
 		);
 
 		self->rec = rec;
