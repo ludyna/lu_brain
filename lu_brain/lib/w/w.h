@@ -216,46 +216,46 @@
 		lu__debug_assert(x + 1 < self->w); // should always be true
 		lu__debug_assert(y + 1 < self->h);
 
-		lu_byte pos = 0;
+		lu_byte column = 0;
 		union lu_n_ix ix;
 
 		ix = lu_w_table__get_n_cell_ix(self, x, y);
 		
 		if (lu_n_ix__is_present(&ix))
 		{
-			children[pos] = ix;
-			children[pos].pos = pos;
-			++pos;
+			children[column] = ix;
+			children[column].column_ix = column;
+			++column;
 		}
 
 		ix = lu_w_table__get_n_cell_ix(self, x + 1, y);
 		
 		if (lu_n_ix__is_present(&ix))
 		{
-			children[pos] = ix;
-			children[pos].pos = pos;
-			++pos;
+			children[column] = ix;
+			children[column].column_ix = column;
+			++column;
 		}
 
 		ix = lu_w_table__get_n_cell_ix(self, x + 1, y + 1);
 		
 		if (lu_n_ix__is_present(&ix))
 		{
-			children[pos] = ix;
-			children[pos].pos = pos;
-			++pos;
+			children[column] = ix;
+			children[column].column_ix = column;
+			++column;
 		}
 
 		ix = lu_w_table__get_n_cell_ix(self, x, y + 1);
 		
 		if (lu_n_ix__is_present(&ix))
 		{
-			children[pos] = ix;
-			children[pos].pos = pos;
-			++pos;
+			children[column] = ix;
+			children[column].column_ix = column;
+			++column;
 		}
 
-		lu_n_ix__set_to_null(&children[pos]);
+		lu_n_ix__set_to_null(&children[column]);
 
 	}
 

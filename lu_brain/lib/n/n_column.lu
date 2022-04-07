@@ -20,7 +20,12 @@
 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, s);
 		lu__alloc_assert(self->cells);
 
-		memset(self->cells, LU_N_CELL__NULL, s); 
+		memset(self->cells, LU_N_CELL__NULL, s);  
+
+		for (lu_size i = 0; i < s; i++)
+		{
+			
+		}
 
 		return self;
 	}

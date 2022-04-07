@@ -9,12 +9,14 @@
 
 	union lu_n_ix {
 		struct {
-			lu_size ix : 32;
-			lu_size pos: 24;
-			lu_size layer: 8;
+			lu_size cell_ix : 32;
+			lu_size column_ix: 24;
+			lu_size layer_ix: 8;
 		};
 		lu_size value;
 	};
+
+	//static inline Lu_N_Ix lu_n_ix__init(Lu_N_Ix self, 
 
 	static inline lu_bool lu_n_ix__is_blank(Lu_N_Ix self)
 	{
@@ -158,7 +160,7 @@
 		while((*p).value)
 		{
 			if (p != s) lu__debug(", ");
-			lu__debug("%d:%d", (*p).pos, (*p).ix);
+			lu__debug("%d:%d:%d", (*p).layer_ix, (*p).column_ix, (*p).cell_ix);
 			++p;
 		} 
 		if (p==s) lu__debug("0");
@@ -201,8 +203,7 @@
 	////
 	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell {
-		///lu_size label_ix; 	// every cell potentially can be labeled for something
-								// ale ne na cioumu rivni?
+		union lu_n_ix address; // can be removed later to save memory, but useful for testing
 
 		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
 	};
@@ -284,8 +285,8 @@
 	static inline union lu_n_ix lu_n_column__cell_to_ix(Lu_N_Column self, Lu_N_Cell cell)
 	{ 
 		union lu_n_ix ix;
-		ix.pos = 0;
-		ix.ix = ((cell - self->cells) / sizeof(struct lu_n_cell));
+		ix.column_ix = 0;
+		ix.cell_ix = ((cell - self->cells) / sizeof(struct lu_n_cell));
 		return ix;
 	}
 

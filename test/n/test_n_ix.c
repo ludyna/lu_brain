@@ -16,7 +16,7 @@ void tearDown(void)
 }
 
 union u1 {
-	lu_byte pos;
+	lu_byte column;
 	lu_size ix;
 };
 
@@ -69,19 +69,19 @@ char* itoa(lu_size num, char* buffer, lu_size base) {
 void test__union_lu_n_ix(void) 
 {
 	union lu_n_ix ix;
-	ix.pos = 1;
+	ix.column = 1;
 	ix.ix = 3;
 	ix.layer = 9;
 
 	union u1 u1;
-	u1.pos = 1;
+	u1.column = 1;
 	u1.ix = 3;
 
 	lu__debug("\n union lu_n_ix SIZE: %d", sizeof(union lu_n_ix));
 	lu__debug("\n lu_size SIZE: %d", sizeof(lu_size));
 	lu__debug("\n union u1 SIZE: %d", sizeof(union u1));
 
-	lu__debug("\n ix.pos = %d", ix.pos);
+	lu__debug("\n ix.column = %d", ix.column);
 	lu__debug("\n ix.ix = %d", ix.ix);
 	lu__debug("\n ix.value = %d", ix.value);
 
@@ -90,10 +90,10 @@ void test__union_lu_n_ix(void)
   	printf ("\n Binary ix.value: %s", buffer);
 
 
-	lu__debug("\n u1.pos = %d", u1.pos);
+	lu__debug("\n u1.column = %d", u1.column);
 	lu__debug("\n u1.ix = %d", u1.ix);
 
-	TEST_ASSERT(ix.pos == 1);
+	TEST_ASSERT(ix.column == 1);
 	TEST_ASSERT(ix.ix == 3);
 }
 
