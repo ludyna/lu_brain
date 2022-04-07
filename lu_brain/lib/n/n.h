@@ -9,8 +9,9 @@
 
 	union lu_n_ix {
 		struct {
-			lu_byte pos : 2;
-			lu_size ix : 62;
+			lu_size ix : 32;
+			lu_size pos: 24;
+			lu_size layer: 8;
 		};
 		lu_size value;
 	};

@@ -147,21 +147,6 @@
 // / / /      \ \ \ (sv 1, sh: comp_count, n independent of each other)
 
 
-	static void lu_s__add_v_layer(Lu_S self, lu_size level)
-	{
-
-	}
-
-	static void lu_s__add_h_layer(Lu_S self, lu_size level)
-	{
-
-	}
-
-	static void lu_s__add_frame(Lu_S self, Lu_Rec rec)
-	{
-
-	}
-
 ///////////////////////////////////////////////////////////////////////////////
 // 
 

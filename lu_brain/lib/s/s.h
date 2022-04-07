@@ -386,6 +386,9 @@
 // Lu_S
 //
 
+	// Maximum number of layers
+	#define LU_S__LAYERS_SIZE 256
+
 	struct lu_s {
 
 		Lu_Config config;
@@ -395,6 +398,7 @@
 
 		Lu_S_Map_Base fractal;
 
+		Lu_S_Layer_Base layers[LU_S__LAYERS_SIZE];
 	};
 
 	//
@@ -444,32 +448,6 @@
 	);
 
 	static void lu_s__destroy(Lu_S self);
-
-	//
-	// S Fractals
-	//
-
-	static void lu_s__create_story_fractal(Lu_Mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_scene_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_event_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_seq_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_rec_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Arr recs);
-	static void lu_s__create_frame_fractal(Lu_Mem mem, Lu_S_Layer p, Lu_Arr apexes, Lu_Arr frames, Lu_Rec rec);
-	static void lu_s__create_component_fractal(Lu_Mem mem, Lu_S_Layer_Rec p, Lu_Arr apexes, Lu_Rec rec);
-
-	//
-	// 
-	//
-
-	static void lu_s__add_v_layer(Lu_S self, lu_size level);
-	static void lu_s__add_h_layer(Lu_S self, lu_size level);
-	static void lu_s__add_rixel_layer(Lu_S self, Lu_Rec rec);
-	
-
-	#define lu_s__add_seq(self) lu_s__add_v_layer(self, 0)
-	#define lu_s__add_event(self) lu_s__add_v_layer(self, 1)
-	#define lu_s__add_chapter(self) lu_s__add_v_layer(self, 2)
-	#define lu_s__add_story(self) lu_s__add_v_layer(self, 3)
 
 	//
 	//
