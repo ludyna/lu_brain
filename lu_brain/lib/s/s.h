@@ -418,7 +418,7 @@
 	#define LU_S__LAYERS_SIZE 256
 
 	////
-	// Beside being space structure for memory fractals, Lu_S is also space layers factory.
+	// Space structure for memory fractals and space layers factory.
 	// 
 	struct lu_s {
 
@@ -436,6 +436,15 @@
 	//
 	// Properties
 	//
+
+	static inline Lu_S_Layer_Base lu_s__get_layer(Lu_S self, lu_size layer_ix)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(layer_ix < LU_S__LAYERS_SIZE);
+		lu__debug_assert(layer_ix < self->layers_count);
+
+		return self->layers[layer_ix];
+	}
 
 	static inline Lu_S_Layer_Rec lu_s__get_v_rec(Lu_S self, lu_size rec_id)
 	{
@@ -463,7 +472,7 @@
 	static inline Lu_S_Layer_Base lu_s__register_layer(Lu_S self, Lu_S_Layer_Base layer)
 	{
 		lu__debug_assert(self);
-		
+
 		self->layers[self->layers_count] = (Lu_S_Layer_Base) layer;
 		++self->layers_count;
 

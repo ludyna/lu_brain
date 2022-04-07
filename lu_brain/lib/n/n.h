@@ -249,13 +249,15 @@
 	struct lu_n_column {
 		Lu_Mem mem;
 
+		lu_size column_ix;
+
 		lu_size h;
 		lu_size d;
 
 		struct lu_n_cell* cells;
 	};
 
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d);
+	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d, lu_size column_ix);
 	static void lu_n_column__deinit(Lu_N_Column self);
 	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d);
 

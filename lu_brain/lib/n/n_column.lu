@@ -2,7 +2,7 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d)
+	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d, lu_size column_ix)
 	{
 		lu__assert(self);
 		lu__assert(mem);
@@ -10,6 +10,7 @@
 		lu__assert(d > 0);
 
 		self->mem = mem;
+		self->column_ix;
 		self->h = h;
 		self->d = d;
 

@@ -215,20 +215,8 @@
 
 	static void lu_s__print_info(Lu_S self)
 	{
-		// lu__user_assert_void(self, "Lu_S is NULL");
-		// lu__user_assert_void(self->recs, "Lu_S recs is NULL");
-
- 	// 	lu__debug("\n\n-- Lu_S info: ");
- 	// 	lu__debug("\n 	Lu_S_Rec_Rg count: %lu", lu_arr__count(self->recs));
-
- 	// 	Lu_S_Rec_Rg rec;
- 	// 	lu_size i;
- 	// 	for(i = 0; i < lu_arr__count(self->recs); i++)
- 	// 	{
- 	// 		rec = (Lu_S_Rec_Rg) lu_arr__get(self->recs, i);
- 	// 		if (rec) 
- 	// 			lu_s_rec_rg__print_info(rec);
- 	// 	}
+		lu__assert(self);
+		
 	}
 
 
