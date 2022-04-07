@@ -8,7 +8,8 @@
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(
 		Lu_Config config, 
 		Lu_S_Layer_Rec frame, 
-		Lu_Rec_Comp_Config rc_config
+		Lu_Rec_Comp_Config rc_config,
+		lu_size layer_ix
 	)
 	{
 		lu__assert(config);
@@ -26,7 +27,7 @@
 			(Lu_S_Layer_Base)frame,
 			config,
 			LU_S_LAYER__COMP,
-			0,
+			layer_ix,
 			lu_s_layer_comp__destroy
 		);
 

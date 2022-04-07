@@ -60,6 +60,31 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// lu_s__Y
+//
+
+	//
+	// (x Y y) = max(max(x - 1, 1) * max(y - 1, 1) - 1, 1)
+	// This calculation is only correct for "intersected squares cortex" type or similar 
+	// 
+	static inline lu_size lu_s__Y(lu_size w, lu_size h)
+	{
+		lu__assert(w);
+		lu__assert(h);
+
+		if (w > 1) --w;
+		if (h > 1) --h;
+
+		lu_size Y = w * h;
+
+		// minus one because apex is in the base layer of the next level
+		// Highest level should always have one layer.
+		if (Y > 1) --Y;
+
+		return Y;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_P
 //
 
@@ -125,6 +150,7 @@
 	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
 		lu_size level;
+		lu_size layer_ix;
 
 		Lu_Mem s_mem;
 		Lu_Mem n_mem;
@@ -201,7 +227,12 @@
 		struct lu_s_view_v v_view;
 	};
 
-	static Lu_S_Layer_Comp lu_s_layer_comp__create(Lu_Config config, Lu_S_Layer_Rec frame, Lu_Rec_Comp_Config rc_config);
+	static Lu_S_Layer_Comp lu_s_layer_comp__create(
+		Lu_Config config, 
+		Lu_S_Layer_Rec frame, 
+		Lu_Rec_Comp_Config rc_config,
+		lu_size layer_ix
+	);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
 	//
@@ -352,7 +383,7 @@
 	//
 
 	static void lu_s_map_base__make_story_fractal(Lu_S_Map_Base self, lu_size recs_layers_size);
-	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec);
+	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec, Lu_S s);
 	static void lu_s_map_base__unmake_fractal(Lu_S_Map_Base);
 
 	//
@@ -389,6 +420,9 @@
 	// Maximum number of layers
 	#define LU_S__LAYERS_SIZE 256
 
+	////
+	// Beside being space structure for memory fractals, Lu_S is also space layers factory.
+	// 
 	struct lu_s {
 
 		Lu_Config config;
@@ -399,32 +433,8 @@
 		Lu_S_Map_Base fractal;
 
 		Lu_S_Layer_Base layers[LU_S__LAYERS_SIZE];
+		lu_size layers_count;
 	};
-
-	//
-	// Utility
-	//
-
-	//
-	// (x Y y) = max(max(x - 1, 1) * max(y - 1, 1) - 1, 1)
-	// This calculation is only correct for "intersected squares cortex" type or similar 
-	// 
-	static inline lu_size lu_s__Y(lu_size w, lu_size h)
-	{
-		lu__assert(w);
-		lu__assert(h);
-
-		if (w > 1) --w;
-		if (h > 1) --h;
-
-		lu_size Y = w * h;
-
-		// minus one because apex is in the base layer of the next level
-		// Highest level should always have one layer.
-		if (Y > 1) --Y;
-
-		return Y;
-	}
 
 	//
 	// Properties
@@ -450,13 +460,31 @@
 	static void lu_s__destroy(Lu_S self);
 
 	//
+	// S Layers Factory
 	//
+	static Lu_S_Layer_Comp lu_s__create_layer_comp(
+		Lu_S self, 
+		Lu_Config config, 
+		Lu_S_Layer_Rec frame, 
+		Lu_Rec_Comp_Config rc_config
+	);
+
+	static Lu_S_Layer lu_s__create_layer(
+		Lu_S self, 
+		Lu_Config config, 
+		lu_size level, 
+		lu_size children_count,
+		lu_size n_w,
+		lu_size n_h,
+		lu_size n_cell_type
+	);
+
+	static Lu_S_Layer_Rec lu_s__create_layer_rec(Lu_S self, Lu_Config config, Lu_Rec rec);
+
+
+	//
+	// Methods
 	// 
 
 	static void lu_s__print_info(Lu_S self);
-
-	//
-	//
-	//
-
 	static void lu_s__save_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config);

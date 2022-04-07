@@ -180,7 +180,7 @@
 		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
 	}
 
-	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec)
+	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec, Lu_S s)
 	{
 		lu__assert(self);
 		lu__assert(rec);
@@ -212,7 +212,7 @@
 		Lu_S_Layer_Comp comp = NULL;
 		for (i = 0; i < rec->depth; i++)
 		{
-			comp = lu_s_layer_comp__create(config, rec_base, lu_rec_config__get_comp_config(&rec->config, i));
+			comp = lu_s__create_layer_comp(s, config, rec_base, lu_rec_config__get_comp_config(&rec->config, i));
 			lu__assert(comp);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_base, (Lu_S_Layer_Base) comp);

@@ -22,6 +22,7 @@
 		lu__assert(v_config);
 
 		self->config = v_config;
+		self->layers_count = 0;
 
 		self->v_recs = lu_arr__create(config->s_mem, lu_arr__count(recs), true);
 		lu__assert(self->v_recs);
@@ -51,7 +52,7 @@
 			lu__assert(frame_map->super.type == LU_S_MAP__FRAME);
 			lu__assert(frame_map);
 
-			lu_s_map_base__make_rec_fractal((Lu_S_Map_Base) frame_map, frame_map->rec);
+			lu_s_map_base__make_rec_fractal((Lu_S_Map_Base) frame_map, frame_map->rec, self);
 
 			frame = lu_s_map_base__get_frame((Lu_S_Map_Base) frame_map);
 			lu__assert(frame);
@@ -146,6 +147,53 @@
 //	/         \
 // / / /      \ \ \ (sv 1, sh: comp_count, n independent of each other)
 
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+
+	static Lu_S_Layer_Comp lu_s__create_layer_comp(
+		Lu_S self, 
+		Lu_Config config, 
+		Lu_S_Layer_Rec frame, 
+		Lu_Rec_Comp_Config rc_config
+	)
+	{
+		lu__assert(self);
+		lu__assert(config);
+		lu__assert(frame);
+		lu__assert(rc_config);
+		lu__assert(self->layers_count < LU_S__LAYERS_SIZE);
+
+		Lu_S_Layer_Comp layer = lu_s_layer_comp__create(config, frame, rc_config, self->layers_count);
+		self->layers[self->layers_count] = (Lu_S_Layer_Base) layer;
+		++self->layers_count;
+
+		return layer;
+	}
+
+	static Lu_S_Layer lu_s__create_layer(
+		Lu_S self,
+		Lu_Config config, 
+		lu_size level, 
+		lu_size children_count,
+		lu_size n_w,
+		lu_size n_h,
+		lu_size n_cell_type
+	)
+	{
+		lu__assert(self);
+		lu__assert(self->layers_count < LU_S__LAYERS_SIZE);
+	}
+	
+	static Lu_S_Layer_Rec lu_s__create_layer_rec(
+		Lu_S self,
+		Lu_Config config, 
+		Lu_Rec rec
+	)
+	{
+		lu__assert(self);
+		lu__assert(self->layers_count < LU_S__LAYERS_SIZE);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
@@ -168,8 +216,6 @@
  	// 	}
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// 
 
 	static void lu_s__save_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config config)
 	{
