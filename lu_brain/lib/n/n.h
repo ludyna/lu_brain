@@ -28,6 +28,33 @@
 		return pos;
 	}
 
+	struct lu_n_pos_3d {
+		lu_size x;
+		lu_size y;
+		lu_size z;
+	};
+
+	static inline lu_size lu_n_pos_3d__to_column_ix(Lu_N_Pos_3d self, lu_size w, lu_size h)
+	{
+		lu__debug_assert(self->x < w);
+		lu__debug_assert(self->y < h);
+
+		return self->z * w * h + self->y * w + self->x;
+	}
+
+	static inline struct lu_n_pos_3d lu_n_pos_3d__from_column_ix(lu_size column_ix, lu_size w, lu_size h)
+	{
+		struct lu_n_pos_3d pos;
+
+		lu_size wh = w * h;
+
+		pos.z = column_ix / wh;
+		pos.y = (column_ix - (pos.z * wh)) / w;
+		pos.x = column_ix % w;
+
+		return pos;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Ix
 

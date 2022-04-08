@@ -54,6 +54,33 @@ void test__lu_n_pos(void)
 
 }
 
+void test__lu_n_pos_3d(void) 
+{
+    struct lu_n_pos_3d pos;
+    lu_size column_ix;
+
+    pos = lu_n_pos_3d__from_column_ix(119, 10, 10);
+
+    TEST_ASSERT(pos.z == 1);
+    TEST_ASSERT(pos.x == 9);
+    TEST_ASSERT(pos.y == 1);
+
+    column_ix = lu_n_pos_3d__to_column_ix(&pos, 10, 10);
+
+    TEST_ASSERT(column_ix == 119);
+
+    pos = lu_n_pos_3d__from_column_ix(34, 3, 5);
+
+    TEST_ASSERT(pos.z == 2);
+    TEST_ASSERT(pos.x == 1);
+    TEST_ASSERT(pos.y == 1);
+
+    column_ix = lu_n_pos_3d__to_column_ix(&pos, 3, 5);
+
+    TEST_ASSERT(column_ix == 34);
+
+}
+
 
 
 

@@ -25,5 +25,4 @@
 #include "exception.h"
 #include "util.h"
 
-
 #endif // _LU_BASIC_H

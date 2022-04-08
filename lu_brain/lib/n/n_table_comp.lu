@@ -30,7 +30,7 @@
 
 		self->cells = (struct lu_n_cell_vp*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct lu_n_cell_vp) * (self->w * self->h * self->d + 1)
+			sizeof(struct lu_n_cell_vp) * (self->w * self->h * self->d + LU_N_CELL__SPEIAL_CELLS_SKIP)
 		);
 
 		lu_size z;
