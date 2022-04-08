@@ -76,7 +76,7 @@
 		lu_arr__set_internal_debug(self->items, (y * self->width) + x, value, func, file, line);
 	}
 
-	#ifdef LU_DEBUG
+	#ifdef LU__DEBUG
 
 	#define arr2__get(self, x, y) arr2__get_internal_debug(self, x, y, __func__, __FILE__, __LINE__)
 	#define arr2__set(self, x, y, v) arr2__set_internal_debug(self, x, y, v, __func__, __FILE__, __LINE__)

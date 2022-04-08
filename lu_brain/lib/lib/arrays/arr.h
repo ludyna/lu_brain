@@ -69,7 +69,7 @@
 		lu_arr__set_internal(self, index, value);
 	}
 
-	#ifdef LU_DEBUG
+	#ifdef LU__DEBUG
 
 	#define lu_arr__get(self, index) lu_arr__get_internal_debug(self, index, __func__, __FILE__, __LINE__)
 	#define lu_arr__set(self, index, value) lu_arr__set_internal_debug(self, index, value, __func__, __FILE__, __LINE__);

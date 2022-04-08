@@ -12,7 +12,7 @@
 		lu_p_byte address = (lu_p_byte) calloc(1, size);
 
 		// Lu_Mem specific debug here
-		#ifdef LU_DEBUG
+		#ifdef LU__DEBUG
 
 			if (self->debugger)
 				self->debugger->register_alloc(self->debugger, address, size, func, file, line);
@@ -27,7 +27,7 @@
 		lu_p_byte address = (lu_p_byte) realloc(p, size_in_bytes);
 
 		// Lu_Mem specific debug here
-		#ifdef LU_DEBUG
+		#ifdef LU__DEBUG
 
 			if (self->debugger)
 				self->debugger->register_realloc(self->debugger, address, size_in_bytes, func, file, line);
@@ -42,7 +42,7 @@
 		free((lu_p_void) p);
 
 		// Lu_Mem specific debug here
-		#ifdef LU_DEBUG
+		#ifdef LU__DEBUG
 
 			if (self->debugger)
 				self->debugger->register_free(self->debugger, p, func, file, line);

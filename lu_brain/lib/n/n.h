@@ -34,21 +34,6 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell_Base
-
-	struct lu_n_cell_base {
-		lu_byte type;
-	};
-	
-	static inline Lu_N_Cell_Base lu_n_cell_base__in7it(Lu_N_Cell_Base self, lu_byte type)
-	{
-		lu__assert(self);
-		self->type = type;
-
-		return self;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell_VP
 
 	struct lu_n_cell_vp {
@@ -186,14 +171,8 @@
 // Lu_N_Label
 //
 
-	struct lu_n_address {
-		lu_size layer_ix;
-		lu_size column_ix;
-		lu_size cell_ix;
-	};
-
 	struct lu_n_label {
-		struct lu_n_address links[1000]; // dlia prostoty ce mozhe buty
+		union lu_n_ix links[1000]; // dlia prostoty ce mozhe buty
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -202,8 +181,10 @@
 
 	////
 	// Insead of adding +1 when saving index, we dont use 0 index cells
-	struct lu_n_cell {
-		union lu_n_ix address; // can be removed later to save memory, but useful for testing
+	struct lu_n_cell { 
+		// address can be removed later to save memory, but useful for testing
+		// can be wrapped in #ifdef LU__DEBUG
+		union lu_n_ix address; 
 
 		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
 	};
