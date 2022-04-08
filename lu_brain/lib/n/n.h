@@ -5,7 +5,31 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// union lu_n_ix
+// Lu_N_Pos 
+
+	struct lu_n_pos {
+		lu_size x;
+		lu_size y;
+	};
+
+	static inline lu_size lu_n_pos__to_column_ix(Lu_N_Pos self, lu_size w)
+	{
+		lu__debug_assert(self->x < w);
+		return self->y * w + self->x;
+	}
+
+	static inline struct lu_n_pos lu_n_pos__from_column_ix(lu_size column_ix, lu_size w)
+	{
+		struct lu_n_pos pos;
+
+		pos.y =  column_ix / w;
+		pos.x = column_ix % w;
+
+		return pos;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Ix
 
 	union lu_n_ix {
 		struct {
@@ -16,7 +40,16 @@
 		lu_size value;
 	};
 
-	//static inline Lu_N_Ix lu_n_ix__init(Lu_N_Ix self, 
+	static inline Lu_N_Ix lu_n_ix__init(Lu_N_Ix self, lu_size cell_ix, lu_size column_ix, lu_size layer_ix)
+	{
+		lu__debug_assert(self);
+
+		self->cell_ix = cell_ix;
+		self->column_ix = column_ix;
+		self->layer_ix = layer_ix;
+
+		return self;
+	}
 
 	static inline lu_bool lu_n_ix__is_blank(Lu_N_Ix self)
 	{
@@ -37,6 +70,7 @@
 // Lu_N_Cell_VP
 
 	struct lu_n_cell_vp {
+		union lu_n_ix address;
 		lu_value value; 
 		lu_size x;
 		lu_size y;
@@ -182,7 +216,7 @@
 	////
 	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell { 
-		// address can be removed later to save memory, but useful for testing
+		// address can be removed later to save memory, but useful for testing and debugging
 		// can be wrapped in #ifdef LU__DEBUG
 		union lu_n_ix address; 
 

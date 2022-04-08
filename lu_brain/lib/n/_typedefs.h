@@ -1,10 +1,8 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */	
-
-// typedef struct lu_n_config* 		Lu_N_Config;
-// typedef struct lu_n* 				Lu_N;
- 
+  
+	typedef struct lu_n_pos* Lu_N_Pos;
 	typedef union lu_n_ix* Lu_N_Ix;
 
 	enum lu_n_cell_special {
@@ -26,19 +24,7 @@
 		LU_N_CELL__END
 	};
 
-	typedef struct lu_n_cell_base* Lu_N_Cell_Base; 
 	typedef struct lu_n_cell_vp* Lu_N_Cell_VP;
-	// typedef struct lu_n_cell_1* Lu_N_Cell_1;
-	// typedef struct lu_n_cell_2* Lu_N_Cell_2; 
-	// typedef struct lu_n_cell_3* Lu_N_Cell_3;
-	// typedef struct lu_n_cell_4* Lu_N_Cell_4;
-	// typedef struct lu_n_cell_allocator* Lu_N_Cell_Allocator;
-
-	// typedef struct lu_n_column_node* Lu_N_Column_Node;
-
-
-
-
 	typedef struct lu_n_cell* Lu_N_Cell;
 	typedef struct lu_n_strings* Lu_N_Strings;
 	typedef struct lu_n_cells* Lu_N_Cells;
