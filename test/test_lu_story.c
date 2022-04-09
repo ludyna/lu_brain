@@ -9,6 +9,7 @@
 #include "unity.h"
 #include "lib/_module.h"
 
+Lu_Mem_Debugger     md;
 Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
@@ -82,7 +83,9 @@ lu_value			data_16[] 		= {
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-	brain 				= lu_brain__create(lu_g_mem, lu_config__get_by_id(LU_CONFIG__DEFAULT));
+	md = lu_mem_debugger__create(lu_g_mem);
+
+	brain 				= lu_brain__create(lu_config__get_by_id(LU_CONFIG__DEFAULT));
 
 	TEST_ASSERT(brain);
 
@@ -111,9 +114,12 @@ void setUp(void)
 
 void tearDown(void)
 {	
-	lu_rec__destroy(rec_0);
-	lu_rec__destroy(rec_1);
 	lu_brain__destroy(brain);
+
+	lu_mem_debugger__print(md);
+
+	TEST_ASSERT(mem_debugger_is_all_clear(md));
+    lu_mem_debugger__destroy(md, true);
 }
 
 void test_lu_seq_1(void)
@@ -189,7 +195,7 @@ void test_lu_seq_1(void)
 void test_lu_seq_2(void)
 { 
 	lu_p_value d;
-	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, lu_brain__recs_size(brain)); 
+	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, 0, lu_brain__recs_size(brain)); 
 	lu_data_seq__block_begin(seq);
 	lu_data_seq__block_begin(seq);
 	lu_data_seq__block_begin(seq);
@@ -215,7 +221,7 @@ void test_lu_seq_data(void)
 {
 	lu_p_value d;
 	Lu_Data data;
-	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, lu_brain__recs_size(brain)); 
+	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, 0, lu_brain__recs_size(brain)); 
 
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 0);
 
@@ -261,7 +267,7 @@ void test_lu_seq_data(void)
 
 void test_lu_seq_validate(void)
 {
-	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, lu_brain__recs_size(brain)); 
+	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, 0, lu_brain__recs_size(brain)); 
 
 	lu__user_assert_off();
 	TEST_ASSERT(lu_data_seq__validate(seq) == NULL); 
@@ -278,7 +284,7 @@ void test_lu_seq_prepare(void)
 {
 	lu_p_value d;
 	Lu_Data data;
-	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, lu_brain__recs_size(brain)); 
+	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, 0, lu_brain__recs_size(brain)); 
 
 	lu_data_seq__push(seq, rec_0, data_00);
 

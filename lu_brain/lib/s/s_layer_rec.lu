@@ -197,6 +197,9 @@
 
 				} // for (lu_size z = 0
 
+				// finish string with zero
+				p_links[p_links_i].value = 0;
+
 				if (p_links[0].value)
 				{
 					lu__debug("\n SAVING N_CELL");
