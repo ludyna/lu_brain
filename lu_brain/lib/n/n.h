@@ -67,6 +67,9 @@
 		lu_size value;
 	};
 
+	// NULL addr
+	extern const union lu_n_addr LU_N_ADDR__NULL; 
+
 	static inline Lu_N_Addr lu_n_addr__init(Lu_N_Addr self, lu_size cell_ix, lu_size column_ix, lu_size layer_ix)
 	{
 		lu__debug_assert(self);
@@ -389,7 +392,7 @@
 
 		// should replace with column reallocation, should not normally happen
 		lu__assert(false);
-		return (union lu_n_addr) (lu_size) LU_N_CELL__NULL;
+		return LU_N_ADDR__NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
