@@ -96,8 +96,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell_VP
 
-	struct lu_n_cell_vp {
-		union lu_n_ix address;
+	struct lu_n_cell_vp { 
+		// addr can be removed later to save memory, but useful for testing and debugging
+		// can be wrapped in #ifdef LU__DEBUG
+		union lu_n_ix addr; 
+
 		lu_value value; 
 		lu_size x;
 		lu_size y;
@@ -163,10 +166,10 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_String
+// Lu_N_Str
 //
 
-	static inline lu_bool lu_n_string__eq(const union lu_n_ix* a, const union lu_n_ix* b)
+	static inline lu_bool lu_n_str__eq(const union lu_n_ix* a, const union lu_n_ix* b)
 	{
 		while (1)
 		{
@@ -185,8 +188,8 @@
 	}
 
 	////
-	// This method doesn't check if <dest> has enough space for <src>
-	static inline void lu_n_string__copy(union lu_n_ix* dest, const union lu_n_ix* src)
+	// (!) This method (intentionally!) doesn't check if <dest> has enough space for <src>
+	static inline void lu_n_str__copy(union lu_n_ix* dest, const union lu_n_ix* src)
 	{
 		while((*src).value)
 		{
@@ -198,7 +201,7 @@
 		(*dest).value = 0;
 	}
 
-	static inline void lu_n_string__print(const union lu_n_ix* s)
+	static inline void lu_n_str__print(const union lu_n_ix* s)
 	{
 		lu__debug("\n N_STRING: {");
 		const union lu_n_ix *p = s;
@@ -215,7 +218,7 @@
 		lu__debug("}");
 	}
 
-	static inline lu_size lu_n_string__hash_comb(const union lu_n_ix* p)
+	static inline lu_size lu_n_str__hash_comb(const union lu_n_ix* p)
 	{
 		lu_size p_reg = 0;
 		while((*p).value)
@@ -243,9 +246,9 @@
 	////
 	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell { 
-		// address can be removed later to save memory, but useful for testing and debugging
+		// addr can be removed later to save memory, but useful for testing and debugging
 		// can be wrapped in #ifdef LU__DEBUG
-		union lu_n_ix address; 
+		union lu_n_ix addr; 
 
 		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
 	};
@@ -257,12 +260,12 @@
 
 	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_ix* children)
 	{
-		return lu_n_string__eq(self->children, children);
+		return lu_n_str__eq(self->children, children);
 	}
 
 	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_ix* children)
 	{
-		lu_n_string__copy(self->children, children);
+		lu_n_str__copy(self->children, children);
 	}
 
 
@@ -321,7 +324,7 @@
 
 	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, union lu_n_ix* children)
 	{
-		return lu_n_column__hash_to_ix(self, lu_n_string__hash_comb(children));
+		return lu_n_column__hash_to_ix(self, lu_n_str__hash_comb(children));
 	}
 
 	static inline union lu_n_ix lu_n_column__cell_to_ix(Lu_N_Column self, Lu_N_Cell cell)

@@ -51,7 +51,6 @@ void test__lu_n_pos(void)
 
     TEST_ASSERT(pos.x == 1);
     TEST_ASSERT(pos.y == 6);
-
 }
 
 void test__lu_n_pos_3d(void) 
@@ -78,7 +77,6 @@ void test__lu_n_pos_3d(void)
     column_ix = lu_n_pos_3d__to_column_ix(&pos, 3, 5);
 
     TEST_ASSERT(column_ix == 34);
-
 }
 
 
