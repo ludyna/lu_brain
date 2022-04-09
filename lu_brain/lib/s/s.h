@@ -105,7 +105,8 @@
 		lu_size height, 
 		lu_value min, 
 		lu_value max, 
-		lu_size cells_size
+		lu_size cells_size,
+		lu_size layer_ix
 	);
 	
 	static void lu_s_view_p__deinit(Lu_S_View_P self);
@@ -135,7 +136,8 @@
 		lu_size height, 
 		lu_value min, 
 		lu_value max, 
-		lu_size cells_size
+		lu_size cells_size,
+		lu_size layer_ix
 	);
 	
 	static void lu_s_view_v__deinit(Lu_S_View_V self);

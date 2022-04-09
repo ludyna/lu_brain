@@ -56,9 +56,9 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Ix
+// Lu_N_Addr
 
-	union lu_n_ix {
+	union lu_n_addr {
 		struct {
 			lu_size cell_ix : 32;
 			lu_size column_ix: 24;
@@ -67,30 +67,30 @@
 		lu_size value;
 	};
 
-	static inline Lu_N_Ix lu_n_ix__init(Lu_N_Ix self, lu_size cell_ix, lu_size column_ix, lu_size layer_ix)
+	static inline Lu_N_Addr lu_n_addr__init(Lu_N_Addr self, lu_size cell_ix, lu_size column_ix, lu_size layer_ix)
 	{
 		lu__debug_assert(self);
 
-		// self->cell_ix = cell_ix;
-		// self->column_ix = column_ix;
-		// self->layer_ix = layer_ix;
+		self->cell_ix = cell_ix;
+		self->column_ix = column_ix;
+		self->layer_ix = layer_ix;
 
 		return self;
 	}
 
-	static inline lu_bool lu_n_ix__is_blank(Lu_N_Ix self)
+	static inline lu_bool lu_n_addr__is_blank(Lu_N_Addr self)
 	{
-		return (self->value == LU_N_CELL__NULL);
+		return (self->value == 0);
 	}
 
-	static inline lu_bool lu_n_ix__is_present(Lu_N_Ix self)
+	static inline lu_bool lu_n_addr__is_present(Lu_N_Addr self)
 	{
-		return (self->value != LU_N_CELL__NULL);
+		return (self->value != 0);
 	}
 
-	static inline void lu_n_ix__set_to_null(Lu_N_Ix self)
+	static inline void lu_n_addr__set_to_null(Lu_N_Addr self)
 	{
-		self->value = LU_N_CELL__NULL;
+		self->value = 0;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -99,7 +99,7 @@
 	struct lu_n_cell_vp { 
 		// addr can be removed later to save memory, but useful for testing and debugging
 		// can be wrapped in #ifdef LU__DEBUG
-		union lu_n_ix addr; 
+		union lu_n_addr addr; 
 
 		lu_value value; 
 		lu_size x;
@@ -107,8 +107,10 @@
 		lu_size z;
 	};
 
-	static inline void lu_n_cell__null_init(Lu_N_Cell_VP self)
+	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
 	{
+		self->addr.value = 0;
+
 		self->value = 0;
 		self->x = 0;
 		self->y = 0;
@@ -148,7 +150,8 @@
 		Lu_Comp_Calc comp_calc, 
 		lu_size width, 
 		lu_size height, 
-		lu_size depth 
+		lu_size depth, 
+		lu_size layer_ix
 	);
 
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
@@ -169,7 +172,7 @@
 // Lu_N_Str
 //
 
-	static inline lu_bool lu_n_str__eq(const union lu_n_ix* a, const union lu_n_ix* b)
+	static inline lu_bool lu_n_str__eq(const union lu_n_addr* a, const union lu_n_addr* b)
 	{
 		while (1)
 		{
@@ -189,7 +192,7 @@
 
 	////
 	// (!) This method (intentionally!) doesn't check if <dest> has enough space for <src>
-	static inline void lu_n_str__copy(union lu_n_ix* dest, const union lu_n_ix* src)
+	static inline void lu_n_str__copy(union lu_n_addr* dest, const union lu_n_addr* src)
 	{
 		while((*src).value)
 		{
@@ -201,10 +204,10 @@
 		(*dest).value = 0;
 	}
 
-	static inline void lu_n_str__print(const union lu_n_ix* s)
+	static inline void lu_n_str__print(const union lu_n_addr* s)
 	{
 		lu__debug("\n N_STRING: {");
-		const union lu_n_ix *p = s;
+		const union lu_n_addr *p = s;
 
 		while((*p).value)
 		{
@@ -218,7 +221,7 @@
 		lu__debug("}");
 	}
 
-	static inline lu_size lu_n_str__hash_comb(const union lu_n_ix* p)
+	static inline lu_size lu_n_str__hash_comb(const union lu_n_addr* p)
 	{
 		lu_size p_reg = 0;
 		while((*p).value)
@@ -236,7 +239,7 @@
 //
 
 	struct lu_n_label {
-		union lu_n_ix links[1000]; // dlia prostoty ce mozhe buty
+		union lu_n_addr links[1000]; // dlia prostoty ce mozhe buty
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -248,9 +251,9 @@
 	struct lu_n_cell { 
 		// addr can be removed later to save memory, but useful for testing and debugging
 		// can be wrapped in #ifdef LU__DEBUG
-		union lu_n_ix addr; 
+		union lu_n_addr addr; 
 
-		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
+		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
 	};
 
 	static inline Lu_N_Cell lu_n_cell__init(
@@ -262,7 +265,7 @@
 	{
 		lu__debug_assert(self);
 
-		lu_n_ix__init(&self->addr, cell_ix, column_ix, layer_ix);
+		lu_n_addr__init(&self->addr, cell_ix, column_ix, layer_ix);
 
 		self->children[0].value = 0;
 
@@ -274,12 +277,12 @@
 		return self->children[0].value == 0;
 	}
 
-	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_ix* children)
+	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_addr* children)
 	{
 		return lu_n_str__eq(self->children, children);
 	}
 
-	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_ix* children)
+	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_addr* children)
 	{
 		lu_n_str__copy(self->children, children);
 	}
@@ -338,20 +341,20 @@
 		return &self->cells[z * self->h + ix];
 	}
 
-	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, union lu_n_ix* children)
+	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, union lu_n_addr* children)
 	{
 		return lu_n_column__hash_to_ix(self, lu_n_str__hash_comb(children));
 	}
 
-	static inline union lu_n_ix lu_n_column__cell_to_ix(Lu_N_Column self, Lu_N_Cell cell)
+	static inline union lu_n_addr lu_n_column__cell_to_ix(Lu_N_Column self, Lu_N_Cell cell)
 	{ 
-		union lu_n_ix ix;
+		union lu_n_addr ix;
 		ix.column_ix = 0;
 		ix.cell_ix = ((cell - self->cells) / sizeof(struct lu_n_cell));
 		return ix;
 	}
 
-	static union lu_n_ix lu_n_column__save(Lu_N_Column self, union lu_n_ix* children)
+	static union lu_n_addr lu_n_column__save(Lu_N_Column self, union lu_n_addr* children)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert((*children).value);
@@ -375,7 +378,7 @@
 
 		// should replace with column reallocation, should not normally happen
 		lu__assert(false);
-		return (union lu_n_ix) (lu_size) LU_N_CELL__NULL;
+		return (union lu_n_addr) (lu_size) LU_N_CELL__NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -396,7 +399,7 @@
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
-	static inline union lu_n_ix lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, union lu_n_ix *links)
+	static inline union lu_n_addr lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, union lu_n_addr *links)
 	{
 		return lu_n_column__save(&self->columns[y * self->w + x], links);
 	}

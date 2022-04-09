@@ -6,7 +6,7 @@
 // Lu_W_Cell 
 
 	struct lu_w_cell {
-		union lu_n_ix n_cell_ix;
+		union lu_n_addr n_cell_ix;
 		lu_value sig;
 	};
 
@@ -17,7 +17,7 @@
 		self->sig = 0;
 	}
  	
- 	static inline void lu_w_cell__save(Lu_W_Cell self, union lu_n_ix n_cell_ix)
+ 	static inline void lu_w_cell__save(Lu_W_Cell self, union lu_n_addr n_cell_ix)
  	{
  		self->n_cell_ix = n_cell_ix;
  		self->sig = 1;
@@ -203,7 +203,7 @@
 		return &self->cells[y * self->w + x];
 	} 
 
-	static inline union lu_n_ix lu_w_table__get_n_cell_ix(Lu_W_Table self, lu_size x, lu_size y)
+	static inline union lu_n_addr lu_w_table__get_n_cell_ix(Lu_W_Table self, lu_size x, lu_size y)
 	{ 
 		lu__debug_assert(x < self->w); // should never happen
 		lu__debug_assert(y < self->h);
@@ -211,17 +211,17 @@
 		return self->cells[y * self->w + x].n_cell_ix;
 	}
 
-	static inline void lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, union lu_n_ix* children)
+	static inline void lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, union lu_n_addr* children)
 	{
 		lu__debug_assert(x + 1 < self->w); // should always be true
 		lu__debug_assert(y + 1 < self->h);
 
 		lu_byte column = 0;
-		union lu_n_ix ix;
+		union lu_n_addr ix;
 
 		ix = lu_w_table__get_n_cell_ix(self, x, y);
 		
-		if (lu_n_ix__is_present(&ix))
+		if (lu_n_addr__is_present(&ix))
 		{
 			children[column] = ix;
 			children[column].column_ix = column;
@@ -230,7 +230,7 @@
 
 		ix = lu_w_table__get_n_cell_ix(self, x + 1, y);
 		
-		if (lu_n_ix__is_present(&ix))
+		if (lu_n_addr__is_present(&ix))
 		{
 			children[column] = ix;
 			children[column].column_ix = column;
@@ -239,7 +239,7 @@
 
 		ix = lu_w_table__get_n_cell_ix(self, x + 1, y + 1);
 		
-		if (lu_n_ix__is_present(&ix))
+		if (lu_n_addr__is_present(&ix))
 		{
 			children[column] = ix;
 			children[column].column_ix = column;
@@ -248,14 +248,14 @@
 
 		ix = lu_w_table__get_n_cell_ix(self, x, y + 1);
 		
-		if (lu_n_ix__is_present(&ix))
+		if (lu_n_addr__is_present(&ix))
 		{
 			children[column] = ix;
 			children[column].column_ix = column;
 			++column;
 		}
 
-		lu_n_ix__set_to_null(&children[column]);
+		lu_n_addr__set_to_null(&children[column]);
 
 	}
 

@@ -4,7 +4,7 @@
   
 	typedef struct lu_n_pos* Lu_N_Pos;
 	typedef struct lu_n_pos_3d* Lu_N_Pos_3d;
-	typedef union lu_n_ix* Lu_N_Ix;
+	typedef union lu_n_addr* Lu_N_Addr;
 
 	enum lu_n_cell_special {
 		LU_N_CELL__NULL = 0,

@@ -16,8 +16,8 @@ void tearDown(void)
 }
 
 union u1 {
-	lu_byte column;
-	lu_size ix;
+	lu_byte column_ix;
+	lu_size cell_ix;
 };
 
 char* itoa(lu_size num, char* buffer, lu_size base) {
@@ -66,35 +66,55 @@ char* itoa(lu_size num, char* buffer, lu_size base) {
     return buffer;
 }
 
-void test__union_lu_n_ix(void) 
+void test__union_lu_n_addr(void) 
 {
-	union lu_n_ix ix;
-	ix.column = 1;
-	ix.ix = 3;
-	ix.layer = 9;
+	union lu_n_addr addr;
+	addr.column_ix = 1;
+	addr.cell_ix = 3;
+	addr.layer_ix = 9;
 
 	union u1 u1;
-	u1.column = 1;
-	u1.ix = 3;
+	u1.column_ix = 1;
+	u1.cell_ix = 3;
 
-	lu__debug("\n union lu_n_ix SIZE: %d", sizeof(union lu_n_ix));
+	lu__debug("\n union lu_n_addr SIZE: %d", sizeof(union lu_n_addr));
 	lu__debug("\n lu_size SIZE: %d", sizeof(lu_size));
 	lu__debug("\n union u1 SIZE: %d", sizeof(union u1));
 
-	lu__debug("\n ix.column = %d", ix.column);
-	lu__debug("\n ix.ix = %d", ix.ix);
-	lu__debug("\n ix.value = %d", ix.value);
+	lu__debug("\n addr.column_ix = %d", addr.column_ix);
+	lu__debug("\n addr.cell_ix = %d", addr.cell_ix);
+	lu__debug("\n addr.value = %d", addr.value);
 
 	char buffer[64];
-  	itoa(ix.value, buffer, 2);
-  	printf ("\n Binary ix.value: %s", buffer);
+  	itoa(addr.value, buffer, 2);
+  	printf ("\n Binary cell_ix.value: %s", buffer);
 
 
-	lu__debug("\n u1.column = %d", u1.column);
-	lu__debug("\n u1.ix = %d", u1.ix);
+	lu__debug("\n u1.column_ix = %d", u1.column_ix);
+	lu__debug("\n u1.cell_ix = %d", u1.cell_ix);
 
-	TEST_ASSERT(ix.column == 1);
-	TEST_ASSERT(ix.ix == 3);
+	TEST_ASSERT(addr.column_ix == 1);
+	TEST_ASSERT(addr.cell_ix == 3);
+}
+
+void test__union_lu_n_addr__methods(void)
+{
+	union lu_n_addr addr;
+
+	Lu_N_Addr p_ix = lu_n_addr__init(&addr, 0, 0, 0);
+
+	TEST_ASSERT(lu_n_addr__is_blank(p_ix) == true);
+	TEST_ASSERT(lu_n_addr__is_present(p_ix) == false);
+
+	lu_n_addr__init(p_ix, 0, 0, 1);
+
+	TEST_ASSERT(lu_n_addr__is_blank(p_ix) == false);
+	TEST_ASSERT(lu_n_addr__is_present(p_ix) == true);
+
+	lu_n_addr__set_to_null(p_ix);
+
+	TEST_ASSERT(lu_n_addr__is_blank(p_ix) == true);
+	TEST_ASSERT(lu_n_addr__is_present(p_ix) == false);
 }
 
 

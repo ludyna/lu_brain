@@ -22,13 +22,25 @@
 		lu__assert(v_config);
 
 		self->config = v_config;
-		self->layers_count = 0;
+
+		lu_size i;
+
+		// (!!) This is important. We start layers ixs from LU_N_CELL__SPEIAL_CELLS_SKIP, 
+		// so union lu_n_addr.value = 0 will be reserved as "NULL" cell. 
+		// This way will not need "special cells", instead we can refer to non existent special layers.
+		// It will save memory and will make code more straightforward.
+		// To form addr of special cell we can use layer_ix from < LU_N_CELL__SPEIAL_CELLS_SKIP, 
+		// and appropriate x and y to form column_ix. cell_x can be 0.
+		self->layers_count = LU_N_CELL__SPEIAL_CELLS_SKIP;
+		for(i = 0; i < LU_N_CELL__SPEIAL_CELLS_SKIP; i++)
+		{
+			self->layers[i] = NULL;
+		}
 
 		self->v_recs = lu_arr__create(config->s_mem, lu_arr__count(recs), true);
 		lu__assert(self->v_recs);
 
 		Lu_Rec rec;
-		lu_size i;
 		lu_size j;
 		Lu_S_Map_Frame frame_map;
 		Lu_S_Map_Story story_map;
@@ -220,9 +232,12 @@
 		Lu_S_Layer_Base layer;
 		lu__debug("\n Lu_S layers: ");
 		char buffer[50];
-		for (lu_size i = 0; i < self->layers_count; i++)
+		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->layers_count; i++)
 		{
 			layer = self->layers[i];
+
+			if (layer == NULL) break;
+
 			lu__debug("\n 	layer_ix: %d", layer->layer_ix);
 			lu_s_layer_type__to_str(layer->type, buffer);
 			lu__debug("\n 	type: %s", buffer);

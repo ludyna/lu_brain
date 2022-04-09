@@ -123,7 +123,7 @@
 		Lu_W_Cell rec_w_p_cell;
 		Lu_W_Cell rec_w_v_cell;
 
-		union lu_n_ix n_cell_ix;
+		union lu_n_addr n_cell_ix;
 
 		lu_bool v_reset;
 
@@ -133,7 +133,7 @@
 		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
 		lu_size p_reg;
-		union lu_n_ix p_links[depth + 1];
+		union lu_n_addr p_links[depth + 1];
 		p_links[depth].value = LU_N_CELL__NULL; // null ended string
 		// lu_size v_reg;
 		// lu_size v_links[depth + 1];

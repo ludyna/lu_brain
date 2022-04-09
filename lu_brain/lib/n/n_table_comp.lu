@@ -10,7 +10,8 @@
 		Lu_Comp_Calc comp_calc, 
 		lu_size width, 
 		lu_size height, 
-		lu_size depth
+		lu_size depth,
+		lu_size layer_ix
 	)
 	{
 		lu__assert(config);
@@ -30,7 +31,7 @@
 
 		self->cells = (struct lu_n_cell_vp*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct lu_n_cell_vp) * (self->w * self->h * self->d + LU_N_CELL__SPEIAL_CELLS_SKIP)
+			sizeof(struct lu_n_cell_vp) * self->w * self->h * self->d
 		);
 
 		lu_size z;
@@ -42,10 +43,9 @@
 		lu_size z_shift;
 		lu_size zy_shift;
 
-		// first cell is NULL cell
-		lu_n_cell__null_init(&self->cells[0]); 
-
-		struct lu_n_cell_vp* cells = self->cells + 1;
+		union lu_n_addr addr;
+		lu_size column_ix;
+		struct lu_n_pos pos;
 
 		for (z = 0; z < depth; z++)
 		{
@@ -55,7 +55,10 @@
 				zy_shift = z_shift + y * width;
 				for (x = 0; x < width; x++)
 				{
-					cell = &cells[zy_shift + x]; 
+					cell = &self->cells[zy_shift + x]; 
+
+					pos.x = x;
+					pos.y = y;
 
 					lu_n_cell_vp__init(cell, comp_calc->steps[z], x, y, z);
 				} 

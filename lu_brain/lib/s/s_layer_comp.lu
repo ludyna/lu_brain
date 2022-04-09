@@ -39,7 +39,8 @@
 			rec->height, 
 			rc_config->v_min, 
 			rc_config->v_max, 
-			rc_config->p_neu_size
+			rc_config->p_neu_size,
+			layer_ix
 		);
 
 		lu_s_view_v__init(
@@ -50,7 +51,8 @@
 			rec->height, 
 			rc_config->v_min, 
 			rc_config->v_max, 
-			rc_config->v_neu_size
+			rc_config->v_neu_size,
+			layer_ix
 		);
 
 		return self;
