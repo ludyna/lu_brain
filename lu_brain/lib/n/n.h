@@ -93,6 +93,11 @@
 		self->value = 0;
 	}
 
+	static inline void lu_n_addr__print(Lu_N_Addr self)
+	{
+		lu__debug("%d:%d:%d", self->layer_ix, self->column_ix, self->cell_ix);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell_VP
 
@@ -211,15 +216,15 @@
 		(*dest).value = 0;
 	}
 
-	static inline void lu_n_str__print(const union lu_n_addr* s)
+	static inline void lu_n_str__print(union lu_n_addr* s)
 	{
 		lu__debug("\n N_STRING: {");
-		const union lu_n_addr *p = s;
+		union lu_n_addr *p = s;
 
 		while((*p).value)
 		{
 			if (p != s) lu__debug(", ");
-			lu__debug("%d:%d:%d", (*p).layer_ix, (*p).column_ix, (*p).cell_ix);
+			lu_n_addr__print(&(*p));
 			++p;
 		} 
 		if (p==s) lu__debug("0");
@@ -293,7 +298,6 @@
 	{
 		lu_n_str__copy(self->children, children);
 	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
@@ -405,8 +409,12 @@
 	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config, lu_size layer_ix);
  	void lu_n_table__destroy(Lu_N_Table self);
 
+ 	static inline Lu_N_Column lu_n_table__get_column(Lu_N_Table self, lu_size x, lu_size y)
+ 	{
+ 		return &self->columns[y * self->w + x];
+ 	}
 
 	static inline union lu_n_addr lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, union lu_n_addr *links)
 	{
-		return lu_n_column__save(&self->columns[y * self->w + x], links);
+		return lu_n_column__save(lu_n_table__get_column(self, x, y), links);
 	}
