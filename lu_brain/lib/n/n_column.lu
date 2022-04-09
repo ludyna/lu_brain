@@ -2,7 +2,14 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d, lu_size column_ix)
+	static Lu_N_Column lu_n_column__init(
+		Lu_N_Column self, 
+		Lu_Mem mem, 
+		lu_size h, 
+		lu_size d, 
+		lu_size layer_ix, 
+		lu_size column_ix
+	)
 	{
 		lu__assert(self);
 		lu__assert(mem);
@@ -14,16 +21,15 @@
 		self->h = h;
 		self->d = d;
 
-		// +1 for "NULL" cell
-		lu_size s = sizeof(struct lu_n_cell) * h * d + 1;
 
-		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, s);
+		lu_size items_size = h * d + LU_N_CELL__SPEIAL_CELLS_SKIP;
+
+		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * items_size);
 		lu__alloc_assert(self->cells);
 
-		memset(self->cells, LU_N_CELL__NULL, s);  
-
-		for (lu_size i = 0; i < s; i++)
+		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < items_size; i++)
 		{
+			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix);
 			
 		}
 

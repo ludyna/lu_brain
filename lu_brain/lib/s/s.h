@@ -267,6 +267,15 @@
 	);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
+	//
+	// S_Layer properties
+	//
+
+	static inline lu_size lu_s_layer__get_layer_ix(Lu_S_Layer self)
+	{
+		return self->super.layer_ix;
+	}
+
 	static inline Lu_W_Table lu_s_layer__get_w_table(Lu_S_Layer self, lu_size wave_id)
 	{
 		lu__debug_assert(self);

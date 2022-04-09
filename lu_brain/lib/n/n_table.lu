@@ -6,7 +6,7 @@
 // 
 
 
-	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config)
+	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config, lu_size layer_ix)
 	{
 		lu__assert(mem);
 		lu__assert(w > 0);
@@ -30,7 +30,7 @@
 		{
 			column = &self->columns[i];
 
-			lu_n_column__init(column, mem, config->n_column_h, config->n_column_d, i);
+			lu_n_column__init(column, mem, config->n_column_h, config->n_column_d, layer_ix, i);
 		}
 
 		return self;

@@ -45,7 +45,7 @@
 			);
 		}
 
-		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, config);
+		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, config, layer_ix);
 		lu__alloc_assert(self->n_table);
 
 		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);

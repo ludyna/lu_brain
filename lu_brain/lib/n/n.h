@@ -71,9 +71,9 @@
 	{
 		lu__debug_assert(self);
 
-		self->cell_ix = cell_ix;
-		self->column_ix = column_ix;
-		self->layer_ix = layer_ix;
+		// self->cell_ix = cell_ix;
+		// self->column_ix = column_ix;
+		// self->layer_ix = layer_ix;
 
 		return self;
 	}
@@ -253,9 +253,25 @@
 		union lu_n_ix children[LU_N_CELL__LINKS_MAX];
 	};
 
+	static inline Lu_N_Cell lu_n_cell__init(
+		Lu_N_Cell self, 
+		lu_size cell_ix, 
+		lu_size column_ix, 
+		lu_size layer_ix
+	)
+	{
+		lu__debug_assert(self);
+
+		lu_n_ix__init(&self->addr, cell_ix, column_ix, layer_ix);
+
+		self->children[0].value = 0;
+
+		return self;
+	}
+
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
-		return self->children[0].value == LU_N_CELL__NULL;
+		return self->children[0].value == 0;
 	}
 
 	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_ix* children)
@@ -303,7 +319,7 @@
 		struct lu_n_cell* cells;
 	};
 
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d, lu_size column_ix);
+	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d, lu_size layer_ix, lu_size column_ix);
 	static void lu_n_column__deinit(Lu_N_Column self);
 	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d);
 
@@ -376,7 +392,7 @@
 		struct lu_n_column* columns;
 	};
 
-	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config);
+	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config, lu_size layer_ix);
  	void lu_n_table__destroy(Lu_N_Table self);
 
 
