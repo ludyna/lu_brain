@@ -123,7 +123,7 @@
 		Lu_W_Cell rec_w_p_cell;
 		Lu_W_Cell rec_w_v_cell;
 
-		union lu_n_addr n_cell_ix;
+		union lu_n_addr n_addr;
 
 		lu_bool v_reset;
 
@@ -133,13 +133,12 @@
 		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
 		lu_size p_reg;
-		union lu_n_addr p_links[depth + 1];
-		p_links[depth].value = LU_N_CELL__NULL; // null ended string
+		union lu_n_addr p_links[depth + 1]; 
+		lu_size p_links_i;
+
 		// lu_size v_reg;
 		// lu_size v_links[depth + 1];
 		// v_links[depth] = LU_N_CELL__NULL;
-
-		lu_bool any_z_p; // true if for any z we saved w_cell_p
 		
 
 		for (y = 0; y < data->h; y++)
@@ -156,7 +155,9 @@
 
 				lu_w_cell__reset(rec_w_p_cell);
 
-				any_z_p = false;
+				// reset string
+				p_links[0].value = 0;
+				p_links_i = 0;
 
 				// iterate all layer comps and save result in rec_layer(which is also s_layer)
 				for (z = 0; z < depth; z++)
@@ -190,20 +191,18 @@
 							p_view->n_comp_table
 						);
 
-						p_links[z].column_ix = z;
-						p_links[z].cell_ix = lu_n_table_comp__get_cell_ix(p_view->n_comp_table, x, y, z);
-
-						any_z_p = true;
+						p_links[p_links_i] = w_p_cell->n_addr;
+						++p_links_i;
 					}
 
 				} // for (lu_size z = 0
 
-				if (any_z_p)
+				if (p_links[0].value)
 				{
 					lu__debug("\n SAVING N_CELL");
 					
-					n_cell_ix = lu_n_table__save(rec_n_table, x, y, p_links);
-					lu_w_cell__save(rec_w_p_cell, n_cell_ix);
+					n_addr = lu_n_table__save(rec_n_table, x, y, p_links);
+					lu_w_cell__save(rec_w_p_cell, n_addr);
 				}
 
 			}  // for (x = 0

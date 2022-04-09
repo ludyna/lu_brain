@@ -22,15 +22,14 @@
 		self->d = d;
 
 
-		lu_size items_size = h * d + LU_N_CELL__SPEIAL_CELLS_SKIP;
+		lu_size items_size = h * d;
 
 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * items_size);
 		lu__alloc_assert(self->cells);
 
-		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < items_size; i++)
+		for (lu_size i = 0; i < items_size; i++)
 		{
 			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix);
-			
 		}
 
 		return self;

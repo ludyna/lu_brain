@@ -122,9 +122,12 @@
 		lu_value value,
 		lu_size x,
 		lu_size y,
-		lu_size z
+		lu_size z,
+		union lu_n_addr addr
 	)
 	{
+		self->addr = addr;
+
 		self->value = value;
 		self->x = x;
 		self->y = y;
@@ -140,6 +143,8 @@
 		lu_size w;
 		lu_size h;
 		lu_size d;
+		lu_size wh;
+		lu_size size;
 
 		// w x h x d, empty by default
 		struct lu_n_cell_vp* cells;
@@ -156,16 +161,18 @@
 
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
 
-	static inline lu_size lu_n_table_comp__get_cell_ix(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
+	static inline lu_size lu_n_table_comp__calc_cell_ix(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
 	{
-		return z * self->w * self->h + y * self->w + x + LU_N_CELL__SPEIAL_CELLS_SKIP;
+		return z * self->wh + y * self->w + x;
 	}
 
-	static inline Lu_N_Cell_VP lu_n_table_comp__cell_ix_to_cell(Lu_N_Table_Comp self, lu_size cell_ix)
+	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
 	{
-		lu__debug_assert(cell_ix >= LU_N_CELL__SPEIAL_CELLS_SKIP);
+		lu_size i = lu_n_table_comp__calc_cell_ix(self, x, y, z);
 
-		return &self->cells[cell_ix - LU_N_CELL__SPEIAL_CELLS_SKIP];
+		lu__debug_assert(i < self->size);
+
+		return &self->cells[i];
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -333,7 +340,7 @@
 
 	static inline lu_size lu_n_column__hash_to_ix(Lu_N_Column self, lu_size hash)
 	{
-		return hash % self->h + LU_N_CELL__SPEIAL_CELLS_SKIP; // always skip "NULL" and "NO FIRE" cells
+		return hash % self->h; 
 	}
 
 	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)

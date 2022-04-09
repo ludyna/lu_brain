@@ -28,10 +28,12 @@
 		self->w = width;
 		self->h = height;
 		self->d = depth;
+		self->wh = self->w * self->h;
+		self->size = self->wh * self->d;
 
 		self->cells = (struct lu_n_cell_vp*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct lu_n_cell_vp) * self->w * self->h * self->d
+			sizeof(struct lu_n_cell_vp) * self->size
 		);
 
 		lu_size z;
@@ -39,7 +41,6 @@
 		lu_size y;
 		Lu_N_Cell_VP cell;
 
-		lu_size wh = width * height;
 		lu_size z_shift;
 		lu_size zy_shift;
 
@@ -49,7 +50,7 @@
 
 		for (z = 0; z < depth; z++)
 		{
-			z_shift = z * wh;
+			z_shift = z * self->wh;
 			for (y = 0; y < height; y++)
 			{
 				zy_shift = z_shift + y * width;
@@ -60,7 +61,11 @@
 					pos.x = x;
 					pos.y = y;
 
-					lu_n_cell_vp__init(cell, comp_calc->steps[z], x, y, z);
+					column_ix = lu_n_pos__to_column_ix(&pos, self->w);
+
+					lu_n_addr__init(&addr, z, column_ix, layer_ix);
+
+					lu_n_cell_vp__init(cell, comp_calc->steps[z], x, y, z, addr);
 				} 
 			}
 		}
