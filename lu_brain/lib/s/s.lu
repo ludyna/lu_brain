@@ -216,7 +216,19 @@
 	static void lu_s__print_info(Lu_S self)
 	{
 		lu__assert(self);
-		
+
+		Lu_S_Layer_Base layer;
+		lu__debug("\n Lu_S layers: ");
+		char buffer[50];
+		for (lu_size i = 0; i < self->layers_count; i++)
+		{
+			layer = self->layers[i];
+			lu__debug("\n 	layer_ix: %d", layer->layer_ix);
+			lu_s_layer_type__to_str(layer->type, buffer);
+			lu__debug("\n 	type: %s", buffer);
+			lu__debug("\n -------------- ");
+		}
+
 	}
 
 

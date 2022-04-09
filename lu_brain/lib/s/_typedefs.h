@@ -20,6 +20,25 @@
 		LU_S_LAYER__END
 	};
 
+	static inline void lu_s_layer_type__to_str(enum lu_s_layer_type type, char buffer[])
+	{
+		switch(type)
+		{
+			case LU_S_LAYER__COMP:
+				strcpy(buffer, "LU_S_LAYER__COMP");
+				break;
+			case LU_S_LAYER__REC:
+				strcpy(buffer, "LU_S_LAYER__REC");
+				break;
+			case LU_S_LAYER__LAYER:
+				strcpy(buffer, "LU_S_LAYER__LAYER");
+				break;
+			default:
+				strcpy(buffer, "(!) UNKNOWN");
+				break;
+		}
+	}
+
 	enum lu_s_layer_tag {
 		LU_S_TAQ__NULL,
 		LU_S_TAG__COMP,
