@@ -354,26 +354,20 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Areas
+// Lu_S_Area
 //
 
-	struct lu_s_area_base {
+	struct lu_s_area {
 		lu_size area_ix;
-		Lu_S_Layer_Base first;
-		Lu_S_Layer_Base last;
 
 		Lu_S_Layer_Base *layers;
-		lu_size layers_size;
-		lu_size layers_count;
+		lu_size size;
+		lu_size count;
 	};
 
-	struct lu_s_area_fixed {
+	static Lu_S_Area lu_s_area__init(Lu_S_Area self, Lu_Mem mem, lu_size size, lu_size count);
+	static void lu_s_area__deinit(Lu_S_Area self, Lu_Mem);
 
-	};
-
-	struct lu_s_area_exp {
-
-	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Maps

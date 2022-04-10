@@ -127,6 +127,12 @@
 	typedef struct lu_s_layer_rec* Lu_S_Layer_Rec;
 	typedef struct lu_s_layer* Lu_S_Layer;
 
+	//
+	// Area
+	//
+
+	typedef struct lu_s_area* Lu_S_Area;
+
 	// 
 	// Map
 	// 
