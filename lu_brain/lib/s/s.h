@@ -298,6 +298,11 @@
 		return self->super.type;
 	}
 
+	static inline enum lu_s_layer_tag lu_s_layer__get_tag(Lu_S_Layer self)
+	{
+		return self->super.tag;
+	}
+
 	static inline Lu_S_Layer lu_s_layer__get_parent(Lu_S_Layer self)
 	{
 		Lu_S_Layer_Base layer_base = self->super.p;
@@ -307,7 +312,7 @@
 	}
 
 
-	static void lu_s_layer__save(
+	static Lu_W_Table lu_s_layer__save(
 		Lu_S_Layer self, 
 		lu_size wave_id, 
 		lu_size block_id, 

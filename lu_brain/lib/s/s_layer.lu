@@ -133,7 +133,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_s_layer__save(
+	static Lu_W_Table lu_s_layer__save(
 		Lu_S_Layer self, 
 		lu_size wave_id, 
 		lu_size block_id, 
@@ -152,6 +152,9 @@
 
 		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(self, wave_id);
 		lu__assert(curr_w_table);
+
+		curr_w_table->wave_id = wave_id;
+		curr_w_table->block_id = block_id;
 
 		lu_bool is_reset = prev_w_table->wave_id != wave_id || ((block_id - prev_w_table->block_id) > 1);
 
@@ -187,4 +190,6 @@
 				}
 			}
 		}
+
+		return curr_w_table;
 	}

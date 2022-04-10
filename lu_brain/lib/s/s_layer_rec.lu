@@ -217,9 +217,15 @@
 		// passing rec_layer w_table as previous w info
 		//
 
-		Lu_S_Layer parent_layer = (Lu_S_Layer) lu_s_layer_rec__get_parent(self);
+		Lu_S_Layer_Base parent_layer = lu_s_layer_rec__get_parent(self);
 
-		lu__assert(lu_s_layer__get_type(parent_layer) == LU_S_LAYER__LAYER);
 
-		lu_s_layer__save(parent_layer, wave_id, block_id, rec_w_table, config);
+		while (parent_layer->tag != LU_S_TAG__FRAME_BASE)
+		{
+			lu__assert(parent_layer->type == LU_S_LAYER__LAYER);
+
+			rec_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, rec_w_table, config);
+
+			parent_layer = parent_layer->p;
+		}
 	}
