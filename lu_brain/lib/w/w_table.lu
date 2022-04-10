@@ -31,6 +31,8 @@
 		);
 		lu__alloc_assert(self->cells);
 
+		self->any_fired = false;
+
 		return self;
 	}
 

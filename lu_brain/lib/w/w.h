@@ -186,6 +186,8 @@
 
 		// always "2D"
 		struct lu_w_cell* cells;
+
+		lu_bool any_fired;
 	};
 
 	static Lu_W_Table lu_w_table__create(

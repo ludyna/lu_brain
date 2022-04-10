@@ -141,6 +141,7 @@
 		// lu_size v_links[depth + 1];
 		// v_links[depth] = LU_N_CELL__NULL;
 		
+		rec_w_table->any_fired = false;
 
 		for (y = 0; y < data->h; y++)
 		{
@@ -207,10 +208,16 @@
 					
 					n_addr = lu_n_table__save(rec_n_table, x, y, p_links);
 					lu_w_cell__save(rec_w_p_cell, n_addr);
+
+					rec_w_table->any_fired = true;
 				}
 
 			}  // for (x = 0
 		} // for (y = 0
+
+
+		// No neurons fired
+		if (!rec_w_table->any_fired) return;
 
 		//
 		// Continue saving until first frames layer
@@ -219,12 +226,17 @@
 
 		Lu_S_Layer_Base parent_layer = lu_s_layer_rec__get_parent(self);
 
-
+		char buffer[50];
 		while (parent_layer->tag != LU_S_TAG__FRAME_BASE)
 		{
 			lu__assert(parent_layer->type == LU_S_LAYER__LAYER);
 
+			lu_s_layer_tag__to_str(parent_layer->tag, buffer);
+			lu__debug("\n PROCESSING: %s", buffer);
+
 			rec_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, rec_w_table, config);
+
+			if (!rec_w_table->any_fired) break;
 
 			parent_layer = parent_layer->p;
 		}
