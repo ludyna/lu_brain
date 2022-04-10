@@ -260,6 +260,7 @@
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
 		lu_size n_h,
+		lu_size n_h_max,
 		enum lu_s_layer_tag tag
 	);
 
@@ -271,6 +272,7 @@
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
+		lu_size n_h_max,
 		enum lu_s_layer_tag tag
 	);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
@@ -350,6 +352,28 @@
 	{
 		return self->super.super.p;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Areas
+//
+
+	struct lu_s_area_base {
+		lu_size area_ix;
+		Lu_S_Layer_Base first;
+		Lu_S_Layer_Base last;
+
+		Lu_S_Layer_Base *layers;
+		lu_size layers_size;
+		lu_size layers_count;
+	};
+
+	struct lu_s_area_fixed {
+
+	};
+
+	struct lu_s_area_exp {
+
+	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Maps
@@ -514,6 +538,7 @@
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
+		lu_size n_h_max,
 		enum lu_s_layer_tag tag
 	);
 

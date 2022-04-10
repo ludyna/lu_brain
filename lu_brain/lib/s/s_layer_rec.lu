@@ -25,6 +25,7 @@
 			lu_s_layer_rec__destroy,
 			rec->width,
 			rec->height,
+			rec->height, // fixed n_table
 			LU_S_TAG__REC_BASE
 		);
 
@@ -112,14 +113,14 @@
 		Lu_Comp_Calc p_comp_calc;
 		Lu_Comp_Calc v_comp_calc;
 
-		Lu_W_Table rec_w_table = lu_s_layer__get_w_table(&self->super, wave_id);
-		lu__assert(rec_w_table);
+		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(&self->super, wave_id);
+		lu__assert(curr_w_table);
 
-		is_reset = rec_w_table->wave_id != wave_id || ((block_id - rec_w_table->block_id) > 1);
+		is_reset = curr_w_table->wave_id != wave_id || ((block_id - curr_w_table->block_id) > 1);
 		lu__debug("\n IS_RESET: %d ", is_reset);
 
-		rec_w_table->wave_id = wave_id;
-		rec_w_table->block_id = block_id;
+		curr_w_table->wave_id = wave_id;
+		curr_w_table->block_id = block_id;
 
 		Lu_W_Cell rec_w_p_cell;
 		Lu_W_Cell rec_w_v_cell;
@@ -141,7 +142,7 @@
 		// lu_size v_links[depth + 1];
 		// v_links[depth] = LU_N_CELL__NULL;
 		
-		rec_w_table->any_fired = false;
+		curr_w_table->any_fired = false;
 
 		for (y = 0; y < data->h; y++)
 		{
@@ -153,7 +154,7 @@
 			{
 				xy_shift = y_shift + x;
 
-				rec_w_p_cell = lu_w_table__get_cell(rec_w_table, x, y);
+				rec_w_p_cell = lu_w_table__get_cell(curr_w_table, x, y);
 
 				lu_w_cell__reset(rec_w_p_cell);
 
@@ -209,7 +210,7 @@
 					n_addr = lu_n_table__save(rec_n_table, x, y, p_links);
 					lu_w_cell__save(rec_w_p_cell, n_addr);
 
-					rec_w_table->any_fired = true;
+					curr_w_table->any_fired = true;
 				}
 
 			}  // for (x = 0
@@ -217,7 +218,7 @@
 
 
 		// No neurons fired
-		if (!rec_w_table->any_fired) return;
+		if (!curr_w_table->any_fired) return;
 
 		//
 		// Continue saving until first frames layer
@@ -234,10 +235,15 @@
 			lu_s_layer_tag__to_str(parent_layer->tag, buffer);
 			lu__debug("\n PROCESSING: %s", buffer);
 
-			rec_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, rec_w_table, config);
+			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, curr_w_table, config);
 
-			if (!rec_w_table->any_fired) break;
+			if (!curr_w_table->any_fired) break;
 
 			parent_layer = parent_layer->p;
 		}
+
+		// We should be at FRAME_BASE now
+		lu__assert(parent_layer->tag == LU_S_TAG__FRAME_BASE); 
+
+		//lu_s_layer__frame_save((Lu_S_Layer) parent_layer, rec_id, wave_id, block_id, curr_w_table, config);
 	}

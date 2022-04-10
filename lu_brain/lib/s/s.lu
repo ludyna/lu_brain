@@ -189,6 +189,7 @@
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
+		lu_size n_h_max,
 		enum lu_s_layer_tag tag
 	)
 	{
@@ -198,7 +199,15 @@
 		lu__assert(n_w > 0);
 		lu__assert(n_h > 0);
 
-		Lu_S_Layer layer = lu_s_layer__create(config, self->layers_count, children_count, n_w, n_h, tag);
+		Lu_S_Layer layer = lu_s_layer__create(
+			config, 
+			self->layers_count, 
+			children_count, 
+			n_w, 
+			n_h, 
+			n_h_max,
+			tag
+		);
 	
 		lu_s__register_layer(self, (Lu_S_Layer_Base) layer);
 

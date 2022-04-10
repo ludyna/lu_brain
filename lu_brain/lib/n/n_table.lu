@@ -6,7 +6,7 @@
 // 
 
 
-	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config, lu_size layer_ix)
+	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_size h_max, Lu_Config config, lu_size layer_ix)
 	{
 		lu__assert(mem);
 		lu__assert(w > 0);

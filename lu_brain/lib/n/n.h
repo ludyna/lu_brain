@@ -59,14 +59,16 @@
 // Lu_N_Addr
 
 	#define LU_N_CELL_IX__SIZE 24
-	#define LU_N_COLUMN_IX__SIZE 24
+	#define LU_N_COLUMN_IX__SIZE 16
 	#define LU_N_LAYER_IX__SIZE 16
+	#define LU_N_AREA_IX__SIZE 8
 
 	union lu_n_addr {
 		struct {
 			lu_size cell_ix : LU_N_CELL_IX__SIZE;
 			lu_size column_ix: LU_N_COLUMN_IX__SIZE;
 			lu_size layer_ix: LU_N_LAYER_IX__SIZE;
+			lu_size area_ix: LU_N_AREA_IX__SIZE;
 		};
 		lu_size value;
 	};
@@ -411,7 +413,7 @@
 		struct lu_n_column* columns;
 	};
 
-	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, Lu_Config config, lu_size layer_ix);
+	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_size h_max, Lu_Config config, lu_size layer_ix);
  	void lu_n_table__destroy(Lu_N_Table self);
 
  	static inline Lu_N_Column lu_n_table__get_column(Lu_N_Table self, lu_size x, lu_size y)

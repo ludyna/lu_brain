@@ -139,15 +139,26 @@
 
 		// Lu_S_Layer story = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__STORY_BASE);
 		// Lu_S_Layer scene = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__SCENE_BASE);
-		// Lu_S_Layer event = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__EVENT_BASE);
-		Lu_S_Layer seq = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__SEQ_BASE);
+		// Lu_S_Layer event = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__EVENT_BASE); 
+
+
+		// static Lu_S_Layer lu_s__create_layer(
+		// 	Lu_S self, 
+		// 	Lu_Config config,  
+		// 	lu_size children_count,
+		// 	lu_size n_w,
+		// 	lu_size n_h,
+		// 	lu_size n_h_max,
+		// 	enum lu_s_layer_tag tag
+		// );
+		Lu_S_Layer seq = lu_s__create_layer(s, config, 1, 1, 1, 1, LU_S_TAG__SEQ_BASE);
 
 		// lu__assert(story);
 		// lu__assert(scene);
 		// lu__assert(event);
 		lu__assert(seq);
 
-		Lu_S_Layer prev = lu_s__create_layer(s, config, recs_count, 1, 1, LU_S_TAG__FRAME_BASE);
+		Lu_S_Layer prev = lu_s__create_layer(s, config, recs_count, 1, 1, 1, LU_S_TAG__FRAME_BASE);
 		lu__assert(prev);
 		Lu_S_Layer frames_base = prev;
 		Lu_S_Layer frames = frames_base;
@@ -155,7 +166,7 @@
 		lu_size recs_layers_size = lu_s__Y(recs_count, 1);
 		for(lu_size i = 1; i < recs_layers_size; i++)
 		{
-			frames = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__FRAME_STEP);
+			frames = lu_s__create_layer(s, config, 1, 1, 1, 1, LU_S_TAG__FRAME_STEP);
 			lu__assert(frames);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) frames, (Lu_S_Layer_Base) prev);
@@ -246,7 +257,7 @@
 			if (w > 1) --w;
 			if (h > 1) --h;
 
-			rec_layer = lu_s__create_layer(s, config, 1, w, h, LU_S_TAG__REC_STEP);
+			rec_layer = lu_s__create_layer(s, config, 1, w, h, h, LU_S_TAG__REC_STEP);
 			lu__assert(rec_layer);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_layer, prev);
