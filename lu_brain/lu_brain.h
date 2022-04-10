@@ -53,8 +53,8 @@
 		// Structure level
 		//
 		Lu_Mem s_mem;						// if NULL initialize to default
-		lu_size s_frames_size; 				// initial maximum number of frames
 		lu_size s_apexes_size;				// initial maximum number of apexes
+		lu_size s_areas_size;				// initial number of areas
 
 		//
 		// Network level

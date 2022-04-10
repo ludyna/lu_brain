@@ -58,8 +58,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Addr
 
-	#define LU_N_CELL_IX__SIZE 24
-	#define LU_N_COLUMN_IX__SIZE 16
+	#define LU_N_CELL_IX__SIZE 16
+	#define LU_N_COLUMN_IX__SIZE 24
 	#define LU_N_LAYER_IX__SIZE 16
 	#define LU_N_AREA_IX__SIZE 8
 

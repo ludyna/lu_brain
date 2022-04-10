@@ -366,7 +366,7 @@
 	};
 
 	static Lu_S_Area lu_s_area__init(Lu_S_Area self, Lu_Mem mem, lu_size size, lu_size count);
-	static void lu_s_area__deinit(Lu_S_Area self, Lu_Mem);
+	static void lu_s_area__deinit(Lu_S_Area self, Lu_Mem mem);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -471,6 +471,10 @@
 
 		Lu_S_Layer_Base layers[LU_S__LAYERS_SIZE];
 		lu_size layers_count;
+
+		Lu_S_Area* areas;
+		lu_size areas_size;
+		lu_size areas_count;
 	};
 
 	//

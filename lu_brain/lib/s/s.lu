@@ -25,14 +25,25 @@
 
 		lu_size i;
 
-		// (!!) This is important. We start layers ixs from LU_N_CELL__SPEIAL_CELLS_SKIP, 
+		// (!!) This is important. We start areas ixs from LU_N_CELL__SPEIAL_CELLS_SKIP, 
 		// so union lu_n_addr.value = 0 will be reserved as "NULL" cell. 
 		// This way will not need "special cells", instead we can refer to non existent special layers.
 		// It will save memory and will make code more straightforward.
-		// To form addr of special cell we can use layer_ix from < LU_N_CELL__SPEIAL_CELLS_SKIP, 
+		// To form addr of special cell we can use area_ix from < LU_N_CELL__SPEIAL_CELLS_SKIP, 
 		// and appropriate x and y to form column_ix. cell_x can be 0.
+		self->areas_size = self->config->s_areas_size;
+		self->areas = (Lu_S_Area*) lu_mem__alloc(v_config->s_mem, sizeof(Lu_S_Area) * self->areas_size);
+		lu__alloc_assert(self->areas);
+
+		self->areas_count = LU_N_CELL__SPEIAL_CELLS_SKIP;
+
+		for (i = 0; i < LU_N_CELL__SPEIAL_CELLS_SKIP; i++)
+		{
+			self->areas[i] = NULL;
+		}
+
 		self->layers_count = LU_N_CELL__SPEIAL_CELLS_SKIP;
-		for(i = 0; i < LU_N_CELL__SPEIAL_CELLS_SKIP; i++)
+		for (i = 0; i < LU_N_CELL__SPEIAL_CELLS_SKIP; i++)
 		{
 			self->layers[i] = NULL;
 		}
@@ -108,6 +119,8 @@
 
 		if (self->v_recs)
 			lu_arr__destroy(self->v_recs);
+
+		lu_mem__free(self->config->s_mem, (lu_p_byte) self->areas);
 
 		lu_mem__free(self->config->s_mem, (lu_p_byte) self);
 	}
