@@ -1,6 +1,6 @@
 # Lu_Brain 
 
-Lu_Brain is an [AI2 technology](https://ai2tech.org) _pattern database_ open-source C library.
+Lu_Brain is a next-generation [AI2 technology](https://ai2tech.org) _pattern database_ open-source C library.
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
