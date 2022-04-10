@@ -24,7 +24,8 @@
 			rec->depth, //children
 			lu_s_layer_rec__destroy,
 			rec->width,
-			rec->height
+			rec->height,
+			LU_S_TAG__REC_BASE
 		);
 
 		self->rec = rec;

@@ -13,7 +13,8 @@
 		lu_size children_count,
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
-		lu_size n_h
+		lu_size n_h,
+		enum lu_s_layer_tag tag
 	)
 	{
 		lu__assert(self);
@@ -29,7 +30,8 @@
 				config, 
 				type, 
 				layer_ix, 
-				destroy
+				destroy,
+				tag
 			); 
 		}
 		else
@@ -41,7 +43,8 @@
 				config, 
 				type, 
 				layer_ix, 
-				destroy
+				destroy,
+				tag
 			);
 		}
 
@@ -88,7 +91,8 @@
 		lu_size layer_ix, 
 		lu_size children_count,
 		lu_size n_w,
-		lu_size n_h
+		lu_size n_h,
+		enum lu_s_layer_tag tag
 	)
 	{
 		lu__assert(config);
@@ -105,7 +109,8 @@
 			children_count, 
 			lu_s_layer__destroy, 
 			n_w, 
-			n_h
+			n_h,
+			tag
 		);
 
 		return self;

@@ -188,7 +188,8 @@
 		Lu_Config config, 
 		lu_size children_count,
 		lu_size n_w,
-		lu_size n_h
+		lu_size n_h,
+		enum lu_s_layer_tag tag
 	)
 	{
 		lu__assert(self);
@@ -197,7 +198,7 @@
 		lu__assert(n_w > 0);
 		lu__assert(n_h > 0);
 
-		Lu_S_Layer layer = lu_s_layer__create(config, self->layers_count, children_count, n_w, n_h);
+		Lu_S_Layer layer = lu_s_layer__create(config, self->layers_count, children_count, n_w, n_h, tag);
 	
 		lu_s__register_layer(self, (Lu_S_Layer_Base) layer);
 
@@ -241,13 +242,15 @@
 			lu__debug("\n 	layer_ix: %d", layer->layer_ix);
 			lu_s_layer_type__to_str(layer->type, buffer);
 			lu__debug("\n 	type: %s", buffer);
+			lu_s_layer_tag__to_str(layer->tag, buffer);
+			lu__debug("\n 	tag: %s", buffer);
 			lu__debug("\n -------------- ");
 		}
 
 	}
 
 
-	static void lu_s__save_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config config)
+	static void lu_s__save_rec_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config config)
 	{
 		lu__assert(self);
 		Lu_S_Layer_Rec frame = lu_s__get_v_rec(self, rec_id);

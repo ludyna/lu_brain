@@ -164,19 +164,19 @@
 		Lu_S s = brain->s;
 		lu__assert(s);
 
-		lu_size i;
+		lu_size rec_id;
 		lu_size size = lu_data_block__get_size(block);
 		Lu_Data data;
-		for (i = 0; i < size; i++)
+		for (rec_id = 0; rec_id < size; rec_id++)
 		{
-			data = lu_data_block__get_data(block, i);
+			data = lu_data_block__get_data(block, rec_id);
 			lu__assert(data);
 
 			if (lu_data__is_empty(data)) continue;
 			
 			lu_data__debug(data);
 
-			lu_s__save_data(s, wave, i, data, config);
+			lu_s__save_rec_data(s, wave, rec_id, data, config);
 		}
 		 
 

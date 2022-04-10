@@ -151,6 +151,7 @@
 
 	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
+		enum lu_s_layer_tag tag;
 		lu_size layer_ix;
 
 		Lu_Mem s_mem;
@@ -170,7 +171,8 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		enum lu_s_layer_tag tag
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
@@ -179,7 +181,8 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		enum lu_s_layer_tag tag
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
@@ -189,7 +192,8 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size level,
-		void (*destroy)(Lu_S_Layer_Base)
+		void (*destroy)(Lu_S_Layer_Base),
+		enum lu_s_layer_tag tag
 	);
 
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self);
@@ -255,7 +259,8 @@
 		lu_size children_count,
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
-		lu_size n_h
+		lu_size n_h,
+		enum lu_s_layer_tag tag
 	);
 
 	static void lu_s_layer__deinit(Lu_S_Layer self);
@@ -265,7 +270,8 @@
 		lu_size layer_ix, 
 		lu_size children_count,
 		lu_size n_w,
-		lu_size n_h
+		lu_size n_h,
+		enum lu_s_layer_tag tag
 	);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
@@ -502,7 +508,8 @@
 		Lu_Config config,  
 		lu_size children_count,
 		lu_size n_w,
-		lu_size n_h
+		lu_size n_h,
+		enum lu_s_layer_tag tag
 	);
 
 	static Lu_S_Layer_Rec lu_s__create_layer_rec(Lu_S self, Lu_Config config, Lu_Rec rec);
@@ -513,4 +520,4 @@
 	// 
 
 	static void lu_s__print_info(Lu_S self);
-	static void lu_s__save_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config);
+	static void lu_s__save_rec_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config);

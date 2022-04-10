@@ -28,7 +28,8 @@
 			config,
 			LU_S_LAYER__COMP,
 			layer_ix,
-			lu_s_layer_comp__destroy
+			lu_s_layer_comp__destroy, 
+			LU_S_TAG__COMP
 		);
 
 		lu_s_view_p__init(

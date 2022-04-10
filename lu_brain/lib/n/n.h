@@ -60,9 +60,9 @@
 
 	union lu_n_addr {
 		struct {
-			lu_size cell_ix : 32;
+			lu_size cell_ix : 24;
 			lu_size column_ix: 24;
-			lu_size layer_ix: 8;
+			lu_size layer_ix: 16;
 		};
 		lu_size value;
 	};
@@ -403,8 +403,6 @@
 
 		lu_size w;
 		lu_size h;
-
-		lu_byte cell_type; // nema smyslu davaty cell_type v komirku koly to vse povtoruyetsia
 
 		struct lu_n_column* columns;
 	};
