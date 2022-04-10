@@ -205,17 +205,18 @@
 
 	static inline union lu_n_addr lu_w_table__get_n_addr(Lu_W_Table self, lu_size x, lu_size y)
 	{ 
-		lu__debug_assert(x < self->w); // should never happen
-		lu__debug_assert(y < self->h);
-
-		return self->cells[y * self->w + x].n_addr;
+		if (x < self->w && y < self->h)
+		{
+			return lu_w_table__get_cell(self, x, y)->n_addr;
+		}
+		else
+		{
+			return LU_N_ADDR__NULL;
+		}
 	}
 
 	static inline void lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, union lu_n_addr children[])
 	{
-		lu__debug_assert(x + 1 < self->w); // should always be true
-		lu__debug_assert(y + 1 < self->h);
-
 		lu_byte i = 0;
 		union lu_n_addr addr;
 
@@ -252,7 +253,6 @@
 		}
 
 		lu_n_addr__set_to_null(&children[i]);
-
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -58,11 +58,15 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Addr
 
+	#define LU_N_CELL_IX__SIZE 24
+	#define LU_N_COLUMN_IX__SIZE 24
+	#define LU_N_LAYER_IX__SIZE 16
+
 	union lu_n_addr {
 		struct {
-			lu_size cell_ix : 24;
-			lu_size column_ix: 24;
-			lu_size layer_ix: 16;
+			lu_size cell_ix : LU_N_CELL_IX__SIZE;
+			lu_size column_ix: LU_N_COLUMN_IX__SIZE;
+			lu_size layer_ix: LU_N_LAYER_IX__SIZE;
 		};
 		lu_size value;
 	};

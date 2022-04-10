@@ -137,14 +137,14 @@
 		// But seq, event, scene and story are expanded when user manually commands to do so.
 		// Without user command everything is considered to be the same seq.
 
-		Lu_S_Layer story = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__STORY_BASE);
-		Lu_S_Layer scene = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__SCENE_BASE);
-		Lu_S_Layer event = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__EVENT_BASE);
+		// Lu_S_Layer story = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__STORY_BASE);
+		// Lu_S_Layer scene = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__SCENE_BASE);
+		// Lu_S_Layer event = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__EVENT_BASE);
 		Lu_S_Layer seq = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__SEQ_BASE);
 
-		lu__assert(story);
-		lu__assert(scene);
-		lu__assert(event);
+		// lu__assert(story);
+		// lu__assert(scene);
+		// lu__assert(event);
 		lu__assert(seq);
 
 		Lu_S_Layer prev = lu_s__create_layer(s, config, recs_count, 1, 1, LU_S_TAG__FRAME_BASE);
@@ -162,9 +162,9 @@
 			prev = frames;
 		}
 
-		lu_s_layer_base__connect((Lu_S_Layer_Base) story, (Lu_S_Layer_Base) scene);
-		lu_s_layer_base__connect((Lu_S_Layer_Base) scene, (Lu_S_Layer_Base) event);
-		lu_s_layer_base__connect((Lu_S_Layer_Base) event, (Lu_S_Layer_Base) seq);
+		// lu_s_layer_base__connect((Lu_S_Layer_Base) story, (Lu_S_Layer_Base) scene);
+		// lu_s_layer_base__connect((Lu_S_Layer_Base) scene, (Lu_S_Layer_Base) event);
+		// lu_s_layer_base__connect((Lu_S_Layer_Base) event, (Lu_S_Layer_Base) seq);
 		lu_s_layer_base__connect((Lu_S_Layer_Base) seq, (Lu_S_Layer_Base) frames);
 
 		//
@@ -173,15 +173,15 @@
 
 		lu_arr__set(self->bases, 0, (lu_p_void) lu_slot_one__create(s_mem, frames_base));
 		lu_arr__set(self->bases, 1, (lu_p_void) lu_slot_one__create(s_mem, seq));
-		lu_arr__set(self->bases, 2, (lu_p_void) lu_slot_one__create(s_mem, event));
-		lu_arr__set(self->bases, 3, (lu_p_void) lu_slot_one__create(s_mem, scene));
-		lu_arr__set(self->bases, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
+		// lu_arr__set(self->bases, 2, (lu_p_void) lu_slot_one__create(s_mem, event));
+		// lu_arr__set(self->bases, 3, (lu_p_void) lu_slot_one__create(s_mem, scene));
+		// lu_arr__set(self->bases, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
 
 		lu_arr__set(self->apexes, 0, (lu_p_void) lu_slot_one__create(s_mem, frames));
 		lu_arr__set(self->apexes, 1, (lu_p_void) lu_slot_one__create(s_mem, seq));
-		lu_arr__set(self->apexes, 2, (lu_p_void) lu_slot_one__create(s_mem, event));
-		lu_arr__set(self->apexes, 3, (lu_p_void) lu_slot_one__create(s_mem, scene));
-		lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
+		// lu_arr__set(self->apexes, 2, (lu_p_void) lu_slot_one__create(s_mem, event));
+		// lu_arr__set(self->apexes, 3, (lu_p_void) lu_slot_one__create(s_mem, scene));
+		// lu_arr__set(self->apexes, 4, (lu_p_void) lu_slot_one__create(s_mem, story));
 	}
 
 	static void lu_s_map_base__make_rec_fractal(Lu_S_Map_Base self, Lu_Rec rec, Lu_S s)

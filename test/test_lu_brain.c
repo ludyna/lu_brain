@@ -69,14 +69,14 @@ void setUp(void)
 	);	
 	TEST_ASSERT(rec_0);
 
-	rec_1 				= lu_brain__rec_add(
-		/*belongs to*/			brain, 
-		/*width*/				3, 
-		/*height*/				3, 
-		/*depth*/				1,
-		/*config*/ 				lu_rec_config__get_by_id(LU_REC__TEST1)
-	);	
-	TEST_ASSERT(rec_1);
+	// rec_1 				= lu_brain__rec_add(
+	// 	/*belongs to*/			brain, 
+	// 	/*width*/				3, 
+	// 	/*height*/				3, 
+	// 	/*depth*/				1,
+	// 	/*config*/ 				lu_rec_config__get_by_id(LU_REC__TEST1)
+	// );	
+	// TEST_ASSERT(rec_1);
 	
 	TEST_ASSERT(brain->recs->count);
 
