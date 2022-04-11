@@ -358,6 +358,7 @@
 //
 
 	struct lu_s_area {
+		Lu_Config config;
 		lu_size area_ix;
 
 		Lu_S_Layer_Base *layers;
@@ -365,8 +366,8 @@
 		lu_size count;
 	};
 
-	static Lu_S_Area lu_s_area__init(Lu_S_Area self, Lu_Mem mem, lu_size size, lu_size count);
-	static void lu_s_area__deinit(Lu_S_Area self, Lu_Mem mem);
+	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size);
+	static void lu_s_area__destroy(Lu_S_Area self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -513,9 +514,25 @@
 	// S Layers Factory
 	//
 
+	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size);
+
+	static inline Lu_S_Area lu_s__register_area(Lu_S self, Lu_S_Area area)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(area);
+		lu__debug_assert(self->areas_count < self->areas_size);
+
+		self->areas[self->areas_count] = area;
+		++self->areas_count;
+
+		return area;
+	}
+
 	static inline Lu_S_Layer_Base lu_s__register_layer(Lu_S self, Lu_S_Layer_Base layer)
 	{
 		lu__debug_assert(self);
+		lu__debug_assert(layer);
+		//lu__debug_assert(layers_count < layers_size);
 
 		self->layers[self->layers_count] = (Lu_S_Layer_Base) layer;
 		++self->layers_count;
