@@ -42,12 +42,6 @@
 			self->areas[i] = NULL;
 		}
 
-		self->layers_count = LU_N_CELL__SPEIAL_CELLS_SKIP;
-		for (i = 0; i < LU_N_CELL__SPEIAL_CELLS_SKIP; i++)
-		{
-			self->layers[i] = NULL;
-		}
-
 		self->v_recs = lu_arr__create(config->s_mem, lu_arr__count(recs), true);
 		lu__assert(self->v_recs);
 
@@ -190,7 +184,7 @@
 		lu__assert(self);
 		lu__assert(config);
 
-		Lu_S_Area area = lu_s_area__create(config, size, tag);
+		Lu_S_Area area = lu_s_area__create(config, self->areas_count, size, tag);
 
 		return lu_s__register_area(self, area);
 	}
@@ -202,21 +196,16 @@
 	{
 		lu__assert(self);
 
-		Lu_S_Layer_Base layer;
-		lu__debug("\n Lu_S layers: ");
+		Lu_S_Area area;
+		lu__debug("\nLu_S Areas: ");
 		char buffer[50];
-		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->layers_count; i++)
+		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->areas_count; i++)
 		{
-			layer = self->layers[i];
+			area = self->areas[i];
 
-			if (layer == NULL) break;
+			if (area == NULL) break;
 
-			lu__debug("\n 	layer_ix: %d", layer->layer_ix);
-			lu_s_layer_type__to_str(layer->type, buffer);
-			lu__debug("\n 	type: %s", buffer);
-			lu_s_tag__to_str(layer->tag, buffer);
-			lu__debug("\n 	tag: %s", buffer);
-			lu__debug("\n -------------- ");
+			lu_s_area__print_info(area);
 		}
 
 	}

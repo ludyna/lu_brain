@@ -217,6 +217,15 @@
 		return self->type;
 	}
 
+	static inline void lu_s_layer_base__print_info(Lu_S_Layer_Base self)
+	{
+		char buffer[50];
+		lu__debug("\n 		layer_ix: %d", self->layer_ix);
+		lu_s_layer_type__to_str(self->type, buffer);
+		lu__debug("\n 		type: %s", buffer);
+		lu__debug("\n 		-------------- ");
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Layers
 //
@@ -367,7 +376,7 @@
 		lu_size layers_count;
 	};
 
-	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size, enum lu_s_tag tag);
+	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_s_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
 
 	static inline Lu_S_Layer_Base lu_s_area__register_layer(Lu_S_Area self, Lu_S_Layer_Base layer)
@@ -399,6 +408,25 @@
 	);
 
 	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Config config, Lu_Rec rec);
+
+
+	static inline void lu_s_area__print_info(Lu_S_Area self)
+	{
+		char buffer[50];
+		lu__debug("\n 	area_ix: %d", self->area_ix);
+		lu_s_tag__to_str(self->tag, buffer);
+		lu__debug("\n 	tag: %s", buffer);
+
+		Lu_S_Layer_Base layer ;
+		for (lu_size i = 0; i < self->layers_count; i++)
+		{
+			layer = self->layers[i];
+
+			if(layer == NULL) break;
+
+			lu_s_layer_base__print_info(layer);
+		}
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -501,9 +529,6 @@
 
 		Lu_S_Map_Base fractal;
 
-		Lu_S_Layer_Base layers[LU_S__LAYERS_SIZE];
-		lu_size layers_count;
-
 		Lu_S_Area* areas;
 		lu_size areas_size;
 		lu_size areas_count;
@@ -520,15 +545,6 @@
 		lu__debug_assert(area_ix < self->areas_count);
 
 		return self->areas[area_ix];
-	}
-
-	static inline Lu_S_Layer_Base lu_s__get_layer(Lu_S self, lu_size layer_ix)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(layer_ix < LU_S__LAYERS_SIZE);
-		lu__debug_assert(layer_ix < self->layers_count);
-
-		return self->layers[layer_ix];
 	}
 
 	static inline Lu_S_Layer_Rec lu_s__get_v_rec(Lu_S self, lu_size rec_id)

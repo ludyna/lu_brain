@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size, enum lu_s_tag tag)
+	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_s_tag tag)
 	{
 		lu__assert(config);
 		lu__assert(size > 0);  
@@ -19,6 +19,7 @@
 		Lu_S_Area self = (Lu_S_Area) lu_mem__alloc(mem, sizeof(struct lu_s_area));
 		lu__alloc_assert(self);
 
+		self->area_ix = area_ix;
 		self->tag = tag;
 		self->config = config;
 		self->layers_size = size;

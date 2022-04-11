@@ -43,19 +43,12 @@
 		LU_S_TAG__NULL,
 		LU_S_TAG__COMP,
 		LU_S_TAG__REC,
-		LU_S_TAG__REC_STEP,
 		LU_S_TAG__FRAME,
-		LU_S_TAG__FRAME_STEP,
 		LU_S_TAG__SEQ,
-		LU_S_TAG__SEQ_STEP,
-		LU_S_TAG__EVENT_BASE,
-		LU_S_TAG__EVENT_STEP,
-		LU_S_TAG__SCENE_BASE,
-		LU_S_TAG__SCENE_STEP,
-		LU_S_TAG__STORY_BASE,
-		LU_S_TAG__STORY_STEP,
-		LU_S_TAG__OTHER_BASE,
-		LU_S_TAG__OTHER_STEP,
+		LU_S_TAG__EVENT,
+		LU_S_TAG__SCENE,
+		LU_S_TAG__STORY,
+		LU_S_TAG__OTHER,
 		LU_S_TAG__END
 	};
 
@@ -70,46 +63,25 @@
 				strcpy(buffer, "COMP");
 				break;
 			case LU_S_TAG__REC:
-				strcpy(buffer, "REC_BASE");
-				break;
-			case LU_S_TAG__REC_STEP:
-				strcpy(buffer, "REC_STEP");
+				strcpy(buffer, "REC");
 				break;
 			case LU_S_TAG__FRAME:
-				strcpy(buffer, "FRAME_BASE");
-				break;
-			case LU_S_TAG__FRAME_STEP:
-				strcpy(buffer, "FRAME_STEP");
+				strcpy(buffer, "FRAME");
 				break;
 			case LU_S_TAG__SEQ:
-				strcpy(buffer, "SEQ_BASE");
+				strcpy(buffer, "SEQ");
 				break;
-			case LU_S_TAG__SEQ_STEP:
-				strcpy(buffer, "SEQ_STEP");
+			case LU_S_TAG__EVENT:
+				strcpy(buffer, "EVENT");
 				break;
-			case LU_S_TAG__EVENT_BASE:
-				strcpy(buffer, "EVENT_BASE");
+			case LU_S_TAG__SCENE:
+				strcpy(buffer, "SCENE");
 				break;
-			case LU_S_TAG__EVENT_STEP:
-				strcpy(buffer, "EVENT_STEP");
+			case LU_S_TAG__STORY:
+				strcpy(buffer, "STORY");
 				break;
-			case LU_S_TAG__SCENE_BASE:
-				strcpy(buffer, "SCENE_BASE");
-				break;
-			case LU_S_TAG__SCENE_STEP:
-				strcpy(buffer, "SCENE_STEP");
-				break;
-			case LU_S_TAG__STORY_BASE:
-				strcpy(buffer, "STORY_BASE");
-				break;
-			case LU_S_TAG__STORY_STEP:
-				strcpy(buffer, "STORY_STEP");
-				break;
-			case LU_S_TAG__OTHER_BASE:
-				strcpy(buffer, "OTHER_BASE");
-				break;
-			case LU_S_TAG__OTHER_STEP:
-				strcpy(buffer, "OTHER_STEP");
+			case LU_S_TAG__OTHER:
+				strcpy(buffer, "OTHER");
 				break;
 			default:
 				strcpy(buffer, "(!) UNKNOWN");
