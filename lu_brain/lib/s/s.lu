@@ -115,6 +115,16 @@
 			}
 
 			lu_s_map_base__recursive_destroy(self->fractal);
+		} 
+
+		lu__assert(self->areas);
+		Lu_S_Area area;
+		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->areas_count; i++)
+		{
+			area = lu_s__get_area(self, i);
+			lu__assert(area);
+
+			lu_s_area__destroy(area);
 		}
 
 		if (self->v_recs)
@@ -178,14 +188,12 @@
 	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size)
 	{
 		lu__assert(self);
-		lu__assert(size > LU_N_CELL__SPEIAL_CELLS_SKIP);
 		lu__assert(config);
 
-		Lu_S_Area area = lu_s_area__create(config, size);
+		Lu_S_Area area = lu_s_area__create(config, size + LU_N_CELL__SPEIAL_CELLS_SKIP);
 
 		return lu_s__register_area(self, area);
 	}
-
 
 	static Lu_S_Layer_Comp lu_s__create_layer_comp(
 		Lu_S self, 

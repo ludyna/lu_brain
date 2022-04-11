@@ -511,7 +511,16 @@
 
 	//
 	// Properties
-	//
+	// 
+
+	static inline Lu_S_Area lu_s__get_area(Lu_S self, lu_size area_ix)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(area_ix < self->areas_size);
+		lu__debug_assert(area_ix < self->areas_count);
+
+		return self->areas[area_ix];
+	}
 
 	static inline Lu_S_Layer_Base lu_s__get_layer(Lu_S self, lu_size layer_ix)
 	{

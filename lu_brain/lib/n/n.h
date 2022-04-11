@@ -409,6 +409,7 @@
 
 		lu_size w;
 		lu_size h;
+		lu_size h_max;
 
 		struct lu_n_column* columns;
 	};

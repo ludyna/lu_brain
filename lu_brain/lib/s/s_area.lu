@@ -16,7 +16,7 @@
 		Lu_S_Area self = (Lu_S_Area) lu_mem__alloc(mem, sizeof(struct lu_s_area));
 		lu__alloc_assert(self);
 
-		self->config;
+		self->config = config;
 		self->layers_size = size;
 		self->layers_count = 0;
 

@@ -9,7 +9,8 @@
 	static Lu_W_Table lu_w_table__create(
 		Lu_Config config, 
 		lu_size w, 
-		lu_size h
+		lu_size h,
+		lu_size h_max
 	)
 	{
 		lu__assert(config);
@@ -20,8 +21,11 @@
 		lu__alloc_assert(self);
 
 		self->mem = config->w_mem;
+		
 		self->w = w;
 		self->h = h;
+		self->h_max = h_max;
+
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->block_id = LU_BLOCK_ID__NOT_SET; 
 

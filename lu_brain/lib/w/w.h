@@ -183,6 +183,7 @@
 
 		lu_size w;
 		lu_size h;
+		lu_size h_max;
 
 		// always "2D"
 		struct lu_w_cell* cells;
@@ -192,8 +193,9 @@
 
 	static Lu_W_Table lu_w_table__create(
 		Lu_Config config, 
-		lu_size width, 
-		lu_size height
+		lu_size w, 
+		lu_size h,
+		lu_size h_max
 	);
 
 	static void lu_w_table__destroy(Lu_W_Table self);

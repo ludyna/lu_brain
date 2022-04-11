@@ -16,9 +16,11 @@
 		Lu_N_Table self = (Lu_N_Table) lu_mem__alloc(mem, sizeof(struct lu_n_table));
 		lu__alloc_assert(self);
 
-		self->mem = mem;
+		self->mem = mem; 
+		
 		self->w = w;
 		self->h = h;
+		self->h_max = h_max;
 
 		lu_size s = w * h;
 
