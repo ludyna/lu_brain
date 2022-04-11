@@ -151,7 +151,7 @@
 
 	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
-		enum lu_s_layer_tag tag;
+		enum lu_s_tag tag;
 		lu_size layer_ix;
 
 		Lu_Mem s_mem;
@@ -172,7 +172,7 @@
 		enum lu_s_layer_type type,
 		lu_size level,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
@@ -182,7 +182,7 @@
 		enum lu_s_layer_type type,
 		lu_size level,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
@@ -193,7 +193,7 @@
 		enum lu_s_layer_type type,
 		lu_size level,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	);
 
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self);
@@ -261,7 +261,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	);
 
 	static void lu_s_layer__deinit(Lu_S_Layer self);
@@ -273,7 +273,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
@@ -300,7 +300,7 @@
 		return self->super.type;
 	}
 
-	static inline enum lu_s_layer_tag lu_s_layer__get_tag(Lu_S_Layer self)
+	static inline enum lu_s_tag lu_s_layer__get_tag(Lu_S_Layer self)
 	{
 		return self->super.tag;
 	}
@@ -358,6 +358,7 @@
 //
 
 	struct lu_s_area {
+		enum lu_s_tag tag;
 		Lu_Config config;
 		lu_size area_ix;
 
@@ -366,7 +367,7 @@
 		lu_size layers_count;
 	};
 
-	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size);
+	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size, enum lu_s_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
 
 	static inline Lu_S_Layer_Base lu_s_area__register_layer(Lu_S_Area self, Lu_S_Layer_Base layer)
@@ -395,7 +396,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	);
 
 	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Config config, Lu_Rec rec);
@@ -554,7 +555,7 @@
 	// Lu_S Area Factory
 	//
 
-	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size);
+	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size, enum lu_s_tag tag);
 
 	static inline Lu_S_Area lu_s__register_area(Lu_S self, Lu_S_Area area)
 	{
@@ -594,7 +595,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	);
 
 	static Lu_S_Layer_Rec lu_s__create_layer_rec(Lu_S self, Lu_Config config, Lu_Rec rec);

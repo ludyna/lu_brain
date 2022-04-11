@@ -15,7 +15,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	)
 	{
 		lu__assert(self);
@@ -94,7 +94,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	)
 	{
 		lu__assert(config);

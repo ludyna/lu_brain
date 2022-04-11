@@ -185,12 +185,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size)
+	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size, enum lu_s_tag tag)
 	{
 		lu__assert(self);
 		lu__assert(config);
 
-		Lu_S_Area area = lu_s_area__create(config, size);
+		Lu_S_Area area = lu_s_area__create(config, size, tag);
 
 		return lu_s__register_area(self, area);
 	}
@@ -222,7 +222,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	)
 	{
 		lu__assert(self);
@@ -283,7 +283,7 @@
 			lu__debug("\n 	layer_ix: %d", layer->layer_ix);
 			lu_s_layer_type__to_str(layer->type, buffer);
 			lu__debug("\n 	type: %s", buffer);
-			lu_s_layer_tag__to_str(layer->tag, buffer);
+			lu_s_tag__to_str(layer->tag, buffer);
 			lu__debug("\n 	tag: %s", buffer);
 			lu__debug("\n -------------- ");
 		}

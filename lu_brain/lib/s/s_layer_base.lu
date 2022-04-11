@@ -12,7 +12,7 @@
 		enum lu_s_layer_type type,
 		lu_size layer_ix,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	)
 	{
 		lu__assert(config);
@@ -40,7 +40,7 @@
 		enum lu_s_layer_type type,
 		lu_size layer_ix,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	)
 	{
 		self = lu_s_layer_base__init(self, p, config, type, layer_ix, destroy, tag);
@@ -60,7 +60,7 @@
 		enum lu_s_layer_type type,
 		lu_size layer_ix,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	)
 	{
 		self = lu_s_layer_base__init(self, p, config, type, layer_ix, destroy, tag);

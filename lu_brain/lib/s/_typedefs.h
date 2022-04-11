@@ -39,14 +39,14 @@
 		}
 	}
 
-	enum lu_s_layer_tag {
+	enum lu_s_tag {
 		LU_S_TAG__NULL,
 		LU_S_TAG__COMP,
 		LU_S_TAG__REC_BASE,
 		LU_S_TAG__REC_STEP,
 		LU_S_TAG__FRAME_BASE,
 		LU_S_TAG__FRAME_STEP,
-		LU_S_TAG__SEQ_BASE,
+		LU_S_TAG__SEQ,
 		LU_S_TAG__SEQ_STEP,
 		LU_S_TAG__EVENT_BASE,
 		LU_S_TAG__EVENT_STEP,
@@ -59,7 +59,7 @@
 		LU_S_TAG__END
 	};
 
-	static inline void lu_s_layer_tag__to_str(enum lu_s_layer_type type, char buffer[])
+	static inline void lu_s_tag__to_str(enum lu_s_layer_type type, char buffer[])
 	{
 		switch(type)
 		{
@@ -81,7 +81,7 @@
 			case LU_S_TAG__FRAME_STEP:
 				strcpy(buffer, "FRAME_STEP");
 				break;
-			case LU_S_TAG__SEQ_BASE:
+			case LU_S_TAG__SEQ:
 				strcpy(buffer, "SEQ_BASE");
 				break;
 			case LU_S_TAG__SEQ_STEP:

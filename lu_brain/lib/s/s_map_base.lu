@@ -149,12 +149,12 @@
 		// 	lu_size n_w,
 		// 	lu_size n_h,
 		// 	lu_size n_h_max,
-		// 	enum lu_s_layer_tag tag
+		// 	enum lu_s_tag tag
 		// );
 
-		Lu_S_Area seq_area = lu_s__create_area(s, self->config, 1);
+		Lu_S_Area seq_area = lu_s__create_area(s, self->config, 1, LU_S_TAG__SEQ);
 
-		Lu_S_Layer seq = lu_s__create_layer(s, config, 1, 1, 1, 1, LU_S_TAG__SEQ_BASE);
+		Lu_S_Layer seq = lu_s__create_layer(s, config, 1, 1, 1, 1, LU_S_TAG__SEQ);
 
 		// lu__assert(story);
 		// lu__assert(scene);

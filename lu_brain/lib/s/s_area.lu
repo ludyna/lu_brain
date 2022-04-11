@@ -5,10 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size)
+	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size, enum lu_s_tag tag)
 	{
 		lu__assert(config);
 		lu__assert(size > 0);  
+		lu__assert(tag < LU_S_TAG__END);
+
 		size += LU_N_CELL__SPEIAL_CELLS_SKIP;
 
 		Lu_Mem mem = config->s_mem;
@@ -17,6 +19,7 @@
 		Lu_S_Area self = (Lu_S_Area) lu_mem__alloc(mem, sizeof(struct lu_s_area));
 		lu__alloc_assert(self);
 
+		self->tag = tag;
 		self->config = config;
 		self->layers_size = size;
 		self->layers_count = 0;
@@ -73,7 +76,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_layer_tag tag
+		enum lu_s_tag tag
 	)
 	{
 		lu__assert(self);
