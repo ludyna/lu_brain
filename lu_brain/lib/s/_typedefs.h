@@ -42,9 +42,9 @@
 	enum lu_s_tag {
 		LU_S_TAG__NULL,
 		LU_S_TAG__COMP,
-		LU_S_TAG__REC_BASE,
+		LU_S_TAG__REC,
 		LU_S_TAG__REC_STEP,
-		LU_S_TAG__FRAME_BASE,
+		LU_S_TAG__FRAME,
 		LU_S_TAG__FRAME_STEP,
 		LU_S_TAG__SEQ,
 		LU_S_TAG__SEQ_STEP,
@@ -69,13 +69,13 @@
 			case LU_S_TAG__COMP:
 				strcpy(buffer, "COMP");
 				break;
-			case LU_S_TAG__REC_BASE:
+			case LU_S_TAG__REC:
 				strcpy(buffer, "REC_BASE");
 				break;
 			case LU_S_TAG__REC_STEP:
 				strcpy(buffer, "REC_STEP");
 				break;
-			case LU_S_TAG__FRAME_BASE:
+			case LU_S_TAG__FRAME:
 				strcpy(buffer, "FRAME_BASE");
 				break;
 			case LU_S_TAG__FRAME_STEP:

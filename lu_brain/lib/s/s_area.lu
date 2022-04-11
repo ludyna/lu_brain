@@ -75,8 +75,7 @@
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
-		lu_size n_h_max,
-		enum lu_s_tag tag
+		lu_size n_h_max
 	)
 	{
 		lu__assert(self);
@@ -93,7 +92,7 @@
 			n_w, 
 			n_h, 
 			n_h_max,
-			tag
+			self->tag
 		);
 	
 		lu_s_area__register_layer(self, (Lu_S_Layer_Base) layer);

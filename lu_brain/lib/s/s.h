@@ -395,8 +395,7 @@
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
-		lu_size n_h_max,
-		enum lu_s_tag tag
+		lu_size n_h_max
 	);
 
 	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Config config, Lu_Rec rec);
@@ -568,38 +567,6 @@
 
 		return area;
 	}
-
-	static inline Lu_S_Layer_Base lu_s__register_layer(Lu_S self, Lu_S_Layer_Base layer)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(layer);
-		//lu__debug_assert(layers_count < layers_size);
-
-		self->layers[self->layers_count] = (Lu_S_Layer_Base) layer;
-		++self->layers_count;
-
-		return layer;
-	}
-	
-	static Lu_S_Layer_Comp lu_s__create_layer_comp(
-		Lu_S self, 
-		Lu_Config config, 
-		Lu_S_Layer_Rec frame, 
-		Lu_Rec_Comp_Config rc_config
-	);
-
-	static Lu_S_Layer lu_s__create_layer(
-		Lu_S self, 
-		Lu_Config config,  
-		lu_size children_count,
-		lu_size n_w,
-		lu_size n_h,
-		lu_size n_h_max,
-		enum lu_s_tag tag
-	);
-
-	static Lu_S_Layer_Rec lu_s__create_layer_rec(Lu_S self, Lu_Config config, Lu_Rec rec);
-
 
 	//
 	// Methods

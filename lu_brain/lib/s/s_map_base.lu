@@ -153,15 +153,18 @@
 		// );
 
 		Lu_S_Area seq_area = lu_s__create_area(s, self->config, 1, LU_S_TAG__SEQ);
+		lu__assert(seq_area);
 
-		Lu_S_Layer seq = lu_s__create_layer(s, config, 1, 1, 1, 1, LU_S_TAG__SEQ);
+		Lu_S_Layer seq = lu_s_area__create_layer(seq_area, config, 1, 1, 1, 1);
 
 		// lu__assert(story);
 		// lu__assert(scene);
 		// lu__assert(event);
 		lu__assert(seq);
 
-		Lu_S_Layer prev = lu_s__create_layer(s, config, recs_count, 1, 1, 1, LU_S_TAG__FRAME_BASE);
+		Lu_S_Area frame_area = lu_s__create_area(s, self->config, recs_count, LU_S_TAG__FRAME);
+
+		Lu_S_Layer prev = lu_s_area__create_layer(frame_area, config, recs_count, 1, 1, 1);
 		lu__assert(prev);
 		Lu_S_Layer frames_base = prev;
 		Lu_S_Layer frames = frames_base;
@@ -169,7 +172,7 @@
 		lu_size recs_layers_size = lu_s__Y(recs_count, 1);
 		for(lu_size i = 1; i < recs_layers_size; i++)
 		{
-			frames = lu_s__create_layer(s, config, 1, 1, 1, 1, LU_S_TAG__FRAME_STEP);
+			frames = lu_s_area__create_layer(frame_area, config, 1, 1, 1, 1);
 			lu__assert(frames);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) frames, (Lu_S_Layer_Base) prev);
@@ -212,11 +215,15 @@
 		lu__assert(s_mem);
 
 		//
-		// Frame
+		// Rec 
 		//
 
-		Lu_S_Layer_Rec rec_base = lu_s__create_layer_rec(s, config, rec);
+		Lu_S_Area rec_area = lu_s__create_area(s, config, lu_s__Y(rec->width, rec->height) + rec->depth, LU_S_TAG__REC);
+		lu__assert(rec_area);
+
+		Lu_S_Layer_Rec rec_base = lu_s_area__create_layer_rec(rec_area, config, rec);
 		lu__assert(rec_base);
+
 		lu__assert(lu_s_layer_base__get_type((Lu_S_Layer_Base) rec_base) == LU_S_LAYER__REC);
 
 		//
@@ -230,7 +237,7 @@
 		Lu_S_Layer_Comp comp = NULL;
 		for (i = 0; i < rec->depth; i++)
 		{
-			comp = lu_s__create_layer_comp(s, config, rec_base, lu_rec_config__get_comp_config(&rec->config, i));
+			comp = lu_s_area__create_layer_comp(rec_area, config, rec_base, lu_rec_config__get_comp_config(&rec->config, i));
 			lu__assert(comp);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_base, (Lu_S_Layer_Base) comp);
@@ -260,7 +267,7 @@
 			if (w > 1) --w;
 			if (h > 1) --h;
 
-			rec_layer = lu_s__create_layer(s, config, 1, w, h, h, LU_S_TAG__REC_STEP);
+			rec_layer = lu_s_area__create_layer(rec_area, config, 1, w, h, h);
 			lu__assert(rec_layer);
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_layer, prev);
