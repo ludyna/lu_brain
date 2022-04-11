@@ -16,6 +16,7 @@
 		lu__assert(config);
 		lu__assert(w > 0);
 		lu__assert(h > 0);
+		lu__assert(h_max >= h);
 
 		Lu_W_Table self = (Lu_W_Table) lu_mem__alloc(config->w_mem, sizeof(struct lu_w_table));
 		lu__alloc_assert(self);

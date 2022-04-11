@@ -190,7 +190,7 @@
 		lu__assert(self);
 		lu__assert(config);
 
-		Lu_S_Area area = lu_s_area__create(config, size + LU_N_CELL__SPEIAL_CELLS_SKIP);
+		Lu_S_Area area = lu_s_area__create(config, size);
 
 		return lu_s__register_area(self, area);
 	}

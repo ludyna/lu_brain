@@ -8,7 +8,8 @@
 	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size size)
 	{
 		lu__assert(config);
-		lu__assert(size > LU_N_CELL__SPEIAL_CELLS_SKIP); 
+		lu__assert(size > 0);  
+		size += LU_N_CELL__SPEIAL_CELLS_SKIP;
 
 		Lu_Mem mem = config->s_mem;
 		lu__assert(mem);
@@ -80,6 +81,7 @@
 		lu__assert(self->layers_count < LU_S__LAYERS_SIZE);
 		lu__assert(n_w > 0);
 		lu__assert(n_h > 0);
+		lu__assert(n_h_max >= n_h);
 
 		Lu_S_Layer layer = lu_s_layer__create(
 			config, 
