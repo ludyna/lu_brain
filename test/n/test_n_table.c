@@ -16,7 +16,7 @@ void setUp(void)
 
 	config = lu_config__get_by_id(LU_CONFIG__DEFAULT);
 
-	n_table = lu_n_table__create(lu_g_mem, 2, 2, &config, 32);
+	n_table = lu_n_table__create(lu_g_mem, 2, 2, 2, &config, 32);
 	TEST_ASSERT(n_table);
 	TEST_ASSERT(n_table->w == 2);
 	TEST_ASSERT(n_table->h == 2);
