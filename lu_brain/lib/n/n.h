@@ -426,3 +426,14 @@
 	{
 		return lu_n_column__save(lu_n_table__get_column(self, x, y), links);
 	}
+
+	////
+	// Returns true if was able to expand
+	static inline lu_bool lu_n_table__expand(Lu_N_Table self)
+	{
+		if (self->h + 1 >= self->h_max) return false;
+
+		++self->h;
+
+		return true;
+	}

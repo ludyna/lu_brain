@@ -23,7 +23,7 @@
 		self->h = h;
 		self->h_max = h_max;
 
-		lu_size s = w * h;
+		lu_size s = w * h_max;
 
 		self->columns = (struct lu_n_column*) lu_mem__alloc(mem, sizeof(struct lu_n_column) * s);
 		lu__alloc_assert(self->columns);
@@ -45,7 +45,7 @@
 		lu__assert(self->columns);
 
 		Lu_N_Column column;
-		lu_size s = self->w * self->h;
+		lu_size s = self->w * self->h_max;
 		for (lu_size i = 0; i < s; i++)
 		{
 			column = &self->columns[i];

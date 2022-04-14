@@ -227,12 +227,8 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Layers
+// Lu_S_Layer_Comp
 //
-
-	//
-	// Lu_S_Layer_Comp 
-	//
 
 	struct lu_s_layer_comp {
 		struct lu_s_layer_base super;
@@ -249,9 +245,9 @@
 	);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
-	//
-	// Lu_S_Layer
-	//
+///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Layer
+//
 
 	struct lu_s_layer {
 		struct lu_s_layer_base super;
@@ -287,7 +283,7 @@
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
 	//
-	// S_Layer properties
+	// Properties
 	//
 
 	static inline lu_size lu_s_layer__get_layer_ix(Lu_S_Layer self)
@@ -331,9 +327,16 @@
 		Lu_Process_Config config
 	);
 
-	//
-	// Lu_S_Layer_Rec
-	//
+	static inline lu_bool lu_s_layer__expand(Lu_S_Layer self)
+	{
+		lu__assert(self);
+
+		return lu_n_table__expand(self->n_table);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Layer_Rec
+//
 
 	struct lu_s_layer_rec {
 		struct lu_s_layer super;
@@ -427,6 +430,8 @@
 			lu_s_layer_base__print_info(layer);
 		}
 	}
+
+	static lu_bool lu_s_area__expand(Lu_S_Area self);
 
 
 ///////////////////////////////////////////////////////////////////////////////

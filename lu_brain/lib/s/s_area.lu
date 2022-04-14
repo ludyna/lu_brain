@@ -118,3 +118,23 @@
 
 		return layer;
 	}
+
+	static lu_bool lu_s_area__expand(Lu_S_Area self)
+	{
+		Lu_S_Layer_Base layer_base;
+		Lu_S_Layer layer;
+		lu_bool res;
+
+		for (lu_size i = 0; i < self->layers_count; i++)
+		{
+			layer_base = self->layers[i];
+
+			lu__assert(layer_base->type == LU_S_LAYER__LAYER);
+
+			layer = (Lu_S_Layer) layer_base;
+
+			res = lu_s_layer__expand(layer);
+
+			if (!res) return false;
+		}
+	}
