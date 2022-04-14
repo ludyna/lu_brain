@@ -382,6 +382,13 @@
 	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_s_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
 
+	static inline Lu_S_Layer_Base lu_s_area__get_last_layer(Lu_S_Area self)
+	{
+		if (self->layers_count == 0) return NULL;
+
+		return self->layers[self->layers_count - 1];
+	}
+
 	static inline Lu_S_Layer_Base lu_s_area__register_layer(Lu_S_Area self, Lu_S_Layer_Base layer)
 	{
 		lu__debug_assert(self);
@@ -396,21 +403,19 @@
 	
 	static Lu_S_Layer_Comp lu_s_area__create_layer_comp(
 		Lu_S_Area self, 
-		Lu_Config config, 
 		Lu_S_Layer_Rec frame, 
 		Lu_Rec_Comp_Config rc_config
 	);
 
 	static Lu_S_Layer lu_s_area__create_layer(
-		Lu_S_Area self, 
-		Lu_Config config,  
+		Lu_S_Area self,  
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max
 	);
 
-	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Config config, Lu_Rec rec);
+	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Rec rec);
 
 
 	static inline void lu_s_area__print_info(Lu_S_Area self)
