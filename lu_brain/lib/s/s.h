@@ -347,7 +347,7 @@
 	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix);
 	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self);
 
-	static void lu_s_layer_rec__save(
+	static Lu_W_Table lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
 		lu_size wave_id,
 		lu_size rec_id, 

@@ -200,6 +200,15 @@
 
 	static void lu_w_table__destroy(Lu_W_Table self);
 
+	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, lu_size wave_id, lu_size block_id)
+	{
+		if (self == NULL) return false;
+
+		if (self->wave_id != wave_id || self->block_id != block_id) return false;
+
+		return self->any_fired;
+	}
+
 	static inline Lu_W_Cell lu_w_table__get_cell(Lu_W_Table self, lu_size x, lu_size y)
 	{ 
 		lu__debug_assert(x < self->w);
