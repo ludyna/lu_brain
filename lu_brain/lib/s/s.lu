@@ -42,6 +42,14 @@
 			self->areas[i] = NULL;
 		}
 
+		self->tag_to_area = (Lu_S_Area*) lu_mem__alloc(v_config->s_mem, sizeof(Lu_S_Area) * LU_S_TAG__END);
+		lu__alloc_assert(self->tag_to_area);
+
+		for (i = 0; i < LU_S_TAG__END; i++)
+		{
+			self->tag_to_area[i] = NULL;
+		}
+
 		self->v_recs = lu_arr__create(config->s_mem, lu_arr__count(recs), true);
 		lu__assert(self->v_recs);
 
@@ -97,6 +105,10 @@
 		lu__assert(self);
 		lu__assert(self->config);
 
+		//
+		// fractals
+		//
+
 		if (self->fractal)
 		{
 			Lu_S_Layer_Base layer_base = lu_s_map_base__get_apex(self->fractal);
@@ -111,6 +123,16 @@
 			lu_s_map_base__recursive_destroy(self->fractal);
 		} 
 
+		//
+		// tag_to_area
+		// 
+		lu__assert(self->tag_to_area);
+		lu_mem__free(self->config->s_mem, (lu_p_byte) self->tag_to_area);
+		self->tag_to_area = NULL;
+
+		//
+		// areas
+		// 
 		lu__assert(self->areas);
 		Lu_S_Area area;
 		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->areas_count; i++)
@@ -121,10 +143,15 @@
 			lu_s_area__destroy(area);
 		}
 
+		lu_mem__free(self->config->s_mem, (lu_p_byte) self->areas);
+		self->areas = NULL;
+
+		//
+		// v_recs
+		// 
 		if (self->v_recs)
 			lu_arr__destroy(self->v_recs);
 
-		lu_mem__free(self->config->s_mem, (lu_p_byte) self->areas);
 
 		lu_mem__free(self->config->s_mem, (lu_p_byte) self);
 	}
@@ -216,6 +243,10 @@
 		lu__assert(self);
 		Lu_S_Layer_Rec frame = lu_s__get_v_rec(self, rec_id);
 		lu__assert(frame);
+
+		// Lu_S_Area area = self->areas[0];
+
+		// lu__assert(area->tag == LU_S_TAG__REC);
 
 		lu_s_layer_rec__save(frame, wave, rec_id, data, config);
 	}

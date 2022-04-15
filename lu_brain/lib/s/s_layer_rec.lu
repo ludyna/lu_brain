@@ -233,7 +233,7 @@
 			lu__assert(parent_layer->type == LU_S_LAYER__LAYER);
 
 			lu_s_tag__to_str(parent_layer->tag, buffer);
-			lu__debug("\n PROCESSING: %s", buffer);
+			lu__debug("\n PROCESSING: %ld %s", parent_layer->layer_ix, buffer);
 
 			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, curr_w_table, config);
 

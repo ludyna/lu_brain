@@ -542,6 +542,8 @@
 		Lu_S_Area* areas;
 		lu_size areas_size;
 		lu_size areas_count;
+
+		Lu_S_Area* tag_to_area;
 	};
 
 	//
@@ -590,6 +592,10 @@
 
 		self->areas[self->areas_count] = area;
 		++self->areas_count;
+
+		lu__assert(self->tag_to_area[area->tag] == NULL);
+
+		self->tag_to_area[area->tag] = area;
 
 		return area;
 	}
