@@ -134,8 +134,9 @@
 			if (!res) return false;
 		}
 
-		
-		layer_base = lu_s_area__get_last_layer(self);
+		layer = (Lu_S_Layer) lu_s_area__get_last_layer(self);
 
-		// Lu_S_Layer new_last = lu_s_area__create_layer(self, self->config, 1, w, h, h);
+		Lu_S_Layer new_last = lu_s_area__create_layer(self, 1, 1, 1, 1);
+
+		lu_s_layer_base__connect((Lu_S_Layer_Base) new_last, (Lu_S_Layer_Base) layer);
 	}
