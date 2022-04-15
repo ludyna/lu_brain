@@ -438,7 +438,7 @@
 
 	static lu_bool lu_s_area__expand(Lu_S_Area self);
 
-	static void lu_s_area__save_rec(
+	static Lu_W_Table lu_s_area__save_rec(
 		Lu_S_Area self, 
 		lu_size wave_id, 
 		lu_size rec_id, 

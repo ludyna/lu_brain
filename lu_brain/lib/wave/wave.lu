@@ -187,7 +187,11 @@
 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_S_TAG__REC/*, rec_id */);
 		lu__assert(area);
 		 
-		lu_s_area__save_rec(area, lu_wave__get_id(wave), rec_id, data, config);
+		Lu_W_Table curr_w_table = lu_s_area__save_rec(area, lu_wave__get_id(wave), rec_id, data, config);
+
+		if (curr_w_table == NULL) return;
+
+		
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

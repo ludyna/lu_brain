@@ -141,7 +141,7 @@
 		lu_s_layer_base__connect((Lu_S_Layer_Base) new_last, (Lu_S_Layer_Base) layer);
 	}
 
-	static void lu_s_area__save_rec(
+	static Lu_W_Table lu_s_area__save_rec(
 		Lu_S_Area self, 
 		lu_size wave_id, 
 		lu_size rec_id, 
@@ -159,7 +159,7 @@
 
 		Lu_W_Table curr_w_table = lu_s_layer_rec__save(layer_rec, wave_id, rec_id, data, config);
 
-		if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return;
+		if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return NULL;
 
 		//
 		// Continue saving until first frames layer
@@ -178,7 +178,7 @@
 
 			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, curr_w_table, config);
 
-			if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return;
+			if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return NULL;
 
 			parent_layer = parent_layer->p;
 		}
@@ -186,6 +186,5 @@
 		// We should be at FRAME_BASE now
 		lu__assert(parent_layer->tag == LU_S_TAG__FRAME); 
 
-		//lu_s_layer__frame_save((Lu_S_Layer) parent_layer, rec_id, wave_id, block_id, curr_w_table, config);
-
+		return curr_w_table;
 	}
