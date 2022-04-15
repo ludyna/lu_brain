@@ -54,7 +54,7 @@
 
 	static void lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
-		Lu_Wave wave, 
+		lu_size wave_id,
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config
@@ -62,7 +62,6 @@
 	{
 		lu__assert(self);
 		lu__assert(self->rec);
-		lu__assert(wave);
 		lu__assert(data);
 		lu__assert(config);
 
@@ -86,7 +85,6 @@
 
 		if (!save_p && !save_v) return;
 
-		lu_size wave_id = lu_wave__get_id(wave);
 		lu_size block_id = data->block_id;
 
 		lu_size x;

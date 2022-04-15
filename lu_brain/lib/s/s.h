@@ -349,7 +349,7 @@
 
 	static void lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
-		Lu_Wave wave, 
+		lu_size wave_id,
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config
@@ -438,6 +438,13 @@
 
 	static lu_bool lu_s_area__expand(Lu_S_Area self);
 
+	static void lu_s_area__save_rec(
+		Lu_S_Area self, 
+		lu_size wave_id, 
+		lu_size rec_id, 
+		Lu_Data data, 
+		Lu_Process_Config config
+	);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Maps
@@ -600,9 +607,15 @@
 		return area;
 	}
 
+	static inline Lu_S_Area lu_s__get_area_by_tag(Lu_S self, enum lu_s_tag tag)
+	{
+		lu__assert(self);
+
+		return self->tag_to_area[tag];
+	}
+
 	//
 	// Methods
 	// 
 
 	static void lu_s__print_info(Lu_S self);
-	static void lu_s__save_rec_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config);

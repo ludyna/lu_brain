@@ -164,22 +164,30 @@
 		Lu_S s = brain->s;
 		lu__assert(s);
 
-		lu_size rec_id;
-		lu_size size = lu_data_block__get_size(block);
-		Lu_Data data;
-		for (rec_id = 0; rec_id < size; rec_id++)
-		{
-			data = lu_data_block__get_data(block, rec_id);
-			lu__assert(data);
+		// lu_size rec_id;
+		// lu_size size = lu_data_block__get_size(block);
+		// Lu_Data data;
+		// for (rec_id = 0; rec_id < size; rec_id++)
+		// {
+		// 	data = lu_data_block__get_data(block, rec_id);
+		// 	lu__assert(data);
 
-			if (lu_data__is_empty(data)) continue;
+		// 	if (lu_data__is_empty(data)) continue;
 			
-			lu_data__debug(data);
+		// 	lu_data__debug(data);
 
-			lu_s__save_rec_data(s, wave, rec_id, data, config);
-		}
+		// lu_s__save_rec_data(s, wave, rec_id, data, config);
+		// }
+
+		Lu_Data data;
+		lu_size rec_id = 0;
+
+		data = lu_data_block__get_data(block, rec_id);
+
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_S_TAG__REC/*, rec_id */);
+		lu__assert(area);
 		 
-
+		lu_s_area__save_rec(area, lu_wave__get_id(wave), rec_id, data, config);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
