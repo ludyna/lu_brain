@@ -54,7 +54,7 @@ int main()
 	);	
 	lu__assert(image_rec);
 
-	// Lu_Wave wave 				= lu_wave_create(brain);
+	Lu_Wave wave 				= lu_wave__create_save_wave(brain);
 	// lu__assert(wave);
 
 	// Lu_Data_Seq seq 				= lu_data_seq__create(brain);
@@ -129,7 +129,7 @@ int main()
 	// // Destroy brain and related  
 
 	// lu_data_seq__destroy(seq);
-	// lu_wave__destroy(wave);
+	lu_wave__destroy(wave);
 	lu_brain__destroy(brain);
 
 	// Clean up memory for data

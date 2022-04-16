@@ -223,9 +223,9 @@
 	// Sync Create
 	//
 
-	Lu_Wave lu_save_wave__create(Lu_Brain); 
-	Lu_Wave lu_match_wave__create(Lu_Brain);
-	Lu_Wave lu_restore_wave__create(Lu_Brain);
+	Lu_Wave lu_wave__create_save_wave(Lu_Brain); 
+	Lu_Wave lu_wave__create_match_wave(Lu_Brain);
+	Lu_Wave lu_wave__create_restore_wave(Lu_Brain);
 
 	//
 	// Destroy

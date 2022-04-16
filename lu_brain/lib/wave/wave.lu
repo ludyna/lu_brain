@@ -370,7 +370,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Create
 
-	Lu_Wave lu_save_wave__create(Lu_Brain brain) 
+	Lu_Wave lu_wave__create_save_wave(Lu_Brain brain) 
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
 
@@ -407,13 +407,13 @@
 	//
 	// Match is more generalized "find".
 	// 
-	Lu_Wave lu_match_wave__create(Lu_Brain brain)
+	Lu_Wave lu_wave__create_match_wave(Lu_Brain brain)
 	{
 		return NULL;
 	}
 
 
-	Lu_Wave lu_restore_wave__create(Lu_Brain brain)
+	Lu_Wave lu_wave__create_restore_wave(Lu_Brain brain)
 	{
 		return NULL;
 	}

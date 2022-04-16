@@ -103,7 +103,7 @@ void test_lu_brain_basics(void)
 
 	lu_brain__print_info(brain);
 
-	Lu_Wave s_wave = lu_save_wave__create(brain); 
+	Lu_Wave s_wave = lu_wave__create_save_wave(brain); 
 
 		TEST_ASSERT(s_wave);
 		TEST_ASSERT(lu_wave__get_id(s_wave) == 0);
@@ -131,7 +131,7 @@ void test_lu_brain_basics(void)
 	/////////////////////////////////////////////////////////
 	// Match
 
-	// Lu_Wave m_wave = lu_match_wave__create(brain);
+	// Lu_Wave m_wave = lu_wave__create_match_wave(brain);
 
 	// 	// TEST_ASSERT(m_wave);
 	// 	// TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
