@@ -45,6 +45,45 @@
 			.w_mem = NULL,	
 			.w_waves_size = 3				
 		},
+		{
+			// LU_CONFIG__SEMEION
+
+			//
+			// Brain level
+			//
+			.b_mem = NULL,					
+			.b_id = 0, 						
+			.b_recs_size = 1,				
+			.b_max_seq_size_in_blocks = 1,
+
+			//
+			// Structure level
+			//
+			.s_mem = NULL, 			
+			.s_apexes_size = 256,
+			.s_areas_size = 16,		
+
+			//
+			// Network level
+			//
+			.n_mem = NULL,		
+			.n_names_size = 128,  			
+			.n_size_in_cell_0 = 10000,
+			.n_size_in_cell_1 = 10000,
+			.n_size_in_cell_2 = 10000,
+			.n_size_in_cell_3 = 10000,
+			.n_size_in_cell_4 = 10000,
+			.n_table_mod = 2, 
+			.n_column_w = 5, 
+			.n_column_h = 64,
+			.n_column_d = 3,
+
+			//
+			// Waves level
+			//
+			.w_mem = NULL,	
+			.w_waves_size = 3				
+		},
 	};		
 
 	struct lu_config lu_config__get_by_id(lu_size id)

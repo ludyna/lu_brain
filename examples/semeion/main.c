@@ -45,13 +45,14 @@ int main()
 	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__SEMEION));
 	lu__assert(brain);
 	
-	// Lu_Rec image_rec 			= lu_rec_create_from_predefined(
-	// 	/*belongs to*/			brain, 
-	// 	/*width*/				16, 
-	// 	/*height*/				16, 
-	// 	/*predefined config */ 	LU_REC__MONO1_IMAGE
-	// );	
-	// lu__assert(image_rec);
+	Lu_Rec image_rec 			= lu_brain__rec_add(
+		/*belongs to*/			brain, 
+		/*width*/				16, 
+		/*height*/				16, 
+		/*depth*/				1,
+		/*predefined config */ 	lu_rec_config__get_by_id(LU_REC__MONO1_IMAGE)
+	);	
+	lu__assert(image_rec);
 
 	// Lu_Wave wave 				= lu_wave_create(brain);
 	// lu__assert(wave);
@@ -129,7 +130,6 @@ int main()
 
 	// lu_data_seq__destroy(seq);
 	// lu_wave__destroy(wave);
-	// lu_rec__destroy(image_rec);
 	lu_brain__destroy(brain);
 
 	// Clean up memory for data
