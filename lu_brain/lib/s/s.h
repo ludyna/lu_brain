@@ -549,7 +549,7 @@
 //
 
 	// Maximum number of layers
-	#define LU_S__LAYERS_SIZE 2^LU_N_LAYER_IX__SIZE
+	#define LU_S__LAYERS_SIZE (2^LU_N_LAYER_IX__SIZE)
 
 	////
 	// Space structure for memory fractals and space layers factory.

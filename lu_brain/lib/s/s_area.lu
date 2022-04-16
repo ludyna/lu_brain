@@ -139,6 +139,8 @@
 		Lu_S_Layer new_last = lu_s_area__create_layer(self, 1, 1, 1, 1);
 
 		lu_s_layer_base__connect((Lu_S_Layer_Base) new_last, (Lu_S_Layer_Base) layer);
+
+		return true;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

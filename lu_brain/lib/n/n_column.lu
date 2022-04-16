@@ -17,7 +17,7 @@
 		lu__assert(d > 0);
 
 		self->mem = mem;
-		self->column_ix;
+		self->column_ix = column_ix;
 		self->h = h;
 		self->d = d;
 

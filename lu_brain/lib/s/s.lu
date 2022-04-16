@@ -54,7 +54,6 @@
 		lu__assert(self->v_recs);
 
 		Lu_Rec rec;
-		lu_size j;
 		Lu_S_Map_Frame frame_map;
 		Lu_S_Map_Story story_map;
 		Lu_S_Layer_Rec frame;
@@ -157,53 +156,6 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S Fractals
-//
-// User actions must be done to increase layers in levels
-// For example, we do not allow to increase layer frames
-// To increase recs we need to add rec
-// To increase seq we need to add time frame
-// To increase event we need to add event
-// To increase scene we need to add scene
-// To increase story we need to add story, etc.
-//
-// "Minimal" start:
-//
-// 		6 level3, story(vertically 1-n4)
-// 		5 level2, scene(vertically 1-n3)
-// 		4 level1, event (vertically 1-n2)
-// 		3 layer seq (vertically 1-n1)
-// 		2 layer recs (vertically rec_count)
-// 		1 layer rixel (vertically w Y h)
-// 		0 frame(vertically 1) 
-// 		- comp1 comp2 comp3 (horizontally comp_count or d)
-//
-// 
-//
-// 		layer seq (sv: seq_count, sh: 1, nh: n)
-// 		layer recs (sv: rec_count)
-// 		layer frames/pixels (sv: (w Y h), sh: 1, nh: n)
-// 		omp1 comp2 comp3 (sv: 1, sh: comp_count or d, n: w x h)
-//
-//
-//		|  
-//		| layer seq: sv: seq_count (for min frame_map seq_count = 1)
-//		|
-//		- (we could do //// sh: seq_count but we want seqs be independent of seq position
-//		|
-//		| layer recs: recs_count
-//		|
-//		-
-//	  / / / / frame (sh: recs_count, here n data is totally independent of each other, thats why sh: recs_count)
-//	  | | | |
-//	  | | | | (w Y h)i, where i is rec id
-//	  | | | |
-//	  / . . \
-//	 /       \
-//	/         \
-// / / /      \ \ \ (sv 1, sh: comp_count, n independent of each other)
-
-///////////////////////////////////////////////////////////////////////////////
 // 
 
 	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size, enum lu_s_tag tag)
@@ -225,7 +177,6 @@
 
 		Lu_S_Area area;
 		lu__debug("\nLu_S Areas: ");
-		char buffer[50];
 		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->areas_count; i++)
 		{
 			area = self->areas[i];
@@ -234,24 +185,5 @@
 
 			lu_s_area__print_info(area);
 		}
-
-	}
-
-
-	static void lu_s__save_rec_data(Lu_S self, Lu_Wave wave, lu_size rec_id, Lu_Data data, Lu_Process_Config config)
-	{
-		// lu__assert(self);
-		// Lu_S_Layer_Rec frame = lu_s__get_v_rec(self, rec_id);
-		// lu__assert(frame);
-
-		// // Lu_S_Area area = self->areas[0];
-
-		// // lu__assert(area->tag == LU_S_TAG__REC);
-
-		 // lu_s_layer_rec__save(frame, wave, rec_id, data, config);
-
-		// Lu_S_Area area = lu_s__get_area_by_tag(self, LU_S_TAG__REC/*, rec_id */);
-		// lu__assert(area);
-
 
 	}

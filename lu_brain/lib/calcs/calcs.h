@@ -48,8 +48,11 @@
 	static inline lu_value lu_comp_calc__norm(Lu_Comp_Calc self, lu_value request)
 	{
 		lu_value val = request - self->orig_min;
-		val < 0 && (val = 0);
-		val > self->max && (val = self->max);
+		
+		#pragma GCC diagnostic ignored "-Wunused-value"
+			val < 0 && (val = 0);
+			val > self->max && (val = self->max);
+		#pragma GCC diagnostic pop
 
 		return val;
 	}
@@ -57,7 +60,10 @@
 	static inline lu_size lu_comp_calc__ix(Lu_Comp_Calc self, lu_value norm_val)
 	{
 		lu_size ix = (lu_size) lu_floor(norm_val / self->step);
-		ix >= self->cells_size && (ix = ix - 1);
+
+		#pragma GCC diagnostic ignored "-Wunused-value"
+			ix >= self->cells_size && (ix = ix - 1);
+		#pragma GCC diagnostic pop
 
 		lu__debug_assert(ix < self->cells_size);
 

@@ -52,7 +52,7 @@
 		LU_S_TAG__END
 	};
 
-	static inline void lu_s_tag__to_str(enum lu_s_layer_type type, char buffer[])
+	static inline void lu_s_tag__to_str(enum lu_s_tag type, char buffer[])
 	{
 		switch(type)
 		{

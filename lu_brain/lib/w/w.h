@@ -47,8 +47,11 @@
 	)
 	{
 		is_reset && (self->state = LU_W_CELL_P__START);
-		self->state == LU_W_CELL_P__START && (self->p1 = p);
-		self->state == LU_W_CELL_P__ONE && (self->p2 = p); 
+
+		#pragma GCC diagnostic ignored "-Wunused-value"
+			self->state == LU_W_CELL_P__START && (self->p1 = p);
+			self->state == LU_W_CELL_P__ONE && (self->p2 = p); 
+		#pragma GCC diagnostic pop
 
 		++self->state; 
 
@@ -71,7 +74,11 @@
 	)
 	{
 		lu_value p = self->p2 - self->p1;
-		p < 0 && (p = -p); 
+
+		#pragma GCC diagnostic ignored "-Wunused-value"
+			p < 0 && (p = -p); 
+		#pragma GCC diagnostic pop
+
 		p = lu_comp_calc__norm(comp_calc, p);
 
 		lu_size column_ix = lu_comp_calc__ix(comp_calc, p);

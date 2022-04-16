@@ -98,18 +98,14 @@
 		lu_size wh = data->h * data->w;
 
 		Lu_S_View_P p_view;
-		Lu_S_View_V v_view;
 
 		Lu_W_Table_P p_table;
-		Lu_W_Table_V v_table;
 
 		lu_bool is_reset;
 
 		Lu_W_Cell_P w_p_cell;
-		Lu_W_Cell_V v_cell;
 
 		Lu_Comp_Calc p_comp_calc;
-		Lu_Comp_Calc v_comp_calc;
 
 		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(&self->super, wave_id);
 		lu__assert(curr_w_table);
@@ -121,18 +117,14 @@
 		curr_w_table->block_id = block_id;
 
 		Lu_W_Cell rec_w_p_cell;
-		Lu_W_Cell rec_w_v_cell;
 
 		union lu_n_addr n_addr;
-
-		lu_bool v_reset;
 
 		lu_size depth = self->rec->depth; 
 
 		// Currently we support max 4 components
 		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
-		lu_size p_reg;
 		union lu_n_addr p_links[depth + 1]; 
 		lu_size p_links_i;
 

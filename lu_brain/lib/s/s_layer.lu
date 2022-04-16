@@ -159,8 +159,6 @@
 		curr_w_table->wave_id = wave_id;
 		curr_w_table->block_id = block_id;
 
-		lu_bool is_reset = prev_w_table->wave_id != wave_id || ((block_id - prev_w_table->block_id) > 1);
-
 		Lu_N_Table curr_n_table = self->n_table;
 		lu__assert(curr_n_table);
 

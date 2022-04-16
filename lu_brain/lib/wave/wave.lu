@@ -43,6 +43,8 @@
 		self->reset = NULL;
 		self->step = NULL;
 		self->process = NULL;
+
+		return self;
 	}
  
 ///////////////////////////////////////////////////////////////////////////////
@@ -50,7 +52,8 @@
 
 	struct lu_process_config lu_wave__get_process_config(Lu_Wave self)
 	{
-
+		lu__debug_assert(self);
+		return self->config;
 	}
 
 	lu_size lu_wave__get_id(Lu_Wave self)
@@ -327,7 +330,7 @@
 
 		Lu_Data_Block block = NULL;
 
-		while(block = lu_data_seq__next_block_get(save_wave->seq))
+		while((block = lu_data_seq__next_block_get(save_wave->seq)))
 			lu_save_wave__process_block(save_wave, block, config);
 	}
 
@@ -463,8 +466,8 @@
 
 	static void lu_restore_wave_destroy_virtual(Lu_Wave wave)
 	{
-		lu__assert(wave);
-		Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
+		// lu__assert(wave);
+		// Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
 
 		//lu_list__destroy(self->seq);
 	}
