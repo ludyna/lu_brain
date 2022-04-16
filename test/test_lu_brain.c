@@ -4,6 +4,8 @@
 	test_lu_brain tests public interfaces (from library user point of view) and includes 
 	general integration tests. It uses nouns with Lu_ prefix only and methods with lu_ prefixes 
 	only.
+
+	$ clear; ceedling clean; ceedling test:lu_brain --trace
 */
 
 #include "unity.h"

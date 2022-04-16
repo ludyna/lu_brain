@@ -42,8 +42,9 @@ int main()
 
 	// Create brain and related
 
-	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__SEMEION));
+	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__DEFAULT));
 	lu__assert(brain);
+	lu__assert(brain->s);
 	
 	Lu_Rec image_rec 			= lu_brain__rec_add(
 		/*belongs to*/			brain, 
@@ -55,42 +56,37 @@ int main()
 	lu__assert(image_rec);
 
 	Lu_Wave wave 				= lu_wave__create_save_wave(brain);
-	// lu__assert(wave);
+	lu__assert(wave);
 
-	// Lu_Data_Seq seq 				= lu_data_seq__create(brain);
-	// lu__assert(seq);
+	Lu_Neu name 				= NULL;
 
-	// Lu_Neu name 				= NULL;
+	// Show random digit
 
-	// lu_brain__print_info(brain);
- 
-	// // Show random digit
+	printf("\nRandom sample:");
+	Smn_Digit digit = &smn_data[rand_in_range(0, (int) smn_data_count)];
+	smn_digit_print(digit);
 
-	// printf("\nRandom sample:");
-	// Smn_Digit digit = &smn_data[rand_in_range(0, (int) smn_data_count)];
-	// smn_digit_print(digit);
+	// Training samples
 
-	// // Training samples
-
-	// size_t i;
-	// Smn_Digit d;
+	size_t i;
+	Smn_Digit d;
 	
-	// printf("\n");
-	// printf("\rTraining samples..");
+	printf("\n");
+	printf("\rTraining samples..");
 
-	// //for (i = 0; i < smn_training_samples_count; i++)
-	// for (i = 0; i < 1; i++)
-	// {
-	// 	d = smn_training_samples[i];
+	//for (i = 0; i < smn_training_samples_count; i++)
+	for (i = 0; i < 1; i++)
+	{
+		d = smn_training_samples[i];
 
-	// 	lu_data_seq__push(seq, image_rec, d->pixels);
-	// 	lu_wave_save_with_name(wave, seq, d->name); 
-	// 	lu_data_seq__reset(seq);
+		lu_wave__push(wave, image_rec, d->pixels);
+		//lu_wave_save_with_name(wave, seq, d->name); 
+		lu_wave__process(wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
-	// 	printf("\rTraining samples.. %lu trained.", i + 1);
-	// 	fflush(stdout);
-	// }
-	// printf("\n");
+		printf("\rTraining samples.. %lu trained.", i + 1);
+		fflush(stdout);
+	}
+	printf("\n");
 
 	// // Testing samples
 	
@@ -126,9 +122,8 @@ int main()
 	// printf("\n 	  Success rate: %f", success_count / (lu_value) smn_test_samples_count);
 	// printf("\n\n");
 
-	// // Destroy brain and related  
+	// Destroy wave and brain
 
-	// lu_data_seq__destroy(seq);
 	lu_wave__destroy(wave);
 	lu_brain__destroy(brain);
 
