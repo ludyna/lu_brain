@@ -175,8 +175,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Table 
 
+	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
+
 	struct lu_w_table {
 		Lu_Mem mem;
+		Lu_S_Layer_Base s_layer;
 
 		lu_size wave_id;
 		lu_size block_id;
@@ -192,6 +195,7 @@
 	};
 
 	static Lu_W_Table lu_w_table__create(
+		Lu_S_Layer_Base s_layer, 
 		Lu_Config config, 
 		lu_size w, 
 		lu_size h,

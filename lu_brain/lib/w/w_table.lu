@@ -7,12 +7,14 @@
 
 
 	static Lu_W_Table lu_w_table__create(
+		Lu_S_Layer_Base s_layer,
 		Lu_Config config, 
 		lu_size w, 
 		lu_size h,
 		lu_size h_max
 	)
 	{
+		lu__assert(s_layer);
 		lu__assert(config);
 		lu__assert(w > 0);
 		lu__assert(h > 0);
@@ -22,6 +24,7 @@
 		lu__alloc_assert(self);
 
 		self->mem = config->w_mem;
+		self->s_layer = s_layer;
 		
 		self->w = w;
 		self->h = h;

@@ -180,7 +180,7 @@
 		// }
 
 		Lu_Data data;
-		lu_size rec_id = 0;
+		lu_size rec_id = 0; // NOTE: fixed temporarily
 
 		data = lu_data_block__get_data(block, rec_id);
 		lu_size wave_id = lu_wave__get_id(wave);
@@ -207,6 +207,18 @@
 		lu__assert(area->tag == LU_S_TAG__FRAME);
 
 		curr_w_table = lu_s_area__save_frame(area, wave_id, block_id, curr_w_table, config);
+
+		if (curr_w_table == NULL) return;
+
+		//
+		// Seq
+		//
+
+		area = lu_s__get_area_by_tag(s, LU_S_TAG__SEQ);
+		lu__assert(area);
+		lu__assert(area->tag == LU_S_TAG__SEQ);
+
+		curr_w_table = lu_s_area__save_seq(area, wave_id, block_id, curr_w_table, config);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

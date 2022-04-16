@@ -58,7 +58,7 @@
 		Lu_W_Table w_table;
 		for (lu_size i = 0; i < lu_arr__size(self->w_tables); i++)
 		{
-			w_table = lu_w_table__create(config, n_w, n_h, n_h_max);
+			w_table = lu_w_table__create((Lu_S_Layer_Base)self, config, n_w, n_h, n_h_max);
 			lu__alloc_assert(w_table);
 			
 			lu_arr__set(self->w_tables, i, (lu_p_void) w_table);
