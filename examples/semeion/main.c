@@ -44,7 +44,6 @@ int main()
 
 	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__DEFAULT));
 	lu__assert(brain);
-	lu__assert(brain->s);
 	
 	Lu_Rec image_rec 			= lu_brain__rec_add(
 		/*belongs to*/			brain, 
@@ -55,6 +54,11 @@ int main()
 	);	
 	lu__assert(image_rec);
 
+	// After we added all recs we need to build/rebuild brain
+	lu_brain__build(brain);
+
+	// Create wave
+	
 	Lu_Wave wave 				= lu_wave__create_save_wave(brain);
 	lu__assert(wave);
 
@@ -88,39 +92,39 @@ int main()
 	}
 	printf("\n");
 
-	// // Testing samples
+	// Testing samples
 	
-	// float failed_count 		= 0;
-	// float success_count 	= 0;
+	float failed_count 		= 0;
+	float success_count 	= 0;
 
-	// printf("\rTesting samples.. ");
+	printf("\rTesting samples.. ");
 
-	// //for (i = 0; i < smn_test_samples_count; i++)
-	// for (i = 0; i < 1; i++)
-	// {
-	// 	d = smn_test_samples[i];
-	// 	lu_data_seq__push(seq, 0, 0, image_rec, d->pixels);
-	// 	wave = lu_wave_find(wave, seq);
+	//for (i = 0; i < smn_test_samples_count; i++)
+	for (i = 0; i < 1; i++)
+	{
+		// d = smn_test_samples[i];
+		// // lu_data_seq__push(seq, 0, 0, image_rec, d->pixels);
+		// wave = lu_wave_find(wave, seq);
 
-	// 	name = lu_wave_top_name_get(wave);
+		// name = lu_wave_top_name_get(wave);
 
-	// 	if (name && lu_neu_name_get(name) == d->name)
-	// 		++success_count;
-	// 	else 
-	// 		++failed_count;
+		// if (name && lu_neu_name_get(name) == d->name)
+		// 	++success_count;
+		// else 
+		// 	++failed_count;
 
-	// 	lu_data_seq__reset(seq);
+		// lu_data_seq__reset(seq);
 
-	// 	printf("\rTesting samples.. %lu tested.", i + 1);
-	// 	fflush(stdout);
-	// }
-	// printf("\n");
+		// printf("\rTesting samples.. %lu tested.", i + 1);
+		// fflush(stdout);
+	}
+	printf("\n");
 
-	// printf("\nReport:");
-	// printf("\n 	  Successfully recognized: %d", (int) success_count);
-	// printf("\n 	  Failed recognition: %d", (int) failed_count);
-	// printf("\n 	  Success rate: %f", success_count / (lu_value) smn_test_samples_count);
-	// printf("\n\n");
+	printf("\nReport:");
+	printf("\n 	  Successfully recognized: %d", (int) success_count);
+	printf("\n 	  Failed recognition: %d", (int) failed_count);
+	printf("\n 	  Success rate: %f", success_count / (lu_value) smn_test_samples_count);
+	printf("\n\n");
 
 	// Destroy wave and brain
 
