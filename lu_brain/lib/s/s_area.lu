@@ -141,6 +141,9 @@
 		lu_s_layer_base__connect((Lu_S_Layer_Base) new_last, (Lu_S_Layer_Base) layer);
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Save methods
+
 	static Lu_W_Table lu_s_area__save_rec(
 		Lu_S_Area self, 
 		lu_size wave_id, 
@@ -187,4 +190,27 @@
 		lu__assert(parent_layer->tag == LU_S_TAG__FRAME); 
 
 		return curr_w_table;
+	} 
+
+
+	static Lu_W_Table lu_s_area__save_frame(
+		Lu_S_Area self, 
+		lu_size wave_id, 
+		lu_size block_id, 
+		Lu_W_Table curr_w_table, 
+		Lu_Process_Config config
+	)
+	{
+
+	}
+
+	static Lu_W_Table lu_s_area__save_seq(
+		Lu_S_Area self, 
+		lu_size wave_id, 
+		lu_size block_id, 
+		Lu_W_Table curr_w_table, 
+		Lu_Process_Config config
+	)
+	{
+
 	}

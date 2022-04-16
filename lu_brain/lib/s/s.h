@@ -446,6 +446,23 @@
 		Lu_Process_Config config
 	);
 
+	static Lu_W_Table lu_s_area__save_frame(
+		Lu_S_Area self, 
+		lu_size wave_id, 
+		lu_size block_id, 
+		Lu_W_Table curr_w_table, 
+		Lu_Process_Config config
+	);
+
+	static Lu_W_Table lu_s_area__save_seq(
+		Lu_S_Area self, 
+		lu_size wave_id, 
+		lu_size block_id, 
+		Lu_W_Table curr_w_table, 
+		Lu_Process_Config config
+	);
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Maps
 //
