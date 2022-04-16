@@ -17,36 +17,33 @@
 
 int main()
 {
-	// Lu_Mem_Debugger md = lu_mem_debugger__create(lu_g_mem);
+	Lu_Mem_Debugger md = lu_mem_debugger__create(lu_g_mem);
 
-	// // Radomize rand() with time
+	// Radomize rand() with time
 
-	// srand(time(0));
+	srand(time(0));
 
-	// // Init samples
+	// Init samples
 
-	// smn_groups_init();
+	smn_groups_init();
 
-	// // Load data into memory  
+	// Load data into memory  
 
-	// smn_data_load();
+	smn_data_load();
 
-	// // Allocate data for groups and fill groups with samples
+	// Allocate data for groups and fill groups with samples
 
-	// smn_groups_data_alloc();
-	// smn_groups_data_fill();
+	smn_groups_data_alloc();
+	smn_groups_data_fill();
 
-	// // Select random samples from group
+	// Select random samples from group
 
-	// smn_data_samples_create();
+	smn_data_samples_create();
 
-	// // Create brain and related
+	// Create brain and related
 
-	// Lu_Brain brain 				= lu_brain_create_from_predefined(
-	// 	/*memory in bytes*/ 	1024 * 1024, 
-	// 	/*predefined config*/ 	LU_CONFIG__DEFAULT
-	// );  
-	// lu__assert(brain);
+	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__SEMEION));
+	lu__assert(brain);
 	
 	// Lu_Rec image_rec 			= lu_rec_create_from_predefined(
 	// 	/*belongs to*/			brain, 
@@ -133,18 +130,18 @@ int main()
 	// lu_data_seq__destroy(seq);
 	// lu_wave__destroy(wave);
 	// lu_rec__destroy(image_rec);
-	// lu_brain__destroy(brain);
+	lu_brain__destroy(brain);
 
-	// // Clean up memory for data
+	// Clean up memory for data
 
-	// smn_data_samples_free();
-	// smn_groups_data_free();
-	// smn_data_free();
+	smn_data_samples_free();
+	smn_groups_data_free();
+	smn_data_free();
 
-	// // Exit app
+	// Exit app
 
-	// lu_mem_debugger__print(md);
-	// lu_mem_debugger__destroy(md, true);
+	lu_mem_debugger__print(md);
+	lu_mem_debugger__destroy(md, true);
 
 	exit(EXIT_SUCCESS);
 }
