@@ -105,9 +105,8 @@ int main()
 	//for (i = 0; i < smn_test_samples_count; i++)
 	for (i = 0; i < 1; i++)
 	{
-		// d = smn_test_samples[i];
-		// // lu_data_seq__push(seq, 0, 0, image_rec, d->pixels);
-		// save_wave = lu_wave_find(save_wave, seq);
+		d = smn_test_samples[i];
+		lu_wave__push(match_wave, image_rec, d->pixels);
 
 		// name = lu_wave_top_name_get(save_wave);
 
