@@ -3,8 +3,8 @@
 */
 
 	static void lu_save_wave__destroy_virtual(Lu_Wave wave);
-	static void lu_find_wave_destroy_virtual(Lu_Wave wave);
-	static void lu_restore_wave_destroy_virtual(Lu_Wave wave);
+	static void lu_match_wave__destroy_virtual(Lu_Wave wave);
+	static void lu_restore_wave__destroy_virtual(Lu_Wave wave);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Init 
@@ -93,7 +93,7 @@
 		lu_data_seq__block_begin(save_wave->seq);
 	} 
 
-	static void lu_find_wave_block_begin_virtual(Lu_Wave self)
+	static void lu_match_wave__block_begin_virtual(Lu_Wave self)
 	{
 
 	} 
@@ -124,7 +124,7 @@
 		lu_data_seq__block_end(save_wave->seq);
 	} 
 
-	static void lu_find_wave_block_end_virtual(Lu_Wave self)
+	static void lu_match_wave__block_end_virtual(Lu_Wave self)
 	{
 
 	} 
@@ -247,7 +247,7 @@
 		lu_data_seq__push(save_wave->seq, rec, data);
 	}
 
-	static void lu_find_wave_push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)
+	static void lu_match_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)
 	{
 
 	}
@@ -284,7 +284,7 @@
 		lu_save_wave__process_block(save_wave, block, config);
 	}
 
-	static void lu_find_wave_step_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_match_wave__step_virtual(Lu_Wave self, Lu_Process_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_find(self));
@@ -338,7 +338,7 @@
 	// Find
 	//
 
-	static void lu_find_wave_process_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_match_wave__process_virtual(Lu_Wave self, Lu_Process_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_find(self));
@@ -375,7 +375,7 @@
 		lu__user_assert(brain, "Lu_Brain is NULL");
 
 		Lu_Mem w_mem = brain->config.w_mem;
-		lu__assert(w_mem);
+		lu__user_assert(w_mem, "w_mem is NULL");
 
 		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_save_wave));
 
@@ -409,7 +409,36 @@
 	// 
 	Lu_Wave lu_wave__create_match_wave(Lu_Brain brain)
 	{
-		return NULL;
+		lu__user_assert(brain, "Lu_Brain is NULL");
+
+		Lu_Mem w_mem = brain->config.w_mem;
+		lu__user_assert(w_mem, "w_mem is NULL");
+
+		Lu_Match_Wave self = (Lu_Match_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_match_wave));
+
+		lu_wave__init(
+			&self->super,
+			LU_WAVE__MATCH,
+			brain
+		);
+
+		self->super.destroy = lu_match_wave__destroy_virtual;
+		
+		self->super.block_begin = lu_match_wave__block_begin_virtual;
+		self->super.block_end = lu_match_wave__block_end_virtual;
+
+		self->super.push = lu_match_wave__push_virtual;
+
+		self->super.step = lu_match_wave__step_virtual;
+		self->super.process = lu_match_wave__process_virtual;
+
+		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
+		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_waves_size.");
+
+		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
+		lu__assert(self->seq);
+
+		return (Lu_Wave) self;
 	}
 
 
@@ -452,10 +481,10 @@
 	// Find
 	//
 
-	static void lu_find_wave_destroy_virtual(Lu_Wave wave)
+	static void lu_match_wave__destroy_virtual(Lu_Wave wave)
 	{
 		lu__assert(wave);
-		Lu_Find_Wave self = (Lu_Find_Wave) wave;
+		Lu_Match_Wave self = (Lu_Match_Wave) wave;
 
 		lu_data_seq__destroy(self->seq);
 	}
@@ -464,7 +493,7 @@
 	// Restore
 	//
 
-	static void lu_restore_wave_destroy_virtual(Lu_Wave wave)
+	static void lu_restore_wave__destroy_virtual(Lu_Wave wave)
 	{
 		// lu__assert(wave);
 		// Lu_Restore_Wave self = (Lu_Restore_Wave) wave;

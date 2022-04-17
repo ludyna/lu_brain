@@ -73,9 +73,9 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Find_Wave 
+// Lu_Match_Wave 
 
-	struct lu_find_wave {
+	struct lu_match_wave {
 		struct lu_wave super;
 
 		Lu_Data_Seq seq;

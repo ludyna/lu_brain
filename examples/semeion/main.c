@@ -45,7 +45,7 @@ int main()
 	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__DEFAULT));
 	lu__assert(brain);
 	
-	Lu_Rec image_rec 			= lu_brain__rec_add(
+	Lu_Rec image_rec = lu_brain__rec_add(
 		/*belongs to*/			brain, 
 		/*width*/				16, 
 		/*height*/				16, 
@@ -57,10 +57,13 @@ int main()
 	// After we added all recs we need to build/rebuild brain
 	lu_brain__build(brain);
 
-	// Create wave
+	// Create save_wave
 	
-	Lu_Wave wave 				= lu_wave__create_save_wave(brain);
-	lu__assert(wave);
+	Lu_Wave save_wave = lu_wave__create_save_wave(brain);
+	lu__assert(save_wave);  
+
+	Lu_Wave match_wave = lu_wave__create_match_wave(brain);
+	lu__assert(match_wave);
 
 	Lu_Neu name 				= NULL;
 
@@ -83,9 +86,9 @@ int main()
 	{
 		d = smn_training_samples[i];
 
-		lu_wave__push(wave, image_rec, d->pixels);
-		//lu_wave_save_with_name(wave, seq, d->name); 
-		lu_wave__process(wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+		lu_wave__push(save_wave, image_rec, d->pixels);
+		//lu_wave_save_with_name(save_wave, seq, d->name); 
+		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
 		printf("\rTraining samples.. %lu trained.", i + 1);
 		fflush(stdout);
@@ -104,9 +107,9 @@ int main()
 	{
 		// d = smn_test_samples[i];
 		// // lu_data_seq__push(seq, 0, 0, image_rec, d->pixels);
-		// wave = lu_wave_find(wave, seq);
+		// save_wave = lu_wave_find(save_wave, seq);
 
-		// name = lu_wave_top_name_get(wave);
+		// name = lu_wave_top_name_get(save_wave);
 
 		// if (name && lu_neu_name_get(name) == d->name)
 		// 	++success_count;
@@ -126,9 +129,10 @@ int main()
 	printf("\n 	  Success rate: %f", success_count / (lu_value) smn_test_samples_count);
 	printf("\n\n");
 
-	// Destroy wave and brain
+	// Destroy save_wave and brain
 
-	lu_wave__destroy(wave);
+	lu_wave__destroy(match_wave);
+	lu_wave__destroy(save_wave);
 	lu_brain__destroy(brain);
 
 	// Clean up memory for data
