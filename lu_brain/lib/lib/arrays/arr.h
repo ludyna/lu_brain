@@ -13,6 +13,12 @@
 		Lu_Mem 		mem;
 	};
 
+	// Init and deinit
+
+	Lu_Arr lu_arr__init(Lu_Arr self, Lu_Mem mem, lu_size size, lu_bool allow_realloc);
+	void lu_arr__deinit(Lu_Arr self);
+
+
 	// Create and destroy 
 
 	Lu_Arr lu_arr__create(Lu_Mem mem, lu_size size, lu_bool allow_realloc);

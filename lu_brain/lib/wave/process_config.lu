@@ -31,7 +31,12 @@
     	},
     	// LU_PROCESS__MATCH_DIFF_ONLY
     	{
-
+            .flags                        = 0,
+            .p_potency                    = 1.0,    
+            .v_potency                    = 1.0,
+            .min_potency                  = 0.05,
+            .min_fire_potency             = 0.9,    // potribna povna kopiya
+            .block_layers_size            = 50
     	},
     	// LU_PROCESS__MATCH_VALUE_ONLY
     	{

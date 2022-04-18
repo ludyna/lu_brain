@@ -1,19 +1,15 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad
 */
- 
-///////////////////////////////////////////////////////////////////////////////
-// Create and destroy
 
-	Lu_Arr lu_arr__create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
-	{
+///////////////////////////////////////////////////////////////////////////////
+// Init and deinit
+
+ 	Lu_Arr lu_arr__init(Lu_Arr self, Lu_Mem mem, lu_size size, lu_bool allow_realloc)
+ 	{
 		lu__user_assert(size > 0, "size should be greater than zero");
 		lu__user_assert(mem, "Lu_Mem is NULL");
 
-		Lu_Arr self = (Lu_Arr) lu_mem__alloc(mem, sizeof(struct lu_arr));
-		lu__user_assert(self, "Unable to allocate array");
-		
-		// Initialize
 		self->size 			= size;
 		self->count 		= 0;
 		self->items 		= (lu_p_void*) lu_mem__alloc(mem, self->size * sizeof(lu_p_void));
@@ -25,9 +21,9 @@
 			self->items[i] = NULL;
 
 		return self;
-	}
+ 	}
 
-	void lu_arr__destroy(Lu_Arr self)
+	void lu_arr__deinit(Lu_Arr self)
 	{
 		lu__user_assert_void(self, "Lu_Arr is NULL");
 		
@@ -35,6 +31,26 @@
 		lu__user_assert_void(mem, "Lu_Mem is NULL");
 
 		lu_mem__free(mem, (lu_p_byte) self->items);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Create and destroy
+
+	Lu_Arr lu_arr__create(Lu_Mem mem, lu_size size, lu_bool allow_realloc)
+	{
+		Lu_Arr self = (Lu_Arr) lu_mem__alloc(mem, sizeof(struct lu_arr));
+		lu__user_assert(self, "Unable to allocate array");
+		
+		return lu_arr__init(self, mem, size, allow_realloc);
+	}
+
+	void lu_arr__destroy(Lu_Arr self)
+	{
+		Lu_Mem mem = self->mem;
+		lu__user_assert_void(mem, "Lu_Mem is NULL");
+
+		lu_arr__deinit(self);
+
 		lu_mem__free(mem, (lu_p_byte) self);
 	}
 

@@ -108,6 +108,9 @@ int main()
 		d = smn_test_samples[i];
 		lu_wave__push(match_wave, image_rec, d->pixels);
 
+		lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+
+
 		// name = lu_wave_top_name_get(save_wave);
 
 		// if (name && lu_neu_name_get(name) == d->name)
