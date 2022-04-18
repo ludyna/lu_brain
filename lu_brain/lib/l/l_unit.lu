@@ -1,0 +1,32 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+
+	static Lu_L_Unit lu_l_unit__init(Lu_L_Unit self, Lu_Mem mem, union lu_n_addr addr, lu_size size)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(mem);
+		lu__debug_assert(!lu_n_addr__is_blank(&addr));
+		lu__debug_assert(size > 0);
+
+		self->addr = addr;
+		self->labels = (union lu_label*) lu_mem__alloc(mem, sizeof(union lu_label) * size);
+		lu__alloc_assert(self->labels);
+
+		return self;
+	}
+
+	static void lu_l_unit__deinit(Lu_L_Unit self, Lu_Mem mem)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(mem);
+
+		self->addr = LU_N_ADDR__NULL;
+
+		lu_mem__free(mem, (lu_p_byte) self->labels);
+	}
