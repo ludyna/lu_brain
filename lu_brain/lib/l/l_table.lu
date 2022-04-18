@@ -1,0 +1,42 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+
+	static Lu_L_Table lu_l_table__init(Lu_L_Table self, Lu_Mem mem, lu_size labels_size, lu_size h, lu_size d)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+
+		self->mem = mem; 
+		self->labels_size = labels_size;
+		self->h = h;
+		self->d = d;
+
+		lu_size hd = self->h * self->d;
+
+		self->addr_to_labels = (struct lu_l_unit*) lu_mem__alloc(mem, sizeof(struct lu_l_unit) * hd);
+		lu__alloc_assert(self->addr_to_labels);
+
+		self->label_to_addrs = (struct lu_list*) lu_mem__alloc(mem, sizeof(struct lu_list) * labels_size);
+
+		return self;
+	}
+
+	static void lu_l_table__deinit(Lu_L_Table self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem);
+
+		lu_mem__free(self->mem, (lu_p_byte) self->addr_to_labels);
+		self->addr_to_labels = NULL;
+
+		lu_mem__free(self->mem, (lu_p_byte) self->label_to_addrs);
+		self->label_to_addrs = NULL;
+
+		self->mem = NULL;
+	}

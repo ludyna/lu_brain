@@ -41,12 +41,16 @@
 	struct lu_l_table {
 		Lu_Mem mem;
 		
+		lu_size labels_size;
 		lu_size h;
 		lu_size d;
 
-		// h x d hash/map
+		// Addr to labels, h x d hash/map
 		struct lu_l_unit *addr_to_labels;
 
 		// Label to addrs, where lu_list contains address (&) to Lu_L_Unit in addr_to_labels.
 		struct lu_list *label_to_addrs;
 	};
+
+	static Lu_L_Table lu_l_table__init(Lu_L_Table self, Lu_Mem mem, lu_size labels_size, lu_size h, lu_size d);
+	static void lu_l_table__deinit(Lu_L_Table self);
