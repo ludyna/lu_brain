@@ -4,26 +4,39 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Label
-
+// Lu_L_Label
 	
-	
-	union lu_l_label {
+	union lu_label {
 		struct {
 			lu_size label : 32;
 			lu_size count : 32;
 		};	
 		lu_size value;
-	};
+	};  
+
+	static inline Lu_L_Label lu_label__init(Lu_L_Label self, lu_size label, lu_size count)
+	{
+		lu__debug_assert(self);
+
+		self->label = label;
+		self->count = count;
+
+		return self;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_L_Cell
 
 	struct lu_l_cell {
 		union lu_n_addr add;
-		union lu_l_label* labels;
+		union lu_label* labels;
 	};
 
-	struct lu_l_label_cell {
 
-	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_L_Table
 
 	struct lu_l_table {
 		Lu_Mem mem;
