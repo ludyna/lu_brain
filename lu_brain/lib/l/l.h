@@ -6,11 +6,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Label
 
-	struct lu_label {
-		lu_size label;
-		lu_size count;
+	
+	
+	union lu_l_label {
+		struct {
+			lu_size label : 32;
+			lu_size count : 32;
+		};	
+		lu_size value;
 	};
 
-	struct lu_labels {
-		struct lu_arr labels;
+	struct lu_l_table {
+		//union lu_l_label
 	};
