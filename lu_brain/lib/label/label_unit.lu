@@ -7,7 +7,7 @@
 // 
 
 
-	static Lu_L_Unit lu_l_unit__init(Lu_L_Unit self, Lu_Mem mem, union lu_n_addr addr, lu_size size)
+	static Lu_Label_Unit lu_label_unit__init(Lu_Label_Unit self, Lu_Mem mem, union lu_n_addr addr, lu_size size)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(mem);
@@ -21,12 +21,15 @@
 		return self;
 	}
 
-	static void lu_l_unit__deinit(Lu_L_Unit self, Lu_Mem mem)
+	static void lu_label_unit__deinit(Lu_Label_Unit self, Lu_Mem mem)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(mem);
 
 		self->addr = LU_N_ADDR__NULL;
 
-		lu_mem__free(mem, (lu_p_byte) self->labels);
+		if (self->labels)
+		{
+			lu_mem__free(mem, (lu_p_byte) self->labels);
+		}
 	}

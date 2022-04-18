@@ -2,5 +2,5 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-#include "l_unit.lu"
-#include "l_table.lu"
+#include "label_unit.lu"
+#include "label_map.lu"

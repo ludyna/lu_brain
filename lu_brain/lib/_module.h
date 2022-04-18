@@ -18,7 +18,7 @@
 
 #include "calcs/_module.h"
 #include "n/_module.h"
-#include "l/_module.h"
+#include "label/_module.h"
 #include "w/_module.h"
 #include "rec/_module.h"
 #include "s/_module.h"
