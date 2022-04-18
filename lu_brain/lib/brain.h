@@ -21,6 +21,8 @@
 		Lu_S s;	
 
 		Lu_W_Manager w_manager;
+
+		struct lu_label_map label_map;
 	};	
 
 	static lu_size lu_brain__rec_attach(Lu_Brain self, Lu_Rec rec);

@@ -71,3 +71,8 @@
 	{
 		
 	}
+
+	static Lu_List lu_label_map__get_units(Lu_Label_Map self, lu_size label)
+	{
+		
+	}

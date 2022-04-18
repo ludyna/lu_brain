@@ -71,6 +71,7 @@
 
 	static Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label);
 	static Lu_Label_Unit lu_label_map__get_labels(Lu_Label_Map self, union lu_n_addr addr);
+	static Lu_List lu_label_map__get_units(Lu_Label_Map self, lu_size label);
 
 
 

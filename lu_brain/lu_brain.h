@@ -76,6 +76,15 @@
 		//
 		Lu_Mem w_mem;						// if NULL initialize to default
 		lu_size w_waves_size;				// waves size
+
+
+		//
+		// Labels
+		//
+		Lu_Mem l_mem;
+		lu_size l_labels_size;
+		lu_size l_map_h;
+		lu_size l_map_d;
 	};
 
 	Lu_Config lu_config__validate(Lu_Config config);

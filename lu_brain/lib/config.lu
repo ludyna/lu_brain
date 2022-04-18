@@ -43,7 +43,16 @@
 			// Waves level
 			//
 			.w_mem = NULL,	
-			.w_waves_size = 3				
+			.w_waves_size = 3,
+
+			//
+			// Labels
+			//			
+
+			.l_mem = NULL,
+			.l_labels_size = 10,
+			.l_map_h = 2024,
+			.l_map_d = 2			
 		},
 		{
 			// LU_CONFIG__SEMEION
@@ -82,8 +91,17 @@
 			// Waves level
 			//
 			.w_mem = NULL,	
-			.w_waves_size = 3				
-		},
+			.w_waves_size = 3,
+
+			//
+			// Labels
+			//			
+
+			.l_mem = NULL,
+			.l_labels_size = 10,
+			.l_map_h = 2024,
+			.l_map_d = 2
+			},
 	};		
 
 	struct lu_config lu_config__get_by_id(lu_size id)
@@ -123,6 +141,11 @@
 		if (self->w_mem == NULL)
 		{
 			self->w_mem = lu_g_mem;
+		}
+
+		if (self->l_mem == NULL)
+		{
+			self->l_mem = lu_g_mem;
 		}
 	}
 
@@ -166,6 +189,14 @@
 
 		lu__user_assert(self->w_mem, "w_mem is NULL");
 		lu__user_assert(self->w_waves_size > 0, "w_waves_size should be greater than 0");
+
+		//
+		// Labels
+		//
+
+		lu__user_assert(self->l_labels_size > 0, "l_labels_size should be greater than 0");
+		lu__user_assert(self->l_map_h > 0, "l_map_h should be greater than 0");
+		lu__user_assert(self->l_map_d > 0, "l_map_d should be greater than 0");
 
 		return self;
 	}
