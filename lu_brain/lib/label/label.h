@@ -42,6 +42,22 @@
 		return self;
 	}
 
+	static inline lu_bool lu_label_unit__is_blank(Lu_Label_Unit self)
+	{
+		lu__debug_assert(self);
+
+		return lu_n_addr__is_blank(&self->addr);
+	}
+
+	static inline lu_bool lu_label_unit__match(Lu_Label_Unit self, union lu_n_addr addr)
+	{
+		lu__debug_assert(self);
+
+		if (lu_label_unit__is_blank(self)) return true;
+
+		return lu_n_addr__is_eq(&self->addr, &addr);
+	}
+
 	static Lu_Label_Unit lu_label_unit__init(Lu_Label_Unit self, Lu_Mem mem, union lu_n_addr addr, lu_size size);
 	static void lu_label_unit__deinit(Lu_Label_Unit self, Lu_Mem mem);
 
@@ -64,6 +80,11 @@
 
 	static Lu_Label_Map lu_label_map__init(Lu_Label_Map self, Lu_Mem mem, lu_size labels_size, lu_size h, lu_size d);
 	static void lu_label_map__deinit(Lu_Label_Map self);
+
+	static inline lu_size lu_label_map__addr_to_ix(Lu_Label_Map self, union lu_n_addr addr)
+	{
+		return lu_hash_comb(0, addr.value) % self->h;
+	}
 
 	//
 	//

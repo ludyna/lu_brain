@@ -64,6 +64,27 @@
 
 	static Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label)
 	{
+		lu__assert(self);
+
+		lu_size ix = lu_label_map__addr_to_ix(self, addr);
+		lu__debug_assert(ix < self->h);
+
+		// find unit 
+		Lu_Label_Unit unit = NULL;
+
+		lu_size hd = self->h * self->d;
+
+		for (lu_size i = 0; i < self->d; i++)
+		{
+			lu__debug_assert((ix + i) < hd);
+			
+			unit = &self->addr_to_labels[ix + i];
+
+
+		}
+
+
+
 
 	}
 
@@ -74,5 +95,5 @@
 
 	static Lu_List lu_label_map__get_units(Lu_Label_Map self, lu_size label)
 	{
-		
+
 	}

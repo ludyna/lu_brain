@@ -102,6 +102,11 @@
 		self->value = 0;
 	}
 
+	static inline lu_bool lu_n_addr__is_eq(Lu_N_Addr self, Lu_N_Addr b)
+	{
+		return self->value == b->value;
+	}
+
 	static inline void lu_n_addr__print(Lu_N_Addr self)
 	{
 		lu__debug("%d:%d:%d", self->layer_ix, self->column_ix, self->cell_ix);
