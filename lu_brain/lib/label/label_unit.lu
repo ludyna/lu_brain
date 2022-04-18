@@ -18,6 +18,9 @@
 		self->labels = (union lu_label*) lu_mem__alloc(mem, sizeof(union lu_label) * size);
 		lu__alloc_assert(self->labels);
 
+		// init to zeros
+		memset(self->labels, 0, sizeof(union lu_label) * size);
+
 		return self;
 	}
 

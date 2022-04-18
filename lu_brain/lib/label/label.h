@@ -14,6 +14,11 @@
 		lu_size value;
 	};  
 
+	static inline lu_bool lu_label__is_blank(Lu_Label self)
+	{
+		return self->value == 0;
+	}
+
 	static inline Lu_Label lu_label__init(Lu_Label self, lu_size label, lu_size count)
 	{
 		lu__debug_assert(self);
@@ -49,13 +54,29 @@
 		return lu_n_addr__is_blank(&self->addr);
 	}
 
-	static inline lu_bool lu_label_unit__match(Lu_Label_Unit self, union lu_n_addr addr)
+	static inline lu_bool lu_label_unit__is_match(Lu_Label_Unit self, union lu_n_addr addr)
 	{
 		lu__debug_assert(self);
 
 		if (lu_label_unit__is_blank(self)) return true;
 
 		return lu_n_addr__is_eq(&self->addr, &addr);
+	}
+
+	static inline lu_size lu_label_unit__label(Lu_Label_Unit self, lu_size label_ix)
+	{
+
+		Lu_Label label = &self->labels[label_ix];
+
+		if (lu_label__is_blank(label)) 
+		{
+			label->label = label_ix;
+			label->count = 1;
+		}
+		else
+		{
+			++label->count;
+		}
 	}
 
 	static Lu_Label_Unit lu_label_unit__init(Lu_Label_Unit self, Lu_Mem mem, union lu_n_addr addr, lu_size size);

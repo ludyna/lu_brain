@@ -62,14 +62,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label)
+	static Lu_Label_Unit lu_label_map__find_unit(Lu_Label_Map self, union lu_n_addr addr)
 	{
 		lu__assert(self);
 
 		lu_size ix = lu_label_map__addr_to_ix(self, addr);
 		lu__debug_assert(ix < self->h);
 
-		// find unit 
 		Lu_Label_Unit unit = NULL;
 
 		lu_size hd = self->h * self->d;
@@ -77,15 +76,29 @@
 		for (lu_size i = 0; i < self->d; i++)
 		{
 			lu__debug_assert((ix + i) < hd);
-			
+
 			unit = &self->addr_to_labels[ix + i];
 
-
+			if (lu_label_unit__is_match(unit, addr)) return unit;
 		}
 
+		return NULL;
+	}
 
+	static Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label)
+	{
+		lu__assert(self);
+		lu__assert(label < self->labels_size);
 
+		Lu_Label_Unit unit = lu_label_map__find_unit(self, addr);
+		lu__assert(unit); 
 
+		if (lu_label_unit__is_blank(unit)) 
+		{
+			lu_label_unit__init(unit, self->mem, addr, self->labels_size);
+		}
+
+		lu_label_unit__label(unit, label);
 	}
 
 	static Lu_Label_Unit lu_label_map__get_labels(Lu_Label_Map self, union lu_n_addr addr)
