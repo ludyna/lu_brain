@@ -65,7 +65,7 @@ int main()
 	Lu_Wave match_wave = lu_wave__create_match_wave(brain);
 	lu__assert(match_wave);
 
-	Lu_Neu name 				= NULL;
+	Lu_N_Cell name 				= NULL;
 
 	// Show random digit
 

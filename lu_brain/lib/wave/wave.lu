@@ -98,7 +98,7 @@
 
 	} 
 
-	static void lu_restore_wave_block_begin_virtual(Lu_Wave self)
+	static void lu_restore_wave__block_begin_virtual(Lu_Wave self)
 	{
 
 	} 
@@ -129,7 +129,7 @@
 
 	} 
 
-	static void lu_restore_wave_block_end_virtual(Lu_Wave self)
+	static void lu_restore_wave__block_end_virtual(Lu_Wave self)
 	{
 
 	}  
@@ -137,17 +137,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Push Neu
 
-	void lu_wave__push_neu(Lu_Wave self, Lu_Neu neu)
+	void lu_wave__push_neu(Lu_Wave self, Lu_N_Cell neu)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
-		lu__user_assert_void(neu, "Lu_Neu is NULL");
+		lu__user_assert_void(neu, "Lu_N_Cell is NULL");
 
 		if (self->push_neu)
 			self->push_neu(self, neu);
 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
 	}
 
-	static void lu_restore_wave_push_neu_virtual(Lu_Wave self, Lu_Neu neu)
+	static void lu_restore_wave_push_neu_virtual(Lu_Wave self, Lu_N_Cell neu)
 	{
 
 	}
@@ -290,7 +290,7 @@
 		lu__assert(lu_wave__is_find(self));
 	}
 
-	static void lu_restore_wave_step_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_restore_wave__step_virtual(Lu_Wave self, Lu_Process_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_restore(self));
@@ -348,7 +348,7 @@
 	// Restore
 	//
 
-	static void lu_restore_wave_process_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_restore_wave__process_virtual(Lu_Wave self, Lu_Process_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_restore(self));

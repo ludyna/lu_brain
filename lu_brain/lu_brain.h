@@ -33,7 +33,7 @@
 	//
 
 	typedef struct lu_data* 			Lu_Data;
-	typedef struct lu_neu* 				Lu_Neu;
+	typedef struct lu_n_cell* 			Lu_N_Cell;
 	typedef struct lu_process_config*	Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave;
 
@@ -256,7 +256,6 @@
 	// Wave Data
 
 	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* data);
-	void lu_wave__push_neu(Lu_Wave, Lu_Neu); 
 
 
 	// lu_size lu_wave_block_count(Lu_Wave);
@@ -271,7 +270,7 @@
 
 	// Process Async (IMPLEMENT LATER)
 	// void lu_wave_process_async(Lu_Wave, Lu_Data_Seq);
-	// void lu_wave_restore_process_async(Lu_Wave, Lu_Neu);
+	// void lu_wave_restore_process_async(Lu_Wave, Lu_N_Cell);
 	// void lu_wave_step_async(Lu_Wave, Lu_Data_Seq);
 	// void lu_wave_restore_step_async(Lu_Wave, Lu_Data_Seq);
 	// void lu_wave_join(Lu_Wave);
@@ -284,10 +283,10 @@
 	lu_size lu_wave__get_id(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Neu 
+// Lu_N_Cell 
 
-	lu_size lu_neu__name(Lu_Neu);
-	void lu_neu__name_set(Lu_Neu, lu_size);
-	void lu_neu__connect(Lu_Neu, Lu_Neu);
+	lu_size lu_neu__name(Lu_N_Cell);
+	void lu_neu__name_set(Lu_N_Cell, lu_size);
+	void lu_neu__connect(Lu_N_Cell, Lu_N_Cell);
 
 #endif // _LU_BRAIN_API_H

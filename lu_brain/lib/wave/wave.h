@@ -44,7 +44,7 @@
 		void (*block_end)(Lu_Wave);
 
 		void (*push)(Lu_Wave, Lu_Rec, lu_value* data);
-		void (*push_neu)(Lu_Wave, Lu_Neu); 
+		void (*push_neu)(Lu_Wave, Lu_N_Cell); 
 
 		void (*reset)(Lu_Wave);
 
