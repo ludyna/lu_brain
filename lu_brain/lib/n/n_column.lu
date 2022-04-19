@@ -7,6 +7,7 @@
 		Lu_Mem mem, 
 		lu_size h, 
 		lu_size d, 
+		lu_size area_ix,
 		lu_size layer_ix, 
 		lu_size column_ix
 	)
@@ -29,7 +30,7 @@
 
 		for (lu_size i = 0; i < items_size; i++)
 		{
-			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix);
+			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix);
 		}
 
 		return self;

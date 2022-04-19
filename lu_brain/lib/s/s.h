@@ -106,7 +106,8 @@
 		lu_value min, 
 		lu_value max, 
 		lu_size cells_size,
-		lu_size layer_ix
+		lu_size layer_ix,
+		lu_size area_ix
 	);
 	
 	static void lu_s_view_p__deinit(Lu_S_View_P self);
@@ -137,7 +138,8 @@
 		lu_value min, 
 		lu_value max, 
 		lu_size cells_size,
-		lu_size layer_ix
+		lu_size layer_ix,
+		lu_size area_ix
 	);
 	
 	static void lu_s_view_v__deinit(Lu_S_View_V self);
@@ -153,6 +155,7 @@
 		enum lu_s_layer_type type;
 		enum lu_s_tag tag;
 		lu_size layer_ix;
+		lu_size area_ix;
 
 		Lu_Mem s_mem;
 		Lu_Mem n_mem;
@@ -170,7 +173,8 @@
 		Lu_S_Layer_Base p,
 		Lu_Config config,
 		enum lu_s_layer_type type,
-		lu_size level,
+		lu_size layer_ix,
+		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
 		enum lu_s_tag tag
 	);
@@ -180,7 +184,8 @@
 		Lu_S_Layer_Base p,
 		Lu_Config config,
 		enum lu_s_layer_type type,
-		lu_size level,
+		lu_size layer_ix,
+		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
 		enum lu_s_tag tag
 	);
@@ -191,7 +196,8 @@
 		lu_size children_count,
 		Lu_Config config,
 		enum lu_s_layer_type type,
-		lu_size level,
+		lu_size layer_ix,
+		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
 		enum lu_s_tag tag
 	);
@@ -241,7 +247,8 @@
 		Lu_Config config, 
 		Lu_S_Layer_Rec frame, 
 		Lu_Rec_Comp_Config rc_config,
-		lu_size layer_ix
+		lu_size layer_ix,
+		lu_size area_ix
 	);
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
@@ -261,6 +268,7 @@
 		Lu_Config config, 
 		enum lu_s_layer_type type,
 		lu_size layer_ix, 
+		lu_size area_ix,
 		lu_size children_count,
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
@@ -274,6 +282,7 @@
 	static Lu_S_Layer lu_s_layer__create(
 		Lu_Config config, 
 		lu_size layer_ix, 
+		lu_size area_ix,
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
@@ -344,7 +353,7 @@
 		Lu_Rec rec;
 	};
 
-	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix);
+	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix, lu_size area_ix);
 	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self);
 
 	static Lu_W_Table lu_s_layer_rec__save(

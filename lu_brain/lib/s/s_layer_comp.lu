@@ -9,7 +9,8 @@
 		Lu_Config config, 
 		Lu_S_Layer_Rec frame, 
 		Lu_Rec_Comp_Config rc_config,
-		lu_size layer_ix
+		lu_size layer_ix,
+		lu_size area_ix
 	)
 	{
 		lu__assert(config);
@@ -28,6 +29,7 @@
 			config,
 			LU_S_LAYER__COMP,
 			layer_ix,
+			area_ix,
 			lu_s_layer_comp__destroy, 
 			LU_S_TAG__COMP
 		);
@@ -41,7 +43,8 @@
 			rc_config->v_min, 
 			rc_config->v_max, 
 			rc_config->p_neu_size,
-			layer_ix
+			layer_ix,
+			area_ix
 		);
 
 		lu_s_view_v__init(
@@ -53,7 +56,8 @@
 			rc_config->v_min, 
 			rc_config->v_max, 
 			rc_config->v_neu_size,
-			layer_ix
+			layer_ix,
+			area_ix
 		);
 
 		return self;

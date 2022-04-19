@@ -76,13 +76,20 @@
 	// NULL addr
 	extern const union lu_n_addr LU_N_ADDR__NULL; 
 
-	static inline Lu_N_Addr lu_n_addr__init(Lu_N_Addr self, lu_size cell_ix, lu_size column_ix, lu_size layer_ix)
+	static inline Lu_N_Addr lu_n_addr__init(
+		Lu_N_Addr self, 
+		lu_size cell_ix, 
+		lu_size column_ix, 
+		lu_size layer_ix, 
+		lu_size area_ix
+	)
 	{
 		lu__debug_assert(self);
 
 		self->cell_ix = cell_ix;
 		self->column_ix = column_ix;
 		self->layer_ix = layer_ix;
+		self->area_ix = area_ix;
 
 		return self;
 	}
@@ -177,7 +184,8 @@
 		lu_size width, 
 		lu_size height, 
 		lu_size depth, 
-		lu_size layer_ix
+		lu_size layer_ix,
+		lu_size area_ix
 	);
 
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self);
@@ -280,12 +288,13 @@
 		Lu_N_Cell self, 
 		lu_size cell_ix, 
 		lu_size column_ix, 
-		lu_size layer_ix
+		lu_size layer_ix, 
+		lu_size area_ix
 	)
 	{
 		lu__debug_assert(self);
 
-		lu_n_addr__init(&self->addr, cell_ix, column_ix, layer_ix);
+		lu_n_addr__init(&self->addr, cell_ix, column_ix, layer_ix, area_ix);
 
 		self->children[0].value = 0;
 
@@ -341,7 +350,15 @@
 		struct lu_n_cell* cells;
 	};
 
-	static Lu_N_Column lu_n_column__init(Lu_N_Column self, Lu_Mem mem, lu_size h, lu_size d, lu_size layer_ix, lu_size column_ix);
+	static Lu_N_Column lu_n_column__init(
+		Lu_N_Column self, 
+		Lu_Mem mem, 
+		lu_size h, 
+		lu_size d, 
+		lu_size area_ix,
+		lu_size layer_ix, 
+		lu_size column_ix
+	);
 	static void lu_n_column__deinit(Lu_N_Column self);
 	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d);
 
@@ -413,7 +430,16 @@
 		struct lu_n_column* columns;
 	};
 
-	Lu_N_Table lu_n_table__create(Lu_Mem mem, lu_size w, lu_size h, lu_size h_max, Lu_Config config, lu_size layer_ix);
+	Lu_N_Table lu_n_table__create(
+		Lu_Mem mem, 
+		lu_size w, 
+		lu_size h, 
+		lu_size h_max, 
+		Lu_Config config, 
+		lu_size layer_ix,
+		lu_size area_ix
+	);
+
  	void lu_n_table__destroy(Lu_N_Table self);
 
  	static inline Lu_N_Column lu_n_table__get_column(Lu_N_Table self, lu_size x, lu_size y)

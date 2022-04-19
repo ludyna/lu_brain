@@ -109,8 +109,8 @@
 		struct lu_list *label_to_addrs;
 	};
 
-	static Lu_Label_Map lu_label_map__init(Lu_Label_Map self, Lu_Mem mem, lu_size labels_size, lu_size h, lu_size d);
-	static void lu_label_map__deinit(Lu_Label_Map self);
+	Lu_Label_Map lu_label_map__init(Lu_Label_Map self, Lu_Mem mem, lu_size labels_size, lu_size h, lu_size d);
+	void lu_label_map__deinit(Lu_Label_Map self);
 
 	static inline lu_size lu_label_map__addr_to_ix(Lu_Label_Map self, union lu_n_addr addr)
 	{
@@ -121,9 +121,9 @@
 	//
 	//
 
-	static Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label);
-	static Lu_Label_Unit lu_label_map__get_labels(Lu_Label_Map self, union lu_n_addr addr);
-	static Lu_List lu_label_map__get_units(Lu_Label_Map self, lu_size label);
+	Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label);
+	Lu_Label_Unit lu_label_map__get_labels(Lu_Label_Map self, union lu_n_addr addr);
+	Lu_List lu_label_map__get_units(Lu_Label_Map self, lu_size label);
 
 
 

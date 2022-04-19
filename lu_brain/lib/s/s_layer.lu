@@ -10,6 +10,7 @@
 		Lu_Config config, 
 		enum lu_s_layer_type type,
 		lu_size layer_ix, 
+		lu_size area_ix,
 		lu_size children_count,
 		void (*destroy)(Lu_S_Layer_Base),
 		lu_size n_w,
@@ -30,7 +31,8 @@
 				NULL, 
 				config, 
 				type, 
-				layer_ix, 
+				layer_ix,
+				area_ix, 
 				destroy,
 				tag
 			); 
@@ -44,12 +46,13 @@
 				config, 
 				type, 
 				layer_ix, 
+				area_ix,
 				destroy,
 				tag
 			);
 		}
 
-		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, n_h_max, config, layer_ix);
+		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, n_h_max, config, layer_ix, area_ix);
 		lu__alloc_assert(self->n_table);
 
 		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
@@ -90,6 +93,7 @@
 	static Lu_S_Layer lu_s_layer__create(
 		Lu_Config config, 
 		lu_size layer_ix, 
+		lu_size area_ix,
 		lu_size children_count,
 		lu_size n_w,
 		lu_size n_h,
@@ -108,6 +112,7 @@
 			config, 
 			LU_S_LAYER__LAYER, 
 			layer_ix, 
+			area_ix,
 			children_count, 
 			lu_s_layer__destroy, 
 			n_w, 

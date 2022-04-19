@@ -11,6 +11,7 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size layer_ix,
+		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
 		enum lu_s_tag tag
 	)
@@ -26,6 +27,7 @@
 		self->type = type;
 		self->tag = tag;
 		self->layer_ix = layer_ix;
+		self->area_ix = area_ix;
 		self->p = p;
 		self->c = NULL;
 		self->destroy = destroy;
@@ -39,11 +41,12 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size layer_ix,
+		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
 		enum lu_s_tag tag
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, layer_ix, destroy, tag);
+		self = lu_s_layer_base__init(self, p, config, type, layer_ix, area_ix, destroy, tag);
 		lu__assert(self);
 		
 		self->c = (Lu_Slot_Base) lu_slot_one__create(self->s_mem, NULL);
@@ -59,11 +62,12 @@
 		Lu_Config config,
 		enum lu_s_layer_type type,
 		lu_size layer_ix,
+		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
 		enum lu_s_tag tag
 	)
 	{
-		self = lu_s_layer_base__init(self, p, config, type, layer_ix, destroy, tag);
+		self = lu_s_layer_base__init(self, p, config, type, layer_ix, area_ix, destroy, tag);
 		lu__assert(self);
  
 		self->c = (Lu_Slot_Base) lu_slot_arr__create(self->s_mem, children_count, true);
