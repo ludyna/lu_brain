@@ -59,8 +59,13 @@
 	static inline lu_p_void lu_list__first_value(Lu_List self) { if (!self->first) return NULL; return self->first->value; }
 	static inline Lu_L_Node lu_list__last_node(Lu_List self) { return self->last; }
 	static inline lu_p_void lu_list__last_value(Lu_List self) { if (!self->last) return NULL; return self->last->value; } 
+	
+	static inline lu_bool lu_list__is_initialized(Lu_List self)
+	{
+		lu__debug_assert(self);
 
-	// State checks
+		return !self->mem;
+	}
 
 	static inline lu_bool lu_list__is_empty(Lu_List self) { return self->first == NULL; }
 

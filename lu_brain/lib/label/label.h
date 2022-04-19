@@ -63,8 +63,9 @@
 		return lu_n_addr__is_eq(&self->addr, &addr);
 	}
 
-	static inline lu_size lu_label_unit__label(Lu_Label_Unit self, lu_size label_ix)
+	static inline Lu_Label lu_label_unit__label(Lu_Label_Unit self, lu_size label_ix)
 	{
+		lu__debug_assert(self);
 
 		Lu_Label label = &self->labels[label_ix];
 
@@ -77,6 +78,8 @@
 		{
 			++label->count;
 		}
+
+		return label;
 	}
 
 	static Lu_Label_Unit lu_label_unit__init(Lu_Label_Unit self, Lu_Mem mem, union lu_n_addr addr, lu_size size);

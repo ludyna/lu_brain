@@ -22,6 +22,8 @@
 		self->addr_to_labels = (struct lu_label_unit*) lu_mem__alloc(mem, sizeof(struct lu_label_unit) * hd);
 		lu__alloc_assert(self->addr_to_labels);
 
+		memset(self->addr_to_labels, 0, sizeof(struct lu_label_unit) * hd);
+
 		Lu_Label_Unit unit;
 		for (lu_size i = 0; i < hd; i++)
 		{
@@ -32,6 +34,8 @@
 
 		self->label_to_addrs = (struct lu_list*) lu_mem__alloc(mem, sizeof(struct lu_list) * labels_size);
 		lu__alloc_assert(self->label_to_addrs);
+
+		memset(self->label_to_addrs, 0, sizeof(struct lu_list) * labels_size);
 
 		return self;
 	}
@@ -85,10 +89,10 @@
 		return NULL;
 	}
 
-	static Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label)
+	static Lu_Label lu_label_map__add_label(Lu_Label_Map self, union lu_n_addr addr, lu_size label_ix)
 	{
 		lu__assert(self);
-		lu__assert(label < self->labels_size);
+		lu__assert(label_ix < self->labels_size);
 
 		Lu_Label_Unit unit = lu_label_map__find_unit(self, addr);
 		lu__assert(unit); 
@@ -98,7 +102,22 @@
 			lu_label_unit__init(unit, self->mem, addr, self->labels_size);
 		}
 
-		lu_label_unit__label(unit, label);
+		Lu_Label label = lu_label_unit__label(unit, label_ix);
+
+		Lu_List list = &self->label_to_addrs[label_ix];
+		
+		if (!lu_list__is_initialized(list))
+		{
+			lu_list__init(list, self->mem);
+
+			lu_list__append(list, unit);
+		}
+		else
+		{
+			
+		}
+
+		return label;
 	}
 
 	static Lu_Label_Unit lu_label_map__get_labels(Lu_Label_Map self, union lu_n_addr addr)
