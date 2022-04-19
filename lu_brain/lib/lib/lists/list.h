@@ -100,6 +100,7 @@
 	void lu_list__node_each_1p(Lu_List self, void (*block)(Lu_List, Lu_L_Node, lu_p_void p1), lu_p_void p1);
 	void lu_list__each_1p(Lu_List self, void (*block)(Lu_List, lu_p_void, lu_p_void p1), lu_p_void p1);
 
+	lu_p_void lu_list__find_forward(Lu_List self, lu_p_void p1);
 	lu_p_void lu_list__find_forward_1p(Lu_List self, lu_bool (*block)(lu_p_void value, lu_p_void p1), lu_p_void p1);
 
 	void lu_list__clear(Lu_List self);

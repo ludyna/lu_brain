@@ -228,6 +228,20 @@
 		}	
 	}
 
+	lu_p_void lu_list__find_forward(Lu_List self, lu_p_void p1)
+	{
+		Lu_L_Node current = self->first;
+
+		while (current)
+		{
+			if (current->value == p1) return current->value;
+
+			current = current->next;
+		}
+
+		return NULL;
+	}
+
 	lu_p_void lu_list__find_forward_1p(Lu_List self, lu_bool (*block)(lu_p_void value, lu_p_void p1), lu_p_void p1)
 	{
 		Lu_L_Node current = self->first;

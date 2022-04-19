@@ -102,7 +102,7 @@
 			lu_label_unit__init(unit, self->mem, addr, self->labels_size);
 		}
 
-		Lu_Label label = lu_label_unit__label(unit, label_ix);
+		Lu_Label label = lu_label_unit__inc(unit, label_ix);
 
 		Lu_List list = &self->label_to_addrs[label_ix];
 		
@@ -114,7 +114,10 @@
 		}
 		else
 		{
-			
+			if (!lu_list__find_forward(list, unit))
+			{
+				lu_list__append(list, unit);
+			}
 		}
 
 		return label;
