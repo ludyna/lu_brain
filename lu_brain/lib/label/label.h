@@ -63,11 +63,18 @@
 		return lu_n_addr__is_eq(&self->addr, &addr);
 	}
 
+	static inline Lu_Label lu_label_unit__get_label(Lu_Label_Unit self, lu_size label_ix)
+	{
+		lu__debug_assert(self);
+
+		return &self->labels[label_ix];
+	}
+
 	static inline Lu_Label lu_label_unit__inc(Lu_Label_Unit self, lu_size label_ix)
 	{
 		lu__debug_assert(self);
 
-		Lu_Label label = &self->labels[label_ix];
+		Lu_Label label = lu_label_unit__get_label(self, label_ix);
 
 		if (lu_label__is_blank(label)) 
 		{

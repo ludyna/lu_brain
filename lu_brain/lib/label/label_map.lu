@@ -125,10 +125,15 @@
 
 	static Lu_Label_Unit lu_label_map__get_labels(Lu_Label_Map self, union lu_n_addr addr)
 	{
-		
+		lu__assert(self);
+
+		return lu_label_map__find_unit(self, addr);
 	}
 
-	static Lu_List lu_label_map__get_units(Lu_Label_Map self, lu_size label)
+	static Lu_List lu_label_map__get_units(Lu_Label_Map self, lu_size label_ix)
 	{
+		lu__assert(self);
+		lu__assert(label_ix < self->labels_size);
 
+		return &self->label_to_addrs[label_ix];
 	}
