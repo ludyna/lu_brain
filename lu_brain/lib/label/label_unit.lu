@@ -36,3 +36,13 @@
 			lu_mem__free(mem, (lu_p_byte) self->labels);
 		}
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	Lu_Label lu_label_unit__get_label(Lu_Label_Unit self, lu_size label_ix)
+	{
+		lu__debug_assert(self);
+
+		return &self->labels[label_ix];
+	}

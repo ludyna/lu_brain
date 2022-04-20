@@ -501,6 +501,15 @@
 		//lu_list__destroy(self->seq);
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Label
 
+	void lu_wave__add_label(Lu_Wave wave, Lu_W_Addr addr, lu_size label_ix)
+	{
 
+	}
 
+	Lu_Label_Unit lu_wave__get_labels(Lu_Wave wave, Lu_W_Addr addr)
+	{
+		return NULL;
+	}

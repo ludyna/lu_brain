@@ -81,7 +81,9 @@ int main()
 	printf("\n");
 	printf("\rTraining samples..");
 
+	union lu_w_addr w_addr;
 
+	lu_w_addr__init(&w_addr, 0, 0, 2);
 
 	//for (i = 0; i < smn_training_samples_count; i++)
 	for (i = 0; i < 1; i++)
@@ -92,7 +94,7 @@ int main()
 		//lu_wave_save_with_name(save_wave, seq, d->name); 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
-		// lu_wave__add_label(match_wave, LU_S_TAG__SEQ, 0, 0, 0);
+		lu_wave__add_label(match_wave, &w_addr, d->name);
 
 		printf("\rTraining samples.. %lu trained.", i + 1);
 		fflush(stdout);
@@ -106,7 +108,8 @@ int main()
 
 	printf("\rTesting samples.. ");
 
-	
+	Lu_Label_Unit unit;
+	Lu_Label label;
 
 	//for (i = 0; i < smn_test_samples_count; i++)
 	for (i = 0; i < 1; i++)
@@ -116,19 +119,28 @@ int main()
 
 		lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
-		// lu_wave__
+		unit = lu_wave__get_labels(match_wave, &w_addr);
 
-		// name = lu_wave_top_name_get(save_wave);
+		if (unit)
+		{
+			label = lu_label_unit__get_label(unit, d->name);
 
-		// if (name && lu_neu_name_get(name) == d->name)
-		// 	++success_count;
-		// else 
-		// 	++failed_count;
+			if (label && label->label == d->name && label->count > 0)
+			{
+				++success_count;
+			}
+			else
+			{
+				++failed_count;
+			}
+		}
+		else
+		{
+			++failed_count;
+		}
 
-		// lu_data_seq__reset(seq);
-
-		// printf("\rTesting samples.. %lu tested.", i + 1);
-		// fflush(stdout);
+		printf("\rTesting samples.. %lu tested.", i + 1);
+		fflush(stdout);
 	}
 	printf("\n");
 

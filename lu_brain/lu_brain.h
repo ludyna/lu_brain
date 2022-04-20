@@ -29,6 +29,19 @@
 	typedef struct lu_rec* 				Lu_Rec; 
 
 	//
+	// W_Addr
+	//
+
+	typedef union lu_w_addr* Lu_W_Addr;
+
+	//
+	// Label
+	//
+
+	typedef union lu_label* Lu_Label;
+	typedef struct lu_label_unit* Lu_Label_Unit;
+
+	//
 	// Wave 
 	//
 
@@ -36,6 +49,7 @@
 	typedef struct lu_n_cell* 			Lu_N_Cell;
 	typedef struct lu_process_config*	Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave;
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Config 
@@ -226,6 +240,21 @@
 	struct lu_process_config lu_process_config__get_by_id(lu_size id);
 
 ///////////////////////////////////////////////////////////////////////////////
+// W_Addr
+
+	Lu_W_Addr lu_w_addr__init(
+		Lu_W_Addr self, 
+		lu_size cell_ix,  
+		lu_size layer_ix, 
+		lu_size area_ix
+	);
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Label
+
+	Lu_Label lu_label_unit__get_label(Lu_Label_Unit self, lu_size label_ix);
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave  
 
 	//
@@ -242,33 +271,24 @@
 
 	void lu_wave__destroy(Lu_Wave); 
 
-
+	//
 	// Wave Level
+	//
 
 	void lu_wave__start_layer(Lu_Wave, lu_size level);
 
 	//
-	// Wave Seq
-	// Same as lu_wave__start_level(wave, 0)
-	//
-
-	#define lu_wave__start_seq(self) lu_wave__start_layer(self, 0)
-	#define lu_wave__start_event(self) lu_wave__start_layer(self, 1)
-	#define lu_wave__start_chapter(self) lu_wave__start_layer(self, 2)
-	#define lu_wave__start_story(self) lu_wave__start_layer(self, 3)
-
 	// Wave Block
+	//
 
 	void lu_wave__block_begin(Lu_Wave);
 	void lu_wave__block_end(Lu_Wave);
 
+	//
 	// Wave Data
+	//
 
 	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* data);
-
-
-	// lu_size lu_wave_block_count(Lu_Wave);
-	// Lu_Data lu_wave_last_data(Lu_Wave, Lu_Rec);
 
 	//
 	// Process
@@ -277,13 +297,6 @@
 	void lu_wave__step(Lu_Wave, struct lu_process_config);
 	void lu_wave__process(Lu_Wave, struct lu_process_config);
 
-	// Process Async (IMPLEMENT LATER)
-	// void lu_wave_process_async(Lu_Wave, Lu_Data_Seq);
-	// void lu_wave_restore_process_async(Lu_Wave, Lu_N_Cell);
-	// void lu_wave_step_async(Lu_Wave, Lu_Data_Seq);
-	// void lu_wave_restore_step_async(Lu_Wave, Lu_Data_Seq);
-	// void lu_wave_join(Lu_Wave);
-
 	//
 	// Properties
 	//
@@ -291,11 +304,12 @@
 	struct lu_process_config lu_wave__get_process_config(Lu_Wave);
 	lu_size lu_wave__get_id(Lu_Wave);
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell 
+	//
+	// Wave label
+	//
 
-	lu_size lu_neu__name(Lu_N_Cell);
-	void lu_neu__name_set(Lu_N_Cell, lu_size);
-	void lu_neu__connect(Lu_N_Cell, Lu_N_Cell);
+	void lu_wave__add_label(Lu_Wave wave, Lu_W_Addr addr, lu_size label_ix);
+	Lu_Label_Unit lu_wave__get_labels(Lu_Wave wave, Lu_W_Addr addr);
+
 
 #endif // _LU_BRAIN_API_H
