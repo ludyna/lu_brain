@@ -61,6 +61,72 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Str
+//
+
+	static inline lu_bool lu_w_str__eq(const union lu_w_addr* a, const union lu_w_addr* b)
+	{
+		while (1)
+		{
+			if ((*a).value != (*b).value)
+			{
+				return false;
+			}
+
+			if ((*a).value == 0 || (*b).value == 0) break;
+
+			++a;
+			++b;
+		}	
+		
+		return true;
+	}
+
+	////
+	// (!) This method (intentionally!) doesn't check if <dest> has enough space for <src>
+	static inline void lu_w_str__copy(union lu_w_addr* dest, const union lu_w_addr* src)
+	{
+		while((*src).value)
+		{
+			*dest = *src;
+			++src;
+			++dest;
+		};
+
+		(*dest).value = 0;
+	}
+
+	static inline void lu_w_str__print(union lu_w_addr* s)
+	{
+		lu__debug("\n W_STRING: {");
+		union lu_w_addr *p = s;
+
+		while((*p).value)
+		{
+			if (p != s) lu__debug(", ");
+			lu_w_addr__print(&(*p));
+			++p;
+		} 
+		if (p==s) lu__debug("0");
+		else lu__debug(", 0");
+
+		lu__debug("}");
+	}
+
+	static inline lu_size lu_w_str__hash_comb(const union lu_w_addr* p)
+	{
+		lu_size p_reg = 0;
+		while((*p).value)
+		{
+			p_reg = lu_hash_comb(p_reg, (*p).value);
+			++p;
+		}
+
+		return p_reg;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell 
 
 	struct lu_w_cell {
@@ -158,7 +224,6 @@
 		lu_byte state;
 		lu_value v;
 	};
-
 
 	static inline void lu_w_cell_v__register(
 		Lu_W_Cell_V self, 

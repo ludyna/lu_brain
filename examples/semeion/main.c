@@ -81,6 +81,8 @@ int main()
 	printf("\n");
 	printf("\rTraining samples..");
 
+
+
 	//for (i = 0; i < smn_training_samples_count; i++)
 	for (i = 0; i < 1; i++)
 	{
@@ -104,7 +106,7 @@ int main()
 
 	printf("\rTesting samples.. ");
 
-	Lu_
+	
 
 	//for (i = 0; i < smn_test_samples_count; i++)
 	for (i = 0; i < 1; i++)
