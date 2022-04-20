@@ -227,6 +227,7 @@
 	{
 		char buffer[50];
 		lu__debug("\n 		layer_ix: %d", self->layer_ix);
+		lu__debug("\n 		area_ix: %d", self->area_ix);
 		lu_s_layer_type__to_str(self->type, buffer);
 		lu__debug("\n 		type: %s", buffer);
 		lu__debug("\n 		-------------- ");

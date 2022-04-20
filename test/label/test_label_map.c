@@ -34,7 +34,7 @@ void test_label_map(void)
 {
 	union lu_n_addr addr;
 
-	// lu_n_addr__init(&addr, 
+	lu_n_addr__init(&addr, 33, 33, 33, 33);
 
-	// lu_mabel_map__add_label(map, 
+	Lu_Label label = lu_label_map__add_label(map, addr, 5);
 }

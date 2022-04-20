@@ -23,17 +23,21 @@
 		memset(self->addr_to_labels, 0, sizeof(struct lu_label_unit) * hd);
 
 		Lu_Label_Unit unit;
-		for (lu_size i = 0; i < hd; i++)
+		lu_size i;
+		for (i = 0; i < hd; i++)
 		{
 			unit = &self->addr_to_labels[i];
 
 			lu_label_unit__null_init(unit);
 		}
 
-		self->label_to_addrs = (struct lu_list*) lu_mem__alloc(mem, sizeof(struct lu_list) * labels_size);
+		self->label_to_addrs = (struct lu_list*) lu_mem__alloc(mem, sizeof(struct lu_list) * self->labels_size);
 		lu__alloc_assert(self->label_to_addrs);
 
-		memset(self->label_to_addrs, 0, sizeof(struct lu_list) * labels_size);
+		for (i = 0; i < self->labels_size; i++)
+		{
+			lu_list__init(&self->label_to_addrs[i], mem);
+		}
 
 		return self;
 	}
@@ -43,9 +47,16 @@
 		lu__assert(self);
 		lu__assert(self->mem);
 
+		lu_size i;
+
+		for (i = 0; i < self->labels_size; i++)
+		{
+			lu_list__deinit(&self->label_to_addrs[i]);
+		}
+
 		lu_size hd = self->h * self->d;
 		Lu_Label_Unit unit;
-		for (lu_size i = 0; i < hd; i++)
+		for (i = 0; i < hd; i++)
 		{
 			unit = &self->addr_to_labels[i];
 
@@ -104,20 +115,11 @@
 
 		Lu_List list = &self->label_to_addrs[label_ix];
 		
-		if (!lu_list__is_initialized(list))
+		if (!lu_list__find_forward(list, unit))
 		{
-			lu_list__init(list, self->mem);
-
 			lu_list__append(list, unit);
 		}
-		else
-		{
-			if (!lu_list__find_forward(list, unit))
-			{
-				lu_list__append(list, unit);
-			}
-		}
-
+		
 		return label;
 	}
 

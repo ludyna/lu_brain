@@ -2,6 +2,8 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
+	void lu_list__node_destroy_all(Lu_List self);		
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_L_Node
 
@@ -49,6 +51,14 @@
 
 		return self;
 	}
+
+	static inline void lu_list__deinit(Lu_List self)
+	{
+		lu__assert(self);
+		lu_list__node_destroy_all(self);
+		lu_list__init(self, NULL);
+	}
+
 	Lu_List lu_list__create(Lu_Mem); 
 	void lu_list__destroy(Lu_List self);
 

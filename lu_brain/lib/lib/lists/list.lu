@@ -36,9 +36,8 @@
 	{
 		Lu_Mem mem = self->mem;
 
-		lu_list__node_destroy_all(self);
+		lu_list__deinit(self);
 
-		lu_list__init(self, NULL); 			// reset for safety
 		lu_mem__free(mem, (lu_p_byte) self);
 	}
 
