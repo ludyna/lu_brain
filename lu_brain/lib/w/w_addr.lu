@@ -2,7 +2,11 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // 
-	
-	typedef struct names_list* Names_List;
+
+	const union lu_w_addr LU_W_ADDR__NULL = {
+			.value = 0
+	};
+

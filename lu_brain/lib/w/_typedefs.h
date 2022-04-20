@@ -2,6 +2,8 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
+	typedef union lu_w_addr* Lu_W_Addr;
+	
  	typedef struct lu_w_cell* Lu_W_Cell; 
  	typedef struct lu_w_cell_p* Lu_W_Cell_P;
  	typedef struct lu_w_cell_v* Lu_W_Cell_V;

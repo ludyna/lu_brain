@@ -3,6 +3,39 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+//  
+
+	#define LU_W_CELL_IX__SIZE 40
+
+	union lu_w_addr {
+		struct {
+			lu_size cell_ix: LU_W_CELL_IX__SIZE;
+			lu_size layer_ix: LU_N_LAYER_IX__SIZE;
+			lu_size area_ix: LU_N_AREA_IX__SIZE;
+		};
+		lu_size value;
+	};
+
+	// NULL addr
+	extern const union lu_w_addr LU_W_ADDR__NULL; 
+
+	static inline Lu_W_Addr lu_w_addr__init(
+		Lu_W_Addr self, 
+		lu_size cell_ix,  
+		lu_size layer_ix, 
+		lu_size area_ix
+	)
+	{
+		lu__debug_assert(self);
+
+		self->cell_ix = cell_ix;
+		self->layer_ix = layer_ix;
+		self->area_ix = area_ix;
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell 
 
 	struct lu_w_cell {
@@ -224,6 +257,7 @@
 	{ 
 		lu__debug_assert(x < self->w);
 		lu__debug_assert(y < self->h);
+		
 		return &self->cells[y * self->w + x];
 	} 
 

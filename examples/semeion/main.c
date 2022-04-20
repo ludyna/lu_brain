@@ -90,6 +90,8 @@ int main()
 		//lu_wave_save_with_name(save_wave, seq, d->name); 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
+		// lu_wave__add_label(match_wave, LU_S_TAG__SEQ, 0, 0, 0);
+
 		printf("\rTraining samples.. %lu trained.", i + 1);
 		fflush(stdout);
 	}
@@ -102,6 +104,8 @@ int main()
 
 	printf("\rTesting samples.. ");
 
+	Lu_
+
 	//for (i = 0; i < smn_test_samples_count; i++)
 	for (i = 0; i < 1; i++)
 	{
@@ -110,6 +114,7 @@ int main()
 
 		lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
+		// lu_wave__
 
 		// name = lu_wave_top_name_get(save_wave);
 
