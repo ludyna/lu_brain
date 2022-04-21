@@ -135,6 +135,8 @@
 		
 		curr_w_table->any_fired = false;
 
+		lu_bool any_p_fired;
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -152,6 +154,7 @@
 				// reset string
 				p_links[0].value = 0;
 				p_links_i = 0;
+				any_p_fired = false;
 
 				// iterate all layer comps and save result in rec_layer(which is also s_layer)
 				for (z = 0; z < depth; z++)
@@ -185,16 +188,18 @@
 							p_view->n_comp_table
 						);
 
-						p_links[p_links_i] = w_p_cell->n_addr;
-						++p_links_i;
+						any_p_fired = true;
 					}
+
+					// always save links, even if w_p_cell havent fired
+					p_links[z] = w_p_cell->n_addr;
 
 				} // for (lu_size z = 0
 
 				// finish string with zero
-				p_links[p_links_i].value = 0;
+				p_links[z].value = 0;
 
-				if (p_links[0].value)
+				if (any_p_fired)
 				{
 					lu__debug("\n SAVING N_CELL");
 					

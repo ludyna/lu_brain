@@ -274,11 +274,7 @@
 // Lu_N_Cell
 //
 
-	////
-	// Insead of adding +1 when saving index, we dont use 0 index cells
 	struct lu_n_cell { 
-		// addr can be removed later to save memory, but useful for testing and debugging
-		// can be wrapped in #ifdef LU__DEBUG
 		union lu_n_addr addr; 
 
 		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
@@ -348,6 +344,21 @@
 		lu_size d;
 
 		struct lu_n_cell* cells;
+
+		struct lu_n_cell* cells_acd;
+		struct lu_n_cell* cells_abd;
+		struct lu_n_cell* cells_abc;
+		struct lu_n_cell* cells_bcd;
+		struct lu_n_cell* cells_ab;
+		struct lu_n_cell* cells_ac;
+		struct lu_n_cell* cells_ad;
+		struct lu_n_cell* cells_bd;
+		struct lu_n_cell* cells_cd;
+		struct lu_n_cell* cells_bc;
+		struct lu_n_cell* cells_a;
+		struct lu_n_cell* cells_b;
+		struct lu_n_cell* cells_c;
+		struct lu_n_cell* cells_d;
 	};
 
 	static Lu_N_Column lu_n_column__init(
