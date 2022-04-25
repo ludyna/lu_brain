@@ -102,6 +102,8 @@ void test_lu_brain_basics(void)
 
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
+	TEST_ASSERT(LU_N_ADDR__INACTIVE.value != LU_N_ADDR__NULL.value);
+	TEST_ASSERT(LU_N_ADDR__INACTIVE.area_ix < LU_N_AREA__SPECIAL_AREA_SKIP);
 
 	lu_brain__print_info(brain);
 

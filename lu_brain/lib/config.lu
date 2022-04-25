@@ -164,7 +164,7 @@
 		//
 
 		lu__user_assert(self->s_mem, "s_mem is NULL");
-		lu__user_assert(self->s_areas_size > LU_N_CELL__SPEIAL_CELLS_SKIP, "s_areas_size should be greater than LU_N_CELL__SPEIAL_CELLS_SKIP");
+		lu__user_assert(self->s_areas_size > LU_N_AREA__SPECIAL_AREA_SKIP, "s_areas_size should be greater than LU_N_AREA__SPECIAL_AREA_SKIP");
 
 		//
 		// Network level

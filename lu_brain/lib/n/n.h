@@ -75,6 +75,7 @@
 
 	// NULL addr
 	extern const union lu_n_addr LU_N_ADDR__NULL; 
+	extern const union lu_n_addr LU_N_ADDR__INACTIVE;
 
 	static inline Lu_N_Addr lu_n_addr__init(
 		Lu_N_Addr self, 
@@ -313,28 +314,19 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Column
+// Lu_N_List
 // 
 
+	struct lu_n_list {
+		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
+		
 
-	////
-	// Having separete columns helps with parallelization in the future, but takes a little bit more memory.
-	// my mozhemo vykorystovuvaty columns, ale treba
-	// prosto znaty v yakomu poriadku zberihayemo string, sho prosto
-	// size parne, 0-size/2 cells, size/2-size - free cells
-	// p_reg mozhna vykorystaty ya dlia zberihannia string tak i dlia
-	// zberihannia n_cell
-	//   xxxxx
-	// y
-	// y 
-	// y 
-	// y 
+	};
 
-	// de y ce index, y x - ce znachenia strichky, prychomu maksymum 4?
-	// mozhna zrobyty z dlia vypadku koly my mayemo povtorennia, 
-	// yasho z > max_z robymo povnyy realloc i vse
-	// , te same dlia komirok
-	// komirka bude maty z i ix, de z i ix toy samyy dlia strichky i dlia komirky
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Column
+// 
+	
 	struct lu_n_column {
 		Lu_Mem mem;
 
@@ -345,20 +337,35 @@
 
 		struct lu_n_cell* cells;
 
-		struct lu_n_cell* cells_acd;
-		struct lu_n_cell* cells_abd;
-		struct lu_n_cell* cells_abc;
-		struct lu_n_cell* cells_bcd;
-		struct lu_n_cell* cells_ab;
-		struct lu_n_cell* cells_ac;
-		struct lu_n_cell* cells_ad;
-		struct lu_n_cell* cells_bd;
-		struct lu_n_cell* cells_cd;
-		struct lu_n_cell* cells_bc;
-		struct lu_n_cell* cells_a;
-		struct lu_n_cell* cells_b;
-		struct lu_n_cell* cells_c;
-		struct lu_n_cell* cells_d;
+	
+		// linky budut prostishe zamist cioho
+		// hocha ce dozvoliaye pevnu optymizaciyu potenciyno
+		// ale vtrachayetsia matematychno naypravelnishyy rezultat, a vin potriben
+		// dlia tochnyh rechei taka ya medycyna
+		// bulo b prykolno prote mohty vybyraty naskily tochno my hochemo
+		// sho yaksho v cell maty posylannia na lu_n_list, shob ne robyty lu_hash_comb calc 
+		// kozhen raz
+
+		// struct lu_n_list* cells_acd;
+		// struct lu_n_list* cells_abd;
+		// struct lu_n_list* cells_abc;
+		// struct lu_n_list* cells_bcd;
+		// struct lu_n_list* cells_ab;
+		// struct lu_n_list* cells_ac;
+		// struct lu_n_list* cells_ad;
+		// struct lu_n_list* cells_bd;
+		// struct lu_n_list* cells_cd;
+		// struct lu_n_list* cells_bc;
+		// struct lu_n_list* cells_a; // a000
+		// struct lu_n_list* cells_b; // 0b00
+		// struct lu_n_list* cells_c; // 00c0
+		// struct lu_n_list* cells_d; // 000d
+
+
+		// struct lu_n_list* cells_a; // a000
+		// struct lu_n_list* cells_b; // 0a00
+		// struct lu_n_list* cells_c; // 00a0
+		// struct lu_n_list* cells_d; // 000a 
 	};
 
 	static Lu_N_Column lu_n_column__init(

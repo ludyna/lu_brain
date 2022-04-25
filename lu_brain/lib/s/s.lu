@@ -25,19 +25,19 @@
 
 		lu_size i;
 
-		// (!!) This is important. We start areas ixs from LU_N_CELL__SPEIAL_CELLS_SKIP, 
+		// (!!) This is important. We start areas ixs from LU_N_AREA__SPECIAL_AREA_SKIP, 
 		// so union lu_n_addr.value = 0 will be reserved as "NULL" cell. 
 		// This way will not need "special cells", instead we can refer to non existent special layers.
 		// It will save memory and will make code more straightforward.
-		// To form addr of special cell we can use area_ix from < LU_N_CELL__SPEIAL_CELLS_SKIP, 
+		// To form addr of special cell we can use area_ix from < LU_N_AREA__SPECIAL_AREA_SKIP, 
 		// and appropriate x and y to form column_ix. cell_x can be 0.
 		self->areas_size = self->config->s_areas_size;
 		self->areas = (Lu_S_Area*) lu_mem__alloc(v_config->s_mem, sizeof(Lu_S_Area) * self->areas_size);
 		lu__alloc_assert(self->areas);
 
-		self->areas_count = LU_N_CELL__SPEIAL_CELLS_SKIP;
+		self->areas_count = LU_N_AREA__SPECIAL_AREA_SKIP;
 
-		for (i = 0; i < LU_N_CELL__SPEIAL_CELLS_SKIP; i++)
+		for (i = 0; i < LU_N_AREA__SPECIAL_AREA_SKIP; i++)
 		{
 			self->areas[i] = NULL;
 		}
@@ -134,7 +134,7 @@
 		// 
 		lu__assert(self->areas);
 		Lu_S_Area area;
-		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->areas_count; i++)
+		for (lu_size i = LU_N_AREA__SPECIAL_AREA_SKIP; i < self->areas_count; i++)
 		{
 			area = lu_s__get_area(self, i);
 			lu__assert(area);
@@ -177,7 +177,7 @@
 
 		Lu_S_Area area;
 		lu__debug("\nLu_S Areas: ");
-		for (lu_size i = LU_N_CELL__SPEIAL_CELLS_SKIP; i < self->areas_count; i++)
+		for (lu_size i = LU_N_AREA__SPECIAL_AREA_SKIP; i < self->areas_count; i++)
 		{
 			area = self->areas[i];
 

@@ -131,7 +131,7 @@
 
 		// lu_size v_reg;
 		// lu_size v_links[depth + 1];
-		// v_links[depth] = LU_N_CELL__NULL;
+		// v_links[depth] = LU_N_AREA__NULL;
 		
 		curr_w_table->any_fired = false;
 
@@ -189,10 +189,16 @@
 						);
 
 						any_p_fired = true;
+
+						// always save links, even if w_p_cell havent fired
+						p_links[z] = w_p_cell->n_addr;
+					}
+					else
+					{
+						p_links[z] = LU_N_ADDR__INACTIVE;
 					}
 
-					// always save links, even if w_p_cell havent fired
-					p_links[z] = w_p_cell->n_addr;
+
 
 				} // for (lu_size z = 0
 

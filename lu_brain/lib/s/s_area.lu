@@ -11,7 +11,7 @@
 		lu__assert(size > 0);  
 		lu__assert(tag < LU_S_TAG__END);
 
-		size += LU_N_CELL__SPEIAL_CELLS_SKIP;
+		size += LU_N_AREA__SPECIAL_AREA_SKIP;
 
 		Lu_Mem mem = config->s_mem;
 		lu__assert(mem);
