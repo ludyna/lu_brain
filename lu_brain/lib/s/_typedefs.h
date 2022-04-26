@@ -9,12 +9,6 @@
 	typedef struct lu_s_view_p* Lu_S_View_P;
 	typedef struct lu_s_view_v* Lu_S_View_V;
 
-	enum lu_n_area_special {
-		LU_N_AREA__NULL = 0,
-		LU_N_AREA__INACTIVE = 1,
-		LU_N_AREA__SPECIAL_AREA_SKIP
-	};
-
 	//
 	// Layers
 	//

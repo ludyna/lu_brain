@@ -5,6 +5,12 @@
 	typedef struct lu_n_pos* Lu_N_Pos;
 	typedef struct lu_n_pos_3d* Lu_N_Pos_3d;
 	typedef union lu_n_addr* Lu_N_Addr;
+
+	enum lu_n_area_special {
+		LU_N_AREA__NULL = 0,
+		LU_N_AREA__INACTIVE = 1,
+		LU_N_AREA__SPECIAL_AREA_SKIP
+	};
 	
 	#define LU_N_CELL__LINKS_MAX 5
 

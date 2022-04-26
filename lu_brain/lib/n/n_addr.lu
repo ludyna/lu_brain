@@ -12,5 +12,5 @@
 
 	const union lu_n_addr LU_N_ADDR__INACTIVE = {
 		.value = 0,
-		.area_ix = 1
+		.area_ix = LU_N_AREA__INACTIVE
 	};
