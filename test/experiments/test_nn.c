@@ -7,13 +7,13 @@
 
 Lu_Mem_Debugger md;
 
-#define T_LINKS_SIZE 10
+#define T_F_LINKS__SIZE 10
 
 typedef struct t_cell* T_Cell;
 typedef struct t_link* T_Link;
 
 struct t_link {
-	T_Cell links[T_LINKS_SIZE];
+	T_Cell links[T_F_LINKS__SIZE];
 	lu_size links_count;
 };
 
@@ -28,7 +28,7 @@ static inline T_Link t_link__init(T_Link self)
 
 static inline void t_link__add(T_Link self, T_Cell cell)
 {
-	lu__assert(self->links_count + 1 < T_LINKS_SIZE);
+	lu__assert(self->links_count + 1 < T_F_LINKS__SIZE);
 
 	self->links[self->links_count] = cell;
 	++self->links_count;
@@ -40,6 +40,8 @@ struct t_cell {
 	struct t_link tr;
 	struct t_link bl;
 	struct t_link br;
+
+	struct t_link children;
 
 	lu_value sig;
 	lu_size wave_id;
@@ -54,23 +56,77 @@ static inline T_Cell t_cell__init(T_Cell self)
 	t_link__init(&self->bl);
 	t_link__init(&self->br);
 
+	t_link__init(&self->children);
+
 	self->sig = 0;
 	self->wave_id = LU_SIZE__MAX;
 
 	return self;
 }
 
-static inline void t_cell__fire(T_Cell self, lu_value sig)
+static inline void t_cell__sig_add(T_Cell self, lu_value sig, lu_size wave_id)
 {
+	lu__assert(self);
+
+	if (self->wave_id != wave_id)
+	{
+		self->sig = 0;
+	}
+
+	self->wave_id = wave_id;
+	self->sig += sig;
+}
+
+static inline void t_cell__sig_fire(T_Cell self)
+{
+	lu__assert(self);
+
 
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Data
+
+struct t_cell tl_1_a;
+struct t_cell tr_1_a;
+struct t_cell bl_1_a;
+struct t_cell br_1_a;
+
+struct t_cell tr_1_b;
+struct t_cell bl_1_b;
+struct t_cell br_1_b;
+
+struct t_cell bl_1_c;
+struct t_cell br_1_c;
+
+struct t_cell a;
+struct t_cell b;
+struct t_cell c;
+
+///////////////////////////////////////////////////////////////////////////////
+// Setup
 
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
 	md = lu_mem_debugger__create(lu_g_mem);
 	TEST_ASSERT(md);
+
+	t_cell__init(&tl_1_a);
+	t_cell__init(&tr_1_a);
+	t_cell__init(&bl_1_a);
+	t_cell__init(&br_1_a);
+
+	t_cell__init(&tr_1_b);
+	t_cell__init(&bl_1_b);
+	t_cell__init(&br_1_b);
+
+	t_cell__init(&bl_1_c);
+	t_cell__init(&br_1_c);
+
+	t_cell__init(&a);
+	t_cell__init(&b);
+	t_cell__init(&c);
 }
 
 void tearDown(void)
@@ -82,7 +138,12 @@ void tearDown(void)
     lu_mem_debugger__destroy(md, true);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Tests
+
 void test_nn_simple(void)
 {
+
+
 
 }
