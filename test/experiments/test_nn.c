@@ -36,6 +36,8 @@ static inline void t_link__add(T_Link self, T_Cell cell)
 
 struct t_cell {
 
+	lu_size label;
+
 	struct t_link tl;
 	struct t_link tr;
 	struct t_link bl;
@@ -77,9 +79,25 @@ static inline void t_cell__sig_add(T_Cell self, lu_value sig, lu_size wave_id)
 	self->sig += sig;
 }
 
-static inline void t_cell__sig_fire(T_Cell self)
+static inline void t_cell__sig_fire_4(T_Cell c1, T_Cell c2, T_Cell c3, T_Cell c4)
 {
-	lu__assert(self);
+	lu__assert(c1);
+
+
+}
+
+static inline void t_cell__connect_4_to_1(T_Cell c1, T_Cell c2, T_Cell c3, T_Cell c4, T_Cell p)
+{
+	lu__assert(c1);
+	lu__assert(c2);
+	lu__assert(c3);
+	lu__assert(c4);
+	lu__assert(p);
+
+	t_link__add(&p->children, c1);
+	t_link__add(&p->children, c2);
+	t_link__add(&p->children, c3);
+	t_link__add(&p->children, c4);
 
 
 }
@@ -92,16 +110,20 @@ struct t_cell tr_1_a;
 struct t_cell bl_1_a;
 struct t_cell br_1_a;
 
+struct t_cell tl_1_b;
 struct t_cell tr_1_b;
 struct t_cell bl_1_b;
 struct t_cell br_1_b;
 
+struct t_cell tl_1_c;
+struct t_cell tr_1_c;
 struct t_cell bl_1_c;
 struct t_cell br_1_c;
 
 struct t_cell a;
 struct t_cell b;
 struct t_cell c;
+struct t_cell d;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Setup
@@ -116,17 +138,21 @@ void setUp(void)
 	t_cell__init(&tr_1_a);
 	t_cell__init(&bl_1_a);
 	t_cell__init(&br_1_a);
-
+ 
+ 	t_cell__init(&tl_1_b);
 	t_cell__init(&tr_1_b);
 	t_cell__init(&bl_1_b);
 	t_cell__init(&br_1_b);
 
+	t_cell__init(&tl_1_c);
+	t_cell__init(&tr_1_c);
 	t_cell__init(&bl_1_c);
 	t_cell__init(&br_1_c);
 
 	t_cell__init(&a);
 	t_cell__init(&b);
 	t_cell__init(&c);
+	t_cell__init(&d);
 }
 
 void tearDown(void)
@@ -143,7 +169,7 @@ void tearDown(void)
 
 void test_nn_simple(void)
 {
-
+	t_cell__connect_4_to_1(&tl_1_a, &tr_1_a, &bl_1_a, &br_1_a, &a);
 
 
 }
