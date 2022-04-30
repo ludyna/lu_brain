@@ -13,3 +13,5 @@ notes.md
 
 /examples/semeion/build
 
+/test/experiments/test_nn.c
+
