@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Digit
 
-	void smn_digit_print(Smn_Digit self)
+	void smn_digit__print(Smn_Digit self)
 	{
 		size_t x;
 		size_t y;
@@ -52,7 +52,7 @@
 
 	struct smn_group smn_groups[SMN_DIGIT_VALUE_COUNT];
 
-	void smn_groups_init()
+	void smn_groups__init()
 	{
 		size_t i;
 		Smn_Group group;
@@ -68,7 +68,7 @@
 		}
 	}
 
-	void smn_groups_data_alloc()
+	void smn_groups__data_alloc()
 	{
 		size_t i;
 		Smn_Group group;
@@ -82,7 +82,7 @@
 		}
 	}
 
-	void smn_groups_data_fill()
+	void smn_groups__data_fill()
 	{
 		Smn_Digit digit;
 		Smn_Group group;
@@ -104,7 +104,7 @@
 		}
 	}
 
-	void smn_groups_data_free()
+	void smn_groups__data_free()
 	{
 		size_t i;
 		Smn_Group group;
@@ -131,7 +131,7 @@
 	size_t 			smn_test_samples_count  	= 0;
 
 
-	void smn_data_load()
+	void smn_data__load()
 	{
 	    FILE * fp;
 	    char * line = NULL;
@@ -202,14 +202,14 @@
 	        free(line);
 	}
 
-	void smn_data_free()
+	void smn_data__free()
 	{
 		if (smn_data) free(smn_data);
 	}
 
-	void smn_data_samples_create()
+	void smn_data__samples_create()
 	{
-		smn_user_assert_void(SMN_TRAINING_SAMPLES_PERCENT < 0.99 && SMN_TRAINING_SAMPLES_PERCENT >= 0.3, "SMN_TRAINING_SAMPLES_PERCENT in bad range"); 
+		smn__user_assert_void(SMN_TRAINING_SAMPLES_PERCENT < 0.99 && SMN_TRAINING_SAMPLES_PERCENT >= 0.3, "SMN_TRAINING_SAMPLES_PERCENT in bad range"); 
 
 		smn_training_samples_count = 0;
 		smn_test_samples_count = 0;
@@ -230,10 +230,10 @@
 		}
 
 		smn_test_samples = (Smn_Digit*) calloc(smn_test_samples_count, sizeof(Smn_Digit));
-		smn_user_assert_void(smn_test_samples, "Cannot allocate smn_test_samples");
+		smn__user_assert_void(smn_test_samples, "Cannot allocate smn_test_samples");
 
 		smn_training_samples = (Smn_Digit*) calloc(smn_training_samples_count, sizeof(Smn_Digit));
-		smn_user_assert_void(smn_training_samples, "Cannot allocate smn_training_samples");
+		smn__user_assert_void(smn_training_samples, "Cannot allocate smn_training_samples");
 
 		size_t j;
 		Smn_Digit d;
@@ -246,8 +246,8 @@
 			j = 0;
 			while (j < group->test_size)
 			{
-				d = group->data[rand_in_range(0, (int) group->count - 1)];
-				smn_user_assert_void(d, "d is NULL");
+				d = group->data[smn__rand_in_range(0, (int) group->count - 1)];
+				smn__user_assert_void(d, "d is NULL");
 
 				if (d->type == SD_NONE)
 				{
@@ -259,7 +259,7 @@
 			}
 		}
 
-		smn_user_assert_void(test_count == smn_test_samples_count, "Sanity check failed: test_count == smn_test_samples_count");
+		smn__user_assert_void(test_count == smn_test_samples_count, "Sanity check failed: test_count == smn_test_samples_count");
 
 		printf("\nSelected %lu random test samples", smn_test_samples_count);
 
@@ -280,12 +280,12 @@
 			}
 		}
 
-		smn_user_assert_void(training_count == smn_training_samples_count, "Sanity check failed: training_count == smn_training_samples_count");
+		smn__user_assert_void(training_count == smn_training_samples_count, "Sanity check failed: training_count == smn_training_samples_count");
 
 		printf("\nSelected %lu random training samples", smn_training_samples_count);
 	}
 
-	void smn_data_samples_free()
+	void smn_data__samples_free()
 	{
 		if (smn_test_samples) free(smn_test_samples);
 		if (smn_training_samples) free(smn_training_samples);

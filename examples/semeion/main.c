@@ -25,20 +25,20 @@ int main()
 
 	// Init samples
 
-	smn_groups_init();
+	smn_groups__init();
 
 	// Load data into memory  
 
-	smn_data_load();
+	smn_data__load();
 
 	// Allocate data for groups and fill groups with samples
 
-	smn_groups_data_alloc();
-	smn_groups_data_fill();
+	smn_groups__data_alloc();
+	smn_groups__data_fill();
 
 	// Select random samples from group
 
-	smn_data_samples_create();
+	smn_data__samples_create();
 
 	// Create brain and related
 
@@ -70,8 +70,8 @@ int main()
 	// Show random digit
 
 	printf("\nRandom sample:");
-	Smn_Digit digit = &smn_data[rand_in_range(0, (int) smn_data_count)];
-	smn_digit_print(digit);
+	Smn_Digit digit = &smn_data[smn__rand_in_range(0, (int) smn_data_count)];
+	smn_digit__print(digit);
 
 	// Training samples
 
@@ -158,9 +158,9 @@ int main()
 
 	// Clean up memory for data
 
-	smn_data_samples_free();
-	smn_groups_data_free();
-	smn_data_free();
+	smn_data__samples_free();
+	smn_groups__data_free();
+	smn_data__free();
 
 	// Exit app
 

@@ -30,7 +30,7 @@
 		enum 			sd_type type;
 	};
 
-	void smn_digit_print(Smn_Digit self);
+	void smn_digit__print(Smn_Digit self);
 
 	// Group digit samples with the same name 
 	struct smn_group {
@@ -58,25 +58,25 @@
 	extern Smn_Digit*				smn_test_samples;
 	extern size_t 					smn_test_samples_count;
 
-	void smn_groups_init();
-	void smn_groups_data_alloc();
-	void smn_groups_data_fill();
-	void smn_groups_data_free();
+	void smn_groups__init();
+	void smn_groups__data_alloc();
+	void smn_groups__data_fill();
+	void smn_groups__data_free();
 
-	void smn_data_load();
-	void smn_data_free();
+	void smn_data__load();
+	void smn_data__free();
 
-	void smn_data_samples_create();;
-	void smn_data_samples_free();
+	void smn_data__samples_create();;
+	void smn_data__samples_free();
 
 ///////////////////////////////////////////////////////////////////////////////
 // Utils
 
-	static inline int rand_in_range(int lower, int upper) 
+	static inline int smn__rand_in_range(int lower, int upper) 
 	{ 
 		return (rand() % (upper - lower + 1)) + lower;
 	} 
 
-	#define smn_user_assert(exp, msg) if(!(exp)) return g_user_assert ? printf(msg) : NULL;
-	#define smn_user_assert_void(exp, msg) if(!(exp)) { if (g_user_assert) printf(msg); return; }
+	#define smn__user_assert(exp, msg) if(!(exp)) return g_user_assert ? printf(msg) : NULL;
+	#define smn__user_assert_void(exp, msg) if(!(exp)) { if (g_user_assert) printf(msg); return; }
 	
