@@ -12,7 +12,8 @@
 		LU_N_AREA__SPECIAL_AREA_SKIP
 	};
 	
-	#define LU_N_CELL__LINKS_MAX 5
+	typedef struct lu_n_node* Lu_N_Node;
+	typedef struct lu_n_node_table* Lu_N_Node_Table;
 
 	enum n_cell_type {
 		LU_N_CELL__0,
@@ -33,3 +34,4 @@
 	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
 	typedef struct lu_n_table* Lu_N_Table;
 
+	#define LU_N_CELL__LINKS_MAX 5

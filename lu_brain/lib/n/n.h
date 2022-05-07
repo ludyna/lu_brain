@@ -270,6 +270,24 @@
 		return p_reg;
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Node
+//
+
+	struct lu_n_node {
+		union lu_n_addr addr;
+
+		Lu_N_Node next;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Node_Table
+//
+
+
+	struct lu_n_node_table {
+
+	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
@@ -278,7 +296,14 @@
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
+		Lu_N_Node tl;
+		Lu_N_Node tr;
+		Lu_N_Node bl;
+		Lu_N_Node br;
+
 		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
+
+		Lu_N_Node children_2;
 	};
 
 	static inline Lu_N_Cell lu_n_cell__init(
