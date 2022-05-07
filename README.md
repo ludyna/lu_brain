@@ -14,12 +14,15 @@ Lu_Brain allows learning "on the fly" without artificial neural networks (ANN) r
 
 #### Transparency and Control
 
-When working with "classic" ANN, information is in "weights," but it is hard to understand where. Lu_Brain gives you a complete understanding of where information is. You can ask Lu_Brain to forget specific patterns or replace them with new ones dynamically. You can see a complete path that led to a specific decision. It means that you have complete data transparency and control over how AI works. No more unexplainable magic output.
+When working with "classic" ANN, information is in "weights," but it is hard to understand where exactly. Lu_Brain gives you a complete understanding of where information is. You can ask Lu_Brain to forget specific patterns or replace them with new ones dynamically. You can see a complete path that led to a specific decision. It means that you have complete data transparency and control over how AI works. No more unexplainable magic output.
 
 #### Speed
 
-Learning speed does not depend on the number of already learned patterns, which means that dynamic learning speed is O(1).
-Pattern recognition speed is also O(1).
+Learning speed does not depend on the number of already learned patterns (no gradient descent). 
+
+Pattern matching speed depends on the quality of expected results (the mathematically most correct answer will require more calculations).  
+
+The mathematically most correct answer for provided data is always achievable. There are no "local minimum" or "saddle points" problems in the Lu_Brain algorithm.
 
 ## Goals
 
