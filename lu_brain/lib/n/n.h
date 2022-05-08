@@ -281,13 +281,21 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Node_Table
+// Lu_N_Node_Mem
 //
 
-
-	struct lu_n_node_table {
+	struct lu_n_node_mem {
+		Lu_Mem_Table mem_table;
 
 	};
+
+	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self);
+	static void lu_n_node_mem__deinit(Lu_N_Node_Mem self);
+
+	static inline Lu_N_Node lu_n_node_mem__node_alloc(Lu_N_Node_Mem self)
+	{
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell

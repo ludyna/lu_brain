@@ -3,6 +3,7 @@
 */
 
 #include "n_addr.lu"
+#include "n_node_mem.lu"
 #include "n_cell.lu"
 #include "n_column.lu"
 #include "n_table.lu"
