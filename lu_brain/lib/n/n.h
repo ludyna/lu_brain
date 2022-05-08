@@ -270,48 +270,6 @@
 		return p_reg;
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Node
-//
-
-	struct lu_n_node {
-		union lu_n_addr addr;
-
-		Lu_N_Node next;
-	};
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Node_Mem
-//
-
-	struct lu_n_node_mem {
-		Lu_Mem_Table mem_table;
-
-	};
-
-	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self, Lu_Mem mem, lu_size size);
-	static void lu_n_node_mem__deinit(Lu_N_Node_Mem self);
-
-	static inline Lu_N_Node lu_n_node_mem__node_alloc(Lu_N_Node_Mem self)
-	{
-		lu__debug_assert(self);
-
-		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
-
-		if (!record)
-		{
-			lu_mem_table__realloc(
-				self->mem_table, 
-				lu_mem_table__records_count(self->mem_table) * 2, 
-				LU_MEM_TABLE__DEFAULT
-			);
-		}
-
-		record = lu_mem_record__alloc(self->mem_table);
-		lu__assert(record);
-
-		return (Lu_N_Node) record;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
@@ -363,14 +321,47 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_List
-// 
+// Lu_N_Node
+//
 
-	struct lu_n_list {
-		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
-		
+	struct lu_n_node {
+		Lu_N_Cell cell;
+
+		Lu_N_Node next;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Node_Mem
+//
+
+	struct lu_n_node_mem {
+		Lu_Mem_Table mem_table;
 
 	};
+
+	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self, Lu_Mem mem, lu_size size);
+	static void lu_n_node_mem__deinit(Lu_N_Node_Mem self);
+
+	static inline Lu_N_Node lu_n_node_mem__node_alloc(Lu_N_Node_Mem self)
+	{
+		lu__debug_assert(self);
+
+		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
+
+		if (!record)
+		{
+			lu_mem_table__realloc(
+				self->mem_table, 
+				lu_mem_table__records_count(self->mem_table) * 2, 
+				LU_MEM_TABLE__DEFAULT
+			); 
+
+			record = lu_mem_record__alloc(self->mem_table);
+			lu__assert(record);
+		}
+
+		return (Lu_N_Node) record;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
