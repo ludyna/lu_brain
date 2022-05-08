@@ -377,6 +377,7 @@
 
 		struct lu_n_cell* cells;
 
+		struct lu_n_node_mem node_mem;
 	
 		// linky budut prostishe zamist cioho
 		// hocha ce dozvoliaye pevnu optymizaciyu potenciyno
@@ -415,7 +416,8 @@
 		lu_size d, 
 		lu_size area_ix,
 		lu_size layer_ix, 
-		lu_size column_ix
+		lu_size column_ix,
+		Lu_Config config
 	);
 	static void lu_n_column__deinit(Lu_N_Column self);
 	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d);

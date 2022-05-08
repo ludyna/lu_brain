@@ -38,6 +38,7 @@
 			.n_column_w = 5, 
 			.n_column_h = 64,
 			.n_column_d = 3,
+			.n_node_mem_size = 64,
 
 			//
 			// Waves level
@@ -86,6 +87,7 @@
 			.n_column_w = 5, 
 			.n_column_h = 64,
 			.n_column_d = 3,
+			.n_node_mem_size = 64,
 
 			//
 			// Waves level
@@ -182,6 +184,7 @@
 		lu__user_assert(self->n_column_w > 4, "n_column_size should be greater than 4");
 		lu__user_assert(self->n_column_h > 9, "n_column_size should be greater than 9");
 		lu__user_assert(self->n_column_d > 2, "n_column_size should be greater than 2");
+		lu__user_assert(self->n_node_mem_size > 16, "n_column_size should be greater than 16");
 
 		//
 		// Waves level

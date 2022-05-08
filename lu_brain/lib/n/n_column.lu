@@ -12,7 +12,8 @@
 		lu_size d, 
 		lu_size area_ix,
 		lu_size layer_ix, 
-		lu_size column_ix
+		lu_size column_ix,
+		Lu_Config config
 	)
 	{
 		lu__assert(self);
@@ -36,6 +37,8 @@
 			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix);
 		}
 
+		lu_n_node_mem__init(&self->node_mem, mem, config->n_node_mem_size);
+
 		return self;
 	}
 
@@ -43,6 +46,8 @@
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
+
+		lu_n_node_mem__deinit(&self->node_mem);
 
 		lu_mem__free(self->mem, (lu_p_byte) self->cells);
 		

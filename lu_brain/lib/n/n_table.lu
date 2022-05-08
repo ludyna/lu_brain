@@ -41,7 +41,16 @@
 		{
 			column = &self->columns[i];
 
-			lu_n_column__init(column, mem, config->n_column_h, config->n_column_d, area_ix, layer_ix, i);
+			lu_n_column__init(
+				column, 
+				mem, 
+				config->n_column_h, 
+				config->n_column_d, 
+				area_ix, 
+				layer_ix, 
+				i, 
+				config
+			);
 		}
 
 		return self;
