@@ -13,7 +13,7 @@
 	};
 	
 	typedef struct lu_n_node* Lu_N_Node;
-	typedef struct lu_n_node_table* Lu_N_Node_Mem;
+	typedef struct lu_n_node_mem* Lu_N_Node_Mem;
 
 	enum n_cell_type {
 		LU_N_CELL__0,

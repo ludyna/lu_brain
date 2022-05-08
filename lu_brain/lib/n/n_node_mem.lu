@@ -1,0 +1,30 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self, Lu_Mem mem, lu_size size)
+	{
+		lu__assert(self);
+		lu__assert(size > 0);
+
+		self->mem_table = lu_mem_table__create(
+			mem, 
+			sizeof(struct lu_n_node),
+			size,
+			0,
+			LU_MEM_TABLE__FREEABLE
+		);
+		lu__assert(self->mem_table);
+	}
+
+	static void lu_n_node_mem__deinit(Lu_N_Node_Mem self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem_table);
+
+		lu_mem_table__destroy(self->mem_table);
+
+	}

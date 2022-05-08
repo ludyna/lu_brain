@@ -289,7 +289,7 @@
 
 	};
 
-	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self);
+	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self, Lu_Mem mem, lu_size size);
 	static void lu_n_node_mem__deinit(Lu_N_Node_Mem self);
 
 	static inline Lu_N_Node lu_n_node_mem__node_alloc(Lu_N_Node_Mem self)

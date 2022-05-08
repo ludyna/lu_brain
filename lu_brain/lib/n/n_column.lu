@@ -2,6 +2,9 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
+///////////////////////////////////////////////////////////////////////////////
+// 
+
 	static Lu_N_Column lu_n_column__init(
 		Lu_N_Column self, 
 		Lu_Mem mem, 
