@@ -120,7 +120,7 @@
 
 	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
 	#define lu_mem_table__reset(mt) mt->reset(mt, __func__, __FILE__, __LINE__)
-	#define lu_mem_table__realloc(mt, n_size, f) mt->realloc(mem, n_size, f, __func__, __FILE__, __LINE__)
+	#define lu_mem_table__realloc(mt, n_size, flags) mt->realloc(mt, n_size, flags, __func__, __FILE__, __LINE__)
 	#define lu_mem_table__destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
 
 	#define lu_mem_record__alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)

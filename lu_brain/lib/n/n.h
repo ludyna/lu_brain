@@ -294,7 +294,23 @@
 
 	static inline Lu_N_Node lu_n_node_mem__node_alloc(Lu_N_Node_Mem self)
 	{
+		lu__debug_assert(self);
 
+		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
+
+		if (!record)
+		{
+			lu_mem_table__realloc(
+				self->mem_table, 
+				lu_mem_table__records_count(self->mem_table) * 2, 
+				LU_MEM_TABLE__DEFAULT
+			);
+		}
+
+		record = lu_mem_record__alloc(self->mem_table);
+		lu__assert(record);
+
+		return (Lu_N_Node) record;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
