@@ -115,20 +115,17 @@
 
 	struct lu_w_cell {
 		union lu_n_addr n_addr;
-		lu_value sig;
 	};
 
 	static inline void lu_w_cell__reset(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
 		self->n_addr.value = 0;
-		self->sig = 0;
 	}
  	
  	static inline void lu_w_cell__save(Lu_W_Cell self, union lu_n_addr n_addr)
  	{
  		self->n_addr = n_addr;
- 		self->sig = 1;
  	}
 
 ///////////////////////////////////////////////////////////////////////////////

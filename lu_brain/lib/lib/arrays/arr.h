@@ -56,6 +56,7 @@
 		if (index >= self->count)
 			self->count = index + 1;
 
+
 		self->items[index] = value;
 	}
 

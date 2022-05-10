@@ -285,7 +285,9 @@
 
 		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
 
-		Lu_N_Node children_2;
+		Lu_N_Node children_2; 
+
+		Lu_W_Node w_nodes[3]; 
 	};
 
 	static inline Lu_N_Cell lu_n_cell__init(
@@ -364,6 +366,24 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Node
+//
+
+	struct lu_w_node {
+		
+	};
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Node_Mem
+//
+
+	struct lu_w_node_mem {
+		Lu_Mem_Table mem_table;
+
+	};
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
 // 
 	
@@ -378,35 +398,6 @@
 		struct lu_n_cell* cells;
 
 		struct lu_n_node_mem node_mem;
-	
-		// linky budut prostishe zamist cioho
-		// hocha ce dozvoliaye pevnu optymizaciyu potenciyno
-		// ale vtrachayetsia matematychno naypravelnishyy rezultat, a vin potriben
-		// dlia tochnyh rechei taka ya medycyna
-		// bulo b prykolno prote mohty vybyraty naskily tochno my hochemo
-		// sho yaksho v cell maty posylannia na lu_n_list, shob ne robyty lu_hash_comb calc 
-		// kozhen raz
-
-		// struct lu_n_list* cells_acd;
-		// struct lu_n_list* cells_abd;
-		// struct lu_n_list* cells_abc;
-		// struct lu_n_list* cells_bcd;
-		// struct lu_n_list* cells_ab;
-		// struct lu_n_list* cells_ac;
-		// struct lu_n_list* cells_ad;
-		// struct lu_n_list* cells_bd;
-		// struct lu_n_list* cells_cd;
-		// struct lu_n_list* cells_bc;
-		// struct lu_n_list* cells_a; // a000
-		// struct lu_n_list* cells_b; // 0b00
-		// struct lu_n_list* cells_c; // 00c0
-		// struct lu_n_list* cells_d; // 000d
-
-
-		// struct lu_n_list* cells_a; // a000
-		// struct lu_n_list* cells_b; // 0a00
-		// struct lu_n_list* cells_c; // 00a0
-		// struct lu_n_list* cells_d; // 000a 
 	};
 
 	static Lu_N_Column lu_n_column__init(
