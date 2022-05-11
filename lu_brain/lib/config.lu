@@ -44,7 +44,7 @@
 			// Waves level
 			//
 			.w_mem = NULL,	
-			.w_waves_size = 3,
+			.w_waves_size = 2,
 
 			//
 			// Labels
@@ -93,7 +93,7 @@
 			// Waves level
 			//
 			.w_mem = NULL,	
-			.w_waves_size = 3,
+			.w_waves_size = 2,
 
 			//
 			// Labels

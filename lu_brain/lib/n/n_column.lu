@@ -34,7 +34,7 @@
 
 		for (lu_size i = 0; i < items_size; i++)
 		{
-			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix);
+			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix, mem, config);
 		}
 
 		lu_n_node_mem__init(&self->node_mem, mem, config->n_node_mem_size);
@@ -48,6 +48,12 @@
 		lu__assert(self->mem);
 
 		lu_n_node_mem__deinit(&self->node_mem);
+
+		lu_size items_size = self->h * self->d;
+		for (lu_size i = 0; i < items_size; i++)
+		{
+			lu_n_cell__deinit(&self->cells[i], self->mem);
+		}
 
 		lu_mem__free(self->mem, (lu_p_byte) self->cells);
 		

@@ -222,7 +222,7 @@
 
 		Lu_N_Node children_2; 
 
-		Lu_W_Node w_nodes[3]; 
+		Lu_W_Match_Cell* w_cells;
 	};
 
 	static inline Lu_N_Cell lu_n_cell__init(
@@ -230,7 +230,9 @@
 		lu_size cell_ix, 
 		lu_size column_ix, 
 		lu_size layer_ix, 
-		lu_size area_ix
+		lu_size area_ix,
+		Lu_Mem mem,
+		Lu_Config config
 	)
 	{
 		lu__debug_assert(self);
@@ -238,6 +240,28 @@
 		lu_n_addr__init(&self->addr, cell_ix, column_ix, layer_ix, area_ix);
 
 		self->children[0].value = 0;
+
+		lu__assert(config->w_waves_size > 0);
+		self->w_cells = (Lu_W_Match_Cell*) lu_mem__alloc(mem, sizeof(Lu_W_Match_Cell*) * config->w_waves_size);
+		lu__alloc_assert(self->w_cells);
+
+		return self;
+	}
+
+	static inline Lu_N_Cell lu_n_cell__deinit(
+		Lu_N_Cell self,
+		Lu_Mem mem
+	)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+		lu__assert(self->w_cells);
+
+		lu__debug_assert(self);
+
+		lu_n_addr__set_to_null(&self->addr);
+
+		lu_mem__free(mem, (lu_p_byte) self->w_cells);
 
 		return self;
 	}
@@ -262,7 +286,7 @@
 //
 
 	struct lu_n_node {
-		union lu_n_addr addr; // if we use addr we dont care about cell type, etc
+		Lu_N_Cell cell;  
 
 		Lu_N_Node next;
 	};
@@ -300,23 +324,6 @@
 		return (Lu_N_Node) record;
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Node
-//
-
-	struct lu_w_node {
-		
-	};
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Node_Mem
-//
-
-	struct lu_w_node_mem {
-		Lu_Mem_Table mem_table;
-
-	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
