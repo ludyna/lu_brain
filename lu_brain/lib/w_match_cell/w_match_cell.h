@@ -105,3 +105,15 @@
 
 		return (Lu_W_Match_Cell) lu_mem_table__get(self->mem_table, addr.value);
 	}
+
+	static inline union lu_w_match_addr lu_w_match_cell_mem__get_addr(Lu_W_Match_Cell_Mem self, Lu_W_Match_Cell cell)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(cell);
+
+		union lu_w_match_addr addr;
+
+		addr.value = lu_mem_table__record_ix(self->mem_table, (lu_p_byte) cell);
+
+		return addr;
+	}

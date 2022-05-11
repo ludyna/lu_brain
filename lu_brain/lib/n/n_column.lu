@@ -32,9 +32,11 @@
 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * items_size);
 		lu__alloc_assert(self->cells);
 
+		self->w_cells_size = config->w_waves_size;
+
 		for (lu_size i = 0; i < items_size; i++)
 		{
-			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix, mem, config);
+			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix, mem, self->w_cells_size);
 		}
 
 		lu_n_node_mem__init(&self->node_mem, mem, config->n_node_mem_size);

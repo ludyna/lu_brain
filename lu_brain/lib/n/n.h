@@ -223,7 +223,6 @@
 		Lu_N_Node children_2; 
 
 		union lu_w_match_addr* w_cells;
-		lu_size w_cells_size;
 	};
 
 	static inline Lu_N_Cell lu_n_cell__init(
@@ -233,20 +232,17 @@
 		lu_size layer_ix, 
 		lu_size area_ix,
 		Lu_Mem mem,
-		Lu_Config config
+		lu_size w_cells_size
 	)
 	{
 		lu__debug_assert(self);
-		lu__assert(config->w_waves_size > 0);
+		lu__debug_assert(w_cells_size > 0);
 
 		lu_n_addr__init(&self->addr, cell_ix, column_ix, layer_ix, area_ix);
 
 		self->children[0].value = 0;
 
-		
-		self->w_cells_size = config->w_waves_size;
-
-		lu_size size = sizeof(union lu_w_match_addr*) * self->w_cells_size;
+		lu_size size = sizeof(union lu_w_match_addr*) * w_cells_size;
 		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(mem, size);
 		lu__alloc_assert(self->w_cells);
 
@@ -270,7 +266,7 @@
 
 		lu_mem__free(mem, (lu_p_byte) self->w_cells);
 
-		self->w_cells_size = 0;
+		self->w_cells = NULL;
 
 		return self;
 	}
@@ -349,6 +345,8 @@
 		struct lu_n_cell* cells;
 
 		struct lu_n_node_mem node_mem;
+
+		lu_size w_cells_size;
 	};
 
 	static Lu_N_Column lu_n_column__init(

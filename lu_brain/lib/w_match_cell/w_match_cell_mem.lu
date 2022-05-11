@@ -19,6 +19,10 @@
 			LU_MEM_TABLE__FREEABLE
 		);
 		lu__assert(self->mem_table);
+
+
+		// Skip first cell, because first cell is NULL cell
+		lu_w_match_cell_mem___cell_alloc(self);
 	}
 
 	static void lu_w_match_cell_mem__deinit(Lu_W_Match_Cell_Mem self)
