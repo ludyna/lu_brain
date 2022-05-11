@@ -69,5 +69,39 @@
 //  Lu_W_Match_Cell_Mem
 
 	struct lu_w_match_cell_mem {
-
+		Lu_Mem_Table mem_table;
 	};
+
+
+	static Lu_W_Match_Cell_Mem lu_w_match_cell_mem__init(Lu_W_Match_Cell_Mem self, Lu_Mem mem, lu_size size);
+	static void lu_w_match_cell_mem___deinit(Lu_W_Match_Cell_Mem self);
+
+	static inline Lu_W_Match_Cell lu_w_match_cell_mem___cell_alloc(Lu_W_Match_Cell_Mem self)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(self->mem_table);
+
+		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
+
+		if (!record)
+		{
+			lu_mem_table__realloc(
+				self->mem_table, 
+				lu_mem_table__records_count(self->mem_table) * 2, 
+				LU_MEM_TABLE__DEFAULT
+			); 
+
+			record = lu_mem_record__alloc(self->mem_table);
+			lu__assert(record);
+		}
+
+		return (Lu_W_Match_Cell) record;
+	}
+
+	static inline Lu_W_Match_Cell lu_w_match_cell_mem__get_cell(Lu_W_Match_Cell_Mem self, union lu_w_match_addr addr)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(self->mem_table);
+
+		return (Lu_W_Match_Cell) lu_mem_table__get(self->mem_table, addr.value);
+	}

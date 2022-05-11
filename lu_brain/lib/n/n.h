@@ -246,9 +246,11 @@
 		
 		self->w_cells_size = config->w_waves_size;
 
-		
-		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(mem, sizeof(union lu_w_match_addr*) * self->w_cells_size);
+		lu_size size = sizeof(union lu_w_match_addr*) * self->w_cells_size;
+		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(mem, size);
 		lu__alloc_assert(self->w_cells);
+
+		memset(self->w_cells, 0, size);
 
 		return self;
 	}

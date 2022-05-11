@@ -133,7 +133,11 @@
 
 	static inline lu_p_byte lu_mem_table__get(Lu_Mem_Table self, lu_size index)
 	{
-		return (self->records_start + index * self->record_size_in_bytes); 
+		lu_p_byte p =  (self->records_start + index * self->record_size_in_bytes);
+
+		lu__debug_assert(p < self->records_end);
+
+		return p;
 	} 
 
 	static inline lu_size lu_mem_table__record_shift(Lu_Mem_Table self, lu_p_byte record_addr)

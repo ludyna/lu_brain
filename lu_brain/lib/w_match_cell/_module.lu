@@ -2,4 +2,4 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-	//#include "w_match_cell.lu"
+	#include "w_match_cell_mem.lu"
