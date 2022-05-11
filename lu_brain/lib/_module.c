@@ -13,6 +13,8 @@
 
 #include "calcs/_module.lu"
 #include "config.lu" 
+#include "n_addr/_module.lu"
+#include "w_match_cell/_module.lu"
 #include "n/_module.lu"
 #include "label/_module.lu"
 #include "w/_module.lu" 

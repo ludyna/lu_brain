@@ -4,13 +4,6 @@
   
 	typedef struct lu_n_pos* Lu_N_Pos;
 	typedef struct lu_n_pos_3d* Lu_N_Pos_3d;
-	typedef union lu_n_addr* Lu_N_Addr;
-
-	enum lu_n_area_special {
-		LU_N_AREA__NULL = 0,
-		LU_N_AREA__INACTIVE = 1,
-		LU_N_AREA__SPECIAL_AREA_SKIP
-	};
 	
 	typedef struct lu_n_node* Lu_N_Node;
 	typedef struct lu_n_node_mem* Lu_N_Node_Mem;
