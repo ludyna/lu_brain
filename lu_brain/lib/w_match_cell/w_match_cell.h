@@ -55,6 +55,8 @@
 		lu_size value;
 	};
 
+	// NULL addr
+	extern const union lu_w_match_addr LU_W_MATCH_ADDR__NULL; 
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell 
