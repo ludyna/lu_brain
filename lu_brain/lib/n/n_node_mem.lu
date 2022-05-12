@@ -5,22 +5,26 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self, Lu_Mem mem, lu_size size)
+	static Lu_N_Link_Mem lu_n_link_mem__init(Lu_N_Link_Mem self, Lu_Mem mem, lu_size size)
 	{
 		lu__assert(self);
-		lu__assert(size > 0);
+		lu__assert(size > 1);
 
 		self->mem_table = lu_mem_table__create(
 			mem, 
-			sizeof(struct lu_n_node),
+			sizeof(struct lu_n_link),
 			size,
 			0,
 			LU_MEM_TABLE__FREEABLE
 		);
 		lu__assert(self->mem_table);
+
+
+		// skip NULL addr
+		lu_n_link_mem__link_alloc(self);
 	}
 
-	static void lu_n_node_mem__deinit(Lu_N_Node_Mem self)
+	static void lu_n_link_mem__deinit(Lu_N_Link_Mem self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem_table);

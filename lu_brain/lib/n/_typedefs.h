@@ -5,8 +5,8 @@
 	typedef struct lu_n_pos* Lu_N_Pos;
 	typedef struct lu_n_pos_3d* Lu_N_Pos_3d;
 	
-	typedef struct lu_n_node* Lu_N_Node;
-	typedef struct lu_n_node_mem* Lu_N_Node_Mem;
+	typedef struct lu_n_link* Lu_N_Link;
+	typedef struct lu_n_link_mem* Lu_N_Link_Mem;
 
 	enum n_cell_type {
 		LU_N_CELL__0,

@@ -1,0 +1,11 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+	
+	const union lu_n_link_addr LU_N_LINK_ADDR__NULL = {
+			.value = 0
+	};

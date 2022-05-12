@@ -213,14 +213,14 @@
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
-		Lu_N_Node tl;
-		Lu_N_Node tr;
-		Lu_N_Node bl;
-		Lu_N_Node br;
+		Lu_N_Link tl;
+		Lu_N_Link tr;
+		Lu_N_Link bl;
+		Lu_N_Link br;
 
 		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
 
-		Lu_N_Node children_2; 
+		Lu_N_Link children_2; 
 
 		union lu_w_match_addr* w_cells;
 	};
@@ -287,28 +287,45 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Node
+// Lu_N_Link_Addr
 //
 
-	struct lu_n_node {
-		Lu_N_Cell cell;  
-
-		Lu_N_Node next;
+	////
+	// We need it because we want to avoid using Lu_N_Link pointers because 
+	// Lu_N_Link_Mem can do reallocate, instead we want to have index insied of Lu_N_Link_Mem
+	// which stays the same independently of real memory position
+	union lu_n_link_addr {
+		lu_size value;
 	};
 
+	// NULL addr
+	extern const union lu_n_link_addr LU_N_LINK_ADDR__NULL; 
+
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Node_Mem
+// Lu_N_Link
 //
 
-	struct lu_n_node_mem {
+	struct lu_n_link {
+		// We cannot use pointer because of reallocations
+		union lu_n_addr cell;
+
+		union lu_n_link_addr next;
+	};
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Link_Mem
+//
+
+	struct lu_n_link_mem {
 		Lu_Mem_Table mem_table;
 
 	};
 
-	static Lu_N_Node_Mem lu_n_node_mem__init(Lu_N_Node_Mem self, Lu_Mem mem, lu_size size);
-	static void lu_n_node_mem__deinit(Lu_N_Node_Mem self);
+	static Lu_N_Link_Mem lu_n_link_mem__init(Lu_N_Link_Mem self, Lu_Mem mem, lu_size size);
+	static void lu_n_link_mem__deinit(Lu_N_Link_Mem self);
 
-	static inline Lu_N_Node lu_n_node_mem__node_alloc(Lu_N_Node_Mem self)
+	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self)
 	{
 		lu__debug_assert(self);
 
@@ -326,9 +343,28 @@
 			lu__assert(record);
 		}
 
-		return (Lu_N_Node) record;
+		return (Lu_N_Link) record;
 	}
 
+	static inline Lu_N_Link lu_n_link_mem__get_cell(Lu_N_Link_Mem self, union lu_n_link_addr addr)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(self->mem_table);
+
+		return (Lu_N_Link) lu_mem_table__get(self->mem_table, addr.value);
+	}
+
+	static inline union lu_n_link_addr lu_n_link_mem__get_addr(Lu_N_Link_Mem self, Lu_N_Link link)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(link);
+
+		union lu_n_link_addr addr;
+
+		addr.value = lu_mem_table__record_ix(self->mem_table, (lu_p_byte) link);
+
+		return addr;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
@@ -344,7 +380,7 @@
 
 		struct lu_n_cell* cells;
 
-		struct lu_n_node_mem node_mem;
+		struct lu_n_link_mem node_mem;
 
 		lu_size w_cells_size;
 	};
