@@ -283,7 +283,9 @@
 
 	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_addr* children)
 	{
-		lu_n_str__copy(self->children, children);
+		//lu_n_str__copy(self->children, children);
+
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -380,9 +382,9 @@
 
 		struct lu_n_cell* cells;
 
-		struct lu_n_link_mem node_mem;
+		struct lu_n_link_mem link_mem;
 
-		lu_size w_cells_size;
+		lu_size w_match_cells_size;
 	};
 
 	static Lu_N_Column lu_n_column__init(

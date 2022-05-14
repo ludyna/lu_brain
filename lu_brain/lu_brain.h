@@ -84,7 +84,7 @@
 		lu_size n_column_w;
 		lu_size n_column_h;
 		lu_size n_column_d;
-		lu_size n_node_mem_size;
+		lu_size n_link_mem_size;
 
 		//
 		// Waves level

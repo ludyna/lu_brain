@@ -190,12 +190,12 @@
 
 						any_p_fired = true;
 
-						// always save links, even if w_p_cell havent fired
+						// Always save links, even if w_p_cell havent fired
 						p_links[z] = w_p_cell->n_addr;
 					}
 					else
 					{
-						p_links[z] = LU_N_ADDR__INACTIVE;
+						p_links[z] = LU_N_ADDR__INACTIVE;  
 					}
 
 
