@@ -135,7 +135,7 @@
 		
 		curr_w_table->any_fired = false;
 
-		lu_bool any_p_fired;
+		lu_size column_ix;
 
 		for (y = 0; y < data->h; y++)
 		{
@@ -154,7 +154,7 @@
 				// reset string
 				p_links[0].value = 0;
 				p_links_i = 0;
-				any_p_fired = false;
+				column_ix = 0;
 
 				// iterate all layer comps and save result in rec_layer(which is also s_layer)
 				for (z = 0; z < depth; z++)
@@ -180,15 +180,13 @@
 					{
 						//lu__debug("\n SAVING:	%.1f", v);
 
-						lu_w_save_cell_p__save(
+						column_ix += lu_w_save_cell_p__save(
 							w_p_cell, 
 							x, 
 							y, 
 							p_comp_calc, 
 							p_view->n_comp_table
 						);
-
-						any_p_fired = true;
 
 						// Always save links, even if w_p_cell havent fired
 						p_links[z] = w_p_cell->n_addr;
@@ -205,7 +203,10 @@
 				// finish string with zero
 				p_links[z].value = 0;
 
-				if (any_p_fired)
+				////
+				// If at least one value present, save, otherwise dont need to do anything
+				// (by default we consider that "NULL" cell fired)
+				if (column_ix)
 				{
 					lu__debug("\n SAVING N_CELL");
 					

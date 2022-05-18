@@ -125,10 +125,15 @@
 	static inline lu_bool lu_w_save_cell_p__is_ready(Lu_W_Save_Cell_P self, lu_value signif_p)
 	{
 		//lu__debug("\n P STEP: %.1f, P1: %.1f, P2: %.1f, P_DIFF: %.1f", signif_p, self->p1, self->p2, lu_value_abs(self->p1 - self->p2));
-		return self->state == LU_W_SAVE_CELL_P__READY && lu_value_abs(self->p1 - self->p2) >= signif_p;
+
+		// If no changes its important information for us
+		return self->state == LU_W_SAVE_CELL_P__READY; // && lu_value_abs(self->p1 - self->p2) >= signif_p;
+
 	}
 
-	static inline void lu_w_save_cell_p__save(
+	////
+	// Returns column_ix
+	static inline lu_size lu_w_save_cell_p__save(
 		Lu_W_Save_Cell_P self, 
 		lu_size x,
 		lu_size y, 
@@ -142,12 +147,18 @@
 			p < 0 && (p = -p); 
 		#pragma GCC diagnostic pop
 
-		p = lu_comp_calc__norm(comp_calc, p);
+		lu_size column_ix = 0;
 
-		lu_size column_ix = lu_comp_calc__ix(comp_calc, p);
+		if (p >= comp_calc->step)
+		{
+			p = lu_comp_calc__norm(comp_calc, p);
+			column_ix = lu_comp_calc__ix(comp_calc, p);
+		}
 
 		self->n_addr = lu_n_table_comp__get_cell(n_table, x, y, column_ix)->addr;
 		self->sig = 1.0;
+
+		return column_ix;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

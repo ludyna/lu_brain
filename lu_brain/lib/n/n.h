@@ -4,6 +4,113 @@
 	n_tables are always "3d"
 */
 
+
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Link_Addr
+//
+
+	////
+	// We need it because we want to avoid using Lu_N_Link pointers because 
+	// Lu_N_Link_Mem can do reallocate, instead we want to have index insied of Lu_N_Link_Mem
+	// which stays the same independently of real memory position
+	union lu_n_link_addr {
+		lu_size value;
+	};
+
+	// NULL addr
+	extern const union lu_n_link_addr LU_N_LINK_ADDR__NULL; 
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+//
+
+	static inline Lu_N_Link lu_n_link_mem__get_link(Lu_N_Link_Mem self, union lu_n_link_addr addr);
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Link
+//
+
+	struct lu_n_link {
+		// We cannot use pointer because of reallocations
+		union lu_n_addr cell_addr;
+
+		union lu_n_link_addr next;
+	};
+
+	static inline lu_bool lu_n_link__eq(Lu_N_Link self, const union lu_n_addr* b, Lu_N_Link_Mem link_mem)
+	{
+		while (1)
+		{
+			if (!self || self->cell_addr.value != (*b).value)
+			{
+				return false;
+			}
+
+			if (self->cell_addr.value == 0 || (*b).value == 0) break;
+
+			self = lu_n_link_mem__get_link(link_mem, self->next);
+			++b;
+		}	
+		
+		return true;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Link_Mem
+//
+
+	struct lu_n_link_mem {
+		Lu_Mem_Table mem_table;
+
+	};
+
+	static Lu_N_Link_Mem lu_n_link_mem__init(Lu_N_Link_Mem self, Lu_Mem mem, lu_size size);
+	static void lu_n_link_mem__deinit(Lu_N_Link_Mem self);
+
+	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self)
+	{
+		lu__debug_assert(self);
+
+		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
+
+		if (!record)
+		{
+			lu_mem_table__realloc(
+				self->mem_table, 
+				lu_mem_table__records_count(self->mem_table) * 2, 
+				LU_MEM_TABLE__DEFAULT
+			); 
+
+			record = lu_mem_record__alloc(self->mem_table);
+			lu__assert(record);
+		}
+
+		return (Lu_N_Link) record;
+	}
+
+	static inline Lu_N_Link lu_n_link_mem__get_link(Lu_N_Link_Mem self, union lu_n_link_addr addr)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(self->mem_table);
+
+		return (Lu_N_Link) lu_mem_table__get(self->mem_table, addr.value);
+	}
+
+	static inline union lu_n_link_addr lu_n_link_mem__get_addr(Lu_N_Link_Mem self, Lu_N_Link link)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(link);
+
+		union lu_n_link_addr addr;
+
+		addr.value = lu_mem_table__record_ix(self->mem_table, (lu_p_byte) link);
+
+		return addr;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Pos 
 
@@ -206,6 +313,7 @@
 	}
 
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
 //
@@ -213,14 +321,14 @@
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
+		Lu_N_Link labels;
+
 		Lu_N_Link tl;
 		Lu_N_Link tr;
 		Lu_N_Link bl;
 		Lu_N_Link br;
 
-		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
-
-		Lu_N_Link children_2; 
+		Lu_N_Link children; 
 
 		union lu_w_match_addr* w_cells;
 	};
@@ -240,7 +348,12 @@
 
 		lu_n_addr__init(&self->addr, cell_ix, column_ix, layer_ix, area_ix);
 
-		self->children[0].value = 0;
+		self->labels = NULL;
+		self->tl = NULL;
+		self->tr = NULL;
+		self->bl = NULL;
+		self->br = NULL;
+		self->children = NULL;
 
 		lu_size size = sizeof(union lu_w_match_addr*) * w_cells_size;
 		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(mem, size);
@@ -273,100 +386,23 @@
 
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
-		return self->children[0].value == 0;
+		return self->children == NULL;
 	}
 
-	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_addr* children)
+	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_addr* children, Lu_N_Link_Mem link_mem)
 	{
-		return lu_n_str__eq(self->children, children);
+		return lu_n_link__eq(self->children, children, link_mem);
 	}
 
-	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_addr* children)
+	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_addr* children, Lu_N_Link_Mem link_mem)
 	{
+		lu__debug_assert(children); // we don't even save NULL cell
+
 		//lu_n_str__copy(self->children, children);
 
 
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Link_Addr
-//
-
-	////
-	// We need it because we want to avoid using Lu_N_Link pointers because 
-	// Lu_N_Link_Mem can do reallocate, instead we want to have index insied of Lu_N_Link_Mem
-	// which stays the same independently of real memory position
-	union lu_n_link_addr {
-		lu_size value;
-	};
-
-	// NULL addr
-	extern const union lu_n_link_addr LU_N_LINK_ADDR__NULL; 
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Link
-//
-
-	struct lu_n_link {
-		// We cannot use pointer because of reallocations
-		union lu_n_addr cell;
-
-		union lu_n_link_addr next;
-	};
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Link_Mem
-//
-
-	struct lu_n_link_mem {
-		Lu_Mem_Table mem_table;
-
-	};
-
-	static Lu_N_Link_Mem lu_n_link_mem__init(Lu_N_Link_Mem self, Lu_Mem mem, lu_size size);
-	static void lu_n_link_mem__deinit(Lu_N_Link_Mem self);
-
-	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self)
-	{
-		lu__debug_assert(self);
-
-		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
-
-		if (!record)
-		{
-			lu_mem_table__realloc(
-				self->mem_table, 
-				lu_mem_table__records_count(self->mem_table) * 2, 
-				LU_MEM_TABLE__DEFAULT
-			); 
-
-			record = lu_mem_record__alloc(self->mem_table);
-			lu__assert(record);
-		}
-
-		return (Lu_N_Link) record;
-	}
-
-	static inline Lu_N_Link lu_n_link_mem__get_cell(Lu_N_Link_Mem self, union lu_n_link_addr addr)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(self->mem_table);
-
-		return (Lu_N_Link) lu_mem_table__get(self->mem_table, addr.value);
-	}
-
-	static inline union lu_n_link_addr lu_n_link_mem__get_addr(Lu_N_Link_Mem self, Lu_N_Link link)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(link);
-
-		union lu_n_link_addr addr;
-
-		addr.value = lu_mem_table__record_ix(self->mem_table, (lu_p_byte) link);
-
-		return addr;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
@@ -441,10 +477,10 @@
 
 			if (lu_n_cell__is_blank(cell))
 			{
-				lu_n_cell__save(cell, children);
+				lu_n_cell__save(cell, children, &self->link_mem);
 				return lu_n_column__cell_to_ix(self, cell);
 			}
-			else if (lu_n_cell__eq(cell, children)) 
+			else if (lu_n_cell__eq(cell, children, &self->link_mem)) 
 			{
 				return lu_n_column__cell_to_ix(self, cell); // no need to do anything, we already have that cell
 			}
