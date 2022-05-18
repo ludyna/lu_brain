@@ -179,8 +179,12 @@
 						);
 
 						// Always save links, even if w_p_cell havent fired
+						// w_p_cell->n_addr never will be LU_N_ADDR__NULL because 
+						// LU_N_ADDR__NULL is for non existing area_ix (0)
+						// column_ix can be 0
 						p_links[z] = w_p_cell->n_addr;
 					}
+
 
 				} // for (lu_size z = 0
 
@@ -195,6 +199,10 @@
 					lu__debug("\n SAVING N_CELL");
 					
 					n_addr = lu_n_table__save(rec_n_table, x, y, p_links);
+
+					// Shouldn't happen, it probably means we had no space for new n_cell
+					lu__debug_assert(n_addr.value != LU_N_ADDR__NULL.value);
+
 					lu_w_save_cell__save(rec_w_p_cell, n_addr);
 
 					curr_w_table->any_fired = true;

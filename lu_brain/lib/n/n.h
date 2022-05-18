@@ -467,7 +467,9 @@
 	static union lu_n_addr lu_n_column__save(Lu_N_Column self, union lu_n_addr* children)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert((*children).value);
+		
+		// Shouldn't happen because we should save only when SUM column_ix is > 0
+		if (!(*children).value) return LU_N_ADDR__NULL;
 
 		lu_size ix = lu_n_column__children_to_ix(self, children);
 
