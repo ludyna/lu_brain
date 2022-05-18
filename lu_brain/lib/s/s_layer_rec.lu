@@ -164,14 +164,12 @@
 					p_comp_calc = &p_view->comp_calc;
 					w_p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
 
-					// v = data->values[z * wh + xy_shift];
+					v = data->values[z * wh + xy_shift];
 
 					lu_w_save_cell_p__register(w_p_cell, is_reset, v, config);
 
 					if (!is_reset && lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
-						lu__debug("\n W_SAVE_CELL_P IS READY");
-
 						column_ix += lu_w_save_cell_p__save(
 							w_p_cell, 
 							x, 

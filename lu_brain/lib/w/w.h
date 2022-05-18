@@ -149,8 +149,6 @@
 
 		lu_size column_ix = 0;
 
-		lu__debug("\n P IS %.2f, P1 = %.2f, P2 = %.2f", p, self->p1, self->p2);
-
 		if (p >= comp_calc->step)
 		{
 			p = lu_comp_calc__norm(comp_calc, p);
