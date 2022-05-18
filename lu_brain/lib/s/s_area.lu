@@ -169,6 +169,9 @@
 
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
 
+		lu__debug("\n SAVING DATA (lu_s_layer_rec__save()):");
+		lu_data__print(data);
+
 		Lu_W_Table curr_w_table = lu_s_layer_rec__save(layer_rec, wave_id, rec_id, data, config);
 
 		if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return NULL;

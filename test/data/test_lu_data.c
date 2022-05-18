@@ -32,7 +32,7 @@ void test_lu_data_create_via_shift(void)
 {
 	Lu_Data data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, -1, 0);
 
-	// lu_data__debug(data_1);
+	// lu_data__print(data_1);
 
 	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 1);
 	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 4);
@@ -41,7 +41,7 @@ void test_lu_data_create_via_shift(void)
 
 	data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, 1, 0);
 
-	// lu_data__debug(data_1);
+	// lu_data__print(data_1);
 
 	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 2);
 	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 6);
@@ -50,7 +50,7 @@ void test_lu_data_create_via_shift(void)
 
 	data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, 0, -1);
 
-	// lu_data__debug(data_1);
+	// lu_data__print(data_1);
 
 	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 1);
 	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 2);
@@ -59,7 +59,7 @@ void test_lu_data_create_via_shift(void)
 
 	data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, 1, 1);
 
-	// lu_data__debug(data_1);
+	// lu_data__print(data_1);
 
 	TEST_ASSERT(lu_data__value_get(data_1, 0, 0, 0) == 5);
 	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 9);

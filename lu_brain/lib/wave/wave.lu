@@ -177,7 +177,7 @@
 
 		// 	if (lu_data__is_empty(data)) continue;
 			
-		// 	lu_data__debug(data);
+		// 	lu_data__print(data);
 
 		// lu_s__save_rec_data(s, wave, rec_id, data, config);
 		// }

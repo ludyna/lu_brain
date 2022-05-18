@@ -127,11 +127,6 @@
 		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
 		union lu_n_addr p_links[depth + 1]; 
-		lu_size p_links_i;
-
-		// lu_size v_reg;
-		// lu_size v_links[depth + 1];
-		// v_links[depth] = LU_N_AREA__NULL;
 		
 		curr_w_table->any_fired = false;
 
@@ -152,33 +147,30 @@
 				lu_w_save_cell__reset(rec_w_p_cell);
 
 				// reset string
-				p_links[0].value = 0;
-				p_links_i = 0;
+				p_links[0] = LU_N_ADDR__NULL;
 				column_ix = 0;
 
 				// iterate all layer comps and save result in rec_layer(which is also s_layer)
 				for (z = 0; z < depth; z++)
 				{
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
-					lu__assert(comp->super.type == LU_S_LAYER__COMP);
+					lu__debug_assert(comp->super.type == LU_S_LAYER__COMP);
 
 					p_view = &comp->p_view;
 
 					p_table = lu_s_view_p__get_w_table(p_view, wave_id);
-					lu__assert(p_table);
+					lu__debug_assert(p_table);
 
 					p_comp_calc = &p_view->comp_calc;
 					w_p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
 
-					v = data->values[z * wh + xy_shift];
+					// v = data->values[z * wh + xy_shift];
 
 					lu_w_save_cell_p__register(w_p_cell, is_reset, v, config);
 
-					//lu__debug("\n PROCESSING:	%.1f", v);
-
 					if (!is_reset && lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
-						//lu__debug("\n SAVING:	%.1f", v);
+						lu__debug("\n W_SAVE_CELL_P IS READY");
 
 						column_ix += lu_w_save_cell_p__save(
 							w_p_cell, 
@@ -191,17 +183,11 @@
 						// Always save links, even if w_p_cell havent fired
 						p_links[z] = w_p_cell->n_addr;
 					}
-					else
-					{
-						p_links[z] = LU_N_ADDR__INACTIVE;  
-					}
-
-
 
 				} // for (lu_size z = 0
 
 				// finish string with zero
-				p_links[z].value = 0;
+				p_links[z] = LU_N_ADDR__NULL;
 
 				////
 				// If at least one value present, save, otherwise dont need to do anything

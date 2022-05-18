@@ -130,7 +130,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Debug
 
-	void lu_data__debug(Lu_Data self)
+	void lu_data__print(Lu_Data self)
 	{
 		lu__assert(self);
 
