@@ -386,7 +386,16 @@
 
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
+		lu__debug_assert(self);
+
 		return self->children == NULL;
+	}
+
+	static inline lu_bool lu_n_cell__is_n_column_null(Lu_N_Cell self)
+	{
+		lu__debug_assert(self);
+
+		return self->addr.column_ix == 0;
 	}
 
 	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_addr* children, Lu_N_Link_Mem link_mem)
@@ -469,13 +478,19 @@
 		lu__debug_assert(self);
 		
 		// Shouldn't happen because we should save only when SUM column_ix is > 0
-		if (!(*children).value) return LU_N_ADDR__NULL;
+		if (lu_n_addr__is_blank(children)) return LU_N_ADDR__NULL;
 
 		lu_size ix = lu_n_column__children_to_ix(self, children);
+
+		lu__debug("\n\n children ix = %ld", ix);
+		lu_n_str__print(children);
 
 		for (lu_size z = 0; z < self->d; z++)
 		{
 			Lu_N_Cell cell = lu_n_column__get_cell(self, z, ix);
+
+			// We don't save to n_column null cell
+			// if (lu_n_cell__is_n_column_null(cell)) continue;
 
 			if (lu_n_cell__is_blank(cell))
 			{

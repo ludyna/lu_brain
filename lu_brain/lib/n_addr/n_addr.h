@@ -21,7 +21,7 @@
 	};
 
 	// NULL addr
-	extern const union lu_n_addr LU_N_ADDR__NULL; 
+	extern union lu_n_addr LU_N_ADDR__NULL; 
 	extern const union lu_n_addr LU_N_ADDR__INACTIVE;
 
 	static inline Lu_N_Addr lu_n_addr__init(
