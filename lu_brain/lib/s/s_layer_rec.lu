@@ -132,6 +132,8 @@
 
 		lu_size column_ix;
 
+		lu_size saved_count;
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -149,6 +151,7 @@
 				// reset string
 				p_links[0] = LU_N_ADDR__NULL;
 				column_ix = 0;
+				saved_count = 0;
 
 				// iterate all layer comps and save result in rec_layer(which is also s_layer)
 				for (z = 0; z < depth; z++)
@@ -183,12 +186,21 @@
 						// LU_N_ADDR__NULL is for non existing area_ix (0)
 						// column_ix can be 0
 						p_links[z] = w_p_cell->n_addr;
+						++saved_count;
 					}
 
 
 				} // for (lu_size z = 0
 
-				// finish string with zero
+				#ifdef LU__DEBUG
+					if (!is_reset)
+					{
+						// lu_n_str_length(p_links) always equal to depth
+						lu__debug_assert(saved_count == depth);
+					}
+				#endif
+
+				// finish string with zero, 
 				p_links[z] = LU_N_ADDR__NULL;
 
 				////
