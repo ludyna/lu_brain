@@ -192,22 +192,20 @@
 
 				} // for (lu_size z = 0
 
-				#ifdef LU__DEBUG
-					if (!is_reset)
-					{
-						// lu_n_str_length(p_links) always equal to depth
-						lu__debug_assert(saved_count == depth);
-					}
-				#endif
-
-				// finish string with zero, 
-				p_links[z] = LU_N_ADDR__NULL;
-
 				////
 				// If at least one value present, save, otherwise dont need to do anything
 				// (by default we consider that "NULL" cell fired)
 				if (column_ix)
 				{
+
+					#ifdef LU__DEBUG
+						// lu_n_str_length(p_links) always equal to depth
+						lu__debug_assert(saved_count == depth);
+					#endif
+
+					// finish string with zero, 
+					p_links[z] = LU_N_ADDR__NULL;
+
 					lu__debug("\n SAVING N_CELL");
 					
 					n_addr = lu_n_table__save(rec_n_table, x, y, p_links);
