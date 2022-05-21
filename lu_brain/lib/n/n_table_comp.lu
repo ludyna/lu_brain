@@ -21,6 +21,7 @@
 		lu__assert(height > 0);
 		lu__assert(depth > 0);
 		lu__assert(comp_calc->cells_size == depth);
+		lu__assert(area_ix >= LU_N_AREA__SPECIAL_AREA_SKIP);
 
 		Lu_N_Table_Comp self = (Lu_N_Table_Comp) lu_mem__alloc(config->n_mem, sizeof(struct lu_n_table_comp));
 		lu__assert(self);
@@ -49,22 +50,27 @@
 		lu_size column_ix;
 		struct lu_n_pos pos;
 
+		lu_size i = 0;
+		lu_size calc_i = 0;
 		for (z = 0; z < depth; z++)
 		{
 			z_shift = z * self->wh;
 			for (y = 0; y < height; y++)
 			{
 				zy_shift = z_shift + y * width;
-				for (x = 0; x < width; x++)
+				for (x = 0; x < width; x++, i++)
 				{
-					cell = &self->cells[zy_shift + x]; 
+					calc_i = zy_shift + x;
+					lu__debug_assert(calc_i == i);
+
+					cell = &self->cells[i]; 
 
 					pos.x = x;
 					pos.y = y;
 
 					column_ix = lu_n_pos__to_column_ix(&pos, self->w);
 
-					lu_n_addr__init(&addr, z, column_ix, layer_ix, area_ix);
+					lu_n_addr__init(&addr, i, column_ix, layer_ix, area_ix);
 
 					lu_n_cell_vp__init(cell, comp_calc->steps[z], x, y, z, addr);
 				} 

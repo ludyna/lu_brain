@@ -223,7 +223,7 @@
 		return self->type;
 	}
 
-	static inline void lu_s_layer_base__print_info(Lu_S_Layer_Base self)
+	static inline void lu_s_layer_base__print(Lu_S_Layer_Base self)
 	{
 		char buffer[50];
 		lu__debug("\n 		layer_ix: %d", self->layer_ix);
@@ -428,7 +428,7 @@
 	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Rec rec);
 
 
-	static inline void lu_s_area__print_info(Lu_S_Area self)
+	static inline void lu_s_area__print(Lu_S_Area self)
 	{
 		char buffer[50];
 		lu__debug("\n 	area_ix: %d", self->area_ix);
@@ -442,7 +442,7 @@
 
 			if(layer == NULL) break;
 
-			lu_s_layer_base__print_info(layer);
+			lu_s_layer_base__print(layer);
 		}
 	}
 

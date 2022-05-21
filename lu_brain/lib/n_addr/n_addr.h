@@ -64,5 +64,5 @@
 
 	static inline void lu_n_addr__print(Lu_N_Addr self)
 	{
-		lu__debug("%d:%d:%d:%d", self->area_ix, self->layer_ix, self->column_ix, self->cell_ix);
+		lu__debug(" (ce_ix: %ld|co_ix: %ld|l_ix: %ld|a_ix: %ld)",  self->cell_ix, self->column_ix, self->layer_ix, self->area_ix);
 	}

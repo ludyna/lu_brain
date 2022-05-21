@@ -313,7 +313,6 @@
 	}
 
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
 //
@@ -345,8 +344,14 @@
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(w_cells_size > 0);
+		lu__debug_assert(area_ix >= LU_N_AREA__SPECIAL_AREA_SKIP);
 
 		lu_n_addr__init(&self->addr, cell_ix, column_ix, layer_ix, area_ix);
+
+		lu__debug_assert(self->addr.cell_ix == cell_ix);
+		lu__debug_assert(self->addr.column_ix == column_ix);
+		lu__debug_assert(self->addr.layer_ix == layer_ix);
+		lu__debug_assert(self->addr.area_ix == area_ix);
 
 		self->labels = NULL;
 		self->tl = NULL;
@@ -391,11 +396,11 @@
 		return self->children == NULL;
 	}
 
-	static inline lu_bool lu_n_cell__is_n_column_null(Lu_N_Cell self)
+	static inline lu_bool lu_n_cell__is_n_column_null_cell(Lu_N_Cell self)
 	{
 		lu__debug_assert(self);
 
-		return self->addr.column_ix == 0;
+		return self->addr.cell_ix == 0;
 	}
 
 	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_addr* children, Lu_N_Link_Mem link_mem)
@@ -408,8 +413,6 @@
 		lu__debug_assert(children); // we don't even save NULL cell
 
 		//lu_n_str__copy(self->children, children);
-
-
 	}
 
 
@@ -490,7 +493,7 @@
 			Lu_N_Cell cell = lu_n_column__get_cell(self, z, ix);
 
 			// We don't save to n_column null cell
-			// if (lu_n_cell__is_n_column_null(cell)) continue;
+			if (lu_n_cell__is_n_column_null_cell(cell)) continue;
 
 			if (lu_n_cell__is_blank(cell))
 			{

@@ -183,7 +183,7 @@
 
 			if (area == NULL) break;
 
-			lu_s_area__print_info(area);
+			lu_s_area__print(area);
 		}
 
 	}

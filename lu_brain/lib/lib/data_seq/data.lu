@@ -44,7 +44,6 @@
 		lu_size size = sizeof(lu_value) * self->w * self->h * self->d;
 
 		self->values 	= (lu_p_value) mem->alloc(mem, size, func, file, line);
-
 		memcpy((lu_p_void) self->values, (lu_p_void) src->values, size);
 
 		return self;
