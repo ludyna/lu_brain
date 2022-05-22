@@ -2,6 +2,7 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
+#include "n_link.lu"
 #include "n_node_mem.lu"
 #include "n_cell.lu"
 #include "n_column.lu"

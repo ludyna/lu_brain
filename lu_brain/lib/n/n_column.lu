@@ -65,6 +65,10 @@
 		self->mem = NULL;
 	}
 
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
 	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d)
 	{
 		// lu__assert(self);
@@ -94,3 +98,11 @@
 		// relocating just like that is not enough, we will have to move data, because we might changed h
 		// and h is used in p_reg % h
 	}
+
+
+	// static union lu_n_addr lu_n_column__save_with_vp_children(
+	// 	Lu_N_Column self, 
+	// 	Lu_N_Cell_VP* children, 
+	// 	lu_size children_count
+	// )
+

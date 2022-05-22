@@ -186,18 +186,18 @@
 				curr_w_cell = lu_w_table__get_cell(curr_w_table, x, y);
 				lu__debug_assert(curr_w_cell);
 
-				lu_w_save_cell__reset(curr_w_cell);
+				// lu_w_save_cell__reset(curr_w_cell);
 
-				lu_w_table__cipher_children(prev_w_table, x, y, children);
+				// lu_w_table__cipher_children(prev_w_table, x, y, children);
 
-				if (lu_n_addr__is_present(&children[0]))
-				{
-					n_addr = lu_n_table__save_with_vp_children(curr_n_table, x, y, children);
-					lu_w_save_cell__save(curr_w_cell, n_addr);
-					++cells_saved_count;
+				// if (lu_n_addr__is_present(&children[0]))
+				// {
+				// 	n_addr = lu_n_table__save_with_vp_children(curr_n_table, x, y, children);
+				// 	lu_w_save_cell__save(curr_w_cell, n_addr);
+				// 	++cells_saved_count;
 
-					curr_w_table->any_fired = true;
-				}
+				// 	curr_w_table->any_fired = true;
+				// }
 			}
 		}
 

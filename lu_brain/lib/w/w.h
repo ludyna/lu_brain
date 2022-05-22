@@ -91,6 +91,9 @@
 
 	struct lu_w_save_cell_p {
 		union lu_n_addr n_addr;
+
+		// sig doesn't make much sense for save cell, but
+		// we have it here to indicate if cell was active (not "null" cell)
 		lu_value sig;
 
 		lu_byte state;
@@ -151,6 +154,8 @@
 		lu_size z = 0;
 
 		// By default, we will not fire
+		// sig doesn't matter for saving, but it is just to indicate 
+		// if was active or not
 		self->sig = 0;
 
 		if (p >= comp_calc->step)

@@ -156,6 +156,7 @@
 				p_links[0] = LU_N_ADDR__NULL;
 				not_null_cells_count = 0;
 				saved_count = 0;
+				children[0] = NULL;
 
 				// Iterate components for x,y position in Data, register them to appropriate w_cell 
 				// and when cell is ready set sig for it marking to be ready to be fired
@@ -226,7 +227,7 @@
 
 					lu__debug("\n SAVING N_CELL");
 					
-					n_addr = lu_n_table__save_with_vp_children(rec_n_table, x, y, p_links);
+					n_addr = lu_n_table__save_with_vp_children(rec_n_table, x, y, children, depth);
 
 					// Shouldn't happen, it probably means we had no space for new n_cell
 					lu__debug_assert(!lu_n_addr__is_eq(&n_addr, &LU_N_ADDR__NULL));

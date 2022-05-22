@@ -5,7 +5,50 @@
 */
 
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Cell_VP
 
+	struct lu_n_cell_vp { 
+		// addr can be removed later to save memory, but useful for testing and debugging
+		// can be wrapped in #ifdef LU__DEBUG
+		union lu_n_addr addr; 
+
+		lu_value value; 
+		lu_size x;
+		lu_size y;
+		lu_size z;  // if z = 0, this cell is "NULL" cell
+
+		Lu_N_Link parents;
+	};
+
+	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
+	{
+		self->addr.value = 0;
+
+		self->value = 0;
+		self->x = 0;
+		self->y = 0;
+		self->z = 0;
+	}
+
+	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
+		Lu_N_Cell_VP self, 
+		lu_value value,
+		lu_size x,
+		lu_size y,
+		lu_size z,
+		union lu_n_addr addr
+	)
+	{
+		self->addr = addr;
+
+		self->value = value;
+		self->x = x;
+		self->y = y;
+		self->z = z;
+
+		return self;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
@@ -57,6 +100,35 @@
 		return true;
 	}
 
+	static inline lu_bool lu_n_link__is_vp_children_eq(
+		Lu_N_Link self, 
+		Lu_N_Cell_VP* children, 
+		lu_size children_count, 
+		Lu_N_Link_Mem link_mem
+	)
+	{
+		lu__debug_assert(children);
+		lu__debug_assert(children[0]);
+		lu__debug_assert(children_count > 0);
+		lu__debug_assert(link_mem);
+
+		if (self == NULL) return false;
+
+		Lu_N_Cell_VP vp_cell;
+		for(lu_size i = 0; i < children_count; i++)
+		{
+			if (self == NULL) return false;
+
+			vp_cell = children[i];
+			lu__debug_assert(vp_cell);
+
+			if (!lu_n_addr__is_eq(&self->cell_addr, &vp_cell->addr)) return false;
+
+			self = lu_n_link_mem__get_link(link_mem, self->next);
+		}
+
+		return true;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Mem
@@ -95,6 +167,8 @@
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(self->mem_table);
+
+		if (addr.value == 0) return NULL;
 
 		return (Lu_N_Link) lu_mem_table__get(self->mem_table, addr.value);
 	}
@@ -162,48 +236,6 @@
 		return pos;
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell_VP
-
-	struct lu_n_cell_vp { 
-		// addr can be removed later to save memory, but useful for testing and debugging
-		// can be wrapped in #ifdef LU__DEBUG
-		union lu_n_addr addr; 
-
-		lu_value value; 
-		lu_size x;
-		lu_size y;
-		lu_size z;  // if z = 0, this cell is "NULL" cell
-	};
-
-	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
-	{
-		self->addr.value = 0;
-
-		self->value = 0;
-		self->x = 0;
-		self->y = 0;
-		self->z = 0;
-	}
-
-	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
-		Lu_N_Cell_VP self, 
-		lu_value value,
-		lu_size x,
-		lu_size y,
-		lu_size z,
-		union lu_n_addr addr
-	)
-	{
-		self->addr = addr;
-
-		self->value = value;
-		self->x = x;
-		self->y = y;
-		self->z = z;
-
-		return self;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table_Comp
@@ -312,6 +344,22 @@
 		return p_reg;
 	}
 
+	static inline lu_size lu_n_str__vp_childrean_hash_comb(Lu_N_Cell_VP* children, lu_size children_count)
+	{
+		lu_size p_reg = 0;
+
+		Lu_N_Cell_VP vp_cell;
+		for (lu_size i = 0; i < children_count; i++)
+		{
+			vp_cell = children[i];
+			lu__debug_assert(vp_cell);
+
+			p_reg = lu_hash_comb(p_reg, vp_cell->addr.value);
+		}
+
+		return p_reg;
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
@@ -403,12 +451,12 @@
 		return self->addr.cell_ix == 0;
 	}
 
-	static inline lu_bool lu_n_cell__eq(Lu_N_Cell self, const union lu_n_addr* children, Lu_N_Link_Mem link_mem)
-	{
-		return lu_n_link__eq(self->children, children, link_mem);
-	}
-
-	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_addr* children, Lu_N_Link_Mem link_mem)
+	static inline void lu_n_cell__vp_save( 
+		Lu_N_Cell self, 
+		Lu_N_Cell_VP* children, 
+		lu_size children_count,
+		Lu_N_Link_Mem link_mem
+	)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(children); // we don't even save NULL cell
@@ -474,25 +522,26 @@
 		return lu_n_column__hash_to_ix(self, lu_n_str__hash_comb(children));
 	}
 
-	static inline union lu_n_addr lu_n_column__cell_to_ix(Lu_N_Column self, Lu_N_Cell cell)
-	{ 
-		union lu_n_addr ix;
-		ix.column_ix = 0;
-		ix.cell_ix = ((cell - self->cells) / sizeof(struct lu_n_cell));
-		return ix;
+	static inline lu_size lu_n_column__vp_children_to_ix(
+		Lu_N_Column self, 
+		Lu_N_Cell_VP* children, 
+		lu_size children_count
+	)
+	{
+		return lu_n_column__hash_to_ix(self, lu_n_str__vp_childrean_hash_comb(children, children_count));
 	}
 
-	static union lu_n_addr lu_n_column__save_with_vp_children(Lu_N_Column self, union lu_n_addr* children)
+	static inline union lu_n_addr lu_n_column__save_with_vp_children(
+		Lu_N_Column self, 
+		Lu_N_Cell_VP* children, 
+		lu_size children_count
+	)
 	{
 		lu__debug_assert(self);
-		
-		// Shouldn't happen because we should save only when SUM column_ix is > 0
-		if (lu_n_addr__is_blank(children)) return LU_N_ADDR__NULL;
+		lu__debug_assert(children);
+		lu__debug_assert(children[0]);
 
-		lu_size ix = lu_n_column__children_to_ix(self, children);
-
-		lu__debug("\n\n children ix = %ld", ix);
-		lu_n_str__print(children);
+		lu_size ix = lu_n_column__vp_children_to_ix(self, children, children_count);
 
 		for (lu_size z = 0; z < self->d; z++)
 		{
@@ -503,12 +552,12 @@
 
 			if (lu_n_cell__is_blank(cell))
 			{
-				lu_n_cell__save(cell, children, &self->link_mem);
-				return lu_n_column__cell_to_ix(self, cell);
+				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
+				return cell->addr;
 			}
-			else if (lu_n_cell__eq(cell, children, &self->link_mem)) 
+			else if (lu_n_link__is_vp_children_eq(cell->children, children, children_count, &self->link_mem)) 
 			{
-				return lu_n_column__cell_to_ix(self, cell); // no need to do anything, we already have that cell
+				return cell->addr; // no need to do anything, we already have that cell
 			}
 		}
 
@@ -547,9 +596,15 @@
  		return &self->columns[y * self->w + x];
  	}
 
-	static inline union lu_n_addr lu_n_table__save_with_vp_children(Lu_N_Table self, lu_size x, lu_size y, union lu_n_addr *links)
+	static inline union lu_n_addr lu_n_table__save_with_vp_children(
+		Lu_N_Table self, 
+		lu_size x, 
+		lu_size y, 
+		Lu_N_Cell_VP* children, 
+		lu_size children_count
+	)
 	{
-		return lu_n_column__save_with_vp_children(lu_n_table__get_column(self, x, y), links);
+		return lu_n_column__save_with_vp_children(lu_n_table__get_column(self, x, y), children, children_count);
 	}
 
 	////
