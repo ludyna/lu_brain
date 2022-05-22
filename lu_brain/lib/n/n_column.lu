@@ -27,14 +27,14 @@
 		self->d = d;
 
 
-		lu_size items_size = h * d;
+		self->cells_size = h * d;
 
-		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * items_size);
+		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
 		lu__alloc_assert(self->cells);
 
 		self->w_match_cells_size = config->w_waves_size;
 
-		for (lu_size i = 0; i < items_size; i++)
+		for (lu_size i = 0; i < self->cells_size; i++)
 		{
 			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix, mem, self->w_match_cells_size);
 		}
@@ -51,8 +51,7 @@
 
 		lu_n_link_mem__deinit(&self->link_mem);
 
-		lu_size items_size = self->h * self->d;
-		for (lu_size i = 0; i < items_size; i++)
+		for (lu_size i = 0; i < self->cells_size; i++)
 		{
 			lu_n_cell__deinit(&self->cells[i], self->mem);
 		}

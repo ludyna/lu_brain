@@ -483,6 +483,7 @@
 		lu_size d;
 
 		struct lu_n_cell* cells;
+		lu_size cells_size;
 
 		struct lu_n_link_mem link_mem;
 
@@ -514,7 +515,13 @@
 
 	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)
 	{
-		return &self->cells[z * self->h + ix];
+		lu__debug_assert(self);
+
+		lu_size column_ix = z * self->h + ix;
+
+		lu__debug_assert(column_ix < self->cells_size);
+
+		return &self->cells[column_ix];
 	}
 
 	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, union lu_n_addr* children)
@@ -547,8 +554,10 @@
 		{
 			Lu_N_Cell cell = lu_n_column__get_cell(self, z, ix);
 
-			// We don't save to n_column null cell
-			if (lu_n_cell__is_n_column_null_cell(cell)) continue;
+			lu__debug_assert(cell);
+
+			// We don't save to n_column null cell (which is for z = 0 only)
+			if (z == 0 && lu_n_cell__is_n_column_null_cell(cell)) continue;
 
 			if (lu_n_cell__is_blank(cell))
 			{
