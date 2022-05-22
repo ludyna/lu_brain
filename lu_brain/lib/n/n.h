@@ -173,7 +173,7 @@
 		lu_value value; 
 		lu_size x;
 		lu_size y;
-		lu_size z;
+		lu_size z;  // if z = 0, this cell is "NULL" cell
 	};
 
 	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
@@ -410,9 +410,15 @@
 
 	static inline void lu_n_cell__save(Lu_N_Cell self, const union lu_n_addr* children, Lu_N_Link_Mem link_mem)
 	{
+		lu__debug_assert(self);
 		lu__debug_assert(children); // we don't even save NULL cell
 
-		//lu_n_str__copy(self->children, children);
+		// while ((*children)->value)
+		// {
+		// 	// lu_n_cell__append_child(self, *children, link_mem);
+
+		// 	++children;
+		// }
 	}
 
 

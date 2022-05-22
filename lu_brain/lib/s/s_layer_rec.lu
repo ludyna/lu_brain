@@ -127,11 +127,12 @@
 		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
 		union lu_n_addr p_links[depth + 1]; 
+
+		Lu_N_Cell_VP children[depth + 1];
 		
 		curr_w_table->any_fired = false;
 
-		lu_size column_ix;
-
+		lu_size not_null_cells_count;
 		lu_size saved_count;
 
 		for (y = 0; y < data->h; y++)
@@ -150,7 +151,7 @@
 
 				// reset string
 				p_links[0] = LU_N_ADDR__NULL;
-				column_ix = 0;
+				not_null_cells_count = 0;
 				saved_count = 0;
 
 				// iterate all layer comps and save result in rec_layer(which is also s_layer)
@@ -173,7 +174,7 @@
 
 					if (!is_reset && lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
-						column_ix += lu_w_save_cell_p__save(
+						children[z] = lu_w_save_cell_p__save(
 							w_p_cell, 
 							x, 
 							y, 
@@ -184,8 +185,14 @@
 						// Always save links, even if w_p_cell havent fired
 						// w_p_cell->n_addr never will be LU_N_ADDR__NULL because 
 						// LU_N_ADDR__NULL is for non existing area_ix (0)
-						// column_ix can be 0
-						p_links[z] = w_p_cell->n_addr;
+						// cell_ix can be 0
+						p_links[z] = children[z]->addr;
+
+						if (children[z]->z != 0)
+						{
+							++not_null_cells_count;
+						}
+
 						++saved_count;
 					}
 
@@ -195,7 +202,7 @@
 				////
 				// If at least one value present, save, otherwise dont need to do anything
 				// (by default we consider that "NULL" cell fired)
-				if (column_ix)
+				if (not_null_cells_count)
 				{
 					#ifdef LU__DEBUG
 						// lu_n_str_length(p_links) always equal to depth

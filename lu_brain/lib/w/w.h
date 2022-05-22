@@ -132,8 +132,8 @@
 	}
 
 	////
-	// Returns column_ix
-	static inline lu_size lu_w_save_cell_p__save(
+	//
+	static inline Lu_N_Cell_VP lu_w_save_cell_p__save(
 		Lu_W_Save_Cell_P self, 
 		lu_size x,
 		lu_size y, 
@@ -147,18 +147,25 @@
 			p < 0 && (p = -p); 
 		#pragma GCC diagnostic pop
 
-		lu_size column_ix = 0;
+		Lu_N_Cell_VP vp_cell;
+		lu_size z = 0;
 
 		if (p >= comp_calc->step)
 		{
 			p = lu_comp_calc__norm(comp_calc, p);
-			column_ix = lu_comp_calc__ix(comp_calc, p);
+			z = lu_comp_calc__ix(comp_calc, p);
 		}
 
-		self->n_addr = lu_n_table_comp__get_cell(n_table, x, y, column_ix)->addr;
+		// If difference between p1 and p2 is small, z will 0, which means its "NULL" cell
+		// z being 0 doesnt meen addr->cell_x is 0 (!)
+		
+		vp_cell = lu_n_table_comp__get_cell(n_table, x, y, z);
+		lu__debug_assert(vp_cell);
+
+		self->n_addr = vp_cell->addr;
 		self->sig = 1.0;
 
-		return column_ix;
+		return vp_cell;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
