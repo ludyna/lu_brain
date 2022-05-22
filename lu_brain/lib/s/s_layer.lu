@@ -192,7 +192,7 @@
 
 				if (lu_n_addr__is_present(&children[0]))
 				{
-					n_addr = lu_n_table__save(curr_n_table, x, y, children);
+					n_addr = lu_n_table__save_with_vp_children(curr_n_table, x, y, children);
 					lu_w_save_cell__save(curr_w_cell, n_addr);
 					++cells_saved_count;
 
@@ -258,7 +258,7 @@
 
 	// 			if (lu_n_addr__is_present(&children[0]))
 	// 			{
-	// 				n_addr = lu_n_table__save(curr_n_table, x, y, children);
+	// 				n_addr = lu_n_table__save_with_vp_children(curr_n_table, x, y, children);
 	// 				lu_w_save_cell__save(curr_w_cell, n_addr);
 	// 				++cells_saved_count;
 

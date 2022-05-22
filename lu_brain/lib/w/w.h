@@ -147,25 +147,31 @@
 			p < 0 && (p = -p); 
 		#pragma GCC diagnostic pop
 
-		Lu_N_Cell_VP vp_cell;
+		Lu_N_Cell_VP n_vp_cell;
 		lu_size z = 0;
+
+		// By default, we will not fire
+		self->sig = 0;
 
 		if (p >= comp_calc->step)
 		{
 			p = lu_comp_calc__norm(comp_calc, p);
 			z = lu_comp_calc__ix(comp_calc, p);
+
+			// We will fire this cell only p >= comp_calc->step
+			self->sig = 1.0;
 		}
 
 		// If difference between p1 and p2 is small, z will 0, which means its "NULL" cell
 		// z being 0 doesnt meen addr->cell_x is 0 (!)
 		
-		vp_cell = lu_n_table_comp__get_cell(n_table, x, y, z);
-		lu__debug_assert(vp_cell);
+		n_vp_cell = lu_n_table_comp__get_cell(n_table, x, y, z);
+		lu__debug_assert(n_vp_cell);
 
-		self->n_addr = vp_cell->addr;
-		self->sig = 1.0;
+		// Link w_cell to n_cell
+		self->n_addr = n_vp_cell->addr;
 
-		return vp_cell;
+		return n_vp_cell;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

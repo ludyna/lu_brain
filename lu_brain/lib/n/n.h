@@ -482,7 +482,7 @@
 		return ix;
 	}
 
-	static union lu_n_addr lu_n_column__save(Lu_N_Column self, union lu_n_addr* children)
+	static union lu_n_addr lu_n_column__save_with_vp_children(Lu_N_Column self, union lu_n_addr* children)
 	{
 		lu__debug_assert(self);
 		
@@ -547,9 +547,9 @@
  		return &self->columns[y * self->w + x];
  	}
 
-	static inline union lu_n_addr lu_n_table__save(Lu_N_Table self, lu_size x, lu_size y, union lu_n_addr *links)
+	static inline union lu_n_addr lu_n_table__save_with_vp_children(Lu_N_Table self, lu_size x, lu_size y, union lu_n_addr *links)
 	{
-		return lu_n_column__save(lu_n_table__get_column(self, x, y), links);
+		return lu_n_column__save_with_vp_children(lu_n_table__get_column(self, x, y), links);
 	}
 
 	////

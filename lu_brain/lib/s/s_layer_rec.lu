@@ -91,6 +91,7 @@
 		lu_size x;
 		lu_size y;
 		lu_size z;
+		lu_size i;
 		lu_size y_shift;
 		lu_value v;
 		lu_size xy_shift;
@@ -135,6 +136,8 @@
 		lu_size not_null_cells_count;
 		lu_size saved_count;
 
+		Lu_N_Cell_VP vp_cell;
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -154,7 +157,8 @@
 				not_null_cells_count = 0;
 				saved_count = 0;
 
-				// iterate all layer comps and save result in rec_layer(which is also s_layer)
+				// Iterate components for x,y position in Data, register them to appropriate w_cell 
+				// and when cell is ready set sig for it marking to be ready to be fired
 				for (z = 0; z < depth; z++)
 				{
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
@@ -168,12 +172,17 @@
 					p_comp_calc = &p_view->comp_calc;
 					w_p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
 
+					// Get value from Data
 					v = data->values[z * wh + xy_shift];
 
 					lu_w_save_cell_p__register(w_p_cell, is_reset, v, config);
 
 					if (!is_reset && lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
+						//
+						// Children W cell_p save
+						//
+
 						children[z] = lu_w_save_cell_p__save(
 							w_p_cell, 
 							x, 
@@ -199,9 +208,8 @@
 
 				} // for (lu_size z = 0
 
-				////
 				// If at least one value present, save, otherwise dont need to do anything
-				// (by default we consider that "NULL" cell fired)
+				// This is optimization, we consider that "NULL" cells fired, but we don't do any calcs
 				if (not_null_cells_count)
 				{
 					#ifdef LU__DEBUG
@@ -209,15 +217,35 @@
 						lu__debug_assert(saved_count == depth);
 					#endif
 
+					//
+					// N Cell save
+					//
+
 					// finish string with zero, 
 					p_links[z] = LU_N_ADDR__NULL;
 
 					lu__debug("\n SAVING N_CELL");
 					
-					n_addr = lu_n_table__save(rec_n_table, x, y, p_links);
+					n_addr = lu_n_table__save_with_vp_children(rec_n_table, x, y, p_links);
 
 					// Shouldn't happen, it probably means we had no space for new n_cell
 					lu__debug_assert(!lu_n_addr__is_eq(&n_addr, &LU_N_ADDR__NULL));
+
+					//
+					// N VP links save
+					//
+
+					for (i = 0; i < depth; i++)
+					{
+						vp_cell = children[i];
+						lu__debug_assert(vp_cell);
+
+
+					}
+
+					//
+					// Parent W cell save
+					//
 
 					lu_w_save_cell__save(rec_w_p_cell, n_addr);
 
