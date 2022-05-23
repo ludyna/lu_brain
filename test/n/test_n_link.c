@@ -12,6 +12,7 @@ Lu_N_Link_Mem link_mem;
 Lu_N_Link n_link_1 = NULL;
 Lu_N_Link n_link_2 = NULL;
 Lu_N_Link n_link_3 = NULL;
+Lu_N_Link n_link_4 = NULL;
 
 #define CHILDREN_COUNT 3
 Lu_N_Cell_VP children_1[CHILDREN_COUNT];
@@ -43,11 +44,6 @@ void tearDown(void)
 
 void test___lu_n_link__is_vp_children_eq(void) 
 {
-	union lu_n_addr a1[] = {{.value = 1}, {.value = 1}, {.value = 1}};
-	union lu_n_addr a2[] = {{.value = 2}, {.value = 2}, {.value = 2}};
-	union lu_n_addr a3[] = {{.value = 3}, {.value = 3}, {.value = 3}};
-	union lu_n_addr a4[] = {{.value = 0}, {.value = 0}, {.value = 0}};
-
 	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == false);
 
 	n_link_1 = lu_n_link_mem__link_alloc(link_mem);
@@ -72,6 +68,13 @@ void test___lu_n_link__is_vp_children_eq(void)
 
 	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == true);
 
+	n_link_4 = lu_n_link_mem__link_alloc(link_mem);
+	n_link_4->cell_addr.value = 4;
+	n_link_4->next.value = 0;
+
+	n_link_3->next = lu_n_link_mem__get_addr(link_mem, n_link_4);
+
+	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == true);
 }
 
 
