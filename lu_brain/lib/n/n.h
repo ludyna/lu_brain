@@ -139,8 +139,8 @@
 
 	};
 
-	static Lu_N_Link_Mem lu_n_link_mem__init(Lu_N_Link_Mem self, Lu_Mem mem, lu_size size);
-	static void lu_n_link_mem__deinit(Lu_N_Link_Mem self);
+	Lu_N_Link_Mem lu_n_link_mem__init(Lu_N_Link_Mem self, Lu_Mem mem, lu_size size);
+	void lu_n_link_mem__deinit(Lu_N_Link_Mem self);
 
 	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self)
 	{
