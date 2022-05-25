@@ -24,6 +24,7 @@
 	typedef struct lu_n_strs* Lu_N_Strs;
 	typedef struct lu_n_cells* Lu_N_Cells;
 	typedef struct lu_n_column* Lu_N_Column;
+	typedef struct lu_n_column_comp* Lu_N_Column_Comp;
 	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
 	typedef struct lu_n_table* Lu_N_Table;
 

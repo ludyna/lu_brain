@@ -1,0 +1,64 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_N_Column_Comp lu_n_column_comp__init(
+		Lu_N_Column_Comp self, 
+		Lu_Mem mem, 
+		lu_size cell_size, 
+		lu_size x, 
+		lu_size y, 
+		lu_size area_ix,
+		lu_size layer_ix, 
+		lu_size column_ix,
+		Lu_Comp_Calc comp_calc, 
+		Lu_Config config
+	)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+		lu__assert(cell_size > 0);
+
+		self->mem = mem;
+		self->column_ix = column_ix;
+		self->cells_size = cell_size;
+
+		self->cells = (struct lu_n_cell_vp*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
+		lu__alloc_assert(self->cells);
+
+		self->w_match_cells_size = config->w_waves_size;
+
+		union lu_n_addr addr;
+
+		for (lu_size i = 0; i < self->cells_size; i++)
+		{
+			lu_n_addr__init(&addr, i, column_ix, layer_ix, area_ix);
+			lu_n_cell_vp__init(&self->cells[i], comp_calc->steps[i], x, y, i, addr, self->w_match_cells_size);
+		}
+
+		lu_n_link_mem__init(&self->link_mem, mem, config->n_link_mem_size);
+
+		return self;
+	}
+
+	static void lu_n_column_comp__deinit(Lu_N_Column_Comp self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem);
+
+		lu_n_link_mem__deinit(&self->link_mem);
+
+		for (lu_size i = 0; i < self->cells_size; i++)
+		{
+			lu_n_cell_vp__deinit(&self->cells[i], self->mem);
+		}
+
+		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+		
+		self->cells = NULL;
+		self->cells_size = 0;
+		self->mem = NULL;
+	}

@@ -37,7 +37,8 @@
 		lu_size x,
 		lu_size y,
 		lu_size z,
-		union lu_n_addr addr
+		union lu_n_addr addr,
+		lu_size w_match_cells_size
 	)
 	{
 		self->addr = addr;
@@ -48,6 +49,11 @@
 		self->z = z;
 
 		return self;
+	}
+
+	static inline void lu_n_cell_vp__deinit(Lu_N_Cell_VP self, Lu_Mem mem)
+	{
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -130,6 +136,11 @@
 		return true;
 	}
 
+	static inline void lu_n_link__prepend(Lu_N_Link self, Lu_N_Link b)
+	{
+		
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Mem
 //
@@ -173,6 +184,8 @@
 		return (Lu_N_Link) lu_mem_table__get(self->mem_table, addr.value);
 	}
 
+	////
+	// 
 	static inline union lu_n_link_addr lu_n_link_mem__get_addr(Lu_N_Link_Mem self, Lu_N_Link link)
 	{
 		lu__debug_assert(self);
@@ -235,6 +248,38 @@
 
 		return pos;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Column_Comp
+//
+
+	struct lu_n_column_comp {
+		Lu_Mem mem;
+
+		lu_size column_ix;
+
+		struct lu_n_cell_vp* cells;
+		lu_size cells_size;
+
+		struct lu_n_link_mem link_mem;
+
+		lu_size w_match_cells_size;
+	};
+
+	static Lu_N_Column_Comp lu_n_column_comp__init(
+		Lu_N_Column_Comp self, 
+		Lu_Mem mem, 
+		lu_size cell_size, 
+		lu_size x, 
+		lu_size y, 
+		lu_size area_ix,
+		lu_size layer_ix, 
+		lu_size column_ix,
+		Lu_Comp_Calc comp_calc, 
+		Lu_Config config
+	);
+
+	static void lu_n_column_comp__deinit(Lu_N_Column_Comp self);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -495,7 +540,7 @@
 			switch(ix)
 			{
 				case 3:
-
+					
 					break;
 				case 2:
 

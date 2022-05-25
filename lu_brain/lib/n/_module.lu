@@ -6,5 +6,6 @@
 #include "n_node_mem.lu"
 #include "n_cell.lu"
 #include "n_column.lu"
+#include "n_column_comp.lu"
 #include "n_table.lu"
 #include "n_table_comp.lu"

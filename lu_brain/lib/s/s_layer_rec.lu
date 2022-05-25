@@ -207,6 +207,11 @@
 					}
 
 
+					// try idei
+					// 1. w_cell mozhe maty vkazivnyky?
+					// 2. n_table_comp skladayetsia z n_column_comp
+					// 3. 
+
 				} // for (lu_size z = 0
 
 				// If at least one value present, save, otherwise dont need to do anything
