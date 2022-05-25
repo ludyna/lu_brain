@@ -63,7 +63,7 @@
 	};
 
 	// NULL addr
-	extern const union lu_n_link_addr LU_N_LINK_ADDR__NULL; 
+	extern union lu_n_link_addr LU_N_LINK_ADDR__NULL; 
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
@@ -365,6 +365,14 @@
 // Lu_N_Cell
 //
 
+	union lu_n_cell_counters {
+		struct {
+			lu_size children_count: 32;
+			lu_size children_null_count: 32;
+		};
+		lu_size value;
+	};
+
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
@@ -376,6 +384,7 @@
 		Lu_N_Link br;
 
 		Lu_N_Link children; 
+		union lu_n_cell_counters counters;
 
 		union lu_w_match_addr* w_cells;
 	};
@@ -407,6 +416,7 @@
 		self->bl = NULL;
 		self->br = NULL;
 		self->children = NULL;
+		self->counters.value = 0;
 
 		lu_size size = sizeof(union lu_w_match_addr*) * w_cells_size;
 		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(mem, size);
@@ -461,12 +471,48 @@
 		lu__debug_assert(self);
 		lu__debug_assert(children); // we don't even save NULL cell
 
-		// while ((*children)->value)
-		// {
-		// 	// lu_n_cell__append_child(self, *children, link_mem);
+		lu_size i;
+		Lu_N_Cell_VP vp_cell = NULL;
+		Lu_N_Link n_link = NULL;
+		Lu_N_Link prev_n_link = NULL;
+		lu_size ix;
 
-		// 	++children;
-		// }
+		for (i = 0; i < children_count; i++)
+		{
+			ix = children_count - i - 1;
+
+			vp_cell = children[ix]; 
+			lu__assert(vp_cell);
+
+			n_link = lu_n_link_mem__link_alloc(link_mem);
+			lu__assert(n_link);
+
+			n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+			n_link->cell_addr = vp_cell->addr;
+
+			prev_n_link = n_link;
+
+			switch(ix)
+			{
+				case 3:
+
+					break;
+				case 2:
+
+					break;
+				case 1: 
+
+					break;
+				case 0:
+
+					break;
+
+				default:
+					lu__assert(true);
+			}
+		}
+
+		self->children = n_link;
 	}
 
 
@@ -556,7 +602,7 @@
 
 			lu__debug_assert(cell);
 
-			// We don't save to n_column null cell (which is for z = 0 only)
+			// We don't save INTO n_column null cell (which is for z = 0 only), find another.
 			if (z == 0 && lu_n_cell__is_n_column_null_cell(cell)) continue;
 
 			if (lu_n_cell__is_blank(cell))
