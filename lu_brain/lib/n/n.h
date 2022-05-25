@@ -281,6 +281,14 @@
 
 	static void lu_n_column_comp__deinit(Lu_N_Column_Comp self);
 
+	static inline Lu_N_Cell_VP lu_n_column_comp__get_cell(Lu_N_Column_Comp self, lu_size z)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(z < self->cells_size);
+
+		return &self->cells[z];
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table_Comp
@@ -292,10 +300,8 @@
 		lu_size h;
 		lu_size d;
 		lu_size wh;
-		lu_size size;
 
-		// w x h x d, empty by default
-		struct lu_n_cell_vp* cells;
+		struct lu_n_column_comp* columns;
 	};
 
 	static Lu_N_Table_Comp lu_n_table_comp__create(
@@ -317,11 +323,15 @@
 
 	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
 	{
-		lu_size i = lu_n_table_comp__calc_cell_ix(self, x, y, z);
+		lu__debug_assert(self);
 
-		lu__debug_assert(i < self->size);
+		lu_size column_ix = y * self->w + x;
 
-		return &self->cells[i];
+		lu__debug_assert(column_ix < self->wh);
+
+		Lu_N_Column_Comp column = &self->columns[column_ix];
+
+		return lu_n_column_comp__get_cell(column, z);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -31,49 +31,35 @@
 		self->h = height;
 		self->d = depth;
 		self->wh = self->w * self->h;
-		self->size = self->wh * self->d;
 
-		self->cells = (struct lu_n_cell_vp*) lu_mem__alloc(
+		self->columns = (struct lu_n_column_comp*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct lu_n_cell_vp) * self->size
+			sizeof(struct lu_n_column_comp) * self->wh
 		);
+		lu__alloc_assert(self->columns);
 
-		lu_size z;
-		lu_size x;
+		Lu_N_Column_Comp column;
+		lu_size column_ix = 0;
 		lu_size y;
-		Lu_N_Cell_VP cell;
-
-		lu_size z_shift;
-		lu_size zy_shift;
-
-		union lu_n_addr addr;
-		lu_size column_ix;
-		struct lu_n_pos pos;
-
-		lu_size i = 0;
-		lu_size calc_i = 0;
-		for (z = 0; z < depth; z++)
+		lu_size x;
+		for (y = 0; y < height; y++)
 		{
-			z_shift = z * self->wh;
-			for (y = 0; y < height; y++)
+			for (x = 0; x < width; x++, column_ix++)
 			{
-				zy_shift = z_shift + y * width;
-				for (x = 0; x < width; x++, i++)
-				{
-					calc_i = zy_shift + x;
-					lu__debug_assert(calc_i == i);
+				column = &self->columns[column_ix];
 
-					cell = &self->cells[i]; 
-
-					pos.x = x;
-					pos.y = y;
-
-					column_ix = lu_n_pos__to_column_ix(&pos, self->w);
-
-					lu_n_addr__init(&addr, i, column_ix, layer_ix, area_ix);
-
-					lu_n_cell_vp__init(cell, comp_calc->steps[z], x, y, z, addr, 0);
-				} 
+				lu_n_column_comp__init(
+					column,
+					self->mem,
+					depth,
+					x,
+					y,
+					area_ix,
+					layer_ix,
+					column_ix,				
+					comp_calc,
+					config
+				);
 			}
 		}
 
@@ -83,9 +69,16 @@
 	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self)
 	{
 		lu__assert(self);
-		lu__assert(self->mem);
+		lu__assert(self->mem);  
 
-		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+		Lu_N_Column_Comp column = NULL;
+		for (lu_size i = 0; i < self->wh; i++)
+		{
+			column = &self->columns[i];
+			lu_n_column_comp__deinit(column);
+		}
+
+		lu_mem__free(self->mem, (lu_p_byte) self->columns);
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
