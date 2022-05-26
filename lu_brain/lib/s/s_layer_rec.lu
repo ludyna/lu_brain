@@ -127,16 +127,14 @@
 		// Currently we support max 4 components
 		lu__assert(depth < LU_N_CELL__LINKS_MAX);
 
-		union lu_n_addr p_links[depth + 1]; 
-
-		Lu_N_Cell_VP children[depth + 1];
+		Lu_W_Save_Cell_P children[depth + 1];
 		
 		curr_w_table->any_fired = false;
 
 		lu_size not_null_cells_count;
 		lu_size saved_count;
 
-		Lu_N_Cell_VP vp_cell;
+		Lu_W_Save_Cell_P vp_cell;
 
 		for (y = 0; y < data->h; y++)
 		{
@@ -153,7 +151,6 @@
 				lu_w_save_cell__reset(rec_w_p_cell);
 
 				// reset string
-				p_links[0] = LU_N_ADDR__NULL;
 				not_null_cells_count = 0;
 				saved_count = 0;
 				children[0] = NULL;
@@ -192,13 +189,9 @@
 							p_view->n_comp_table
 						);
 
-						// Always save links, even if w_p_cell havent fired
-						// w_p_cell->n_addr never will be LU_N_ADDR__NULL because 
-						// LU_N_ADDR__NULL is for non existing area_ix (0)
-						// cell_ix can be 0
-						p_links[z] = children[z]->addr;
+						lu__debug_assert(children[z]);
 
-						if (children[z]->z != 0)
+						if (children[z]->sig > 0)
 						{
 							++not_null_cells_count;
 						}
@@ -219,16 +212,13 @@
 				if (not_null_cells_count)
 				{
 					#ifdef LU__DEBUG
-						// lu_n_str_length(p_links) always equal to depth
+						// children_count always equal to depth
 						lu__debug_assert(saved_count == depth);
 					#endif
 
 					//
 					// N Cell save
 					//
-
-					// finish string with zero, 
-					p_links[z] = LU_N_ADDR__NULL;
 
 					lu__debug("\n SAVING N_CELL");
 					

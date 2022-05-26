@@ -108,7 +108,7 @@
 
 	static inline lu_bool lu_n_link__is_vp_children_eq(
 		Lu_N_Link self, 
-		Lu_N_Cell_VP* children, 
+		Lu_W_Save_Cell_P* children, 
 		lu_size children_count, 
 		Lu_N_Link_Mem link_mem
 	)
@@ -120,15 +120,16 @@
 
 		if (self == NULL) return false;
 
-		Lu_N_Cell_VP vp_cell;
+		Lu_W_Save_Cell_P vp_cell;
 		for(lu_size i = 0; i < children_count; i++)
 		{
 			if (self == NULL) return false;
 
 			vp_cell = children[i];
 			lu__debug_assert(vp_cell);
+			lu__debug_assert(vp_cell->cell);
 
-			if (!lu_n_addr__is_eq(&self->cell_addr, &vp_cell->addr)) return false;
+			if (!lu_n_addr__is_eq(&self->cell_addr, &vp_cell->cell->addr)) return false;
 
 			self = lu_n_link_mem__get_link(link_mem, self->next);
 		}
@@ -399,17 +400,18 @@
 		return p_reg;
 	}
 
-	static inline lu_size lu_n_str__vp_childrean_hash_comb(Lu_N_Cell_VP* children, lu_size children_count)
+	static inline lu_size lu_n_str__vp_childrean_hash_comb(Lu_W_Save_Cell_P* children, lu_size children_count)
 	{
 		lu_size p_reg = 0;
 
-		Lu_N_Cell_VP vp_cell;
+		Lu_W_Save_Cell_P vp_cell;
 		for (lu_size i = 0; i < children_count; i++)
 		{
 			vp_cell = children[i];
 			lu__debug_assert(vp_cell);
+			lu__debug_assert(vp_cell->cell);
 
-			p_reg = lu_hash_comb(p_reg, vp_cell->addr.value);
+			p_reg = lu_hash_comb(p_reg, vp_cell->cell->addr.value);
 		}
 
 		return p_reg;
@@ -518,7 +520,7 @@
 
 	static inline void lu_n_cell__vp_save( 
 		Lu_N_Cell self, 
-		Lu_N_Cell_VP* children, 
+		Lu_W_Save_Cell_P* children, 
 		lu_size children_count,
 		Lu_N_Link_Mem link_mem
 	)
@@ -527,7 +529,7 @@
 		lu__debug_assert(children); // we don't even save NULL cell
 
 		lu_size i;
-		Lu_N_Cell_VP vp_cell = NULL;
+		Lu_W_Save_Cell_P vp_cell = NULL;
 		Lu_N_Link n_link = NULL;
 		Lu_N_Link prev_n_link = NULL;
 		lu_size ix;
@@ -543,7 +545,10 @@
 			lu__assert(n_link);
 
 			n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
-			n_link->cell_addr = vp_cell->addr;
+
+			lu__debug_assert(vp_cell->cell);
+
+			n_link->cell_addr = vp_cell->cell->addr;
 
 			prev_n_link = n_link;
 
@@ -632,7 +637,7 @@
 
 	static inline lu_size lu_n_column__vp_children_to_ix(
 		Lu_N_Column self, 
-		Lu_N_Cell_VP* children, 
+		Lu_W_Save_Cell_P* children, 
 		lu_size children_count
 	)
 	{
@@ -641,7 +646,7 @@
 
 	static inline union lu_n_addr lu_n_column__save_with_vp_children(
 		Lu_N_Column self, 
-		Lu_N_Cell_VP* children, 
+		Lu_W_Save_Cell_P* children, 
 		lu_size children_count
 	)
 	{
@@ -710,7 +715,7 @@
 		Lu_N_Table self, 
 		lu_size x, 
 		lu_size y, 
-		Lu_N_Cell_VP* children, 
+		Lu_W_Save_Cell_P* children, 
 		lu_size children_count
 	)
 	{
