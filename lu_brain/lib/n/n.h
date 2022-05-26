@@ -322,7 +322,7 @@
 		return z * self->wh + y * self->w + x;
 	}
 
-	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
+	static inline Lu_N_Column_Comp lu_n_table_comp__get_column(Lu_N_Table_Comp self, lu_size x, lu_size y)
 	{
 		lu__debug_assert(self);
 
@@ -330,7 +330,12 @@
 
 		lu__debug_assert(column_ix < self->wh);
 
-		Lu_N_Column_Comp column = &self->columns[column_ix];
+		return &self->columns[column_ix];
+	}
+
+	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z)
+	{
+		Lu_N_Column_Comp column = lu_n_table_comp__get_column(self, x, y);
 
 		return lu_n_column_comp__get_cell(column, z);
 	}

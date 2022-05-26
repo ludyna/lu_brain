@@ -15,6 +15,8 @@
 	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
 
 	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z);
+	static inline Lu_N_Column_Comp lu_n_table_comp__get_column(Lu_N_Table_Comp self, lu_size x, lu_size y);
+	static inline Lu_N_Cell_VP lu_n_column_comp__get_cell(Lu_N_Column_Comp self, lu_size z);
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Addr
@@ -79,8 +81,8 @@
 // Lu_W_Save_Cell_P
 
 	struct lu_w_save_cell_p {
-		Lu_N_Cell_VP cell;
 		Lu_N_Column_Comp column;
+		Lu_N_Cell_VP cell;
 
 		// sig doesn't make much sense for save cell, but
 		// we have it here to indicate if cell was active (not "null" cell)
@@ -159,7 +161,9 @@
 		// If difference between p1 and p2 is small, z will 0, which means its "NULL" cell
 		// z being 0 doesnt meen addr->cell_x is 0 (!)
 		
-		self->cell = lu_n_table_comp__get_cell(n_table, x, y, z);
+		self->column = lu_n_table_comp__get_column(n_table, x, y);
+		self->cell = lu_n_column_comp__get_cell(self->column, z);
+
 		lu__debug_assert(self->cell);
 
 		return self;
