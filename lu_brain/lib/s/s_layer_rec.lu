@@ -211,10 +211,8 @@
 				// This is optimization, we consider that "NULL" cells fired, but we don't do any calcs
 				if (not_null_cells_count)
 				{
-					#ifdef LU__DEBUG
-						// children_count always equal to depth
-						lu__debug_assert(saved_count == depth);
-					#endif
+					// children_count always equal to depth
+					lu__debug_assert(saved_count == depth);
 
 					//
 					// N Cell save

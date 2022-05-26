@@ -523,6 +523,23 @@
 		return self->addr.cell_ix == 0;
 	}
 
+	static inline Lu_N_Link lu_n_cell__children_append(Lu_N_Cell self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
+	{
+		Lu_N_Link prev_n_link = self->children;
+
+		// new child link
+		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
+		lu__assert(n_link);
+
+		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+
+		n_link->cell_addr = addr;
+
+		self->children = n_link;
+
+		return n_link;
+	}	
+
 	static inline void lu_n_cell__vp_save( 
 		Lu_N_Cell self, 
 		Lu_W_Save_Cell_P* children, 
@@ -535,8 +552,8 @@
 
 		lu_size i;
 		Lu_W_Save_Cell_P vp_cell = NULL;
-		Lu_N_Link n_link = NULL;
-		Lu_N_Link prev_n_link = NULL;
+		;
+		
 		lu_size ix;
 
 		for (i = 0; i < children_count; i++)
@@ -545,39 +562,11 @@
 
 			vp_cell = children[ix]; 
 			lu__assert(vp_cell);
-
-			n_link = lu_n_link_mem__link_alloc(link_mem);
-			lu__assert(n_link);
-
-			n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
-
 			lu__debug_assert(vp_cell->cell);
 
-			n_link->cell_addr = vp_cell->cell->addr;
 
-			prev_n_link = n_link;
-
-			switch(ix)
-			{
-				case 3:
-					
-					break;
-				case 2:
-
-					break;
-				case 1: 
-
-					break;
-				case 0:
-
-					break;
-
-				default:
-					lu__assert(true);
-			}
+			lu_n_cell__children_append(self, link_mem, vp_cell->cell->addr);
 		}
-
-		self->children = n_link;
 	}
 
 
