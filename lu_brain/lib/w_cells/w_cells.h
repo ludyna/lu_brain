@@ -160,7 +160,7 @@
 		}
 
 		// If difference between p1 and p2 is small, z will 0, which means its "NULL" cell
-		// z being 0 doesnt meen addr->cell_x is 0 (!)
+		// z being 0 doesnt mean addr->cell_x is 0 (!)
 		
 		self->column = lu_n_table_comp__get_column(n_table, x, y);
 		self->cell = lu_n_column_comp__get_cell(self->column, z);
@@ -170,7 +170,7 @@
 		return self;
 	}
 
-	static inline lu_size lu_w_save_cell_p__children_has_comp(Lu_W_Save_Cell_P* children, lu_size children_count)
+	static inline lu_size lu_w_save_cell_p__children_hash_comp(Lu_W_Save_Cell_P* children, lu_size children_count)
 	{
 		lu_size p_reg = 0;
 

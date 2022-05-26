@@ -562,7 +562,7 @@
 		lu__debug_assert(children); // we don't even save NULL cell
 
 		lu_size i;
-		Lu_W_Save_Cell_P vp_cell = NULL;
+		Lu_W_Save_Cell_P w_cell = NULL;
 		;
 		
 		lu_size ix;
@@ -571,14 +571,14 @@
 		{
 			ix = children_count - i - 1;
 
-			vp_cell = children[ix]; 
-			lu__assert(vp_cell);
-			lu__debug_assert(vp_cell->cell);
+			w_cell = children[ix]; 
+			lu__assert(w_cell);
+			lu__debug_assert(w_cell->cell);
 
 
-			lu_n_cell__children_append(self, link_mem, vp_cell->cell->addr);
+			lu_n_cell__children_append(self, link_mem, w_cell->cell->addr);
 
-			lu_n_cell_vp__parent_append(vp_cell->cell, &vp_cell->column->link_mem, self->addr);
+			lu_n_cell_vp__parent_append(w_cell->cell, &w_cell->column->link_mem, self->addr);
 		}
 	}
 
@@ -648,7 +648,7 @@
 		lu_size children_count
 	)
 	{
-		return lu_n_column__hash_to_ix(self, lu_w_save_cell_p__children_has_comp(children, children_count));
+		return lu_n_column__hash_to_ix(self, lu_w_save_cell_p__children_hash_comp(children, children_count));
 	}
 
 	static inline union lu_n_addr lu_n_column__save_with_vp_children(
