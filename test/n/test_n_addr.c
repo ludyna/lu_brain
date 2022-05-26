@@ -101,12 +101,12 @@ void test__union_lu_n_addr__methods(void)
 {
 	union lu_n_addr addr;
 
-	Lu_N_Addr p_ix = lu_n_addr__init(&addr, 0, 0, 0);
+	Lu_N_Addr p_ix = lu_n_addr__init(&addr, 0, 0, 0, 0);
 
 	TEST_ASSERT(lu_n_addr__is_blank(p_ix) == true);
 	TEST_ASSERT(lu_n_addr__is_present(p_ix) == false);
 
-	lu_n_addr__init(p_ix, 0, 0, 1);
+	lu_n_addr__init(p_ix, 0, 0, 0, 1);
 
 	TEST_ASSERT(lu_n_addr__is_blank(p_ix) == false);
 	TEST_ASSERT(lu_n_addr__is_present(p_ix) == true);
