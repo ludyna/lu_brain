@@ -4,58 +4,6 @@
 	n_tables are always "3d"
 */
 
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Cell_VP
-
-	struct lu_n_cell_vp { 
-		// addr can be removed later to save memory, but useful for testing and debugging
-		// can be wrapped in #ifdef LU__DEBUG
-		union lu_n_addr addr; 
-
-		lu_value value; 
-		lu_size x;
-		lu_size y;
-		lu_size z;  // if z = 0, this cell is "NULL" cell
-
-		Lu_N_Link parents;
-	};
-
-	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
-	{
-		self->addr.value = 0;
-
-		self->value = 0;
-		self->x = 0;
-		self->y = 0;
-		self->z = 0;
-	}
-
-	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
-		Lu_N_Cell_VP self, 
-		lu_value value,
-		lu_size x,
-		lu_size y,
-		lu_size z,
-		union lu_n_addr addr,
-		lu_size w_match_cells_size
-	)
-	{
-		self->addr = addr;
-
-		self->value = value;
-		self->x = x;
-		self->y = y;
-		self->z = z;
-
-		return self;
-	}
-
-	static inline void lu_n_cell_vp__deinit(Lu_N_Cell_VP self, Lu_Mem mem)
-	{
-
-	}
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //
@@ -103,37 +51,6 @@
 			++b;
 		}	
 		
-		return true;
-	}
-
-	static inline lu_bool lu_n_link__is_vp_children_eq(
-		Lu_N_Link self, 
-		Lu_W_Save_Cell_P* children, 
-		lu_size children_count, 
-		Lu_N_Link_Mem link_mem
-	)
-	{
-		lu__debug_assert(children);
-		lu__debug_assert(children[0]);
-		lu__debug_assert(children_count > 0);
-		lu__debug_assert(link_mem);
-
-		if (self == NULL) return false;
-
-		Lu_W_Save_Cell_P vp_cell;
-		for(lu_size i = 0; i < children_count; i++)
-		{
-			if (self == NULL) return false;
-
-			vp_cell = children[i];
-			lu__debug_assert(vp_cell);
-			lu__debug_assert(vp_cell->cell);
-
-			if (!lu_n_addr__is_eq(&self->cell_addr, &vp_cell->cell->addr)) return false;
-
-			self = lu_n_link_mem__get_link(link_mem, self->next);
-		}
-
 		return true;
 	}
 
@@ -251,6 +168,147 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Str
+//
+
+	static inline lu_bool lu_n_str__eq(const union lu_n_addr* a, const union lu_n_addr* b)
+	{
+		while (1)
+		{
+			if ((*a).value != (*b).value)
+			{
+				return false;
+			}
+
+			if ((*a).value == 0 || (*b).value == 0) break;
+
+			++a;
+			++b;
+		}	
+		
+		return true;
+	}
+
+	////
+	// (!) This method (intentionally!) doesn't check if <dest> has enough space for <src>
+	static inline void lu_n_str__copy(union lu_n_addr* dest, const union lu_n_addr* src)
+	{
+		while((*src).value)
+		{
+			*dest = *src;
+			++src;
+			++dest;
+		};
+
+		(*dest).value = 0;
+	}
+
+	static inline void lu_n_str__print(union lu_n_addr* s)
+	{
+		lu__debug("\n N_STRING: {");
+		union lu_n_addr *p = s;
+
+		while((*p).value)
+		{
+			if (p != s) lu__debug(", ");
+			lu_n_addr__print(&(*p));
+			++p;
+		} 
+		if (p==s) lu__debug("0");
+		else lu__debug(", 0");
+
+		lu__debug("}");
+	}
+
+	static inline lu_size lu_n_str__hash_comb(const union lu_n_addr* p)
+	{
+		lu_size p_reg = 0;
+		while((*p).value)
+		{
+			p_reg = lu_hash_comb(p_reg, (*p).value);
+			++p;
+		}
+
+		return p_reg;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Cell_VP
+
+	struct lu_n_cell_vp { 
+		// addr can be removed later to save memory, but useful for testing and debugging
+		// can be wrapped in #ifdef LU__DEBUG
+		union lu_n_addr addr; 
+
+		lu_value value; 
+		lu_size x;
+		lu_size y;
+		lu_size z;  // if z = 0, this cell is "NULL" cell
+
+		Lu_N_Link parents;
+	};
+
+	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
+	{
+		self->addr.value = 0;
+
+		self->value = 0;
+		self->x = 0;
+		self->y = 0;
+		self->z = 0;
+	}
+
+	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
+		Lu_N_Cell_VP self, 
+		lu_value value,
+		lu_size x,
+		lu_size y,
+		lu_size z,
+		union lu_n_addr addr,
+		lu_size w_match_cells_size
+	)
+	{
+		self->addr = addr;
+
+		self->value = value;
+		self->x = x;
+		self->y = y;
+		self->z = z;
+
+		return self;
+	}
+
+	static inline void lu_n_cell_vp__deinit(Lu_N_Cell_VP self, Lu_Mem mem)
+	{
+
+	}
+
+	static inline Lu_N_Link lu_n_cell_vp__parent_append(Lu_N_Cell_VP self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
+	{
+		Lu_N_Link prev_n_link = self->parents;
+
+		// new child link
+		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
+		lu__assert(n_link);
+
+		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+
+		n_link->cell_addr = addr;
+
+		self->parents = n_link;
+
+		return n_link;
+	}
+
+	static inline union lu_n_addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self)
+	{
+		lu__debug_assert(self);
+
+		return self->addr;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column_Comp
 //
 
@@ -341,85 +399,38 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Str
+// Lu_N_Link 
 //
 
-	static inline lu_bool lu_n_str__eq(const union lu_n_addr* a, const union lu_n_addr* b)
+	static inline lu_bool lu_n_link__is_vp_children_eq(
+		Lu_N_Link self, 
+		Lu_W_Save_Cell_P* children, 
+		lu_size children_count, 
+		Lu_N_Link_Mem link_mem
+	)
 	{
-		while (1)
-		{
-			if ((*a).value != (*b).value)
-			{
-				return false;
-			}
+		lu__debug_assert(children);
+		lu__debug_assert(children[0]);
+		lu__debug_assert(children_count > 0);
+		lu__debug_assert(link_mem);
 
-			if ((*a).value == 0 || (*b).value == 0) break;
-
-			++a;
-			++b;
-		}	
-		
-		return true;
-	}
-
-	////
-	// (!) This method (intentionally!) doesn't check if <dest> has enough space for <src>
-	static inline void lu_n_str__copy(union lu_n_addr* dest, const union lu_n_addr* src)
-	{
-		while((*src).value)
-		{
-			*dest = *src;
-			++src;
-			++dest;
-		};
-
-		(*dest).value = 0;
-	}
-
-	static inline void lu_n_str__print(union lu_n_addr* s)
-	{
-		lu__debug("\n N_STRING: {");
-		union lu_n_addr *p = s;
-
-		while((*p).value)
-		{
-			if (p != s) lu__debug(", ");
-			lu_n_addr__print(&(*p));
-			++p;
-		} 
-		if (p==s) lu__debug("0");
-		else lu__debug(", 0");
-
-		lu__debug("}");
-	}
-
-	static inline lu_size lu_n_str__hash_comb(const union lu_n_addr* p)
-	{
-		lu_size p_reg = 0;
-		while((*p).value)
-		{
-			p_reg = lu_hash_comb(p_reg, (*p).value);
-			++p;
-		}
-
-		return p_reg;
-	}
-
-	static inline lu_size lu_n_str__vp_childrean_hash_comb(Lu_W_Save_Cell_P* children, lu_size children_count)
-	{
-		lu_size p_reg = 0;
+		if (self == NULL) return false;
 
 		Lu_W_Save_Cell_P vp_cell;
-		for (lu_size i = 0; i < children_count; i++)
+		for(lu_size i = 0; i < children_count; i++)
 		{
+			if (self == NULL) return false;
+
 			vp_cell = children[i];
 			lu__debug_assert(vp_cell);
 			lu__debug_assert(vp_cell->cell);
 
-			p_reg = lu_hash_comb(p_reg, vp_cell->cell->addr.value);
+			if (!lu_n_addr__is_eq(&self->cell_addr, &vp_cell->cell->addr)) return false;
+
+			self = lu_n_link_mem__get_link(link_mem, self->next);
 		}
 
-		return p_reg;
+		return true;
 	}
 
 
@@ -566,6 +577,8 @@
 
 
 			lu_n_cell__children_append(self, link_mem, vp_cell->cell->addr);
+
+			lu_n_cell_vp__parent_append(vp_cell->cell, &vp_cell->column->link_mem, self->addr);
 		}
 	}
 
@@ -635,7 +648,7 @@
 		lu_size children_count
 	)
 	{
-		return lu_n_column__hash_to_ix(self, lu_n_str__vp_childrean_hash_comb(children, children_count));
+		return lu_n_column__hash_to_ix(self, lu_w_save_cell_p__children_has_comp(children, children_count));
 	}
 
 	static inline union lu_n_addr lu_n_column__save_with_vp_children(

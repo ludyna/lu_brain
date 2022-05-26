@@ -17,6 +17,7 @@
 	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z);
 	static inline Lu_N_Column_Comp lu_n_table_comp__get_column(Lu_N_Table_Comp self, lu_size x, lu_size y);
 	static inline Lu_N_Cell_VP lu_n_column_comp__get_cell(Lu_N_Column_Comp self, lu_size z);
+	static inline union lu_n_addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self);
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Addr
@@ -167,6 +168,23 @@
 		lu__debug_assert(self->cell);
 
 		return self;
+	}
+
+	static inline lu_size lu_w_save_cell_p__children_has_comp(Lu_W_Save_Cell_P* children, lu_size children_count)
+	{
+		lu_size p_reg = 0;
+
+		Lu_W_Save_Cell_P vp_cell;
+		for (lu_size i = 0; i < children_count; i++)
+		{
+			vp_cell = children[i];
+			lu__debug_assert(vp_cell);
+			lu__debug_assert(vp_cell->cell);
+
+			p_reg = lu_hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(vp_cell->cell).value);
+		}
+
+		return p_reg;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
