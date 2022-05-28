@@ -416,16 +416,16 @@
 
 		if (self == NULL) return false;
 
-		Lu_W_Save_Cell_P vp_cell;
+		Lu_W_Save_Cell_P w_cell;
 		for(lu_size i = 0; i < children_count; i++)
 		{
 			if (self == NULL) return false;
 
-			vp_cell = children[i];
-			lu__debug_assert(vp_cell);
-			lu__debug_assert(vp_cell->cell);
+			w_cell = children[i];
+			lu__debug_assert(w_cell);
+			lu__debug_assert(w_cell->n_cell);
 
-			if (!lu_n_addr__is_eq(&self->cell_addr, &vp_cell->cell->addr)) return false;
+			if (!lu_n_addr__is_eq(&self->cell_addr, &w_cell->n_cell->addr)) return false;
 
 			self = lu_n_link_mem__get_link(link_mem, self->next);
 		}
@@ -572,12 +572,12 @@
 
 			w_cell = children[ix]; 
 			lu__assert(w_cell);
-			lu__debug_assert(w_cell->cell);
+			lu__debug_assert(w_cell->n_cell);
 
 
-			lu_n_cell__children_append(self, link_mem, w_cell->cell->addr);
+			lu_n_cell__children_append(self, link_mem, w_cell->n_cell->addr);
 
-			lu_n_cell_vp__parent_append(w_cell->cell, &w_cell->column->link_mem, self->addr);
+			lu_n_cell_vp__parent_append(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);
 		}
 	}
 

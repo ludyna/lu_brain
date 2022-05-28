@@ -100,8 +100,8 @@
 // Lu_W_Save_Cell_P
 
 	struct lu_w_save_cell_p {
-		Lu_N_Column_Comp column;
-		Lu_N_Cell_VP cell;
+		Lu_N_Column_Comp n_column;
+		Lu_N_Cell_VP n_cell;
 
 		// sig doesn't make much sense for save cell, but
 		// we have it here to indicate if cell was active (not "null" cell)
@@ -180,10 +180,10 @@
 		// If difference between p1 and p2 is small, z will 0, which means its "NULL" cell
 		// z being 0 doesnt mean addr->cell_x is 0 (!)
 		
-		self->column = lu_n_table_comp__get_column(n_table, x, y);
-		self->cell = lu_n_column_comp__get_cell(self->column, z);
+		self->n_column = lu_n_table_comp__get_column(n_table, x, y);
+		self->n_cell = lu_n_column_comp__get_cell(self->n_column, z);
 
-		lu__debug_assert(self->cell);
+		lu__debug_assert(self->n_cell);
 
 		return self;
 	}
@@ -192,14 +192,14 @@
 	{
 		lu_size p_reg = 0;
 
-		Lu_W_Save_Cell_P vp_cell;
+		Lu_W_Save_Cell_P w_cell;
 		for (lu_size i = 0; i < children_count; i++)
 		{
-			vp_cell = children[i];
-			lu__debug_assert(vp_cell);
-			lu__debug_assert(vp_cell->cell);
+			w_cell = children[i];
+			lu__debug_assert(w_cell);
+			lu__debug_assert(w_cell->n_cell);
 
-			p_reg = lu_hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(vp_cell->cell).value);
+			p_reg = lu_hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(w_cell->n_cell).value);
 		}
 
 		return p_reg;
