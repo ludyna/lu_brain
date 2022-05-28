@@ -562,10 +562,9 @@
 		lu__debug_assert(children); // we don't even save NULL cell
 
 		lu_size i;
-		Lu_W_Save_Cell_P w_cell = NULL;
-		;
-		
 		lu_size ix;
+
+		Lu_W_Save_Cell_P w_cell = NULL;
 
 		for (i = 0; i < children_count; i++)
 		{
@@ -651,7 +650,7 @@
 		return lu_n_column__hash_to_ix(self, lu_w_save_cell_p__children_hash_comp(children, children_count));
 	}
 
-	static inline union lu_n_addr lu_n_column__save_with_vp_children(
+	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
 		Lu_N_Column self, 
 		Lu_W_Save_Cell_P* children, 
 		lu_size children_count
@@ -675,17 +674,16 @@
 			if (lu_n_cell__is_blank(cell))
 			{
 				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
-				return cell->addr;
+				return cell;
 			}
 			else if (lu_n_link__is_vp_children_eq(cell->children, children, children_count, &self->link_mem)) 
 			{
-				return cell->addr; // no need to do anything, we already have that cell
+				return cell; // no need to do anything, we already have that cell
 			}
 		}
 
 		// should replace with column reallocation, should not normally happen
-		lu__assert(false);
-		return LU_N_ADDR__NULL;
+		return NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -717,17 +715,6 @@
  	{
  		return &self->columns[y * self->w + x];
  	}
-
-	static inline union lu_n_addr lu_n_table__save_with_vp_children(
-		Lu_N_Table self, 
-		lu_size x, 
-		lu_size y, 
-		Lu_W_Save_Cell_P* children, 
-		lu_size children_count
-	)
-	{
-		return lu_n_column__save_with_vp_children(lu_n_table__get_column(self, x, y), children, children_count);
-	}
 
 	////
 	// Returns true if was able to expand

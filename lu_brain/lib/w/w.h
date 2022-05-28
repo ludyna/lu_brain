@@ -159,7 +159,7 @@
 	{ 
 		if (x < self->w && y < self->h)
 		{
-			return lu_w_table__get_cell(self, x, y)->n_addr;
+			return lu_w_table__get_cell(self, x, y)->n_cell->addr;
 		}
 		else
 		{

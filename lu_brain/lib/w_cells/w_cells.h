@@ -64,19 +64,37 @@
 // Lu_W_Save_Cell 
 
 	struct lu_w_save_cell {
-		union lu_n_addr n_addr;
+		lu_size wave_id;
+		lu_size block_id;
+
+		Lu_N_Cell n_cell;
+		Lu_N_Column n_column;
 	};
 
 	static inline void lu_w_save_cell__reset(Lu_W_Save_Cell self)
 	{
 		lu__debug_assert(self);
-		self->n_addr.value = 0;
+		self->wave_id = LU_WAVE_ID__NOT_SET;
+		self->block_id = LU_BLOCK_ID__NOT_SET;
+		self->n_cell = NULL;
+		self->n_column = NULL;
+	}
+
+	static inline Lu_W_Save_Cell lu_w_save_cell__save(
+		Lu_W_Save_Cell self,
+		lu_size wave_id,
+		lu_size block_id,
+		Lu_N_Cell n_cell,
+		Lu_N_Column n_column
+	)
+	{
+		lu__debug_assert(self);
+		self->wave_id = wave_id;
+		self->block_id = block_id;
+		self->n_cell = n_cell;
+		self->n_column = n_column;
 	}
  	
- 	static inline void lu_w_save_cell__save(Lu_W_Save_Cell self, union lu_n_addr n_addr)
- 	{
- 		self->n_addr = n_addr;
- 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Save_Cell_P

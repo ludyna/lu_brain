@@ -136,6 +136,9 @@
 
 		Lu_W_Save_Cell_P vp_cell;
 
+		Lu_N_Column n_column;
+		Lu_N_Cell n_cell;
+
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
@@ -199,12 +202,6 @@
 						++saved_count;
 					}
 
-
-					// try idei
-					// 1. w_cell mozhe maty vkazivnyky?
-					// 2. n_table_comp skladayetsia z n_column_comp
-					// 3. 
-
 				} // for (lu_size z = 0
 
 				// If at least one value present, save, otherwise dont need to do anything
@@ -212,36 +209,25 @@
 				if (not_null_cells_count)
 				{
 					// children_count always equal to depth
-					lu__debug_assert(saved_count == depth);
+					lu__assert(saved_count == depth);
 
 					//
 					// N Cell save
 					//
 
-					lu__debug("\n SAVING N_CELL");
+					lu__debug("\n SAVING N_CELL"); 
+
+					n_column = lu_n_table__get_column(rec_n_table, x, y);
+					lu__assert(n_column);
 					
-					n_addr = lu_n_table__save_with_vp_children(rec_n_table, x, y, children, depth);
-
-					// Shouldn't happen, it probably means we had no space for new n_cell
-					lu__debug_assert(!lu_n_addr__is_eq(&n_addr, &LU_N_ADDR__NULL));
-
-					//
-					// N VP links save
-					//
-
-					for (i = 0; i < depth; i++)
-					{
-						vp_cell = children[i];
-						lu__debug_assert(vp_cell);
-
-
-					}
+					n_cell = lu_n_column__save_with_vp_children(n_column, children, depth);
+					lu__assert(n_cell);
 
 					//
 					// Parent W cell save
 					//
 
-					lu_w_save_cell__save(rec_w_p_cell, n_addr);
+					lu_w_save_cell__save(rec_w_p_cell, wave_id, block_id, n_cell, n_column);
 
 					curr_w_table->any_fired = true;
 				}
