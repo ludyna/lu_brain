@@ -180,7 +180,7 @@
 		Lu_W_Save_Cell children[LU_N_CELL__CHILDREN_MAX];
 		children[LU_N_CELL__CHILDREN_MAX - 1] = NULL;
 		
-		lu_size children_count;
+		lu_size non_null_count;
 
 		for (y = 0; y < curr_w_table->h; y++)
 		{
@@ -191,7 +191,7 @@
 
 				lu_w_save_cell__reset(curr_w_cell);
 
-				lu_w_table__collect_children(prev_w_table, x, y, children, &children_count);
+				lu_w_table__collect_children(prev_w_table, x, y, children, &non_null_count);
 
 				// if (lu_n_addr__is_present(&children[0]))
 				// {

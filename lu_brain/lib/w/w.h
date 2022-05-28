@@ -122,6 +122,8 @@
 		lu_size h;
 		lu_size h_max;
 
+		lu_size normal_children_size;
+
 		// always "2D"
 		struct lu_w_save_cell* cells;
 
@@ -166,48 +168,30 @@
 		lu_size x, 
 		lu_size y, 
 		Lu_W_Save_Cell children[], 
-		lu_size *children_count
+		lu_size *non_null_count
 	)
 	{
 		lu_byte i = 0;
-		Lu_W_Save_Cell w_cell;
+		lu_size local_non_null_count = 0;
 
-		w_cell = lu_w_table__get_cell(self, x, y);
-		
-		if (w_cell)
-		{
-			children[i] = w_cell;
-			++i;
-		}
+		children[i] = lu_w_table__get_cell(self, x, y);
+		if (children[i]) ++local_non_null_count;
 
-		w_cell = lu_w_table__get_cell(self, x + 1, y);
-		
-		if (w_cell)
-		{
-			children[i] = w_cell;
-			++i;
-		}
+		++i;
+		children[i] = lu_w_table__get_cell(self, x + 1, y);
+		if (children[i]) ++local_non_null_count;
 
-		w_cell = lu_w_table__get_cell(self, x + 1, y + 1);
-		
-		if (w_cell)
-		{
-			children[i] = w_cell;
-			++i;
-		}
+		++i;
+		children[i] = lu_w_table__get_cell(self, x + 1, y + 1);
+		if (children[i]) ++local_non_null_count;
 
-		w_cell = lu_w_table__get_cell(self, x, y + 1);
-		
-		if (w_cell)
-		{
-			children[i] = w_cell;
-			++i;
-		}
+		++i;
+		children[i] = lu_w_table__get_cell(self, x, y + 1);
+		if (children[i]) ++local_non_null_count;
 
-		lu__debug_assert(i < LU_N_CELL__CHILDREN_MAX);
+		lu__debug_assert(local_non_null_count <= self->normal_children_size);
 
-		children[i] = NULL;
-		*children_count = i;
+		*non_null_count = local_non_null_count;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

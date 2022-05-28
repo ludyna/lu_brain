@@ -30,6 +30,19 @@
 		self->h = h;
 		self->h_max = h_max;
 
+		if (w == 1 && h == 1)
+		{
+			self->normal_children_size = 1;
+		}
+		else if (w == 1 || h == 1)
+		{
+			self->normal_children_size = 2;
+		}
+		else
+		{
+			self->normal_children_size = 4;
+		}
+
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->block_id = LU_BLOCK_ID__NOT_SET; 
 
