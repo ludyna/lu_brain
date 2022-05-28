@@ -170,14 +170,17 @@
 		lu__assert(curr_n_table->w == curr_w_table->w);
 		lu__assert(curr_n_table->h == curr_w_table->h);
 
-		union lu_n_addr children[LU_N_CELL__LINKS_MAX];
-
 		lu_size cells_saved_count = 0;
 
 		Lu_W_Save_Cell curr_w_cell;
 		union lu_n_addr n_addr;
 
 		curr_w_table->any_fired = false;
+
+		Lu_W_Save_Cell children[LU_N_CELL__CHILDREN_MAX];
+		children[LU_N_CELL__CHILDREN_MAX - 1] = NULL;
+		
+		lu_size children_count;
 
 		for (y = 0; y < curr_w_table->h; y++)
 		{
@@ -186,9 +189,9 @@
 				curr_w_cell = lu_w_table__get_cell(curr_w_table, x, y);
 				lu__debug_assert(curr_w_cell);
 
-				// lu_w_save_cell__reset(curr_w_cell);
+				lu_w_save_cell__reset(curr_w_cell);
 
-				// lu_w_table__cipher_children(prev_w_table, x, y, children);
+				lu_w_table__collect_children(prev_w_table, x, y, children, &children_count);
 
 				// if (lu_n_addr__is_present(&children[0]))
 				// {
@@ -236,7 +239,7 @@
 	// 	lu__assert(curr_n_table->w == curr_w_table->w);
 	// 	lu__assert(curr_n_table->h == curr_w_table->h);
 
-	// 	union lu_n_addr children[LU_N_CELL__LINKS_MAX];
+	// 	union lu_n_addr children[LU_N_CELL__CHILDREN_MAX];
 
 	// 	lu_size cells_saved_count = 0;
 

@@ -147,64 +147,67 @@
 		return self->any_fired;
 	}
 
+	////
+	// Returns NULL if x or y out of range.
 	static inline Lu_W_Save_Cell lu_w_table__get_cell(Lu_W_Table self, lu_size x, lu_size y)
-	{ 
-		lu__debug_assert(x < self->w);
-		lu__debug_assert(y < self->h);
-		
-		return &self->cells[y * self->w + x];
-	} 
-
-	static inline union lu_n_addr lu_w_table__get_n_addr(Lu_W_Table self, lu_size x, lu_size y)
 	{ 
 		if (x < self->w && y < self->h)
 		{
-			return lu_w_table__get_cell(self, x, y)->n_cell->addr;
+			return &self->cells[y * self->w + x];
 		}
 		else
 		{
-			return LU_N_ADDR__NULL;
+			return NULL;
 		}
 	}
 
-	static inline void lu_w_table__cipher_children(Lu_W_Table self, lu_size x, lu_size y, union lu_n_addr children[])
+	static inline void lu_w_table__collect_children(
+		Lu_W_Table self, 
+		lu_size x, 
+		lu_size y, 
+		Lu_W_Save_Cell children[], 
+		lu_size *children_count
+	)
 	{
 		lu_byte i = 0;
-		union lu_n_addr addr;
+		Lu_W_Save_Cell w_cell;
 
-		addr = lu_w_table__get_n_addr(self, x, y);
+		w_cell = lu_w_table__get_cell(self, x, y);
 		
-		if (lu_n_addr__is_present(&addr))
+		if (w_cell)
 		{
-			children[i] = addr;
+			children[i] = w_cell;
 			++i;
 		}
 
-		addr = lu_w_table__get_n_addr(self, x + 1, y);
+		w_cell = lu_w_table__get_cell(self, x + 1, y);
 		
-		if (lu_n_addr__is_present(&addr))
+		if (w_cell)
 		{
-			children[i] = addr;
+			children[i] = w_cell;
 			++i;
 		}
 
-		addr = lu_w_table__get_n_addr(self, x + 1, y + 1);
+		w_cell = lu_w_table__get_cell(self, x + 1, y + 1);
 		
-		if (lu_n_addr__is_present(&addr))
+		if (w_cell)
 		{
-			children[i] = addr;
+			children[i] = w_cell;
 			++i;
 		}
 
-		addr = lu_w_table__get_n_addr(self, x, y + 1);
+		w_cell = lu_w_table__get_cell(self, x, y + 1);
 		
-		if (lu_n_addr__is_present(&addr))
+		if (w_cell)
 		{
-			children[i] = addr;
+			children[i] = w_cell;
 			++i;
 		}
 
-		lu_n_addr__set_to_null(&children[i]);
+		lu__debug_assert(i < LU_N_CELL__CHILDREN_MAX);
+
+		children[i] = NULL;
+		*children_count = i;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

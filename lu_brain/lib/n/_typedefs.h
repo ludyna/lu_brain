@@ -28,4 +28,4 @@
 	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
 	typedef struct lu_n_table* Lu_N_Table;
 
-	#define LU_N_CELL__LINKS_MAX 5
+	#define LU_N_CELL__CHILDREN_MAX 5
