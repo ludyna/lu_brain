@@ -657,7 +657,7 @@
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(children);
-		lu__debug_assert(children[0]);
+		lu__debug_assert(children_count > 0);
 
 		lu_size ix = lu_n_column__vp_children_to_ix(self, children, children_count);
 
@@ -683,6 +683,20 @@
 
 		// should replace with column reallocation, should not normally happen
 		return NULL;
+	}
+
+	static inline Lu_N_Cell lu_n_column__save_with_children(
+		Lu_N_Column self, 
+		Lu_W_Save_Cell* children, 
+		lu_size children_count
+	)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(children);
+		lu__debug_assert(children_count > 0);
+
+
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
