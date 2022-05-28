@@ -64,9 +64,6 @@
 // Lu_W_Save_Cell 
 
 	struct lu_w_save_cell {
-		lu_size wave_id;
-		lu_size block_id;
-
 		Lu_N_Cell n_cell;
 		Lu_N_Column n_column;
 	};
@@ -74,23 +71,19 @@
 	static inline void lu_w_save_cell__reset(Lu_W_Save_Cell self)
 	{
 		lu__debug_assert(self);
-		self->wave_id = LU_WAVE_ID__NOT_SET;
-		self->block_id = LU_BLOCK_ID__NOT_SET;
+
 		self->n_cell = NULL;
 		self->n_column = NULL;
 	}
 
 	static inline Lu_W_Save_Cell lu_w_save_cell__save(
 		Lu_W_Save_Cell self,
-		lu_size wave_id,
-		lu_size block_id,
 		Lu_N_Cell n_cell,
 		Lu_N_Column n_column
 	)
 	{
 		lu__debug_assert(self);
-		self->wave_id = wave_id;
-		self->block_id = block_id;
+
 		self->n_cell = n_cell;
 		self->n_column = n_column;
 	}
@@ -108,13 +101,25 @@
 		lu_value sig;
 
 		lu_byte state;
-		lu_value p1;
-		lu_value p2;
+		lu_value p_1;
+		lu_value p_2;
 	};
 
 	#define LU_W_SAVE_CELL_P__START 0
 	#define LU_W_SAVE_CELL_P__ONE 1
 	#define LU_W_SAVE_CELL_P__READY 2
+
+	static inline void lu_w_save_cell_p__reset(Lu_W_Save_Cell_P self)
+	{
+		lu__debug_assert(self);
+
+		self->n_column = NULL;
+		self->n_cell = NULL;
+		self->sig = 0;
+		self->state = LU_W_SAVE_CELL_P__START;
+		self->p_1 = 0;
+		self->p_2 = 0;
+	}
 
 	static inline void lu_w_save_cell_p__register(
 		Lu_W_Save_Cell_P self, 
@@ -126,8 +131,8 @@
 		is_reset && (self->state = LU_W_SAVE_CELL_P__START);
 
 		#pragma GCC diagnostic ignored "-Wunused-value"
-			self->state == LU_W_SAVE_CELL_P__START && (self->p1 = p);
-			self->state == LU_W_SAVE_CELL_P__ONE && (self->p2 = p); 
+			self->state == LU_W_SAVE_CELL_P__START && (self->p_1 = p);
+			self->state == LU_W_SAVE_CELL_P__ONE && (self->p_2 = p); 
 		#pragma GCC diagnostic pop
 
 		++self->state; 
@@ -138,10 +143,10 @@
 
 	static inline lu_bool lu_w_save_cell_p__is_ready(Lu_W_Save_Cell_P self, lu_value signif_p)
 	{
-		//lu__debug("\n P STEP: %.1f, P1: %.1f, P2: %.1f, P_DIFF: %.1f", signif_p, self->p1, self->p2, lu_value_abs(self->p1 - self->p2));
+		//lu__debug("\n P STEP: %.1f, P1: %.1f, P2: %.1f, P_DIFF: %.1f", signif_p, self->p_1, self->p_2, lu_value_abs(self->p_1 - self->p_2));
 
 		// If no changes its important information for us
-		return self->state == LU_W_SAVE_CELL_P__READY; // && lu_value_abs(self->p1 - self->p2) >= signif_p;
+		return self->state == LU_W_SAVE_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
 
 	}
 
@@ -155,7 +160,7 @@
 		Lu_N_Table_Comp n_table
 	)
 	{
-		lu_value p = self->p2 - self->p1;
+		lu_value p = self->p_2 - self->p_1;
 
 		#pragma GCC diagnostic ignored "-Wunused-value"
 			p < 0 && (p = -p); 
@@ -177,7 +182,7 @@
 			self->sig = 1.0;
 		}
 
-		// If difference between p1 and p2 is small, z will 0, which means its "NULL" cell
+		// If difference between p_1 and p_2 is small, z will 0, which means its "NULL" cell
 		// z being 0 doesnt mean addr->cell_x is 0 (!)
 		
 		self->n_column = lu_n_table_comp__get_column(n_table, x, y);

@@ -574,7 +574,6 @@
 			lu__assert(w_cell);
 			lu__debug_assert(w_cell->n_cell);
 
-
 			lu_n_cell__children_append(self, link_mem, w_cell->n_cell->addr);
 
 			lu_n_cell_vp__parent_append(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);

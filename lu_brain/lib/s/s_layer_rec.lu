@@ -151,8 +151,6 @@
 
 				rec_w_p_cell = lu_w_table__get_cell(curr_w_table, x, y);
 
-				lu_w_save_cell__reset(rec_w_p_cell);
-
 				// reset string
 				not_null_cells_count = 0;
 				saved_count = 0;
@@ -176,9 +174,14 @@
 					// Get value from Data
 					v = data->values[z * wh + xy_shift];
 
+					if (is_reset)
+					{
+						lu_w_save_cell_p__reset(w_p_cell);
+					}
+
 					lu_w_save_cell_p__register(w_p_cell, is_reset, v, config);
 
-					if (!is_reset && lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
+					if (lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
 						//
 						// Children W cell_p save
@@ -227,10 +230,15 @@
 					// Parent W cell save
 					//
 
-					lu_w_save_cell__save(rec_w_p_cell, wave_id, block_id, n_cell, n_column);
+					lu_w_save_cell__save(rec_w_p_cell, n_cell, n_column);
 
 					curr_w_table->any_fired = true;
 				}
+				else
+				{
+					lu_w_save_cell__reset(rec_w_p_cell);
+				}
+
 
 			}  // for (x = 0
 		} // for (y = 0
