@@ -5,6 +5,14 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self);
+	static inline union lu_n_link_addr lu_n_link_mem__get_addr(Lu_N_Link_Mem self, Lu_N_Link link);
+	static inline Lu_N_Link lu_n_link_mem__get_link(Lu_N_Link_Mem self, union lu_n_link_addr addr);
+	static inline Lu_N_Link_Mem lu_n_column__get_link_mem(Lu_N_Column self);
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //
 
@@ -17,13 +25,7 @@
 	};
 
 	// NULL addr
-	extern union lu_n_link_addr LU_N_LINK_ADDR__NULL; 
-
-///////////////////////////////////////////////////////////////////////////////
-// 
-//
-
-	static inline Lu_N_Link lu_n_link_mem__get_link(Lu_N_Link_Mem self, union lu_n_link_addr addr);
+	extern union lu_n_link_addr LU_N_LINK_ADDR__NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link
@@ -67,6 +69,68 @@
 		n_link->cell_addr = addr;
 
 		return n_link;
+	}
+
+	static inline lu_bool lu_n_link__is_vp_children_eq(
+		Lu_N_Link self, 
+		Lu_W_Save_Cell_P* children, 
+		lu_size children_count, 
+		Lu_N_Link_Mem link_mem
+	)
+	{
+		lu__debug_assert(children);
+		lu__debug_assert(children[0]);
+		lu__debug_assert(children_count > 0);
+		lu__debug_assert(link_mem);
+
+		if (self == NULL) return false;
+
+		Lu_W_Save_Cell_P w_cell;
+		for(lu_size i = 0; i < children_count; i++)
+		{
+			if (self == NULL) return false;
+
+			w_cell = children[i];
+			lu__debug_assert(w_cell);
+			lu__debug_assert(w_cell->n_cell);
+
+			if (!lu_n_addr__is_eq(&self->cell_addr, lu_n_cell_vp__get_cell_addr(w_cell->n_cell))) return false;
+
+			self = lu_n_link_mem__get_link(link_mem, self->next);
+		}
+
+		return true;
+	}
+
+	static inline lu_bool lu_n_link__is_children_eq(
+		Lu_N_Link self, 
+		Lu_W_Save_Cell* children, 
+		lu_size children_count, 
+		Lu_N_Link_Mem link_mem
+	)
+	{
+		lu__debug_assert(children);
+		lu__debug_assert(children[0]);
+		lu__debug_assert(children_count > 0);
+		lu__debug_assert(link_mem);
+
+		if (self == NULL) return false;
+
+		Lu_W_Save_Cell w_cell;
+		for(lu_size i = 0; i < children_count; i++)
+		{
+			if (self == NULL) return false;
+
+			w_cell = children[i];
+			lu__debug_assert(w_cell);
+			lu__debug_assert(w_cell->n_cell);
+
+			if (!lu_n_addr__is_eq(&self->cell_addr, lu_n_cell__get_cell_addr(w_cell->n_cell))) return false;
+
+			self = lu_n_link_mem__get_link(link_mem, self->next);
+		}
+
+		return true;
 	}
 
 
@@ -312,11 +376,11 @@
 		return n_link;
 	}
 
-	static inline union lu_n_addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self)
+	static inline Lu_N_Addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self)
 	{
 		lu__debug_assert(self);
 
-		return self->addr;
+		return &self->addr;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -409,41 +473,6 @@
 		return lu_n_column_comp__get_cell(column, z);
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Link 
-//
-
-	static inline lu_bool lu_n_link__is_vp_children_eq(
-		Lu_N_Link self, 
-		Lu_W_Save_Cell_P* children, 
-		lu_size children_count, 
-		Lu_N_Link_Mem link_mem
-	)
-	{
-		lu__debug_assert(children);
-		lu__debug_assert(children[0]);
-		lu__debug_assert(children_count > 0);
-		lu__debug_assert(link_mem);
-
-		if (self == NULL) return false;
-
-		Lu_W_Save_Cell_P w_cell;
-		for(lu_size i = 0; i < children_count; i++)
-		{
-			if (self == NULL) return false;
-
-			w_cell = children[i];
-			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
-
-			if (!lu_n_addr__is_eq(&self->cell_addr, &w_cell->n_cell->addr)) return false;
-
-			self = lu_n_link_mem__get_link(link_mem, self->next);
-		}
-
-		return true;
-	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
@@ -531,11 +560,11 @@
 		return self;
 	}
 
-	static inline union lu_n_addr lu_n_cell__get_cell_addr(Lu_N_Cell self)
+	static inline Lu_N_Addr lu_n_cell__get_cell_addr(Lu_N_Cell self)
 	{
 		lu__debug_assert(self);
 
-		return self->addr;
+		return &self->addr;
 	}
 
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
@@ -638,16 +667,16 @@
 			switch(i)
 			{
 				case 0:
-					n_cell->tl = lu_n_link__prepend(n_cell->tl, n_column->link_mem, self->addr);
+					n_cell->tl = lu_n_link__prepend(n_cell->tl, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				case 1:
-					n_cell->tr = lu_n_link__prepend(n_cell->tr, n_column->link_mem, self->addr);
+					n_cell->tr = lu_n_link__prepend(n_cell->tr, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				case 2:
-					n_cell->bl = lu_n_link__prepend(n_cell->bl, n_column->link_mem, self->addr);
+					n_cell->bl = lu_n_link__prepend(n_cell->bl, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				case 3:
-					n_cell->br = lu_n_link__prepend(n_cell->br, n_column->link_mem, self->addr);
+					n_cell->br = lu_n_link__prepend(n_cell->br, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				default:
 					lu__assert(false);
@@ -693,6 +722,13 @@
 	// {
 	// 	return cell - self->cells;
 	// }
+
+	static inline Lu_N_Link_Mem lu_n_column__get_link_mem(Lu_N_Column self)
+	{
+		lu__debug_assert(self);
+
+		return &self->link_mem;
+	}
 
 	static inline lu_size lu_n_column__hash_to_ix(Lu_N_Column self, lu_size hash)
 	{
