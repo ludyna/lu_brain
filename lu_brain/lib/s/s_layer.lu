@@ -203,12 +203,19 @@
 
 				lu_w_table__collect_children(prev_w_table, x, y, children, &non_null_count);
 
+				lu__debug_assert(non_null_count <= prev_w_table->normal_children_size);
+
 				if (non_null_count)
 				{
 					n_column = lu_n_table__get_column(curr_n_table, x, y);
 					lu__assert(n_column);
 
-					n_cell = lu_n_column__save_with_children(n_column, children, prev_w_table->normal_children_size);
+					n_cell = lu_n_column__save_with_children(
+						n_column, 
+						children, 
+						prev_w_table->normal_children_size, 
+						non_null_count
+					);
 					lu__assert(n_cell);
 
 					lu_w_save_cell__save(curr_w_cell, n_cell, n_column);

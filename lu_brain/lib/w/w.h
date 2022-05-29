@@ -182,11 +182,11 @@
 		if (children[i]) ++local_non_null_count;
 
 		++i;
-		children[i] = lu_w_table__get_cell(self, x + 1, y + 1);
+		children[i] = lu_w_table__get_cell(self, x, y + 1);
 		if (children[i]) ++local_non_null_count;
 
 		++i;
-		children[i] = lu_w_table__get_cell(self, x, y + 1);
+		children[i] = lu_w_table__get_cell(self, x + 1, y + 1);
 		if (children[i]) ++local_non_null_count;
 
 		lu__debug_assert(local_non_null_count <= self->normal_children_size);

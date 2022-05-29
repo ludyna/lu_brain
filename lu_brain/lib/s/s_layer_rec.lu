@@ -223,7 +223,7 @@
 					n_column = lu_n_table__get_column(rec_n_table, x, y);
 					lu__assert(n_column);
 					
-					n_cell = lu_n_column__save_with_vp_children(n_column, children, depth);
+					n_cell = lu_n_column__save_with_vp_children(n_column, children, depth, not_null_cells_count);
 					lu__assert(n_cell);
 
 					//

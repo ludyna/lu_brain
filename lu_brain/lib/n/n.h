@@ -54,10 +54,21 @@
 		return true;
 	}
 
-	static inline void lu_n_link__prepend(Lu_N_Link self, Lu_N_Link b)
+	static inline Lu_N_Link lu_n_link__prepend(Lu_N_Link self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
-		
+		Lu_N_Link prev_n_link = self;
+
+		// new child link
+		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
+		lu__assert(n_link);
+
+		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+
+		n_link->cell_addr = addr;
+
+		return n_link;
 	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Mem
@@ -520,6 +531,13 @@
 		return self;
 	}
 
+	static inline union lu_n_addr lu_n_cell__get_cell_addr(Lu_N_Cell self)
+	{
+		lu__debug_assert(self);
+
+		return self->addr;
+	}
+
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
 		lu__debug_assert(self);
@@ -555,11 +573,12 @@
 		Lu_N_Cell self, 
 		Lu_W_Save_Cell_P* children, 
 		lu_size children_count,
-		Lu_N_Link_Mem link_mem
+		Lu_N_Link_Mem link_mem,
+		lu_size non_null_count
 	)
 	{
-		lu__debug_assert(self);
-		lu__debug_assert(children); // we don't even save NULL cell
+		lu__assert(self);
+		lu__assert(children); // we don't even save NULL cell
 
 		lu_size i;
 		lu_size ix;
@@ -577,6 +596,62 @@
 			lu_n_cell__children_append(self, link_mem, w_cell->n_cell->addr);
 
 			lu_n_cell_vp__parent_append(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);
+		}
+	}
+
+	static inline void lu_n_cell__save( 
+		Lu_N_Cell self, 
+		Lu_W_Save_Cell* children, 
+		lu_size children_count,
+		Lu_N_Link_Mem link_mem,
+		lu_size non_null_count
+	)
+	{
+		lu__assert(self);
+		lu__assert(children); // we don't even save NULL cell
+
+		lu_size i;
+		lu_size ix;
+
+		Lu_W_Save_Cell w_cell = NULL;
+		Lu_N_Cell n_cell;
+		Lu_N_Column n_column;
+
+		for (i = 0; i < children_count; i++)
+		{
+			ix = children_count - i - 1;
+
+			w_cell = children[ix]; 
+			lu__assert(w_cell);
+
+			
+			n_cell = w_cell->n_cell;
+			n_column = w_cell->n_column;
+ 
+ 			// ce nepravylno	
+			lu__assert(n_cell);
+			lu__assert(n_column);
+
+			lu_n_cell__children_append(self, link_mem, n_cell->addr);
+
+			// Lu_N_Link lu_n_link__prepend(Lu_N_Link self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
+			switch(i)
+			{
+				case 0:
+					n_cell->tl = lu_n_link__prepend(n_cell->tl, n_column->link_mem, self->addr);
+					break;
+				case 1:
+					n_cell->tr = lu_n_link__prepend(n_cell->tr, n_column->link_mem, self->addr);
+					break;
+				case 2:
+					n_cell->bl = lu_n_link__prepend(n_cell->bl, n_column->link_mem, self->addr);
+					break;
+				case 3:
+					n_cell->br = lu_n_link__prepend(n_cell->br, n_column->link_mem, self->addr);
+					break;
+				default:
+					lu__assert(false);
+			}
 		}
 	}
 
@@ -635,11 +710,6 @@
 		return &self->cells[column_ix];
 	}
 
-	static inline lu_size lu_n_column__children_to_ix(Lu_N_Column self, union lu_n_addr* children)
-	{
-		return lu_n_column__hash_to_ix(self, lu_n_str__hash_comb(children));
-	}
-
 	static inline lu_size lu_n_column__vp_children_to_ix(
 		Lu_N_Column self, 
 		Lu_W_Save_Cell_P* children, 
@@ -647,12 +717,22 @@
 	)
 	{
 		return lu_n_column__hash_to_ix(self, lu_w_save_cell_p__children_hash_comp(children, children_count));
+	} 
+
+	static inline lu_size lu_n_column__children_to_ix(
+		Lu_N_Column self, 
+		Lu_W_Save_Cell* children, 
+		lu_size children_count
+	)
+	{
+		return lu_n_column__hash_to_ix(self, lu_w_save_cell__children_hash_comp(children, children_count));
 	}
 
 	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
 		Lu_N_Column self, 
 		Lu_W_Save_Cell_P* children, 
-		lu_size children_count
+		lu_size children_count,
+		lu_size non_null_count
 	)
 	{
 		lu__debug_assert(self);
@@ -672,7 +752,7 @@
 
 			if (lu_n_cell__is_blank(cell))
 			{
-				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
+				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem, non_null_count);
 				return cell;
 			}
 			else if (lu_n_link__is_vp_children_eq(cell->children, children, children_count, &self->link_mem)) 
@@ -688,14 +768,38 @@
 	static inline Lu_N_Cell lu_n_column__save_with_children(
 		Lu_N_Column self, 
 		Lu_W_Save_Cell* children, 
-		lu_size children_count
+		lu_size children_count,
+		lu_size non_null_count
 	)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(children);
 		lu__debug_assert(children_count > 0);
 
+		lu_size ix = lu_n_column__children_to_ix(self, children, children_count);
 
+		for (lu_size z = 0; z < self->d; z++)
+		{
+			Lu_N_Cell cell = lu_n_column__get_cell(self, z, ix);
+
+			lu__debug_assert(cell);
+
+			// We don't save INTO n_column null cell (which is for z = 0 only), find another.
+			if (z == 0 && lu_n_cell__is_n_column_null_cell(cell)) continue;
+
+			if (lu_n_cell__is_blank(cell))
+			{
+				lu_n_cell__save(cell, children, children_count, &self->link_mem, non_null_count);
+				return cell;
+			}
+			else if (lu_n_link__is_children_eq(cell->children, children, children_count, &self->link_mem)) 
+			{
+				return cell; // no need to do anything, we already have that cell
+			}
+		}
+
+		// should replace with column reallocation, should not normally happen
+		return NULL;
 
 	}
 
