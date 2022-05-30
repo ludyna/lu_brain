@@ -212,7 +212,7 @@
 	)
 	{
 
-		Lu_S_Layer_Base parent_layer = curr_w_table->s_layer->p;
+		Lu_S_Layer_Base parent_layer = lu_s_layer__get_parent_layer(curr_w_table->s_layer);
 
 		char buffer[50];
 		while (parent_layer->tag != LU_S_TAG__SEQ)
@@ -248,7 +248,7 @@
 		lu__assert(config);
 		lu__assert(curr_w_table->s_layer);
 
-		Lu_S_Layer_Base p = curr_w_table->s_layer->p;
+		Lu_S_Layer_Base p = lu_s_layer__get_parent_layer(curr_w_table->s_layer);
 
 		lu__assert(p->type == LU_S_LAYER__LAYER);
 

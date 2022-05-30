@@ -221,15 +221,9 @@
 		{
 			w_cell = children[i];
 			lu__debug_assert(w_cell);
-			
-			if (w_cell->n_cell)
-			{
-				value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
-			}
-			else
-			{
-				value = 0;
-			}
+			lu__debug_assert(w_cell->n_cell); // this is correct
+
+			value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
 
 			p_reg = lu_hash_comb(p_reg, value);
 		}

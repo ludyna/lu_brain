@@ -124,10 +124,7 @@
 
 		lu_size depth = self->rec->depth; 
 
-		// Currently we support max 4 components
-		lu__assert(depth < LU_N_CELL__CHILDREN_MAX);
-
-		Lu_W_Save_Cell_P children[depth + 1];
+		Lu_W_Save_Cell_P children[depth];
 		
 		curr_w_table->any_fired = false;
 

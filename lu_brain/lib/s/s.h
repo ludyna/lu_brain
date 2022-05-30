@@ -296,6 +296,20 @@
 	// Properties
 	//
 
+	static inline Lu_S_Layer_Base lu_s_layer__get_parent_layer(Lu_S_Layer self)
+	{
+		lu__debug_assert(self);
+
+		return self->super.p;
+	}
+
+	static inline Lu_N_Table lu_s_layer__get_n_table(Lu_S_Layer self)
+	{
+		lu__debug_assert(self);
+
+		return self->n_table;
+	}
+
 	static inline lu_size lu_s_layer__get_layer_ix(Lu_S_Layer self)
 	{
 		return self->super.layer_ix;

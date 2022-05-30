@@ -3,6 +3,13 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// 
+//
+
+	typedef struct lu_s_layer* Lu_S_Layer;
+	static inline Lu_N_Table lu_s_layer__get_n_table(Lu_S_Layer self);
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Str
 //
 
@@ -109,11 +116,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Table 
 
-	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
-
 	struct lu_w_table {
 		Lu_Mem mem;
-		Lu_S_Layer_Base s_layer;
+		Lu_S_Layer s_layer;
 
 		lu_size wave_id;
 		lu_size block_id;
@@ -131,7 +136,7 @@
 	};
 
 	static Lu_W_Table lu_w_table__create(
-		Lu_S_Layer_Base s_layer, 
+		Lu_S_Layer s_layer, 
 		Lu_Config config, 
 		lu_size w, 
 		lu_size h,
@@ -171,8 +176,13 @@
 		lu_size *non_null_count
 	)
 	{
+		lu__assert(self);
+		lu__assert(self->s_layer);
+
 		lu_byte i = 0;
 		lu_size local_non_null_count = 0;
+
+		Lu_N_Table n_table = lu_s_layer__get_n_table(self->s_layer);
 
 		////
 		// Possible situations:
