@@ -189,9 +189,10 @@
 		////
 		// Possible situations:
 		// 1. Outside bounds
+		//		children[i] = NULL;
 		// 		
 		// 2. w_cell was not fired for this wave (w_cell->n_cell == NULL)
-		//		This should not be the case, because we should have w_cell->n_cell = n_column "NULL" cell
+		//		We should set w_cell->n_cell to appropriate n_column "NULL" cell
 		// 
 		// 3. w_cell was fired for this wave (w_cell->n_cell != NULL)
 

@@ -657,22 +657,18 @@
 			ix = children_count - i - 1;
 
 			w_cell = children[ix]; 
-			lu__assert(w_cell);
-
+			
+			// Out of bounds situation
+			if (w_cell == NULL) continue;
 			
 			n_cell = w_cell->n_cell;
+			lu__assert(n_cell); // should never happen, it should be "null" cell or normal cell
+
 			n_column = w_cell->n_column;
 			lu__assert(n_column);
-
-			// We don't create links for NULL cells (optimization)
-			if (n_cell == NULL) 
-			{
-				// get 
-			}
-
+	
 			lu_n_cell__children_append(self, link_mem, n_cell->addr);
 
-			// Lu_N_Link lu_n_link__prepend(Lu_N_Link self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 			switch(i)
 			{
 				case 0:
