@@ -744,6 +744,13 @@
 		return hash % self->h; 
 	}
 
+	static inline Lu_N_Cell lu_n_column__get_null_cell(Lu_N_Column self)
+	{
+		lu__debug_assert(self);
+
+		return &self->cells[0];
+	}
+
 	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)
 	{
 		lu__debug_assert(self);

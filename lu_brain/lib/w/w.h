@@ -183,6 +183,8 @@
 		lu_size local_non_null_count = 0;
 
 		Lu_N_Table n_table = lu_s_layer__get_n_table(self->s_layer);
+		lu__assert(n_table);
+		Lu_N_Column n_column;
 
 		////
 		// Possible situations:
@@ -194,19 +196,59 @@
 		// 3. w_cell was fired for this wave (w_cell->n_cell != NULL)
 
 		children[i] = lu_w_table__get_cell(self, x, y);
-		if (children[i]) ++local_non_null_count;
+		if (children[i])
+		{
+			++local_non_null_count;
+
+			if (children[i]->n_cell == NULL)
+			{
+				n_column = lu_n_table__get_column(n_table, x, y);
+			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
+			 	children[i]->n_column = n_column;
+			}
+		}
 
 		++i;
 		children[i] = lu_w_table__get_cell(self, x + 1, y);
-		if (children[i]) ++local_non_null_count;
+		if (children[i])
+		{
+			++local_non_null_count;
+
+			if (children[i]->n_cell == NULL)
+			{
+				n_column = lu_n_table__get_column(n_table, x + 1, y);
+			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
+			 	children[i]->n_column = n_column;
+			}
+		}
 
 		++i;
 		children[i] = lu_w_table__get_cell(self, x, y + 1);
-		if (children[i]) ++local_non_null_count;
+		if (children[i]) 
+		{
+			++local_non_null_count;
+
+			if (children[i]->n_cell == NULL)
+			{
+				n_column = lu_n_table__get_column(n_table, x, y + 1);
+			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
+			 	children[i]->n_column = n_column;
+			}
+		}
 
 		++i;
 		children[i] = lu_w_table__get_cell(self, x + 1, y + 1);
-		if (children[i]) ++local_non_null_count;
+		if (children[i]) 
+		{
+			++local_non_null_count;
+
+			if (children[i]->n_cell == NULL)
+			{
+				n_column = lu_n_table__get_column(n_table, x + 1, y + 1);
+			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
+			 	children[i]->n_column = n_column;
+			}
+		}
 
 		lu__debug_assert(local_non_null_count <= self->normal_children_size);
 
