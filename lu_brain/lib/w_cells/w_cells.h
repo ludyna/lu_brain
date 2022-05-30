@@ -216,13 +216,22 @@
 		lu_size p_reg = 0;
 
 		Lu_W_Save_Cell w_cell;
+		lu_size value;
 		for (lu_size i = 0; i < children_count; i++)
 		{
 			w_cell = children[i];
 			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
+			
+			if (w_cell->n_cell)
+			{
+				value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
+			}
+			else
+			{
+				value = 0;
+			}
 
-			p_reg = lu_hash_comb(p_reg, lu_n_cell__get_cell_addr(w_cell->n_cell)->value);
+			p_reg = lu_hash_comb(p_reg, value);
 		}
 
 		return p_reg;

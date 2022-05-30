@@ -174,6 +174,15 @@
 		lu_byte i = 0;
 		lu_size local_non_null_count = 0;
 
+		////
+		// Possible situations:
+		// 1. Outside bounds
+		// 		
+		// 2. w_cell was not fired for this wave (w_cell->n_cell == NULL)
+		//		This should not be the case, because we should have w_cell->n_cell = n_column "NULL" cell
+		// 
+		// 3. w_cell was fired for this wave (w_cell->n_cell != NULL)
+
 		children[i] = lu_w_table__get_cell(self, x, y);
 		if (children[i]) ++local_non_null_count;
 

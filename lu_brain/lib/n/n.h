@@ -478,13 +478,13 @@
 // Lu_N_Cell
 //
 
-	union lu_n_cell_counters {
-		struct {
-			lu_size children_count: 32;
-			lu_size children_null_count: 32;
-		};
-		lu_size value;
-	};
+	// union lu_n_cell_counters {
+	// 	struct {
+	// 		lu_size children_count: 32;
+	// 		lu_size children_null_count: 32;
+	// 	};
+	// 	lu_size value;
+	// };
 
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
@@ -497,8 +497,9 @@
 		Lu_N_Link br;
 
 		Lu_N_Link children; 
-		union lu_n_cell_counters counters;
 
+		lu_value default_sig;
+		
 		union lu_w_match_addr* w_cells;
 	};
 
@@ -528,8 +529,8 @@
 		self->tr = NULL;
 		self->bl = NULL;
 		self->br = NULL;
-		self->children = NULL;
-		self->counters.value = 0;
+		self->children = NULL; 
+		self->default_sig = 0;
 
 		lu_size size = sizeof(union lu_w_match_addr*) * w_cells_size;
 		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(mem, size);
@@ -614,6 +615,8 @@
 
 		Lu_W_Save_Cell_P w_cell = NULL;
 
+		// We dont need to use default_sig because all links present (even if they are to NULL cells)
+
 		for (i = 0; i < children_count; i++)
 		{
 			ix = children_count - i - 1;
@@ -621,6 +624,9 @@
 			w_cell = children[ix]; 
 			lu__assert(w_cell);
 			lu__debug_assert(w_cell->n_cell);
+
+			// We create links even if sig > 0.
+			// We dont create links only if all children are NULL (which means we will not get here).
 
 			lu_n_cell__children_append(self, link_mem, w_cell->n_cell->addr);
 
@@ -656,10 +662,13 @@
 			
 			n_cell = w_cell->n_cell;
 			n_column = w_cell->n_column;
- 
- 			// ce nepravylno	
-			lu__assert(n_cell);
 			lu__assert(n_column);
+
+			// We don't create links for NULL cells (optimization)
+			if (n_cell == NULL) 
+			{
+				// get 
+			}
 
 			lu_n_cell__children_append(self, link_mem, n_cell->addr);
 

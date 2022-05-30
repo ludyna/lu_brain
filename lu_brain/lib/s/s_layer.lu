@@ -194,6 +194,7 @@
 				curr_w_cell = lu_w_table__get_cell(curr_w_table, x, y);
 				lu__debug_assert(curr_w_cell);
 
+				// We reset so data from previous waves don't interfere
 				lu_w_save_cell__reset(curr_w_cell);
 
 				for (i = 0; i < LU_N_CELL__CHILDREN_MAX; i++)

@@ -156,8 +156,7 @@
 				saved_count = 0;
 				children[0] = NULL;
 
-				// Iterate components for x,y position in Data, register them to appropriate w_cell 
-				// and when cell is ready set sig for it marking to be ready to be fired
+				// Collect children
 				for (z = 0; z < depth; z++)
 				{
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
@@ -181,6 +180,7 @@
 
 					lu_w_save_cell_p__register(w_p_cell, is_reset, v, config);
 
+					// Cell is ready after p_1 and p_2 are set, independently if sig is 0 or not
 					if (lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
 						//
@@ -205,9 +205,10 @@
 						++saved_count;
 					}
 
+
 				} // for (lu_size z = 0
 
-				// If at least one value present, save, otherwise dont need to do anything
+				// If at least one value present, save links, otherwise dont need to do anything
 				// This is optimization, we consider that "NULL" cells fired, but we don't do any calcs
 				if (not_null_cells_count)
 				{
@@ -236,6 +237,7 @@
 				}
 				else
 				{
+					// We reset so data from previous wave don't interfere
 					lu_w_save_cell__reset(rec_w_p_cell);
 				}
 
