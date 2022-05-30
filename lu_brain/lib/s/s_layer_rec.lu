@@ -216,8 +216,6 @@
 					// N Cell save
 					//
 
-					lu__debug("\n SAVING N_CELL"); 
-
 					n_column = lu_n_table__get_column(rec_n_table, x, y);
 					lu__assert(n_column);
 					

@@ -478,14 +478,6 @@
 // Lu_N_Cell
 //
 
-	// union lu_n_cell_counters {
-	// 	struct {
-	// 		lu_size children_count: 32;
-	// 		lu_size children_null_count: 32;
-	// 	};
-	// 	lu_size value;
-	// };
-
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
@@ -586,7 +578,7 @@
 	{
 		Lu_N_Link prev_n_link = self->children;
 
-		// new child link
+		// New child link
 		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
 		lu__assert(n_link);
 
@@ -595,6 +587,9 @@
 		n_link->cell_addr = addr;
 
 		self->children = n_link;
+
+		// For every children we have minus sig potential, that should be overcome by child signal
+		--self->default_sig;
 
 		return n_link;
 	}	
@@ -632,6 +627,8 @@
 
 			lu_n_cell_vp__parent_append(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);
 		}
+
+		lu__debug("\n lu_n_cell__vp_save()"); 
 	}
 
 	static inline void lu_n_cell__save( 
@@ -687,6 +684,8 @@
 					lu__assert(false);
 			}
 		}
+
+		lu__debug("\n lu_n_cell__save()");
 	}
 
 
