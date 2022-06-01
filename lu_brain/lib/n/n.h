@@ -359,7 +359,7 @@
 
 	}
 
-	static inline Lu_N_Link lu_n_cell_vp__parent_append(Lu_N_Cell_VP self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
+	static inline Lu_N_Link lu_n_cell_vp__parent_prepend(Lu_N_Cell_VP self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
 		Lu_N_Link prev_n_link = self->parents;
 
@@ -574,7 +574,7 @@
 		return self->addr.cell_ix == 0;
 	}
 
-	static inline Lu_N_Link lu_n_cell__children_append(Lu_N_Cell self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
+	static inline Lu_N_Link lu_n_cell__children_prepend(Lu_N_Cell self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
 		Lu_N_Link prev_n_link = self->children;
 
@@ -623,9 +623,9 @@
 			// We create links even if sig > 0.
 			// We dont create links only if all children are NULL (which means we will not get here).
 
-			lu_n_cell__children_append(self, link_mem, w_cell->n_cell->addr);
+			lu_n_cell__children_prepend(self, link_mem, w_cell->n_cell->addr);
 
-			lu_n_cell_vp__parent_append(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);
+			lu_n_cell_vp__parent_prepend(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);
 		}
 
 		lu__debug("\n lu_n_cell__vp_save()"); 
@@ -664,7 +664,7 @@
 			n_column = w_cell->n_column;
 			lu__assert(n_column);
 	
-			lu_n_cell__children_append(self, link_mem, n_cell->addr);
+			lu_n_cell__children_prepend(self, link_mem, n_cell->addr);
 
 			switch(i)
 			{
