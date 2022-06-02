@@ -8,6 +8,7 @@
 
 	static Lu_La_Column lu_la_column__init(
 		Lu_La_Column self, 
+		Lu_Config config,
 		Lu_Mem mem, 
 		lu_size cells_size,
 		lu_size n_link_mem_size, 

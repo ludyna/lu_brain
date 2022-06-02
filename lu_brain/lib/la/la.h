@@ -17,13 +17,29 @@
 // 
 
 	struct lu_la_cell {
-		lu_size label;
+		lu_size label; // we need this because same label_ix might "contain" more than one label
 
 		Lu_La_Link children;
 		lu_size children_count;
 
 		union lu_w_match_addr* w_cells;
 	};
+
+	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, Lu_Mem w_mem, Lu_Config config)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(w_mem);
+		lu__debug_assert(config);
+
+
+
+		return self;
+	}
+
+	static inline Lu_La_Cell lu_la_cell__deinit(Lu_La_Cell self, Lu_Mem w_mem)
+	{
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
@@ -114,6 +130,7 @@
 
 	static Lu_La_Column lu_la_column__init(
 		Lu_La_Column self, 
+		Lu_Config config,
 		Lu_Mem mem, 
 		lu_size cells_size,
 		lu_size n_link_mem_size, 
@@ -122,9 +139,27 @@
 
 	static void lu_la_column__deinit(Lu_La_Column self);
 
-	static inline Lu_N_Link_Mem lu_la_column__gen_n_link_mem(Lu_La_Column self)
+	static inline Lu_N_Link_Mem lu_la_column__get_n_link_mem(Lu_La_Column self)
 	{
 		lu__debug_assert(self);
 
 		return self->n_link_mem;
+	}
+
+	static inline lu_size lu_la_column__label_to_ix(Lu_La_Column self, lu_size label)
+	{
+		lu__debug_assert(self);
+
+		lu__assert(label < self->cells_size); // simplified, when we add realloc, everything will be fine
+
+		return label;
+	}
+
+	static inline Lu_La_Cell lu_la_column__get_la_cell(Lu_La_Column self, lu_size label)
+	{
+		lu__debug_assert(self);
+
+		lu_size label_ix = lu_la_column__label_to_ix(self, label);
+
+		return &self->cells[label_ix];
 	}
