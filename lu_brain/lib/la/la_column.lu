@@ -17,15 +17,24 @@
 		// lu__assert(n_link_mem_size > 0);
 		// lu__assert(lu_link_mem_size > 0);
 
-		self->mem = config->la_mem;
+		self->la_mem = config->la_mem;
+		self->w_mem = config->w_mem;
+		self->n_mem = config->n_mem;
+
 		self->cells_size = config->la_labels_size;
 
 		lu_size size_bytes = sizeof(struct lu_la_cell) * self->cells_size;
 
-		self->cells = (struct lu_la_cell*) lu_mem__alloc(self->mem, size_bytes);
+		self->cells = (struct lu_la_cell*) lu_mem__alloc(self->la_mem, size_bytes);
 		lu__alloc_assert(self->cells);
 
-		memset(self->cells, 0, size_bytes);
+		Lu_La_Cell la_cell;
+		for (lu_size i = 0; i < self->cells_size; i++)
+		{
+			la_cell = &self->cells[i];
+
+			lu_la_cell__init(la_cell, i);
+		}
 
 		return self;
 	}
@@ -33,7 +42,16 @@
 	static void lu_la_column__deinit(Lu_La_Column self)
 	{
 		lu__assert(self);
-		lu__assert(self->mem);
+		lu__assert(self->la_mem);
+		lu__assert(self->w_mem);
 
-		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+		Lu_La_Cell la_cell;
+		for (lu_size i = 0; i < self->cells_size; i++)
+		{
+			la_cell = &self->cells[i];
+
+			lu_la_cell__deinit(la_cell, self->w_mem);
+		}
+
+		lu_mem__free(self->la_mem, (lu_p_byte) self->cells);
 	}

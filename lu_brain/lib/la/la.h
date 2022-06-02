@@ -17,6 +17,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Cell
 
+	#define LU_LA_CELL__LABEL_NOT_SET LU_SIZE__MAX
+
 	struct lu_la_cell {
 		lu_size label; // we need this because same label_ix might "contain" more than one label
 
@@ -26,20 +28,29 @@
 		union lu_w_match_addr* w_cells;
 	};
 
-	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, Lu_Mem w_mem, Lu_Config config)
+	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, lu_size label)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert(w_mem);
-		lu__debug_assert(config);
 
-
+		self->label = label;
+		self->children = NULL;
+		self->children_count = 0;
+		self->w_cells = NULL;
 
 		return self;
 	}
 
 	static inline Lu_La_Cell lu_la_cell__deinit(Lu_La_Cell self, Lu_Mem w_mem)
 	{
+		lu__assert(self);
+		lu__assert(w_mem);
 
+		if (self->w_cells)
+			lu_mem__free(w_mem, (lu_p_byte) self->w_cells);
+
+		self->children = NULL;
+		self->children_count = 0;
+		self->w_cells = 0;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -121,13 +132,17 @@
 // Lu_La_Column
 	
 	struct lu_la_column {
-		Lu_Mem mem;
+		Lu_Mem la_mem;
+		Lu_Mem w_mem;
+		Lu_Mem n_mem;
 
 		struct lu_la_cell* cells;
 		lu_size cells_size;
 
 		Lu_N_Link_Mem n_link_mem;
 		Lu_La_Link_Mem la_link_mem;
+
+
 	};
 
 	static Lu_La_Column lu_la_column__init(Lu_La_Column self, Lu_Config config);
@@ -157,4 +172,15 @@
 		lu_size label_ix = lu_la_column__label_to_ix(self, label);
 
 		return &self->cells[label_ix];
+	}
+
+	static inline Lu_La_Cell lu_la_column__save_label(Lu_La_Column self, Lu_N_Cell n_cell, lu_size label)
+	{
+		lu__assert(self);
+		lu__assert(n_cell);
+		lu__assert(label < self->cells_size);
+
+		Lu_La_Cell cell = &self->cells[lu_la_column__label_to_ix(self, label)];
+
+
 	}
