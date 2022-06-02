@@ -20,6 +20,7 @@
 #include "n_addr/_module.h"
 #include "w_cells/_module.h"
 #include "n/_module.h"
+#include "la/_module.h"
 #include "label/_module.h"
 #include "w/_module.h"
 #include "rec/_module.h"
