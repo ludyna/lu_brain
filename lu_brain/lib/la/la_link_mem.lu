@@ -1,0 +1,33 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	Lu_La_Link_Mem lu_la_link_mem__init(Lu_La_Link_Mem self, Lu_Mem mem, lu_size size)
+	{
+		lu__assert(self);
+		lu__assert(size > 1);
+
+		self->mem_table = lu_mem_table__create(
+			mem, 
+			sizeof(struct lu_n_link),
+			size,
+			0,
+			LU_MEM_TABLE__FREEABLE
+		);
+		lu__assert(self->mem_table);
+
+
+		// skip NULL addr
+		lu_la_link_mem__link_alloc(self);
+	}
+
+	void lu_la_link_mem__deinit(Lu_La_Link_Mem self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem_table);
+
+		lu_mem_table__destroy(self->mem_table);
+	}
