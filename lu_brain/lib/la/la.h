@@ -17,25 +17,24 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Cell
 
-	#define LU_LA_CELL__LABEL_NOT_SET LU_SIZE__MAX
-
 	struct lu_la_cell {
 		lu_size label; // we need this because same label_ix might "contain" more than one label
 
-		Lu_La_Link children;
+		Lu_N_Link children;
 		lu_size children_count;
 
 		union lu_w_match_addr* w_cells;
 	};
 
-	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, lu_size label)
+	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, lu_size label, Lu_Mem w_mem, lu_size w_waves_size)
 	{
 		lu__debug_assert(self);
 
 		self->label = label;
 		self->children = NULL;
 		self->children_count = 0;
-		self->w_cells = NULL;
+		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(w_mem, sizeof(union lu_w_match_addr) * w_waves_size);
+		lu__alloc_assert(self->w_cells);
 
 		return self;
 	}
@@ -51,6 +50,16 @@
 		self->children = NULL;
 		self->children_count = 0;
 		self->w_cells = 0;
+	}
+
+	static inline lu_bool lu_la_cell__child_exist(Lu_La_Cell self, Lu_N_Addr n_addr)
+	{
+		return false;
+	}
+
+	static inline Lu_N_Link lu_la_cell__prepend_child(Lu_La_Cell self, union lu_n_addr n_addr, Lu_N_Link_Mem n_link_mem)
+	{
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -142,7 +151,7 @@
 		Lu_N_Link_Mem n_link_mem;
 		Lu_La_Link_Mem la_link_mem;
 
-
+		lu_size w_waves_size;
 	};
 
 	static Lu_La_Column lu_la_column__init(Lu_La_Column self, Lu_Config config);
@@ -180,7 +189,12 @@
 		lu__assert(n_cell);
 		lu__assert(label < self->cells_size);
 
-		Lu_La_Cell cell = &self->cells[lu_la_column__label_to_ix(self, label)];
+		Lu_La_Cell la_cell = &self->cells[lu_la_column__label_to_ix(self, label)];
 
+		if (!lu_la_cell__child_exist(la_cell, &n_cell->addr))
+		{
+			lu_la_cell__prepend_child(la_cell, n_cell->addr, self->n_link_mem);
+		}
 
+		return la_cell;
 	}

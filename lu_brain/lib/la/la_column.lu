@@ -14,14 +14,17 @@
 		lu__assert(self);
 		lu__assert(config);
 		lu__assert(config->la_labels_size > 0);
-		// lu__assert(n_link_mem_size > 0);
-		// lu__assert(lu_link_mem_size > 0);
+		lu__assert(config->la_mem);
+		lu__assert(config->w_mem);
+		lu__assert(config->n_mem);
+		lu__assert(config->w_waves_size > 0);
 
 		self->la_mem = config->la_mem;
 		self->w_mem = config->w_mem;
 		self->n_mem = config->n_mem;
 
 		self->cells_size = config->la_labels_size;
+		self->w_waves_size = config->w_waves_size;
 
 		lu_size size_bytes = sizeof(struct lu_la_cell) * self->cells_size;
 
@@ -33,7 +36,7 @@
 		{
 			la_cell = &self->cells[i];
 
-			lu_la_cell__init(la_cell, i);
+			lu_la_cell__init(la_cell, i, self->w_mem, self->w_waves_size);
 		}
 
 		return self;
