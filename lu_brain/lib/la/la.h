@@ -105,10 +105,26 @@
 	
 	struct lu_la_column {
 
-
 		struct lu_la_cell* cells;
 		lu_size cells_size;
 
-		Lu_La_Link_Mem n_link_mem;
+		Lu_N_Link_Mem n_link_mem;
 		Lu_La_Link_Mem la_link_mem;
 	};
+
+	static Lu_La_Column lu_la_column__init(
+		Lu_La_Column self, 
+		Lu_Mem mem, 
+		lu_size cells_size,
+		lu_size n_link_mem_size, 
+		lu_size lu_link_mem_size
+	);
+
+	static void lu_la_column__deinit(Lu_La_Column self);
+
+	static inline Lu_N_Link_Mem lu_la_column__gen_n_link_mem(Lu_La_Column self)
+	{
+		lu__debug_assert(self);
+
+		return self->n_link_mem;
+	}

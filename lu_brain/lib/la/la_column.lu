@@ -1,0 +1,23 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+
+	static Lu_La_Column lu_la_column__init(
+		Lu_La_Column self, 
+		Lu_Mem mem, 
+		lu_size cells_size,
+		lu_size n_link_mem_size, 
+		lu_size lu_link_mem_size
+	)
+	{
+
+	}
+
+	static void lu_la_column__deinit(Lu_La_Column self)
+	{
+
+	}

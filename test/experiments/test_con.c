@@ -72,10 +72,10 @@ typedef unsigned int uint;
 
 float find_value(int x, int y, float* p, uint w, uint h)
 {
-	if(x < 0) x = 0;
-	if(x >= w) x = w - 1;
-	if(y < 0) y = 0;
-	if(y >= h) y = h - 1;
+	if (x < 0) x = 0;
+	if (x >= w) x = w - 1;
+	if (y < 0) y = 0;
+	if (y >= h) y = h - 1;
 
 	return p[x + w * y];
 }

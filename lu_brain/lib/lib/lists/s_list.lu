@@ -236,7 +236,7 @@ void lu_s_list__debug(Lu_S_List self)
 			else 
 			{
 				//lu__debug("%.1f", (float)(*curr->value));	
-				if(lu_lim_list__count(&curr->values) > 0) lu__debug("(%ld)", lu_lim_list__count(&curr->values) + 1);
+				if (lu_lim_list__count(&curr->values) > 0) lu__debug("(%ld)", lu_lim_list__count(&curr->values) + 1);
 				lu__debug(", ");
 			}
 

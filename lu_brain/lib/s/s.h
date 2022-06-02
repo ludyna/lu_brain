@@ -454,7 +454,7 @@
 		{
 			layer = self->layers[i];
 
-			if(layer == NULL) break;
+			if (layer == NULL) break;
 
 			lu_s_layer_base__print(layer);
 		}
