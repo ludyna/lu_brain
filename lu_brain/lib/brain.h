@@ -22,7 +22,7 @@
 
 		Lu_W_Manager w_manager;
 
-		struct lu_label_map label_map;
+		struct lu_la_column la_column;
 	};	
 
 	static lu_size lu_brain__rec_attach(Lu_Brain self, Lu_Rec rec);

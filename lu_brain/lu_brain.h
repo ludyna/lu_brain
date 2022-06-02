@@ -96,10 +96,8 @@
 		//
 		// Labels
 		//
-		Lu_Mem l_mem;
-		lu_size l_labels_size;
-		lu_size l_map_h;
-		lu_size l_map_d;
+		Lu_Mem la_mem;
+		lu_size la_labels_size;
 	};
 
 	Lu_Config lu_config__validate(Lu_Config config);

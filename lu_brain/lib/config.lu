@@ -50,10 +50,8 @@
 			// Labels
 			//			
 
-			.l_mem = NULL,
-			.l_labels_size = 10,
-			.l_map_h = 2024,
-			.l_map_d = 2			
+			.la_mem = NULL,
+			.la_labels_size = 1024,		
 		},
 		{
 			// LU_CONFIG__SEMEION
@@ -99,10 +97,9 @@
 			// Labels
 			//			
 
-			.l_mem = NULL,
-			.l_labels_size = 10,
-			.l_map_h = 2024,
-			.l_map_d = 2
+			.la_mem = NULL,
+			.la_labels_size = 16,
+
 			},
 	};		
 
@@ -145,9 +142,9 @@
 			self->w_mem = lu_g_mem;
 		}
 
-		if (self->l_mem == NULL)
+		if (self->la_mem == NULL)
 		{
-			self->l_mem = lu_g_mem;
+			self->la_mem = lu_g_mem;
 		}
 	}
 
@@ -197,9 +194,7 @@
 		// Labels
 		//
 
-		lu__user_assert(self->l_labels_size > 0, "l_labels_size should be greater than 0");
-		lu__user_assert(self->l_map_h > 0, "l_map_h should be greater than 0");
-		lu__user_assert(self->l_map_d > 0, "l_map_d should be greater than 0");
+		lu__user_assert(self->la_labels_size > 0, "la_labels_size should be greater than 0");
 
 		return self;
 	}

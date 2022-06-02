@@ -4,7 +4,8 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Lu_La_Addr
+
 	union lu_la_addr {
 		struct {
 			lu_size la_ix;
@@ -14,7 +15,7 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Lu_La_Cell
 
 	struct lu_la_cell {
 		lu_size label; // we need this because same label_ix might "contain" more than one label
@@ -42,7 +43,7 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Lu_La_Link_Addr
 
 	union lu_la_link_addr {
 		struct {
@@ -53,7 +54,7 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Lu_La_Link
 
 	struct lu_la_link {
 		union lu_la_addr la_addr;
@@ -62,7 +63,7 @@
 	}; 
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Lu_La_Link_Mem
 
 	struct lu_la_link_mem {
 		Lu_Mem_Table mem_table;
@@ -117,9 +118,10 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Lu_La_Column
 	
 	struct lu_la_column {
+		Lu_Mem mem;
 
 		struct lu_la_cell* cells;
 		lu_size cells_size;
@@ -128,14 +130,7 @@
 		Lu_La_Link_Mem la_link_mem;
 	};
 
-	static Lu_La_Column lu_la_column__init(
-		Lu_La_Column self, 
-		Lu_Config config,
-		Lu_Mem mem, 
-		lu_size cells_size,
-		lu_size n_link_mem_size, 
-		lu_size lu_link_mem_size
-	);
+	static Lu_La_Column lu_la_column__init(Lu_La_Column self, Lu_Config config);
 
 	static void lu_la_column__deinit(Lu_La_Column self);
 

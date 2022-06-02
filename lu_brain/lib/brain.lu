@@ -22,12 +22,9 @@
 		self->w_manager 	= lu_w_manager__create(p_config->b_mem, p_config->w_waves_size);
 		lu__assert(self->w_manager);
 
-		lu_label_map__init(
-			&self->label_map, 
-			p_config->l_mem, 
-			p_config->l_labels_size,
-			p_config->l_map_h,
-			p_config->l_map_d
+		lu_la_column__init(
+			&self->la_column,
+			p_config
 		);
 
 		return self;
@@ -39,7 +36,7 @@
 
 		lu__user_assert_void(self, "Lu_Brain is NULL");
 
-		lu_label_map__deinit(&self->label_map);
+		lu_la_column__deinit(&self->la_column);
 
 		if (self->w_manager)
 		{
