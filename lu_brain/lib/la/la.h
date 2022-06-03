@@ -61,6 +61,14 @@
 		union lu_la_link_addr next;
 	}; 
 
+	static inline Lu_La_Link lu_la_link__init(Lu_La_Link self, union lu_la_addr la_addr, union lu_la_link_addr next)
+	{
+		self->la_addr = la_addr;
+		self->next = next;
+
+		return self;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Link_Mem
 

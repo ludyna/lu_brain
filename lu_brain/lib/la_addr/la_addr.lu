@@ -1,0 +1,15 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	union lu_la_addr LU_LA_ADDR__NULL = {
+			.value = LU_SIZE__MAX
+	};
+
+	union lu_la_link_addr LU_LA_LINK_ADDR__NULL = {
+			.value = 0
+	};

@@ -13,6 +13,8 @@
 		lu_size value;
 	};
 
+	extern union lu_la_addr LU_LA_ADDR__NULL; 
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Link_Addr
 
@@ -23,3 +25,5 @@
 
 		lu_size value;
 	};
+
+	extern union lu_la_link_addr LU_LA_LINK_ADDR__NULL; 

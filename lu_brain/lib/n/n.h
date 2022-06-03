@@ -16,6 +16,10 @@
 	typedef struct lu_la_link* Lu_La_Link;
 	typedef struct lu_la_link_mem* Lu_La_Link_Mem;
 
+	static inline Lu_La_Link lu_la_link_mem__link_alloc(Lu_La_Link_Mem self);
+	static inline union lu_la_link_addr lu_la_link_mem__get_addr(Lu_La_Link_Mem self, Lu_La_Link link);
+	static inline Lu_La_Link lu_la_link__init(Lu_La_Link self, union lu_la_addr la_addr, union lu_la_link_addr next);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //
@@ -692,13 +696,25 @@
 		lu__debug("\n lu_n_cell__save()");
 	}
 
-	static inline void lu_n_cell__prepend_label(
+	static inline Lu_La_Link lu_n_cell__prepend_label(
 		Lu_N_Cell self, 
 		union lu_la_addr la_addr, 
 		Lu_La_Link_Mem la_link_mem
 	)
 	{
+		Lu_La_Link prev_la_link = self->labels;
 
+		// new child link
+		Lu_La_Link la_link = lu_la_link_mem__link_alloc(la_link_mem);
+		lu__assert(la_link);
+
+		lu_la_link__init(
+			la_link, 
+			la_addr,
+			prev_la_link ? lu_la_link_mem__get_addr(la_link_mem, prev_la_link) : LU_LA_LINK_ADDR__NULL
+		);
+
+		return la_link;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

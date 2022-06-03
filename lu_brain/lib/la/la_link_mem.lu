@@ -19,7 +19,6 @@
 		);
 		lu__assert(self->mem_table);
 
-
 		// skip NULL addr
 		lu_la_link_mem__link_alloc(self);
 	}
