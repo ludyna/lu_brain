@@ -3,22 +3,12 @@
 
 */
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_La_Addr
-
-	union lu_la_addr {
-		struct {
-			lu_size la_ix;
-		};
-
-		lu_size value;
-	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Cell
 
 	struct lu_la_cell {
-		lu_size label; // we need this because same label_ix might "contain" more than one label
+		union lu_la_addr addr;
 
 		Lu_N_Link children;
 		lu_size children_count;
@@ -30,7 +20,7 @@
 	{
 		lu__debug_assert(self);
 
-		self->label = label;
+		self->addr.la_ix = label;
 		self->children = NULL;
 		self->children_count = 0;
 		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(w_mem, sizeof(union lu_w_match_addr) * w_waves_size);
@@ -61,17 +51,6 @@
 	{
 
 	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_La_Link_Addr
-
-	union lu_la_link_addr {
-		struct {
-			lu_size link_ix;
-		};
-
-		lu_size value;
-	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Link
@@ -191,10 +170,11 @@
 
 		Lu_La_Cell la_cell = &self->cells[lu_la_column__label_to_ix(self, label)];
 
-		if (!lu_la_cell__child_exist(la_cell, &n_cell->addr))
-		{
-			lu_la_cell__prepend_child(la_cell, n_cell->addr, self->n_link_mem);
-		}
+		if (lu_la_cell__child_exist(la_cell, &n_cell->addr)) return la_cell;
+		
+		lu_la_cell__prepend_child(la_cell, n_cell->addr, self->n_link_mem);
+
+		lu_n_cell__prepend_label(n_cell, la_cell->addr, self->la_link_mem);
 
 		return la_cell;
 	}

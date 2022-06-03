@@ -12,6 +12,10 @@
 	static inline Lu_N_Link lu_n_link_mem__get_link(Lu_N_Link_Mem self, union lu_n_link_addr addr);
 	static inline Lu_N_Link_Mem lu_n_column__get_link_mem(Lu_N_Column self);
 
+	typedef union lu_la_addr* Lu_La_Addr;
+	typedef struct lu_la_link* Lu_La_Link;
+	typedef struct lu_la_link_mem* Lu_La_Link_Mem;
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //
@@ -481,7 +485,7 @@
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
-		Lu_N_Link labels;
+		Lu_La_Link labels;
 
 		Lu_N_Link tl;
 		Lu_N_Link tr;
@@ -688,6 +692,14 @@
 		lu__debug("\n lu_n_cell__save()");
 	}
 
+	static inline void lu_n_cell__prepend_label(
+		Lu_N_Cell self, 
+		union lu_la_addr la_addr, 
+		Lu_La_Link_Mem la_link_mem
+	)
+	{
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column

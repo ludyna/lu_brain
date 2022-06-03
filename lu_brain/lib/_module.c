@@ -12,7 +12,8 @@
 // App
 
 #include "calcs/_module.lu"
-#include "config.lu" 
+#include "config.lu"  
+#include "la_addr/_module.lu"
 #include "n_addr/_module.lu"
 #include "w_cells/_module.lu"
 #include "n/_module.lu"

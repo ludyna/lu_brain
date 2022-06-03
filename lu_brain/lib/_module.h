@@ -17,6 +17,7 @@
 // Modules
 
 #include "calcs/_module.h"
+#include "la_addr/_module.h"
 #include "n_addr/_module.h"
 #include "w_cells/_module.h"
 #include "n/_module.h"
