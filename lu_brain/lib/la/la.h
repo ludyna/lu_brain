@@ -49,7 +49,19 @@
 
 	static inline Lu_N_Link lu_la_cell__prepend_child(Lu_La_Cell self, union lu_n_addr n_addr, Lu_N_Link_Mem n_link_mem)
 	{
+		Lu_N_Link prev_n_link = self->children;
 
+		// New child link
+		Lu_N_Link n_link = lu_n_link_mem__link_alloc(n_link_mem);
+		lu__assert(n_link);
+
+		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(n_link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+
+		n_link->cell_addr = n_addr;
+
+		self->children = n_link;
+
+		return n_link;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
