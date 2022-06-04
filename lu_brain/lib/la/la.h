@@ -42,13 +42,30 @@
 		self->w_cells = 0;
 	}
 
-	static inline lu_bool lu_la_cell__child_exist(Lu_La_Cell self, Lu_N_Addr n_addr)
+	static inline lu_bool lu_la_cell__child_exist(Lu_La_Cell self, union lu_n_addr n_addr, Lu_N_Link_Mem n_link_mem)
 	{
+		lu__debug_assert(self);
+		lu__debug_assert(n_link_mem);
+
+		Lu_N_Link n_link = self->children;
+		Lu_N_Link next;
+
+		while (n_link)
+		{
+			if (lu_n_addr__is_eq(&n_link->cell_addr, &n_addr)) return true;
+
+			// Will be NULL for &LU_N_LINK_ADDR__NULL (addr.value == 0)
+			n_link = lu_n_link_mem__get_link(n_link_mem, n_link->next);
+		}
+
 		return false;
 	}
 
 	static inline Lu_N_Link lu_la_cell__prepend_child(Lu_La_Cell self, union lu_n_addr n_addr, Lu_N_Link_Mem n_link_mem)
 	{
+		lu__debug_assert(self);
+		lu__debug_assert(n_link_mem);
+
 		Lu_N_Link prev_n_link = self->children;
 
 		// New child link
@@ -190,7 +207,7 @@
 
 		Lu_La_Cell la_cell = &self->cells[lu_la_column__label_to_ix(self, label)];
 
-		if (lu_la_cell__child_exist(la_cell, &n_cell->addr)) return la_cell;
+		if (lu_la_cell__child_exist(la_cell, n_cell->addr, self->n_link_mem)) return la_cell;
 		
 		lu_la_cell__prepend_child(la_cell, n_cell->addr, self->n_link_mem);
 

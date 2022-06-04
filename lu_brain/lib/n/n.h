@@ -175,6 +175,8 @@
 		return (Lu_N_Link) record;
 	}
 
+	////
+	// Important(!!): returns NULL for addr.value == 0
 	static inline Lu_N_Link lu_n_link_mem__get_link(Lu_N_Link_Mem self, union lu_n_link_addr addr)
 	{
 		lu__debug_assert(self);
