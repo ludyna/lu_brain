@@ -38,8 +38,7 @@
 	// Label
 	//
 
-	typedef union lu_label* Lu_Label;
-	typedef struct lu_label_unit* Lu_Label_Unit;
+	typedef struct lu_la_cell* Lu_Label;
 
 	//
 	// Wave 
@@ -251,7 +250,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Label
 
-	Lu_Label lu_label_unit__get_label(Lu_Label_Unit self, lu_size label_ix);
+	
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave  
@@ -307,8 +306,8 @@
 	// Wave label
 	//
 
-	void lu_wave__add_label(Lu_Wave wave, Lu_W_Addr addr, lu_size label_ix);
-	Lu_Label_Unit lu_wave__get_labels(Lu_Wave wave, Lu_W_Addr addr);
+	// void lu_wave__add_label(Lu_Wave wave, Lu_W_Addr addr, lu_size label_ix);
+	// Lu_Label_Unit lu_wave__get_labels(Lu_Wave wave, Lu_W_Addr addr);
 
 
 #endif // _LU_BRAIN_API_H
