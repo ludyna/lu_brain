@@ -22,9 +22,9 @@
 
 		self->cells = NULL;
 
-		self->cells = (struct lu_w_save_cell_v*) lu_mem__alloc(
+		self->cells = (struct lu_w_cell_v*) lu_mem__alloc(
 			config->w_mem, 
-			sizeof(struct lu_w_save_cell_v) * size
+			sizeof(struct lu_w_cell_v) * size
 		);
 		lu__assert(self->cells);
 

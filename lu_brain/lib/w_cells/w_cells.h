@@ -61,15 +61,18 @@
 	{
 		lu__debug("%d:%d:%d", self->area_ix, self->layer_ix, self->cell_ix);
 	}
-///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Save_Cell 
 
-	struct lu_w_save_cell {
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Cell 
+
+	////
+	// We are using this cell and related "infrastructure" for both save and restore operations.
+	struct lu_w_cell {
 		Lu_N_Cell n_cell;
 		Lu_N_Column n_column;
 	};
 
-	static inline void lu_w_save_cell__reset(Lu_W_Save_Cell self)
+	static inline void lu_w_cell__reset(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
 
@@ -77,8 +80,8 @@
 		self->n_column = NULL;
 	}
 
-	static inline Lu_W_Save_Cell lu_w_save_cell__save(
-		Lu_W_Save_Cell self,
+	static inline Lu_W_Cell lu_w_cell__save(
+		Lu_W_Cell self,
 		Lu_N_Cell n_cell,
 		Lu_N_Column n_column
 	)
@@ -91,12 +94,13 @@
  	
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Save_Cell_P
+// Lu_W_Cell_P
 
-	struct lu_w_save_cell_p {
-		Lu_N_Column_Comp n_column;
+	struct lu_w_cell_p {
+		
 		Lu_N_Cell_VP n_cell;
-
+		Lu_N_Column_Comp n_column;
+		
 		// sig doesn't make much sense for save cell, but
 		// we have it here to indicate if cell was active (not "null" cell)
 		lu_value sig;
@@ -106,55 +110,55 @@
 		lu_value p_2;
 	};
 
-	#define LU_W_SAVE_CELL_P__START 0
-	#define LU_W_SAVE_CELL_P__ONE 1
-	#define LU_W_SAVE_CELL_P__READY 2
+	#define LU_W_CELL_P__START 0
+	#define LU_W_CELL_P__ONE 1
+	#define LU_W_CELL_P__READY 2
 
-	static inline void lu_w_save_cell_p__reset(Lu_W_Save_Cell_P self)
+	static inline void lu_w_cell_p__reset(Lu_W_Cell_P self)
 	{
 		lu__debug_assert(self);
 
 		self->n_column = NULL;
 		self->n_cell = NULL;
 		self->sig = 0;
-		self->state = LU_W_SAVE_CELL_P__START;
+		self->state = LU_W_CELL_P__START;
 		self->p_1 = 0;
 		self->p_2 = 0;
 	}
 
-	static inline void lu_w_save_cell_p__register(
-		Lu_W_Save_Cell_P self, 
+	static inline void lu_w_cell_p__register(
+		Lu_W_Cell_P self, 
 		lu_bool is_reset,
 		lu_value p, 
 		Lu_Process_Config config
 	)
 	{
-		is_reset && (self->state = LU_W_SAVE_CELL_P__START);
+		is_reset && (self->state = LU_W_CELL_P__START);
 
 		#pragma GCC diagnostic ignored "-Wunused-value"
-			self->state == LU_W_SAVE_CELL_P__START && (self->p_1 = p);
-			self->state == LU_W_SAVE_CELL_P__ONE && (self->p_2 = p); 
+			self->state == LU_W_CELL_P__START && (self->p_1 = p);
+			self->state == LU_W_CELL_P__ONE && (self->p_2 = p); 
 		#pragma GCC diagnostic pop
 
 		++self->state; 
 
-		lu__debug_assert(self->state <= LU_W_SAVE_CELL_P__READY);
-		// self->state > LU_W_SAVE_CELL_P__READY && self->state == LU_W_SAVE_CELL_P__START;
+		lu__debug_assert(self->state <= LU_W_CELL_P__READY);
+		// self->state > LU_W_CELL_P__READY && self->state == LU_W_CELL_P__START;
 	}
 
-	static inline lu_bool lu_w_save_cell_p__is_ready(Lu_W_Save_Cell_P self, lu_value signif_p)
+	static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self, lu_value signif_p)
 	{
 		//lu__debug("\n P STEP: %.1f, P1: %.1f, P2: %.1f, P_DIFF: %.1f", signif_p, self->p_1, self->p_2, lu_value_abs(self->p_1 - self->p_2));
 
 		// If no changes its important information for us
-		return self->state == LU_W_SAVE_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
+		return self->state == LU_W_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
 
 	}
 
 	////
 	//
-	static inline Lu_W_Save_Cell_P lu_w_save_cell_p__save(
-		Lu_W_Save_Cell_P self, 
+	static inline Lu_W_Cell_P lu_w_cell_p__save(
+		Lu_W_Cell_P self, 
 		lu_size x,
 		lu_size y, 
 		Lu_Comp_Calc comp_calc, 
@@ -194,11 +198,11 @@
 		return self;
 	}
 
-	static inline lu_size lu_w_save_cell_p__children_hash_comp(Lu_W_Save_Cell_P* children, lu_size children_count)
+	static inline lu_size lu_w_cell_p__children_hash_comp(Lu_W_Cell_P* children, lu_size children_count)
 	{
 		lu_size p_reg = 0;
 
-		Lu_W_Save_Cell_P w_cell;
+		Lu_W_Cell_P w_cell;
 		for (lu_size i = 0; i < children_count; i++)
 		{
 			w_cell = children[i];
@@ -211,11 +215,11 @@
 		return p_reg;
 	}
 
-	static inline lu_size lu_w_save_cell__children_hash_comp(Lu_W_Save_Cell* children, lu_size children_count)
+	static inline lu_size lu_w_cell__children_hash_comp(Lu_W_Cell* children, lu_size children_count)
 	{
 		lu_size p_reg = 0;
 
-		Lu_W_Save_Cell w_cell;
+		Lu_W_Cell w_cell;
 		lu_size value;
 		for (lu_size i = 0; i < children_count; i++)
 		{
@@ -233,12 +237,12 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Save_Cell_V
+// Lu_W_Cell_V
 
 	#define LU_W_SAVE_CELL_V__NOT_SET 0
 	#define LU_W_SAVE_CELL_V__READY 1
 
-	struct lu_w_save_cell_v {
+	struct lu_w_cell_v {
 		union lu_n_addr n_addr;
 		lu_value sig;
 
@@ -246,8 +250,8 @@
 		lu_value v;
 	};
 
-	static inline void lu_w_save_cell_v__register(
-		Lu_W_Save_Cell_V self, 
+	static inline void lu_w_cell_v__register(
+		Lu_W_Cell_V self, 
 		lu_bool is_reset,
 		lu_value v, 
 		Lu_Process_Config config
@@ -257,13 +261,13 @@
 		self->state = LU_W_SAVE_CELL_V__READY;
 	}
 
-	static inline lu_bool lu_w_save_cell_v__is_ready(Lu_W_Save_Cell_V self)
+	static inline lu_bool lu_w_cell_v__is_ready(Lu_W_Cell_V self)
 	{
 		return self->state == LU_W_SAVE_CELL_V__READY;
 	}
 
-	static inline void lu_w_save_cell_v__save(
-		Lu_W_Save_Cell_V self, 
+	static inline void lu_w_cell_v__save(
+		Lu_W_Cell_V self, 
 		lu_size x,
 		lu_size y, 
 		Lu_Comp_Calc comp_calc, 
@@ -278,7 +282,7 @@
 		// self->sig = 1.0;
 	}
 
-	static inline void lu_w_save_cell_v__reset(Lu_W_Save_Cell_V self)
+	static inline void lu_w_cell_v__reset(Lu_W_Cell_V self)
 	{
 		self->state = LU_W_SAVE_CELL_V__NOT_SET;
 		self->sig = 0;

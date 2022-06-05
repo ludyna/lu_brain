@@ -46,9 +46,9 @@
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->block_id = LU_BLOCK_ID__NOT_SET; 
 
-		self->cells = (struct lu_w_save_cell*) lu_mem__alloc(
+		self->cells = (struct lu_w_cell*) lu_mem__alloc(
 			config->w_mem, 
-			sizeof(struct lu_w_save_cell) * w * h
+			sizeof(struct lu_w_cell) * w * h
 		);
 		lu__alloc_assert(self->cells);
 

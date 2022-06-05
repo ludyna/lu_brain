@@ -84,13 +84,13 @@
 		lu_size h;
  
  		// 2d because its for one Z layer
-		struct lu_w_save_cell_p* cells;
+		struct lu_w_cell_p* cells;
 	};
 
 	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size w, lu_size h);
 	static void lu_w_table_p__destroy(Lu_W_Table_P self);
 
-	static inline Lu_W_Save_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size addr)
+	static inline Lu_W_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size addr)
 	{
 		return &self->cells[addr];
 	}
@@ -105,10 +105,10 @@
 		lu_size h;
 		lu_size d;
 
-		struct lu_w_save_cell_v* cells;
+		struct lu_w_cell_v* cells;
 	};
 
-	static inline Lu_W_Save_Cell_V lu_w_table_v__get_cell(Lu_W_Table_V self, lu_size x, lu_size y)
+	static inline Lu_W_Cell_V lu_w_table_v__get_cell(Lu_W_Table_V self, lu_size x, lu_size y)
 	{
 		return &self->cells[y * self->w + x];
 	}
@@ -130,7 +130,7 @@
 		lu_size normal_children_size;
 
 		// always "2D"
-		struct lu_w_save_cell* cells;
+		struct lu_w_cell* cells;
 
 		lu_bool any_fired;
 	};
@@ -156,7 +156,7 @@
 
 	////
 	// Returns NULL if x or y out of range.
-	static inline Lu_W_Save_Cell lu_w_table__get_cell(Lu_W_Table self, lu_size x, lu_size y)
+	static inline Lu_W_Cell lu_w_table__get_cell(Lu_W_Table self, lu_size x, lu_size y)
 	{ 
 		if (x < self->w && y < self->h)
 		{
@@ -172,7 +172,7 @@
 		Lu_W_Table self, 
 		lu_size x, 
 		lu_size y, 
-		Lu_W_Save_Cell children[], 
+		Lu_W_Cell children[], 
 		lu_size *non_null_count
 	)
 	{

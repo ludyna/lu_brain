@@ -81,7 +81,7 @@
 
 	static inline lu_bool lu_n_link__is_vp_children_eq(
 		Lu_N_Link self, 
-		Lu_W_Save_Cell_P* children, 
+		Lu_W_Cell_P* children, 
 		lu_size children_count, 
 		Lu_N_Link_Mem link_mem
 	)
@@ -93,7 +93,7 @@
 
 		if (self == NULL) return false;
 
-		Lu_W_Save_Cell_P w_cell;
+		Lu_W_Cell_P w_cell;
 		for(lu_size i = 0; i < children_count; i++)
 		{
 			if (self == NULL) return false;
@@ -112,7 +112,7 @@
 
 	static inline lu_bool lu_n_link__is_children_eq(
 		Lu_N_Link self, 
-		Lu_W_Save_Cell* children, 
+		Lu_W_Cell* children, 
 		lu_size children_count, 
 		Lu_N_Link_Mem link_mem
 	)
@@ -124,7 +124,7 @@
 
 		if (self == NULL) return false;
 
-		Lu_W_Save_Cell w_cell;
+		Lu_W_Cell w_cell;
 		for(lu_size i = 0; i < children_count; i++)
 		{
 			if (self == NULL) return false;
@@ -606,7 +606,7 @@
 
 	static inline void lu_n_cell__vp_save( 
 		Lu_N_Cell self, 
-		Lu_W_Save_Cell_P* children, 
+		Lu_W_Cell_P* children, 
 		lu_size children_count,
 		Lu_N_Link_Mem link_mem,
 		lu_size non_null_count
@@ -618,7 +618,7 @@
 		lu_size i;
 		lu_size ix;
 
-		Lu_W_Save_Cell_P w_cell = NULL;
+		Lu_W_Cell_P w_cell = NULL;
 
 		// We dont need to use default_sig because all links present (even if they are to NULL cells)
 
@@ -643,7 +643,7 @@
 
 	static inline void lu_n_cell__save( 
 		Lu_N_Cell self, 
-		Lu_W_Save_Cell* children, 
+		Lu_W_Cell* children, 
 		lu_size children_count,
 		Lu_N_Link_Mem link_mem,
 		lu_size non_null_count
@@ -655,7 +655,7 @@
 		lu_size i;
 		lu_size ix;
 
-		Lu_W_Save_Cell w_cell = NULL;
+		Lu_W_Cell w_cell = NULL;
 		Lu_N_Cell n_cell;
 		Lu_N_Column n_column;
 
@@ -789,25 +789,25 @@
 
 	static inline lu_size lu_n_column__vp_children_to_ix(
 		Lu_N_Column self, 
-		Lu_W_Save_Cell_P* children, 
+		Lu_W_Cell_P* children, 
 		lu_size children_count
 	)
 	{
-		return lu_n_column__hash_to_ix(self, lu_w_save_cell_p__children_hash_comp(children, children_count));
+		return lu_n_column__hash_to_ix(self, lu_w_cell_p__children_hash_comp(children, children_count));
 	} 
 
 	static inline lu_size lu_n_column__children_to_ix(
 		Lu_N_Column self, 
-		Lu_W_Save_Cell* children, 
+		Lu_W_Cell* children, 
 		lu_size children_count
 	)
 	{
-		return lu_n_column__hash_to_ix(self, lu_w_save_cell__children_hash_comp(children, children_count));
+		return lu_n_column__hash_to_ix(self, lu_w_cell__children_hash_comp(children, children_count));
 	}
 
 	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
 		Lu_N_Column self, 
-		Lu_W_Save_Cell_P* children, 
+		Lu_W_Cell_P* children, 
 		lu_size children_count,
 		lu_size non_null_count
 	)
@@ -844,7 +844,7 @@
 
 	static inline Lu_N_Cell lu_n_column__save_with_children(
 		Lu_N_Column self, 
-		Lu_W_Save_Cell* children, 
+		Lu_W_Cell* children, 
 		lu_size children_count,
 		lu_size non_null_count
 	)

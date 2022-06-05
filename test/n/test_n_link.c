@@ -15,8 +15,8 @@ Lu_N_Link n_link_3 = NULL;
 Lu_N_Link n_link_4 = NULL;
 
 #define CHILDREN_COUNT 3
-Lu_W_Save_Cell_P children_1[CHILDREN_COUNT];
-struct lu_w_save_cell_p v_children_1[CHILDREN_COUNT];
+Lu_W_Cell_P children_1[CHILDREN_COUNT];
+struct lu_w_cell_p v_children_1[CHILDREN_COUNT];
 
 struct lu_n_cell_vp n_cell_1;
 struct lu_n_cell_vp n_cell_2;

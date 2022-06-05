@@ -105,7 +105,7 @@
 
 		lu_bool is_reset;
 
-		Lu_W_Save_Cell_P w_p_cell;
+		Lu_W_Cell_P w_p_cell;
 
 		Lu_Comp_Calc p_comp_calc;
 
@@ -118,20 +118,20 @@
 		curr_w_table->wave_id = wave_id;
 		curr_w_table->block_id = block_id;
 
-		Lu_W_Save_Cell rec_w_p_cell;
+		Lu_W_Cell rec_w_p_cell;
 
 		union lu_n_addr n_addr;
 
 		lu_size depth = self->rec->depth; 
 
-		Lu_W_Save_Cell_P children[depth];
+		Lu_W_Cell_P children[depth];
 		
 		curr_w_table->any_fired = false;
 
 		lu_size not_null_cells_count;
 		lu_size saved_count;
 
-		Lu_W_Save_Cell_P vp_cell;
+		Lu_W_Cell_P vp_cell;
 
 		Lu_N_Column n_column;
 		Lu_N_Cell n_cell;
@@ -172,19 +172,19 @@
 
 					if (is_reset)
 					{
-						lu_w_save_cell_p__reset(w_p_cell);
+						lu_w_cell_p__reset(w_p_cell);
 					}
 
-					lu_w_save_cell_p__register(w_p_cell, is_reset, v, config);
+					lu_w_cell_p__register(w_p_cell, is_reset, v, config);
 
 					// Cell is ready after p_1 and p_2 are set, independently if sig is 0 or not
-					if (lu_w_save_cell_p__is_ready(w_p_cell, p_comp_calc->step))
+					if (lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
 						//
 						// Children W cell_p save
 						//
 
-						children[z] = lu_w_save_cell_p__save(
+						children[z] = lu_w_cell_p__save(
 							w_p_cell, 
 							x, 
 							y, 
@@ -226,14 +226,14 @@
 					// Parent W cell save
 					//
 
-					lu_w_save_cell__save(rec_w_p_cell, n_cell, n_column);
+					lu_w_cell__save(rec_w_p_cell, n_cell, n_column);
 
 					curr_w_table->any_fired = true;
 				}
 				else
 				{
 					// We reset so data from previous wave don't interfere
-					lu_w_save_cell__reset(rec_w_p_cell);
+					lu_w_cell__reset(rec_w_p_cell);
 				}
 
 

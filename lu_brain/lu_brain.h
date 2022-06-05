@@ -28,11 +28,6 @@
 	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
 
-	//
-	// W_Addr
-	//
-
-	typedef union lu_w_addr* Lu_W_Addr;
 
 	//
 	// Label
@@ -42,10 +37,13 @@
 
 	//
 	// Wave 
-	//
+	// 
 
-	typedef struct lu_data* 			Lu_Data;
-	typedef struct lu_n_cell* 			Lu_N_Cell;
+	typedef union lu_w_addr* Lu_W_Addr;
+	typedef struct lu_w_cell* Lu_W_Cell; 
+ 	typedef struct lu_w_cell_p* Lu_W_Cell_P;
+ 	typedef struct lu_w_cell_v* Lu_W_Cell_V;
+
 	typedef struct lu_process_config*	Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave;
 
