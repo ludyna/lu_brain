@@ -187,3 +187,19 @@
 		}
 
 	}
+
+
+	static Lu_W_Cell lu_s__get_w_cell( 
+		Lu_S self, 
+		lu_size wave_id, 
+		lu_size area_ix, 
+		lu_size layer_ix, 
+		lu_size x, 
+		lu_size y
+	)
+	{
+		Lu_S_Area area = lu_s__get_area(self, area_ix);
+		if (area == NULL) return NULL;
+
+		return lu_s_area__get_w_cell(area, wave_id, layer_ix, x, y);
+	}

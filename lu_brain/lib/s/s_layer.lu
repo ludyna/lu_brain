@@ -191,7 +191,7 @@
 		{
 			for (x = 0; x < curr_w_table->w; x++)
 			{
-				curr_w_cell = lu_w_table__get_cell(curr_w_table, x, y);
+				curr_w_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
 				lu__debug_assert(curr_w_cell);
 
 				// We reset so data from previous waves don't interfere
@@ -276,7 +276,7 @@
 	// 	{
 	// 		for (x = 0; x < curr_w_table->w; x++)
 	// 		{
-	// 			curr_w_cell = lu_w_table__get_cell(curr_w_table, x, y);
+	// 			curr_w_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
 	// 			lu__debug_assert(curr_w_cell);
 
 	// 			lu_w_cell__reset(curr_w_cell);

@@ -1,0 +1,11 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Label
+
+	Lu_Label lu_w_cell__add_label(Lu_W_Cell self, lu_size label)
+	{
+
+	}

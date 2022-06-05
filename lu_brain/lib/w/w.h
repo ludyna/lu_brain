@@ -156,7 +156,7 @@
 
 	////
 	// Returns NULL if x or y out of range.
-	static inline Lu_W_Cell lu_w_table__get_cell(Lu_W_Table self, lu_size x, lu_size y)
+	static inline Lu_W_Cell lu_w_table__get_w_cell(Lu_W_Table self, lu_size x, lu_size y)
 	{ 
 		if (x < self->w && y < self->h)
 		{
@@ -196,7 +196,7 @@
 		// 
 		// 3. w_cell was fired for this wave (w_cell->n_cell != NULL)
 
-		children[i] = lu_w_table__get_cell(self, x, y);
+		children[i] = lu_w_table__get_w_cell(self, x, y);
 		if (children[i])
 		{
 			++local_non_null_count;
@@ -210,7 +210,7 @@
 		}
 
 		++i;
-		children[i] = lu_w_table__get_cell(self, x + 1, y);
+		children[i] = lu_w_table__get_w_cell(self, x + 1, y);
 		if (children[i])
 		{
 			++local_non_null_count;
@@ -224,7 +224,7 @@
 		}
 
 		++i;
-		children[i] = lu_w_table__get_cell(self, x, y + 1);
+		children[i] = lu_w_table__get_w_cell(self, x, y + 1);
 		if (children[i]) 
 		{
 			++local_non_null_count;
@@ -238,7 +238,7 @@
 		}
 
 		++i;
-		children[i] = lu_w_table__get_cell(self, x + 1, y + 1);
+		children[i] = lu_w_table__get_w_cell(self, x + 1, y + 1);
 		if (children[i]) 
 		{
 			++local_non_null_count;

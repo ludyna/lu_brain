@@ -146,7 +146,7 @@
 			{
 				xy_shift = y_shift + x;
 
-				rec_w_p_cell = lu_w_table__get_cell(curr_w_table, x, y);
+				rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
 
 				// reset string
 				not_null_cells_count = 0;

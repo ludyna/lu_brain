@@ -39,19 +39,6 @@
 		}
 	}
 
-	enum lu_s_tag {
-		LU_S_TAG__NULL,
-		LU_S_TAG__COMP,
-		LU_S_TAG__REC,
-		LU_S_TAG__FRAME,
-		LU_S_TAG__SEQ,
-		LU_S_TAG__EVENT,
-		LU_S_TAG__SCENE,
-		LU_S_TAG__STORY,
-		LU_S_TAG__OTHER,
-		LU_S_TAG__END
-	};
-
 	static inline void lu_s_tag__to_str(enum lu_s_tag type, char buffer[])
 	{
 		switch(type)

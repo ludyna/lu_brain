@@ -30,10 +30,21 @@
 
 
 	//
-	// Label
-	//
+	// Structure 
+	// 
 
-	typedef struct lu_la_cell* Lu_Label;
+	enum lu_s_tag {
+		LU_S_TAG__NULL,
+		LU_S_TAG__COMP,
+		LU_S_TAG__REC,
+		LU_S_TAG__FRAME,
+		LU_S_TAG__SEQ,
+		LU_S_TAG__EVENT,
+		LU_S_TAG__SCENE,
+		LU_S_TAG__STORY,
+		LU_S_TAG__OTHER,
+		LU_S_TAG__END
+	};
 
 	//
 	// Wave 
@@ -45,7 +56,13 @@
  	typedef struct lu_w_cell_v* Lu_W_Cell_V;
 
 	typedef struct lu_process_config*	Lu_Process_Config;
-	typedef struct lu_wave* 			Lu_Wave;
+	typedef struct lu_wave* 			Lu_Wave; 
+
+	//
+	// Label
+	//
+
+	typedef struct lu_la_cell* Lu_Label;
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -235,20 +252,6 @@
 
 	struct lu_process_config lu_process_config__get_by_id(lu_size id);
 
-///////////////////////////////////////////////////////////////////////////////
-// W_Addr
-
-	Lu_W_Addr lu_w_addr__init(
-		Lu_W_Addr self, 
-		lu_size cell_ix,  
-		lu_size layer_ix, 
-		lu_size area_ix
-	);
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Label
-
-	
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave  
@@ -307,5 +310,13 @@
 	// void lu_wave__add_label(Lu_Wave wave, Lu_W_Addr addr, lu_size label_ix);
 	// Lu_Label_Unit lu_wave__get_labels(Lu_Wave wave, Lu_W_Addr addr);
 
+	Lu_W_Cell lu_wave__get_cell(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y);
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Cell 
+
+	Lu_Label lu_w_cell__add_label(Lu_W_Cell self, lu_size label);
+
+
+	
 #endif // _LU_BRAIN_API_H

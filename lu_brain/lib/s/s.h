@@ -406,6 +406,33 @@
 	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_s_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
 
+	static inline Lu_W_Cell lu_s_area__get_w_cell(
+		Lu_S_Area self, 
+		lu_size wave_id, 
+		lu_size layer_ix, 
+		lu_size x, 
+		lu_size y
+	)
+	{
+		lu__assert(self);
+		lu__assert(layer_ix < self->layers_count);
+
+		Lu_S_Layer_Base layer_base = self->layers[layer_ix];
+		lu__assert(layer_base);
+
+		// We can have access to Lu_W_Cell(s) in LU_S_LAYER__LAYER(s) only atm
+		if (layer_base->type != LU_S_LAYER__LAYER) return NULL;
+
+		Lu_S_Layer layer = (Lu_S_Layer) layer_base;
+
+		lu__assert(lu_s_layer__get_layer_ix(layer) == layer_ix);
+
+		Lu_W_Table w_table = lu_s_layer__get_w_table(layer, wave_id);
+		lu__assert(w_table);
+
+		return lu_w_table__get_w_cell(w_table, x, y);
+	}
+
 	static inline Lu_S_Layer_Base lu_s_area__get_last_layer(Lu_S_Area self)
 	{
 		if (self->layers_count == 0) return NULL;
@@ -602,7 +629,7 @@
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(area_ix < self->areas_size);
-		lu__debug_assert(area_ix < self->areas_count);
+		lu__assert(area_ix < self->areas_count);
 
 		return self->areas[area_ix];
 	}
@@ -660,3 +687,12 @@
 	// 
 
 	static void lu_s__print_info(Lu_S self);
+
+	static Lu_W_Cell lu_s__get_w_cell( 
+		Lu_S self, 
+		lu_size wave_id, 
+		lu_size area_ix, 
+		lu_size layer_ix, 
+		lu_size x, 
+		lu_size y
+	);

@@ -502,5 +502,12 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Label
+// Lu_W_Cell
 
+	Lu_W_Cell lu_wave__get_cell(Lu_Wave self, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y)
+	{
+		lu__assert(self);
+		lu__assert(self->brain);
+
+		return lu_s__get_w_cell(self->brain->s, self->wave_id, area_ix, layer_ix, x, y);
+	}
