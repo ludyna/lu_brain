@@ -39,6 +39,9 @@
 			lu_la_cell__init(la_cell, i, self->w_mem, self->w_waves_size);
 		}
 
+		lu_n_link_mem__init(&self->n_link_mem, self->n_mem, config->n_link_mem_size);
+		lu_la_link_mem__init(&self->la_link_mem, self->la_mem, config->la_link_mem_size);
+
 		return self;
 	}
 
@@ -47,6 +50,9 @@
 		lu__assert(self);
 		lu__assert(self->la_mem);
 		lu__assert(self->w_mem);
+
+		lu_la_link_mem__deinit(&self->la_link_mem);
+		lu_n_link_mem__deinit(&self->n_link_mem);
 
 		Lu_La_Cell la_cell;
 		for (lu_size i = 0; i < self->cells_size; i++)

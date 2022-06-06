@@ -51,7 +51,8 @@
 			//			
 
 			.la_mem = NULL,
-			.la_labels_size = 1024,		
+			.la_labels_size = 128,		
+			.la_link_mem_size = 1024
 		},
 		{
 			// LU_CONFIG__SEMEION
@@ -98,8 +99,8 @@
 			//			
 
 			.la_mem = NULL,
-			.la_labels_size = 16,
-
+			.la_labels_size = 16,		
+			.la_link_mem_size = 2048
 			},
 	};		
 
@@ -195,6 +196,7 @@
 		//
 
 		lu__user_assert(self->la_labels_size > 0, "la_labels_size should be greater than 0");
+		lu__user_assert(self->la_link_mem_size > self->la_labels_size, "la_link_mem_size should be greater than la_labels_size");
 
 		return self;
 	}

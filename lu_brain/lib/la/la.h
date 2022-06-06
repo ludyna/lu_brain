@@ -164,8 +164,8 @@
 		struct lu_la_cell* cells;
 		lu_size cells_size;
 
-		Lu_N_Link_Mem n_link_mem;
-		Lu_La_Link_Mem la_link_mem;
+		struct lu_n_link_mem n_link_mem;
+		struct lu_la_link_mem la_link_mem;
 
 		lu_size w_waves_size;
 	};
@@ -178,7 +178,7 @@
 	{
 		lu__debug_assert(self);
 
-		return self->n_link_mem;
+		return &self->n_link_mem;
 	}
 
 	static inline lu_size lu_la_column__label_to_ix(Lu_La_Column self, lu_size label)
@@ -207,11 +207,11 @@
 
 		Lu_La_Cell la_cell = &self->cells[lu_la_column__label_to_ix(self, label)];
 
-		if (lu_la_cell__child_exist(la_cell, n_cell->addr, self->n_link_mem)) return la_cell;
+		if (lu_la_cell__child_exist(la_cell, n_cell->addr, &self->n_link_mem)) return la_cell;
 		
-		lu_la_cell__prepend_child(la_cell, n_cell->addr, self->n_link_mem);
+		lu_la_cell__prepend_child(la_cell, n_cell->addr, &self->n_link_mem);
 
-		lu_n_cell__prepend_label(n_cell, la_cell->addr, self->la_link_mem);
+		lu_n_cell__prepend_label(n_cell, la_cell->addr, &self->la_link_mem);
 
 		return la_cell;
 	}

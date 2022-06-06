@@ -109,6 +109,7 @@
 		//
 		Lu_Mem la_mem;
 		lu_size la_labels_size;
+		lu_size la_link_mem_size;
 	};
 
 	Lu_Config lu_config__validate(Lu_Config config);
