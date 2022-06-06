@@ -28,7 +28,6 @@
 	typedef struct lu_rec_config*		Lu_Rec_Config;
 	typedef struct lu_rec* 				Lu_Rec; 
 
-
 	//
 	// Structure 
 	// 
@@ -52,8 +51,6 @@
 
 	typedef union lu_w_addr* Lu_W_Addr;
 	typedef struct lu_w_cell* Lu_W_Cell; 
- 	typedef struct lu_w_cell_p* Lu_W_Cell_P;
- 	typedef struct lu_w_cell_v* Lu_W_Cell_V;
 
 	typedef struct lu_process_config*	Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave; 
@@ -312,11 +309,7 @@
 	// void lu_wave__add_label(Lu_Wave wave, Lu_W_Addr addr, lu_size label_ix);
 	// Lu_Label_Unit lu_wave__get_labels(Lu_Wave wave, Lu_W_Addr addr);
 
-	Lu_W_Cell lu_wave__get_cell(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y);
+	Lu_Label lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label);
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Cell 
-
-	Lu_Label lu_w_cell__add_label(Lu_W_Cell self, lu_size label);
 	
 #endif // _LU_BRAIN_API_H

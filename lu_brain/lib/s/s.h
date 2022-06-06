@@ -465,7 +465,6 @@
 
 	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Rec rec);
 
-
 	static inline void lu_s_area__print(Lu_S_Area self, lu_bool short_version)
 	{
 		char buffer[50];
@@ -511,7 +510,6 @@
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	);
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Maps
