@@ -137,9 +137,9 @@
 		// But seq, event, scene and story are expanded when user manually commands to do so.
 		// Without user command everything is considered to be the same seq.
 
-		// Lu_S_Layer story = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__STORY_BASE);
-		// Lu_S_Layer scene = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__SCENE_BASE);
-		// Lu_S_Layer event = lu_s__create_layer(s, config, 1, 1, 1, LU_S_TAG__EVENT_BASE); 
+		// Lu_S_Layer story = lu_s__create_layer(s, config, 1, 1, 1, LU_AREA_TAG__STORY_BASE);
+		// Lu_S_Layer scene = lu_s__create_layer(s, config, 1, 1, 1, LU_AREA_TAG__SCENE_BASE);
+		// Lu_S_Layer event = lu_s__create_layer(s, config, 1, 1, 1, LU_AREA_TAG__EVENT_BASE); 
 
 
 		// static Lu_S_Layer lu_s__create_layer(
@@ -149,10 +149,10 @@
 		// 	lu_size n_w,
 		// 	lu_size n_h,
 		// 	lu_size n_h_max,
-		// 	enum lu_s_tag tag
+		// 	enum lu_area_tag tag
 		// );
 
-		Lu_S_Area seq_area = lu_s__create_area(s, self->config, 1, LU_S_TAG__SEQ);
+		Lu_S_Area seq_area = lu_s__create_area(s, self->config, 1, LU_AREA_TAG__SEQ);
 		lu__assert(seq_area);
 
 		Lu_S_Layer seq = lu_s_area__create_layer(seq_area, 1, 1, 1, 1);
@@ -162,7 +162,7 @@
 		// lu__assert(event);
 		lu__assert(seq);
 
-		Lu_S_Area frame_area = lu_s__create_area(s, self->config, recs_count, LU_S_TAG__FRAME);
+		Lu_S_Area frame_area = lu_s__create_area(s, self->config, recs_count, LU_AREA_TAG__FRAME);
 
 		Lu_S_Layer prev = lu_s_area__create_layer(frame_area, recs_count, 1, 1, 1);
 		lu__assert(prev);
@@ -218,7 +218,7 @@
 		// Rec 
 		//
 
-		Lu_S_Area rec_area = lu_s__create_area(s, config, lu_s__Y(rec->width, rec->height) + rec->depth, LU_S_TAG__REC);
+		Lu_S_Area rec_area = lu_s__create_area(s, config, lu_s__Y(rec->width, rec->height) + rec->depth, LU_AREA_TAG__REC);
 		lu__assert(rec_area);
 
 		Lu_S_Layer_Rec rec_base = lu_s_area__create_layer_rec(rec_area, rec);

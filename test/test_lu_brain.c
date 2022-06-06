@@ -105,7 +105,7 @@ void test_lu_brain_basics(void)
 	TEST_ASSERT(LU_N_ADDR__INACTIVE.value != LU_N_ADDR__NULL.value);
 	TEST_ASSERT(LU_N_ADDR__INACTIVE.area_ix < LU_N_AREA__SPECIAL_AREA_SKIP);
 
-	lu_brain__print_info(brain);
+	lu_brain__print_areas(brain);
 
 	Lu_Wave s_wave = lu_wave__create_save_wave(brain); 
 
@@ -126,8 +126,8 @@ void test_lu_brain_basics(void)
 	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
 
-	// Lu_W_Cell w_cell = lu_wave__get_cell(s_wave, LU_S_TAG__SEQ, 0, 0, 0);
-	// lu__assert(w_cell);
+	Lu_W_Cell w_cell = lu_wave__get_cell(s_wave, 2, 0, 0, 0);
+	TEST_ASSERT(w_cell);
 
 	// lu_w_cell__assign_label(w_cell, 3);
 

@@ -33,17 +33,17 @@
 	// Structure 
 	// 
 
-	enum lu_s_tag {
-		LU_S_TAG__NULL,
-		LU_S_TAG__COMP,
-		LU_S_TAG__REC,
-		LU_S_TAG__FRAME,
-		LU_S_TAG__SEQ,
-		LU_S_TAG__EVENT,
-		LU_S_TAG__SCENE,
-		LU_S_TAG__STORY,
-		LU_S_TAG__OTHER,
-		LU_S_TAG__END
+	enum lu_area_tag {
+		LU_AREA_TAG__NULL,
+		LU_AREA_TAG__COMP,
+		LU_AREA_TAG__REC,
+		LU_AREA_TAG__FRAME,
+		LU_AREA_TAG__SEQ,
+		LU_AREA_TAG__EVENT,
+		LU_AREA_TAG__SCENE,
+		LU_AREA_TAG__STORY,
+		LU_AREA_TAG__OTHER,
+		LU_AREA_TAG__END
 	};
 
 	//
@@ -135,6 +135,8 @@
 	void lu_brain__destroy(Lu_Brain);
 
 	void lu_brain__print_info(Lu_Brain self);
+
+	void lu_brain__print_areas(Lu_Brain self);
 
 	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_config config);
 
@@ -316,7 +318,5 @@
 // Lu_W_Cell 
 
 	Lu_Label lu_w_cell__add_label(Lu_W_Cell self, lu_size label);
-
-
 	
 #endif // _LU_BRAIN_API_H

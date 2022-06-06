@@ -39,35 +39,35 @@
 		}
 	}
 
-	static inline void lu_s_tag__to_str(enum lu_s_tag type, char buffer[])
+	static inline void lu_area_tag__to_str(enum lu_area_tag type, char buffer[])
 	{
 		switch(type)
 		{
-			case LU_S_TAG__NULL:
+			case LU_AREA_TAG__NULL:
 				strcpy(buffer, "NULL");
 				break;
-			case LU_S_TAG__COMP:
+			case LU_AREA_TAG__COMP:
 				strcpy(buffer, "COMP");
 				break;
-			case LU_S_TAG__REC:
+			case LU_AREA_TAG__REC:
 				strcpy(buffer, "REC");
 				break;
-			case LU_S_TAG__FRAME:
+			case LU_AREA_TAG__FRAME:
 				strcpy(buffer, "FRAME");
 				break;
-			case LU_S_TAG__SEQ:
+			case LU_AREA_TAG__SEQ:
 				strcpy(buffer, "SEQ");
 				break;
-			case LU_S_TAG__EVENT:
+			case LU_AREA_TAG__EVENT:
 				strcpy(buffer, "EVENT");
 				break;
-			case LU_S_TAG__SCENE:
+			case LU_AREA_TAG__SCENE:
 				strcpy(buffer, "SCENE");
 				break;
-			case LU_S_TAG__STORY:
+			case LU_AREA_TAG__STORY:
 				strcpy(buffer, "STORY");
 				break;
-			case LU_S_TAG__OTHER:
+			case LU_AREA_TAG__OTHER:
 				strcpy(buffer, "OTHER");
 				break;
 			default:

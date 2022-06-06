@@ -42,10 +42,10 @@
 			self->areas[i] = NULL;
 		}
 
-		self->tag_to_area = (Lu_S_Area*) lu_mem__alloc(v_config->s_mem, sizeof(Lu_S_Area) * LU_S_TAG__END);
+		self->tag_to_area = (Lu_S_Area*) lu_mem__alloc(v_config->s_mem, sizeof(Lu_S_Area) * LU_AREA_TAG__END);
 		lu__alloc_assert(self->tag_to_area);
 
-		for (i = 0; i < LU_S_TAG__END; i++)
+		for (i = 0; i < LU_AREA_TAG__END; i++)
 		{
 			self->tag_to_area[i] = NULL;
 		}
@@ -158,7 +158,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size, enum lu_s_tag tag)
+	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size, enum lu_area_tag tag)
 	{
 		lu__assert(self);
 		lu__assert(config);
@@ -183,23 +183,23 @@
 
 			if (area == NULL) break;
 
-			lu_s_area__print(area);
+			lu_s_area__print(area, false);
 		}
-
 	}
 
 
-	static Lu_W_Cell lu_s__get_w_cell( 
-		Lu_S self, 
-		lu_size wave_id, 
-		lu_size area_ix, 
-		lu_size layer_ix, 
-		lu_size x, 
-		lu_size y
-	)
+	static void lu_s__print_areas(Lu_S self)
 	{
-		Lu_S_Area area = lu_s__get_area(self, area_ix);
-		if (area == NULL) return NULL;
+		lu__assert(self);
 
-		return lu_s_area__get_w_cell(area, wave_id, layer_ix, x, y);
+		Lu_S_Area area;
+		lu__debug("\nLu_S Areas: ");
+		for (lu_size i = LU_N_AREA__SPECIAL_AREA_SKIP; i < self->areas_count; i++)
+		{
+			area = self->areas[i];
+
+			if (area == NULL) break;
+
+			lu_s_area__print(area, true);
+		}
 	}

@@ -31,7 +31,7 @@
 			layer_ix,
 			area_ix,
 			lu_s_layer_comp__destroy, 
-			LU_S_TAG__COMP
+			LU_AREA_TAG__COMP
 		);
 
 		lu_s_view_p__init(

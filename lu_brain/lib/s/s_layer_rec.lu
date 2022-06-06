@@ -27,7 +27,7 @@
 			rec->width,
 			rec->height,
 			rec->height, // fixed n_table
-			LU_S_TAG__REC
+			LU_AREA_TAG__REC
 		);
 
 		self->rec = rec;

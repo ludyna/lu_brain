@@ -153,7 +153,7 @@
 
 	struct lu_s_layer_base {
 		enum lu_s_layer_type type;
-		enum lu_s_tag tag;
+		enum lu_area_tag tag;
 		lu_size layer_ix;
 		lu_size area_ix;
 
@@ -176,7 +176,7 @@
 		lu_size layer_ix,
 		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_tag tag
+		enum lu_area_tag tag
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_one_c_slot(
@@ -187,7 +187,7 @@
 		lu_size layer_ix,
 		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_tag tag
+		enum lu_area_tag tag
 	);
 
 	static inline Lu_S_Layer_Base lu_s_layer_base__init_with_arr_c_slot(
@@ -199,7 +199,7 @@
 		lu_size layer_ix,
 		lu_size area_ix,
 		void (*destroy)(Lu_S_Layer_Base),
-		enum lu_s_tag tag
+		enum lu_area_tag tag
 	);
 
 	static inline void lu_s_layer_base__deinit(Lu_S_Layer_Base self);
@@ -226,11 +226,8 @@
 	static inline void lu_s_layer_base__print(Lu_S_Layer_Base self)
 	{
 		char buffer[50];
-		lu__debug("\n 		layer_ix: %d", self->layer_ix);
-		lu__debug("\n 		area_ix: %d", self->area_ix);
 		lu_s_layer_type__to_str(self->type, buffer);
-		lu__debug("\n 		type: %s", buffer);
-		lu__debug("\n 		-------------- ");
+		lu__debug("\n 		layer_ix: %d, type: %s", self->layer_ix, buffer);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -275,7 +272,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_tag tag
+		enum lu_area_tag tag
 	);
 
 	static void lu_s_layer__deinit(Lu_S_Layer self);
@@ -288,7 +285,7 @@
 		lu_size n_w,
 		lu_size n_h,
 		lu_size n_h_max,
-		enum lu_s_tag tag
+		enum lu_area_tag tag
 	);
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
@@ -329,7 +326,7 @@
 		return self->super.type;
 	}
 
-	static inline enum lu_s_tag lu_s_layer__get_tag(Lu_S_Layer self)
+	static inline enum lu_area_tag lu_s_layer__get_tag(Lu_S_Layer self)
 	{
 		return self->super.tag;
 	}
@@ -394,7 +391,7 @@
 //
 
 	struct lu_s_area {
-		enum lu_s_tag tag;
+		enum lu_area_tag tag;
 		Lu_Config config;
 		lu_size area_ix;
 
@@ -403,7 +400,7 @@
 		lu_size layers_count;
 	};
 
-	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_s_tag tag);
+	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_area_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
 
 	static inline Lu_W_Cell lu_s_area__get_w_cell(
@@ -469,12 +466,14 @@
 	static Lu_S_Layer_Rec lu_s_area__create_layer_rec(Lu_S_Area self, Lu_Rec rec);
 
 
-	static inline void lu_s_area__print(Lu_S_Area self)
+	static inline void lu_s_area__print(Lu_S_Area self, lu_bool short_version)
 	{
 		char buffer[50];
-		lu__debug("\n 	area_ix: %d", self->area_ix);
-		lu_s_tag__to_str(self->tag, buffer);
-		lu__debug("\n 	tag: %s", buffer);
+		lu_area_tag__to_str(self->tag, buffer);
+
+		lu__debug("\n 	area_ix: %d, tag: %s", self->area_ix, buffer);
+
+		if (short_version) return;
 
 		Lu_S_Layer_Base layer ;
 		for (lu_size i = 0; i < self->layers_count; i++)
@@ -642,6 +641,22 @@
 		return (Lu_S_Layer_Rec) lu_arr__get(self->v_recs, rec_id);
 	}
 
+	static inline Lu_W_Cell lu_s__get_w_cell( 
+		Lu_S self, 
+		lu_size wave_id, 
+		lu_size area_ix, 
+		lu_size layer_ix, 
+		lu_size x, 
+		lu_size y
+	)
+	{
+		Lu_S_Area area = lu_s__get_area(self, area_ix);
+		if (area == NULL) return NULL;
+
+		return lu_s_area__get_w_cell(area, wave_id, layer_ix, x, y);
+	}
+
+
 	//
 	// Create and destroy
 	//
@@ -657,7 +672,7 @@
 	// Lu_S Area Factory
 	//
 
-	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size, enum lu_s_tag tag);
+	static inline Lu_S_Area lu_s__create_area(Lu_S self, Lu_Config config, lu_size size, enum lu_area_tag tag);
 
 	static inline Lu_S_Area lu_s__register_area(Lu_S self, Lu_S_Area area)
 	{
@@ -675,7 +690,7 @@
 		return area;
 	}
 
-	static inline Lu_S_Area lu_s__get_area_by_tag(Lu_S self, enum lu_s_tag tag)
+	static inline Lu_S_Area lu_s__get_area_by_tag(Lu_S self, enum lu_area_tag tag)
 	{
 		lu__assert(self);
 
@@ -687,12 +702,5 @@
 	// 
 
 	static void lu_s__print_info(Lu_S self);
+	static void lu_s__print_areas(Lu_S self);
 
-	static Lu_W_Cell lu_s__get_w_cell( 
-		Lu_S self, 
-		lu_size wave_id, 
-		lu_size area_ix, 
-		lu_size layer_ix, 
-		lu_size x, 
-		lu_size y
-	);

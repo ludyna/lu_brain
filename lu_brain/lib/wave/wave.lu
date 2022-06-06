@@ -193,9 +193,9 @@
 		// Rec
 		// 
 
-		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_S_TAG__REC/*, rec_id */);
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
 		lu__assert(area);
-		lu__assert(area->tag == LU_S_TAG__REC);
+		lu__assert(area->tag == LU_AREA_TAG__REC);
 		 
 		Lu_W_Table curr_w_table = lu_s_area__save_rec(area, wave_id, rec_id, data, config);
 
@@ -205,9 +205,9 @@
 		// Frame
 		//
 
-		area = lu_s__get_area_by_tag(s, LU_S_TAG__FRAME);
+		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__FRAME);
 		lu__assert(area);
-		lu__assert(area->tag == LU_S_TAG__FRAME);
+		lu__assert(area->tag == LU_AREA_TAG__FRAME);
 
 		curr_w_table = lu_s_area__save_frame(area, wave_id, block_id, curr_w_table, config);
 
@@ -217,9 +217,9 @@
 		// Seq
 		//
 
-		area = lu_s__get_area_by_tag(s, LU_S_TAG__SEQ);
+		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__SEQ);
 		lu__assert(area);
-		lu__assert(area->tag == LU_S_TAG__SEQ);
+		lu__assert(area->tag == LU_AREA_TAG__SEQ);
 
 		curr_w_table = lu_s_area__save_seq(area, wave_id, block_id, curr_w_table, config);
 	}

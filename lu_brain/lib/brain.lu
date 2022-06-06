@@ -97,6 +97,18 @@
  		// 		lu_n__print_info(self->n);
 	}
 
+	void lu_brain__print_areas(Lu_Brain self)
+	{
+		lu__user_assert_void(self, "Lu_Brain is NULL");
+
+		Lu_Mem b_mem = self->config.b_mem;
+		lu__assert(b_mem);
+
+ 		if (self->s)
+ 			lu_s__print_areas(self->s);
+
+	}
+
 	struct lu_config lu_brain_config_get(Lu_Brain self)
 	{
 		lu__assert(self);
