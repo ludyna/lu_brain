@@ -307,10 +307,13 @@
 	// Wave label
 	//
 
-	// void lu_wave__add_label(Lu_Wave wave, Lu_W_Addr addr, lu_size label_ix);
-	// Lu_Label_Unit lu_wave__get_labels(Lu_Wave wave, Lu_W_Addr addr);
+	Lu_Label lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
+	Lu_Label lu_wave__get_top_label(Lu_Wave, lu_size index);
 
-	Lu_Label lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label);
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Label
 
-	
+	lu_size lu_label__get_id(Lu_Label self);
+
+
 #endif // _LU_BRAIN_API_H

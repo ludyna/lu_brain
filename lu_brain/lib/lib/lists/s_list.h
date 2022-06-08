@@ -54,7 +54,7 @@
 		lu_size				level_size;
 		lu_size 			count;
 		lu_fp_compare 		compare;
-		Lu_Mem_Table 			mem_table;
+		Lu_Mem_Table 		mem_table;
 
 		Lu_S_Node 			first;
 		Lu_S_Node 			last;

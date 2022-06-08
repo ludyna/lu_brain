@@ -130,23 +130,13 @@ void test_lu_brain_basics(void)
 		TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
 		TEST_ASSERT(lu_brain__get_wave_by_id(brain, lu_wave__get_id(m_wave)) == m_wave);
 
-	// 	lu_wave__push(m_wave, rec_0, data_0);
+		lu_wave__push(s_wave, rec_0, data_0);
+		lu_wave__push(s_wave, rec_0, data_01);
 
-	// 	lu_wave__block_begin(m_wave);
-	// 	lu_wave__push(m_wave, rec_0, data_01);
-	// 	lu_wave__push(m_wave, rec_1, data_2);
-	// 	lu_wave__block_end(m_wave);
+	lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
-	// 	lu_wave__push(m_wave, rec_0, data_3);
-
-	// lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
-
-	// 	lu_wave__block_begin(m_wave);
-	// 	lu_wave__push(m_wave, rec_0, data_4);
-	// 	lu_wave__push(m_wave, rec_1, data_5);
-	// 	lu_wave__block_end(m_wave); 
-
-	// lu_wave__step(m_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	label_cell = lu_wave__get_top_label(m_wave, 0);
+	TEST_ASSERT(label_cell);
 
 
 	/////////////////////////////////////////////////////////
@@ -154,37 +144,6 @@ void test_lu_brain_basics(void)
 
 	lu_wave__destroy(s_wave); 
 	lu_wave__destroy(m_wave);
-
-
-	// lu_byte state = 3;
-	// lu_value p1 = 0;
-	// lu_value p2 = 0;
-	// lu_value p3 = 0;
-
-	// state == 1 && (p1 = 0.1);
-	// state == 2 && (p2 = 0.2);
-	// state == 3 && (p3 = 0.3);
-	// lu__debug("\n\n %f | %f | %f \n\n", p1, p2, p3);
-
-
-
-	/////////////////////////////////////////////////////////
-	// Lu_Name
-
-	// Lu_Neuron save_neuron = lu_save_resp_neuron(save_response);
-
-	// Lu_Name apple = lu_name_create(brain);
-
-	// lu_name_give(apple, save_neuron);
-
-	/////////////////////////////////////////////////////////
-	// Restore
-
-	// Lu_Restore_Resp lu_restore_resp = lu_seq_restore(brain, save_neuron, restore_opts);
-
-	/////////////////////////////////////////////////////
-	// Restore stories by lu_name
-
 }
 
 void test_lu_brain_basics_2(void) 
