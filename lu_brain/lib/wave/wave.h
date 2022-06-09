@@ -74,10 +74,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Match_Wave 
 
+	struct lu_match_processor {
+
+	};
+
+	static inline void lu_match_processor__deinit(Lu_Match_Processor self)
+	{
+
+	}
+
 	struct lu_match_wave {
 		struct lu_wave super;
 
 		Lu_Data_Seq seq;
+
+		struct lu_match_processor processor;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -260,3 +260,19 @@
 
 		return curr_w_table;
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Match methods
+
+	static Lu_W_Table lu_s_area__match_rec(
+		Lu_S_Area self, 
+		lu_size wave_id, 
+		lu_size rec_id, 
+		Lu_Data data, 
+		Lu_Process_Config config,
+		Lu_Match_Processor processor
+	)
+	{
+
+	}

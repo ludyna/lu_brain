@@ -216,7 +216,28 @@
 
 	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Process_Config config)
 	{
+		lu__assert(self);
+		lu__assert(block);
 
+		Lu_Wave wave = (Lu_Wave) self;
+		Lu_Brain brain = wave->brain;
+		lu__assert(brain);
+
+		Lu_S s = brain->s;
+		lu__assert(s);
+
+		Lu_Data data;
+		lu_size rec_id = 0; // NOTE: fixed temporarily
+
+		data = lu_data_block__get_data(block, rec_id);
+		lu_size wave_id = lu_wave__get_id(wave);
+		lu_size block_id = data->block_id;
+
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__REC);
+		 
+		lu_s_area__match_rec(area, wave_id, rec_id, data, config, &self->processor);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -503,6 +524,8 @@
 		Lu_Match_Wave self = (Lu_Match_Wave) wave;
 
 		lu_data_seq__destroy(self->seq);
+
+		lu_match_processor__deinit(&self->processor);
 	}
 
 	//

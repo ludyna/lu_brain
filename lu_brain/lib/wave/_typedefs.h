@@ -4,7 +4,10 @@
 
 
 typedef struct lu_save_wave* Lu_Save_Wave;
+
+typedef struct lu_match_processor* Lu_Match_Processor;
 typedef struct lu_match_wave* Lu_Match_Wave;
+
 typedef struct lu_restore_wave* Lu_Restore_Wave;
 
 
