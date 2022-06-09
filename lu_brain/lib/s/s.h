@@ -376,6 +376,15 @@
 		Lu_Process_Config config
 	);
 
+	static void lu_s_layer_rec__match(
+		Lu_S_Layer_Rec self, 
+		lu_size wave_id,
+		lu_size rec_id, 
+		Lu_Data data,
+		Lu_Process_Config config,
+		Lu_W_Processor processor
+	);
+
 	static inline Lu_N_Table lu_s_layer_rec__get_n_table(Lu_S_Layer_Rec self)
 	{
 		return self->super.n_table;

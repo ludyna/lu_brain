@@ -525,7 +525,7 @@
 
 		lu_data_seq__destroy(self->seq);
 
-		lu_match_processor__deinit(&self->processor);
+		lu_w_processor__deinit(&self->processor);
 	}
 
 	//
