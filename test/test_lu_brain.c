@@ -95,7 +95,7 @@ void tearDown(void)
     lu_mem_debugger__destroy(md, true);
 }
 
-void test_lu_brain_basics(void) 
+void test_lu_brain_basics_01(void) 
 { 
 	/////////////////////////////////////////////////////////
 	// Save 
@@ -138,6 +138,8 @@ void test_lu_brain_basics(void)
 	label_cell = lu_wave__get_top_label(m_wave, 0);
 	TEST_ASSERT(label_cell);
 
+	// TEST_ASSERT(lu_label__get_id(label_cell) == 3);
+
 
 	/////////////////////////////////////////////////////////
 	// Destroy waves
@@ -146,7 +148,7 @@ void test_lu_brain_basics(void)
 	lu_wave__destroy(m_wave);
 }
 
-void test_lu_brain_basics_2(void) 
+void test_lu_brain_basics_02(void) 
 { 
 	/////////////////////////////////////////////////////////
 	// Save 

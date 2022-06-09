@@ -224,6 +224,11 @@
 		curr_w_table = lu_s_area__save_seq(area, wave_id, block_id, curr_w_table, config);
 	}
 
+	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Process_Config config)
+	{
+
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Push
 
@@ -342,6 +347,13 @@
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_find(self));
+
+		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+
+		Lu_Data_Block block = NULL;
+
+		while((block = lu_data_seq__next_block_get(match_wave->seq)))
+			lu_match_wave__process_block(match_wave, block, config);
 	}
 
 	//
