@@ -44,7 +44,6 @@
 		void (*block_end)(Lu_Wave);
 
 		void (*push)(Lu_Wave, Lu_Rec, lu_value* data);
-		void (*push_neu)(Lu_Wave, Lu_N_Cell); 
 
 		void (*reset)(Lu_Wave);
 
@@ -59,7 +58,7 @@
 	);
 
 	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE__SAVE; }
-	static inline lu_bool lu_wave__is_find(Lu_Wave self) { return self->type == LU_WAVE__MATCH; }
+	static inline lu_bool lu_wave__is_match(Lu_Wave self) { return self->type == LU_WAVE__MATCH; }
 	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE__RESTORE; }
 
 

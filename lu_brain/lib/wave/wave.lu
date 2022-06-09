@@ -39,7 +39,6 @@
 		self->block_begin = NULL;
 		self->block_end = NULL;
 		self->push = NULL;
-		self->push_neu = NULL;
 		self->reset = NULL;
 		self->step = NULL;
 		self->process = NULL;
@@ -95,7 +94,11 @@
 
 	static void lu_match_wave__block_begin_virtual(Lu_Wave self)
 	{
+		lu__assert(self);
+		lu__assert(lu_wave__is_match(self));
 
+		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+		lu_data_seq__block_begin(match_wave->seq);
 	} 
 
 	static void lu_restore_wave__block_begin_virtual(Lu_Wave self)
@@ -126,7 +129,11 @@
 
 	static void lu_match_wave__block_end_virtual(Lu_Wave self)
 	{
+		lu__assert(self);
+		lu__assert(lu_wave__is_save(self));
 
+		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+		lu_data_seq__block_end(match_wave->seq);
 	} 
 
 	static void lu_restore_wave__block_end_virtual(Lu_Wave self)
@@ -134,23 +141,6 @@
 
 	}  
 
-///////////////////////////////////////////////////////////////////////////////
-// Push Neu
-
-	void lu_wave__push_neu(Lu_Wave self, Lu_N_Cell neu)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-		lu__user_assert_void(neu, "Lu_N_Cell is NULL");
-
-		if (self->push_neu)
-			self->push_neu(self, neu);
-		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
-	}
-
-	static void lu_restore_wave_push_neu_virtual(Lu_Wave self, Lu_N_Cell neu)
-	{
-
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Process block
@@ -254,7 +244,11 @@
 
 	static void lu_match_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)
 	{
+		lu__assert(self);
+		lu__assert(lu_wave__is_match(self));
 
+		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+		lu_data_seq__push(match_wave->seq, rec, data);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -292,7 +286,15 @@
 	static void lu_match_wave__step_virtual(Lu_Wave self, Lu_Process_Config config)
 	{
 		lu__assert(self);
-		lu__assert(lu_wave__is_find(self));
+		lu__assert(lu_wave__is_match(self));
+		lu__assert(config);
+
+		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+
+		Lu_Data_Block block = lu_data_seq__next_block_get(match_wave->seq);
+		if (!block) return; // nothing to process
+
+		lu_match_wave__process_block(match_wave, block, config);
 	}
 
 	static void lu_restore_wave__step_virtual(Lu_Wave self, Lu_Process_Config config)
@@ -346,7 +348,7 @@
 	static void lu_match_wave__process_virtual(Lu_Wave self, Lu_Process_Config config)
 	{
 		lu__assert(self);
-		lu__assert(lu_wave__is_find(self));
+		lu__assert(lu_wave__is_match(self));
 
 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
 
@@ -496,6 +498,8 @@
 	static void lu_match_wave__destroy_virtual(Lu_Wave wave)
 	{
 		lu__assert(wave);
+		lu__assert(lu_wave__is_match(wave));
+
 		Lu_Match_Wave self = (Lu_Match_Wave) wave;
 
 		lu_data_seq__destroy(self->seq);

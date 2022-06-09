@@ -148,11 +148,8 @@
 
 	static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self, lu_value signif_p)
 	{
-		//lu__debug("\n P STEP: %.1f, P1: %.1f, P2: %.1f, P_DIFF: %.1f", signif_p, self->p_1, self->p_2, lu_value_abs(self->p_1 - self->p_2));
-
 		// If no changes its important information for us
 		return self->state == LU_W_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
-
 	}
 
 	////
