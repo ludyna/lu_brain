@@ -81,11 +81,6 @@
 
 		lu__assert(self->rec->depth == lu_arr__count(slot_arr->items));
 
-		bool save_p = !lu_value__eq_with_signif(config->p_potency, 0.0, config->min_potency);
-		bool save_v = false; //!lu_value__eq_with_signif(config->v_potency, 0.0, config->min_potency);
-
-		if (!save_p && !save_v) return NULL;
-
 		lu_size block_id = data->block_id;
 
 		lu_size x;
@@ -253,5 +248,176 @@
 		Lu_W_Processor processor
 	)
 	{
+		lu__assert(self);
+		lu__assert(self->rec);
+		lu__assert(data);
+		lu__assert(config);
 
+		Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
+
+		lu__assert(rec_n_table);
+
+		Lu_S_Layer_Base base = (Lu_S_Layer_Base) self;
+
+		Lu_Slot_Base slot_base = base->c;
+		lu__assert(slot_base);
+		lu__assert(slot_base->type == LU_SLOT__ARR);
+
+		Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) slot_base;
+
+		lu__assert(self->rec->depth == lu_arr__count(slot_arr->items));
+
+		bool process_p = !lu_value__eq_with_signif(config->p_potency, 0.0, config->min_potency);
+		bool process_v = false; //!lu_value__eq_with_signif(config->v_potency, 0.0, config->min_potency);
+
+		if (!process_p && !process_v) return;
+
+		lu_size block_id = data->block_id;
+
+		lu_size x;
+		lu_size y;
+		lu_size z;
+		lu_size i;
+		lu_size y_shift;
+		lu_value v;
+		lu_size xy_shift;
+		Lu_S_Layer_Comp comp;
+
+		lu_size wh = data->h * data->w;
+
+		Lu_S_View_P p_view;
+
+		Lu_W_Table_P p_table;
+
+		lu_bool is_reset;
+
+		Lu_W_Cell_P w_p_cell;
+
+		Lu_Comp_Calc p_comp_calc;
+
+		is_reset = processor->wave_id != wave_id || ((block_id - processor->block_id) > 1);
+		lu__debug("\n IS_RESET: %d ", is_reset);
+
+		processor->wave_id = wave_id;
+		processor->block_id = block_id;
+
+		Lu_W_Cell rec_w_p_cell;
+
+		union lu_n_addr n_addr;
+
+		lu_size depth = self->rec->depth; 
+
+		Lu_W_Cell_P children[depth];
+
+		lu_size not_null_cells_count;
+		lu_size saved_count;
+
+		Lu_W_Cell_P vp_cell;
+
+		Lu_N_Column n_column;
+		Lu_N_Cell n_cell;
+
+		// for (y = 0; y < data->h; y++)
+		// {
+		// 	y_shift = y * data->w;
+
+		// 	lu__debug("\n");
+
+		// 	for (x = 0; x < data->w; x++)
+		// 	{
+		// 		xy_shift = y_shift + x;
+
+		// 		rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
+
+		// 		// reset string
+		// 		not_null_cells_count = 0;
+		// 		saved_count = 0;
+		// 		children[0] = NULL;
+
+		// 		// Collect children
+		// 		for (z = 0; z < depth; z++)
+		// 		{
+		// 			comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
+		// 			lu__debug_assert(comp->super.type == LU_S_LAYER__COMP);
+
+		// 			p_view = &comp->p_view;
+
+		// 			p_table = lu_s_view_p__get_w_table(p_view, wave_id);
+		// 			lu__debug_assert(p_table);
+
+		// 			p_comp_calc = &p_view->comp_calc;
+		// 			w_p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
+
+		// 			// Get value from Data
+		// 			v = data->values[z * wh + xy_shift];
+
+		// 			if (is_reset)
+		// 			{
+		// 				lu_w_cell_p__reset(w_p_cell);
+		// 			}
+
+		// 			lu_w_cell_p__register(w_p_cell, is_reset, v, config);
+
+		// 			// Cell is ready after p_1 and p_2 are set, independently if sig is 0 or not
+		// 			if (lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
+		// 			{
+		// 				//
+		// 				// Children W cell_p save
+		// 				//
+
+		// 				children[z] = lu_w_cell_p__save(
+		// 					w_p_cell, 
+		// 					x, 
+		// 					y, 
+		// 					p_comp_calc, 
+		// 					p_view->n_comp_table
+		// 				);
+
+		// 				lu__debug_assert(children[z]);
+
+		// 				if (children[z]->sig > 0)
+		// 				{
+		// 					++not_null_cells_count;
+		// 				}
+
+		// 				++saved_count;
+		// 			}
+
+
+		// 		} // for (lu_size z = 0
+
+		// 		// If at least one value present, save links, otherwise dont need to do anything
+		// 		// This is optimization, we consider that "NULL" cells fired, but we don't do any calcs
+		// 		if (not_null_cells_count)
+		// 		{
+		// 			// children_count always equal to depth
+		// 			lu__assert(saved_count == depth);
+
+		// 			//
+		// 			// N Cell save
+		// 			//
+
+		// 			n_column = lu_n_table__get_column(rec_n_table, x, y);
+		// 			lu__assert(n_column);
+					
+		// 			n_cell = lu_n_column__save_with_vp_children(n_column, children, depth, not_null_cells_count);
+		// 			lu__assert(n_cell);
+
+		// 			//
+		// 			// Parent W cell save
+		// 			//
+
+		// 			lu_w_cell__save(rec_w_p_cell, n_cell, n_column);
+
+		// 			curr_w_table->any_fired = true;
+		// 		}
+		// 		else
+		// 		{
+		// 			// We reset so data from previous wave don't interfere
+		// 			lu_w_cell__reset(rec_w_p_cell);
+		// 		}
+
+
+		// 	}  // for (x = 0
+		// } // for (y = 0
 	}

@@ -196,8 +196,15 @@
 // Lu_W_Processor
 
 	struct lu_w_processor {
-
+		lu_size wave_id;
+		lu_size block_id;
 	};
+
+	static inline void lu_w_processor__init(Lu_W_Processor self)
+	{
+		self->wave_id = LU_WAVE_ID__NOT_SET;
+		self->block_id = LU_BLOCK_ID__NOT_SET;
+	}
 
 	static inline void lu_w_processor__deinit(Lu_W_Processor self)
 	{

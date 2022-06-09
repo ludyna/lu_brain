@@ -473,6 +473,8 @@
 		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
+		lu_w_processor__init(&self->processor);
+
 		return (Lu_Wave) self;
 	}
 
