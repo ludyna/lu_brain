@@ -216,10 +216,12 @@
 
 	struct lu_w_manager {
 		Lu_Mem mem;
-		Lu_Mem_Table waves;
+		Lu_Mem_Table save_waves;
+		Lu_Mem_Table match_waves;
+		Lu_Mem_Table restore_waves;
 	};
 
-	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, lu_size w_save_waves_size);
+	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, Lu_Config config);
 	static void lu_w_manager__destroy(Lu_W_Manager self); 
 
 	static bool lu_w_manager__register_wave(Lu_W_Manager self, Lu_Wave wave);
@@ -228,16 +230,16 @@
 	static inline bool lu_w_manager__is_empty(Lu_W_Manager self) 
 	{
 		lu__assert(self);
-		lu__assert(self->waves);
+		lu__assert(self->save_waves);
 
-		return lu_mem_table__records_count(self->waves) == 0;
+		return lu_mem_table__records_count(self->save_waves) == 0;
 	}
 
 	static inline Lu_Wave lu_w_manager__get_wave_by_id(Lu_W_Manager self, lu_size id)
 	{
 		lu__assert(self);
-		lu__assert(self->waves);
+		lu__assert(self->save_waves);
 
-		return *((Lu_Wave*) lu_mem_table__get(self->waves, id));
+		return *((Lu_Wave*) lu_mem_table__get(self->save_waves, id));
 	}
 	 

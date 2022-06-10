@@ -5,17 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, lu_size w_save_waves_size)
+	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, Lu_Config config)
 	{
 		lu__assert(mem);
-		lu__assert(w_save_waves_size > 0);
 
 		Lu_W_Manager self = (Lu_W_Manager) lu_mem__alloc(mem, sizeof(struct lu_w_manager));
 		lu__assert(self);
 
 		self->mem = mem;
-		self->waves = lu_mem_table__create(mem, sizeof(Lu_Wave), w_save_waves_size, 0, LU_MEM_TABLE__FREEABLE);
-		lu__assert(self->waves);
+		self->save_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_save_waves_size, 0, LU_MEM_TABLE__FREEABLE);
+		lu__assert(self->save_waves);
 
 		return self;
 	}
@@ -23,10 +22,10 @@
 	static void lu_w_manager__destroy(Lu_W_Manager self)
 	{
 		lu__assert(self);
-		lu__assert(self->waves);
+		lu__assert(self->save_waves);
 		lu__assert(self->mem);
 
-		lu_mem_table__destroy(self->waves);
+		lu_mem_table__destroy(self->save_waves);
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
@@ -37,9 +36,9 @@
 	{
 		lu__assert(self);
 		lu__assert(wave);
-		lu__assert(self->waves);
+		lu__assert(self->save_waves);
 
-		wave->manager_addr = lu_mem_record__alloc(self->waves);
+		wave->manager_addr = lu_mem_record__alloc(self->save_waves);
 		
 		if (!wave->manager_addr)
 		{
@@ -52,7 +51,7 @@
 
 		lu__assert(*wave_addr == wave);
 
-		wave->wave_id = lu_mem_table__record_ix(self->waves, wave->manager_addr);
+		wave->wave_id = lu_mem_table__record_ix(self->save_waves, wave->manager_addr);
 
 		// to double check
 		lu__assert(lu_w_manager__get_wave_by_id(self, wave->wave_id) == wave);
@@ -64,8 +63,8 @@
 	{
 		lu__assert(self);
 		lu__assert(wave);
-		lu__assert(self->waves);
+		lu__assert(self->save_waves);
 
-		lu_mem_record__free(self->waves, lu_mem_table__get(self->waves, wave->wave_id));
+		lu_mem_record__free(self->save_waves, lu_mem_table__get(self->save_waves, wave->wave_id));
 
 	}
