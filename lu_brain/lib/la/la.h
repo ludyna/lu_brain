@@ -16,14 +16,14 @@
 		union lu_w_match_addr* w_cells;
 	};
 
-	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, lu_size label, Lu_Mem w_mem, lu_size w_waves_size)
+	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, lu_size label, Lu_Mem w_mem, lu_size w_save_waves_size)
 	{
 		lu__debug_assert(self);
 
 		self->addr.la_ix = label;
 		self->children = NULL;
 		self->children_count = 0;
-		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(w_mem, sizeof(union lu_w_match_addr) * w_waves_size);
+		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(w_mem, sizeof(union lu_w_match_addr) * w_save_waves_size);
 		lu__alloc_assert(self->w_cells);
 
 		return self;
@@ -167,7 +167,7 @@
 		struct lu_n_link_mem n_link_mem;
 		struct lu_la_link_mem la_link_mem;
 
-		lu_size w_waves_size;
+		lu_size w_save_waves_size;
 	};
 
 	static Lu_La_Column lu_la_column__init(Lu_La_Column self, Lu_Config config);

@@ -43,7 +43,7 @@
 		);
 		lu__assert(self->n_comp_table);
 
-		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
+		self->w_tables = lu_arr__create(config->w_mem, config->w_save_waves_size, false);
 		lu__assert(self->w_tables);
 
 		Lu_W_Table_V w_table;

@@ -5,16 +5,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, lu_size w_waves_size)
+	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, lu_size w_save_waves_size)
 	{
 		lu__assert(mem);
-		lu__assert(w_waves_size > 0);
+		lu__assert(w_save_waves_size > 0);
 
 		Lu_W_Manager self = (Lu_W_Manager) lu_mem__alloc(mem, sizeof(struct lu_w_manager));
 		lu__assert(self);
 
 		self->mem = mem;
-		self->waves = lu_mem_table__create(mem, sizeof(Lu_Wave), w_waves_size, 0, LU_MEM_TABLE__FREEABLE);
+		self->waves = lu_mem_table__create(mem, sizeof(Lu_Wave), w_save_waves_size, 0, LU_MEM_TABLE__FREEABLE);
 		lu__assert(self->waves);
 
 		return self;

@@ -19,7 +19,7 @@
 		self->recs 			= lu_arr__temp_create(p_config->b_recs_size, false);
 
 		self->s 			= NULL;
-		self->w_manager 	= lu_w_manager__create(p_config->b_mem, p_config->w_waves_size);
+		self->w_manager 	= lu_w_manager__create(p_config->b_mem, p_config->w_save_waves_size);
 		lu__assert(self->w_manager);
 
 		lu_la_column__init(

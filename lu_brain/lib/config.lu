@@ -44,7 +44,9 @@
 			// Waves level
 			//
 			.w_mem = NULL,	
-			.w_waves_size = 2,
+			.w_save_waves_size = 2,
+			.w_match_waves_size = 1,
+			.w_restore_waves_size = 1,
 
 			//
 			// Labels
@@ -92,7 +94,9 @@
 			// Waves level
 			//
 			.w_mem = NULL,	
-			.w_waves_size = 2,
+			.w_save_waves_size = 2,
+			.w_match_waves_size = 1,
+			.w_restore_waves_size = 1,
 
 			//
 			// Labels
@@ -189,7 +193,9 @@
 		//
 
 		lu__user_assert(self->w_mem, "w_mem is NULL");
-		lu__user_assert(self->w_waves_size > 0, "w_waves_size should be greater than 0");
+		lu__user_assert(self->w_save_waves_size > 0, "w_save_waves_size should be greater than 0");
+		lu__user_assert(self->w_match_waves_size > 0, "w_save_waves_size should be greater than 0");
+		lu__user_assert(self->w_restore_waves_size > 0, "w_save_waves_size should be greater than 0");
 
 		//
 		// Labels

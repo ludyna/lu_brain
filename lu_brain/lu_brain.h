@@ -101,7 +101,9 @@
 		// Waves level
 		//
 		Lu_Mem w_mem;						// if NULL initialize to default
-		lu_size w_waves_size;				// waves size
+		lu_size w_save_waves_size;			// save waves size
+		lu_size w_match_waves_size;			// match waves size
+		lu_size w_restore_waves_size;		// restore waves size
 
 
 		//

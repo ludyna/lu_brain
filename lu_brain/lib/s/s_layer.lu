@@ -55,7 +55,7 @@
 		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, n_h_max, config, layer_ix, area_ix);
 		lu__alloc_assert(self->n_table);
 
-		self->w_tables = lu_arr__create(config->w_mem, config->w_waves_size, false);
+		self->w_tables = lu_arr__create(config->w_mem, config->w_save_waves_size, false);
 		lu__alloc_assert(self->w_tables);
 
 		Lu_W_Table w_table;

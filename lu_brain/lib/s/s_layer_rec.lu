@@ -317,26 +317,26 @@
 		Lu_N_Column n_column;
 		Lu_N_Cell n_cell;
 
-		// for (y = 0; y < data->h; y++)
-		// {
-		// 	y_shift = y * data->w;
+		for (y = 0; y < data->h; y++)
+		{
+			y_shift = y * data->w;
 
-		// 	lu__debug("\n");
+			lu__debug("\n");
 
-		// 	for (x = 0; x < data->w; x++)
-		// 	{
-		// 		xy_shift = y_shift + x;
+			for (x = 0; x < data->w; x++)
+			{
+				xy_shift = y_shift + x;
 
-		// 		rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
+				// rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
 
-		// 		// reset string
-		// 		not_null_cells_count = 0;
-		// 		saved_count = 0;
-		// 		children[0] = NULL;
+				// // reset string
+				// not_null_cells_count = 0;
+				// saved_count = 0;
+				// children[0] = NULL;
 
-		// 		// Collect children
-		// 		for (z = 0; z < depth; z++)
-		// 		{
+				// Collect children
+				for (z = 0; z < depth; z++)
+				{
 		// 			comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
 		// 			lu__debug_assert(comp->super.type == LU_S_LAYER__COMP);
 
@@ -381,7 +381,7 @@
 		// 				}
 
 		// 				++saved_count;
-		// 			}
+					}
 
 
 		// 		} // for (lu_size z = 0
@@ -418,6 +418,6 @@
 		// 		}
 
 
-		// 	}  // for (x = 0
-		// } // for (y = 0
+			}  // for (x = 0
+		} // for (y = 0
 	}
