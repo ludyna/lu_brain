@@ -94,7 +94,8 @@
 		struct lu_comp_calc comp_calc;
 
 		Lu_N_Table_Comp n_comp_table;
-		Lu_Arr w_tables;
+		Lu_Arr w_save_tables;
+		Lu_Arr w_match_tables;
 	};
 
 	static Lu_S_View_P lu_s_view_p__init(
@@ -112,8 +113,6 @@
 	
 	static void lu_s_view_p__deinit(Lu_S_View_P self);
 
-	static void lu_s_view_p__register(Lu_S_View_P self, lu_size z, Lu_Data data, lu_size wave_id);
-
 	static Lu_W_Table_P lu_s_view_p__get_w_table(Lu_S_View_P self, lu_size wave_id);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -126,7 +125,7 @@
 		struct lu_comp_calc comp_calc;
 
 		Lu_N_Table_Comp n_comp_table;
-		Lu_Arr w_tables;
+		Lu_Arr w_save_tables;
 	};
 
 	static Lu_S_View_V lu_s_view_v__init(
@@ -258,7 +257,7 @@
 		struct lu_s_layer_base super;
 
 		Lu_N_Table n_table;
-		Lu_Arr w_tables;
+		Lu_Arr w_save_tables;
 	};
 
 	static Lu_S_Layer lu_s_layer__init(
@@ -315,10 +314,10 @@
 	static inline Lu_W_Table lu_s_layer__get_w_table(Lu_S_Layer self, lu_size wave_id)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert(self->w_tables);
-		lu__debug_assert(wave_id < lu_arr__size(self->w_tables));
+		lu__debug_assert(self->w_save_tables);
+		lu__debug_assert(wave_id < lu_arr__size(self->w_save_tables));
 
-		return lu_arr__get(self->w_tables, wave_id);
+		return lu_arr__get(self->w_save_tables, wave_id);
 	}
 
 	static inline enum lu_s_layer_type lu_s_layer__get_type(Lu_S_Layer self)
