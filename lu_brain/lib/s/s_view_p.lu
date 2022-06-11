@@ -46,6 +46,17 @@
 			lu_arr__set(self->w_save_tables, i, (lu_p_void) w_table);
 		}
 
+		self->w_match_tables = lu_arr__create(config->w_mem, config->w_match_waves_size, false);
+		lu__assert(self->w_match_tables);
+
+		for (lu_size i = 0; i < lu_arr__size(self->w_match_tables); i++)
+		{
+			w_table = lu_w_table_p__create(config, width, height);
+			lu__assert(w_table);
+			
+			lu_arr__set(self->w_match_tables, i, (lu_p_void) w_table);
+		}
+
 		return self;
 	}
 
@@ -56,6 +67,15 @@
 		lu_n_table_comp__destroy(self->n_comp_table);
 
 		Lu_W_Table_P w_table;
+
+		for (lu_size i = 0; i < lu_arr__count(self->w_match_tables); i++)
+		{
+			w_table = (Lu_W_Table_P) lu_arr__get(self->w_match_tables, i);
+			lu_w_table_p__destroy(w_table);
+		}
+
+		lu_arr__destroy(self->w_match_tables);
+
 		for (lu_size i = 0; i < lu_arr__count(self->w_save_tables); i++)
 		{
 			w_table = (Lu_W_Table_P) lu_arr__get(self->w_save_tables, i);
