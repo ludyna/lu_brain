@@ -92,8 +92,3 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-
-	static Lu_W_Table_P lu_s_view_p__get_w_table(Lu_S_View_P self, lu_size wave_id)
-	{
-		return (Lu_W_Table_P) lu_arr__get(self->w_save_tables, wave_id);
-	}

@@ -350,8 +350,7 @@
 		lu_size x,
 		lu_size y,
 		lu_size z,
-		union lu_n_addr addr,
-		lu_size w_match_cells_size
+		union lu_n_addr addr
 	)
 	{
 		self->addr = addr;

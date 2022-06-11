@@ -113,7 +113,15 @@
 	
 	static void lu_s_view_p__deinit(Lu_S_View_P self);
 
-	static Lu_W_Table_P lu_s_view_p__get_w_table(Lu_S_View_P self, lu_size wave_id);
+	static inline Lu_W_Table_P lu_s_view_p__get_w_save_table(Lu_S_View_P self, lu_size wave_id)
+	{
+		return (Lu_W_Table_P) lu_arr__get(self->w_save_tables, wave_id);
+	}
+
+	static inline Lu_W_Table_P lu_s_view_p__get_w_match_table(Lu_S_View_P self, lu_size wave_id)
+	{
+		return (Lu_W_Table_P) lu_arr__get(self->w_match_tables, wave_id);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_V
