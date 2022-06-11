@@ -49,6 +49,13 @@
 	// Wave 
 	// 
 
+	enum lu_wave_type {
+		LU_WAVE__SAVE,
+		LU_WAVE__MATCH,
+		LU_WAVE__RESTORE
+	};
+
+
 	typedef union lu_w_addr* Lu_W_Addr;
 	typedef struct lu_w_cell* Lu_W_Cell; 
 
@@ -146,7 +153,7 @@
 	// Method returns NULL if build failed.
 	Lu_Brain lu_brain__build(Lu_Brain self);
 
-	Lu_Wave lu_brain__get_wave_by_id(Lu_Brain self, lu_size id);
+	Lu_Wave lu_brain__get_wave_by_id(Lu_Brain self, lu_size id, enum lu_wave_type wave_type);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec  
@@ -304,6 +311,7 @@
 
 	struct lu_process_config lu_wave__get_process_config(Lu_Wave);
 	lu_size lu_wave__get_id(Lu_Wave);
+	enum lu_wave_type lu_wave__get_type(Lu_Wave);
 
 	//
 	// Wave label

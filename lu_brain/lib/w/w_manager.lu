@@ -13,8 +13,15 @@
 		lu__assert(self);
 
 		self->mem = mem;
+
 		self->save_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_save_waves_size, 0, LU_MEM_TABLE__FREEABLE);
 		lu__assert(self->save_waves);
+
+		self->match_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_match_waves_size, 0, LU_MEM_TABLE__FREEABLE);
+		lu__assert(self->match_waves);
+
+		self->restore_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_restore_waves_size, 0, LU_MEM_TABLE__FREEABLE);
+		lu__assert(self->restore_waves);
 
 		return self;
 	}
@@ -23,22 +30,62 @@
 	{
 		lu__assert(self);
 		lu__assert(self->save_waves);
+		lu__assert(self->match_waves);
+		lu__assert(self->restore_waves);
 		lu__assert(self->mem);
 
 		lu_mem_table__destroy(self->save_waves);
+		lu_mem_table__destroy(self->match_waves);
+		lu_mem_table__destroy(self->restore_waves);
+
 		lu_mem__free(self->mem, (lu_p_byte) self);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	static inline Lu_Mem_Table lu_w_manage__get_mem_table_for_wave(Lu_W_Manager self, enum lu_wave_type wave_type)
+	{
+		lu__assert(self);
+
+		switch(wave_type)
+		{
+			case LU_WAVE__SAVE:
+				return self->save_waves;
+				break;
+			case LU_WAVE__MATCH:
+				return self->match_waves;
+				break;
+			case LU_WAVE__RESTORE:
+				return self->restore_waves;
+				break;
+			default:
+				return NULL;
+		}
+
+		return NULL;
+	}
+
+	static inline Lu_Wave lu_w_manager__get_wave_by_id(Lu_W_Manager self, lu_size id, enum lu_wave_type wave_type)
+	{
+		lu__assert(self);
+
+		Lu_Mem_Table mem_table = lu_w_manage__get_mem_table_for_wave(self, wave_type);
+		lu__assert(mem_table);
+
+		return *((Lu_Wave*) lu_mem_table__get(mem_table, id));
+	}
+
 	static bool lu_w_manager__register_wave(Lu_W_Manager self, Lu_Wave wave)
 	{
 		lu__assert(self);
 		lu__assert(wave);
-		lu__assert(self->save_waves);
 
-		wave->manager_addr = lu_mem_record__alloc(self->save_waves);
+		Lu_Mem_Table mem_table = lu_w_manage__get_mem_table_for_wave(self, wave->type);
+		lu__assert(mem_table);
+
+		wave->manager_addr = lu_mem_record__alloc(mem_table);
+		wave->wave_id = lu_mem_table__record_ix(mem_table, wave->manager_addr);
 		
 		if (!wave->manager_addr)
 		{
@@ -51,10 +98,8 @@
 
 		lu__assert(*wave_addr == wave);
 
-		wave->wave_id = lu_mem_table__record_ix(self->save_waves, wave->manager_addr);
-
 		// to double check
-		lu__assert(lu_w_manager__get_wave_by_id(self, wave->wave_id) == wave);
+		lu__assert(lu_w_manager__get_wave_by_id(self, wave->wave_id, wave->type) == wave);
 
 		return true;
 	}
@@ -63,8 +108,11 @@
 	{
 		lu__assert(self);
 		lu__assert(wave);
-		lu__assert(self->save_waves);
 
-		lu_mem_record__free(self->save_waves, lu_mem_table__get(self->save_waves, wave->wave_id));
+		Lu_Mem_Table mem_table = lu_w_manage__get_mem_table_for_wave(self, wave->type);
+		lu__assert(mem_table);
 
+		lu_p_byte record = lu_mem_table__get(mem_table, wave->wave_id);
+
+		lu_mem_record__free(mem_table, record);
 	}

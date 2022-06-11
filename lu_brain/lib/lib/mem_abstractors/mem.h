@@ -135,7 +135,7 @@
 	{
 		lu_p_byte p =  (self->records_start + index * self->record_size_in_bytes);
 
-		lu__debug_assert(p < self->records_end);
+		lu__assert(p < self->records_end);
 
 		return p;
 	} 

@@ -20,9 +20,9 @@
 		Lu_Config b_config = &brain->config;
 		lu__assert(b_config);
 
-		self->type = type;
 		self->wave_id = 0;
-
+		self->type = type;
+	
 		lu__assert(b_config->w_mem);
 		self->mem = b_config->w_mem;
 
@@ -58,6 +58,11 @@
 	lu_size lu_wave__get_id(Lu_Wave self)
 	{
 		return self->wave_id;
+	}
+
+	enum lu_wave_type lu_wave__get_type(Lu_Wave self)
+	{
+		return self->type;
 	}
 
 	// lu_size lu_wave_block_count(Lu_Wave self)
@@ -457,6 +462,9 @@
 			brain
 		);
 
+		lu__assert(lu_wave__is_match((Lu_Wave) self));
+		lu__assert(lu_wave__get_type((Lu_Wave) self) == LU_WAVE__MATCH);
+
 		self->super.destroy = lu_match_wave__destroy_virtual;
 		
 		self->super.block_begin = lu_match_wave__block_begin_virtual;
@@ -562,5 +570,5 @@
 
 	Lu_Label lu_wave__get_top_label(Lu_Wave self, lu_size index)
 	{
-
+		return NULL;
 	}

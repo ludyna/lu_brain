@@ -231,15 +231,15 @@
 	{
 		lu__assert(self);
 		lu__assert(self->save_waves);
+ 
+		// lu__debug(
+		// 	"\n SAVE_WAVES_COUNT = %ld, MATCH = %ld, RESTORE = %ld \n", 
+		// 	lu_mem_table__records_count(self->save_waves),
+		// 	lu_mem_table__records_count(self->match_waves),
+		// 	lu_mem_table__records_count(self->restore_waves)
+		// );
 
-		return lu_mem_table__records_count(self->save_waves) == 0;
+		return lu_mem_table__records_count(self->save_waves) == 0 \
+		 && lu_mem_table__records_count(self->match_waves) == 0 \
+		 && lu_mem_table__records_count(self->restore_waves) == 0;
 	}
-
-	static inline Lu_Wave lu_w_manager__get_wave_by_id(Lu_W_Manager self, lu_size id)
-	{
-		lu__assert(self);
-		lu__assert(self->save_waves);
-
-		return *((Lu_Wave*) lu_mem_table__get(self->save_waves, id));
-	}
-	 

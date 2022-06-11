@@ -16,20 +16,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave 
 
-	
-	enum lu_wave_type {
-		LU_WAVE__SAVE,
-		LU_WAVE__MATCH,
-		LU_WAVE__RESTORE
-	};
-
 	/*
 		One wave is one seq. Create another wave to create another seq.
 	*/
 	struct lu_wave {
+		lu_size wave_id;
 		enum lu_wave_type type;
 
-		lu_size wave_id;
 		lu_p_byte manager_addr;
 
 		Lu_Mem mem;
