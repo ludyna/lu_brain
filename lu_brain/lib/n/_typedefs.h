@@ -5,6 +5,7 @@
 	typedef struct lu_n_pos* Lu_N_Pos;
 	typedef struct lu_n_pos_3d* Lu_N_Pos_3d;
 	
+	typedef union lu_n_link_addr* Lu_N_Link_Addr;
 	typedef struct lu_n_link* Lu_N_Link;
 	typedef struct lu_n_link_mem* Lu_N_Link_Mem;
 

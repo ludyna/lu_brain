@@ -211,6 +211,34 @@
 
 	}
 
+	static inline void lu_w_processor__fire_vp_with_sig(
+		Lu_W_Processor self, 
+		lu_size wave_id,
+		lu_size block_id,
+		Lu_N_Cell_VP n_cell, 
+		Lu_N_Column_Comp n_column,
+		lu_value sig
+	)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(n_cell);
+		lu__debug_assert(n_column);
+		lu__debug_assert(sig > 0);
+
+		// Lu_N_Link n_link_parent = n_cell->parents;
+		// Lu_N_Cell n_cell_parent;
+
+		// while (n_link_parent)
+		// {
+		// 	n_cell_parent = lu_w_processor__get_n_cell(n_link_parent->cell_addr);
+		// 	lu__assert(n_cell_parent);
+
+		// 	//
+
+		// 	n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_link_parent->next);
+		// }
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Manager
 

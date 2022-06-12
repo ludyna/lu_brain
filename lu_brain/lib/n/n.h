@@ -35,6 +35,11 @@
 	// NULL addr
 	extern union lu_n_link_addr LU_N_LINK_ADDR__NULL;
 
+	static inline lu_bool lu_n_link_addr__is_blank(Lu_N_Link_Addr self)
+	{
+		return self->value == LU_N_LINK_ADDR__NULL.value;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link
 //
@@ -331,7 +336,7 @@
 		lu_size y;
 		lu_size z;  // if z = 0, this cell is "NULL" cell
 
-		Lu_N_Link parents;
+		union lu_n_link_addr parents;
 	};
 
 	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
@@ -358,7 +363,8 @@
 		self->value = value;
 		self->x = x;
 		self->y = y;
-		self->z = z;
+		self->z = z; 
+		self->parents = LU_N_LINK_ADDR__NULL;
 
 		return self;
 	}
@@ -370,17 +376,15 @@
 
 	static inline Lu_N_Link lu_n_cell_vp__parent_prepend(Lu_N_Cell_VP self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
-		Lu_N_Link prev_n_link = self->parents;
-
 		// new child link
 		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
 		lu__assert(n_link);
 
-		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+		n_link->next = self->parents;
 
 		n_link->cell_addr = addr;
 
-		self->parents = n_link;
+		self->parents = lu_n_link_mem__get_addr(link_mem, n_link);
 
 		return n_link;
 	}
@@ -597,8 +601,8 @@
 
 		self->children = n_link;
 
-		// For every children we have minus sig potential, that should be overcome by child signal
-		--self->default_sig;
+		// For every children we have plus sig potential, that should be overcome by child signal
+		++self->default_sig;
 
 		return n_link;
 	}	

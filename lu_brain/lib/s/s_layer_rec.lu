@@ -361,6 +361,9 @@
 							p_comp_calc, 
 							p_view->n_comp_table
 						);
+
+						// now that we have detected n_cell, we can fire it
+						lu_w_processor__fire_vp_with_sig(processor, wave_id, block_id, w_p_cell->n_cell, w_p_cell->n_column, 1.0);
 					}
 
 
