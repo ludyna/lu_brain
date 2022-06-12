@@ -354,14 +354,13 @@
 					// Cell is ready after p_1 and p_2 are set, independently if sig is 0 or not
 					if (lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
 					{
-
-						// lu_w_cell_p__save(
-						// 		w_p_cell, 
-						// 		x, 
-						// 		y, 
-						// 		p_comp_calc, 
-						// 		p_view->n_comp_table
-						// 	);
+						lu_w_cell_p__save(
+							w_p_cell, 
+							x, 
+							y, 
+							p_comp_calc, 
+							p_view->n_comp_table
+						);
 					}
 
 

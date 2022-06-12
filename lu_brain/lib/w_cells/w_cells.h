@@ -152,6 +152,17 @@
 		return self->state == LU_W_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
 	}
 
+	static inline lu_value lu_w_cell_p__calc_p(Lu_W_Cell_P self)
+	{
+		lu_value p = self->p_2 - self->p_1;
+
+		#pragma GCC diagnostic ignored "-Wunused-value"
+			p < 0 && (p = -p); 
+		#pragma GCC diagnostic pop 
+
+		return p;
+	}
+
 	////
 	//
 	static inline Lu_W_Cell_P lu_w_cell_p__save(
@@ -162,11 +173,7 @@
 		Lu_N_Table_Comp n_table
 	)
 	{
-		lu_value p = self->p_2 - self->p_1;
-
-		#pragma GCC diagnostic ignored "-Wunused-value"
-			p < 0 && (p = -p); 
-		#pragma GCC diagnostic pop
+		lu_value p = lu_w_cell_p__calc_p(self);
 
 		lu_size z = 0;
 
