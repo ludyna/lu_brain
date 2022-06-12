@@ -84,68 +84,6 @@
 		return n_link;
 	}
 
-	static inline lu_bool lu_n_link__is_vp_children_eq(
-		Lu_N_Link self, 
-		Lu_W_Cell_P* children, 
-		lu_size children_count, 
-		Lu_N_Link_Mem link_mem
-	)
-	{
-		lu__debug_assert(children);
-		lu__debug_assert(children[0]);
-		lu__debug_assert(children_count > 0);
-		lu__debug_assert(link_mem);
-
-		if (self == NULL) return false;
-
-		Lu_W_Cell_P w_cell;
-		for(lu_size i = 0; i < children_count; i++)
-		{
-			if (self == NULL) return false;
-
-			w_cell = children[i];
-			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
-
-			if (!lu_n_addr__is_eq(&self->cell_addr, lu_n_cell_vp__get_cell_addr(w_cell->n_cell))) return false;
-
-			self = lu_n_link_mem__get_link(link_mem, self->next);
-		}
-
-		return true;
-	}
-
-	static inline lu_bool lu_n_link__is_children_eq(
-		Lu_N_Link self, 
-		Lu_W_Cell* children, 
-		lu_size children_count, 
-		Lu_N_Link_Mem link_mem
-	)
-	{
-		lu__debug_assert(children);
-		lu__debug_assert(children[0]);
-		lu__debug_assert(children_count > 0);
-		lu__debug_assert(link_mem);
-
-		if (self == NULL) return false;
-
-		Lu_W_Cell w_cell;
-		for(lu_size i = 0; i < children_count; i++)
-		{
-			if (self == NULL) return false;
-
-			w_cell = children[i];
-			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
-
-			if (!lu_n_addr__is_eq(&self->cell_addr, lu_n_cell__get_cell_addr(w_cell->n_cell))) return false;
-
-			self = lu_n_link_mem__get_link(link_mem, self->next);
-		}
-
-		return true;
-	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Mem
@@ -347,6 +285,7 @@
 		self->x = 0;
 		self->y = 0;
 		self->z = 0;
+		self->parents = LU_N_LINK_ADDR__NULL;
 	}
 
 	static inline Lu_N_Cell_VP lu_n_cell_vp__init(
@@ -501,7 +440,7 @@
 		Lu_N_Link bl;
 		Lu_N_Link br;
 
-		Lu_N_Link children; 
+		union lu_n_link_addr children; 
 
 		lu_value default_sig;
 		
@@ -534,7 +473,7 @@
 		self->tr = NULL;
 		self->bl = NULL;
 		self->br = NULL;
-		self->children = NULL; 
+		self->children = LU_N_LINK_ADDR__NULL; 
 		self->default_sig = 0;
 
 		lu_size size = sizeof(union lu_w_match_addr*) * w_cells_size;
@@ -577,7 +516,7 @@
 	{
 		lu__debug_assert(self);
 
-		return self->children == NULL;
+		return lu_n_link_addr__is_blank(&self->children);
 	}
 
 	static inline lu_bool lu_n_cell__is_n_column_null_cell(Lu_N_Cell self)
@@ -589,17 +528,15 @@
 
 	static inline Lu_N_Link lu_n_cell__children_prepend(Lu_N_Cell self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
-		Lu_N_Link prev_n_link = self->children;
-
 		// New child link
 		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
 		lu__assert(n_link);
 
-		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+		n_link->next = self->children;
 
 		n_link->cell_addr = addr;
 
-		self->children = n_link;
+		self->children = lu_n_link_mem__get_addr(link_mem, n_link);
 
 		// For every children we have plus sig potential, that should be overcome by child signal
 		++self->default_sig;
@@ -723,6 +660,80 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Link_Addr
+//
+
+	static inline lu_bool lu_n_link_addr__is_vp_eq(
+		union lu_n_link_addr self, 
+		Lu_W_Cell_P* children, 
+		lu_size children_count, 
+		Lu_N_Link_Mem link_mem
+	)
+	{
+		lu__debug_assert(children);
+		lu__debug_assert(children[0]);
+		lu__debug_assert(children_count > 0);
+		lu__debug_assert(link_mem);
+
+		if (lu_n_link_addr__is_blank(&self)) return false;
+
+		Lu_N_Link n_link;
+		Lu_W_Cell_P w_cell;
+		for(lu_size i = 0; i < children_count; i++)
+		{
+			if (lu_n_link_addr__is_blank(&self)) return false;
+
+			w_cell = children[i];
+			lu__debug_assert(w_cell);
+			lu__debug_assert(w_cell->n_cell);
+
+			n_link = lu_n_link_mem__get_link(link_mem, self);
+			if (!n_link) return false;
+
+			if (!lu_n_addr__is_eq(&n_link->cell_addr, lu_n_cell_vp__get_cell_addr(w_cell->n_cell))) return false;
+
+			self = n_link->next;
+		}
+
+		return true;
+	}
+
+	static inline lu_bool lu_n_link_addr__is_eq(
+		union lu_n_link_addr self, 
+		Lu_W_Cell* children, 
+		lu_size children_count, 
+		Lu_N_Link_Mem link_mem
+	)
+	{
+		lu__debug_assert(children);
+		lu__debug_assert(children[0]);
+		lu__debug_assert(children_count > 0);
+		lu__debug_assert(link_mem);
+
+		if (lu_n_link_addr__is_blank(&self)) return false;
+
+		Lu_N_Link n_link;
+		Lu_W_Cell w_cell;
+		for(lu_size i = 0; i < children_count; i++)
+		{
+			if (lu_n_link_addr__is_blank(&self)) return false;
+
+			w_cell = children[i];
+			lu__debug_assert(w_cell);
+			lu__debug_assert(w_cell->n_cell);
+
+			n_link = lu_n_link_mem__get_link(link_mem, self);
+			if (!n_link) return false;
+
+			if (!lu_n_addr__is_eq(&n_link->cell_addr, lu_n_cell__get_cell_addr(w_cell->n_cell))) return false;
+
+			self = n_link->next;
+		}
+
+		return true;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
 // 
 	
@@ -835,7 +846,7 @@
 				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem, non_null_count);
 				return cell;
 			}
-			else if (lu_n_link__is_vp_children_eq(cell->children, children, children_count, &self->link_mem)) 
+			else if (lu_n_link_addr__is_vp_eq(cell->children, children, children_count, &self->link_mem)) 
 			{
 				return cell; // no need to do anything, we already have that cell
 			}
@@ -872,7 +883,7 @@
 				lu_n_cell__save(cell, children, children_count, &self->link_mem, non_null_count);
 				return cell;
 			}
-			else if (lu_n_link__is_children_eq(cell->children, children, children_count, &self->link_mem)) 
+			else if (lu_n_link_addr__is_eq(cell->children, children, children_count, &self->link_mem)) 
 			{
 				return cell; // no need to do anything, we already have that cell
 			}

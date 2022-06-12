@@ -54,15 +54,15 @@ void tearDown(void)
 	lu_n_link_mem__deinit(link_mem);
 }
 
-void test___lu_n_link__is_vp_children_eq(void) 
+void test___lu_n_cell_children__is_vp_eq(void) 
 {
-	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == false);
+	TEST_ASSERT(lu_n_link_addr__is_vp_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == false);
 
 	n_link_1 = lu_n_link_mem__link_alloc(link_mem);
 	n_link_1->cell_addr = n_cell_1.addr;
 	n_link_1->next.value = 0;
 
-	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == false);
+	TEST_ASSERT(lu_n_link_addr__is_vp_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == false);
 
 	n_link_2 = lu_n_link_mem__link_alloc(link_mem);
 	n_link_2->cell_addr = n_cell_2.addr;
@@ -70,7 +70,7 @@ void test___lu_n_link__is_vp_children_eq(void)
 
 	n_link_1->next = lu_n_link_mem__get_addr(link_mem, n_link_2);
 
-	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == false);
+	TEST_ASSERT(lu_n_link_addr__is_vp_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == false);
 
 	n_link_3 = lu_n_link_mem__link_alloc(link_mem);
 	n_link_3->cell_addr = n_cell_3.addr;
@@ -78,7 +78,7 @@ void test___lu_n_link__is_vp_children_eq(void)
 
 	n_link_2->next = lu_n_link_mem__get_addr(link_mem, n_link_3);
 
-	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == true);
+	TEST_ASSERT(lu_n_link_addr__is_vp_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == true);
 
 	n_link_4 = lu_n_link_mem__link_alloc(link_mem);
 	n_link_4->cell_addr = n_cell_4.addr;
@@ -86,7 +86,7 @@ void test___lu_n_link__is_vp_children_eq(void)
 
 	n_link_3->next = lu_n_link_mem__get_addr(link_mem, n_link_4);
 
-	TEST_ASSERT(lu_n_link__is_vp_children_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == true);
+	TEST_ASSERT(lu_n_link_addr__is_vp_eq(n_link_1, children_1, CHILDREN_COUNT, link_mem) == true);
 }
 
 
