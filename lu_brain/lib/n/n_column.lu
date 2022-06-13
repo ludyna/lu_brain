@@ -26,13 +26,12 @@
 		self->h = h;
 		self->d = d;
 
-
 		self->cells_size = h * d;
 
 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
 		lu__alloc_assert(self->cells);
 
-		self->w_match_cells_size = config->w_save_waves_size;
+		self->w_match_cells_size = config->w_match_waves_size;
 
 		for (lu_size i = 0; i < self->cells_size; i++)
 		{

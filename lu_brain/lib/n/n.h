@@ -643,6 +643,16 @@
 		self->labels = lu_la_link_mem__get_addr(la_link_mem, la_link);
 	}
 
+	static inline Lu_W_Match_Cell lu_n_cell__get_and_reset_match_cell(
+		Lu_N_Cell self,
+		lu_size wave_id,
+		lu_size block_id
+	)
+	{
+		
+	}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //

@@ -226,13 +226,32 @@
 
 	}
 
-	static inline void lu_w_processor__fire_n_cell(
+	static inline void lu_w_processor__put_in_queue(
 		Lu_W_Processor self,
+		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
 		Lu_N_Column n_column
 	)
 	{
 		
+	}
+
+
+	static inline void lu_w_processor__fire_n_cell(
+		Lu_W_Processor self,
+		Lu_N_Cell n_cell,
+		Lu_N_Column n_column,
+		lu_value sig
+	)
+	{
+		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->wave_id, self->block_id);
+
+		lu_w_match_cell__add_sig(match_cell, sig);
+
+		if (lu_w_match_cell__ready_to_fire(match_cell))
+		{
+			lu_w_processor__put_in_queue(self, match_cell, n_cell, n_column);
+		}
 	}
 	
 	static inline void lu_w_processor__find_n_cell_and_n_column(
@@ -277,7 +296,7 @@
 
 			lu__debug("\n YOO! \n");
 
-			lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent);
+			lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent, sig);
 
 			n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_link_parent->next);
 		}

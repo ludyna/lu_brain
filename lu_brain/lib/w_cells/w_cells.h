@@ -310,8 +310,18 @@
 	struct lu_w_match_cell {
 		lu_value sig;
 		lu_size wave_id;
+		lu_size block_id;
 	};	
 
+	static inline void lu_w_match_cell__add_sig(Lu_W_Match_Cell self, lu_value sig)
+	{
+
+	}
+
+	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self)
+	{
+		
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell_Mem
