@@ -20,6 +20,8 @@
 	static inline union lu_la_link_addr lu_la_link_mem__get_addr(Lu_La_Link_Mem self, Lu_La_Link link);
 	static inline Lu_La_Link lu_la_link__init(Lu_La_Link self, union lu_la_addr la_addr, union lu_la_link_addr next);
 
+	static inline union lu_n_link_addr lu_n_link_addr__prepend(union lu_n_link_addr self, Lu_N_Link_Mem link_mem, union lu_n_addr addr);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //
@@ -68,22 +70,6 @@
 		
 		return true;
 	}
-
-	static inline Lu_N_Link lu_n_link__prepend(Lu_N_Link self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
-	{
-		Lu_N_Link prev_n_link = self;
-
-		// new child link
-		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
-		lu__assert(n_link);
-
-		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
-
-		n_link->cell_addr = addr;
-
-		return n_link;
-	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Mem
@@ -435,10 +421,10 @@
 
 		Lu_La_Link labels;
 
-		Lu_N_Link tl;
-		Lu_N_Link tr;
-		Lu_N_Link bl;
-		Lu_N_Link br;
+		union lu_n_link_addr tl;
+		union lu_n_link_addr tr;
+		union lu_n_link_addr bl;
+		union lu_n_link_addr br;
 
 		union lu_n_link_addr children; 
 
@@ -469,10 +455,10 @@
 		lu__debug_assert(self->addr.area_ix == area_ix);
 
 		self->labels = NULL;
-		self->tl = NULL;
-		self->tr = NULL;
-		self->bl = NULL;
-		self->br = NULL;
+		self->tl = LU_N_LINK_ADDR__NULL;
+		self->tr = LU_N_LINK_ADDR__NULL;
+		self->bl = LU_N_LINK_ADDR__NULL;
+		self->br = LU_N_LINK_ADDR__NULL;
 		self->children = LU_N_LINK_ADDR__NULL; 
 		self->default_sig = 0;
 
@@ -619,16 +605,16 @@
 			switch(i)
 			{
 				case 0:
-					n_cell->tl = lu_n_link__prepend(n_cell->tl, lu_n_column__get_link_mem(n_column), self->addr);
+					n_cell->tl = lu_n_link_addr__prepend(n_cell->tl, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				case 1:
-					n_cell->tr = lu_n_link__prepend(n_cell->tr, lu_n_column__get_link_mem(n_column), self->addr);
+					n_cell->tr = lu_n_link_addr__prepend(n_cell->tr, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				case 2:
-					n_cell->bl = lu_n_link__prepend(n_cell->bl, lu_n_column__get_link_mem(n_column), self->addr);
+					n_cell->bl = lu_n_link_addr__prepend(n_cell->bl, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				case 3:
-					n_cell->br = lu_n_link__prepend(n_cell->br, lu_n_column__get_link_mem(n_column), self->addr);
+					n_cell->br = lu_n_link_addr__prepend(n_cell->br, lu_n_column__get_link_mem(n_column), self->addr);
 					break;
 				default:
 					lu__assert(false);
@@ -732,6 +718,20 @@
 
 		return true;
 	}
+
+	static inline union lu_n_link_addr lu_n_link_addr__prepend(union lu_n_link_addr self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
+	{
+		// new child link
+		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
+		lu__assert(n_link);
+
+		n_link->next = self;
+
+		n_link->cell_addr = addr;
+
+		return lu_n_link_mem__get_addr(link_mem, n_link);
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column
