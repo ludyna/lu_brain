@@ -9,6 +9,13 @@
 	typedef struct lu_s_layer* Lu_S_Layer;
 	static inline Lu_N_Table lu_s_layer__get_n_table(Lu_S_Layer self);
 
+	typedef struct lu_s* Lu_S;
+	static inline void lu_s__find_n_cell_and_n_column(		
+		Lu_S self,
+		union lu_n_addr addr,
+		Lu_N_Cell* n_cell,
+		Lu_N_Column* n_column
+	);
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Table_P
@@ -198,17 +205,37 @@
 	struct lu_w_processor {
 		lu_size wave_id;
 		lu_size block_id;
+		Lu_S s;
+		Lu_Mem mem;
 	};
 
-	static inline void lu_w_processor__init(Lu_W_Processor self)
+	static inline void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config)
 	{
+		lu__assert(self);
+		lu__assert(s);
+		lu__assert(config);
+
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->block_id = LU_BLOCK_ID__NOT_SET;
+		self->s = s;
+		self->mem = config->w_mem;
 	}
 
 	static inline void lu_w_processor__deinit(Lu_W_Processor self)
 	{
 
+	}
+	
+	static inline void lu_w_processor__find_n_cell_and_n_column(
+		Lu_W_Processor self,
+		union lu_n_addr addr,
+		Lu_N_Cell* n_cell,
+		Lu_N_Column* n_column
+	)
+	{
+		lu__assert(self);
+
+		lu_s__find_n_cell_and_n_column(self->s, addr, n_cell, n_column);
 	}
 
 	static inline void lu_w_processor__fire_vp_with_sig(
@@ -225,19 +252,23 @@
 		lu__debug_assert(n_column);
 		lu__debug_assert(sig > 0);
 
-		// Lu_N_Link n_link_parent = n_cell->parents;
-		// Lu_N_Cell n_cell_parent;
+		Lu_N_Link n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_cell->parents);
+		Lu_N_Cell n_cell_parent = NULL;
+		Lu_N_Column n_column_parent = NULL;
+ 
+		while (n_link_parent)
+		{
+			lu_w_processor__find_n_cell_and_n_column(self, n_link_parent->cell_addr, &n_cell_parent, &n_column_parent);
+		
+			lu__assert(n_cell_parent);
+			lu__assert(n_column_parent);
 
-		// while (n_link_parent)
-		// {
-		// 	n_cell_parent = lu_w_processor__get_n_cell(n_link_parent->cell_addr);
-		// 	lu__assert(n_cell_parent);
+			lu__debug("\n YOO! \n");
 
-		// 	//
-
-		// 	n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_link_parent->next);
-		// }
+			n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_link_parent->next);
+		}
 	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Manager

@@ -501,6 +501,16 @@
 		}
 	}
 
+	static inline void lu_s_area__find_n_cell_and_n_column(
+		Lu_S_Area self, 
+		union lu_n_addr addr, 
+		Lu_N_Cell* n_cell, 
+		Lu_N_Column* n_column
+	)
+	{
+
+	}
+
 	static lu_bool lu_s_area__expand(Lu_S_Area self);
 
 	static Lu_W_Table lu_s_area__save_rec(
@@ -718,3 +728,21 @@
 	static void lu_s__print_info(Lu_S self);
 	static void lu_s__print_areas(Lu_S self);
 
+	static inline void lu_s__find_n_cell_and_n_column(		
+		Lu_S self,
+		union lu_n_addr addr,
+		Lu_N_Cell* n_cell,
+		Lu_N_Column* n_column
+	)
+	{
+		Lu_S_Area s_area = lu_s__get_area(self, addr.area_ix);
+
+		if (s_area == NULL)
+		{
+			*n_cell = NULL;
+			*n_column = NULL;
+			return;
+		}
+
+		lu_s_area__find_n_cell_and_n_column(s_area, addr, n_cell, n_column);
+	}
