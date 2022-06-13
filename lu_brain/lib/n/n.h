@@ -786,17 +786,19 @@
 		lu__debug_assert(self);
 
 		return &self->cells[0];
+	} 
+
+	static inline Lu_N_Cell lu_n_column__get_cell_by_ix(Lu_N_Column self, lu_size cell_ix)
+	{
+		lu__assert(self);
+		lu__assert(cell_ix < self->cells_size);
+
+		return &self->cells[cell_ix];
 	}
 
 	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)
 	{
-		lu__debug_assert(self);
-
-		lu_size column_ix = z * self->h + ix;
-
-		lu__debug_assert(column_ix < self->cells_size);
-
-		return &self->cells[column_ix];
+		return lu_n_column__get_cell_by_ix(self, z * self->h + ix);
 	}
 
 	static inline lu_size lu_n_column__vp_children_to_ix(
@@ -889,7 +891,20 @@
 
 		// should replace with column reallocation, should not normally happen
 		return NULL;
+	}
 
+	static inline void lu_n_column__find_n_cell(
+		Lu_N_Column self, 
+		union lu_n_addr addr, 
+		Lu_N_Cell* p_n_cell
+	)
+	{
+		Lu_N_Cell n_cell = lu_n_column__get_cell_by_ix(self, addr.cell_ix);
+
+		// Make sure everything is correct
+		lu__assert(lu_n_addr__is_eq(&n_cell->addr, &addr));
+
+		*p_n_cell = n_cell;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -903,6 +918,7 @@
 		lu_size h_max;
 
 		struct lu_n_column* columns;
+		lu_size columns_size;
 	};
 
 	Lu_N_Table lu_n_table__create(
@@ -917,9 +933,17 @@
 
  	void lu_n_table__destroy(Lu_N_Table self);
 
+ 	static inline Lu_N_Column lu_n_table__get_column_by_ix(Lu_N_Table self, lu_size column_ix)
+ 	{
+ 		lu__assert(self);
+ 		lu__assert(column_ix < self->columns_size);
+
+ 		return &self->columns[column_ix];
+ 	}
+
  	static inline Lu_N_Column lu_n_table__get_column(Lu_N_Table self, lu_size x, lu_size y)
  	{
- 		return &self->columns[y * self->w + x];
+ 		return lu_n_table__get_column_by_ix(self, y * self->w + x);
  	}
 
 	////

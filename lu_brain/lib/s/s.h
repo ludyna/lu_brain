@@ -362,6 +362,19 @@
 		return lu_n_table__expand(self->n_table);
 	}
 
+	static inline void lu_s_layer__find_n_cell_and_n_column(
+		Lu_S_Layer self, 
+		union lu_n_addr addr, 
+		Lu_N_Cell* p_n_cell, 
+		Lu_N_Column* p_n_column
+	)
+	{
+		Lu_N_Column n_column = lu_n_table__get_column_by_ix(self->n_table, addr.column_ix);
+		*p_n_column = n_column;
+
+		lu_n_column__find_n_cell(n_column, addr, p_n_cell);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Rec
 //
@@ -501,6 +514,14 @@
 		}
 	}
 
+	static inline Lu_S_Layer_Base lu_s_area__get_layer(Lu_S_Area self, lu_size layer_ix)
+	{
+		lu__assert(self);
+		lu__assert(layer_ix < self->layers_count);
+
+		return self->layers[layer_ix];
+	}
+
 	static inline void lu_s_area__find_n_cell_and_n_column(
 		Lu_S_Area self, 
 		union lu_n_addr addr, 
@@ -508,7 +529,12 @@
 		Lu_N_Column* n_column
 	)
 	{
+		Lu_S_Layer_Base s_layer_base = lu_s_area__get_layer(self, addr.layer_ix);
 
+		// LU_S_LAYER__REC is also LU_S_LAYER__LAYER
+		lu__assert(s_layer_base->type == LU_S_LAYER__LAYER || s_layer_base->type == LU_S_LAYER__REC);
+
+		lu_s_layer__find_n_cell_and_n_column((Lu_S_Layer) s_layer_base, addr, n_cell, n_column);
 	}
 
 	static lu_bool lu_s_area__expand(Lu_S_Area self);
@@ -650,8 +676,7 @@
 
 	static inline Lu_S_Area lu_s__get_area(Lu_S self, lu_size area_ix)
 	{
-		lu__debug_assert(self);
-		lu__debug_assert(area_ix < self->areas_size);
+		lu__assert(self);
 		lu__assert(area_ix < self->areas_count);
 
 		return self->areas[area_ix];
@@ -736,13 +761,6 @@
 	)
 	{
 		Lu_S_Area s_area = lu_s__get_area(self, addr.area_ix);
-
-		if (s_area == NULL)
-		{
-			*n_cell = NULL;
-			*n_column = NULL;
-			return;
-		}
 
 		lu_s_area__find_n_cell_and_n_column(s_area, addr, n_cell, n_column);
 	}
