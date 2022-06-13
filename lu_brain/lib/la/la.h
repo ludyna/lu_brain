@@ -10,7 +10,7 @@
 	struct lu_la_cell {
 		union lu_la_addr addr;
 
-		Lu_N_Link children;
+		union lu_n_link_addr children;
 		lu_size children_count;
 
 		union lu_w_match_addr* w_cells;
@@ -21,7 +21,7 @@
 		lu__debug_assert(self);
 
 		self->addr.la_ix = label;
-		self->children = NULL;
+		self->children = LU_N_LINK_ADDR__NULL;
 		self->children_count = 0;
 		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(w_mem, sizeof(union lu_w_match_addr) * w_save_waves_size);
 		lu__alloc_assert(self->w_cells);
@@ -37,7 +37,7 @@
 		if (self->w_cells)
 			lu_mem__free(w_mem, (lu_p_byte) self->w_cells);
 
-		self->children = NULL;
+		self->children = LU_N_LINK_ADDR__NULL;
 		self->children_count = 0;
 		self->w_cells = 0;
 	}
@@ -47,7 +47,7 @@
 		lu__debug_assert(self);
 		lu__debug_assert(n_link_mem);
 
-		Lu_N_Link n_link = self->children;
+		Lu_N_Link n_link = lu_n_link_mem__get_link(n_link_mem, self->children);
 		Lu_N_Link next;
 
 		while (n_link)
@@ -61,24 +61,20 @@
 		return false;
 	}
 
-	static inline Lu_N_Link lu_la_cell__prepend_child(Lu_La_Cell self, union lu_n_addr n_addr, Lu_N_Link_Mem n_link_mem)
+	static inline void lu_la_cell__prepend_child(Lu_La_Cell self, union lu_n_addr n_addr, Lu_N_Link_Mem n_link_mem)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(n_link_mem);
-
-		Lu_N_Link prev_n_link = self->children;
 
 		// New child link
 		Lu_N_Link n_link = lu_n_link_mem__link_alloc(n_link_mem);
 		lu__assert(n_link);
 
-		n_link->next = prev_n_link ? lu_n_link_mem__get_addr(n_link_mem, prev_n_link) : LU_N_LINK_ADDR__NULL;
+		n_link->next = self->children;  
 
 		n_link->cell_addr = n_addr;
 
-		self->children = n_link;
-
-		return n_link;
+		self->children = lu_n_link_mem__get_addr(n_link_mem, n_link);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

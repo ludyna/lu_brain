@@ -419,7 +419,7 @@
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
-		Lu_La_Link labels;
+		union lu_la_link_addr labels;
 
 		union lu_n_link_addr tl;
 		union lu_n_link_addr tr;
@@ -454,7 +454,7 @@
 		lu__debug_assert(self->addr.layer_ix == layer_ix);
 		lu__debug_assert(self->addr.area_ix == area_ix);
 
-		self->labels = NULL;
+		self->labels = LU_LA_LINK_ADDR__NULL;
 		self->tl = LU_N_LINK_ADDR__NULL;
 		self->tr = LU_N_LINK_ADDR__NULL;
 		self->bl = LU_N_LINK_ADDR__NULL;
@@ -624,14 +624,12 @@
 		lu__debug("\n lu_n_cell__save()");
 	}
 
-	static inline Lu_La_Link lu_n_cell__prepend_label(
+	static inline void lu_n_cell__prepend_label(
 		Lu_N_Cell self, 
 		union lu_la_addr la_addr, 
 		Lu_La_Link_Mem la_link_mem
 	)
 	{
-		Lu_La_Link prev_la_link = self->labels;
-
 		// new child link
 		Lu_La_Link la_link = lu_la_link_mem__link_alloc(la_link_mem);
 		lu__assert(la_link);
@@ -639,10 +637,10 @@
 		lu_la_link__init(
 			la_link, 
 			la_addr,
-			prev_la_link ? lu_la_link_mem__get_addr(la_link_mem, prev_la_link) : LU_LA_LINK_ADDR__NULL
+			self->labels
 		);
 
-		return la_link;
+		self->labels = lu_la_link_mem__get_addr(la_link_mem, la_link);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
