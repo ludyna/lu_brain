@@ -230,6 +230,12 @@
 		return self->type;
 	}
 
+	static inline lu_bool lu_s_layer_base__is_layer_type(Lu_S_Layer_Base self)
+	{
+		// LU_S_LAYER__REC is also LU_S_LAYER__LAYER
+		return self->type == LU_S_LAYER__LAYER || self->type == LU_S_LAYER__REC;
+	}
+
 	static inline void lu_s_layer_base__print(Lu_S_Layer_Base self)
 	{
 		char buffer[50];
@@ -531,8 +537,7 @@
 	{
 		Lu_S_Layer_Base s_layer_base = lu_s_area__get_layer(self, addr.layer_ix);
 
-		// LU_S_LAYER__REC is also LU_S_LAYER__LAYER
-		lu__assert(s_layer_base->type == LU_S_LAYER__LAYER || s_layer_base->type == LU_S_LAYER__REC);
+		lu__assert(lu_s_layer_base__is_layer_type(s_layer_base));
 
 		lu_s_layer__find_n_cell_and_n_column((Lu_S_Layer) s_layer_base, addr, n_cell, n_column);
 	}

@@ -225,6 +225,15 @@
 	{
 
 	}
+
+	static inline void lu_w_processor__fire_n_cell(
+		Lu_W_Processor self,
+		Lu_N_Cell n_cell,
+		Lu_N_Column n_column
+	)
+	{
+		
+	}
 	
 	static inline void lu_w_processor__find_n_cell_and_n_column(
 		Lu_W_Processor self,
@@ -253,17 +262,22 @@
 		lu__debug_assert(sig > 0);
 
 		Lu_N_Link n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_cell->parents);
-		Lu_N_Cell n_cell_parent = NULL;
-		Lu_N_Column n_column_parent = NULL;
+		Lu_N_Cell n_cell_parent;
+		Lu_N_Column n_column_parent;
  
 		while (n_link_parent)
 		{
+			n_cell_parent = NULL;
+			n_column_parent = NULL;
+
 			lu_w_processor__find_n_cell_and_n_column(self, n_link_parent->cell_addr, &n_cell_parent, &n_column_parent);
 		
 			lu__assert(n_cell_parent);
 			lu__assert(n_column_parent);
 
 			lu__debug("\n YOO! \n");
+
+			lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent);
 
 			n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_link_parent->next);
 		}
