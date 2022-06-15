@@ -48,6 +48,7 @@
 			.w_match_waves_size = 1,
 			.w_restore_waves_size = 1,
 			.w_processor_queue_size = 1024,
+			.w_processor_label_queue_size = 3,
 
 			//
 			// Labels
@@ -99,6 +100,7 @@
 			.w_match_waves_size = 1,
 			.w_restore_waves_size = 1,
 			.w_processor_queue_size = 1024,
+			.w_processor_label_queue_size = 3,
 
 			//
 			// Labels

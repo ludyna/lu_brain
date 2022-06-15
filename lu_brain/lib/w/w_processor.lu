@@ -16,14 +16,23 @@
 		self->s = s;
 		self->mem = config->w_mem;
 
-		self->mem_table = lu_mem_table__create(
+		self->n_mem_table = lu_mem_table__create(
 			self->mem, 
 			sizeof(struct lu_w_n_item),
-			config->w_processor_queue_size,
+			config->w_processor_queue_size * 2,  // because we have two lists (curr_list and next_list)
 			0,
 			LU_MEM_TABLE__FREEABLE
 		);
-		lu__alloc_assert(self->mem_table);
+		lu__alloc_assert(self->n_mem_table);
+
+		self->la_mem_table = lu_mem_table__create(
+			self->mem, 
+			sizeof(struct lu_w_n_item),
+			config->w_processor_label_queue_size,
+			0,
+			LU_MEM_TABLE__FREEABLE
+		);
+		lu__alloc_assert(self->la_mem_table);
 
 		self->curr_list = lu_lim_list__create(self->mem, config->w_processor_queue_size);
 		lu__alloc_assert(self->curr_list);
@@ -37,11 +46,13 @@
 		lu__assert(self);
 		lu__assert(self->next_list);
 		lu__assert(self->curr_list);
-		lu__assert(self->mem_table);
+		lu__assert(self->n_mem_table);
+		lu__assert(self->la_mem_table);
 
 		lu_lim_list__destroy(self->next_list);
 
 		lu_lim_list__destroy(self->curr_list);
 
-		lu_mem_table__destroy(self->mem_table);
+		lu_mem_table__destroy(self->la_mem_table);
+		lu_mem_table__destroy(self->n_mem_table);
 	}

@@ -244,7 +244,8 @@
 		Lu_S s;
 		Lu_Mem mem;
 
-		Lu_Mem_Table mem_table;
+		Lu_Mem_Table n_mem_table;
+		Lu_Mem_Table la_mem_table;
 
 		Lu_Lim_List curr_list;
 		Lu_Lim_List next_list;
@@ -263,7 +264,7 @@
 		Lu_N_Column n_column
 	)
 	{
-		Lu_W_N_Item n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->mem_table);
+		Lu_W_N_Item n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->n_mem_table);
 
 		lu_w_n_item__init(n_item, match_cell, n_cell, n_column);
 

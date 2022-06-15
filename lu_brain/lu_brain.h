@@ -76,23 +76,23 @@
 		//
 		// Brain level
 		//
-		Lu_Mem b_mem;						// if NULL initialize to default
-		lu_size b_id;						// optional, to identify brain by unique id
-		lu_size b_recs_size;				// initial maximum number of recs 
-		lu_size b_max_seq_size_in_blocks; 	// max seq size in blocks
+		Lu_Mem b_mem;								// if NULL initialize to default
+		lu_size b_id;								// optional, to identify brain by unique id
+		lu_size b_recs_size;						// initial maximum number of recs 
+		lu_size b_max_seq_size_in_blocks; 			// max seq size in blocks
 
 		//
 		// Structure level
 		//
-		Lu_Mem s_mem;						// if NULL initialize to default
-		lu_size s_apexes_size;				// initial maximum number of apexes
-		lu_size s_areas_size;				// initial number of areas
+		Lu_Mem s_mem;								// if NULL initialize to default
+		lu_size s_apexes_size;						// initial maximum number of apexes
+		lu_size s_areas_size;						// initial number of areas
 
 		//
 		// Network level
 		//
-		Lu_Mem n_mem;						// if NULL initialize to default
-		lu_size n_names_size; 				// initial maximum number of names
+		Lu_Mem n_mem;								// if NULL initialize to default
+		lu_size n_names_size; 						// initial maximum number of names
 		lu_size n_size_in_cell_0;
 		lu_size n_size_in_cell_1;
 		lu_size n_size_in_cell_2;
@@ -107,11 +107,12 @@
 		//
 		// Waves level
 		//
-		Lu_Mem w_mem;						// if NULL initialize to default
-		lu_size w_save_waves_size;			// save waves size
-		lu_size w_match_waves_size;			// match waves size
-		lu_size w_restore_waves_size;		// restore waves size
-		lu_size w_processor_queue_size;		// 
+		Lu_Mem w_mem;								// if NULL initialize to default
+		lu_size w_save_waves_size;					// save waves size
+		lu_size w_match_waves_size;					// match waves size
+		lu_size w_restore_waves_size;				// restore waves size
+		lu_size w_processor_queue_size;				// 
+		lu_size w_processor_label_queue_size;		//
 
 
 		//
