@@ -23,10 +23,7 @@
 			0,
 			LU_MEM_TABLE__FREEABLE
 		);
-		lu__assert(self->curr_mem_table);
-
-		// skip NULL addr
-		//lu_la_link_mem__link_alloc(self);
+		lu__alloc_assert(self->curr_mem_table);
 
 		self->next_mem_table = lu_mem_table__create(
 			self->mem, 
@@ -35,20 +32,28 @@
 			0,
 			LU_MEM_TABLE__FREEABLE
 		);
-		lu__assert(self->next_mem_table);
+		lu__alloc_assert(self->next_mem_table);
 
-		// skip NULL addr
-		//lu_la_link_mem__link_alloc(self);
+		self->curr_list = lu_lim_list__create(self->mem, config->w_processor_queue_size);
+		lu__alloc_assert(self->curr_list);
+
+		self->next_list = lu_lim_list__create(self->mem, config->w_processor_queue_size);
+		lu__alloc_assert(self->next_list);
 	}
 
 	static void lu_w_processor__deinit(Lu_W_Processor self)
 	{
 		lu__assert(self);
+		lu__assert(self->next_list);
+		lu__assert(self->curr_list);
 		lu__assert(self->curr_mem_table);
+		lu__assert(self->next_mem_table);
+
+		lu_lim_list__destroy(self->next_list);
+
+		lu_lim_list__destroy(self->curr_list);
 
 		lu_mem_table__destroy(self->curr_mem_table);
-
-		lu__assert(self->next_mem_table);
 
 		lu_mem_table__destroy(self->next_mem_table);
 	}
