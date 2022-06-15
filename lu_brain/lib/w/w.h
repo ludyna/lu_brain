@@ -227,6 +227,13 @@
 		return self;
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Label_Item
+
+	struct lu_w_label_item {
+		Lu_W_Match_Cell match_cell;
+		Lu_La_Cell label;
+	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Processor
@@ -240,8 +247,10 @@
 		Lu_Mem_Table curr_mem_table;
 		Lu_Mem_Table next_mem_table;
 
-		struct lu_list curr_list;
-		struct lu_list next_list;
+		Lu_Lim_List curr_list;
+		Lu_Lim_List next_list;
+
+		Lu_S_List s_list;
 	};
 
 	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config);
