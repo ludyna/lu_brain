@@ -111,6 +111,7 @@
 		lu_size w_save_waves_size;			// save waves size
 		lu_size w_match_waves_size;			// match waves size
 		lu_size w_restore_waves_size;		// restore waves size
+		lu_size w_processor_queue_size;		// 
 
 
 		//

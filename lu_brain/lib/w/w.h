@@ -200,6 +200,35 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Proc_Item
+
+	struct lu_w_proc_item {
+		Lu_W_Match_Cell match_cell;
+		Lu_N_Cell n_cell;
+		Lu_N_Column n_column;
+	};
+
+	static inline Lu_W_Proc_Item lu_w_proc_item__init(
+		Lu_W_Proc_Item self, 
+		Lu_W_Match_Cell match_cell,
+		Lu_N_Cell n_cell,
+		Lu_N_Column n_column
+	)
+	{
+		lu__assert(self);
+		lu__assert(match_cell);
+		lu__assert(n_cell);
+		lu__assert(n_column);
+
+		self->match_cell = match_cell;
+		self->n_cell = n_cell;
+		self->n_column = n_column;
+
+		return self;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Processor
 
 	struct lu_w_processor {
@@ -207,24 +236,17 @@
 		lu_size block_id;
 		Lu_S s;
 		Lu_Mem mem;
+
+		Lu_Mem_Table curr_mem_table;
+		Lu_Mem_Table next_mem_table;
+
+		struct lu_list curr_list;
+		struct lu_list next_list;
 	};
 
-	static inline void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config)
-	{
-		lu__assert(self);
-		lu__assert(s);
-		lu__assert(config);
-
-		self->wave_id = LU_WAVE_ID__NOT_SET;
-		self->block_id = LU_BLOCK_ID__NOT_SET;
-		self->s = s;
-		self->mem = config->w_mem;
-	}
-
-	static inline void lu_w_processor__deinit(Lu_W_Processor self)
-	{
-
-	}
+	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config);
+	static void lu_w_processor__deinit(Lu_W_Processor self);
+	//static inline void lu_w_process__
 
 	static inline void lu_w_processor__put_in_queue(
 		Lu_W_Processor self,
@@ -233,9 +255,8 @@
 		Lu_N_Column n_column
 	)
 	{
-		
-	}
 
+	}
 
 	static inline void lu_w_processor__fire_n_cell(
 		Lu_W_Processor self,
@@ -252,7 +273,7 @@
 		{
 			lu_w_processor__put_in_queue(self, match_cell, n_cell, n_column);
 		}
-	}
+	} 
 	
 	static inline void lu_w_processor__find_n_cell_and_n_column(
 		Lu_W_Processor self,

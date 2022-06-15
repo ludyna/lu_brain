@@ -1,0 +1,54 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+
+	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config)
+	{
+		lu__assert(self);
+		lu__assert(s);
+		lu__assert(config);
+
+		self->wave_id = LU_WAVE_ID__NOT_SET;
+		self->block_id = LU_BLOCK_ID__NOT_SET;
+		self->s = s;
+		self->mem = config->w_mem;
+
+		self->curr_mem_table = lu_mem_table__create(
+			self->mem, 
+			sizeof(struct lu_w_proc_item),
+			config->w_processor_queue_size,
+			0,
+			LU_MEM_TABLE__FREEABLE
+		);
+		lu__assert(self->curr_mem_table);
+
+		// skip NULL addr
+		//lu_la_link_mem__link_alloc(self);
+
+		self->next_mem_table = lu_mem_table__create(
+			self->mem, 
+			sizeof(struct lu_w_proc_item),
+			config->w_processor_queue_size,
+			0,
+			LU_MEM_TABLE__FREEABLE
+		);
+		lu__assert(self->next_mem_table);
+
+		// skip NULL addr
+		//lu_la_link_mem__link_alloc(self);
+	}
+
+	static void lu_w_processor__deinit(Lu_W_Processor self)
+	{
+		lu__assert(self);
+		lu__assert(self->curr_mem_table);
+
+		lu_mem_table__destroy(self->curr_mem_table);
+
+		lu__assert(self->next_mem_table);
+
+		lu_mem_table__destroy(self->next_mem_table);
+	}

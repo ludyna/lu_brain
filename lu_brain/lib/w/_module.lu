@@ -5,4 +5,5 @@
 	#include "w_table.lu" 
 	#include "w_table_p.lu"
 	#include "w_table_v.lu"
+	#include "w_processor.lu"
 	#include "w_manager.lu"
