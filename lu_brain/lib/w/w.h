@@ -200,16 +200,16 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Proc_Item
+// Lu_W_N_Item
 
-	struct lu_w_proc_item {
+	struct lu_w_n_item {
 		Lu_W_Match_Cell match_cell;
 		Lu_N_Cell n_cell;
 		Lu_N_Column n_column;
 	};
 
-	static inline Lu_W_Proc_Item lu_w_proc_item__init(
-		Lu_W_Proc_Item self, 
+	static inline Lu_W_N_Item lu_w_n_item__init(
+		Lu_W_N_Item self, 
 		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
 		Lu_N_Column n_column
@@ -230,7 +230,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Label_Item
 
-	struct lu_w_label_item {
+	struct lu_w_la_item {
 		Lu_W_Match_Cell match_cell;
 		Lu_La_Cell label;
 	};
@@ -244,8 +244,7 @@
 		Lu_S s;
 		Lu_Mem mem;
 
-		Lu_Mem_Table curr_mem_table;
-		Lu_Mem_Table next_mem_table;
+		Lu_Mem_Table mem_table;
 
 		Lu_Lim_List curr_list;
 		Lu_Lim_List next_list;
@@ -264,7 +263,11 @@
 		Lu_N_Column n_column
 	)
 	{
+		Lu_W_N_Item n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->mem_table);
 
+		lu_w_n_item__init(n_item, match_cell, n_cell, n_column);
+
+		lu_lim_list__append(self->next_list, (lu_p_void) n_item);
 	}
 
 	static inline void lu_w_processor__fire_n_cell(
@@ -331,7 +334,6 @@
 			n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_link_parent->next);
 		}
 	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Manager

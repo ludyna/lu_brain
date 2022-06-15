@@ -12,7 +12,7 @@
 	//
 	// Match
 	//
-	typedef struct lu_w_proc_item* Lu_W_Proc_Item;
+	typedef struct lu_w_n_item* Lu_W_N_Item;
 	typedef struct lu_w_processor* Lu_W_Processor;
 
 

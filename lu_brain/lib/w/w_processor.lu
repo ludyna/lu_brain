@@ -16,23 +16,14 @@
 		self->s = s;
 		self->mem = config->w_mem;
 
-		self->curr_mem_table = lu_mem_table__create(
+		self->mem_table = lu_mem_table__create(
 			self->mem, 
-			sizeof(struct lu_w_proc_item),
+			sizeof(struct lu_w_n_item),
 			config->w_processor_queue_size,
 			0,
 			LU_MEM_TABLE__FREEABLE
 		);
-		lu__alloc_assert(self->curr_mem_table);
-
-		self->next_mem_table = lu_mem_table__create(
-			self->mem, 
-			sizeof(struct lu_w_proc_item),
-			config->w_processor_queue_size,
-			0,
-			LU_MEM_TABLE__FREEABLE
-		);
-		lu__alloc_assert(self->next_mem_table);
+		lu__alloc_assert(self->mem_table);
 
 		self->curr_list = lu_lim_list__create(self->mem, config->w_processor_queue_size);
 		lu__alloc_assert(self->curr_list);
@@ -46,14 +37,11 @@
 		lu__assert(self);
 		lu__assert(self->next_list);
 		lu__assert(self->curr_list);
-		lu__assert(self->curr_mem_table);
-		lu__assert(self->next_mem_table);
+		lu__assert(self->mem_table);
 
 		lu_lim_list__destroy(self->next_list);
 
 		lu_lim_list__destroy(self->curr_list);
 
-		lu_mem_table__destroy(self->curr_mem_table);
-
-		lu_mem_table__destroy(self->next_mem_table);
+		lu_mem_table__destroy(self->mem_table);
 	}
