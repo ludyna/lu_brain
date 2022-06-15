@@ -28,7 +28,7 @@
 		self->la_mem_table = lu_mem_table__create(
 			self->mem, 
 			sizeof(struct lu_w_n_item),
-			config->w_processor_label_queue_size,
+			config->w_processor_label_queue_size * 2, 
 			0,
 			LU_MEM_TABLE__FREEABLE
 		);

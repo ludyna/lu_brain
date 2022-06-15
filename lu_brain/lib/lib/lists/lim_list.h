@@ -53,6 +53,8 @@
 	// Methods
 
 	Lu_L_Node lu_lim_list__append(Lu_Lim_List, lu_p_void);
+	Lu_L_Node lu_lim_list__prepend(Lu_Lim_List, lu_p_void);
+	
 	void lu_lim_list__node_remove(Lu_Lim_List, Lu_L_Node);
 
 	void lu_lim_list__clear(Lu_Lim_List);

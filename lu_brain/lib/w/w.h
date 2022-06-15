@@ -268,7 +268,7 @@
 
 		lu_w_n_item__init(n_item, match_cell, n_cell, n_column);
 
-		lu_lim_list__append(self->next_list, (lu_p_void) n_item);
+		lu_lim_list__prepend(self->next_list, (lu_p_void) n_item);
 	}
 
 	static inline void lu_w_processor__fire_n_cell(
@@ -334,6 +334,11 @@
 
 			n_link_parent = lu_n_link_mem__get_link(&n_column->link_mem, n_link_parent->next);
 		}
+	}
+
+	static inline void lu_w_processor__process(Lu_W_Processor self)
+	{
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

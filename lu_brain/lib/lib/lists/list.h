@@ -81,8 +81,8 @@
 
 	// Main public methods
 
-	Lu_L_Node lu_list__node_attach(Lu_List, Lu_L_Node);
 	Lu_L_Node lu_list__node_append_with_creator(Lu_List self, lu_p_void value, Lu_L_Node (*node_creator)(Lu_List));
+	Lu_L_Node lu_list__node_prepend_with_creator(Lu_List self, lu_p_void value, Lu_L_Node (*node_creator)(Lu_List));
 	Lu_L_Node lu_list__append(Lu_List, lu_p_void);
 	Lu_L_Node lu_list__prepend(Lu_List, lu_p_void);
 

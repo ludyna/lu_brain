@@ -76,6 +76,15 @@
 
 		return lu_list__node_append_with_creator((Lu_List) self, value, lu_lim_list_l_node_create);
 	}
+
+	Lu_L_Node lu_lim_list__prepend(Lu_Lim_List self, lu_p_void value)
+	{
+		// if out of items, remove first
+		if (lu_lim_list__count(self) >= self->max_size)
+			lu_lim_list__node_remove(self, lu_list__last_node(&self->super));
+
+		return lu_list__node_prepend_with_creator((Lu_List) self, value, lu_lim_list_l_node_create);
+	}
 	
 	void lu_lim_list__node_remove(Lu_Lim_List self, Lu_L_Node node)
 	{
