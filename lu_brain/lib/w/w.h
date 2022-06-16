@@ -268,6 +268,7 @@
 
 		lu_w_n_item__init(n_item, match_cell, n_cell, n_column);
 
+		// prepend, because we want FIFO queue
 		lu_lim_list__prepend(self->next_list, (lu_p_void) n_item);
 	}
 
@@ -300,10 +301,8 @@
 		lu_s__find_n_cell_and_n_column(self->s, addr, n_cell, n_column);
 	}
 
-	static inline void lu_w_processor__fire_vp_with_sig(
+	static inline void lu_w_processor__fire_vp_parents_with_sig(
 		Lu_W_Processor self, 
-		lu_size wave_id,
-		lu_size block_id,
 		Lu_N_Cell_VP n_cell, 
 		Lu_N_Column_Comp n_column,
 		lu_value sig
@@ -336,9 +335,45 @@
 		}
 	}
 
-	static inline void lu_w_processor__process(Lu_W_Processor self)
+	static inline void lu_w_processor__fire_n_parents_with_sig(
+		Lu_W_Processor self, 
+		Lu_N_Cell n_cell, 
+		Lu_N_Column n_column,
+		lu_value sig
+	)
 	{
 
+	}
+
+	static inline lu_size lu_w_processor__process(Lu_W_Processor self)
+	{
+		Lu_Lim_List t;
+		if (lu_list__is_empty((Lu_List) self->curr_list))
+		{
+			t = self->curr_list;
+			self->curr_list = self->next_list;
+			self->next_list = t;
+		}
+
+		Lu_List curr_list = (Lu_List) self->curr_list;
+
+		Lu_L_Node current = curr_list->first;
+
+		Lu_W_N_Item n_item;
+		lu_size cells_processed = 0;
+		while (current)
+		{
+			n_item = (Lu_W_N_Item) current->value;
+
+			lu__assert(n_item);
+
+			lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
+
+			++cells_processed;
+			current = current->next;
+		}
+
+		return cells_processed;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

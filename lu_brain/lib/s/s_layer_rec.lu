@@ -363,7 +363,7 @@
 						);
 
 						// now that we have detected n_cell, we can fire it
-						lu_w_processor__fire_vp_with_sig(processor, wave_id, block_id, w_p_cell->n_cell, w_p_cell->n_column, 1.0);
+						lu_w_processor__fire_vp_parents_with_sig(processor, w_p_cell->n_cell, w_p_cell->n_column, 1.0);
 					}
 
 
