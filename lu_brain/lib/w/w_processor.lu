@@ -5,16 +5,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
-	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config)
+	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config, Lu_W_Match_Cell_Mem match_cell_mem)
 	{
 		lu__assert(self);
 		lu__assert(s);
 		lu__assert(config);
+		lu__assert(match_cell_mem);
 
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->block_id = LU_BLOCK_ID__NOT_SET;
 		self->s = s;
 		self->mem = config->w_mem;
+		self->match_cell_mem = match_cell_mem;
 
 		self->n_mem_table = lu_mem_table__create(
 			self->mem, 

@@ -243,6 +243,7 @@
 		lu_size block_id;
 		Lu_S s;
 		Lu_Mem mem;
+		Lu_W_Match_Cell_Mem match_cell_mem;
 
 		Lu_Mem_Table n_mem_table;
 		Lu_Mem_Table la_mem_table;
@@ -253,7 +254,7 @@
 		Lu_S_List s_list;
 	};
 
-	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config);
+	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config, Lu_W_Match_Cell_Mem match_cell_mem);
 	static void lu_w_processor__deinit(Lu_W_Processor self);
 	//static inline void lu_w_process__
 
@@ -281,7 +282,7 @@
 	{
 		lu__assert(self->wave_id < n_column->w_match_cells_size);
 
-		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->wave_id, self->block_id);
+		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->wave_id, self->block_id, self->match_cell_mem);
 
 		lu_w_match_cell__add_sig(match_cell, sig);
 

@@ -304,6 +304,11 @@
 	// NULL addr
 	extern const union lu_w_match_addr LU_W_MATCH_ADDR__NULL; 
 
+	static inline lu_bool lu_w_match_addr__is_blank(Lu_W_Match_Addr self)
+	{
+		return self->value == LU_W_MATCH_ADDR__NULL.value;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell 
 
@@ -377,6 +382,8 @@
 
 	static inline Lu_W_Match_Cell lu_w_match_cell_mem__get_cell(Lu_W_Match_Cell_Mem self, union lu_w_match_addr addr)
 	{
+		if (lu_w_match_addr__is_blank(&addr)) return NULL;
+
 		lu__debug_assert(self);
 		lu__debug_assert(self->mem_table);
 
@@ -385,6 +392,8 @@
 
 	static inline union lu_w_match_addr lu_w_match_cell_mem__get_addr(Lu_W_Match_Cell_Mem self, Lu_W_Match_Cell cell)
 	{
+		if (cell == NULL) return LU_W_MATCH_ADDR__NULL;
+
 		lu__debug_assert(self);
 		lu__debug_assert(cell);
 
