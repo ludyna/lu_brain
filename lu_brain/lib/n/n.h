@@ -42,6 +42,11 @@
 		return self->value == LU_N_LINK_ADDR__NULL.value;
 	}
 
+	static inline lu_bool lu_n_link_addr__is_present(Lu_N_Link_Addr self)
+	{
+		return self->value != LU_N_LINK_ADDR__NULL.value;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link
 //
