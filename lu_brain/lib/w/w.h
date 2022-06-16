@@ -286,7 +286,7 @@
 
 		lu_w_match_cell__add_sig(match_cell, sig);
 
-		if (lu_w_match_cell__ready_to_fire(match_cell))
+		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell))
 		{
 			lu_w_processor__put_in_queue(self, match_cell, n_cell, n_column);
 		}

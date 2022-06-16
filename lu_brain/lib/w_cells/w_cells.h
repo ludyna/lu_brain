@@ -14,11 +14,13 @@
 	typedef struct lu_n_column* Lu_N_Column;
 	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
 
+	static inline lu_value lu_n_cell__get_default_sig(Lu_N_Cell self);
+	static inline Lu_N_Addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self);
+	static inline Lu_N_Addr lu_n_cell__get_cell_addr(Lu_N_Cell self);
+
 	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z);
 	static inline Lu_N_Column_Comp lu_n_table_comp__get_column(Lu_N_Table_Comp self, lu_size x, lu_size y);
 	static inline Lu_N_Cell_VP lu_n_column_comp__get_cell(Lu_N_Column_Comp self, lu_size z);
-	static inline Lu_N_Addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self);
-	static inline Lu_N_Addr lu_n_cell__get_cell_addr(Lu_N_Cell self);
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Addr
@@ -339,12 +341,12 @@
 
 	static inline void lu_w_match_cell__add_sig(Lu_W_Match_Cell self, lu_value sig)
 	{
-
+		self->sig += sig;
 	}
 
-	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self)
+	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self, Lu_N_Cell n_cell)
 	{
-		
+		return (lu_n_cell__get_default_sig(n_cell) - self->sig) < 1.0;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
