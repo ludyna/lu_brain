@@ -49,6 +49,7 @@
 			.w_restore_waves_size = 1,
 			.w_processor_queue_size = 1024,
 			.w_processor_label_queue_size = 3,
+			.w_match_cells_size_per_wave = 10000,
 
 			//
 			// Labels
@@ -101,6 +102,7 @@
 			.w_restore_waves_size = 1,
 			.w_processor_queue_size = 1024,
 			.w_processor_label_queue_size = 3,
+			.w_match_cells_size_per_wave = 10000,
 
 			//
 			// Labels
@@ -200,6 +202,7 @@
 		lu__user_assert(self->w_save_waves_size > 0, "w_save_waves_size should be greater than 0");
 		lu__user_assert(self->w_match_waves_size > 0, "w_save_waves_size should be greater than 0");
 		lu__user_assert(self->w_restore_waves_size > 0, "w_save_waves_size should be greater than 0");
+		lu__user_assert(self->w_match_cells_size_per_wave > 1, "w_match_cells_size_per_wave should be greater than 1");
 
 		//
 		// Labels

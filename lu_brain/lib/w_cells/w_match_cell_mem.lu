@@ -20,7 +20,6 @@
 		);
 		lu__assert(self->mem_table);
 
-
 		// Skip first cell, because first cell is NULL cell
 		lu_w_match_cell_mem___cell_alloc(self);
 	}

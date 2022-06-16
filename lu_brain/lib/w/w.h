@@ -279,6 +279,8 @@
 		lu_value sig
 	)
 	{
+		lu__assert(self->wave_id < n_column->w_match_cells_size);
+
 		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->wave_id, self->block_id);
 
 		lu_w_match_cell__add_sig(match_cell, sig);

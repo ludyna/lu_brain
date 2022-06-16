@@ -73,6 +73,8 @@
 		Lu_Data_Seq seq;
 
 		struct lu_w_processor processor;
+
+		struct lu_w_match_cell_mem match_cell_mem;
 	};
 
 ///////////////////////////////////////////////////////////////////////////////

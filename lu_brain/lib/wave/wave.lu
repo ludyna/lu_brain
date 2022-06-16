@@ -481,6 +481,8 @@
 		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
+		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
+
 		lu_w_processor__init(&self->processor, brain->s, &brain->config);
 
 		return (Lu_Wave) self;
@@ -532,9 +534,11 @@
 
 		Lu_Match_Wave self = (Lu_Match_Wave) wave;
 
-		lu_data_seq__destroy(self->seq);
-
 		lu_w_processor__deinit(&self->processor);
+
+		lu_w_match_cell_mem__deinit(&self->match_cell_mem);
+
+		lu_data_seq__destroy(self->seq);
 	}
 
 	//

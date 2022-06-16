@@ -473,6 +473,13 @@
 
 		memset(self->w_cells, 0, size);
 
+		// Lu_W_Match_Cell w_cell;
+		// for (lu_size i = 0; i < w_cells_size; i++)
+		// {
+		// 	w_cell = &self->w_cells[i];
+		// 	lu_w_match_cell__init_null(w_cell);
+		// }
+
 		return self;
 	}
 
@@ -494,6 +501,11 @@
 		self->w_cells = NULL;
 
 		return self;
+	}
+
+	static inline Lu_W_Match_Cell lu_n_cell__get_w_match_cell(Lu_N_Cell self, lu_size wave_id)
+	{
+		// return &self->w_cells[wave_id];
 	}
 
 	static inline Lu_N_Addr lu_n_cell__get_cell_addr(Lu_N_Cell self)
@@ -654,6 +666,14 @@
 		lu_size block_id
 	)
 	{
+		// Lu_W_Match_Cell match_cell = lu_n_cell__get_w_match_cell(self, wave_id);
+
+		// if (match_cell->wave_id != wave_id || match_cell->block_id != block_id)
+		// {
+		// 	// reset
+		// 	lu_w_match_cell__init(match_cell, wave_id, block_id, 0);
+		// }
+
 		
 	}
 
