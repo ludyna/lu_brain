@@ -137,7 +137,7 @@
 			self->start_block_on_next_data = false;
 		}
 
-		if (lu_list__is_empty(self->blocks))
+		if (lu_list__is_blank(self->blocks))
 			lu_data_seq__block_add(self);
 
 		Lu_Data data = lu_data_seq__data_get(self, rec->id, lu_list__last_node(self->blocks));

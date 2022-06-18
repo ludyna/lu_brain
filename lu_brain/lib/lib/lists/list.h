@@ -77,7 +77,7 @@
 		return !self->mem;
 	}
 
-	static inline lu_bool lu_list__is_empty(Lu_List self) { return self->first == NULL; }
+	static inline lu_bool lu_list__is_blank(Lu_List self) { return self->first == NULL; }
 	static inline lu_bool lu_list__is_present(Lu_List self) { return self->first != NULL; }
 
 	// Main public methods

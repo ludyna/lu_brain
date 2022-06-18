@@ -379,7 +379,7 @@
 	static inline lu_size lu_w_processor__process(Lu_W_Processor self)
 	{
 		lu__assert(self);
-		lu__assert(lu_list__is_empty((Lu_List) self->curr_list));
+		lu__assert(lu_list__is_blank((Lu_List) self->curr_list));
 
 		Lu_Lim_List t;
 		t = self->curr_list;
@@ -393,9 +393,9 @@
 		while (lu_list__is_present(curr_list))
 		{
 			n_item = (Lu_W_N_Item) lu_list__pop_first_value(curr_list);
-			lu__assert(n_item);
+			// lu__assert(n_item);
 
-			lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
+			// lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
 
 			++cells_processed;
 		}
@@ -405,7 +405,7 @@
 
 	static inline lu_bool lu_w_processor__has_items_to_process(Lu_W_Processor self)
 	{
-		return !lu_list__is_empty((Lu_List) self->next_list);
+		return !lu_list__is_blank((Lu_List) self->next_list);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

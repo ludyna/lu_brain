@@ -35,6 +35,11 @@
 	{
 		lu__assert(self);
 
+		if (lu_list__is_present((Lu_List) self))
+		{
+			lu_lim_list__clear(self);
+		}
+
 		lu_mem_table__destroy(self->mem_table);
 		lu_mem__free(self->super.mem, (lu_p_byte) self);
 	}

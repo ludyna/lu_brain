@@ -257,8 +257,11 @@
 
 	lu_p_void lu_list__pop_first_value(Lu_List self)
 	{
+		if (self->first == NULL) return NULL;
+
 		lu_p_void value = lu_list__first_value(self);
 
+		// THIS IS WRONG, WE USING BAD NODE DESTROY METHOD IF CALLED FROM LIM_LIST
 		lu_list__node_remove(self, self->first);
 
 		return value;
@@ -266,6 +269,8 @@
 
 	lu_p_void lu_list__pop_last_value(Lu_List self)
 	{
+		if (self->last == NULL) return NULL;
+		
 		lu_p_void value = lu_list__last_value(self);
 
 		lu_list__node_remove(self, self->last);

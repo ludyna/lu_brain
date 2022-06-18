@@ -209,7 +209,7 @@
 	void lu_data_seq__reset(Lu_Data_Seq self);
 
 	static Lu_Data_Block lu_data_seq__block_add(Lu_Data_Seq self);
-	static inline lu_bool lu_data_seq__is_empty(Lu_Data_Seq self) { return lu_list__is_empty(self->blocks); }
+	static inline lu_bool lu_data_seq__is_empty(Lu_Data_Seq self) { return lu_list__is_blank(self->blocks); }
 	static inline lu_size lu_data_seq__recs_count(Lu_Data_Seq self) { return self->recs_size; }
 	lu_size lu_data_seq__blocks_count(Lu_Data_Seq self);
 	lu_p_value lu_data_seq__last_values(Lu_Data_Seq self, lu_size rec_i);
