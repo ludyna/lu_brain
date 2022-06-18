@@ -298,7 +298,7 @@
 		{
 			lu_w_processor__put_in_queue(self, match_cell, n_cell, n_column);
 		}
-	} 
+	}
 	
 	static inline void lu_w_processor__find_n_cell_and_n_column(
 		Lu_W_Processor self,
@@ -334,7 +334,7 @@
 			lu__assert(n_cell_parent);
 			lu__assert(n_column_parent);
 
-			lu__debug("\n YOO! \n");
+			//lu__debug("\n YOO! \n");
 
 			lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent, sig);
 
@@ -386,17 +386,35 @@
 
 	static inline void lu_w_processor__fire_n_labels_with_sig(
 		Lu_W_Processor self, 
-		Lu_N_Cell n_cell, 
-		Lu_N_Column n_column,
+		union lu_la_link_addr labels,
+		Lu_La_Column la_column,
 		lu_value sig
 	)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert(n_cell);
-		lu__debug_assert(n_column);
+		lu__debug_assert(la_column);
 		lu__debug_assert(sig > 0);
 
+		Lu_La_Link_Mem link_mem = lu_la_column__get_la_link_mem(la_column);
+		lu__assert(link_mem);
 
+		Lu_La_Link la_link_label = lu_la_link_mem__get_link(link_mem, labels);
+
+		Lu_La_Cell la_cell;
+ 
+		while (la_link_label)
+		{
+			la_cell = NULL;
+
+			// lu_la_column__find_la_cell(la_column, la_link_label->cell_addr, &la_cell);
+			// lu__assert(la_cell);
+
+			lu__debug("\n O.O O.O O.O! \n");
+
+			// lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent, sig);
+
+			la_link_label = lu_la_link_mem__get_link(link_mem, la_link_label->next);
+		}
 	}
 
 	static inline lu_size lu_w_processor__process(Lu_W_Processor self)
@@ -420,7 +438,7 @@
 
 			lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
 
-			lu_w_processor__fire_n_labels_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
+			lu_w_processor__fire_n_labels_with_sig(self, n_item->n_cell->labels, self->la_column, 1.0);
 
 			++cells_processed;
 		}

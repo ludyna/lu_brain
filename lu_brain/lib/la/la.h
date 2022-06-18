@@ -177,6 +177,13 @@
 		return &self->n_link_mem;
 	}
 
+	static inline Lu_La_Link_Mem lu_la_column__get_la_link_mem(Lu_La_Column self)
+	{
+		lu__debug_assert(self);
+
+		return &self->la_link_mem;
+	}
+
 	static inline lu_size lu_la_column__label_to_ix(Lu_La_Column self, lu_size label)
 	{
 		lu__debug_assert(self);
