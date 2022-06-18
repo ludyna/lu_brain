@@ -66,9 +66,9 @@
 
 	static inline lu_size lu_list__count(Lu_List self) { return self->count; }
 	static inline Lu_L_Node lu_list__first_node(Lu_List self) { return self->first; }
-	static inline lu_p_void lu_list__first_value(Lu_List self) { if (!self->first) return NULL; return self->first->value; }
+	static inline lu_p_void lu_list__get_first_value(Lu_List self) { if (!self->first) return NULL; return self->first->value; }
 	static inline Lu_L_Node lu_list__last_node(Lu_List self) { return self->last; }
-	static inline lu_p_void lu_list__last_value(Lu_List self) { if (!self->last) return NULL; return self->last->value; } 
+	static inline lu_p_void lu_list__get_last_value(Lu_List self) { if (!self->last) return NULL; return self->last->value; } 
 	
 	static inline lu_bool lu_list__is_initialized(Lu_List self)
 	{
@@ -88,7 +88,7 @@
 	Lu_L_Node lu_list__prepend(Lu_List, lu_p_void);
 
 	Lu_L_Node lu_list__node_detach(Lu_List self, Lu_L_Node node);
-	void lu_list__node_remove_with_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node));
+	void lu_list__remove_node_with_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node));
 	void lu_list__node_remove(Lu_List, Lu_L_Node);
 	
 	static inline void lu_list__node_remove_first(Lu_List self) { lu_list__node_remove(self, self->first); }

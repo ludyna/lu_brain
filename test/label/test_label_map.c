@@ -81,11 +81,11 @@ void test_label_map(void)
 
 	TEST_ASSERT(list);
 
-	unit = (Lu_Label_Unit) lu_list__first_value(list);
+	unit = (Lu_Label_Unit) lu_list__get_first_value(list);
 
 	TEST_ASSERT(lu_n_addr__is_eq(&unit->addr, &a_1));
 
-	unit = (Lu_Label_Unit) lu_list__last_value(list);
+	unit = (Lu_Label_Unit) lu_list__get_last_value(list);
 
 	TEST_ASSERT(lu_n_addr__is_eq(&unit->addr, &a_2));
 }

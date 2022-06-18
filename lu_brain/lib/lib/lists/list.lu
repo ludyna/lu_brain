@@ -114,7 +114,7 @@
 	 	return node;
 	}
 
-	void lu_list__node_remove_with_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node))
+	void lu_list__remove_node_with_destroyer(Lu_List self, Lu_L_Node node, void (*node_destroyer)(Lu_List self, Lu_L_Node* l_node))
 	{
 		if (node == NULL) return;
 
@@ -127,7 +127,7 @@
 	void lu_list__node_remove(Lu_List self, Lu_L_Node node)
 	{ 
 		if (node == NULL) return;
-		lu_list__node_remove_with_destroyer(self, node, lu_l_node_destroy);
+		lu_list__remove_node_with_destroyer(self, node, lu_l_node_destroy);
 	}
 
 	Lu_L_Node lu_list__insert_after(Lu_List self, lu_p_void value, Lu_L_Node node)
@@ -259,9 +259,8 @@
 	{
 		if (self->first == NULL) return NULL;
 
-		lu_p_void value = lu_list__first_value(self);
-
-		// THIS IS WRONG, WE USING BAD NODE DESTROY METHOD IF CALLED FROM LIM_LIST
+		lu_p_void value = lu_list__get_first_value(self);
+		
 		lu_list__node_remove(self, self->first);
 
 		return value;
@@ -271,7 +270,7 @@
 	{
 		if (self->last == NULL) return NULL;
 		
-		lu_p_void value = lu_list__last_value(self);
+		lu_p_void value = lu_list__get_last_value(self);
 
 		lu_list__node_remove(self, self->last);
 

@@ -26,8 +26,14 @@
 	static inline lu_size lu_lim_list__size(Lu_Lim_List self) { return self->max_size; }
 	static inline lu_bool lu_lim_list__is_empty(Lu_Lim_List self) { return lu_list__count(&self->super) == 0; }
 
-	static inline Lu_L_Node lu_lim_list__node_last(Lu_Lim_List self) { return self->super.last; }
-	static inline Lu_L_Node lu_lim_list__node_first(Lu_Lim_List self) { return self->super.first; }
+	static inline Lu_L_Node lu_lim_list__get_last_node(Lu_Lim_List self) { return self->super.last; }
+	static inline Lu_L_Node lu_lim_list__get_first_node(Lu_Lim_List self) { return self->super.first; } 
+
+	static inline lu_bool lu_lim_list__is_present(Lu_Lim_List self) { return lu_list__is_present((Lu_List) self); }
+	static inline lu_bool lu_lim_list__is_blank(Lu_Lim_List self) { return lu_list__is_blank((Lu_List) self); }
+
+	static inline lu_p_void lu_lim_list__get_first_value(Lu_Lim_List self) { return lu_list__get_first_value((Lu_List) self); }
+	static inline lu_p_void lu_lim_list__get_last_value(Lu_Lim_List self) { return lu_list__get_last_value((Lu_List) self); }
 	
 	// Init
 	
@@ -58,3 +64,6 @@
 	void lu_lim_list__node_remove(Lu_Lim_List, Lu_L_Node);
 
 	void lu_lim_list__clear(Lu_Lim_List);
+
+	lu_p_void lu_lim_list__pop_first_value(Lu_Lim_List self);
+	lu_p_void lu_lim_list__pop_last_value(Lu_Lim_List self);

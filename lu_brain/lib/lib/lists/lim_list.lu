@@ -93,7 +93,7 @@
 	
 	void lu_lim_list__node_remove(Lu_Lim_List self, Lu_L_Node node)
 	{
-		lu_list__node_remove_with_destroyer((Lu_List) self, node, lu_lim_list_l_node_destroy);
+		lu_list__remove_node_with_destroyer((Lu_List) self, node, lu_lim_list_l_node_destroy);
 	}
 
 	void lu_lim_list__clear(Lu_Lim_List self)
@@ -116,4 +116,30 @@
 		lu_mem_table__reset(self->mem_table);
 
 		lu_list__init(list, list->mem);
+	}
+
+	lu_p_void lu_lim_list__pop_first_value(Lu_Lim_List self)
+	{
+		Lu_L_Node first = lu_lim_list__get_first_node(self);
+
+		if (first == NULL) return NULL;
+
+		lu_p_void value = first->value;
+		
+		lu_list__remove_node_with_destroyer((Lu_List) self, first, lu_lim_list_l_node_destroy);
+
+		return value;
+	}
+
+	lu_p_void lu_lim_list__pop_last_value(Lu_Lim_List self)
+	{
+		Lu_L_Node last = lu_lim_list__get_last_node(self);
+
+		if (last == NULL) return NULL;
+
+		lu_p_void value = last->value;
+		
+		lu_list__remove_node_with_destroyer((Lu_List) self, last, lu_lim_list_l_node_destroy);
+
+		return value;
 	}

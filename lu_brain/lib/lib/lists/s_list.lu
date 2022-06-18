@@ -177,8 +177,8 @@ static void s_list_remove(Lu_S_List self, Lu_S_Node bottom)
 	Lu_Lim_List values = &bottom->values;
 	if (lu_lim_list__count(values) > 0)
 	{
-		lu__assert(lu_lim_list__node_last(values) != NULL);
-		lu_lim_list__node_remove(values, lu_lim_list__node_last(values));
+		lu__assert(lu_lim_list__get_last_node(values) != NULL);
+		lu_lim_list__node_remove(values, lu_lim_list__get_last_node(values));
 		goto end;
 	}
 

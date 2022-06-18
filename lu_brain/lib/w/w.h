@@ -386,13 +386,13 @@
 		self->curr_list = self->next_list;
 		self->next_list = t;
 
-		Lu_List curr_list = (Lu_List) self->curr_list;
+		Lu_Lim_List curr_list = self->curr_list;
 
 		Lu_W_N_Item n_item;
 		lu_size cells_processed = 0;
-		while (lu_list__is_present(curr_list))
+		while (lu_lim_list__is_present(curr_list))
 		{
-			n_item = (Lu_W_N_Item) lu_list__pop_first_value(curr_list);
+			n_item = (Lu_W_N_Item) lu_lim_list__pop_first_value(curr_list);
 			// lu__assert(n_item);
 
 			// lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
