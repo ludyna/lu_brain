@@ -19,9 +19,14 @@
 		);
 		lu__assert(self->mem_table);
 
-
 		// skip NULL addr
-		lu_n_link_mem__link_alloc(self);
+		#if LU__DEBUG
+			Lu_N_Link n_link = lu_n_link_mem__link_alloc(self);
+			union lu_n_link_addr addr = lu_n_link_mem__get_addr(self, n_link);
+			lu__assert(lu_n_link_addr__is_blank(&addr));
+		#else
+			lu_n_link_mem__link_alloc(self);
+		#endif
 	}
 
 	void lu_n_link_mem__deinit(Lu_N_Link_Mem self)

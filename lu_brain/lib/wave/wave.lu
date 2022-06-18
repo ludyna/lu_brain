@@ -243,6 +243,8 @@
 		lu__assert(area->tag == LU_AREA_TAG__REC);
 		 
 		lu_s_area__match_rec(area, wave_id, rec_id, data, config, &self->processor);
+
+		lu__debug("\n LIM_NEXT_COUNT = %ld\n", lu_lim_list__count(self->processor.next_list));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

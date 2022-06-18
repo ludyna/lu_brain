@@ -316,6 +316,8 @@
 
 		self->parents = lu_n_link_mem__get_addr(link_mem, n_link);
 
+		lu__assert(lu_n_link_addr__is_present(&self->parents));
+
 		return n_link;
 	}
 
@@ -576,7 +578,7 @@
 			lu__assert(w_cell);
 			lu__debug_assert(w_cell->n_cell);
 
-			// We create links even if sig > 0.
+			// We create links even if sig = 0.
 			// We dont create links only if all children are NULL (which means we will not get here).
 
 			lu_n_cell__children_prepend(self, link_mem, w_cell->n_cell->addr);
@@ -886,6 +888,8 @@
 		lu__debug_assert(children_count > 0);
 
 		lu_size ix = lu_n_column__vp_children_to_ix(self, children, children_count);
+
+		lu__debug("\nWHATTT ix=%ld\n", ix);
 
 		for (lu_size z = 0; z < self->d; z++)
 		{

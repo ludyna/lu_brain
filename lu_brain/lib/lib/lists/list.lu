@@ -253,3 +253,22 @@
 		lu_list__node_destroy_all(self);
 		lu_list__init(self, self->mem);
 	}
+
+
+	lu_p_void lu_list__pop_first_value(Lu_List self)
+	{
+		lu_p_void value = lu_list__first_value(self);
+
+		lu_list__node_remove(self, self->first);
+
+		return value;
+	}
+
+	lu_p_void lu_list__pop_last_value(Lu_List self)
+	{
+		lu_p_void value = lu_list__last_value(self);
+
+		lu_list__node_remove(self, self->last);
+
+		return value;
+	}

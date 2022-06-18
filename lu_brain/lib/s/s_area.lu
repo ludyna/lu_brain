@@ -286,4 +286,9 @@
 		lu_data__print(data);
 
 		lu_s_layer_rec__match(layer_rec, wave_id, rec_id, data, config, processor);
+
+		while (lu_w_processor__has_items_to_process(processor))
+		{
+			lu_w_processor__process(processor);
+		}
 	}

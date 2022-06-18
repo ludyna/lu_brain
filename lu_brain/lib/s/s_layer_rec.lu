@@ -142,6 +142,7 @@
 				xy_shift = y_shift + x;
 
 				rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
+				lu_w_cell__reset(rec_w_p_cell);
 
 				// reset string
 				not_null_cells_count = 0;
@@ -200,9 +201,8 @@
 
 				} // for (lu_size z = 0
 
-				// If at least one value present, save links, otherwise dont need to do anything
-				// This is optimization, we consider that "NULL" cells fired, but we don't do any calcs
-				if (not_null_cells_count)
+				// Save all links including for non changed cells 
+				if (saved_count > 0)
 				{
 					// children_count always equal to depth
 					lu__assert(saved_count == depth);
@@ -225,11 +225,11 @@
 
 					curr_w_table->any_fired = true;
 				}
-				else
-				{
-					// We reset so data from previous wave don't interfere
-					lu_w_cell__reset(rec_w_p_cell);
-				}
+				// else
+				// {
+				// 	// We reset so data from previous wave don't interfere
+				// 	lu_w_cell__reset(rec_w_p_cell);
+				// }
 
 
 			}  // for (x = 0
@@ -327,7 +327,7 @@
 			{
 				xy_shift = y_shift + x;
 
-				// Collect children
+				// Collect children, z are just "RBG"
 				for (z = 0; z < depth; z++)
 				{
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);

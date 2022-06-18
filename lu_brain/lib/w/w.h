@@ -346,6 +346,7 @@
 		lu__debug_assert(n_column);
 		lu__debug_assert(sig > 0);
 	
+		lu_n_addr__print(&n_cell->addr);
 		if (lu_n_link_addr__is_present(&n_cell->parents))
 			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->parents);
 	}
@@ -378,33 +379,33 @@
 	static inline lu_size lu_w_processor__process(Lu_W_Processor self)
 	{
 		lu__assert(self);
-		lu__assert(!lu_list__is_empty((Lu_List) self->curr_list));
+		lu__assert(lu_list__is_empty((Lu_List) self->curr_list));
 
 		Lu_Lim_List t;
 		t = self->curr_list;
 		self->curr_list = self->next_list;
 		self->next_list = t;
 
-
 		Lu_List curr_list = (Lu_List) self->curr_list;
-
-		Lu_L_Node current = curr_list->first;
 
 		Lu_W_N_Item n_item;
 		lu_size cells_processed = 0;
-		while (current)
+		while (lu_list__is_present(curr_list))
 		{
-			n_item = (Lu_W_N_Item) current->value;
-
+			n_item = (Lu_W_N_Item) lu_list__pop_first_value(curr_list);
 			lu__assert(n_item);
 
 			lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
 
 			++cells_processed;
-			current = current->next;
 		}
 
 		return cells_processed;
+	}
+
+	static inline lu_bool lu_w_processor__has_items_to_process(Lu_W_Processor self)
+	{
+		return !lu_list__is_empty((Lu_List) self->next_list);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -177,7 +177,7 @@
 	{
 		lu_value p = lu_w_cell_p__calc_p(self);
 
-		lu_size z = 0;
+		lu_size z = 0; // points to NULL cell by default
 
 		// By default, we will not fire
 		// sig doesn't matter for saving, but it is just to indicate 
