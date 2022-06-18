@@ -244,6 +244,7 @@
 		Lu_S s;
 		Lu_Mem mem;
 		Lu_W_Match_Cell_Mem match_cell_mem;
+		Lu_La_Column la_column;
 
 		Lu_Mem_Table n_mem_table;
 		Lu_Mem_Table la_mem_table;
@@ -254,7 +255,14 @@
 		Lu_S_List s_list;
 	};
 
-	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config, Lu_W_Match_Cell_Mem match_cell_mem);
+	static void lu_w_processor__init(
+		Lu_W_Processor self,  
+		Lu_S s, 
+		Lu_Config config, 
+		Lu_W_Match_Cell_Mem match_cell_mem,
+		Lu_La_Column la_column
+	);
+
 	static void lu_w_processor__deinit(Lu_W_Processor self);
 	//static inline void lu_w_process__
 
@@ -376,6 +384,21 @@
 			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->br);
 	}
 
+	static inline void lu_w_processor__fire_n_labels_with_sig(
+		Lu_W_Processor self, 
+		Lu_N_Cell n_cell, 
+		Lu_N_Column n_column,
+		lu_value sig
+	)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(n_cell);
+		lu__debug_assert(n_column);
+		lu__debug_assert(sig > 0);
+
+
+	}
+
 	static inline lu_size lu_w_processor__process(Lu_W_Processor self)
 	{
 		lu__assert(self);
@@ -393,9 +416,11 @@
 		while (lu_lim_list__is_present(curr_list))
 		{
 			n_item = (Lu_W_N_Item) lu_lim_list__pop_first_value(curr_list);
-			// lu__assert(n_item);
+			lu__assert(n_item);
 
-			// lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
+			lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
+
+			lu_w_processor__fire_n_labels_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
 
 			++cells_processed;
 		}

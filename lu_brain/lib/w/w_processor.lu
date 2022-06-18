@@ -5,12 +5,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
-	static void lu_w_processor__init(Lu_W_Processor self, Lu_S s, Lu_Config config, Lu_W_Match_Cell_Mem match_cell_mem)
+	static void lu_w_processor__init(
+		Lu_W_Processor self, 
+		Lu_S s, 
+		Lu_Config config, 
+		Lu_W_Match_Cell_Mem match_cell_mem,
+		Lu_La_Column la_column
+	)
 	{
 		lu__assert(self);
 		lu__assert(s);
 		lu__assert(config);
 		lu__assert(match_cell_mem);
+		lu__assert(la_column);
 
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->block_id = LU_BLOCK_ID__NOT_SET;
@@ -41,6 +48,8 @@
 
 		self->next_list = lu_lim_list__create(self->mem, config->w_processor_queue_size);
 		lu__alloc_assert(self->next_list);
+
+		self->la_column = la_column;
 	}
 
 	static void lu_w_processor__deinit(Lu_W_Processor self)

@@ -485,7 +485,7 @@
 
 		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
 
-		lu_w_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem);
+		lu_w_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
 
 		return (Lu_Wave) self;
 	}
