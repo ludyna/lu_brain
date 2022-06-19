@@ -77,6 +77,50 @@
 		self->children = lu_n_link_mem__get_addr(n_link_mem, n_link);
 	}
 
+	static inline union lu_w_match_addr lu_la_cell__get_w_match_cell_addr(Lu_La_Cell self, lu_size wave_id)
+	{
+		return self->w_cells[wave_id];
+	}
+
+	static inline void lu_la_cell__set_w_mach_cell_addr(Lu_La_Cell self, lu_size wave_id, union lu_w_match_addr w_addr)
+	{
+		self->w_cells[wave_id] = w_addr;
+	}
+
+	static inline Lu_W_Match_Cell lu_la_cell__get_and_reset_match_cell(
+		Lu_La_Cell self,
+		lu_size wave_id,
+		lu_size block_id, 
+		Lu_W_Match_Cell_Mem match_cell_mem
+	)
+	{
+		union lu_w_match_addr match_addr = lu_la_cell__get_w_match_cell_addr(self, wave_id);
+
+		Lu_W_Match_Cell match_cell = NULL;
+		if (lu_w_match_addr__is_blank(&match_addr))
+		{
+			match_cell = lu_w_match_cell_mem___cell_alloc(match_cell_mem);
+			match_addr = lu_w_match_cell_mem__get_addr(match_cell_mem, match_cell);
+
+			lu_la_cell__set_w_mach_cell_addr(self, wave_id, match_addr);
+
+			lu_w_match_cell__init(match_cell, wave_id, block_id, 0);
+			
+			return match_cell;
+		}
+
+		match_cell = lu_w_match_cell_mem__get_cell(match_cell_mem, match_addr);
+		lu__assert(match_cell);
+
+		if (match_cell->wave_id != wave_id || match_cell->block_id != block_id)
+		{
+			// reset
+			lu_w_match_cell__init(match_cell, wave_id, block_id, 0);
+		}
+
+		return match_cell;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Link
 
@@ -200,6 +244,13 @@
 		lu_size label_ix = lu_la_column__label_to_ix(self, label);
 
 		return &self->cells[label_ix];
+	}
+
+	static inline Lu_La_Cell lu_la_column__get_la_cell_by_addr(Lu_La_Column self, union lu_la_addr addr)
+	{
+		lu__debug_assert(self);
+
+		return lu_la_column__get_la_cell(self, addr.la_ix);
 	}
 
 	static inline Lu_La_Cell lu_la_column__save_label(Lu_La_Column self, Lu_N_Cell n_cell, lu_size label)

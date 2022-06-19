@@ -401,17 +401,17 @@
 		Lu_La_Link la_link_label = lu_la_link_mem__get_link(link_mem, labels);
 
 		Lu_La_Cell la_cell;
+		Lu_W_Match_Cell match_cell;
  
 		while (la_link_label)
 		{
 			la_cell = NULL;
 
-			// lu_la_column__find_la_cell(la_column, la_link_label->cell_addr, &la_cell);
-			// lu__assert(la_cell);
+			la_cell = lu_la_column__get_la_cell_by_addr(la_column, la_link_label->la_addr);
+			lu__assert(la_cell);
 
-			lu__debug("\n O.O O.O O.O! \n");
-
-			// lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent, sig);
+			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->wave_id, self->block_id, self->match_cell_mem);
+			lu_w_match_cell__add_sig(match_cell, sig);
 
 			la_link_label = lu_la_link_mem__get_link(link_mem, la_link_label->next);
 		}
