@@ -240,6 +240,8 @@
 
 		Lu_Mem_Table n_mem_table;
 		Lu_Mem_Table la_mem_table;
+		lu_size w_result_labels_size;
+		Lu_Label *sorted_results;
 
 		Lu_Lim_List curr_list;
 		Lu_Lim_List next_list;
@@ -456,6 +458,15 @@
 		Lu_La_Column la_column = self->la_column;
 		Lu_W_Match_Cell match_cell;
 
+		if (self->s_list) lu_s_list__destroy(self->s_list);
+
+		self->s_list = lu_s_list__create(self->mem, self->w_result_labels_size, lu_label__compare, LU_S_LST__FIRST);
+		lu_mem_table__reset(self->la_mem_table); // invalidates existing Lu_Labels
+
+		if (self->sorted_results) lu_mem__free(self->mem, (lu_p_byte) self->sorted_results);
+
+		self->sorted_results = (Lu_Label*) lu_mem__alloc(self->mem, sizeof(Lu_Label) * self->w_result_labels_size);
+
 		for (i = 0; i < la_column->cells_size; i++)
 		{
 			la_cell = lu_la_column__get_la_cell(la_column, i);
@@ -471,6 +482,8 @@
 			if (lu_w_match_cell__no_sig(match_cell)) continue;
 
 			// lu__debug("\n\n OH YEAH %ld \n\n", la_cell->addr.la_ix);
+
+
 		}
 	}
 

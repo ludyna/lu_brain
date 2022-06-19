@@ -13,6 +13,23 @@
 		Lu_La_Cell la_cell;
 	};
 
+	static lu_value lu_label__compare(lu_p_void p_1, lu_p_void p_2)
+	{
+		Lu_Label label_1 = (Lu_Label) p_1;
+		Lu_Label label_2 = (Lu_Label) p_2;
+
+		lu_value sig_1 = 0;
+		lu_value sig_2 = 0;
+
+		if (label_1 && label_1->match_cell)
+			sig_1 = label_1->match_cell->sig;
+
+		if (label_2 && label_2->match_cell)
+			sig_2 = label_2->match_cell->sig;
+
+		return sig_1 - sig_2;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Cell
 

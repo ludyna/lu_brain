@@ -112,7 +112,7 @@
 		lu_size w_match_waves_size;					// match waves size
 		lu_size w_restore_waves_size;				// restore waves size
 		lu_size w_processor_queue_size;				// 
-		lu_size w_processor_label_queue_size;		//
+		lu_size w_result_labels_size;		//
 		lu_size w_match_cells_size_per_wave;		//			
 
 

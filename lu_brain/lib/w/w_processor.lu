@@ -24,6 +24,7 @@
 		self->s = s;
 		self->mem = config->w_mem;
 		self->match_cell_mem = match_cell_mem;
+		self->w_result_labels_size = config->w_result_labels_size;
 
 		self->n_mem_table = lu_mem_table__create(
 			self->mem, 
@@ -34,10 +35,11 @@
 		);
 		lu__alloc_assert(self->n_mem_table);
 
+		// For lu_labels
 		self->la_mem_table = lu_mem_table__create(
 			self->mem, 
 			sizeof(struct lu_label),
-			config->w_processor_label_queue_size * 2, 
+			config->la_labels_size, 
 			0,
 			LU_MEM_TABLE__FREEABLE
 		);
@@ -52,15 +54,20 @@
 		self->la_column = la_column;
 
 		self->s_list = NULL;
+		self->sorted_results = NULL;
 	}
 
 	static void lu_w_processor__deinit(Lu_W_Processor self)
 	{
 		lu__assert(self);
+		lu__assert(self->mem);
 		lu__assert(self->next_list);
 		lu__assert(self->curr_list);
 		lu__assert(self->n_mem_table);
 		lu__assert(self->la_mem_table);
+
+		if (self->sorted_results)
+			lu_mem__free(self->mem, (lu_p_byte) self->sorted_results);
 
 		if (self->s_list)
 			lu_s_list__destroy(self->s_list);

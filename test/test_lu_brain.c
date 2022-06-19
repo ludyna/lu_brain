@@ -89,7 +89,7 @@ void tearDown(void)
 {	
 	lu_brain__destroy(brain);
 
-	// lu_mem_debugger__print(md);
+	lu_mem_debugger__print(md);
 
 	TEST_ASSERT(mem_debugger_is_all_clear(md));
     lu_mem_debugger__destroy(md, true);
