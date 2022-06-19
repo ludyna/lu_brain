@@ -321,7 +321,7 @@
 	//
 
 	Lu_La_Cell lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
-	Lu_Label lu_wave__get_top_label(Lu_Wave, lu_size index);
+	Lu_Label* lu_wave__get_result_labels(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Label

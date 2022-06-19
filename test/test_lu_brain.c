@@ -135,10 +135,10 @@ void test_lu_brain_basics_01(void)
 
 	lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
-	// label_cell = lu_wave__get_top_label(m_wave, 0);
-	// TEST_ASSERT(label_cell);
+	Lu_Label* results = lu_wave__get_result_labels(m_wave);
+	TEST_ASSERT(results);
 
-	// TEST_ASSERT(lu_label__get_id(label_cell) == 3);
+	TEST_ASSERT(lu_label__get_id(results[0]) == 3);
 
 	/////////////////////////////////////////////////////////
 	// Destroy waves

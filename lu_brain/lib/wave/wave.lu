@@ -574,7 +574,13 @@
 	}
 
 
-	Lu_Label lu_wave__get_top_label(Lu_Wave self, lu_size index)
+	Lu_Label* lu_wave__get_result_labels(Lu_Wave self)
 	{
-		return NULL;
+		lu__assert(self);
+		lu__assert(lu_wave__get_type(self) == LU_WAVE__MATCH);
+
+		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+
+
+		return match_wave->processor.sorted_results;
 	}
