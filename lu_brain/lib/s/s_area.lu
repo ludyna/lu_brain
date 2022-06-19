@@ -291,4 +291,6 @@
 		{
 			lu_w_processor__process(processor);
 		}
+
+		lu_w_processor__prepare_results(processor);
 	}

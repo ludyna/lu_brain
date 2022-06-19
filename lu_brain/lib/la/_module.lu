@@ -6,4 +6,5 @@
 // 
 
 	#include "la_link_mem.lu"
-	#include "la_column.lu"
+	#include "la_column.lu" 
+	#include "label.lu"

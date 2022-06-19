@@ -15,6 +15,19 @@ By learning this style, you will also:
 
 ## Why C?
 
+## Entities
+
+User
+
+Class
+	if you use Class you should understand how it works. Classes are not black boxes (Modules are).
+
+Object
+
+Module
+	Difference between Class and Module (beside that module can include more than one class) is that User is not suppoused to know how Module works.
+
+Library
 
 
 ## WORK IN PROGRESS

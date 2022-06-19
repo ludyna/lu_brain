@@ -558,7 +558,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	Lu_Label lu_wave__link_to_label(Lu_Wave self, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label)
+	Lu_La_Cell lu_wave__link_to_label(Lu_Wave self, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label)
 	{
 		lu__user_assert(self, "Lu_Wave is NULL");
 		lu__user_assert(self->brain, "Lu_Wave brain is NULL");

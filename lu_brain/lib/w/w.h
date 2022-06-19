@@ -228,14 +228,6 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Label_Item
-
-	struct lu_w_la_item {
-		Lu_W_Match_Cell match_cell;
-		Lu_La_Cell label;
-	};
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Processor
 
 	struct lu_w_processor {
@@ -440,6 +432,8 @@
 
 			lu_w_processor__fire_n_labels_with_sig(self, n_item->n_cell->labels, self->la_column, 1.0);
 
+			lu_mem_record__free(self->n_mem_table, (lu_p_byte) n_item);
+
 			++cells_processed;
 		}
 
@@ -449,6 +443,35 @@
 	static inline lu_bool lu_w_processor__has_items_to_process(Lu_W_Processor self)
 	{
 		return !lu_list__is_blank((Lu_List) self->next_list);
+	}
+
+	static inline void lu_w_processor__prepare_results(Lu_W_Processor self)
+	{
+		lu__assert(self);
+		lu__assert(self->la_column);
+
+		lu_size i;
+		Lu_La_Cell la_cell;
+		union lu_w_match_addr addr;
+		Lu_La_Column la_column = self->la_column;
+		Lu_W_Match_Cell match_cell;
+
+		for (i = 0; i < la_column->cells_size; i++)
+		{
+			la_cell = lu_la_column__get_la_cell(la_column, i);
+			lu__assert(la_cell);
+
+			addr = lu_la_cell__get_w_match_cell_addr(la_cell, self->wave_id);
+
+			if (lu_w_match_addr__is_blank(&addr)) continue;
+
+			match_cell = lu_w_match_cell_mem__get_cell(self->match_cell_mem, addr);
+			if (match_cell == NULL) continue;
+
+			if (lu_w_match_cell__no_sig(match_cell)) continue;
+
+			// lu__debug("\n\n OH YEAH %ld \n\n", la_cell->addr.la_ix);
+		}
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

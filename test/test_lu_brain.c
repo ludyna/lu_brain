@@ -118,7 +118,7 @@ void test_lu_brain_basics_01(void)
  
 	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
-	Lu_Label label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, 3);
+	Lu_La_Cell label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, 3);
 	TEST_ASSERT(label_cell);
 
 	///////////////////////////////////////////////////////

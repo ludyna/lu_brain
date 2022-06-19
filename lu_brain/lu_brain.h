@@ -66,8 +66,8 @@
 	// Label
 	//
 
-	typedef struct lu_la_cell* Lu_Label;
-
+	typedef struct lu_label* Lu_Label;
+	typedef struct lu_la_cell* Lu_La_Cell;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Config 
@@ -320,7 +320,7 @@
 	// Wave label
 	//
 
-	Lu_Label lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
+	Lu_La_Cell lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
 	Lu_Label lu_wave__get_top_label(Lu_Wave, lu_size index);
 
 ///////////////////////////////////////////////////////////////////////////////

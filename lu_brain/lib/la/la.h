@@ -5,6 +5,15 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_Label
+
+	// Lu_Label for end User
+	struct lu_label {
+		Lu_W_Match_Cell match_cell;
+		Lu_La_Cell la_cell;
+	};
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Cell
 
 	struct lu_la_cell {
@@ -119,6 +128,12 @@
 		}
 
 		return match_cell;
+	}
+
+	static inline lu_size lu_la_cell__get_ix(Lu_La_Cell self)
+	{
+		lu__assert(self);
+		return lu_la_addr__get_la_ix(&self->addr);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

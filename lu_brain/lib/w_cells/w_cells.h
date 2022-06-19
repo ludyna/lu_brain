@@ -349,6 +349,11 @@
 		return (lu_n_cell__get_default_sig(n_cell) - self->sig) < 1.0;
 	}
 
+	static inline lu_bool lu_w_match_cell__no_sig(Lu_W_Match_Cell self)
+	{
+		return self->sig == 0;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell_Mem
 

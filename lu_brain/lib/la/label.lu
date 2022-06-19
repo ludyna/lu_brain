@@ -1,7 +1,11 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
-
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Lu_Label
+
+	lu_size lu_label__get_id(Lu_Label self)
+	{
+		return lu_la_cell__get_ix(self->la_cell);
+	}

@@ -36,7 +36,7 @@
 
 		self->la_mem_table = lu_mem_table__create(
 			self->mem, 
-			sizeof(struct lu_w_n_item),
+			sizeof(struct lu_label),
 			config->w_processor_label_queue_size * 2, 
 			0,
 			LU_MEM_TABLE__FREEABLE
@@ -50,6 +50,8 @@
 		lu__alloc_assert(self->next_list);
 
 		self->la_column = la_column;
+
+		self->s_list = NULL;
 	}
 
 	static void lu_w_processor__deinit(Lu_W_Processor self)
@@ -59,6 +61,9 @@
 		lu__assert(self->curr_list);
 		lu__assert(self->n_mem_table);
 		lu__assert(self->la_mem_table);
+
+		if (self->s_list)
+			lu_s_list__destroy(self->s_list);
 
 		lu_lim_list__destroy(self->next_list);
 
