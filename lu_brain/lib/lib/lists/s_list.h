@@ -31,11 +31,19 @@
 		self->value 			= NULL;
 	}
 
-	// Main public methods
+	//
+	// Create and Destroy
+	//
 
 	Lu_S_Node lu_s_node__create(Lu_Mem_Table mem_table, lu_size limit_size);
-
 	void lu_s_node__destroy(Lu_Mem_Table mem_table, Lu_S_Node* s_node);
+
+	//
+	// Properties,
+	//
+
+	static inline lu_p_void lu_s_node__get_value(Lu_S_Node self) { return self->value; }
+	static inline Lu_S_Node lu_s_node__get_next_node(Lu_S_Node self) { return self->next; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_List
@@ -66,6 +74,11 @@
 
 	Lu_S_List lu_s_list__create(Lu_Mem, lu_size limit, lu_fp_compare compare, enum lu_s_list_side_type over_limit_remove_side);
 	void lu_s_list__destroy(Lu_S_List self);
+
+	//
+
+	static inline Lu_S_Node lu_s_list__get_first_node(Lu_S_List self) { return self->first; }
+	static inline Lu_S_Node lu_s_list__get_last_node(Lu_S_List self) { return self->first; }
 
 	// Main public methods
 

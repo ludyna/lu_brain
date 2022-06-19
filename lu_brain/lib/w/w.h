@@ -458,15 +458,32 @@
 		Lu_La_Column la_column = self->la_column;
 		Lu_W_Match_Cell match_cell;
 
+		//
+		// Reset s_list
+		//
 		if (self->s_list) lu_s_list__destroy(self->s_list);
-
-		self->s_list = lu_s_list__create(self->mem, self->w_result_labels_size, lu_label__compare, LU_S_LST__FIRST);
+		self->s_list = lu_s_list__create(self->mem, self->w_result_labels_size, lu_label__compare, LU_S_LST__LAST);
+		lu__alloc_assert(self->s_list);
+		
+		//
+		// Reset Lu Labels mem
+		//
 		lu_mem_table__reset(self->la_mem_table); // invalidates existing Lu_Labels
 
+		// Reset sorted results
 		if (self->sorted_results) lu_mem__free(self->mem, (lu_p_byte) self->sorted_results);
-
 		self->sorted_results = (Lu_Label*) lu_mem__alloc(self->mem, sizeof(Lu_Label) * self->w_result_labels_size);
+		lu__alloc_assert(self->sorted_results);
+		
+		for (i = 0; i < self->w_result_labels_size; i++)
+		{
+			self->sorted_results[i] = NULL;
+		}
 
+		//
+		// Collect new results in s_list
+		//
+		Lu_Label label;
 		for (i = 0; i < la_column->cells_size; i++)
 		{
 			la_cell = lu_la_column__get_la_cell(la_column, i);
@@ -482,9 +499,30 @@
 			if (lu_w_match_cell__no_sig(match_cell)) continue;
 
 			// lu__debug("\n\n OH YEAH %ld \n\n", la_cell->addr.la_ix);
+			label = (Lu_Label) lu_mem_record__alloc(self->la_mem_table);
+			lu__alloc_assert(label);
 
+			lu_label__init(label, self->wave_id, self->block_id, la_cell, match_cell);
 
+			lu_s_list__add(self->s_list, (lu_p_void) label);
 		}
+
+		//
+		// Copy sorted results from s_list to sorted_results
+		//
+
+		i = 0;
+		Lu_S_Node curr = lu_s_list__get_first_node(self->s_list);
+		while (curr)
+		{
+			self->sorted_results[i] = (Lu_Label) lu_s_node__get_value(curr);
+			++i;
+
+			lu__assert(i < self->w_result_labels_size);
+
+			curr = lu_s_node__get_next_node(curr);
+		}
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

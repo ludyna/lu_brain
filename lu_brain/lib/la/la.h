@@ -9,9 +9,25 @@
 
 	// Lu_Label for end User
 	struct lu_label {
-		Lu_W_Match_Cell match_cell;
+		lu_size wave_id;
+		lu_size block_id;
 		Lu_La_Cell la_cell;
+		Lu_W_Match_Cell match_cell;
 	};
+
+	static inline Lu_Label lu_label__init(
+		Lu_Label self, 
+		lu_size wave_id, 
+		lu_size block_id, 
+		Lu_La_Cell la_cell,
+		Lu_W_Match_Cell match_cell
+	)
+	{
+		self->wave_id = wave_id;
+		self->block_id = block_id;
+		self->la_cell = la_cell;
+		self->match_cell = match_cell;
+	} 
 
 	static lu_value lu_label__compare(lu_p_void p_1, lu_p_void p_2)
 	{
