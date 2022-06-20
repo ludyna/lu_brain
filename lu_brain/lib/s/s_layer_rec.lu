@@ -86,7 +86,6 @@
 		lu_size x;
 		lu_size y;
 		lu_size z;
-		lu_size i;
 		lu_size y_shift;
 		lu_value v;
 		lu_size xy_shift;
@@ -115,7 +114,7 @@
 
 		Lu_W_Cell rec_w_p_cell;
 
-		union lu_n_addr n_addr;
+		// union lu_n_addr n_addr;
 
 		lu_size depth = self->rec->depth; 
 
@@ -126,7 +125,7 @@
 		lu_size not_null_cells_count;
 		lu_size saved_count;
 
-		Lu_W_Cell_P vp_cell;
+		// Lu_W_Cell_P vp_cell;
 
 		Lu_N_Column n_column;
 		Lu_N_Cell n_cell;
@@ -277,7 +276,6 @@
 		lu_size x;
 		lu_size y;
 		lu_size z;
-		lu_size i;
 		lu_size y_shift;
 		lu_value v;
 		lu_size xy_shift;
@@ -301,21 +299,7 @@
 		processor->wave_id = wave_id;
 		processor->block_id = block_id;
 
-		Lu_W_Cell rec_w_p_cell;
-
-		union lu_n_addr n_addr;
-
 		lu_size depth = self->rec->depth; 
-
-		Lu_W_Cell_P children[depth];
-
-		lu_size not_null_cells_count;
-		lu_size saved_count;
-
-		Lu_W_Cell_P vp_cell;
-
-		Lu_N_Column n_column;
-		Lu_N_Cell n_cell;
 
 		for (y = 0; y < data->h; y++)
 		{

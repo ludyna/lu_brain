@@ -173,7 +173,6 @@
 		lu_size cells_saved_count = 0;
 
 		Lu_W_Cell curr_w_cell;
-		union lu_n_addr n_addr;
 
 		curr_w_table->any_fired = false;
 

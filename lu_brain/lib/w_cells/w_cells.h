@@ -92,6 +92,8 @@
 
 		self->n_cell = n_cell;
 		self->n_column = n_column;
+
+		return self;
 	}
  	
 

@@ -27,6 +27,8 @@
 		self->block_id = block_id;
 		self->la_cell = la_cell;
 		self->match_cell = match_cell;
+
+		return self;
 	} 
 
 	static lu_value lu_label__compare(lu_p_void p_1, lu_p_void p_2)
@@ -71,7 +73,7 @@
 		return self;
 	}
 
-	static inline Lu_La_Cell lu_la_cell__deinit(Lu_La_Cell self, Lu_Mem w_mem)
+	static inline void lu_la_cell__deinit(Lu_La_Cell self, Lu_Mem w_mem)
 	{
 		lu__assert(self);
 		lu__assert(w_mem);
@@ -90,7 +92,6 @@
 		lu__debug_assert(n_link_mem);
 
 		Lu_N_Link n_link = lu_n_link_mem__get_link(n_link_mem, self->children);
-		Lu_N_Link next;
 
 		while (n_link)
 		{

@@ -265,7 +265,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Match methods
 
-	static Lu_W_Table lu_s_area__match_rec(
+	static void lu_s_area__match_rec(
 		Lu_S_Area self, 
 		lu_size wave_id, 
 		lu_size rec_id, 
@@ -277,8 +277,6 @@
 		Lu_S_Layer_Base layer_base = self->layers[0];
 		lu__assert(layer_base);
 		lu__assert(layer_base->type == LU_S_LAYER__REC);
-
-		lu_size block_id = data->block_id;
 
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
 

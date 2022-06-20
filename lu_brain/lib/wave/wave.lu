@@ -236,7 +236,6 @@
 
 		data = lu_data_block__get_data(block, rec_id);
 		lu_size wave_id = lu_wave__get_id(wave);
-		lu_size block_id = data->block_id;
 
 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
 		lu__assert(area);

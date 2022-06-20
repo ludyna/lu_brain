@@ -9,7 +9,7 @@
 	Flags:
 	-Wno-unused-function - to not show warning about unused functions
 	-Wno-unused-value - we have unused vaues because some pieces of code it
-
+	
 */
 
 #include "semeion.h"

@@ -22,6 +22,8 @@
 
 		// Skip first cell, because first cell is NULL cell
 		lu_w_match_cell_mem___cell_alloc(self);
+
+		return self;
 	}
 
 	static void lu_w_match_cell_mem__deinit(Lu_W_Match_Cell_Mem self)

@@ -27,6 +27,8 @@
 		#else
 			lu_n_link_mem__link_alloc(self);
 		#endif
+
+		return self;
 	}
 
 	void lu_n_link_mem__deinit(Lu_N_Link_Mem self)

@@ -21,6 +21,8 @@
 
 		// skip NULL addr
 		lu_la_link_mem__link_alloc(self);
+
+		return self;
 	}
 
 	void lu_la_link_mem__deinit(Lu_La_Link_Mem self)
