@@ -585,8 +585,6 @@
 
 			lu_n_cell_vp__parent_prepend(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);
 		}
-
-		lu__debug("\n lu_n_cell__vp_save()"); 
 	}
 
 	static inline void lu_n_cell__save( 
@@ -643,7 +641,7 @@
 			}
 		}
 
-		lu__debug("\n lu_n_cell__save()");
+		// lu__debug("\n lu_n_cell__save()");
 	}
 
 	static inline void lu_n_cell__prepend_label(
@@ -889,7 +887,7 @@
 
 		lu_size ix = lu_n_column__vp_children_to_ix(self, children, children_count);
 
-		lu__debug("\nWHATTT ix=%ld\n", ix);
+		//lu__debug("\nWHATTT ix=%ld\n", ix);
 
 		for (lu_size z = 0; z < self->d; z++)
 		{

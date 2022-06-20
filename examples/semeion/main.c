@@ -9,7 +9,7 @@
 	Flags:
 	-Wno-unused-function - to not show warning about unused functions
 	-Wno-unused-value - we have unused vaues because some pieces of code it
-	
+
 */
 
 #include "semeion.h"
@@ -65,8 +65,6 @@ int main()
 	Lu_Wave match_wave = lu_wave__create_match_wave(brain);
 	lu__assert(match_wave);
 
-	Lu_N_Cell name 				= NULL;
-
 	// Show random digit
 
 	printf("\nRandom sample:");
@@ -86,7 +84,7 @@ int main()
 	lu_w_addr__init(&w_addr, 0, 0, 2);
 
 	//for (i = 0; i < smn_training_samples_count; i++)
-	for (i = 0; i < 1; i++)
+	for (i = 0; i < 10; i++)
 	{
 		d = smn_training_samples[i];
 
@@ -94,7 +92,7 @@ int main()
 		//lu_wave_save_with_name(save_wave, seq, d->name); 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
-		lu_wave__add_label(match_wave, &w_addr, d->name);
+		lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
 
 		printf("\rTraining samples.. %lu trained.", i + 1);
 		fflush(stdout);
@@ -108,40 +106,37 @@ int main()
 
 	printf("\rTesting samples.. ");
 
-	Lu_Label_Unit unit;
-	Lu_Label label;
+	// Lu_Label* labels = NULL;
 
 	//for (i = 0; i < smn_test_samples_count; i++)
-	for (i = 0; i < 1; i++)
-	{
-		d = smn_test_samples[i];
-		lu_wave__push(match_wave, image_rec, d->pixels);
+	// for (i = 0; i < 1; i++)
+	// {
+	// 	d = smn_test_samples[i];
+	// 	lu_wave__push(match_wave, image_rec, d->pixels);
 
-		lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+	// 	lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
-		unit = lu_wave__get_labels(match_wave, &w_addr);
+	// 	labels = lu_wave__get_result_labels(match_wave);
 
-		if (unit)
-		{
-			label = lu_label_unit__get_label(unit, d->name);
+	// 	if (labels)
+	// 	{
+	// 		if (lu_label__get_id(labels[0]) == d->name)
+	// 		{
+	// 			++success_count;
+	// 		}
+	// 		else
+	// 		{
+	// 			++failed_count;
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		++failed_count;
+	// 	}
 
-			if (label && label->label == d->name && label->count > 0)
-			{
-				++success_count;
-			}
-			else
-			{
-				++failed_count;
-			}
-		}
-		else
-		{
-			++failed_count;
-		}
-
-		printf("\rTesting samples.. %lu tested.", i + 1);
-		fflush(stdout);
-	}
+	// 	printf("\rTesting samples.. %lu tested.", i + 1);
+	// 	fflush(stdout);
+	// }
 	printf("\n");
 
 	printf("\nReport:");

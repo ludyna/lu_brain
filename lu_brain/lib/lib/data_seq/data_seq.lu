@@ -102,7 +102,7 @@
 		lu__assert(self);
 		lu__assert(self->blocks);
 
-		lu__debug("\n LIST_COUNT: %d", lu_list__count(self->blocks));
+		// lu__debug("\n LIST_COUNT: %d", lu_list__count(self->blocks));
 		Lu_Data_Block block = lu_data_block__create(self->mem, self->recs_size, lu_list__count(self->blocks));
 		lu__assert(block);
 
