@@ -57,6 +57,10 @@ int main()
 	// After we added all recs we need to build/rebuild brain
 	lu_brain__build(brain);
 
+	// Print brain areas structure
+
+	lu_brain__print_areas(brain);
+
 	// Create save_wave
 	
 	Lu_Wave save_wave = lu_wave__create_save_wave(brain);
@@ -76,26 +80,24 @@ int main()
 	size_t i;
 	Smn_Digit d;
 	
-	printf("\n");
-	printf("\rTraining samples..");
-
-	union lu_w_addr w_addr;
-
-	lu_w_addr__init(&w_addr, 0, 0, 2);
+	printf("\nTraining samples..");
 
 	//for (i = 0; i < smn_training_samples_count; i++)
 	for (i = 0; i < 10; i++)
 	{
 		d = smn_training_samples[i];
 
+		printf("\nSTART OF %ld", i);
 		lu_wave__push_with_shift(save_wave, image_rec, d->pixels, 1, 1);
-		//lu_wave_save_with_name(save_wave, seq, d->name); 
+
+		// //lu_wave_save_with_name(save_wave, seq, d->name); 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+		printf("\nEND OF %ld", i);
 
-		lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
+		// lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
 
-		printf("\rTraining samples.. %lu trained.", i + 1);
-		fflush(stdout);
+		// printf("\rTraining samples.. %lu trained.", i + 1);
+		// fflush(stdout);
 	}
 	printf("\n");
 
