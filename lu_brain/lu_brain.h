@@ -156,7 +156,7 @@
 	// Method returns NULL if build failed.
 	Lu_Brain lu_brain__build(Lu_Brain self);
 
-	Lu_Wave lu_brain__get_wave_by_id(Lu_Brain self, lu_size id, enum lu_wave_type wave_type);
+	Lu_Wave lu_brain__get_wave_by_ix(Lu_Brain self, lu_size wave_ix, enum lu_wave_type wave_type);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec  
@@ -283,6 +283,12 @@
 	void lu_wave__destroy(Lu_Wave); 
 
 	//
+	// Wave Reset
+	//
+
+	void lu_wave__reset(Lu_Wave);
+
+	//
 	// Wave Level
 	//
 
@@ -315,6 +321,7 @@
 
 	struct lu_process_config lu_wave__get_process_config(Lu_Wave);
 	lu_size lu_wave__get_id(Lu_Wave);
+	lu_size lu_wave__get_ix(Lu_Wave);
 	enum lu_wave_type lu_wave__get_type(Lu_Wave);
 
 	//

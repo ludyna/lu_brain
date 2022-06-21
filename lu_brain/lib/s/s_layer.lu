@@ -143,8 +143,8 @@
 
 	static Lu_W_Table lu_s_layer__save(
 		Lu_S_Layer self, 
-		lu_size wave_id, 
-		lu_size block_id, 
+		Lu_Save_Wave save_wave,
+		lu_size block_ix, 
 		Lu_W_Table prev_w_table, 
 		Lu_Process_Config config
 	)
@@ -152,17 +152,19 @@
 		lu__assert(self);
 		lu__assert(prev_w_table);
 
-		lu__assert(prev_w_table->wave_id == wave_id);
-		lu__assert(prev_w_table->block_id == block_id);
+		Lu_Wave wave = (Lu_Wave) save_wave;
+
+		lu__assert(prev_w_table->wave_ix == wave->wave_ix);
+		lu__assert(prev_w_table->block_ix == block_ix);
 
 		lu_size x;
 		lu_size y;
 
-		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(self, wave_id);
+		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(self, wave->wave_ix);
 		lu__assert(curr_w_table);
 
-		curr_w_table->wave_id = wave_id;
-		curr_w_table->block_id = block_id;
+		curr_w_table->wave_ix = wave->wave_ix;
+		curr_w_table->block_ix = block_ix;
 
 		Lu_N_Table curr_n_table = self->n_table;
 		lu__assert(curr_n_table);
@@ -234,7 +236,7 @@
 	// 	Lu_S_Layer self,
 	// 	lu_size rec_id,  
 	// 	lu_size wave_id, 
-	// 	lu_size block_id, 
+	// 	lu_size block_ix, 
 	// 	Lu_W_Table prev_w_table, 
 	// 	Lu_Process_Config config
 	// )
@@ -243,7 +245,7 @@
 	// 	lu__assert(prev_w_table);
 
 	// 	lu__assert(prev_w_table->wave_id == wave_id);
-	// 	lu__assert(prev_w_table->block_id == block_id);
+	// 	lu__assert(prev_w_table->block_ix == block_ix);
 
 	// 	lu_size x;
 	// 	lu_size y;
@@ -252,9 +254,9 @@
 	// 	lu__assert(curr_w_table);
 
 	// 	curr_w_table->wave_id = wave_id;
-	// 	curr_w_table->block_id = block_id;
+	// 	curr_w_table->block_ix = block_ix;
 
-	// 	lu_bool is_reset = prev_w_table->wave_id != wave_id || ((block_id - prev_w_table->block_id) > 1);
+	// 	lu_bool is_reset = prev_w_table->wave_id != wave_id || ((block_ix - prev_w_table->block_ix) > 1);
 
 	// 	Lu_N_Table curr_n_table = self->n_table;
 	// 	lu__assert(curr_n_table);

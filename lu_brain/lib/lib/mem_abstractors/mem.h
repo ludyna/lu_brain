@@ -131,14 +131,19 @@
 
 	#define lu_mem_table__records_count(mt) mt->records_count
 
-	static inline lu_p_byte lu_mem_table__get(Lu_Mem_Table self, lu_size index)
+	static inline lu_p_byte lu_mem_table__get_internal(Lu_Mem_Table self, lu_size index, const char* func, const char* file, int line)
 	{
 		lu_p_byte p =  (self->records_start + index * self->record_size_in_bytes);
 
-		lu__assert(p < self->records_end);
+		if(p >= self->records_end)
+		{
+			lu__user_debug_internal(func, file, line, "lu_mem_table__get_internal() failed");
+			return NULL;
+		}
 
 		return p;
 	} 
+	#define lu_mem_table__get(mt, i) lu_mem_table__get_internal(mt, i, __func__, __FILE__, __LINE__)
 
 	static inline lu_size lu_mem_table__record_shift(Lu_Mem_Table self, lu_p_byte record_addr)
 	{

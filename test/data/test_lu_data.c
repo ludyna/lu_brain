@@ -28,7 +28,7 @@ void tearDown(void)
 {	
 }
 
-void test_lu_data_create_via_shift(void)
+void test__lu_data_create_via_shift(void)
 {
 	Lu_Data data_1 = lu_data__create_via_shift(lu_g_mem, &data_0, -1, 0);
 
@@ -65,4 +65,28 @@ void test_lu_data_create_via_shift(void)
 	TEST_ASSERT(lu_data__value_get(data_1, 1, 1, 0) == 9);
 
 	lu_data__destroy(data_1, lu_g_mem);
+}
+
+void test__lu_data_seq(void)
+{
+	struct lu_rec rec;
+	rec.brain = NULL;
+	rec.id = 0;
+	rec.width = 3;
+	rec.height = 3;
+	rec.depth = 1;
+
+	Lu_Data_Seq ds = lu_data_seq__create(lu_g_mem, 0, 1);
+
+	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00);
+	
+
+	lu_data_seq__destroy(ds);
 }

@@ -153,7 +153,7 @@
 
 	static Lu_W_Table lu_s_area__save_rec(
 		Lu_S_Area self, 
-		lu_size wave_id, 
+		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data, 
 		Lu_Process_Config config
@@ -163,16 +163,18 @@
 		lu__assert(layer_base);
 		lu__assert(layer_base->type == LU_S_LAYER__REC);
 
-		lu_size block_id = data->block_id;
+		lu_size block_ix = data->block_ix;
 
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
+
+		Lu_Wave wave = (Lu_Wave) save_wave;
 
 		// lu__debug("\n SAVING DATA (lu_s_layer_rec__save()):");
 		// lu_data__print(data);
 
-		Lu_W_Table curr_w_table = lu_s_layer_rec__save(layer_rec, wave_id, rec_id, data, config);
+		Lu_W_Table curr_w_table = lu_s_layer_rec__save(layer_rec, save_wave, rec_id, data, config);
 
-		if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return NULL;
+		if (!lu_w_table__any_fired(curr_w_table, wave->wave_ix, block_ix)) return NULL;
 
 		//
 		// Continue saving until first frames layer
@@ -189,9 +191,9 @@
 			lu_area_tag__to_str(parent_layer->tag, buffer);
 			lu__debug("\n PROCESSING: %ld %s", parent_layer->layer_ix, buffer);
 
-			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, curr_w_table, config);
+			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
 
-			if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return NULL;
+			if (!lu_w_table__any_fired(curr_w_table, wave->wave_ix, block_ix)) return NULL;
 
 			parent_layer = parent_layer->p;
 		}
@@ -205,14 +207,14 @@
 
 	static Lu_W_Table lu_s_area__save_frame(
 		Lu_S_Area self, 
-		lu_size wave_id, 
-		lu_size block_id, 
+		Lu_Save_Wave save_wave, 
+		lu_size block_ix, 
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	)
 	{
-
 		Lu_S_Layer_Base parent_layer = lu_s_layer__get_parent_layer(curr_w_table->s_layer);
+		Lu_Wave wave = (Lu_Wave) save_wave;
 
 		char buffer[50];
 		while (parent_layer->tag != LU_AREA_TAG__SEQ)
@@ -222,9 +224,9 @@
 			lu_area_tag__to_str(parent_layer->tag, buffer);
 			lu__debug("\n PROCESSING: %ld %s", parent_layer->layer_ix, buffer);
 
-			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, wave_id, block_id, curr_w_table, config);
+			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
 
-			if (!lu_w_table__any_fired(curr_w_table, wave_id, block_id)) return NULL;
+			if (!lu_w_table__any_fired(curr_w_table, wave->wave_ix, block_ix)) return NULL;
 
 			parent_layer = parent_layer->p;
 		}
@@ -237,8 +239,8 @@
 
 	static Lu_W_Table lu_s_area__save_seq(
 		Lu_S_Area self, 
-		lu_size wave_id, 
-		lu_size block_id, 
+		Lu_Save_Wave save_wave,
+		lu_size block_ix, 
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	)
@@ -256,7 +258,7 @@
 		lu_area_tag__to_str(p->tag, buffer);
 		lu__debug("\n PROCESSING: %ld %s", p->layer_ix, buffer);
 
-		curr_w_table = lu_s_layer__save((Lu_S_Layer) p, wave_id, block_id, curr_w_table, config);
+		curr_w_table = lu_s_layer__save((Lu_S_Layer) p, save_wave, block_ix, curr_w_table, config);
 
 		return curr_w_table;
 	}
@@ -267,7 +269,7 @@
 
 	static void lu_s_area__match_rec(
 		Lu_S_Area self, 
-		lu_size wave_id, 
+		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data, 
 		Lu_Process_Config config,
@@ -283,7 +285,7 @@
 		lu__debug("\n MATCHING DATA (lu_s_layer_rec__match()):");
 		lu_data__print(data);
 
-		lu_s_layer_rec__match(layer_rec, wave_id, rec_id, data, config, processor);
+		lu_s_layer_rec__match(layer_rec, match_wave, rec_id, data, config, processor);
 
 		while (lu_w_processor__has_items_to_process(processor))
 		{

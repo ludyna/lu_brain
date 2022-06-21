@@ -89,7 +89,7 @@ void tearDown(void)
 {	
 	lu_brain__destroy(brain);
 
-	lu_mem_debugger__print(md);
+	// lu_mem_debugger__print(md);
 
 	TEST_ASSERT(mem_debugger_is_all_clear(md));
     lu_mem_debugger__destroy(md, true);
@@ -110,8 +110,8 @@ void test_lu_brain_basics_01(void)
 	Lu_Wave s_wave = lu_wave__create_save_wave(brain); 
 
 		TEST_ASSERT(s_wave);
-		TEST_ASSERT(lu_wave__get_id(s_wave) == 0);
-		TEST_ASSERT(lu_brain__get_wave_by_id(brain, lu_wave__get_id(s_wave), lu_wave__get_type(s_wave)) == s_wave);
+		TEST_ASSERT(lu_wave__get_ix(s_wave) == 0);
+		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(s_wave), lu_wave__get_type(s_wave)) == s_wave);
 
 		lu_wave__push(s_wave, rec_0, data_0);
 		lu_wave__push(s_wave, rec_0, data_01);
@@ -127,8 +127,9 @@ void test_lu_brain_basics_01(void)
 	Lu_Wave m_wave = lu_wave__create_match_wave(brain);
 
 		TEST_ASSERT(m_wave);
-		TEST_ASSERT(lu_wave__get_id(m_wave) == 0);
-		TEST_ASSERT(lu_brain__get_wave_by_id(brain, lu_wave__get_id(m_wave), lu_wave__get_type(m_wave)) == m_wave);
+		TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
+		TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
+		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
 
 		lu_wave__push(m_wave, rec_0, data_0);
 		lu_wave__push(m_wave, rec_0, data_01);
@@ -163,7 +164,7 @@ void test_lu_brain_basics_01(void)
 
 	// 	TEST_ASSERT(s_wave);
 	// 	TEST_ASSERT(lu_wave__get_id(s_wave) == 0);
-	// 	TEST_ASSERT(lu_brain__get_wave_by_id(brain, lu_wave__get_id(s_wave)) == s_wave);
+	// 	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_id(s_wave)) == s_wave);
 
 	// 	lu_wave__push(s_wave, rec_0, data_0);
 	// 	lu_wave__push(s_wave, rec_0, data_01);
@@ -196,7 +197,7 @@ void test_lu_brain_basics_01(void)
 
 	// 	// TEST_ASSERT(m_wave);
 	// 	// TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
-	// 	// TEST_ASSERT(lu_brain__get_wave_by_id(brain, lu_wave__get_id(m_wave)) == m_wave);
+	// 	// TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_id(m_wave)) == m_wave);
 
 	// 	lu_wave__push(m_wave, rec_0, data_0);
 

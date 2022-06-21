@@ -63,8 +63,8 @@
 		Lu_Mem mem;
 		Lu_S_Layer s_layer;
 
-		lu_size wave_id;
-		lu_size block_id;
+		lu_size wave_ix;
+		lu_size block_ix;
 
 		lu_size w;
 		lu_size h;
@@ -88,11 +88,11 @@
 
 	static void lu_w_table__destroy(Lu_W_Table self);
 
-	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, lu_size wave_id, lu_size block_id)
+	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, lu_size wave_ix, lu_size block_ix)
 	{
 		if (self == NULL) return false;
 
-		if (self->wave_id != wave_id || self->block_id != block_id) return false;
+		if (self->wave_ix != wave_ix || self->block_ix != block_ix) return false;
 
 		return self->any_fired;
 	}
@@ -232,7 +232,8 @@
 
 	struct lu_w_processor {
 		lu_size wave_id;
-		lu_size block_id;
+		lu_size wave_ix;
+		lu_size block_ix;
 		Lu_S s;
 		Lu_Mem mem;
 		Lu_W_Match_Cell_Mem match_cell_mem;
@@ -282,9 +283,9 @@
 		lu_value sig
 	)
 	{
-		lu__assert(self->wave_id < n_column->w_match_cells_size);
+		lu__assert(self->wave_ix < n_column->w_match_cells_size);
 
-		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->wave_id, self->block_id, self->match_cell_mem);
+		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->wave_ix, self->block_ix, self->match_cell_mem);
 
 		lu_w_match_cell__add_sig(match_cell, sig);
 
@@ -404,7 +405,7 @@
 			la_cell = lu_la_column__get_la_cell_by_addr(la_column, la_link_label->la_addr);
 			lu__assert(la_cell);
 
-			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->wave_id, self->block_id, self->match_cell_mem);
+			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->wave_ix, self->block_ix, self->match_cell_mem);
 			lu_w_match_cell__add_sig(match_cell, sig);
 
 			la_link_label = lu_la_link_mem__get_link(link_mem, la_link_label->next);
@@ -489,7 +490,7 @@
 			la_cell = lu_la_column__get_la_cell(la_column, i);
 			lu__assert(la_cell);
 
-			addr = lu_la_cell__get_w_match_cell_addr(la_cell, self->wave_id);
+			addr = lu_la_cell__get_w_match_cell_addr(la_cell, self->wave_ix);
 
 			if (lu_w_match_addr__is_blank(&addr)) continue;
 
@@ -502,7 +503,7 @@
 			label = (Lu_Label) lu_mem_record__alloc(self->la_mem_table);
 			lu__alloc_assert(label);
 
-			lu_label__init(label, self->wave_id, self->block_id, la_cell, match_cell);
+			lu_label__init(label, self->wave_ix, self->block_ix, la_cell, match_cell);
 
 			lu_s_list__add(self->s_list, (lu_p_void) label);
 		}
@@ -533,10 +534,22 @@
 		Lu_Mem_Table save_waves;
 		Lu_Mem_Table match_waves;
 		Lu_Mem_Table restore_waves;
+
+		lu_size next_wave_id;
 	};
 
 	static Lu_W_Manager lu_w_manager__create(Lu_Mem mem, Lu_Config config);
 	static void lu_w_manager__destroy(Lu_W_Manager self); 
+
+	static inline lu_size lu_w_manager__generate_next_wave_id(Lu_W_Manager self)
+	{
+		lu__assert(self);
+
+		lu_size r = self->next_wave_id;
+		++self->next_wave_id;
+
+		return r;
+	}
 
 	static bool lu_w_manager__register_wave(Lu_W_Manager self, Lu_Wave wave);
 	static void lu_w_manager__unregister_wave(Lu_W_Manager self, Lu_Wave wave);

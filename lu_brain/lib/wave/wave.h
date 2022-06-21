@@ -20,8 +20,9 @@
 		One wave is one seq. Create another wave to create another seq.
 	*/
 	struct lu_wave {
-		lu_size wave_id;
-		enum lu_wave_type type;
+		lu_size wave_id; 			// global wave_id
+		lu_size wave_ix;			// wave type specific, can be same number for different wave types
+		enum lu_wave_type type;	
 
 		lu_p_byte manager_addr;
 

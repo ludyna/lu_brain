@@ -60,6 +60,11 @@
 		return self->wave_id;
 	}
 
+	lu_size lu_wave__get_ix(Lu_Wave self)
+	{
+		return self->wave_ix;
+	}
+
 	enum lu_wave_type lu_wave__get_type(Lu_Wave self)
 	{
 		return self->type;
@@ -181,8 +186,7 @@
 		lu_size rec_id = 0; // NOTE: fixed temporarily
 
 		data = lu_data_block__get_data(block, rec_id);
-		lu_size wave_id = lu_wave__get_id(wave);
-		lu_size block_id = data->block_id;
+		lu_size block_ix = data->block_ix;
 
 		//
 		// Rec
@@ -192,7 +196,7 @@
 		lu__assert(area);
 		lu__assert(area->tag == LU_AREA_TAG__REC);
 		 
-		Lu_W_Table curr_w_table = lu_s_area__save_rec(area, wave_id, rec_id, data, config);
+		Lu_W_Table curr_w_table = lu_s_area__save_rec(area, self, rec_id, data, config);
 
 		if (curr_w_table == NULL) return;
 
@@ -204,7 +208,7 @@
 		lu__assert(area);
 		lu__assert(area->tag == LU_AREA_TAG__FRAME);
 
-		curr_w_table = lu_s_area__save_frame(area, wave_id, block_id, curr_w_table, config);
+		curr_w_table = lu_s_area__save_frame(area, self, block_ix, curr_w_table, config);
 
 		if (curr_w_table == NULL) return;
 
@@ -216,7 +220,7 @@
 		lu__assert(area);
 		lu__assert(area->tag == LU_AREA_TAG__SEQ);
 
-		curr_w_table = lu_s_area__save_seq(area, wave_id, block_id, curr_w_table, config);
+		curr_w_table = lu_s_area__save_seq(area, self, block_ix, curr_w_table, config);
 	}
 
 	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Process_Config config)
@@ -241,7 +245,7 @@
 		lu__assert(area);
 		lu__assert(area->tag == LU_AREA_TAG__REC);
 		 
-		lu_s_area__match_rec(area, wave_id, rec_id, data, config, &self->processor);
+		lu_s_area__match_rec(area, self, rec_id, data, config, &self->processor);
 
 		lu__debug("\n LIM_NEXT_COUNT = %ld\n", lu_lim_list__count(self->processor.next_list));
 	}
@@ -273,7 +277,7 @@
 		struct lu_data data_1;
 		lu_data__set(
 			&data_1, 
-			LU_WAVE_ID__NOT_SET, 
+			LU_WAVE_IX__NOT_SET, 
 			LU_BLOCK_ID__NOT_SET, 
 			LU_REC_ID__NOT_SET, 
 			rec->width,
@@ -400,7 +404,10 @@
 		Lu_Data_Block block = NULL;
 
 		while((block = lu_data_seq__next_block_get(save_wave->seq)))
+		{
+			lu__debug("\n BEFORE PROCESS BLOCK: wave_id=%ld, block_ix=%ld", save_wave->seq->wave_id, block->block_ix);
 			lu_save_wave__process_block(save_wave, block, config);
+		}
 	}
 
 	//
@@ -442,6 +449,13 @@
 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
 	}
 
+	void lu_save_wave__reset(Lu_Wave self)
+	{
+		lu__assert(self);
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+		lu_data_seq__reset(save_wave->seq);  	
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Create
@@ -467,6 +481,7 @@
 		self->super.block_end = lu_save_wave__block_end_virtual;
 
 		self->super.push = lu_save_wave__push_virtual;
+		self->super.reset = lu_save_wave__reset;
 
 		self->super.step = lu_save_wave__step_virtual;
 		self->super.process = lu_save_wave__process_virtual;
@@ -474,7 +489,7 @@
 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
 		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
 
-		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
+		self->seq = lu_data_seq__create(w_mem, self->super.wave_ix, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
 		return (Lu_Wave) self;
@@ -514,7 +529,7 @@
 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
 		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
 
-		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
+		self->seq = lu_data_seq__create(w_mem, self->super.wave_ix, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
 		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
@@ -589,6 +604,7 @@
 		//lu_list__destroy(self->seq);
 	}
 
+
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
@@ -607,14 +623,12 @@
 		return lu_la_column__save_label(&self->brain->la_column, w_cell->n_cell, label);
 	}
 
-
 	Lu_Label* lu_wave__get_result_labels(Lu_Wave self)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__get_type(self) == LU_WAVE__MATCH);
 
 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
-
 
 		return match_wave->processor.sorted_results;
 	}

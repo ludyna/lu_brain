@@ -318,19 +318,19 @@
 
 	struct lu_w_match_cell {
 		lu_size wave_id;
-		lu_size block_id;
+		lu_size block_ix;
 		lu_value sig;
 	};	
 
 	static inline Lu_W_Match_Cell lu_w_match_cell__init(
 		Lu_W_Match_Cell self, 
 		lu_size wave_id, 
-		lu_size block_id,
+		lu_size block_ix,
 		lu_value sig
 	)
 	{	
 		self->wave_id = wave_id;
-		self->block_id = block_id;
+		self->block_ix = block_ix;
 		self->sig = 0;
 
 		return self;
@@ -338,7 +338,7 @@
 
 	static inline Lu_W_Match_Cell lu_w_match_cell__init_null(Lu_W_Match_Cell self)
 	{
-		return lu_w_match_cell__init(self, LU_WAVE_ID__NOT_SET, LU_BLOCK_ID__NOT_SET, 0);
+		return lu_w_match_cell__init(self, LU_WAVE_IX__NOT_SET, LU_BLOCK_ID__NOT_SET, 0);
 	}
 
 	static inline void lu_w_match_cell__add_sig(Lu_W_Match_Cell self, lu_value sig)

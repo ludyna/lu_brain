@@ -150,7 +150,7 @@
 		lu__assert(data);
 		lu__assert(data->values == NULL);
 
-	 	lu_data__set(data, self->wave_id, data->block_id, rec->id, rec->width, rec->height, rec->depth, values);
+	 	lu_data__set(data, self->wave_id, data->block_ix, rec->id, rec->width, rec->height, rec->depth, values);
 	}
 
 	static lu_bool lu_seq_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)

@@ -10,7 +10,7 @@
 	// Lu_Label for end User
 	struct lu_label {
 		lu_size wave_id;
-		lu_size block_id;
+		lu_size block_ix;
 		Lu_La_Cell la_cell;
 		Lu_W_Match_Cell match_cell;
 	};
@@ -18,13 +18,13 @@
 	static inline Lu_Label lu_label__init(
 		Lu_Label self, 
 		lu_size wave_id, 
-		lu_size block_id, 
+		lu_size block_ix, 
 		Lu_La_Cell la_cell,
 		Lu_W_Match_Cell match_cell
 	)
 	{
 		self->wave_id = wave_id;
-		self->block_id = block_id;
+		self->block_ix = block_ix;
 		self->la_cell = la_cell;
 		self->match_cell = match_cell;
 
@@ -133,7 +133,7 @@
 	static inline Lu_W_Match_Cell lu_la_cell__get_and_reset_match_cell(
 		Lu_La_Cell self,
 		lu_size wave_id,
-		lu_size block_id, 
+		lu_size block_ix, 
 		Lu_W_Match_Cell_Mem match_cell_mem
 	)
 	{
@@ -147,7 +147,7 @@
 
 			lu_la_cell__set_w_mach_cell_addr(self, wave_id, match_addr);
 
-			lu_w_match_cell__init(match_cell, wave_id, block_id, 0);
+			lu_w_match_cell__init(match_cell, wave_id, block_ix, 0);
 			
 			return match_cell;
 		}
@@ -155,10 +155,10 @@
 		match_cell = lu_w_match_cell_mem__get_cell(match_cell_mem, match_addr);
 		lu__assert(match_cell);
 
-		if (match_cell->wave_id != wave_id || match_cell->block_id != block_id)
+		if (match_cell->wave_id != wave_id || match_cell->block_ix != block_ix)
 		{
 			// reset
-			lu_w_match_cell__init(match_cell, wave_id, block_id, 0);
+			lu_w_match_cell__init(match_cell, wave_id, block_ix, 0);
 		}
 
 		return match_cell;

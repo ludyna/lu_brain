@@ -6,12 +6,13 @@
 // Lu_Data
 
 	#define LU_WAVE_ID__NOT_SET LU_SIZE__MAX
+	#define LU_WAVE_IX__NOT_SET LU_SIZE__MAX
 	#define LU_BLOCK_ID__NOT_SET LU_SIZE__MAX
 	#define LU_REC_ID__NOT_SET LU_SIZE__MAX
 
 	struct lu_data {
 		lu_size wave_id;
-		lu_size block_id;
+		lu_size block_ix;
 		lu_size rec_id;
 
 		lu_size w;
@@ -47,7 +48,7 @@
 	static inline Lu_Data lu_data__set(
 		Lu_Data self, 
 		lu_size wave_id,
-		lu_size block_id,
+		lu_size block_ix,
 		lu_size rec_id, 
 		lu_size w, 
 		lu_size h, 
@@ -56,7 +57,7 @@
 	)
 	{
 		self->wave_id 	= wave_id;
-		self->block_id 	= block_id;
+		self->block_ix 	= block_ix;
 		self->rec_id 	= rec_id;
 
 		self->w 		= w;
@@ -71,7 +72,7 @@
 	{
 		lu_data__set(
 			self, 
-			LU_WAVE_ID__NOT_SET, 
+			LU_WAVE_IX__NOT_SET, 
 			LU_BLOCK_ID__NOT_SET, 
 			LU_REC_ID__NOT_SET, 
 			0, 
@@ -144,7 +145,7 @@
 
 	static inline Lu_Data lu_data__shallow_copy(Lu_Data dest, Lu_Data src)
 	{
-		lu_data__set(dest, src->wave_id, src->block_id, src->rec_id, src->w, src->h, src->d, src->values);
+		lu_data__set(dest, src->wave_id, src->block_ix, src->rec_id, src->w, src->h, src->d, src->values);
 
 		return dest;
 	}
@@ -163,14 +164,14 @@
 	struct lu_data_block {
 		Lu_Mem mem;
 
-		lu_size block_id;
+		lu_size block_ix;
 
 		lu_size 			datum_size;
 		struct lu_data* 	datum;
 
 	};
 
-	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size block_id);
+	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size block_ix);
 	static void lu_data_block__destroy(Lu_Data_Block self);
 
 	static inline lu_size lu_data_block__get_size(Lu_Data_Block self) { return self->datum_size; }
@@ -192,10 +193,10 @@
 		Lu_L_Node 			current_read_pos;
 	};
 
-	static inline lu_size lu_data_seq__block_count(Lu_Data_Seq self) { return lu_list__count(self->blocks); }
-
 	Lu_Data_Seq lu_data_seq__create(Lu_Mem mem, lu_size wave_id, lu_size recs_size);
 	void lu_data_seq__destroy(Lu_Data_Seq self);
+
+	static inline lu_size lu_data_seq__block_count(Lu_Data_Seq self) { return lu_list__count(self->blocks); }
 
 	Lu_Data_Seq lu_data_seq__validate(Lu_Data_Seq);
 	Lu_Data_Seq lu_data_seq__prepare(Lu_Data_Seq);

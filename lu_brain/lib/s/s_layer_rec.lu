@@ -32,7 +32,7 @@
 
 		self->rec = rec;
 		
-		return self;
+		return self;	
 	}
 
 	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self)
@@ -55,7 +55,7 @@
 
 	static Lu_W_Table lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
-		lu_size wave_id,
+		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config
@@ -65,7 +65,6 @@
 		lu__assert(self->rec);
 		lu__assert(data);
 		lu__assert(config);
-
 
 		Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
 
@@ -81,7 +80,7 @@
 
 		lu__assert(self->rec->depth == lu_arr__count(slot_arr->items));
 
-		lu_size block_id = data->block_id;
+		lu_size block_ix = data->block_ix;
 
 		lu_size x;
 		lu_size y;
@@ -92,27 +91,24 @@
 		Lu_S_Layer_Comp comp;
 
 		lu_size wh = data->h * data->w;
-
 		Lu_S_View_P p_view;
-
 		Lu_W_Table_P p_table;
-
 		lu_bool is_reset;
-
 		Lu_W_Cell_P w_p_cell;
-
 		Lu_Comp_Calc p_comp_calc;
 
-		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(&self->super, wave_id);
+		Lu_Wave wave = (Lu_Wave) save_wave;
+
+		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(&self->super, wave->wave_ix);
 		lu__assert(curr_w_table);
 
-		is_reset = curr_w_table->wave_id != wave_id || ((block_id - curr_w_table->block_id) > 1);
+		is_reset = curr_w_table->wave_ix != wave->wave_ix || ((block_ix - curr_w_table->block_ix) > 1);
 		// lu__debug("\n IS_RESET: %d ", is_reset);
 
-		lu__debug("\nREC__SAVE: wave_id=%ld, block_id=%ld, is_reset=%ld", wave_id, block_id, is_reset);
+		lu__debug("\nREC__SAVE: wave_id=%ld, wave_ix=%ld, block_ix=%ld, is_reset=%ld", wave->wave_id, wave->wave_ix, block_ix, is_reset);
 
-		curr_w_table->wave_id = wave_id;
-		curr_w_table->block_id = block_id;
+		curr_w_table->wave_ix = wave->wave_ix;
+		curr_w_table->block_ix = block_ix;
 
 		Lu_W_Cell rec_w_p_cell;
 
@@ -156,7 +152,7 @@
 
 					p_view = &comp->p_view;
 
-					p_table = lu_s_view_p__get_w_save_table(p_view, wave_id);
+					p_table = lu_s_view_p__get_w_save_table(p_view, wave->wave_ix);
 					lu__debug_assert(p_table);
 
 					p_comp_calc = &p_view->comp_calc;
@@ -240,7 +236,7 @@
 
 	static void lu_s_layer_rec__match(
 		Lu_S_Layer_Rec self, 
-		lu_size wave_id,
+		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config,
@@ -251,6 +247,8 @@
 		lu__assert(self->rec);
 		lu__assert(data);
 		lu__assert(config);
+
+		Lu_Wave wave = (Lu_Wave) match_wave;
 
 		Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
 
@@ -271,7 +269,7 @@
 
 		if (!process_p && !process_v) return;
 
-		lu_size block_id = data->block_id;
+		lu_size block_ix = data->block_ix;
 
 		lu_size x;
 		lu_size y;
@@ -284,28 +282,23 @@
 		lu_size wh = data->h * data->w;
 
 		Lu_S_View_P p_view;
-
 		Lu_W_Table_P p_table;
-
 		lu_bool is_reset;
-
 		Lu_W_Cell_P w_p_cell;
-
 		Lu_Comp_Calc p_comp_calc;
 
-		is_reset = processor->wave_id != wave_id || ((block_id - processor->block_id) > 1);
+		is_reset = processor->wave_ix != wave->wave_ix || ((block_ix - processor->block_ix) > 1);
 		lu__debug("\n IS_RESET: %d ", is_reset);
 
-		processor->wave_id = wave_id;
-		processor->block_id = block_id;
+		processor->wave_id = wave->wave_id;
+		processor->wave_ix = wave->wave_ix;
+		processor->block_ix = block_ix;
 
 		lu_size depth = self->rec->depth; 
 
 		for (y = 0; y < data->h; y++)
 		{
 			y_shift = y * data->w;
-
-			lu__debug("\n");
 
 			for (x = 0; x < data->w; x++)
 			{
@@ -319,7 +312,7 @@
 
 					p_view = &comp->p_view;
 
-					p_table = lu_s_view_p__get_w_match_table(p_view, wave_id);
+					p_table = lu_s_view_p__get_w_match_table(p_view, wave->wave_ix);
 					lu__debug_assert(p_table);
 
 					p_comp_calc = &p_view->comp_calc;

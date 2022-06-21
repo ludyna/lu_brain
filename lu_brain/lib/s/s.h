@@ -60,6 +60,12 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// 
+//
+	typedef struct lu_save_wave* Lu_Save_Wave;
+	typedef struct lu_match_wave* Lu_Match_Wave;
+
+///////////////////////////////////////////////////////////////////////////////
 // lu_s__Y
 //
 
@@ -355,8 +361,8 @@
 
 	static Lu_W_Table lu_s_layer__save(
 		Lu_S_Layer self, 
-		lu_size wave_id, 
-		lu_size block_id, 
+		Lu_Save_Wave save_wave,
+		lu_size block_ix, 
 		Lu_W_Table prev_w_table,
 		Lu_Process_Config config
 	);
@@ -396,7 +402,7 @@
 
 	static Lu_W_Table lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
-		lu_size wave_id,
+		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config
@@ -404,7 +410,7 @@
 
 	static void lu_s_layer_rec__match(
 		Lu_S_Layer_Rec self, 
-		lu_size wave_id,
+		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Process_Config config,
@@ -546,7 +552,7 @@
 
 	static Lu_W_Table lu_s_area__save_rec(
 		Lu_S_Area self, 
-		lu_size wave_id, 
+		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data, 
 		Lu_Process_Config config
@@ -554,16 +560,16 @@
 
 	static Lu_W_Table lu_s_area__save_frame(
 		Lu_S_Area self, 
-		lu_size wave_id, 
-		lu_size block_id, 
+		Lu_Save_Wave save_wave, 
+		lu_size block_ix, 
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	);
 
 	static Lu_W_Table lu_s_area__save_seq(
 		Lu_S_Area self, 
-		lu_size wave_id, 
-		lu_size block_id, 
+		Lu_Save_Wave save_wave,
+		lu_size block_ix, 
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	);
