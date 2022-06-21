@@ -225,11 +225,11 @@ void test_lu_seq_data(void)
 
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 0);
 
-  		data = lu_data_seq__last_data(seq, 0);
+  		data = lu_data_seq__get_last_data(seq, 0);
 
   			TEST_ASSERT(data == NULL);
 
-		data = lu_data_seq__last_data(seq, 0);
+		data = lu_data_seq__get_last_data(seq, 0);
 
 			TEST_ASSERT(data == NULL);
 
@@ -237,7 +237,7 @@ void test_lu_seq_data(void)
  		
  		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 1);
 		
-		data = lu_data_seq__last_data(seq, 0);
+		data = lu_data_seq__get_last_data(seq, 0);
 		
 		TEST_ASSERT(data->values);
 		TEST_ASSERT(data->values[0] == 0);
@@ -248,14 +248,14 @@ void test_lu_seq_data(void)
  		
  		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 1);
 		
-		data = lu_data_seq__last_data(seq, 1);
+		data = lu_data_seq__get_last_data(seq, 1);
 		
 		TEST_ASSERT(data->values);
 		TEST_ASSERT(data->values[0] == 6);
 		TEST_ASSERT(data->w == 2);
  		TEST_ASSERT(data->h == 2);
 		
-		data = lu_data_seq__last_data(seq, 0);
+		data = lu_data_seq__get_last_data(seq, 0);
 		TEST_ASSERT(data);
 		TEST_ASSERT(data->values[0] == 0);
 		TEST_ASSERT(data->w == 3);

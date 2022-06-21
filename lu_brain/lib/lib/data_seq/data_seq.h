@@ -212,8 +212,8 @@
 	static inline lu_bool lu_data_seq__is_empty(Lu_Data_Seq self) { return lu_list__is_blank(self->blocks); }
 	static inline lu_size lu_data_seq__recs_count(Lu_Data_Seq self) { return self->recs_size; }
 	lu_size lu_data_seq__blocks_count(Lu_Data_Seq self);
-	lu_p_value lu_data_seq__last_values(Lu_Data_Seq self, lu_size rec_i);
-	Lu_Data lu_data_seq__last_data(Lu_Data_Seq self, lu_size rec_i);
+	lu_p_value lu_data_seq__get_last_values(Lu_Data_Seq self, lu_size rec_i);
+	Lu_Data lu_data_seq__get_last_data(Lu_Data_Seq self, lu_size rec_i);
 
 	// Seq reading
 
