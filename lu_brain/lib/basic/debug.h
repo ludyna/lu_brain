@@ -30,6 +30,7 @@ void lu__debug_message_internal(const char* file, int line, const char * message
 #endif 
 
 #define lu__alloc_assert assert
+#define lu__create_assert assert
 
 ///////////////////////////////////////////////////////////////////////////////
 // Label gen

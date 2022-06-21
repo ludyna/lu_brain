@@ -258,6 +258,41 @@
 		if (self->push)
 			self->push(self, rec, data);
 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
+	} 
+
+	void lu_wave__push_with_shift(Lu_Wave self, Lu_Rec rec, lu_value* data, lu_size x_shift, lu_size y_shift)
+	{
+		lu__user_assert_void(self, "Lu_Wave is NULL");
+		lu__user_assert_void(rec, "Lu_Rec is NULL");
+		lu__user_assert_void(data, "data is NULL");
+		lu__user_assert_void(
+			x_shift > 0 || y_shift > 0, 
+			"x_shift should be greater than 0 or y_shift should be greater than 0"
+		);
+
+		struct lu_data data_1;
+		lu_data__set(
+			&data_1, 
+			LU_WAVE_ID__NOT_SET, 
+			LU_BLOCK_ID__NOT_SET, 
+			LU_REC_ID__NOT_SET, 
+			rec->width,
+			rec->height,
+			rec->depth,
+			data
+		);
+
+		Lu_Data data_2 = lu_data__create_via_shift(self->mem, &data_1, x_shift, y_shift);
+		lu__create_assert(data_2);
+
+		if (self->push)
+		{
+			self->push(self, rec, data);
+
+			self->push(self, rec, data_2->values);
+		}
+
+		lu_data__destroy(data_2, self->mem);
 	}
 
 	static void lu_save_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data)

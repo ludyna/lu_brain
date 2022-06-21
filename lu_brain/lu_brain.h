@@ -300,6 +300,7 @@
 	//
 
 	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* data);
+	void lu_wave__push_with_shift(Lu_Wave, Lu_Rec, lu_value* data, lu_size x_shift, lu_size y_shift);
 
 	//
 	// Process

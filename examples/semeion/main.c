@@ -88,7 +88,7 @@ int main()
 	{
 		d = smn_training_samples[i];
 
-		lu_wave__push(save_wave, image_rec, d->pixels);
+		lu_wave__push_with_shift(save_wave, image_rec, d->pixels, 1, 1);
 		//lu_wave_save_with_name(save_wave, seq, d->name); 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
