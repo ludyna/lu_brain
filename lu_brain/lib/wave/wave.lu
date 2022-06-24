@@ -239,7 +239,6 @@
 		lu_size rec_id = 0; // NOTE: fixed temporarily
 
 		data = lu_data_block__get_data(block, rec_id);
-		lu_size wave_id = lu_wave__get_id(wave);
 
 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
 		lu__assert(area);
@@ -278,7 +277,7 @@
 		lu_data__set(
 			&data_1, 
 			LU_WAVE_IX__NOT_SET, 
-			LU_BLOCK_ID__NOT_SET, 
+			LU_BLOCK_IX__NOT_SET, 
 			LU_REC_ID__NOT_SET, 
 			rec->width,
 			rec->height,

@@ -395,6 +395,8 @@
 		struct lu_s_layer super;
 
 		Lu_Rec rec;
+
+		
 	};
 
 	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix, lu_size area_ix);

@@ -7,7 +7,7 @@
 
 	#define LU_WAVE_ID__NOT_SET LU_SIZE__MAX
 	#define LU_WAVE_IX__NOT_SET LU_SIZE__MAX
-	#define LU_BLOCK_ID__NOT_SET LU_SIZE__MAX
+	#define LU_BLOCK_IX__NOT_SET LU_SIZE__MAX
 	#define LU_REC_ID__NOT_SET LU_SIZE__MAX
 
 	struct lu_data {
@@ -73,7 +73,7 @@
 		lu_data__set(
 			self, 
 			LU_WAVE_IX__NOT_SET, 
-			LU_BLOCK_ID__NOT_SET, 
+			LU_BLOCK_IX__NOT_SET, 
 			LU_REC_ID__NOT_SET, 
 			0, 
 			0, 

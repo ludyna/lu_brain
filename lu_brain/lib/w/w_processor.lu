@@ -21,7 +21,7 @@
 
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
-		self->block_ix = LU_BLOCK_ID__NOT_SET;
+		self->block_ix = LU_BLOCK_IX__NOT_SET;
 		self->s = s;
 		self->mem = config->w_mem;
 		self->match_cell_mem = match_cell_mem;

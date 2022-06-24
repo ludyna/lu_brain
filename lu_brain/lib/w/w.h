@@ -18,6 +18,34 @@
 	);
 
 ///////////////////////////////////////////////////////////////////////////////
+//  Lu_W_Rec state
+
+	struct lu_w_rec {
+		// data for when we had last access to s_rec
+		lu_size wave_id;
+		lu_size wave_ix;
+		lu_size block_ix;
+	};
+
+	static inline Lu_W_Rec lu_w_rec__init_null(Lu_W_Rec self)
+	{
+		lu__assert(self);
+
+		self->wave_id = LU_WAVE_ID__NOT_SET;
+		self->wave_ix = LU_WAVE_IX__NOT_SET;
+		self->block_ix = LU_BLOCK_IX__NOT_SET;
+	}
+
+	static inline Lu_W_Rec lu_w_rec__init(Lu_W_Rec self, lu_size wave_id, lu_size wave_ix, lu_size block_ix)
+	{
+		lu__assert(self);
+
+		self->wave_id = wave_id;
+		self->wave_ix = wave_ix;
+		self->block_ix = block_ix;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Table_P
 
 	struct lu_w_table_p {

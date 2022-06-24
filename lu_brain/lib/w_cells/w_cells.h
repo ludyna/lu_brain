@@ -95,8 +95,7 @@
 
 		return self;
 	}
- 	
-
+ 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_P
 
@@ -338,7 +337,7 @@
 
 	static inline Lu_W_Match_Cell lu_w_match_cell__init_null(Lu_W_Match_Cell self)
 	{
-		return lu_w_match_cell__init(self, LU_WAVE_IX__NOT_SET, LU_BLOCK_ID__NOT_SET, 0);
+		return lu_w_match_cell__init(self, LU_WAVE_IX__NOT_SET, LU_BLOCK_IX__NOT_SET, 0);
 	}
 
 	static inline void lu_w_match_cell__add_sig(Lu_W_Match_Cell self, lu_value sig)

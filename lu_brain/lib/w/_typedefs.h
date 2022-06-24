@@ -4,6 +4,7 @@
 	//
 	// Save
 	//
+	typedef struct lu_w_rec * Lu_W_Rec;
 	typedef struct lu_w_table_p* Lu_W_Table_P;
 	typedef struct lu_w_table_v* Lu_W_Table_V;
 	typedef struct lu_w_table* Lu_W_Table;
