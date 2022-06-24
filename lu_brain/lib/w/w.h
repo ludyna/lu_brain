@@ -18,8 +18,8 @@
 	);
 
 ///////////////////////////////////////////////////////////////////////////////
-//  Lu_W_Rec state
-
+//  Lu_W_Rec 
+	
 	struct lu_w_rec {
 		// data for when we had last access to s_rec
 		lu_size wave_id;

@@ -65,6 +65,11 @@
 		Lu_Data_Seq seq;
 	};
 
+	static inline lu_size lu_save_wave__get_wave_ix(Lu_Save_Wave self)
+	{
+		return self->super.wave_ix;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Match_Wave 
 
