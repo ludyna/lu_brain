@@ -55,7 +55,6 @@
 	static inline lu_bool lu_wave__is_match(Lu_Wave self) { return self->type == LU_WAVE__MATCH; }
 	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE__RESTORE; }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
 

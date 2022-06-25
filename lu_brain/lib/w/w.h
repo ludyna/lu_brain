@@ -19,12 +19,22 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Rec 
-	
+
+	enum lu_w_rec_state {
+		LU_W_REC_STATE__START,
+		LU_W_REC_STATE__ONE,
+		LU_W_REC_STATE__TWO,
+		LU_W_REC_STATE__SWITCH,
+		LU_W_REC_STATE__END
+	};
+
 	struct lu_w_rec {
 		// data for when we had last access to s_rec
 		lu_size wave_id;
 		lu_size wave_ix;
 		lu_size block_ix;
+
+		enum lu_w_rec_state state;
 	};
 
 	static inline Lu_W_Rec lu_w_rec__init_null(Lu_W_Rec self)
@@ -34,11 +44,58 @@
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
 		self->block_ix = LU_BLOCK_IX__NOT_SET;
+		self->state = LU_W_REC_STATE__START;
 	}
 
-	static inline Lu_W_Rec lu_w_rec__init(Lu_W_Rec self, lu_size wave_id, lu_size wave_ix, lu_size block_ix)
+	static inline Lu_W_Rec lu_w_rec__update(Lu_W_Rec self, lu_size wave_id, lu_size wave_ix, lu_size block_ix)
 	{
 		lu__assert(self);
+
+		//
+		// Detect state first
+		//
+
+		if (self->wave_id != wave_id)
+		{
+			// totally new wave, start with saving one
+			self->state = LU_W_REC_STATE__ONE;
+		}
+		else if (self->wave_ix != wave_ix)
+		{
+			// new wave ix means its new wave also 
+			// (should never happen because we get this lu_w_rec from "same" wave_ix, 
+			// but put this code here noneless for completeness)
+			self->state = LU_W_REC_STATE__ONE;
+		}
+		else if (self->block_ix == block_ix)
+		{
+			// should not happen
+			lu__assert(false);
+		}
+		else
+		{
+			lu_size diff = block_ix - self->block_ix;
+
+			if (diff > 1)
+			{
+				self->state = LU_W_REC_STATE__ONE;
+			}
+			else
+			{
+				if (self->state == LU_W_REC_STATE__ONE)
+				{
+					self->state == LU_W_REC_STATE__TWO;
+				}
+				else if (self->state == LU_W_REC_STATE__TWO)
+				{
+					self->state == LU_W_REC_STATE__SWITCH;
+				}
+			}
+		}
+
+		//
+		// Update values
+		//
 
 		self->wave_id = wave_id;
 		self->wave_ix = wave_ix;
