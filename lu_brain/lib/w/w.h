@@ -28,6 +28,28 @@
 		LU_W_REC_STATE__END
 	};
 
+	static inline void lu_w_rec_state__to_str(enum lu_w_rec_state self, char buffer[])
+	{
+		switch (self)
+		{
+			case LU_W_REC_STATE__START:
+				strcpy(buffer, "START");
+				break;
+			case LU_W_REC_STATE__ONE:
+				strcpy(buffer, "ONE");
+				break;
+			case LU_W_REC_STATE__TWO:
+				strcpy(buffer, "TWO");
+				break;
+			case LU_W_REC_STATE__SWITCH:
+				strcpy(buffer, "SWITCH");
+				break;
+			default:
+				strcpy(buffer, "(!) UNKNOWN");
+				break;
+		}
+	}
+
 	struct lu_w_rec {
 		// data for when we had last access to s_rec
 		lu_size wave_id;
@@ -74,6 +96,8 @@
 		}
 		else
 		{
+			lu__assert(self->block_ix != LU_BLOCK_IX__NOT_SET);
+
 			lu_size diff = block_ix - self->block_ix;
 
 			if (diff > 1)
@@ -84,11 +108,11 @@
 			{
 				if (self->state == LU_W_REC_STATE__ONE)
 				{
-					self->state == LU_W_REC_STATE__TWO;
+					self->state = LU_W_REC_STATE__TWO;
 				}
 				else if (self->state == LU_W_REC_STATE__TWO)
 				{
-					self->state == LU_W_REC_STATE__SWITCH;
+					self->state = LU_W_REC_STATE__SWITCH;
 				}
 			}
 		}
