@@ -34,11 +34,21 @@
 		self->rec = rec;
 		self->save_w_recs_size = config->w_save_waves_size;
 		self->save_w_recs = (struct lu_w_rec*) lu_mem__alloc(self->super.super.w_mem, sizeof(struct lu_w_rec) * self->save_w_recs_size);
+		self->match_w_recs_size = config->w_match_waves_size;
+		self->match_w_recs = (struct lu_w_rec*) lu_mem__alloc(self->super.super.w_mem, sizeof(struct lu_w_rec) * self->match_w_recs_size);
 
 		Lu_W_Rec w_rec;
 		for (lu_size i = 0; i < self->save_w_recs_size; i++)
 		{
 			w_rec = lu_s_layer_rec__get_save_w_rec(self, i);
+			lu__assert(w_rec);
+
+			lu_w_rec__init_null(w_rec);
+		}
+
+		for (lu_size i = 0; i < self->match_w_recs_size; i++)
+		{
+			w_rec = lu_s_layer_rec__get_match_w_rec(self, i);
 			lu__assert(w_rec);
 
 			lu_w_rec__init_null(w_rec);
@@ -56,6 +66,7 @@
 
 		Lu_S_Layer_Rec layer = (Lu_S_Layer_Rec) self;
 
+		lu_mem__free(self->w_mem, (lu_p_byte) layer->match_w_recs);
 		lu_mem__free(self->w_mem, (lu_p_byte) layer->save_w_recs);
 
 		lu__assert(layer->rec);

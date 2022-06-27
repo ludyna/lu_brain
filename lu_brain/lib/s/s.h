@@ -415,6 +415,15 @@
 		return &self->save_w_recs[wave_ix];
 	}
 
+	static inline Lu_W_Rec lu_s_layer_rec__get_match_w_rec(Lu_S_Layer_Rec self, lu_size wave_ix)
+	{
+		lu__assert(self);
+		lu__assert(wave_ix < self->match_w_recs_size);
+
+		return &self->match_w_recs[wave_ix];
+	}
+
+
 	static Lu_W_Table lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
 		Lu_Save_Wave save_wave,
