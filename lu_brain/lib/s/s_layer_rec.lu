@@ -200,16 +200,28 @@
 					lu_w_cell_p__update(
 						w_p_cell,
 						w_rec->state,
-						v,
-						x,
-						y,
-						z,
-						p_comp_calc,
-						p_view->n_comp_table,
-						children,
-						&not_null_cells_count,
-						&saved_count
+						v
 					);
+
+					if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
+					{
+						children[z] = lu_w_cell_p__save(
+							w_p_cell, 
+							x, 
+							y, 
+							p_comp_calc, 
+							p_view->n_comp_table
+						);
+
+						lu__assert(children[z]);
+
+						if (children[z]->sig > 0)
+						{
+							++not_null_cells_count;
+						}
+
+						++saved_count;
+					}
 
 				} // for (lu_size z = 0
 
@@ -237,6 +249,12 @@
 
 					curr_w_table->any_fired = true;
 				}
+				// else
+				// {
+				// 	// We reset so data from previous wave don't interfere
+				// 	lu_w_cell__reset(rec_w_p_cell);
+				// }
+
 
 			}  // for (x = 0
 		} // for (y = 0
@@ -260,6 +278,21 @@
 		lu__assert(config);
 
 		Lu_Wave wave = (Lu_Wave) match_wave;
+
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_match_w_rec(self, wave->wave_ix);
+		lu__assert(w_rec);
+
+		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix);
+
+		char buffer[50];
+		lu_w_rec_state__to_str(w_rec->state, buffer);
+		lu__debug(
+			"\n\nREC_MATCH: w_rec->state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld \n\n", 
+			buffer,
+			w_rec->wave_id,
+			w_rec->wave_ix,
+			w_rec->block_ix
+		);
 
 		Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
 
@@ -294,12 +327,8 @@
 
 		Lu_S_View_P p_view;
 		Lu_W_Table_P p_table;
-		lu_bool is_reset;
 		Lu_W_Cell_P w_p_cell;
 		Lu_Comp_Calc p_comp_calc;
-
-		is_reset = processor->wave_ix != wave->wave_ix || ((block_ix - processor->block_ix) > 1);
-		lu__debug("\n IS_RESET: %d ", is_reset);
 
 		processor->wave_id = wave->wave_id;
 		processor->wave_ix = wave->wave_ix;
@@ -332,15 +361,13 @@
 					// Get value from Data
 					v = data->values[z * wh + xy_shift];
 
-					if (is_reset)
-					{
-						lu_w_cell_p__reset(w_p_cell);
-					}
+					lu_w_cell_p__update(
+						w_p_cell,
+						w_rec->state,
+						v
+					);
 
-					lu_w_cell_p__register(w_p_cell, is_reset, v, config);
-
-					// Cell is ready after p_1 and p_2 are set, independently if sig is 0 or not
-					if (lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
+					if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
 					{
 						lu_w_cell_p__save(
 							w_p_cell, 

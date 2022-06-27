@@ -254,15 +254,7 @@
 	static inline void lu_w_cell_p__update(
 		Lu_W_Cell_P self, 
 		enum lu_w_rec_state state,
-		lu_value v, 
-		lu_size x, 
-		lu_size y, 
-		lu_size z,
-		Lu_Comp_Calc p_comp_calc, 
-		Lu_N_Table_Comp n_comp_table,
-		Lu_W_Cell_P children[],
-		lu_size* not_null_cells_count,
-		lu_size* saved_count
+		lu_value v
 	)
 	{
 		switch(state)
@@ -272,48 +264,11 @@
 				break;
 			case LU_W_REC_STATE__TWO:
 				self->p_2 = v;
-
-				children[z] = lu_w_cell_p__save(
-					self, 
-					x, 
-					y, 
-					p_comp_calc, 
-					n_comp_table
-				);
-
-				lu__assert(children[z]);
-
-				if (children[z]->sig > 0)
-				{
-					++(*not_null_cells_count);
-				}
-
-				++(*saved_count);
-
 				break;
 			case LU_W_REC_STATE__SWITCH:
 				self->p_1 = self->p_2;
 				self->p_2 = v;
-
-				children[z] = lu_w_cell_p__save(
-					self, 
-					x, 
-					y, 
-					p_comp_calc, 
-					n_comp_table
-				);
-
-				lu__assert(children[z]);
-
-				if (children[z]->sig > 0)
-				{
-					++(*not_null_cells_count);
-				}
-
-				++(*saved_count);
-
 				break;
-
 			default:
 				lu__assert(false); // should not happen here
 		}
