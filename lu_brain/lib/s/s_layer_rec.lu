@@ -136,17 +136,12 @@
 		lu_size wh = data->h * data->w;
 		Lu_S_View_P p_view;
 		Lu_W_Table_P p_table;
-		lu_bool is_reset;
+
 		Lu_W_Cell_P w_p_cell;
 		Lu_Comp_Calc p_comp_calc;
 
 		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(&self->super, wave->wave_ix);
 		lu__assert(curr_w_table);
-
-		is_reset = curr_w_table->wave_ix != wave->wave_ix || ((block_ix - curr_w_table->block_ix) > 1);
-		// lu__debug("\n IS_RESET: %d ", is_reset);
-
-		lu__debug("\nREC__SAVE: wave_id=%ld, wave_ix=%ld, block_ix=%ld, is_reset=%ld", wave->wave_id, wave->wave_ix, block_ix, is_reset);
 
 		curr_w_table->wave_ix = wave->wave_ix;
 		curr_w_table->block_ix = block_ix;
@@ -202,37 +197,90 @@
 					// Get value from Data
 					v = data->values[z * wh + xy_shift];
 
-					if (is_reset)
+					switch(w_rec->state)
 					{
-						lu_w_cell_p__reset(w_p_cell);
+						case LU_W_REC_STATE__ONE:
+							w_p_cell->p_1 = v;
+							break;
+						case LU_W_REC_STATE__TWO:
+							w_p_cell->p_2 = v;
+
+							children[z] = lu_w_cell_p__save(
+								w_p_cell, 
+								x, 
+								y, 
+								p_comp_calc, 
+								p_view->n_comp_table
+							);
+
+							lu__assert(children[z]);
+
+							if (children[z]->sig > 0)
+							{
+								++not_null_cells_count;
+							}
+
+							++saved_count;
+
+							break;
+						case LU_W_REC_STATE__SWITCH:
+							w_p_cell->p_1 = w_p_cell->p_2;
+							w_p_cell->p_2 = v;
+
+							children[z] = lu_w_cell_p__save(
+								w_p_cell, 
+								x, 
+								y, 
+								p_comp_calc, 
+								p_view->n_comp_table
+							);
+
+							lu__assert(children[z]);
+
+							if (children[z]->sig > 0)
+							{
+								++not_null_cells_count;
+							}
+
+							++saved_count;
+
+							break;
+
+						default:
+							lu__assert(false); // should not happen here
 					}
 
-					lu_w_cell_p__register(w_p_cell, is_reset, v, config);
+					// if (is_reset)
+					// {
+					// 	lu_w_cell_p__reset(w_p_cell);
+					// }
 
-					// Cell is ready after p_1 and p_2 are set, independently if sig is 0 or not
-					if (lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
-					{
-						//
-						// Children W cell_p save
-						//
+					// lu_w_cell_p__register(w_p_cell, is_reset, v, config);
 
-						children[z] = lu_w_cell_p__save(
-							w_p_cell, 
-							x, 
-							y, 
-							p_comp_calc, 
-							p_view->n_comp_table
-						);
+					// // Cell is ready after p_1 and p_2 are set, independently if sig is 0 or not
+					// if (lu_w_cell_p__is_ready(w_p_cell, p_comp_calc->step))
+					// {
+					// 	//
+					// 	// Children W cell_p save
+					// 	//
 
-						lu__debug_assert(children[z]);
+					// 	children[z] = lu_w_cell_p__save(
+					// 		w_p_cell, 
+					// 		x, 
+					// 		y, 
+					// 		p_comp_calc, 
+					// 		p_view->n_comp_table
+					// 	);
 
-						if (children[z]->sig > 0)
-						{
-							++not_null_cells_count;
-						}
+					// 	lu__debug_assert(children[z]);
 
-						++saved_count;
-					}
+					// 	if (children[z]->sig > 0)
+					// 	{
+					// 		++not_null_cells_count;
+					// 	}
+
+					// 	++saved_count;
+					// }
 
 
 				} // for (lu_size z = 0
