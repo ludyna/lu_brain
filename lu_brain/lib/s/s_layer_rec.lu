@@ -32,13 +32,13 @@
 		);
 
 		self->rec = rec;
-		self->w_recs_size = config->w_save_waves_size;
-		self->w_recs = (struct lu_w_rec*) lu_mem__alloc(self->super.super.w_mem, sizeof(struct lu_w_rec) * self->w_recs_size);
+		self->save_w_recs_size = config->w_save_waves_size;
+		self->save_w_recs = (struct lu_w_rec*) lu_mem__alloc(self->super.super.w_mem, sizeof(struct lu_w_rec) * self->save_w_recs_size);
 
 		Lu_W_Rec w_rec;
-		for (lu_size i = 0; i < self->w_recs_size; i++)
+		for (lu_size i = 0; i < self->save_w_recs_size; i++)
 		{
-			w_rec = lu_s_layer_rec__get_w_rec(self, i);
+			w_rec = lu_s_layer_rec__get_save_w_rec(self, i);
 			lu__assert(w_rec);
 
 			lu_w_rec__init_null(w_rec);
@@ -56,7 +56,7 @@
 
 		Lu_S_Layer_Rec layer = (Lu_S_Layer_Rec) self;
 
-		lu_mem__free(self->w_mem, (lu_p_byte) layer->w_recs);
+		lu_mem__free(self->w_mem, (lu_p_byte) layer->save_w_recs);
 
 		lu__assert(layer->rec);
 
@@ -83,7 +83,7 @@
 
 		Lu_Wave wave = (Lu_Wave) save_wave;
 
-		Lu_W_Rec w_rec = lu_s_layer_rec__get_w_rec(self, wave->wave_ix);
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, wave->wave_ix);
 		lu__assert(w_rec);
 
 		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix);
@@ -97,7 +97,6 @@
 			w_rec->wave_ix,
 			w_rec->block_ix
 		);
-
 
 		Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
 

@@ -396,19 +396,23 @@
 
 		Lu_Rec rec;
 
-		struct lu_w_rec* w_recs;
-		lu_size w_recs_size;
+		struct lu_w_rec* save_w_recs;
+		lu_size save_w_recs_size;
+
+		struct lu_w_rec* match_w_recs; 
+		lu_size match_w_recs_size;
+		
 	};
 
 	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix, lu_size area_ix);
 	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self);
 
-	static inline Lu_W_Rec lu_s_layer_rec__get_w_rec(Lu_S_Layer_Rec self, lu_size wave_ix)
+	static inline Lu_W_Rec lu_s_layer_rec__get_save_w_rec(Lu_S_Layer_Rec self, lu_size wave_ix)
 	{
 		lu__assert(self);
-		lu__assert(wave_ix < self->w_recs_size);
+		lu__assert(wave_ix < self->save_w_recs_size);
 
-		return &self->w_recs[wave_ix];
+		return &self->save_w_recs[wave_ix];
 	}
 
 	static Lu_W_Table lu_s_layer_rec__save(
