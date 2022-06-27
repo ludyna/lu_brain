@@ -20,14 +20,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Rec 
 
-	enum lu_w_rec_state {
-		LU_W_REC_STATE__START,
-		LU_W_REC_STATE__ONE,
-		LU_W_REC_STATE__TWO,
-		LU_W_REC_STATE__SWITCH,
-		LU_W_REC_STATE__END
-	};
-
 	static inline void lu_w_rec_state__to_str(enum lu_w_rec_state self, char buffer[])
 	{
 		switch (self)

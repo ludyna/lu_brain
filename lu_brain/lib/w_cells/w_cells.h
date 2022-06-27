@@ -22,6 +22,15 @@
 	static inline Lu_N_Column_Comp lu_n_table_comp__get_column(Lu_N_Table_Comp self, lu_size x, lu_size y);
 	static inline Lu_N_Cell_VP lu_n_column_comp__get_cell(Lu_N_Column_Comp self, lu_size z);
 
+	enum lu_w_rec_state {
+		LU_W_REC_STATE__START,
+		LU_W_REC_STATE__ONE,
+		LU_W_REC_STATE__TWO,
+		LU_W_REC_STATE__SWITCH,
+		LU_W_REC_STATE__END
+	};
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Addr
 
@@ -240,6 +249,74 @@
 		}
 
 		return p_reg;
+	}
+
+	static inline void lu_w_cell_p__update(
+		Lu_W_Cell_P self, 
+		enum lu_w_rec_state state,
+		lu_value v, 
+		lu_size x, 
+		lu_size y, 
+		lu_size z,
+		Lu_Comp_Calc p_comp_calc, 
+		Lu_N_Table_Comp n_comp_table,
+		Lu_W_Cell_P children[],
+		lu_size* not_null_cells_count,
+		lu_size* saved_count
+	)
+	{
+		switch(state)
+		{
+			case LU_W_REC_STATE__ONE:
+				self->p_1 = v;
+				break;
+			case LU_W_REC_STATE__TWO:
+				self->p_2 = v;
+
+				children[z] = lu_w_cell_p__save(
+					self, 
+					x, 
+					y, 
+					p_comp_calc, 
+					n_comp_table
+				);
+
+				lu__assert(children[z]);
+
+				if (children[z]->sig > 0)
+				{
+					++(*not_null_cells_count);
+				}
+
+				++(*saved_count);
+
+				break;
+			case LU_W_REC_STATE__SWITCH:
+				self->p_1 = self->p_2;
+				self->p_2 = v;
+
+				children[z] = lu_w_cell_p__save(
+					self, 
+					x, 
+					y, 
+					p_comp_calc, 
+					n_comp_table
+				);
+
+				lu__assert(children[z]);
+
+				if (children[z]->sig > 0)
+				{
+					++(*not_null_cells_count);
+				}
+
+				++(*saved_count);
+
+				break;
+
+			default:
+				lu__assert(false); // should not happen here
+		}
 	}
 
 
