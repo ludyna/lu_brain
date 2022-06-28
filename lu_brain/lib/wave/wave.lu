@@ -451,9 +451,68 @@
 	void lu_save_wave__reset(Lu_Wave self)
 	{
 		lu__assert(self);
+		lu__assert(self->brain);
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
 
 		lu_data_seq__reset(save_wave->seq);  	
+
+		//
+		// Reset w_recs
+		//
+
+		Lu_S s = self->brain->s;
+		lu__assert(s);
+
+		// NOTE: fixed temporarily
+		//lu_size rec_id = 0; 
+
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__REC);
+
+		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(area, 0);
+		lu__assert(layer_base);
+		lu__assert(layer_base->type == LU_S_LAYER__REC);
+
+		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
+
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(layer_rec, self->wave_ix);
+		lu__assert(w_rec);
+
+		lu_w_rec__init_null(w_rec);
+	}
+
+	void lu_match_wave__reset(Lu_Wave self)
+	{
+		lu__assert(self);
+		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+		lu_data_seq__reset(save_wave->seq);  	
+
+		//
+		// Reset w_recs
+		//
+
+		Lu_S s = self->brain->s;
+		lu__assert(s);
+
+		// NOTE: fixed temporarily
+		//lu_size rec_id = 0; 
+
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__REC);
+
+		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(area, 0);
+		lu__assert(layer_base);
+		lu__assert(layer_base->type == LU_S_LAYER__REC);
+
+		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
+
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(layer_rec, self->wave_ix);
+		lu__assert(w_rec);
+
+		lu_w_rec__init_null(w_rec);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -521,6 +580,7 @@
 		self->super.block_end = lu_match_wave__block_end_virtual;
 
 		self->super.push = lu_match_wave__push_virtual;
+		self->super.reset = lu_match_wave__reset;
 
 		self->super.step = lu_match_wave__step_virtual;
 		self->super.process = lu_match_wave__process_virtual;

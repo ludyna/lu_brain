@@ -58,10 +58,12 @@
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
 		self->block_ix = LU_BLOCK_IX__NOT_SET;
-		self->state = LU_W_REC_STATE__START;
+		self->state = LU_W_REC_STATE__START; 
+
+		return self;
 	}
 
-	static inline Lu_W_Rec lu_w_rec__update(Lu_W_Rec self, lu_size wave_id, lu_size wave_ix, lu_size block_ix)
+	static inline void lu_w_rec__update(Lu_W_Rec self, lu_size wave_id, lu_size wave_ix, lu_size block_ix)
 	{
 		lu__assert(self);
 
@@ -89,8 +91,12 @@
 		else
 		{
 			lu__assert(self->block_ix != LU_BLOCK_IX__NOT_SET);
+			lu__assert(block_ix < LU__LONG_MAX);
+			lu__assert(self->block_ix < LU__LONG_MAX);
 
-			lu_size diff = block_ix - self->block_ix;
+			lu_long diff = ((lu_long)block_ix) - ((lu_long)self->block_ix);
+
+			lu__assert(diff > 0); // if this fails, probably wave was not reset properly 
 
 			if (diff > 1)
 			{

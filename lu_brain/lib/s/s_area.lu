@@ -159,15 +159,15 @@
 		Lu_Process_Config config
 	)
 	{
-		Lu_S_Layer_Base layer_base = self->layers[0];
+		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(self, 0);
 		lu__assert(layer_base);
 		lu__assert(layer_base->type == LU_S_LAYER__REC);
-
-		lu_size block_ix = data->block_ix;
 
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
 
 		Lu_Wave wave = (Lu_Wave) save_wave;
+
+		lu_size block_ix = data->block_ix;
 
 		// lu__debug("\n SAVING DATA (lu_s_layer_rec__save()):");
 		// lu_data__print(data);

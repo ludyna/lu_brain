@@ -550,7 +550,7 @@
 		}
 	}
 
-	static inline Lu_S_Layer_Base lu_s_area__get_layer(Lu_S_Area self, lu_size layer_ix)
+	static inline Lu_S_Layer_Base lu_s_area__get_layer_by_ix(Lu_S_Area self, lu_size layer_ix)
 	{
 		lu__assert(self);
 		lu__assert(layer_ix < self->layers_count);
@@ -565,7 +565,7 @@
 		Lu_N_Column* n_column
 	)
 	{
-		Lu_S_Layer_Base s_layer_base = lu_s_area__get_layer(self, addr.layer_ix);
+		Lu_S_Layer_Base s_layer_base = lu_s_area__get_layer_by_ix(self, addr.layer_ix);
 
 		lu__assert(lu_s_layer_base__is_layer_type(s_layer_base));
 
