@@ -148,18 +148,6 @@
 		++self->alloc_count;
 	}
 	
-	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger imd, lu_p_byte old_address, lu_p_byte new_address, lu_size size,  
-										const char* func, const char* file, int line)
-	{
-		if (new_address == NULL) 
-		{
-			lu__debug_message_internal(file, line, "\nMem_Debugger: Realloc failed!");
-			return;
-		} 
-
-		lu__debug("\n!!! MEM DEBUGGER REGISTER REALLOC !!!");
-	}
-
 	void mem_debugger_register_free(	Lu_I_Mem_Debugger imd, lu_p_byte address, 
 										const char* func, const char* file, int line)
 	{
@@ -208,3 +196,20 @@
 		++self->freed_count;
 		lu_md_item_destroy(item, false);
 	}	
+
+	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger imd, lu_p_byte old_address, lu_p_byte new_address, lu_size size,  
+										const char* func, const char* file, int line)
+	{
+		if (new_address == NULL) 
+		{
+			lu__debug_message_internal(file, line, "\nMem_Debugger: Realloc failed!");
+			return;
+		} 
+
+		lu__debug("\n!!! MEM DEBUGGER REGISTER REALLOC !!!");
+
+		mem_debugger_register_free(imd, old_address, func, file, line);
+
+		mem_debugger_register_alloc(imd, new_address, size, func, file, line);
+	}
+
