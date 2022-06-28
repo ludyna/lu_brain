@@ -79,7 +79,7 @@ void test_lim_list(void)
 
     //lu_mem_debugger__print(md);
 
-    TEST_ASSERT(mem_debugger_is_all_clear(md));
+    TEST_ASSERT(lu_mem_debugger__is_all_freed(md));
     lu_mem_debugger__destroy(md, true);
 }
 
@@ -112,7 +112,7 @@ void test_lim_list_max_size(void)
     lu_lim_list__destroy(list);
     lu_mem__destroy(mem, lu_g_mem);
 
-    TEST_ASSERT(mem_debugger_is_all_clear(md));
+    TEST_ASSERT(lu_mem_debugger__is_all_freed(md));
     lu_mem_debugger__destroy(md, true);
 }
 
@@ -157,7 +157,7 @@ void test_lim_list_clear(void)
 
     lu_mem_debugger__print(md);
 
-    TEST_ASSERT(mem_debugger_is_all_clear(md));
+    TEST_ASSERT(lu_mem_debugger__is_all_freed(md));
     lu_mem_debugger__destroy(md, true);
 }
 
@@ -188,6 +188,6 @@ void test_lim_list_pop(void)
     lu_lim_list__destroy(list);
     lu_mem_debugger__print(md);
 
-    TEST_ASSERT(mem_debugger_is_all_clear(md));
+    TEST_ASSERT(lu_mem_debugger__is_all_freed(md));
     lu_mem_debugger__destroy(md, true);
 }

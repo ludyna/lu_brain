@@ -817,7 +817,7 @@
 		Lu_Config config
 	);
 	static void lu_n_column__deinit(Lu_N_Column self);
-	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d);
+	static void lu_n_column__realloc(Lu_N_Column self);
 
 	// static inline lu_size lu_n_column__get_cell_ix(Lu_N_Column self, Lu_N_Cell cell)
 	// {
@@ -889,10 +889,11 @@
 
 		//lu__debug("\nWHATTT ix=%ld\n", ix);
 
-		for (lu_size z = 0; z < self->d; z++)
+		Lu_N_Cell cell;
+		lu_size z;
+		for (z = 0; z < self->d; z++)
 		{
-			Lu_N_Cell cell = lu_n_column__get_cell(self, z, ix);
-
+			cell = lu_n_column__get_cell(self, z, ix);
 			lu__debug_assert(cell);
 
 			// We don't save INTO n_column null cell (which is for z = 0 only), find another.
@@ -909,8 +910,14 @@
 			}
 		}
 
-		// should replace with column reallocation, should not normally happen
-		return NULL;
+		lu_n_column__realloc(self);
+
+		cell = lu_n_column__get_cell(self, z, ix);
+		lu__assert(lu_n_cell__is_blank(cell));
+
+		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem, non_null_count);
+
+		return cell;
 	}
 
 	static inline Lu_N_Cell lu_n_column__save_with_children(
@@ -926,10 +933,11 @@
 
 		lu_size ix = lu_n_column__children_to_ix(self, children, children_count);
 
-		for (lu_size z = 0; z < self->d; z++)
+		Lu_N_Cell cell;
+		lu_size z;
+		for (z = 0; z < self->d; z++)
 		{
-			Lu_N_Cell cell = lu_n_column__get_cell(self, z, ix);
-
+			cell = lu_n_column__get_cell(self, z, ix);
 			lu__debug_assert(cell);
 
 			// We don't save INTO n_column null cell (which is for z = 0 only), find another.
@@ -946,8 +954,14 @@
 			}
 		}
 
-		// should replace with column reallocation, should not normally happen
-		return NULL;
+		lu_n_column__realloc(self);
+
+		cell = lu_n_column__get_cell(self, z, ix);
+		lu__assert(lu_n_cell__is_blank(cell));
+
+		lu_n_cell__save(cell, children, children_count, &self->link_mem, non_null_count);
+
+		return cell;
 	}
 
 	static inline void lu_n_column__find_n_cell(

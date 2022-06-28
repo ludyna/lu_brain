@@ -41,13 +41,13 @@
 		lu_size 				realloc_count;
 	};
 
-	static inline lu_size mem_debugger_index(lu_p_byte address)
+	static inline lu_size lu_mem_debugger__get_ix(lu_p_byte address)
 	{
 		lu_size addr = (lu_size) address;
 		return addr & LU_MD_INDEX_MASK;
 	}
 
-	static inline lu_bool mem_debugger_is_all_clear(Lu_Mem_Debugger self)
+	static inline lu_bool lu_mem_debugger__is_all_freed(Lu_Mem_Debugger self)
 	{
 		return self->alloc_size == self->freed_size;
 	}
@@ -62,7 +62,7 @@
 	void mem_debugger_register_alloc(	Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  
 										const char* func, const char* file, int line);
 
-	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger self, lu_p_byte old_address, lu_p_byte new_address, lu_size size,  
 										const char* func, const char* file, int line);
 
 	void mem_debugger_register_free(	Lu_I_Mem_Debugger self, lu_p_byte address, 

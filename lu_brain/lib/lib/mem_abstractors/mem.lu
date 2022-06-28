@@ -30,7 +30,7 @@
 		#ifdef LU__DEBUG
 
 			if (self->debugger)
-				self->debugger->register_realloc(self->debugger, address, size_in_bytes, func, file, line);
+				self->debugger->register_realloc(self->debugger, p, address, size_in_bytes, func, file, line);
 
 		#endif
 

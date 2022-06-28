@@ -42,7 +42,7 @@ int main()
 
 	// Create brain and related
 
-	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__DEFAULT));
+	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__SEMEION));
 	lu__assert(brain);
 	
 	Lu_Rec image_rec = lu_brain__rec_add(

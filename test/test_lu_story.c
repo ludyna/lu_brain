@@ -118,7 +118,7 @@ void tearDown(void)
 
 	lu_mem_debugger__print(md);
 
-	TEST_ASSERT(mem_debugger_is_all_clear(md));
+	TEST_ASSERT(lu_mem_debugger__is_all_freed(md));
     lu_mem_debugger__destroy(md, true);
 }
 

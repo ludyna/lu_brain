@@ -29,7 +29,7 @@
 		void (*register_alloc)(		Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  
 									const char* func, const char* file, int line);
 		
-		void (*register_realloc)(	Lu_I_Mem_Debugger self, lu_p_byte address, lu_size size,  
+		void (*register_realloc)(	Lu_I_Mem_Debugger self, lu_p_byte old_address, lu_p_byte new_address, lu_size size,  
 									const char* func, const char* file, int line);
 
 		void (*register_free)(		Lu_I_Mem_Debugger self, lu_p_byte address, 

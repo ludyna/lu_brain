@@ -66,7 +66,7 @@
 		lu__debug("\n%-12s %lu", "alloc_count:", self->alloc_count);
 		lu__debug("\n%-12s %lu", "freed_count:", self->freed_count);
 
-		if (!mem_debugger_is_all_clear(self))
+		if (!lu_mem_debugger__is_all_freed(self))
 		{
 			Lu_Md_Item item;
 			lu__debug("\n%7s | %10s | %-40s | %-40s", "#", "Size", "Alloc", "Free");
@@ -103,7 +103,7 @@
 		lu__assert(size > 0);
 
 		Lu_Mem_Debugger self = (Lu_Mem_Debugger) imd;
-		lu_size i = mem_debugger_index(address);
+		lu_size i = lu_mem_debugger__get_ix(address);
 		lu__assert(i < LU_MD_HASH_SIZE);
 
 		Lu_Md_Item 				prev;
@@ -148,10 +148,10 @@
 		++self->alloc_count;
 	}
 	
-	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger imd, lu_p_byte address, lu_size size,  
+	void mem_debugger_register_realloc(	Lu_I_Mem_Debugger imd, lu_p_byte old_address, lu_p_byte new_address, lu_size size,  
 										const char* func, const char* file, int line)
 	{
-		if (address == NULL) 
+		if (new_address == NULL) 
 		{
 			lu__debug_message_internal(file, line, "\nMem_Debugger: Realloc failed!");
 			return;
@@ -173,7 +173,7 @@
 		lu__assert(imd);
 
 		Lu_Mem_Debugger self	= (Lu_Mem_Debugger) imd;
-		lu_size i 			= mem_debugger_index(address);
+		lu_size i 			= lu_mem_debugger__get_ix(address);
 		lu__assert(i < LU_MD_HASH_SIZE);
 
 		Lu_Md_Item item 	= self->items[i];

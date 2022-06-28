@@ -91,7 +91,7 @@
 			.n_column_w = 5, 
 			.n_column_h = 64,
 			.n_column_d = 3,
-			.n_link_mem_size = 64,
+			.n_link_mem_size = 1024,
 
 			//
 			// Waves level

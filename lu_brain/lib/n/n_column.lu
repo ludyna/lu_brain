@@ -67,40 +67,77 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static void lu_n_column__realloc(Lu_N_Column self, lu_size h, lu_size d)
+	static void lu_n_column__realloc(Lu_N_Column self)
 	{
-		// lu__assert(self);
-		// lu__assert(self->mem);
-		// lu__assert(w > 0);
-		// lu__assert(h > 0);
-		// lu__assert(d > 0);
+		//
+		// Current simple implementation is that we just simply increase d , calculate cells_size , 
+		// reinit additital "columns"
+		//
 
-		// self->w = w;
-		// self->h = h;
-		// self->d = d;
+		lu__assert(self);
+		lu__assert(self->mem);
 
-		// self->strings = (lu_size*) lu_mem__realloc(
-		// 	self->mem, 
-		// 	(lu_p_byte) self->strings, 
-		// 	sizeof(lu_size) * w * h * d + 1
-		// );
-		// lu__alloc_assert(self->strings);
+		lu_size old_cells_size = self->cells_size;
+		lu_size old_d = self->d;
 
-		// self->cells = (struct lu_n_cell*) lu_mem__realloc(
-		// 	self->mem, 
-		// 	(lu_p_byte) self->cells, 
-		// 	sizeof(struct lu_n_cell) * h * d + 1
-		// );
-		// lu__alloc_assert(self->cells);
+		self->d *= 2;
 
-		// relocating just like that is not enough, we will have to move data, because we might changed h
-		// and h is used in p_reg % h
+		self->cells_size = self->h * self->d;
+
+		self->cells = (struct lu_n_cell*) lu_mem__realloc(
+			self->mem, 
+			(lu_p_byte) self->cells, 
+			sizeof(struct lu_n_cell) * self->cells_size
+		);
+		lu__alloc_assert(self->cells);
+
+		//
+		// Init addr.cell_ix to 0 initally for new cells
+		//
+
+		lu_size i;
+		Lu_N_Cell n_cell;
+		for (i = old_cells_size; i < self->cells_size; i++)
+		{
+			n_cell = &self->cells[i];
+			n_cell->addr.cell_ix = 0;
+		}
+
+		//
+		// Init new cells only
+		//
+
+		lu_size z; 
+		lu_size ix;
+		lu_size z_shift;
+		
+		Lu_N_Cell null_n_cell = lu_n_column__get_null_cell(self);
+
+		for (z = old_d; z < self->d; z++)
+		{
+			z_shift = z * self->h;
+
+			for (ix = 0; ix < self->h; ix++)
+			{
+				i = z_shift + ix;
+				lu__assert(i < self->cells_size);
+
+				n_cell = &self->cells[i];
+
+				lu__assert(n_cell->addr.cell_ix == 0);
+
+				lu_n_cell__init(
+					n_cell, 
+					i, 
+					self->column_ix, 
+					null_n_cell->addr.layer_ix, 
+					null_n_cell->addr.area_ix, 
+					self->mem, 
+					self->w_match_cells_size
+				);
+			}
+		}
+
+		lu__debug("\nN_COLUMN REALLOCATED\n");
 	}
-
-
-	// static union lu_n_addr lu_n_column__save_with_vp_children(
-	// 	Lu_N_Column self, 
-	// 	Lu_N_Cell_VP* children, 
-	// 	lu_size children_count
-	// )
 
