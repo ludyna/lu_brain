@@ -82,8 +82,8 @@ int main()
 	
 	printf("\nTraining samples..");
 
-	//for (i = 0; i < smn_training_samples_count; i++)
 	for (i = 0; i < 10; i++)
+	// for (i = 0; i < smn_training_samples_count; i++)
 	{
 		d = smn_training_samples[i];
 		lu_wave__reset(save_wave);
@@ -94,9 +94,9 @@ int main()
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 		printf("\nEND OF %ld", i);
 
-		// lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
+		lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
 
-		// printf("\rTraining samples.. %lu trained.", i + 1);
+		printf("\rTraining samples.. %lu trained.", i + 1);
 		// fflush(stdout);
 	}
 	printf("\n");

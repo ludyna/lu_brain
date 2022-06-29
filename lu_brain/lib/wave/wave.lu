@@ -404,7 +404,7 @@
 
 		while((block = lu_data_seq__next_block_get(save_wave->seq)))
 		{
-			lu__debug("\n BEFORE PROCESS BLOCK: wave_id=%ld, block_ix=%ld", save_wave->seq->wave_id, block->block_ix);
+			// lu__debug("\n BEFORE PROCESS BLOCK: wave_id=%ld, block_ix=%ld", save_wave->seq->wave_id, block->block_ix);
 			lu_save_wave__process_block(save_wave, block, config);
 		}
 	}

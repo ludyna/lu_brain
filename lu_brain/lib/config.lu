@@ -28,13 +28,6 @@
 			// Network level
 			//
 			.n_mem = NULL,		
-			.n_names_size = 128,  			
-			.n_size_in_cell_0 = 10000,
-			.n_size_in_cell_1 = 10000,
-			.n_size_in_cell_2 = 10000,
-			.n_size_in_cell_3 = 10000,
-			.n_size_in_cell_4 = 10000,
-			.n_table_mod = 2, 
 			.n_column_w = 5, 
 			.n_column_h = 64,
 			.n_column_d = 3,
@@ -81,17 +74,10 @@
 			// Network level
 			//
 			.n_mem = NULL,		
-			.n_names_size = 128,  			
-			.n_size_in_cell_0 = 10000,
-			.n_size_in_cell_1 = 10000,
-			.n_size_in_cell_2 = 10000,
-			.n_size_in_cell_3 = 10000,
-			.n_size_in_cell_4 = 10000,
-			.n_table_mod = 2, 
 			.n_column_w = 5, 
-			.n_column_h = 64,
+			.n_column_h = 2000,
 			.n_column_d = 3,
-			.n_link_mem_size = 1024,
+			.n_link_mem_size = 2000,
 
 			//
 			// Waves level
@@ -181,14 +167,6 @@
 		//
 
 		lu__user_assert(self->n_mem, "n_mem is NULL");
-
-		lu__user_assert(self->n_names_size > 0, "n_names_size should be greater than 0");
-		lu__user_assert(self->n_size_in_cell_0 > 0, "n_size_in_cell_0 should be greater than 0");
-		lu__user_assert(self->n_size_in_cell_1 > 0, "n_size_in_cell_1 should be greater than 0");
-		lu__user_assert(self->n_size_in_cell_2 > 0, "n_size_in_cell_2 should be greater than 0");
-		lu__user_assert(self->n_size_in_cell_3 > 0, "n_size_in_cell_3 should be greater than 0");
-		lu__user_assert(self->n_size_in_cell_4 > 0, "n_size_in_cell_4 should be greater than 0");
-		lu__user_assert(self->n_table_mod > 1, "n_table_mod should be greater than 1"); 
 		lu__user_assert(self->n_column_w > 4, "n_column_size should be greater than 4");
 		lu__user_assert(self->n_column_h > 9, "n_column_size should be greater than 9");
 		lu__user_assert(self->n_column_d > 2, "n_column_size should be greater than 2");

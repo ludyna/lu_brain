@@ -77,6 +77,8 @@
 		lu__assert(self);
 		lu__assert(self->mem);
 
+		lu__debug("\nN_COLUMN REALLOCATING\n");
+
 		lu_size old_cells_size = self->cells_size;
 		lu_size old_d = self->d;
 
@@ -138,6 +140,5 @@
 			}
 		}
 
-		lu__debug("\nN_COLUMN REALLOCATED\n");
 	}
 
