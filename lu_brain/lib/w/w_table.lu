@@ -28,7 +28,10 @@
 		
 		self->w = w;
 		self->h = h;
+		self->wh = self->w * self->h;
+
 		self->h_max = h_max;
+		self->wh_max = self->w * self->h_max;
 
 		if (w == 1 && h == 1)
 		{
@@ -48,9 +51,14 @@
 
 		self->cells = (struct lu_w_cell*) lu_mem__alloc(
 			config->w_mem, 
-			sizeof(struct lu_w_cell) * w * h
+			sizeof(struct lu_w_cell) * self->wh_max
 		);
 		lu__alloc_assert(self->cells);
+
+		for (lu_size i = 0; i < self->wh_max; i++)
+		{
+			lu_w_cell__init_null(&self->cells[i]);
+		}
 
 		self->any_fired = false;
 

@@ -173,7 +173,7 @@
 				xy_shift = y_shift + x;
 
 				rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
-				lu_w_cell__reset(rec_w_p_cell);
+				lu_w_cell__init_null(rec_w_p_cell);
 
 				// reset string
 				not_null_cells_count = 0;
@@ -252,7 +252,7 @@
 				// else
 				// {
 				// 	// We reset so data from previous wave don't interfere
-				// 	lu_w_cell__reset(rec_w_p_cell);
+				// 	lu_w_cell__init_null(rec_w_p_cell);
 				// }
 
 

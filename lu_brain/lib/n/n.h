@@ -817,7 +817,6 @@
 		Lu_Config config
 	);
 	static void lu_n_column__deinit(Lu_N_Column self);
-	static void lu_n_column__realloc(Lu_N_Column self);
 
 	// static inline lu_size lu_n_column__get_cell_ix(Lu_N_Column self, Lu_N_Cell cell)
 	// {
@@ -872,6 +871,81 @@
 	)
 	{
 		return lu_n_column__hash_to_ix(self, lu_w_cell__children_hash_comp(children, children_count));
+	}
+
+	static void lu_n_column__realloc(Lu_N_Column self)
+	{
+		//
+		// Current simple implementation is that we just simply increase d , calculate cells_size , 
+		// reinit additital "columns"
+		//
+
+		lu__assert(self);
+		lu__assert(self->mem);
+
+		lu__debug("\nN_COLUMN REALLOCATING\n");
+
+		lu_size old_cells_size = self->cells_size;
+		lu_size old_d = self->d;
+
+		self->d *= 2;
+
+		self->cells_size = self->h * self->d;
+
+		self->cells = (struct lu_n_cell*) lu_mem__realloc(
+			self->mem, 
+			(lu_p_byte) self->cells, 
+			sizeof(struct lu_n_cell) * self->cells_size
+		);
+		lu__alloc_assert(self->cells);
+
+		//
+		// Init addr.cell_ix to 0 initally for new cells
+		//
+
+		lu_size i;
+		Lu_N_Cell n_cell;
+		for (i = old_cells_size; i < self->cells_size; i++)
+		{
+			n_cell = &self->cells[i];
+			n_cell->addr.cell_ix = 0;
+		}
+
+		//
+		// Init new cells only
+		//
+
+		lu_size z; 
+		lu_size ix;
+		lu_size z_shift;
+		
+		Lu_N_Cell null_n_cell = lu_n_column__get_null_cell(self);
+
+		for (z = old_d; z < self->d; z++)
+		{
+			z_shift = z * self->h;
+
+			for (ix = 0; ix < self->h; ix++)
+			{
+				i = z_shift + ix;
+				lu__assert(i < self->cells_size);
+
+				n_cell = &self->cells[i];
+
+				lu__assert(n_cell->addr.cell_ix == 0);
+
+				lu_n_cell__init(
+					n_cell, 
+					i, 
+					self->column_ix, 
+					null_n_cell->addr.layer_ix, 
+					null_n_cell->addr.area_ix, 
+					self->mem, 
+					self->w_match_cells_size
+				);
+			}
+		}
+
 	}
 
 	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
@@ -977,6 +1051,8 @@
 
 		*p_n_cell = n_cell;
 	}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table

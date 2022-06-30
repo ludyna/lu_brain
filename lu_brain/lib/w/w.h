@@ -176,6 +176,8 @@
 		lu_size w;
 		lu_size h;
 		lu_size h_max;
+		lu_size wh;
+		lu_size wh_max;
 
 		lu_size normal_children_size;
 
@@ -208,9 +210,13 @@
 	// Returns NULL if x or y out of range.
 	static inline Lu_W_Cell lu_w_table__get_w_cell(Lu_W_Table self, lu_size x, lu_size y)
 	{ 
-		if (x < self->w && y < self->h)
+		lu__assert(self);
+		
+		lu_size ix = y * self->w + x;
+
+		if (ix < self->wh)
 		{
-			return &self->cells[y * self->w + x];
+			return &self->cells[ix];
 		}
 		else
 		{

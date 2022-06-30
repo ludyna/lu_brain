@@ -83,7 +83,7 @@
 		Lu_N_Column n_column;
 	};
 
-	static inline void lu_w_cell__reset(Lu_W_Cell self)
+	static inline void lu_w_cell__init_null(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
 
@@ -240,8 +240,8 @@
 		for (lu_size i = 0; i < children_count; i++)
 		{
 			w_cell = children[i];
-			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell); // this is correct
+			lu__assert(w_cell);
+			lu__assert(w_cell->n_cell); // this is correct
 
 			value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
 
