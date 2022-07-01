@@ -30,7 +30,6 @@
 		LU_W_REC_STATE__END
 	};
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Addr
 
@@ -87,7 +86,7 @@
 	// Constructors / Destructors
 	//
 
-	static inline void lu_w_cell__init_null(Lu_W_Cell self)
+	static inline void lu_w_cell__reset(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
 
@@ -399,7 +398,7 @@
 		return self;
 	}
 
-	static inline Lu_W_Match_Cell lu_w_match_cell__init_null(Lu_W_Match_Cell self)
+	static inline Lu_W_Match_Cell lu_w_match_cell__reset(Lu_W_Match_Cell self)
 	{
 		return lu_w_match_cell__init(self, LU_WAVE_IX__NOT_SET, LU_BLOCK_IX__NOT_SET, 0);
 	}

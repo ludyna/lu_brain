@@ -480,7 +480,7 @@
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(layer_rec, self->wave_ix);
 		lu__assert(w_rec);
 
-		lu_w_rec__init_null(w_rec);
+		lu_w_rec__reset(w_rec);
 	}
 
 	void lu_match_wave__reset(Lu_Wave self)
@@ -513,7 +513,7 @@
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(layer_rec, self->wave_ix);
 		lu__assert(w_rec);
 
-		lu_w_rec__init_null(w_rec);
+		lu_w_rec__reset(w_rec);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

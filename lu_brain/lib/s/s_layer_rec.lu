@@ -43,7 +43,7 @@
 			w_rec = lu_s_layer_rec__get_save_w_rec(self, i);
 			lu__assert(w_rec);
 
-			lu_w_rec__init_null(w_rec);
+			lu_w_rec__reset(w_rec);
 		}
 
 		for (lu_size i = 0; i < self->match_w_recs_size; i++)
@@ -51,7 +51,7 @@
 			w_rec = lu_s_layer_rec__get_match_w_rec(self, i);
 			lu__assert(w_rec);
 
-			lu_w_rec__init_null(w_rec);
+			lu_w_rec__reset(w_rec);
 		}
 		
 		return self;	
@@ -134,10 +134,10 @@
 		Lu_S_Layer_Comp comp;
 
 		lu_size wh = data->h * data->w;
-		Lu_S_View_P p_view;
-		Lu_W_Table_P p_table;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
 
-		Lu_W_Cell_P w_p_cell;
+		Lu_W_Cell_P w_cell_p;
 		Lu_Comp_Calc p_comp_calc;
 
 		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(&self->super, wave->wave_ix);
@@ -170,7 +170,7 @@
 				xy_shift = y_shift + x;
 
 				rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
-				lu_w_cell__init_null(rec_w_p_cell);
+				lu_w_cell__reset(rec_w_p_cell);
 
 				// reset string
 				children[0] = NULL;
@@ -181,19 +181,24 @@
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
 					lu__debug_assert(comp->super.type == LU_S_LAYER__COMP);
 
-					p_view = &comp->p_view;
+					s_view_p = &comp->p_view;
 
-					p_table = lu_s_view_p__get_w_save_table(p_view, wave->wave_ix);
-					lu__debug_assert(p_table);
+					w_table_p = lu_s_view_p__get_w_save_table(s_view_p, wave->wave_ix);
+					lu__debug_assert(w_table_p);
 
-					p_comp_calc = &p_view->comp_calc;
-					w_p_cell = lu_w_table_p__get_w_cell_by_ix(p_table, xy_shift);
+					p_comp_calc = &s_view_p->comp_calc;
+					w_cell_p = lu_w_table_p__get_w_cell_by_ix(w_table_p, xy_shift);
+
+					if (w_rec->state == LU_W_REC_STATE__ONE || w_rec->state == LU_W_REC_STATE__START)
+					{
+						lu_w_cell_p__reset(w_cell_p);
+					}
 
 					// Get value from Data
 					v = data->values[z * wh + xy_shift];
 
 					lu_w_cell_p__update(
-						w_p_cell,
+						w_cell_p,
 						w_rec->state,
 						v
 					);
@@ -201,11 +206,11 @@
 					if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
 					{
 						children[z] = lu_w_cell_p__save(
-							w_p_cell, 
+							w_cell_p, 
 							x, 
 							y, 
 							p_comp_calc, 
-							p_view->n_comp_table
+							s_view_p->n_comp_table
 						);
 
 						lu__assert(children[z]);
@@ -303,9 +308,9 @@
 
 		lu_size wh = data->h * data->w;
 
-		Lu_S_View_P p_view;
-		Lu_W_Table_P p_table;
-		Lu_W_Cell_P w_p_cell;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
+		Lu_W_Cell_P w_cell_p;
 		Lu_Comp_Calc p_comp_calc;
 
 		processor->wave_id = wave->wave_id;
@@ -328,19 +333,24 @@
 					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
 					lu__debug_assert(comp->super.type == LU_S_LAYER__COMP);
 
-					p_view = &comp->p_view;
+					s_view_p = &comp->p_view;
 
-					p_table = lu_s_view_p__get_w_match_table(p_view, wave->wave_ix);
-					lu__debug_assert(p_table);
+					w_table_p = lu_s_view_p__get_w_match_table(s_view_p, wave->wave_ix);
+					lu__debug_assert(w_table_p);
 
-					p_comp_calc = &p_view->comp_calc;
-					w_p_cell = lu_w_table_p__get_w_cell_by_ix(p_table, xy_shift);
+					p_comp_calc = &s_view_p->comp_calc;
+					w_cell_p = lu_w_table_p__get_w_cell_by_ix(w_table_p, xy_shift);
+
+					if (w_rec->state == LU_W_REC_STATE__ONE || w_rec->state == LU_W_REC_STATE__START)
+					{
+						lu_w_cell_p__reset(w_cell_p);
+					}
 
 					// Get value from Data
 					v = data->values[z * wh + xy_shift];
 
 					lu_w_cell_p__update(
-						w_p_cell,
+						w_cell_p,
 						w_rec->state,
 						v
 					);
@@ -348,15 +358,15 @@
 					if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
 					{
 						lu_w_cell_p__save(
-							w_p_cell, 
+							w_cell_p, 
 							x, 
 							y, 
 							p_comp_calc, 
-							p_view->n_comp_table
+							s_view_p->n_comp_table
 						);
 
 						// now that we have detected n_cell, we can fire it
-						lu_w_processor__fire_vp_parents_with_sig(processor, w_p_cell->n_cell, w_p_cell->n_column, 1.0);
+						lu_w_processor__fire_vp_parents_with_sig(processor, w_cell_p->n_cell, w_cell_p->n_column, 1.0);
 					}
 
 

@@ -61,7 +61,7 @@
 		enum lu_w_rec_state state;
 	};
 
-	static inline Lu_W_Rec lu_w_rec__init_null(Lu_W_Rec self)
+	static inline Lu_W_Rec lu_w_rec__reset(Lu_W_Rec self)
 	{
 		lu__assert(self);
 
@@ -323,7 +323,7 @@
 				{
 					lu__debug("0 ");
 				}
-				else if (w_cell->n_cell == NULL || w_cell->n_column == NULL)
+				else if (lu_w_cell__is_not_set(w_cell))
 				{
 					lu__debug("E ");
 				}

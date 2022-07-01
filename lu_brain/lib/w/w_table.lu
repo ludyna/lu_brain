@@ -57,7 +57,7 @@
 
 		for (lu_size i = 0; i < self->wh_max; i++)
 		{
-			lu_w_cell__init_null(&self->cells[i]);
+			lu_w_cell__reset(&self->cells[i]);
 		}
 
 		self->any_fired = false;
