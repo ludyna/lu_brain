@@ -99,15 +99,15 @@
 
 		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix);
 
-		// char buffer[50];
-		// lu_w_rec_state__to_str(w_rec->state, buffer);
-		// lu__debug(
-		// 	"\n\nREC_SAVE: w_rec->state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld \n\n", 
-		// 	buffer,
-		// 	w_rec->wave_id,
-		// 	w_rec->wave_ix,
-		// 	w_rec->block_ix
-		// );
+		char buffer[50];
+		lu_w_rec_state__to_str(w_rec->state, buffer);
+		lu__debug(
+			"\n\nREC_SAVE: w_rec->state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld \n\n", 
+			buffer,
+			w_rec->wave_id,
+			w_rec->wave_ix,
+			w_rec->block_ix
+		);
 
 		Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
 
@@ -156,9 +156,6 @@
 		
 		curr_w_table->any_fired = false;
 
-		lu_size not_null_cells_count;
-		lu_size saved_count;
-
 		// Lu_W_Cell_P vp_cell;
 
 		Lu_N_Column n_column;
@@ -176,8 +173,6 @@
 				lu_w_cell__init_null(rec_w_p_cell);
 
 				// reset string
-				not_null_cells_count = 0;
-				saved_count = 0;
 				children[0] = NULL;
 
 				// Collect children
@@ -214,23 +209,12 @@
 						);
 
 						lu__assert(children[z]);
-
-						if (children[z]->sig > 0)
-						{
-							++not_null_cells_count;
-						}
-
-						++saved_count;
 					}
 
 				} // for (lu_size z = 0
 
-				// Save all links including for non changed cells 
-				if (saved_count > 0)
+				if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
 				{
-					// children_count always equal to depth
-					lu__assert(saved_count == depth);
-
 					//
 					// N Cell save
 					//
@@ -238,7 +222,7 @@
 					n_column = lu_n_table__get_column(rec_n_table, x, y);
 					lu__assert(n_column);
 					
-					n_cell = lu_n_column__save_with_vp_children(n_column, children, depth, not_null_cells_count);
+					n_cell = lu_n_column__save_with_vp_children(n_column, children, z);
 					lu__assert(n_cell);
 
 					//
@@ -246,18 +230,12 @@
 					//
 
 					lu_w_cell__save(rec_w_p_cell, n_cell, n_column);
-
-					curr_w_table->any_fired = true;
 				}
-				// else
-				// {
-				// 	// We reset so data from previous wave don't interfere
-				// 	lu_w_cell__init_null(rec_w_p_cell);
-				// }
-
 
 			}  // for (x = 0
 		} // for (y = 0
+
+		curr_w_table->any_fired = true;
 
 		return curr_w_table;
 	}

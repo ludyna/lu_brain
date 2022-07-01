@@ -179,14 +179,34 @@
 		curr_w_table->any_fired = false;
 
 		Lu_W_Cell children[LU_N_CELL__CHILDREN_MAX];
-		children[LU_N_CELL__CHILDREN_MAX - 1] = NULL;
 		
-		lu_size non_null_count = 0;
+		lu_size children_count = 0;
 
 		Lu_N_Column n_column;
 		Lu_N_Cell n_cell;
 
 		lu_size i;
+
+		// if(prev_w_table->w >= curr_w_table->w)
+		// {
+			lu__debug(
+				"\n pw=(%ld, %ld), cw=(%ld, %ld) \n", 
+				prev_w_table->w,
+				prev_w_table->h,
+				curr_w_table->w,
+				curr_w_table->h
+			);
+		// }
+		// if (prev_w_table->h >= curr_w_table->h)
+		// {
+			lu__debug(
+				"\n pw=(%ld, %ld), cw=(%ld, %ld) \n", 
+				prev_w_table->w,
+				prev_w_table->h,
+				curr_w_table->w,
+				curr_w_table->h
+			);
+		// }
 
 		for (y = 0; y < curr_w_table->h; y++)
 		{
@@ -203,31 +223,27 @@
 					children[i] = NULL;
 				}
 
-				lu_w_table__collect_children(prev_w_table, x, y, children, &non_null_count);
+				lu_w_table__collect_children(prev_w_table, x, y, children, &children_count);
 
-				lu__debug_assert(non_null_count <= prev_w_table->normal_children_size);
+				lu__debug_assert(children_count == prev_w_table->normal_children_size);
 
-				if (non_null_count)
-				{
-					n_column = lu_n_table__get_column(curr_n_table, x, y);
-					lu__assert(n_column);
+				n_column = lu_n_table__get_column(curr_n_table, x, y);
+				lu__assert(n_column);
 
-					n_cell = lu_n_column__save_with_children(
-						n_column, 
-						children, 
-						prev_w_table->normal_children_size, 
-						non_null_count
-					);
-					lu__assert(n_cell);
+				n_cell = lu_n_column__save_with_children(
+					n_column, 
+					children, 
+					children_count
+				);
+				lu__assert(n_cell);
 
-					lu_w_cell__save(curr_w_cell, n_cell, n_column);
+				lu_w_cell__save(curr_w_cell, n_cell, n_column);
 
-					++cells_saved_count;
-
-					curr_w_table->any_fired = true;
-				}
+				++cells_saved_count;
 			}
 		}
+
+		curr_w_table->any_fired = true;
 
 		return curr_w_table;
 	}

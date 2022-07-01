@@ -556,8 +556,7 @@
 		Lu_N_Cell self, 
 		Lu_W_Cell_P* children, 
 		lu_size children_count,
-		Lu_N_Link_Mem link_mem,
-		lu_size non_null_count
+		Lu_N_Link_Mem link_mem
 	)
 	{
 		lu__assert(self);
@@ -591,8 +590,7 @@
 		Lu_N_Cell self, 
 		Lu_W_Cell* children, 
 		lu_size children_count,
-		Lu_N_Link_Mem link_mem,
-		lu_size non_null_count
+		Lu_N_Link_Mem link_mem
 	)
 	{
 		lu__assert(self);
@@ -951,8 +949,7 @@
 	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
 		Lu_N_Column self, 
 		Lu_W_Cell_P* children, 
-		lu_size children_count,
-		lu_size non_null_count
+		lu_size children_count
 	)
 	{
 		lu__debug_assert(self);
@@ -975,7 +972,7 @@
 
 			if (lu_n_cell__is_blank(cell))
 			{
-				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem, non_null_count);
+				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
 				return cell;
 			}
 			else if (lu_n_link_addr__is_vp_eq(cell->children, children, children_count, &self->link_mem)) 
@@ -989,7 +986,7 @@
 		cell = lu_n_column__get_cell(self, z, ix);
 		lu__assert(lu_n_cell__is_blank(cell));
 
-		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem, non_null_count);
+		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
 
 		return cell;
 	}
@@ -997,8 +994,7 @@
 	static inline Lu_N_Cell lu_n_column__save_with_children(
 		Lu_N_Column self, 
 		Lu_W_Cell* children, 
-		lu_size children_count,
-		lu_size non_null_count
+		lu_size children_count
 	)
 	{
 		lu__debug_assert(self);
@@ -1019,7 +1015,7 @@
 
 			if (lu_n_cell__is_blank(cell))
 			{
-				lu_n_cell__save(cell, children, children_count, &self->link_mem, non_null_count);
+				lu_n_cell__save(cell, children, children_count, &self->link_mem);
 				return cell;
 			}
 			else if (lu_n_link_addr__is_eq(cell->children, children, children_count, &self->link_mem)) 
@@ -1033,7 +1029,7 @@
 		cell = lu_n_column__get_cell(self, z, ix);
 		lu__assert(lu_n_cell__is_blank(cell));
 
-		lu_n_cell__save(cell, children, children_count, &self->link_mem, non_null_count);
+		lu_n_cell__save(cell, children, children_count, &self->link_mem);
 
 		return cell;
 	}

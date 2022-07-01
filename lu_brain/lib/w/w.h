@@ -212,16 +212,12 @@
 	{ 
 		lu__assert(self);
 		
-		lu_size ix = y * self->w + x;
-
-		if (ix < self->wh)
-		{
-			return &self->cells[ix];
-		}
-		else
+		if (x >= self->w || y >= self->h)
 		{
 			return NULL;
 		}
+
+		return &self->cells[y * self->w + x];
 	}
 
 	static inline void lu_w_table__collect_children(
@@ -229,7 +225,7 @@
 		lu_size x, 
 		lu_size y, 
 		Lu_W_Cell children[], 
-		lu_size *non_null_count
+		lu_size *children_count
 	)
 	{
 		lu__assert(self);
@@ -307,9 +303,10 @@
 			}
 		}
 
-		lu__debug_assert(local_non_null_count <= self->normal_children_size);
+		lu__debug("\nlocal_non_null_count=%ld, self->normal_children_size=%ld\n", local_non_null_count, self->normal_children_size);
+		lu__debug_assert(local_non_null_count == self->normal_children_size);
 
-		*non_null_count = local_non_null_count;
+		*children_count = local_non_null_count;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
