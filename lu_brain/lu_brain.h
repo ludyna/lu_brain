@@ -316,7 +316,7 @@
 	void lu_wave__process(Lu_Wave, struct lu_process_config);
 
 	//
-	// Properties
+	// Get
 	//
 
 	struct lu_process_config lu_wave__get_process_config(Lu_Wave);

@@ -23,7 +23,7 @@
 	};
 
 	//	
-	// Properties
+	// Get
 	//
 
 	static inline void lu_data__value_set(Lu_Data d, lu_size x, lu_size y, lu_size z, lu_value value) 

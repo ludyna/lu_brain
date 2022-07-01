@@ -20,7 +20,7 @@
 		void 			(*node_before_destroy)(Lu_Lim_List, Lu_L_Node);
 	};
 
-	// Properties
+	// Get
 
 	static inline lu_size lu_lim_list__count(Lu_Lim_List self) { return lu_list__count(&self->super); }
 	static inline lu_size lu_lim_list__size(Lu_Lim_List self) { return self->max_size; }

@@ -8,6 +8,21 @@
 
  	};
 
+ 	//
+ 	// Constructors / Destructors
+ 	//
+
 	static Name name__create();
 	static void name__destroy(Name self);
 
+	//
+	// Get
+	// 
+
+	//
+	// Is 
+	//
+
+	//
+	// Methods
+	//

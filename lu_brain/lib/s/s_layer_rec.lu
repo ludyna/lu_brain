@@ -187,7 +187,7 @@
 					lu__debug_assert(p_table);
 
 					p_comp_calc = &p_view->comp_calc;
-					w_p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
+					w_p_cell = lu_w_table_p__get_w_cell_by_ix(p_table, xy_shift);
 
 					// Get value from Data
 					v = data->values[z * wh + xy_shift];
@@ -334,7 +334,7 @@
 					lu__debug_assert(p_table);
 
 					p_comp_calc = &p_view->comp_calc;
-					w_p_cell = lu_w_table_p__get_cell(p_table, xy_shift);
+					w_p_cell = lu_w_table_p__get_w_cell_by_ix(p_table, xy_shift);
 
 					// Get value from Data
 					v = data->values[z * wh + xy_shift];

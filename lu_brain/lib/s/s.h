@@ -249,6 +249,19 @@
 		lu__debug("\n 		layer_ix: %d, type: %s", self->layer_ix, buffer);
 	}
 
+	static inline void lu_s_layer_base__print_basic_info(Lu_S_Layer_Base self)
+	{
+		lu__assert(self);
+
+		char type[50];
+		char tag[50];
+
+		lu_s_layer_type__to_str(self->type, type);
+		lu_area_tag__to_str(self->tag, tag);
+
+		lu__debug("tag=%s, area_ix=%ld, layer_ix=%ld, layer type=%ld", tag, self->area_ix, self->layer_ix, type);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Comp
 //
@@ -280,6 +293,10 @@
 		Lu_Arr w_save_tables;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static Lu_S_Layer lu_s_layer__init(
 		Lu_S_Layer self, 
 		Lu_Config config, 
@@ -309,8 +326,28 @@
 	static void lu_s_layer__destroy(Lu_S_Layer_Base self);
 
 	//
-	// Properties
+	// Get
 	//
+
+	static inline lu_size lu_s_layer__get_layer_ix(Lu_S_Layer self)
+	{
+		return self->super.layer_ix;
+	} 
+
+	static inline lu_size lu_s_layer__get_area_ix(Lu_S_Layer self)
+	{
+		return self->super.area_ix;
+	}
+
+	static inline enum lu_s_layer_type lu_s_layer__get_type(Lu_S_Layer self)
+	{
+		return self->super.type;
+	}
+
+	static inline enum lu_area_tag lu_s_layer__get_tag(Lu_S_Layer self)
+	{
+		return self->super.tag;
+	}
 
 	static inline Lu_S_Layer_Base lu_s_layer__get_parent_layer(Lu_S_Layer self)
 	{
@@ -326,11 +363,6 @@
 		return self->n_table;
 	}
 
-	static inline lu_size lu_s_layer__get_layer_ix(Lu_S_Layer self)
-	{
-		return self->super.layer_ix;
-	}
-
 	static inline Lu_W_Table lu_s_layer__get_w_table(Lu_S_Layer self, lu_size wave_id)
 	{
 		lu__debug_assert(self);
@@ -340,16 +372,6 @@
 		return lu_arr__get(self->w_save_tables, wave_id);
 	}
 
-	static inline enum lu_s_layer_type lu_s_layer__get_type(Lu_S_Layer self)
-	{
-		return self->super.type;
-	}
-
-	static inline enum lu_area_tag lu_s_layer__get_tag(Lu_S_Layer self)
-	{
-		return self->super.tag;
-	}
-
 	static inline Lu_S_Layer lu_s_layer__get_parent(Lu_S_Layer self)
 	{
 		Lu_S_Layer_Base layer_base = self->super.p;
@@ -357,6 +379,10 @@
 
 		return (Lu_S_Layer) layer_base;
 	}
+
+	//
+	// Methods
+	//
 
 
 	static Lu_W_Table lu_s_layer__save(
@@ -385,6 +411,11 @@
 		*p_n_column = n_column;
 
 		lu_n_column__find_n_cell(n_column, addr, p_n_cell);
+	}
+
+	static inline void lu_s_layer__print_basic_info(Lu_S_Layer self)
+	{
+		lu_s_layer_base__print_basic_info(&self->super);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -706,7 +737,7 @@
 	};
 
 	//
-	// Properties
+	// Get
 	// 
 
 	static inline Lu_S_Area lu_s__get_area(Lu_S self, lu_size area_ix)

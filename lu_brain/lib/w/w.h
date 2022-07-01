@@ -6,8 +6,18 @@
 // 
 //
 
+	//
+	// Lu_S_Layer
+	//
+
 	typedef struct lu_s_layer* Lu_S_Layer;
+
 	static inline Lu_N_Table lu_s_layer__get_n_table(Lu_S_Layer self);
+	static inline void lu_s_layer__print_basic_info(Lu_S_Layer self);
+
+	//
+	// Lu_S 
+	//
 
 	typedef struct lu_s* Lu_S;
 	static inline void lu_s__find_n_cell_and_n_column(		
@@ -137,13 +147,67 @@
 		struct lu_w_cell_p* cells;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size w, lu_size h);
 	static void lu_w_table_p__destroy(Lu_W_Table_P self);
 
-	static inline Lu_W_Cell_P lu_w_table_p__get_cell(Lu_W_Table_P self, lu_size addr)
+	//
+	// Get
+	//
+
+	static inline Lu_W_Cell_P lu_w_table_p__get_w_cell_by_ix(Lu_W_Table_P self, lu_size ix)
 	{
-		return &self->cells[addr];
+		return &self->cells[ix];
 	}
+
+	static inline Lu_W_Cell_P lu_w_table_p__get_w_cell(Lu_W_Table_P self, lu_size x, lu_size y)
+	{
+		return &self->cells[y * self->w + x];
+	}
+
+	//
+	// Methods
+	//
+
+	static inline void lu_w_table_p__print(Lu_W_Table_P self)
+	{
+		lu__assert(self);
+
+		lu_size x;
+		lu_size y;
+
+		Lu_W_Cell_P w_cell;
+		lu_size y_shift;
+
+		lu__debug("\nLU_W_TABLE_P:");
+
+
+		for (y = 0; y < self->h; y++)
+		{
+			y_shift = y * self->w;
+			lu__debug("\n   ");
+			for (x = 0; x < self->w; x++)
+			{
+				w_cell = lu_w_table_p__get_w_cell(self, x, y);
+				if (w_cell == NULL)
+				{
+					lu__debug("0 ");
+				}
+				else if (lu_w_cell_p__is_not_set(w_cell))
+				{
+					lu__debug("E ");
+				}
+				else
+				{
+					lu__debug("X ");
+				}
+			}
+		}
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Table_V
@@ -187,6 +251,10 @@
 		lu_bool any_fired;
 	};
 
+	//
+	// Constructors / Destructors
+	// 
+
 	static Lu_W_Table lu_w_table__create(
 		Lu_S_Layer s_layer, 
 		Lu_Config config, 
@@ -197,14 +265,9 @@
 
 	static void lu_w_table__destroy(Lu_W_Table self);
 
-	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, lu_size wave_ix, lu_size block_ix)
-	{
-		if (self == NULL) return false;
-
-		if (self->wave_ix != wave_ix || self->block_ix != block_ix) return false;
-
-		return self->any_fired;
-	}
+	//
+	// Get
+	//
 
 	////
 	// Returns NULL if x or y out of range.
@@ -220,6 +283,59 @@
 		return &self->cells[y * self->w + x];
 	}
 
+
+	//
+	// Methods
+	//
+
+	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, lu_size wave_ix, lu_size block_ix)
+	{
+		if (self == NULL) return false;
+
+		if (self->wave_ix != wave_ix || self->block_ix != block_ix) return false;
+
+		return self->any_fired;
+	}
+
+	static inline void lu_w_table__print(Lu_W_Table self)
+	{
+		lu__assert(self);
+		lu__assert(self->s_layer);
+
+		lu_size x;
+		lu_size y;
+
+		Lu_W_Cell w_cell;
+		lu_size y_shift;
+
+		lu__debug("\nLU_W_TABLE from s_layer (");
+		lu_s_layer__print_basic_info(self->s_layer);
+		lu__debug("):");
+
+		for (y = 0; y < self->h_max; y++)
+		{
+			y_shift = y * self->w;
+			lu__debug("\n   ");
+			for (x = 0; x < self->w; x++)
+			{
+				w_cell = lu_w_table__get_w_cell(self, x, y);
+				if (w_cell == NULL)
+				{
+					lu__debug("0 ");
+				}
+				else if (w_cell->n_cell == NULL || w_cell->n_column == NULL)
+				{
+					lu__debug("E ");
+				}
+				else
+				{
+					lu__debug("X ");
+				}
+			}
+		}
+	}
+
+
 	static inline void lu_w_table__collect_children(
 		Lu_W_Table self, 
 		lu_size x, 
@@ -232,7 +348,7 @@
 		lu__assert(self->s_layer);
 
 		lu_byte i = 0;
-		lu_size local_non_null_count = 0;
+		*children_count = 0;
 
 		Lu_N_Table n_table = lu_s_layer__get_n_table(self->s_layer);
 		lu__assert(n_table);
@@ -251,62 +367,40 @@
 		children[i] = lu_w_table__get_w_cell(self, x, y);
 		if (children[i])
 		{
-			++local_non_null_count;
+			++(*children_count);
 
-			if (children[i]->n_cell == NULL)
-			{
-				n_column = lu_n_table__get_column(n_table, x, y);
-			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
-			 	children[i]->n_column = n_column;
-			}
+			lu__assert(children[i]->n_cell);
 		}
 
 		++i;
 		children[i] = lu_w_table__get_w_cell(self, x + 1, y);
 		if (children[i])
 		{
-			++local_non_null_count;
+			++(*children_count);
 
-			if (children[i]->n_cell == NULL)
-			{
-				n_column = lu_n_table__get_column(n_table, x + 1, y);
-			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
-			 	children[i]->n_column = n_column;
-			}
+			lu__assert(children[i]->n_cell);
 		}
 
 		++i;
 		children[i] = lu_w_table__get_w_cell(self, x, y + 1);
 		if (children[i]) 
 		{
-			++local_non_null_count;
+			++(*children_count);
 
-			if (children[i]->n_cell == NULL)
-			{
-				n_column = lu_n_table__get_column(n_table, x, y + 1);
-			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
-			 	children[i]->n_column = n_column;
-			}
+			lu__assert(children[i]->n_cell);
 		}
 
 		++i;
 		children[i] = lu_w_table__get_w_cell(self, x + 1, y + 1);
 		if (children[i]) 
 		{
-			++local_non_null_count;
+			++(*children_count);
 
-			if (children[i]->n_cell == NULL)
-			{
-				n_column = lu_n_table__get_column(n_table, x + 1, y + 1);
-			 	children[i]->n_cell = lu_n_column__get_null_cell(n_column);
-			 	children[i]->n_column = n_column;
-			}
+			lu__assert(children[i]->n_cell);
 		}
 
-		lu__debug("\nlocal_non_null_count=%ld, self->normal_children_size=%ld\n", local_non_null_count, self->normal_children_size);
-		lu__debug_assert(local_non_null_count == self->normal_children_size);
-
-		*children_count = local_non_null_count;
+		lu__debug("\n*children_count=%ld, self->normal_children_size=%ld\n", *children_count, self->normal_children_size);
+		lu__debug_assert(*children_count == self->normal_children_size);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

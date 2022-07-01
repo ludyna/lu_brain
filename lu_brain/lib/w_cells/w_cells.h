@@ -83,6 +83,10 @@
 		Lu_N_Column n_column;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static inline void lu_w_cell__init_null(Lu_W_Cell self)
 	{
 		lu__debug_assert(self);
@@ -90,6 +94,21 @@
 		self->n_cell = NULL;
 		self->n_column = NULL;
 	}
+
+	//
+	// Is 
+	//
+
+	static inline lu_bool lu_w_cell__is_not_set(Lu_W_Cell self)
+	{
+		lu__assert(self);
+
+		return (self->n_cell == NULL) || (self->n_column == NULL);
+	}
+
+	//
+	// Methods
+	//
 
 	static inline Lu_W_Cell lu_w_cell__save(
 		Lu_W_Cell self,
@@ -117,14 +136,13 @@
 		// we have it here to indicate if cell was active (not "null" cell)
 		lu_value sig;
 
-		lu_byte state;
 		lu_value p_1;
 		lu_value p_2;
 	};
 
-	#define LU_W_CELL_P__START 0
-	#define LU_W_CELL_P__ONE 1
-	#define LU_W_CELL_P__READY 2
+	//
+	// Constructors / Destructors
+	// 
 
 	static inline void lu_w_cell_p__reset(Lu_W_Cell_P self)
 	{
@@ -133,36 +151,50 @@
 		self->n_column = NULL;
 		self->n_cell = NULL;
 		self->sig = 0;
-		self->state = LU_W_CELL_P__START;
 		self->p_1 = 0;
 		self->p_2 = 0;
 	}
 
-	static inline void lu_w_cell_p__register(
-		Lu_W_Cell_P self, 
-		lu_bool is_reset,
-		lu_value p, 
-		Lu_Process_Config config
-	)
+	// static inline void lu_w_cell_p__register(
+	// 	Lu_W_Cell_P self, 
+	// 	lu_bool is_reset,
+	// 	lu_value p, 
+	// 	Lu_Process_Config config
+	// )
+	// {
+	// 	is_reset && (self->state = LU_W_CELL_P__START);
+
+	// 	#pragma GCC diagnostic ignored "-Wunused-value"
+	// 		self->state == LU_W_CELL_P__START && (self->p_1 = p);
+	// 		self->state == LU_W_CELL_P__ONE && (self->p_2 = p); 
+	// 	#pragma GCC diagnostic pop
+
+	// 	++self->state; 
+
+	// 	lu__debug_assert(self->state <= LU_W_CELL_P__READY);
+	// 	// self->state > LU_W_CELL_P__READY && self->state == LU_W_CELL_P__START;
+	// }
+
+	// static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self, lu_value signif_p)
+	// {
+	// 	// If no changes its important information for us
+	// 	return self->state == LU_W_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
+	// }
+
+	//
+	// Is
+	// 
+
+	static inline lu_bool lu_w_cell_p__is_not_set(Lu_W_Cell_P self)
 	{
-		is_reset && (self->state = LU_W_CELL_P__START);
+		lu__assert(self);
 
-		#pragma GCC diagnostic ignored "-Wunused-value"
-			self->state == LU_W_CELL_P__START && (self->p_1 = p);
-			self->state == LU_W_CELL_P__ONE && (self->p_2 = p); 
-		#pragma GCC diagnostic pop
-
-		++self->state; 
-
-		lu__debug_assert(self->state <= LU_W_CELL_P__READY);
-		// self->state > LU_W_CELL_P__READY && self->state == LU_W_CELL_P__START;
+		return (self->n_cell == NULL) || (self->n_column == NULL);
 	}
 
-	static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self, lu_value signif_p)
-	{
-		// If no changes its important information for us
-		return self->state == LU_W_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
-	}
+	//
+	// Methods
+	//
 
 	static inline lu_value lu_w_cell_p__calc_p(Lu_W_Cell_P self)
 	{
