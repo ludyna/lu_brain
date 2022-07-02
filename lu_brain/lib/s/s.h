@@ -259,7 +259,7 @@
 		lu_s_layer_type__to_str(self->type, type);
 		lu_area_tag__to_str(self->tag, tag);
 
-		lu__debug("tag=%s, area_ix=%ld, layer_ix=%ld, layer type=%ld", tag, self->area_ix, self->layer_ix, type);
+		lu__debug("%s:%s area_ix=%ld, layer_ix=%ld", tag, type, self->area_ix, self->layer_ix);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

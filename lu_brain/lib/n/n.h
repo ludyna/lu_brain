@@ -489,7 +489,7 @@
 
 		lu__debug_assert(self);
 
-		lu_n_addr__set_to_null(&self->addr);
+		lu_n_addr__reset(&self->addr);
 
 		lu_mem__free(mem, (lu_p_byte) self->w_cells);
 

@@ -20,6 +20,7 @@ void lu__debug_message_internal(const char* file, int line, const char * message
 #define lu__save_debug printf
 
 #define LU__DEBUG 1
+#define LU__DEEP_DEBUG 1
 
 #define lu__assert assert
 

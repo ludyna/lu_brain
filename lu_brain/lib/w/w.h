@@ -327,6 +327,10 @@
 				{
 					lu__debug("E ");
 				}
+				else if (lu_w_cell__has_null_n_cell(w_cell))
+				{
+					lu__debug("N ");
+				}
 				else
 				{
 					lu__debug("X ");

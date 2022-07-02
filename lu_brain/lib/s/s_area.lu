@@ -188,8 +188,10 @@
 		{
 			lu__assert(parent_layer->type == LU_S_LAYER__LAYER);
 
-			lu_area_tag__to_str(parent_layer->tag, buffer);
-			lu__debug("\n PROCESSING: %ld %s", parent_layer->layer_ix, buffer);
+			#ifdef LU__DEEP_DEBUG
+			lu__debug("\nPROCESSING ");
+			lu_s_layer_base__print_basic_info(parent_layer);
+			#endif
 
 			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
 
@@ -221,8 +223,10 @@
 		{
 			lu__assert(parent_layer->type == LU_S_LAYER__LAYER);
 
-			lu_area_tag__to_str(parent_layer->tag, buffer);
-			lu__debug("\n PROCESSING: %ld %s", parent_layer->layer_ix, buffer);
+			#ifdef LU__DEEP_DEBUG
+			lu__debug("\nPROCESSING ");
+			lu_s_layer_base__print_basic_info(parent_layer);
+			#endif
 
 			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
 
@@ -250,15 +254,16 @@
 		lu__assert(config);
 		lu__assert(curr_w_table->s_layer);
 
-		Lu_S_Layer_Base p = lu_s_layer__get_parent_layer(curr_w_table->s_layer);
+		Lu_S_Layer_Base parent_layer = lu_s_layer__get_parent_layer(curr_w_table->s_layer);
 
-		lu__assert(p->type == LU_S_LAYER__LAYER);
+		lu__assert(parent_layer->type == LU_S_LAYER__LAYER);
 
-		char buffer[50];
-		lu_area_tag__to_str(p->tag, buffer);
-		lu__debug("\n PROCESSING: %ld %s", p->layer_ix, buffer);
+		#ifdef LU__DEEP_DEBUG
+		lu__debug("\nPROCESSING ");
+		lu_s_layer_base__print_basic_info(parent_layer);
+		#endif
 
-		curr_w_table = lu_s_layer__save((Lu_S_Layer) p, save_wave, block_ix, curr_w_table, config);
+		curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
 
 		return curr_w_table;
 	}

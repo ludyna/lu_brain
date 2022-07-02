@@ -111,7 +111,7 @@ void test__union_lu_n_addr__methods(void)
 	TEST_ASSERT(lu_n_addr__is_blank(p_ix) == false);
 	TEST_ASSERT(lu_n_addr__is_present(p_ix) == true);
 
-	lu_n_addr__set_to_null(p_ix);
+	lu_n_addr__reset(p_ix);
 
 	TEST_ASSERT(lu_n_addr__is_blank(p_ix) == true);
 	TEST_ASSERT(lu_n_addr__is_present(p_ix) == false);

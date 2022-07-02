@@ -95,7 +95,7 @@
 	}
 
 	//
-	// Is 
+	// Is / Has
 	//
 
 	static inline lu_bool lu_w_cell__is_not_set(Lu_W_Cell self)
@@ -103,6 +103,15 @@
 		lu__assert(self);
 
 		return (self->n_cell == NULL) || (self->n_column == NULL);
+	}
+
+	static inline lu_bool lu_w_cell__has_null_n_cell(Lu_W_Cell self)
+	{
+		if (self == NULL) return false;
+
+		if (self->n_cell == NULL) return false;
+
+		return lu_n_addr__get_cell_ix(lu_n_cell__get_cell_addr(self->n_cell)) == 0;
 	}
 
 	//
