@@ -113,7 +113,7 @@
 					lu__assert(ty >= 0);
 					lu__assert(ty < self->h);
 
-					lu_data__value_set(self, tx, ty, z, lu_data__get_value(src, sx, sy, z));
+					lu_data__value_set(self, tx, ty, z, lu_macro__values_3d(src, sx, sy, z, src_w, src_h, src_d));
 				}
 			
 		return self;	
@@ -204,33 +204,37 @@
 		lu__assert(self);
 
 		lu__debug("\nData: ");
-		lu__debug("\n\twave_id: %d", self->wave_id); 
-		lu__debug("\n\tblock_id: %d", self->block_ix);
-		lu__debug("\n\trec_id: %d", self->rec_id);
-		lu__debug("\n\tw: %d", self->w); 
-		lu__debug("\n\th: %d", self->h);
-		lu__debug("\n\td: %d", self->d);
+		lu__debug("\n\twave_id: %d, block_id: %d, rec_id: %d", self->wave_id, self->block_ix, self->rec_id); 
+		lu__debug("\n\tw: %d, h: %d, d: %d", self->w, self->h, self->d); 
 
 		if (self->values)
 		{
-			lu_size x;
-			lu_size y;
-			lu_size z;
-			for (z = 0; z < self->d; z++)
-			{
-				lu__debug("\n\t");
-				for (y = 0; y < self->h; y++)
-				{
-					lu__debug("\n\t");
-					for (x = 0; x < self->w; x++)
-					{
-						lu__debug("%.2f, ", lu_data__get_value(self, x, y, z));
-					}
-				}
-			}
+			lu_values__print(self->values, self->w, self->h, self->d);
 		}
 		else
 		{
 			lu__debug("\tvalues: NULL");
 		}
+
+		lu__debug("\n");
+	}
+
+	void lu_data__print_binary(Lu_Data self)
+	{
+		lu__assert(self);
+
+		lu__debug("\nData: ");
+		lu__debug("\n\twave_id: %d, block_id: %d, rec_id: %d", self->wave_id, self->block_ix, self->rec_id); 
+		lu__debug("\n\tw: %d, h: %d, d: %d", self->w, self->h, self->d); 
+
+		if (self->values)
+		{
+			lu_values__print_binary(self->values, self->w, self->h, self->d);
+		}
+		else
+		{
+			lu__debug("\tvalues: NULL");
+		}
+
+		lu__debug("\n");
 	}

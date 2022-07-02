@@ -1,0 +1,61 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// lu_values
+
+	void lu_values__print(
+		lu_p_value values, 
+		lu_size w, 
+		lu_size h, 
+		lu_size d
+	)
+	{
+		lu_size x;
+		lu_size y;
+		lu_size z;
+		for (z = 0; z < d; z++)
+		{
+			lu__debug("\n\t");
+			for (y = 0; y < h; y++)
+			{
+				lu__debug("\n\t");
+				for (x = 0; x < w; x++)
+				{
+					lu__debug("%.2f, ", lu_macro__values_3d(values, x, y, z, w, h, d));
+				}
+			}
+		}
+	}
+
+	void lu_values__print_binary(
+		lu_p_value values, 
+		lu_size w, 
+		lu_size h, 
+		lu_size d
+	)
+	{
+		lu_size x;
+		lu_size y;
+		lu_size z;
+		for (z = 0; z < d; z++)
+		{
+			lu__debug("\n\t");
+			for (y = 0; y < h; y++)
+			{
+				lu__debug("\n\t");
+				for (x = 0; x < w; x++)
+				{
+					if(lu_macro__values_3d(values, x, y, z, w, h, d) > 0)
+					{
+						lu__debug("X ");
+					}
+					else
+					{
+						lu__debug("  ");
+					}
+				}
+			}
+		}
+	}

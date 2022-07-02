@@ -16,56 +16,55 @@ Lu_Brain 			brain;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
 
-lu_value			data_0[] 		= { 
+lu_value			values_0[] 		= { 
 										1, 1, 1, 
 										1, 0, 1, 
 										1, 0, 1, 
 										1, 0, 1, 
 										1, 1, 1, 
 									};
-lu_value			data_1[] 		= { 
+lu_value			values_1[] 		= { 
 										0, 0, 1, 
 										0, 1, 1, 
 										0, 0, 1, 
 										0, 0, 1, 
 										0, 0, 1, 
 									};
-lu_value			data_2[] 		= { 
+lu_value			values_2[] 		= { 
 										1, 1, 1, 
 										0, 0, 1, 
 										0, 1, 0, 
 										1, 0, 0, 
 										1, 1, 1, 
 									};
-lu_value			data_3[] 		= { 
+lu_value			values_3[] 		= { 
 										1, 1, 1, 
 										0, 0, 1, 
 										1, 1, 1, 
 										0, 0, 1, 
 										1, 1, 1, 
 									};
-lu_value			data_4[] 		= { 
+lu_value			values_4[] 		= { 
 										1, 0, 1, 
 										1, 0, 1, 
 										1, 1, 1, 
 										0, 0, 1,
 										0, 0, 1,
 									};
-lu_value			data_5[] 		= { 
+lu_value			values_5[] 		= { 
 										1, 1, 1, 
 										1, 0, 0,
 										1, 1, 1, 
 										0, 0, 1,
 										1, 1, 1, 
 									};
-lu_value			data_6[] 		= { 
+lu_value			values_6[] 		= { 
 										1, 1, 1, 
 										1, 0, 0, 
 										1, 1, 1, 
 										1, 0, 1, 
 										1, 1, 1, 
 									};
-
 
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
@@ -127,7 +126,10 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(lu_wave__get_ix(s_wave) == 0);
 		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(s_wave), lu_wave__get_type(s_wave)) == s_wave);
 
-		lu_wave__push_with_shift(s_wave, rec_0, data_0, 1, 1);
+		lu__debug("\nvalues_0 before push: ");
+		lu_values__print_binary(values_0, 3, 5, 1);
+
+		lu_wave__push_with_shift(s_wave, rec_0, values_0, 1, 1);
 
 	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
@@ -144,7 +146,7 @@ void test_lu_brain_basics_01(void)
 	// 	TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
 	// 	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
 
-	// 	lu_wave__push_with_shift(s_wave, rec_0, data_0, 1, 1);
+	// 	lu_wave__push_with_shift(s_wave, rec_0, values_0, 1, 1);
 
 	// lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 

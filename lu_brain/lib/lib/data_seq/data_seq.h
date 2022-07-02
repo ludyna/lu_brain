@@ -3,6 +3,23 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// lu_values
+
+	void lu_values__print(
+		lu_p_value src, 
+		lu_size w, 
+		lu_size h, 
+		lu_size d
+	);
+
+	void lu_values__print_binary(
+		lu_p_value src, 
+		lu_size w, 
+		lu_size h, 
+		lu_size d
+	);
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_Data
 
 	#define LU_WAVE_ID__NOT_SET LU_SIZE__MAX
@@ -160,10 +177,11 @@
 
 
 	//
-	// Debug
+	// Methods
 	//
 
 	void lu_data__print(Lu_Data);
+	void lu_data__print_binary(Lu_Data);
 
 
 ///////////////////////////////////////////////////////////////////////////////
