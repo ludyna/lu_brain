@@ -204,7 +204,7 @@
 		lu__assert(parent_layer->tag == LU_AREA_TAG__FRAME); 
 
 		return curr_w_table;
-	} 
+	}
 
 
 	static Lu_W_Table lu_s_area__save_frame(

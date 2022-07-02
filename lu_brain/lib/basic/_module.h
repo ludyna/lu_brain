@@ -24,5 +24,6 @@
 #include "constants.h"
 #include "exception.h"
 #include "util.h"
+#include "macro.h"
 
 #endif // _LU_BASIC_H

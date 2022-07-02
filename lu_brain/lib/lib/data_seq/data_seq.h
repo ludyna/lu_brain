@@ -28,15 +28,13 @@
 
 	static inline void lu_data__value_set(Lu_Data d, lu_size x, lu_size y, lu_size z, lu_value value) 
 	{ 
-		d->values[z * d->w * d->h + y * d->w + x] = value; 
+		lu_macro__values_3d(d->values, x, y, z, d->w, d->h, d->d) = value; 
 	}
 
-	
-	#define lu_data__get(d, x, y, z) d->values[z * d->w * d->h + y * d->w + x]
-	static inline lu_value lu_data__value_get(Lu_Data d, lu_size x, lu_size y, lu_size z) 
+	static inline lu_value lu_data__get_value(Lu_Data d, lu_size x, lu_size y, lu_size z) 
 	{ 
 		// WARNING: Reading values in cycle using this method is bad due to a lot of multiplications for each value.
-		return lu_data__get(d, x, y, z); 
+		return lu_macro__values_3d(d->values, x, y, z, d->w, d->h, d->d); 
 	}
 
 	static inline lu_bool lu_data__is_empty(Lu_Data self) { return self->values == NULL; }
@@ -108,6 +106,16 @@
 
 	#define lu_data__create_via_deep_copy(mem, src) \
 		lu_data__create_via_deep_copy_internal(mem, src, __func__, __FILE__, __LINE__)
+
+	Lu_Data lu_data__shift(
+		Lu_Data self, 
+		lu_p_value src, 
+		lu_size src_w, 
+		lu_size src_h, 
+		lu_size src_d, 
+		lu_int x_shift, 
+		lu_int y_shift
+	);
 
 	Lu_Data lu_data__create_via_shift_internal(
 		Lu_Mem mem, 

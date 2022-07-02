@@ -29,8 +29,8 @@ void test_comp_calc_1(void)
 { 
 	Lu_Data data = lu_data__create_via_mem_copy(lu_g_mem, data_0, 3, 3, 2);
 
-	TEST_ASSERT(lu_data__get(data, 1, 1, 0) == 2.4);
-	TEST_ASSERT(lu_data__get(data, 1, 1, 1) == 2.4);
+	TEST_ASSERT(lu_data__get_value(data, 1, 1, 0) == 2.4);
+	TEST_ASSERT(lu_data__get_value(data, 1, 1, 1) == 2.4);
 	
 	struct lu_comp_calc cc;
 
@@ -41,9 +41,9 @@ void test_comp_calc_1(void)
 	// lu_data__print(data);
 	lu_comp_calc__digitalize_data(&cc, data, 1);
 
-	TEST_ASSERT(lu_data__get(data, 1, 1, 0) == 2.4);
-	TEST_ASSERT(lu_data__get(data, 1, 1, 1) == 0);
-	TEST_ASSERT(lu_data__get(data, 2, 1, 1) == 1.5);
+	TEST_ASSERT(lu_data__get_value(data, 1, 1, 0) == 2.4);
+	TEST_ASSERT(lu_data__get_value(data, 1, 1, 1) == 0);
+	TEST_ASSERT(lu_data__get_value(data, 2, 1, 1) == 1.5);
 	// lu_data__print(data);
 
 	lu_comp_calc__deinit(&cc);

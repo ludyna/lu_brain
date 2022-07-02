@@ -49,6 +49,76 @@
 		return self;
 	}
 
+	Lu_Data lu_data__shift(
+		Lu_Data self, 
+		lu_p_value src, 
+		lu_size src_w, 
+		lu_size src_h, 
+		lu_size src_d, 
+		lu_int x_shift, 
+		lu_int y_shift
+	)
+	{	
+		lu__assert(self);
+		lu__assert(src);
+
+		lu_size abs_x_shift = x_shift < 0 ? -x_shift : x_shift;
+		lu_size abs_y_shift = y_shift < 0 ? -y_shift : y_shift;
+
+		lu__assert(self->w == (src_w + abs_x_shift));
+		lu__assert(self->h == (src_h + abs_y_shift));
+		lu__assert(self->d == src_d);
+		lu__assert(self->values);
+
+		lu_int w = (lu_int) src_w;
+		lu_int h = (lu_int) src_h;
+		lu_int d = (lu_int) src_d;
+
+		lu__assert(x_shift < w);
+		lu__assert(y_shift < h);
+
+		lu_int x;
+		lu_int y;
+		lu_int z;
+		lu_int sx;
+		lu_int sy;
+		lu_int tx; 
+		lu_int ty;
+
+		lu_int x_start 	= x_shift;
+		lu_int x_end 	= w + x_shift;
+
+		lu_int y_start 	= y_shift;
+		lu_int y_end 	= h + y_shift;
+
+		for(z = 0; z < d; z++)
+			for (y = y_start; y < y_end; y++)
+				for(x = x_start; x < x_end; x++)
+				{
+					sx = x;
+					sy = y;
+
+					if (sx < 0) sx = 0; 
+					if (sx >= self->w) sx = self->w - 1;
+					if (sy < 0) sy = 0;
+					if (sy >= self->h) sy = self->h - 1;
+
+					tx = x - x_shift;
+					ty = y - y_shift;
+
+					// lu__debug("\n %d - %d = %d", x, x_shift, tx);
+
+					lu__assert(tx >= 0);
+					lu__assert(tx < self->w);
+					lu__assert(ty >= 0);
+					lu__assert(ty < self->h);
+
+					lu_data__value_set(self, tx, ty, z, lu_data__get_value(src, sx, sy, z));
+				}
+			
+		return self;	
+	}
+
 	Lu_Data lu_data__create_via_shift_internal(Lu_Mem mem, Lu_Data src, lu_int x_shift, lu_int y_shift, const char* func, const char* file, int line) 
 	{
 		lu__assert(mem);
@@ -105,7 +175,7 @@
 					lu__assert(ty >= 0);
 					lu__assert(ty < self->h);
 
-					lu_data__value_set(self, tx, ty, z, lu_data__value_get(src, sx, sy, z));
+					lu_data__value_set(self, tx, ty, z, lu_data__get_value(src, sx, sy, z));
 				}
 			
 		return self;
@@ -154,7 +224,7 @@
 					lu__debug("\n\t");
 					for (x = 0; x < self->w; x++)
 					{
-						lu__debug("%.2f, ", lu_data__value_get(self, x, y, z));
+						lu__debug("%.2f, ", lu_data__get_value(self, x, y, z));
 					}
 				}
 			}
