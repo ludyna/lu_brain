@@ -268,6 +268,10 @@
 		union lu_n_link_addr parents;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static inline void lu_n_cell_vp__null_init(Lu_N_Cell_VP self)
 	{
 		self->addr.value = 0;
@@ -304,6 +308,21 @@
 
 	}
 
+	//
+	// Get
+	//
+
+	static inline Lu_N_Addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self)
+	{
+		lu__debug_assert(self);
+
+		return &self->addr;
+	}
+
+	//
+	// Methods
+	// 
+
 	static inline Lu_N_Link lu_n_cell_vp__parent_prepend(Lu_N_Cell_VP self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
 		// new child link
@@ -321,12 +340,6 @@
 		return n_link;
 	}
 
-	static inline Lu_N_Addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self)
-	{
-		lu__debug_assert(self);
-
-		return &self->addr;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column_Comp
