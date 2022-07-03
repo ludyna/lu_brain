@@ -78,6 +78,15 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
+	static void lu_s_layer__reset_children(Lu_W_Cell_P* children, lu_size depth)
+	{
+		lu__assert(children);
+
+		for (lu_size i = 0; i < depth; i++)
+		{
+			children[i] = NULL;
+		}
+	}
 
 	static Lu_W_Table lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
@@ -129,12 +138,6 @@
 
 		lu_size block_ix = data->block_ix;
 
-		lu_size x;
-		lu_size y;
-		lu_size z;
-		lu_size y_shift;
-		lu_value v;
-		lu_size xy_shift;
 		Lu_S_Layer_Comp comp;
 
 		lu_size wh = data->h * data->w;
@@ -150,11 +153,12 @@
 		curr_w_table->wave_ix = wave->wave_ix;
 		curr_w_table->block_ix = block_ix;
 
-		Lu_W_Cell rec_w_p_cell;
+		Lu_W_Cell rec_w_cell;
 
 		// union lu_n_addr n_addr;
 
 		lu_size depth = self->rec->depth; 
+
 
 		Lu_W_Cell_P children[depth];
 		
@@ -165,24 +169,52 @@
 		Lu_N_Column n_column;
 		Lu_N_Cell n_cell;
 
-		for (y = 0; y < data->h; y++)
+		lu_size src_x;
+		lu_size src_y;
+		lu_size src_z;
+		lu_value v;
+
+		Lu_Rec rec = self->rec;
+
+		lu_size src_start_x = rec->src_start_x;
+		lu_size src_start_y = rec->src_start_y;
+		lu_size src_start_z = rec->src_start_z;
+
+		lu_size src_end_x = rec->src_end_x;
+		lu_size src_end_y = rec->src_end_y;
+		lu_size src_end_z = rec->src_end_z;
+
+		lu_long dest_x;
+		lu_long dest_y;
+
+		lu_long dest_start_x = rec->dest_start_x;
+		lu_long dest_start_y = rec->dest_start_y;
+
+
+		// Here we calculate comp=>p_view=>w_table_p=>w_cell with appropriante n_cell for each comp (z=1,2,3,..)
+		// And then using these n_cells we calculane n_cell in next layer and update curr_w_table with it
+		for (src_y = src_start_y; src_y < src_end_y; src_y++)
 		{
-			y_shift = y * data->w;
+			dest_y = dest_start_y + (lu_long)(src_y - src_start_y);
+			if (dest_y < 0) continue;
+			if (dest_y >= rec->height) continue;
 
-			for (x = 0; x < data->w; x++)
+			for (src_x = src_start_x; src_x < src_end_y; src_x++)
 			{
-				xy_shift = y_shift + x;
+				dest_x = dest_start_x + (lu_long)(src_x - src_start_x);
+				if (dest_x < 0) continue;
+				if (dest_x >= rec->width) continue;
 
-				rec_w_p_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
-				lu_w_cell__reset(rec_w_p_cell);
+				// write destination w_cell (not w_cell_p)
+				rec_w_cell = lu_w_table__get_w_cell(curr_w_table, (lu_size)dest_x, (lu_size)dest_y);
+				lu_w_cell__reset(rec_w_cell);
 
-				// reset string
-				children[0] = NULL;
+				lu_s_layer__reset_children(children, depth);
 
 				// Collect children
-				for (z = 0; z < depth; z++)
+				for (src_z = src_start_z; src_z < src_end_z; src_z++)
 				{
-					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
+					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, src_z);
 					lu__assert(comp->super.type == LU_S_LAYER__COMP);
 
 					s_view_p = &comp->p_view;
@@ -191,7 +223,9 @@
 					lu__assert(w_table_p);
 
 					p_comp_calc = &s_view_p->comp_calc;
-					w_cell_p = lu_w_table_p__get_w_cell_by_ix(w_table_p, xy_shift);
+
+					// write destination w_cell_p
+					w_cell_p = lu_w_table_p__get_w_cell(w_table_p, (lu_size)dest_x, (lu_size) dest_y);
 
 					if (w_rec->state == LU_W_REC_STATE__ONE || w_rec->state == LU_W_REC_STATE__START)
 					{
@@ -199,7 +233,8 @@
 					}
 
 					// Get value from Data
-					v = data->values[z * wh + xy_shift];
+					// v = data->values[src_z * wh + xy_shift];
+					v = lu_data__get_value(data, src_x, src_y, src_z);
 
 					lu_w_cell_p__update(
 						w_cell_p,
@@ -209,18 +244,18 @@
 
 					if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
 					{
-						children[z] = lu_w_cell_p__save(
+						children[src_z] = lu_w_cell_p__save(
 							w_cell_p, 
-							x, 
-							y, 
+							src_x, 
+							src_y, 
 							p_comp_calc, 
 							s_view_p->n_comp_table
 						);
 
-						lu__assert(children[z]);
+						lu__assert(children[src_z]);
 					}
 
-				} // for (lu_size z = 0
+				} // for (lu_size src_z = 0
 
 				if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
 				{
@@ -228,29 +263,29 @@
 					// N Cell save
 					//
 
-					n_column = lu_n_table__get_column(rec_n_table, x, y);
+					n_column = lu_n_table__get_column(rec_n_table, src_x, src_y);
 					lu__assert(n_column);
 					
-					n_cell = lu_n_column__save_with_vp_children(n_column, children, z);
+					n_cell = lu_n_column__save_with_vp_children(n_column, children, src_z);
 					lu__assert(n_cell);
 
 					//
 					// Parent W cell save
 					//
 
-					lu_w_cell__save(rec_w_p_cell, n_cell, n_column);
+					lu_w_cell__save(rec_w_cell, n_cell, n_column);
 				}
 
-			}  // for (x = 0
-		} // for (y = 0
+			}  // for (src_x = 0
+		} // for (src_y = 0
 
 		#ifdef LU__DEEP_DEBUG
 		if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__TWO)
 		{
 			// Debug w_table
-			for (z = 0; z < depth; z++)
+			for (src_z = 0; src_z < depth; src_z++)
 			{
-				comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
+				comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, src_z);
 				lu__assert(comp->super.type == LU_S_LAYER__COMP);
 
 				s_view_p = &comp->p_view;
@@ -325,9 +360,9 @@
 
 		lu_size block_ix = data->block_ix;
 
-		lu_size x;
-		lu_size y;
-		lu_size z;
+		lu_size src_x;
+		lu_size src_y;
+		lu_size src_z;
 		lu_size y_shift;
 		lu_value v;
 		lu_size xy_shift;
@@ -346,18 +381,18 @@
 
 		lu_size depth = self->rec->depth; 
 
-		for (y = 0; y < data->h; y++)
+		for (src_y = 0; src_y < data->h; src_y++)
 		{
-			y_shift = y * data->w;
+			y_shift = src_y * data->w;
 
-			for (x = 0; x < data->w; x++)
+			for (src_x = 0; src_x < data->w; src_x++)
 			{
-				xy_shift = y_shift + x;
+				xy_shift = y_shift + src_x;
 
-				// Collect children, z are just "RBG"
-				for (z = 0; z < depth; z++)
+				// Collect children, src_z are just "RBG"
+				for (src_z = 0; src_z < depth; src_z++)
 				{
-					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, z);
+					comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, src_z);
 					lu__assert(comp->super.type == LU_S_LAYER__COMP);
 
 					s_view_p = &comp->p_view;
@@ -374,7 +409,7 @@
 					}
 
 					// Get value from Data
-					v = data->values[z * wh + xy_shift];
+					v = data->values[src_z * wh + xy_shift];
 
 					lu_w_cell_p__update(
 						w_cell_p,
@@ -386,8 +421,8 @@
 					{
 						lu_w_cell_p__save(
 							w_cell_p, 
-							x, 
-							y, 
+							src_x, 
+							src_y, 
 							p_comp_calc, 
 							s_view_p->n_comp_table
 						);
@@ -397,8 +432,8 @@
 					}
 
 
-				} // for (lu_size z = 0
+				} // for (lu_size src_z = 0
 
-			}  // for (x = 0
-		} // for (y = 0
+			}  // for (src_x = 0
+		} // for (src_y = 0
 	}

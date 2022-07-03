@@ -23,7 +23,7 @@
 				lu__debug("\n\t");
 				for (x = 0; x < w; x++)
 				{
-					lu__debug("%.2f, ", lu_macro__values_3d(values, x, y, z, w, h, d));
+					lu__debug("%.2f, ", lu_macro__value_in_3d_array(values, x, y, z, w, h));
 				}
 			}
 		}
@@ -47,7 +47,7 @@
 				lu__debug("\n\t");
 				for (x = 0; x < w; x++)
 				{
-					if(lu_macro__values_3d(values, x, y, z, w, h, d) > 0)
+					if(lu_macro__value_in_3d_array(values, x, y, z, w, h) > 0)
 					{
 						lu__debug("X ");
 					}

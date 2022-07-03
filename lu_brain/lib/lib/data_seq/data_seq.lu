@@ -122,12 +122,15 @@
 		self->start_block_on_next_data = false;
 	}
 
-	void lu_data_seq__push(Lu_Data_Seq self, Lu_Rec rec, lu_value* values)
+	void lu_data_seq__push(Lu_Data_Seq self, Lu_Rec rec, lu_value* values, lu_size width, lu_size height, lu_size depth)
 	{ 
 		lu__user_assert_void(self, "Lu_Data_Seq should not be NULL"); 
 		lu__user_assert_void(rec, "Lu_Rec should not be NULL"); 
 		lu__user_assert_void(values, "values should not be NULL");
 		lu__user_assert_void(rec->depth, "Lu_Rec depth is zero"); 
+		lu__user_assert_void(width > 0, "width should be greater than zero");
+		lu__user_assert_void(height > 0, "height should be greater than zero");
+		lu__user_assert_void(depth > 0, "depth should be greater than zero");
 
 	 	if (self->start_block_on_next_data)
 		{ 
@@ -150,7 +153,7 @@
 		lu__assert(data);
 		lu__assert(data->values == NULL);
 
-	 	lu_data__set(data, self->wave_id, data->block_ix, rec->id, rec->width, rec->height, rec->depth, values);
+	 	lu_data__set(data, self->wave_id, data->block_ix, rec->id, width, height, depth, values);
 	}
 
 	static lu_bool lu_seq_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)

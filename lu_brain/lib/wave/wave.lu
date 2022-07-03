@@ -273,16 +273,16 @@
 		lu__assert(lu_wave__is_save(self));
 
 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_data_seq__push(save_wave->seq, rec, data);
+		lu_data_seq__push(save_wave->seq, rec, data, w, h, d);
 	}
 
-	static void lu_match_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data, lu_size w, lu_size hp, lu_size d)
+	static void lu_match_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data, lu_size w, lu_size h, lu_size d)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_match(self));
 
 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
-		lu_data_seq__push(match_wave->seq, rec, data);
+		lu_data_seq__push(match_wave->seq, rec, data, w, h, d);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

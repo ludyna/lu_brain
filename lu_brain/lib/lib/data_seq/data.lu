@@ -113,7 +113,7 @@
 					lu__assert(ty >= 0);
 					lu__assert(ty < self->h);
 
-					lu_data__value_set(self, tx, ty, z, lu_macro__values_3d(src, sx, sy, z, src_w, src_h, src_d));
+					lu_data__value_set(self, tx, ty, z, lu_macro__value_in_3d_array(src, sx, sy, z, src_w, src_h));
 				}
 			
 		return self;	

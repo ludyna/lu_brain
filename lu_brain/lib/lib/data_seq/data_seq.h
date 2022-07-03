@@ -45,13 +45,13 @@
 
 	static inline void lu_data__value_set(Lu_Data d, lu_size x, lu_size y, lu_size z, lu_value value) 
 	{ 
-		lu_macro__values_3d(d->values, x, y, z, d->w, d->h, d->d) = value; 
+		lu_macro__value_in_3d_array(d->values, x, y, z, d->w, d->h) = value; 
 	}
 
 	static inline lu_value lu_data__get_value(Lu_Data d, lu_size x, lu_size y, lu_size z) 
 	{ 
 		// WARNING: Reading values in cycle using this method is bad due to a lot of multiplications for each value.
-		return lu_macro__values_3d(d->values, x, y, z, d->w, d->h, d->d); 
+		return lu_macro__value_in_3d_array(d->values, x, y, z, d->w, d->h); 
 	}
 
 	static inline lu_bool lu_data__is_empty(Lu_Data self) { return self->values == NULL; }
@@ -230,7 +230,7 @@
 	void lu_data_seq__block_begin(Lu_Data_Seq seq);
 	void lu_data_seq__block_end(Lu_Data_Seq seq);
 
-	void lu_data_seq__push(Lu_Data_Seq self, Lu_Rec rec, lu_value* values);
+	void lu_data_seq__push(Lu_Data_Seq self, Lu_Rec rec, lu_value* values, lu_size w, lu_size h, lu_size d);
 	Lu_Data lu_data_seq__data_get(Lu_Data_Seq self, lu_size rec_i, Lu_L_Node node);
 
 	void lu_data_seq__reset(Lu_Data_Seq self);

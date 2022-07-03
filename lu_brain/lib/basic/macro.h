@@ -5,5 +5,5 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-#define lu_macro__values_2d(values, x, y, w, h) values[y * w + x]
-#define lu_macro__values_3d(values, x, y, z, w, h, d) values[z * w * h + y * w + x]
+#define lu_macro__value_in_2d_array(values, x, y, w) values[y * w + x]
+#define lu_macro__value_in_3d_array(values, x, y, z, w, h) values[z * w * h + y * w + x]

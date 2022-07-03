@@ -25,10 +25,20 @@
 		// 
 
 		// Starting position from which we read data from source
-		lu_long src_start_x; 
-		lu_long src_start_y;
+		// src_start_x should be >= 0
+		// src_start_y should be >= 0
+		// src_end_x should be <= width
+		// src_end_y should be <= height
+		lu_size src_start_x; 
+		lu_size src_start_y;
+		lu_size src_start_z;
+		lu_size src_end_x;
+		lu_size src_end_y;
+		lu_size src_end_z;
 
 		// Starting positing into which we write data from source
+		// it could be below 0, only part that of src that intersects with
+		// dest rectangle will be written (if any)
 		lu_long dest_start_x; 
 		lu_long dest_start_y;
 	};

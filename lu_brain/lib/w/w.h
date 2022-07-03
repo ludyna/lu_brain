@@ -165,7 +165,7 @@
 
 	static inline Lu_W_Cell_P lu_w_table_p__get_w_cell(Lu_W_Table_P self, lu_size x, lu_size y)
 	{
-		return &self->cells[y * self->w + x];
+		return &lu_macro__value_in_2d_array(self->cells, x, y, self->w);
 	}
 
 	//
