@@ -16,6 +16,7 @@
 
 // Modules
 
+#include "rec/_module.h"
 #include "calcs/_module.h"
 #include "la_addr/_module.h"
 #include "n_addr/_module.h"
@@ -23,7 +24,6 @@
 #include "n/_module.h"
 #include "la/_module.h"
 #include "w/_module.h"
-#include "rec/_module.h"
 #include "s/_module.h"
 #include "wave/_module.h"
 

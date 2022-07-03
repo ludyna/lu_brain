@@ -33,15 +33,7 @@
 		// View
 		//
 
-		self->src_start_x = 0;
-		self->src_start_y = 0;
-		self->src_start_z = 0;
-		self->src_end_x = width;
-		self->src_end_y = height;
-		self->src_end_z = depth;
-
-		self->dest_start_x = 0;
-		self->dest_start_y = 0;
+		lu_rec_view__init(&self->view, self->width, self->height, self->depth);
 
 		lu_brain__rec_attach(brain, self);
 
@@ -74,8 +66,7 @@
 	{
 		lu__user_assert_void(self, "Rec is NULL");
 
-		self->dest_start_x = dest_x;
-		self->dest_start_y = dest_y;
+		lu_rec_view__set_dest_start_pos(&self->view, dest_x, dest_y);
 	}
 
 	void lu_rec__set_src_start_pos(Lu_Rec self, lu_size src_x, lu_size src_y)
@@ -83,11 +74,10 @@
 		lu__user_assert_void(self, "Rec is NULL");
 		lu__user_assert_void(src_x <= self->width, "src_x should <= widht");
 		lu__user_assert_void(src_y <= self->height, "src_x should <= widht");
-		lu__user_assert_void(src_x <= self->src_end_x, "src_x should <= src_end_x");
-		lu__user_assert_void(src_y <= self->src_end_y, "src_x should <= src_end_y");
+		lu__user_assert_void(src_x <= self->view.src_end_x, "src_x should <= src_end_x");
+		lu__user_assert_void(src_y <= self->view.src_end_y, "src_x should <= src_end_y");
 
-		self->src_start_x = src_x;
-		self->src_start_y = src_y;
+		lu_rec_view__set_src_start_pos(&self->view, src_x, src_y);
 	}
 
 	void lu_rec__set_src_end_pos(Lu_Rec self, lu_size src_x, lu_size src_y)
@@ -95,27 +85,26 @@
 		lu__user_assert_void(self, "Rec is NULL"); 
 		lu__user_assert_void(src_x <= self->width, "src_x should <= widht");
 		lu__user_assert_void(src_y <= self->height, "src_x should <= widht");
-		lu__user_assert_void(src_x >= self->src_start_x, "src_x should <= src_start_x");
-		lu__user_assert_void(src_y >= self->src_start_y, "src_x should <= src_start_y");
+		lu__user_assert_void(src_x >= self->view.src_start_x, "src_x should <= src_start_x");
+		lu__user_assert_void(src_y >= self->view.src_start_y, "src_x should <= src_start_y");
 
-		self->src_end_x = src_x;
-		self->src_end_y = src_y;
+		lu_rec_view__set_src_end_pos(&self->view, src_x, src_y);
 	}
 
 	void lu_rec__set_src_start_z(Lu_Rec self, lu_size src_z)
 	{
 		lu__user_assert_void(self, "Rec is NULL"); 
 		lu__user_assert_void(src_z <= self->depth, "src_z should <= depth");
-		lu__user_assert_void(src_z <= self->src_end_z, "src_z should <= src_end_z");
+		lu__user_assert_void(src_z <= self->view.src_end_z, "src_z should <= src_end_z");
 
-		self->src_start_z = src_z;
+		lu_rec_view__set_src_start_z(&self->view, src_z);
 	}
 
 	void lu_rec__set_src_end_z(Lu_Rec self, lu_size src_z)
 	{
 		lu__user_assert_void(self, "Rec is NULL"); 
 		lu__user_assert_void(src_z <= self->depth, "src_z should <= depth");
-		lu__user_assert_void(src_z >= self->src_start_z, "src_z should <= src_start_z");
+		lu__user_assert_void(src_z >= self->view.src_start_z, "src_z should <= src_start_z");
 
-		self->src_end_z = src_z;
+		lu_rec_view__set_src_end_z(&self->view, src_z);
 	}

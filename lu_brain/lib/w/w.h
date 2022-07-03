@@ -59,6 +59,10 @@
 		lu_size block_ix;
 
 		enum lu_w_rec_state state;
+
+		// Rec view is also a rec state. Rec view can be changed dynamically so we should copy it here 
+		// so we understand how wave was calculated.
+		struct lu_rec_view view; 
 	};
 
 	static inline Lu_W_Rec lu_w_rec__reset(Lu_W_Rec self)
@@ -73,7 +77,13 @@
 		return self;
 	}
 
-	static inline void lu_w_rec__update(Lu_W_Rec self, lu_size wave_id, lu_size wave_ix, lu_size block_ix)
+	static inline void lu_w_rec__update(
+		Lu_W_Rec self, 
+		lu_size wave_id, 
+		lu_size wave_ix, 
+		lu_size block_ix,
+		struct lu_rec_view view
+	)
 	{
 		lu__assert(self);
 
@@ -132,6 +142,7 @@
 		self->wave_id = wave_id;
 		self->wave_ix = wave_ix;
 		self->block_ix = block_ix;
+		self->view = view; // copy struct data
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -188,25 +199,25 @@
 		for (y = 0; y < self->h; y++)
 		{
 			y_shift = y * self->w;
-			lu__debug("\n   ");
+			lu__debug("\n\t");
 			for (x = 0; x < self->w; x++)
 			{
 				w_cell = lu_w_table_p__get_w_cell(self, x, y);
 				if (w_cell == NULL)
 				{
-					lu__debug("0 ");
+					lu__debug("0 "); // error
 				}
-				else if (lu_w_cell_p__is_not_set(w_cell))
+				else if (lu_w_cell_p__is_not_set(w_cell))  // (self->n_cell == NULL) || (self->n_column == NULL)
 				{
-					lu__debug("E ");
+					lu__debug("E "); // error
 				}
-				else if (lu_w_cell_p__has_null_n_cell(w_cell))
+				else if (lu_w_cell_p__has_null_n_cell(w_cell)) // self->n_cell->addr.cell_ix == 0
 				{
-					lu__debug("N ");
+					lu__debug("N "); // just null (no changes for p)
 				}
 				else
 				{
-					lu__debug("X ");
+					lu__debug("X "); // value
 				}
 			}
 		}

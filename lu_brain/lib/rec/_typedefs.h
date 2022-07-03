@@ -1,9 +1,10 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
-*/
-
+*/	
+  
 ///////////////////////////////////////////////////////////////////////////////
-// Includes
+// 
 
-	#include "_typedefs.h"
-	#include "rec.h"
+	typedef struct lu_rec_view* Lu_Rec_View;
+
+	

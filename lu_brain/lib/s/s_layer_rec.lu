@@ -106,13 +106,13 @@
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, wave->wave_ix);
 		lu__assert(w_rec);
 
-		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix);
+		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix, self->rec->view);
 
 		#ifdef LU__DEEP_DEBUG
 		char buffer[50];
 		lu_w_rec_state__to_str(w_rec->state, buffer);
 		lu__debug(
-			"\nREC_SAVE: w_rec->state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld", 
+			"\nREC_SAVE: w_state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld", 
 			buffer,
 			w_rec->wave_id,
 			w_rec->wave_ix,
@@ -153,7 +153,7 @@
 		curr_w_table->wave_ix = wave->wave_ix;
 		curr_w_table->block_ix = block_ix;
 
-		Lu_W_Cell rec_w_cell;
+		Lu_W_Cell w_cell;
 
 		// union lu_n_addr n_addr;
 
@@ -175,24 +175,24 @@
 		lu_value v;
 
 		Lu_Rec rec = self->rec;
+		Lu_Rec_View rec_view = &w_rec->view;
 
-		lu_size src_start_x = rec->src_start_x;
-		lu_size src_start_y = rec->src_start_y;
-		lu_size src_start_z = rec->src_start_z;
+		lu_size src_start_x = rec_view->src_start_x;
+		lu_size src_start_y = rec_view->src_start_y;
+		lu_size src_start_z = rec_view->src_start_z;
 
-		lu_size src_end_x = rec->src_end_x;
-		lu_size src_end_y = rec->src_end_y;
-		lu_size src_end_z = rec->src_end_z;
+		lu_size src_end_x = rec_view->src_end_x;
+		lu_size src_end_y = rec_view->src_end_y;
+		lu_size src_end_z = rec_view->src_end_z;
 
 		lu_long dest_x;
 		lu_long dest_y;
 
-		lu_long dest_start_x = rec->dest_start_x;
-		lu_long dest_start_y = rec->dest_start_y;
+		lu_long dest_start_x = rec_view->dest_start_x;
+		lu_long dest_start_y = rec_view->dest_start_y;
 
-
-		// Here we calculate comp=>p_view=>w_table_p=>w_cell with appropriante n_cell for each comp (z=1,2,3,..)
-		// And then using these n_cells we calculane n_cell in next layer and update curr_w_table with it
+		// Here we calculate comp=>p_view=>w_table_p=>w_cell_p with appropriante n_cell for each comp (z=1,2,3,..)
+		// And then using these n_cells (saved in =>w_cell_p) we calculane n_cell in next layer and update curr_w_table with it
 		for (src_y = src_start_y; src_y < src_end_y; src_y++)
 		{
 			dest_y = dest_start_y + (lu_long)(src_y - src_start_y);
@@ -206,8 +206,8 @@
 				if (dest_x >= rec->width) continue;
 
 				// write destination w_cell (not w_cell_p)
-				rec_w_cell = lu_w_table__get_w_cell(curr_w_table, (lu_size)dest_x, (lu_size)dest_y);
-				lu_w_cell__reset(rec_w_cell);
+				w_cell = lu_w_table__get_w_cell(curr_w_table, (lu_size)dest_x, (lu_size)dest_y);
+				lu_w_cell__reset(w_cell);
 
 				lu_s_layer__reset_children(children, depth);
 
@@ -273,7 +273,7 @@
 					// Parent W cell save
 					//
 
-					lu_w_cell__save(rec_w_cell, n_cell, n_column);
+					lu_w_cell__save(w_cell, n_cell, n_column);
 				}
 
 			}  // for (src_x = 0
@@ -327,7 +327,7 @@
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_match_w_rec(self, wave->wave_ix);
 		lu__assert(w_rec);
 
-		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix);
+		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix, self->rec->view);
 
 		char buffer[50];
 		lu_w_rec_state__to_str(w_rec->state, buffer);
