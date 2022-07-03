@@ -29,6 +29,16 @@
 		self->height = height;
 		self->depth = depth;
 
+		//
+		// View
+		//
+
+		self->src_start_x = 0;
+		self->src_start_y = 0;
+
+		self->dest_start_x = 0;
+		self->dest_start_y = 0;
+
 		lu_brain__rec_attach(brain, self);
 
 		return self;
@@ -55,3 +65,13 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
+
+	void lu_rec__set_dest_pos(Lu_Rec self, lu_long dest_x, lu_long dest_y)
+	{
+		lu__user_assert_void(self, "Rec is NULL");
+	}
+
+	void lu_rec__set_src_pos(Lu_Rec self, lu_long src_x, lu_long src_y)
+	{
+		lu__user_assert_void(self, "Rec is NULL");
+	}

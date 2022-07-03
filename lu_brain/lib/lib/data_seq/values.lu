@@ -17,7 +17,7 @@
 		lu_size z;
 		for (z = 0; z < d; z++)
 		{
-			lu__debug("\n\t");
+			if(z > 0) lu__debug("\n\t");
 			for (y = 0; y < h; y++)
 			{
 				lu__debug("\n\t");
@@ -41,7 +41,7 @@
 		lu_size z;
 		for (z = 0; z < d; z++)
 		{
-			lu__debug("\n\t");
+			if (z > 0) lu__debug("\n\t");
 			for (y = 0; y < h; y++)
 			{
 				lu__debug("\n\t");

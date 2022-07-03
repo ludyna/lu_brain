@@ -233,6 +233,13 @@
 
 	Lu_Rec lu_brain__get_rec_by_id(Lu_Brain brain, lu_size rec_id);
 
+	//
+	// Setup view 
+	//
+
+	void lu_rec__set_dest_pos(Lu_Rec, lu_long dest_x, lu_long dest_y);
+	void lu_rec__set_src_pos(Lu_Rec, lu_long src_x, lu_long src_y);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Process_Config 
 
@@ -305,8 +312,7 @@
 	// Wave Data
 	//
 
-	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* data);
-	void lu_wave__push_with_shift(Lu_Wave, Lu_Rec, lu_value* data, lu_size x_shift, lu_size y_shift);
+	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
 
 	//
 	// Process

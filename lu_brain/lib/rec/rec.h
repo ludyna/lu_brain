@@ -19,6 +19,18 @@
 		lu_size  					depth;
 
 		struct lu_rec_config 		config;	
+
+		//
+		// View config
+		// 
+
+		// Starting position from which we read data from source
+		lu_long src_start_x; 
+		lu_long src_start_y;
+
+		// Starting positing into which we write data from source
+		lu_long dest_start_x; 
+		lu_long dest_start_y;
 	};
 
 	static void lu_rec__destroy(Lu_Rec self, Lu_Mem mem);

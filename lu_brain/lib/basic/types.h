@@ -12,9 +12,6 @@
 #define lu_time unsigned long
 #define LU__TIME_MAX ULONG_MAX
 
-#define lu_long long
-#define LU__LONG_MAX LONG_MAX
-
 #define lu_round round 
 #define lu_floor floor
 #define lu_value_abs fabs
