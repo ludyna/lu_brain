@@ -23,10 +23,8 @@
 	static inline Lu_N_Cell_VP lu_n_column_comp__get_cell(Lu_N_Column_Comp self, lu_size z);
 
 	enum lu_w_rec_state {
-		LU_W_REC_STATE__START,
-		LU_W_REC_STATE__ONE,
-		LU_W_REC_STATE__TWO,
-		LU_W_REC_STATE__SWITCH,
+		LU_W_REC_STATE__COLLECT,
+		LU_W_REC_STATE__COLLECT_AND_SAVE,
 		LU_W_REC_STATE__END
 	};
 
@@ -298,27 +296,16 @@
 		return p_reg;
 	}
 
-	static inline void lu_w_cell_p__update(
-		Lu_W_Cell_P self, 
-		enum lu_w_rec_state state,
-		lu_value v
-	)
+	static inline void lu_w_cell_p__collect(Lu_W_Cell_P self, lu_value v)
 	{
-		switch(state)
-		{
-			case LU_W_REC_STATE__ONE:
-				self->p_1 = v;
-				break;
-			case LU_W_REC_STATE__TWO:
-				self->p_2 = v;
-				break;
-			case LU_W_REC_STATE__SWITCH:
-				self->p_1 = self->p_2;
-				self->p_2 = v;
-				break;
-			default:
-				lu__assert(false); // should not happen here
-		}
+		// very simplified for now (should be array of values)
+		self->p_2 = v;
+	}
+
+	static inline void lu_w_cell_p__collect_and_shift(Lu_W_Cell_P self, lu_value v)
+	{
+		self->p_1 = self->p_2;
+		self->p_2 = v;
 	}
 
 

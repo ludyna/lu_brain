@@ -34,17 +34,11 @@
 	{
 		switch (self)
 		{
-			case LU_W_REC_STATE__START:
-				strcpy(buffer, "START");
+			case LU_W_REC_STATE__COLLECT:
+				strcpy(buffer, "COLLECT");
 				break;
-			case LU_W_REC_STATE__ONE:
-				strcpy(buffer, "ONE");
-				break;
-			case LU_W_REC_STATE__TWO:
-				strcpy(buffer, "TWO");
-				break;
-			case LU_W_REC_STATE__SWITCH:
-				strcpy(buffer, "SWITCH");
+			case LU_W_REC_STATE__COLLECT_AND_SAVE:
+				strcpy(buffer, "COLLECT_AND_SAVE");
 				break;
 			default:
 				strcpy(buffer, "(!) UNKNOWN");
@@ -72,7 +66,7 @@
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
 		self->block_ix = LU_BLOCK_IX__NOT_SET;
-		self->state = LU_W_REC_STATE__START; 
+		self->state = LU_W_REC_STATE__COLLECT; 
 
 		return self;
 	}
@@ -94,14 +88,14 @@
 		if (self->wave_id != wave_id)
 		{
 			// totally new wave, start with saving one
-			self->state = LU_W_REC_STATE__ONE;
+			self->state = LU_W_REC_STATE__COLLECT;
 		}
 		else if (self->wave_ix != wave_ix)
 		{
 			// new wave ix means its new wave also 
 			// (should never happen because we get this lu_w_rec from "same" wave_ix, 
 			// but put this code here noneless for completeness)
-			self->state = LU_W_REC_STATE__ONE;
+			self->state = LU_W_REC_STATE__COLLECT;
 		}
 		else if (self->block_ix == block_ix)
 		{
@@ -120,17 +114,13 @@
 
 			if (diff > 1)
 			{
-				self->state = LU_W_REC_STATE__ONE;
+				self->state = LU_W_REC_STATE__COLLECT;
 			}
 			else
 			{
-				if (self->state == LU_W_REC_STATE__ONE)
+				if (self->state == LU_W_REC_STATE__COLLECT)
 				{
-					self->state = LU_W_REC_STATE__TWO;
-				}
-				else if (self->state == LU_W_REC_STATE__TWO)
-				{
-					self->state = LU_W_REC_STATE__SWITCH;
+					self->state = LU_W_REC_STATE__COLLECT_AND_SAVE;
 				}
 			}
 		}
