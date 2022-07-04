@@ -435,8 +435,16 @@
 		
 	};
 
+	//
+	// Costructors / Destructors
+	//
+
 	static Lu_S_Layer_Rec lu_s_layer_rec__create(Lu_Config config, Lu_Rec rec, lu_size layer_ix, lu_size area_ix);
 	static void lu_s_layer_rec__destroy(Lu_S_Layer_Base self);
+
+	//
+	// Get
+	//
 
 	static inline Lu_W_Rec lu_s_layer_rec__get_save_w_rec(Lu_S_Layer_Rec self, lu_size wave_ix)
 	{
@@ -454,6 +462,35 @@
 		return &self->match_w_recs[wave_ix];
 	}
 
+	static inline Lu_N_Table lu_s_layer_rec__get_n_table(Lu_S_Layer_Rec self)
+	{
+		return self->super.n_table;
+	}
+
+	static inline Lu_S_Layer_Base lu_s_layer_rec__get_parent(Lu_S_Layer_Rec self)
+	{
+		return self->super.super.p;
+	}
+
+	static inline Lu_S_Layer_Comp lu_s_layer_rec__get_layer_comp(Lu_S_Layer_Rec self, lu_size ix)
+	{
+		Lu_S_Layer_Base base = (Lu_S_Layer_Base) self;
+
+		Lu_Slot_Base slot_base = base->c;
+		lu__assert(slot_base);
+		lu__assert(slot_base->type == LU_SLOT__ARR);
+
+		Lu_Slot_Arr slot_arr = (Lu_Slot_Arr) slot_base;
+
+		Lu_S_Layer_Comp comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, ix);
+		lu__assert(comp->super.type == LU_S_LAYER__COMP);
+
+		return comp;
+	}
+
+	//
+	// Methods
+	// 
 
 	static Lu_W_Table lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
@@ -471,16 +508,6 @@
 		Lu_Process_Config config,
 		Lu_W_Processor processor
 	);
-
-	static inline Lu_N_Table lu_s_layer_rec__get_n_table(Lu_S_Layer_Rec self)
-	{
-		return self->super.n_table;
-	}
-
-	static inline Lu_S_Layer_Base lu_s_layer_rec__get_parent(Lu_S_Layer_Rec self)
-	{
-		return self->super.super.p;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Area

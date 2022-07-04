@@ -1,12 +1,10 @@
 # Lu_Brain 
 
-Lu_Brain is a next-generation [AI2 technology](https://ai2tech.org) _pattern database_ open-source C library.
+Lu_Brain is a next-generation AI _pattern database_ open-source C library.
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
 ## Why Lu_Brain?
-
-Lu_Brain is an AI2 technology.
 
 #### Dynamicity
 
@@ -18,9 +16,7 @@ When working with "classic" ANN, information is in "weights," but it is hard to 
 
 #### Speed
 
-Learning speed does not depend on the number of already learned patterns (no gradient descent). 
-
-Pattern matching speed depends on the quality of expected results (the mathematically most correct answer will require more calculations).  
+Learning speed does not depend on the number of already learned patterns (no gradient descent).  
 
 The mathematically most correct answer for provided data is always achievable. There are no "local minimum" or "saddle points" problems in the Lu_Brain algorithm.
 
@@ -29,12 +25,6 @@ The mathematically most correct answer for provided data is always achievable. T
 1. The fastest dynamic pattern learning and manipulation in the World
 2. Pattern database with complete data transparency and ease of access
 3. Easy to use, well designed and architected, fast and bug-free, enjoyable to contribute software
-
-## FAQ
-
-Q: **Why C?**
-
-A: Lu_Brain is a low-level library, and, in short, C is the best language for the job (not C++, Rust, Go, Python, etc.). Later we will create wrappers for higher-level languages.
 
 ## Legal
 

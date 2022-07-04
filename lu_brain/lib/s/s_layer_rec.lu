@@ -88,6 +88,193 @@
 		}
 	}
 
+	struct lu_s_layer_rec_block_params {
+		lu_size src_start_z; 
+		lu_size src_end_z;
+		lu_size src_x;
+		lu_size src_y;
+		lu_size dest_x; 
+		lu_size dest_y;
+		lu_size wave_ix;
+		Lu_Data data;
+		enum lu_w_rec_state state;
+		Lu_W_Table curr_w_table;
+		Lu_N_Table rec_n_table;
+	};
+
+	typedef struct lu_s_layer_rec_block_params* Lu_S_Layer_Rec_Block_Params;
+
+	static void lu_s_layer_rec__block_collect(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+	{
+		Lu_S_Layer_Comp comp;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
+		Lu_W_Cell_P w_cell_p;
+		Lu_Comp_Calc p_comp_calc;
+		lu_value v;
+
+		for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
+		{
+			comp = lu_s_layer_rec__get_layer_comp(self, src_z);
+			lu__assert(comp);
+
+			s_view_p = &comp->p_view;
+
+			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
+			lu__assert(w_table_p);
+
+			p_comp_calc = &s_view_p->comp_calc;
+
+			// write destination w_cell_p
+			w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
+
+			lu_w_cell_p__reset(w_cell_p);
+
+			// Get value from Data
+			// v = data->values[src_z * wh + xy_shift];
+			v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
+
+			lu_w_cell_p__update(
+				w_cell_p,
+				p->state,
+				v
+			);
+		}
+	}
+
+	static void lu_s_layer_rec__block_collect_and_save(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+	{
+		Lu_S_Layer_Comp comp;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
+		Lu_W_Cell_P w_cell_p;
+		Lu_Comp_Calc p_comp_calc;
+		lu_value v;
+
+		Lu_N_Column n_column;
+		Lu_N_Cell n_cell;
+
+		// write destination w_cell (not w_cell_p)
+		Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
+		lu__assert(w_cell);
+		lu_w_cell__reset(w_cell);
+
+		lu_size children_count = p->src_end_z - p->src_start_z;
+		Lu_W_Cell_P children[children_count];
+
+		lu_s_layer__reset_children(children, children_count);
+
+		// Collect children
+		for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
+		{
+			comp = lu_s_layer_rec__get_layer_comp(self, src_z);
+			lu__assert(comp);
+
+			s_view_p = &comp->p_view;
+
+			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
+			lu__assert(w_table_p);
+
+			p_comp_calc = &s_view_p->comp_calc;
+
+			// write destination w_cell_p
+			w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
+
+			// Get value from Data
+			// v = data->values[src_z * wh + xy_shift];
+			v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
+
+			lu_w_cell_p__update(
+				w_cell_p,
+				p->state,
+				v
+			);
+
+			children[src_z] = lu_w_cell_p__save(
+				w_cell_p, 
+				p->src_x, 
+				p->src_y, 
+				p_comp_calc, 
+				s_view_p->n_comp_table
+			);
+
+			lu__assert(children[src_z]);
+
+
+		} // for (lu_size src_z = 0
+
+		//
+		// N Cell save
+		//
+
+		n_column = lu_n_table__get_column(p->rec_n_table, p->dest_x, p->dest_y);
+		lu__assert(n_column);
+		
+		n_cell = lu_n_column__save_with_vp_children(n_column, children, children_count);
+		lu__assert(n_cell);
+
+		//
+		// Parent W cell save
+		//
+
+		lu_w_cell__save(w_cell, n_cell, n_column);
+		
+	}
+
+	static void lu_s_layer_rec__process_data(
+		Lu_S_Layer_Rec self, 
+		Lu_S_Layer_Rec_Block_Params p,
+		void (*block)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+	)
+	{
+		Lu_Rec rec = self->rec;
+		lu__assert(rec);
+		
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, p->wave_ix);
+		lu__assert(w_rec);
+
+		lu_size src_x;
+		lu_size src_y;
+		lu_size src_z;
+		lu_value v;
+
+		Lu_Rec_View rec_view = &w_rec->view;
+
+		lu_size src_start_x = rec_view->src_start_x;
+		lu_size src_start_y = rec_view->src_start_y;
+		lu_size src_start_z = rec_view->src_start_z;
+
+		lu_size src_end_x = rec_view->src_end_x;
+		lu_size src_end_y = rec_view->src_end_y;
+		lu_size src_end_z = rec_view->src_end_z;
+
+		lu_long dest_x;
+		lu_long dest_y;
+
+		lu_long dest_start_x = rec_view->dest_start_x;
+		lu_long dest_start_y = rec_view->dest_start_y;
+
+		// Here we calculate comp=>p_view=>w_table_p=>w_cell_p with appropriante n_cell for each comp (z=1,2,3,..)
+		// And then using these n_cells (saved in =>w_cell_p) we calculane n_cell in next layer and update curr_w_table with it
+		for (src_y = src_start_y; src_y < src_end_y; src_y++)
+		{
+			dest_y = dest_start_y + (lu_long)(src_y - src_start_y);
+			if (dest_y < 0) continue;
+			if (dest_y >= rec->height) continue;
+
+			for (src_x = src_start_x; src_x < src_end_y; src_x++)
+			{
+				dest_x = dest_start_x + (lu_long)(src_x - src_start_x);
+				if (dest_x < 0) continue;
+				if (dest_x >= rec->width) continue;
+
+				
+
+			}  // for (src_x = 0
+		} // for (src_y = 0
+
+	}
+
 	static Lu_W_Table lu_s_layer_rec__save(
 		Lu_S_Layer_Rec self, 
 		Lu_Save_Wave save_wave,
@@ -141,11 +328,8 @@
 		lu_size block_ix = data->block_ix;
 
 		Lu_S_Layer_Comp comp;
-
-		lu_size wh = data->h * data->w;
 		Lu_S_View_P s_view_p;
 		Lu_W_Table_P w_table_p;
-
 		Lu_W_Cell_P w_cell_p;
 		Lu_Comp_Calc p_comp_calc;
 
@@ -308,7 +492,6 @@
 
 		return curr_w_table;
 	}
-
 
 	static void lu_s_layer_rec__match(
 		Lu_S_Layer_Rec self, 
