@@ -9,5 +9,4 @@
 #include "hashes/_module.h"
 #include "mem_debuggers/_module.h"
 #include "slots/_module.h"
-#include "data_seq/_module.h"
 

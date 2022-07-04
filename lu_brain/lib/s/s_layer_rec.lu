@@ -106,17 +106,19 @@
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, wave->wave_ix);
 		lu__assert(w_rec);
 
-		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix, self->rec->view);
+		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix, data->view);
 
 		#ifdef LU__DEEP_DEBUG
 		char buffer[50];
 		lu_w_rec_state__to_str(w_rec->state, buffer);
 		lu__debug(
-			"\nREC_SAVE: w_state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld", 
+			"\nREC_SAVE: w_state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld, view dest pos=[%ld, %ld]", 
 			buffer,
 			w_rec->wave_id,
 			w_rec->wave_ix,
-			w_rec->block_ix
+			w_rec->block_ix,
+			w_rec->view.dest_start_x,
+			w_rec->view.dest_start_y
 		);
 		
 		lu_data__print_binary(data);
@@ -327,12 +329,12 @@
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_match_w_rec(self, wave->wave_ix);
 		lu__assert(w_rec);
 
-		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix, self->rec->view);
+		lu_w_rec__update(w_rec, wave->wave_id, wave->wave_ix, data->block_ix, data->view);
 
 		char buffer[50];
 		lu_w_rec_state__to_str(w_rec->state, buffer);
 		lu__debug(
-			"\n\nREC_MATCH: w_rec->state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld \n\n", 
+			"\nREC_MATCH: w_rec->state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld", 
 			buffer,
 			w_rec->wave_id,
 			w_rec->wave_ix,

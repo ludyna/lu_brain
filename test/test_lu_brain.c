@@ -129,6 +129,8 @@ void test_lu_brain_basics_01(void)
 		lu__debug("\nvalues_0 before push: ");
 		lu_values__print_binary(values_0, 3, 5, 1);
 
+		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+
 		lu_wave__push(s_wave, rec_0, values_0, 3, 5, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 1, 1);

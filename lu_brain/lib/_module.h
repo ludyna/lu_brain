@@ -17,6 +17,7 @@
 // Modules
 
 #include "rec/_module.h"
+#include "data_seq/_module.h"
 #include "calcs/_module.h"
 #include "la_addr/_module.h"
 #include "n_addr/_module.h"

@@ -12,6 +12,7 @@
 // App
 
 #include "rec/_module.lu"
+#include "data_seq/_module.lu"
 #include "calcs/_module.lu"
 #include "config.lu"  
 #include "la_addr/_module.lu"

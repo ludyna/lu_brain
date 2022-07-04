@@ -37,6 +37,9 @@
 		lu_size d;
 
 		lu_p_value values;
+
+		// Info about how to view/process this data
+		struct lu_rec_view view;
 	};
 
 	//	
@@ -68,7 +71,8 @@
 		lu_size w, 
 		lu_size h, 
 		lu_size d, 
-		lu_p_value values
+		lu_p_value values, 
+		struct lu_rec_view view
 	)
 	{
 		self->wave_id 	= wave_id;
@@ -79,12 +83,18 @@
 		self->h 		= h;
 		self->d 		= d;
 		self->values 	= values;
+		self->view 		= view;
 
 		return self;
 	}
 
 	static inline Lu_Data lu_data__init_default(Lu_Data self)
 	{
+
+		struct lu_rec_view view;
+
+		lu_rec_view__init(&view, 0, 0, 0);
+
 		lu_data__set(
 			self, 
 			LU_WAVE_IX__NOT_SET, 
@@ -93,7 +103,8 @@
 			0, 
 			0, 
 			0, 
-			NULL
+			NULL,
+			view
 		);
 
 		return self;
@@ -170,7 +181,7 @@
 
 	static inline Lu_Data lu_data__shallow_copy(Lu_Data dest, Lu_Data src)
 	{
-		lu_data__set(dest, src->wave_id, src->block_ix, src->rec_id, src->w, src->h, src->d, src->values);
+		lu_data__set(dest, src->wave_id, src->block_ix, src->rec_id, src->w, src->h, src->d, src->values, src->view);
 
 		return dest;
 	}
@@ -230,7 +241,14 @@
 	void lu_data_seq__block_begin(Lu_Data_Seq seq);
 	void lu_data_seq__block_end(Lu_Data_Seq seq);
 
-	void lu_data_seq__push(Lu_Data_Seq self, Lu_Rec rec, lu_value* values, lu_size w, lu_size h, lu_size d);
+	void lu_data_seq__push(
+		Lu_Data_Seq self, 
+		Lu_Rec rec, lu_value* values, 
+		lu_size w, 
+		lu_size h, 
+		lu_size d,
+		struct lu_rec_view view
+	);
 	Lu_Data lu_data_seq__data_get(Lu_Data_Seq self, lu_size rec_i, Lu_L_Node node);
 
 	void lu_data_seq__reset(Lu_Data_Seq self);
