@@ -184,8 +184,8 @@
 
 			children[src_z] = lu_w_cell_p__save(
 				w_cell_p, 
-				p->src_x, 
-				p->src_y, 
+				p->dest_x, 
+				p->dest_x, 
 				p_comp_calc, 
 				s_view_p->n_comp_table
 			);
@@ -359,31 +359,16 @@
 				break;
 			case LU_W_REC_STATE__COLLECT_AND_SAVE:
 				lu_s_layer_rec__process_data(self, &p, lu_s_layer_rec__block_collect_and_save);
+				
+				#ifdef LU__DEEP_DEBUG
+				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
+				#endif
+
 				p.curr_w_table->any_fired = true;
 				break;
 			default:
 				lu__assert(false);
 		};
-
-
-		// #ifdef LU__DEEP_DEBUG
-		// if (w_rec->state == LU_W_REC_STATE__SWITCH || w_rec->state == LU_W_REC_STATE__COLLECT_AND_SAVE)
-		// {
-		// 	// Debug w_table
-		// 	for (lu_size src_z = 0; src_z < depth; src_z++)
-		// 	{
-		// 		comp = (Lu_S_Layer_Comp) lu_arr__get(slot_arr->items, src_z);
-		// 		lu__assert(comp->super.type == LU_S_LAYER__COMP);
-
-		// 		s_view_p = &comp->p_view;
-
-		// 		w_table_p = lu_s_view_p__get_w_save_table(s_view_p, wave->wave_ix);
-		// 		lu__assert(w_table_p);
-
-		// 		lu_w_table_p__print(w_table_p);
-		// 	}
-		// }	
-		// #endif
 
 		return p.curr_w_table;
 	}

@@ -509,6 +509,26 @@
 		Lu_W_Processor processor
 	);
 
+	static inline void lu_s_layer_rec__print_comp_w_tables(Lu_S_Layer_Rec self, lu_size wave_ix, lu_size src_start_z, lu_size src_end_z)
+	{
+		Lu_S_Layer_Comp comp;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
+
+		for (lu_size src_z = src_start_z; src_z < src_end_z; src_z++)
+		{
+			comp = lu_s_layer_rec__get_layer_comp(self, src_z);
+			lu__assert(comp->super.type == LU_S_LAYER__COMP);
+
+			s_view_p = &comp->p_view;
+
+			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, wave_ix);
+			lu__assert(w_table_p);
+
+			lu_w_table_p__print(w_table_p);
+		}
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Area
 //
