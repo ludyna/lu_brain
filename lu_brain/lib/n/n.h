@@ -1097,7 +1097,7 @@
  		return &self->columns[column_ix];
  	}
 
- 	static inline Lu_N_Column lu_n_table__get_column(Lu_N_Table self, lu_size x, lu_size y)
+ 	static inline Lu_N_Column lu_n_table__get_n_column(Lu_N_Table self, lu_size x, lu_size y)
  	{
  		return lu_n_table__get_column_by_ix(self, y * self->w + x);
  	}

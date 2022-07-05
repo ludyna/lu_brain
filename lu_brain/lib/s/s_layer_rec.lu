@@ -272,7 +272,7 @@
 		// N Cell save
 		//
 
-		n_column = lu_n_table__get_column(p->curr_n_table, p->dest_x, p->dest_y);
+		n_column = lu_n_table__get_n_column(p->curr_n_table, p->dest_x, p->dest_y);
 		lu__assert(n_column);
 		
 		n_cell = lu_n_column__save_with_vp_children(n_column, children, children_count);
@@ -403,6 +403,14 @@
 			data->block_ix,
 			p.curr_n_table
 		);
+
+		//
+		// Because of how Rec View works we might not process all rec cells and therefore
+		// not all curr_w_table cells will be set. To avoid some curr_w_table cells without n_cell/n_column or having
+		// previous wave data, we reset every w_cell to appropriate n "null cells"
+		//
+
+		lu_w_table__reset_cells_to_null_cells(p.curr_w_table);
 		
 		//
 		// Process data 

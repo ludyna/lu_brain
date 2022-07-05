@@ -378,6 +378,46 @@
 		}
 	}
 
+	static inline void lu_w_table__reset_cells_to_null_cells(Lu_W_Table self)
+	{
+		lu__assert(self);
+		lu__assert(self->n_table);
+
+		//
+		// Sanity check
+		//
+
+		lu__assert(self->w == self->n_table->w);
+		lu__assert(self->h == self->n_table->h);
+
+		//
+		// Reset
+		//
+
+		lu_size y;
+		lu_size x;
+		Lu_W_Cell w_cell;
+		Lu_N_Column n_column;
+		Lu_N_Cell n_cell;
+
+		for (y = 0; y < self->h; y++)
+		{
+			for (x = 0; x < self->w; x++)
+			{
+				w_cell = lu_w_table__get_w_cell(self, x, y);
+				lu__assert(w_cell);
+
+				n_column = lu_n_table__get_n_column(self->n_table, x, y);
+				lu__assert(n_column);
+
+				n_cell = lu_n_column__get_null_cell(n_column);
+				lu__assert(n_cell);
+
+				lu_w_cell__save(w_cell, n_cell, n_column);
+			}
+		}
+	}
+
 
 	static inline void lu_w_table__collect_children(
 		Lu_W_Table self, 
@@ -442,7 +482,7 @@
 			lu__assert(children[i]->n_cell);
 		}
 
-		lu__debug("\n*children_count=%ld, self->normal_children_size=%ld\n", *children_count, self->normal_children_size);
+		// lu__debug("\n*children_count=%ld, self->normal_children_size=%ld\n", *children_count, self->normal_children_size);
 		lu__debug_assert(*children_count == self->normal_children_size);
 	}
 

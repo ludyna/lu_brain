@@ -121,7 +121,7 @@
 		Lu_N_Column n_column
 	)
 	{
-		lu__debug_assert(self);
+		lu__assert(self);
 
 		self->n_cell = n_cell;
 		self->n_column = n_column;

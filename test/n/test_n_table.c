@@ -22,7 +22,7 @@ void setUp(void)
 	TEST_ASSERT(n_table->h == 2);
 	TEST_ASSERT(n_table->columns);
 
-	Lu_N_Column column = lu_n_table__get_column(n_table, 1, 1);
+	Lu_N_Column column = lu_n_table__get_n_column(n_table, 1, 1);
 	TEST_ASSERT(column);
 
 	Lu_N_Cell cell = lu_n_column__get_cell(column, 0, 3);
@@ -35,7 +35,7 @@ void setUp(void)
 
 	struct lu_n_pos pos = lu_n_pos__from_column_ix(cell->addr.column_ix, n_table->w);
  
- 	Lu_N_Column column_2 = lu_n_table__get_column(n_table, pos.x, pos.y);
+ 	Lu_N_Column column_2 = lu_n_table__get_n_column(n_table, pos.x, pos.y);
 
  	TEST_ASSERT(column_2 == column);
 
