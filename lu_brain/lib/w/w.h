@@ -414,43 +414,41 @@
 		// 
 		// 3. w_cell was fired for this wave (w_cell->n_cell != NULL)
 
-		children[i] = lu_w_table__get_w_cell(self, x, y);
-		if (children[i])
-		{
-			++(*children_count);
 
-			lu__assert(children[i]->n_cell);
+
+		Lu_W_Cell w_cell = lu_w_table__get_w_cell(self, x, y);
+		if (w_cell)
+		{
+			lu__assert(lu_w_cell__is_set(w_cell));
+			children[i++] = w_cell;
 		}
 
-		++i;
-		children[i] = lu_w_table__get_w_cell(self, x + 1, y);
-		if (children[i])
+		w_cell = lu_w_table__get_w_cell(self, x + 1, y);
+		if (w_cell)
 		{
-			++(*children_count);
-
-			lu__assert(children[i]->n_cell);
+			lu__assert(lu_w_cell__is_set(w_cell));
+			children[i++] = w_cell;
 		}
 
-		++i;
-		children[i] = lu_w_table__get_w_cell(self, x, y + 1);
-		if (children[i]) 
+		w_cell = lu_w_table__get_w_cell(self, x, y + 1);
+		if (w_cell) 
 		{
-			++(*children_count);
-
-			lu__assert(children[i]->n_cell);
+			lu__assert(lu_w_cell__is_set(w_cell));
+			children[i++] = w_cell;
 		}
 
-		++i;
-		children[i] = lu_w_table__get_w_cell(self, x + 1, y + 1);
-		if (children[i]) 
+		w_cell = lu_w_table__get_w_cell(self, x + 1, y + 1);
+		if (w_cell) 
 		{
-			++(*children_count);
-
-			lu__assert(children[i]->n_cell);
+			lu__assert(lu_w_cell__is_set(w_cell));
+			children[i++] = w_cell;
 		}
+
+		*children_count = i;
 
 		// lu__debug("\n*children_count=%ld, self->normal_children_size=%ld\n", *children_count, self->normal_children_size);
 		lu__debug_assert(*children_count == self->normal_children_size);
+
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

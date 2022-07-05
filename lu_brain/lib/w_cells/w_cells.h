@@ -103,6 +103,11 @@
 		return (self->n_cell == NULL) || (self->n_column == NULL);
 	}
 
+ 	static inline lu_bool lu_w_cell__is_set(Lu_W_Cell self)
+	{
+		return !lu_w_cell__is_not_set(self);
+	}
+
 	static inline lu_bool lu_w_cell__has_null_n_cell(Lu_W_Cell self)
 	{
 		if (self == NULL) return false;
@@ -189,6 +194,11 @@
 		lu__assert(self);
 
 		return (self->n_cell == NULL) || (self->n_column == NULL);
+	}
+
+ 	static inline lu_bool lu_w_cell_p__is_set(Lu_W_Cell_P self)
+	{
+		return !lu_w_cell_p__is_not_set(self);
 	}
 
 	static inline lu_bool lu_w_cell_p__has_null_n_cell(Lu_W_Cell_P self)
@@ -339,7 +349,7 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-//  w_children
+//  lu_w_children
 
 	static inline void lu_w_children__print_symbols(Lu_W_Cell* self, lu_size children_count)
 	{
@@ -351,6 +361,15 @@
 		{
 			w_cell = self[i];
 			lu_w_cell__print_symbol(w_cell);
+		}
+	}
+
+	static inline void lu_w_children__reset(Lu_W_Cell* self, lu_size children_count)
+	{
+		lu__assert(self);
+		for (lu_size i = 0; i < children_count; i++)
+		{
+			self[i] = NULL;
 		}
 	}
 
