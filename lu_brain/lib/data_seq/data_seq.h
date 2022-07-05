@@ -12,7 +12,7 @@
 		lu_size d
 	);
 
-	void lu_values__print_binary(
+	void lu_values__print_symbols(
 		lu_p_value src, 
 		lu_size w, 
 		lu_size h, 
@@ -202,7 +202,7 @@
 	//
 
 	void lu_data__print(Lu_Data);
-	void lu_data__print_binary(Lu_Data);
+	void lu_data__print_symbols(Lu_Data);
 
 
 ///////////////////////////////////////////////////////////////////////////////

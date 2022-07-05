@@ -29,7 +29,7 @@
 		}
 	}
 
-	void lu_values__print_binary(
+	void lu_values__print_symbols(
 		lu_p_value values, 
 		lu_size w, 
 		lu_size h, 

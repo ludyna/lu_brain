@@ -219,7 +219,7 @@
 		lu__debug("\n");
 	}
 
-	void lu_data__print_binary(Lu_Data self)
+	void lu_data__print_symbols(Lu_Data self)
 	{
 		lu__assert(self);
 
@@ -229,7 +229,7 @@
 
 		if (self->values)
 		{
-			lu_values__print_binary(self->values, self->w, self->h, self->d);
+			lu_values__print_symbols(self->values, self->w, self->h, self->d);
 		}
 		else
 		{

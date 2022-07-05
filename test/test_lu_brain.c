@@ -135,7 +135,7 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(s_wave), lu_wave__get_type(s_wave)) == s_wave);
 
 		lu__debug("\nvalues_0 before push: ");
-		lu_values__print_binary(values_dot, 3, 5, 1);
+		lu_values__print_symbols(values_dot, 3, 5, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
 

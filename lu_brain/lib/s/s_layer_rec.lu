@@ -377,7 +377,7 @@
 			w_rec->view.dest_start_y
 		);
 		
-		lu_data__print_binary(data);
+		lu_data__print_symbols(data);
 		#endif 
 
  		//

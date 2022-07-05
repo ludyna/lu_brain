@@ -128,6 +128,26 @@
 
 		return self;
 	}
+
+	static inline void lu_w_cell__print_symbol(Lu_W_Cell self)
+	{
+		if (self == NULL)
+		{
+			lu__debug("0 ");
+		}
+		else if (lu_w_cell__is_not_set(self))
+		{
+			lu__debug("E ");
+		}
+		else if (lu_w_cell__has_null_n_cell(self))
+		{
+			lu__debug("N ");
+		}
+		else
+		{
+			lu__debug("X ");
+		}
+	}
  
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_P
@@ -296,6 +316,43 @@
 		);
 	}
 
+	static inline void lu_w_cell_p__print_symbol(Lu_W_Cell_P self)
+	{
+		if (self == NULL)
+		{
+			lu__debug("00 "); // error
+		}
+		else if (lu_w_cell_p__is_not_set(self))  // (self->n_cell == NULL) || (self->n_column == NULL)
+		{
+			lu__debug("EE "); // error
+		}
+		else if (lu_w_cell_p__has_null_n_cell(self)) // self->n_cell->addr.cell_ix == 0
+		{
+			lu__debug("NN "); // just null (no changes for p)
+		}
+		else
+		{
+			char buff[4];
+			sprintf(buff, "%.0f", self->p_2 - self->p_1);
+			lu__debug("%2s ", buff); // value
+		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+//  w_children
+
+	static inline void lu_w_children__print_symbols(Lu_W_Cell* self, lu_size children_count)
+	{
+		lu__assert(self);
+
+		lu__debug("\nCHILDREN(count=%ld): ", children_count);
+		Lu_W_Cell w_cell;
+		for (lu_size i = 0; i < children_count; i++)
+		{
+			w_cell = self[i];
+			lu_w_cell__print_symbol(w_cell);
+		}
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_V

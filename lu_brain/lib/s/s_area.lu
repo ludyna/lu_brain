@@ -287,7 +287,7 @@
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
 
 		lu__debug("\n MATCHING DATA (lu_s_layer_rec__match()):");
-		lu_data__print_binary(data);
+		lu_data__print_symbols(data);
 
 		lu_s_layer_rec__match(layer_rec, match_wave, rec_id, data, config, processor);
 
