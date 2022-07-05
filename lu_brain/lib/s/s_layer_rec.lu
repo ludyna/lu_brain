@@ -114,7 +114,7 @@
 		Lu_Data data;
 		enum lu_w_rec_state state;
 		Lu_W_Table curr_w_table;
-		Lu_N_Table rec_n_table;
+		Lu_N_Table curr_n_table;
 	};
 
 	typedef struct lu_s_layer_rec_block_params* Lu_S_Layer_Rec_Block_Params;
@@ -272,7 +272,7 @@
 		// N Cell save
 		//
 
-		n_column = lu_n_table__get_column(p->rec_n_table, p->dest_x, p->dest_y);
+		n_column = lu_n_table__get_column(p->curr_n_table, p->dest_x, p->dest_y);
 		lu__assert(n_column);
 		
 		n_cell = lu_n_column__save_with_vp_children(n_column, children, children_count);
@@ -390,15 +390,20 @@
 		p.data = data;
 		p.state = w_rec->state;
 
+		p.curr_n_table = lu_s_layer_rec__get_n_table(self);
+		lu__assert(p.curr_n_table);
+
 		p.curr_w_table = lu_s_layer__get_w_table(&self->super, wave->wave_ix);
 		lu__assert(p.curr_w_table);
-		p.curr_w_table->wave_ix = wave->wave_ix;
-		p.curr_w_table->block_ix = data->block_ix;
-		p.curr_w_table->any_fired = false;
-		
-		p.rec_n_table = lu_s_layer_rec__get_n_table(self);
-		lu__assert(p.rec_n_table);
 
+		lu_w_table__prepare_for_wave(
+			p.curr_w_table,
+			wave->wave_id,
+			wave->wave_ix,
+			data->block_ix,
+			p.curr_n_table
+		);
+		
 		//
 		// Process data 
 		//
@@ -459,9 +464,9 @@
 		// 	w_rec->block_ix
 		// );
 
-		// Lu_N_Table rec_n_table = lu_s_layer_rec__get_n_table(self);
+		// Lu_N_Table curr_n_table = lu_s_layer_rec__get_n_table(self);
 
-		// lu__assert(rec_n_table);
+		// lu__assert(curr_n_table);
 
 		// Lu_S_Layer_Base base = (Lu_S_Layer_Base) self;
 

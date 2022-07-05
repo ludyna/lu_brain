@@ -149,64 +149,81 @@
 		Lu_Process_Config config
 	)
 	{
+		//
+		// Validation
+		//
+
 		lu__assert(self);
+		lu__assert(save_wave);
 		lu__assert(prev_w_table);
+		lu__assert(config);
+
+		//
+		// Local varibles
+		//
 
 		Lu_Wave wave = (Lu_Wave) save_wave;
+		lu_size x;
+		lu_size y;
+		lu_size cells_saved_count = 0;
+		Lu_W_Cell curr_w_cell;
+		lu_size children_count = 0;
+		Lu_N_Column n_column;
+		Lu_N_Cell n_cell;
+		lu_size i;
+		Lu_W_Cell children[LU_N_CELL__CHILDREN_MAX];
+
+		//
+		// Sanity check
+		//
 
 		lu__assert(prev_w_table->wave_ix == wave->wave_ix);
 		lu__assert(prev_w_table->block_ix == block_ix);
 
-		lu_size x;
-		lu_size y;
-
+		//
+		// Get curr_w_table
+		//
 		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(self, wave->wave_ix);
 		lu__assert(curr_w_table);
 
-		curr_w_table->wave_ix = wave->wave_ix;
-		curr_w_table->block_ix = block_ix;
+		//
+		// Get curr_n_table
+		// 
 
 		Lu_N_Table curr_n_table = self->n_table;
 		lu__assert(curr_n_table);
 
+		//
+		// Sanity check
+		//
+
 		lu__assert(curr_n_table->w == curr_w_table->w);
 		lu__assert(curr_n_table->h == curr_w_table->h);
 
-		lu_size cells_saved_count = 0;
+		//
+		// Prepare curr_w_table for wave 
+		//
 
-		Lu_W_Cell curr_w_cell;
+		lu_w_table__prepare_for_wave(
+			curr_w_table,
+			wave->wave_id,
+			wave->wave_ix,
+			block_ix,
+			curr_n_table
+		);
 
-		curr_w_table->any_fired = false;
+		#ifdef LU__DEEP_DEBUG
+		lu__debug(
+			"\npw=(%ld, %ld), cw=(%ld, %ld)", 
+			prev_w_table->w,
+			prev_w_table->h,
+			curr_w_table->w,
+			curr_w_table->h
+		);
 
-		Lu_W_Cell children[LU_N_CELL__CHILDREN_MAX];
-		
-		lu_size children_count = 0;
-
-		Lu_N_Column n_column;
-		Lu_N_Cell n_cell;
-
-		lu_size i;
-
-		// if(prev_w_table->w >= curr_w_table->w)
-		// {
-			lu__debug(
-				"\n pw=(%ld, %ld), cw=(%ld, %ld) \n", 
-				prev_w_table->w,
-				prev_w_table->h,
-				curr_w_table->w,
-				curr_w_table->h
-			);
-		// }
-		// if (prev_w_table->h >= curr_w_table->h)
-		// {
-			lu__debug(
-				"\n pw=(%ld, %ld), cw=(%ld, %ld) \n", 
-				prev_w_table->w,
-				prev_w_table->h,
-				curr_w_table->w,
-				curr_w_table->h
-			);
-		// }
+		lu_w_table__print(prev_w_table);
+		lu_w_table__print(curr_w_table);
+		#endif
 
 		for (y = 0; y < curr_w_table->h; y++)
 		{

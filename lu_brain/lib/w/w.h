@@ -241,6 +241,7 @@
 		Lu_Mem mem;
 		Lu_S_Layer s_layer;
 
+		lu_size wave_id;
 		lu_size wave_ix;
 		lu_size block_ix;
 
@@ -256,6 +257,8 @@
 		struct lu_w_cell* cells;
 
 		lu_bool any_fired;
+
+		Lu_N_Table n_table;
 	};
 
 	//
@@ -294,6 +297,35 @@
 	//
 	// Methods
 	//
+
+	static inline void lu_w_table__prepare_for_wave(
+		Lu_W_Table self,
+		lu_size wave_id,
+		lu_size wave_ix,
+		lu_size block_ix,
+		Lu_N_Table n_table
+	)
+	{
+		lu__assert(self);
+		lu__assert(n_table);
+
+		//
+		// Sanity check
+		// 
+
+		lu__assert(self->wave_id != wave_id || self->wave_ix != wave_ix || self->block_ix != block_ix);
+
+		//
+		// Prepare
+		//
+
+		self->wave_id = wave_id;
+		self->wave_ix = wave_ix;
+		self->block_ix = block_ix;
+		self->n_table = n_table;
+
+		self->any_fired = false;
+	}
 
 	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, lu_size wave_ix, lu_size block_ix)
 	{

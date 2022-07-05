@@ -46,6 +46,7 @@
 			self->normal_children_size = 4;
 		}
 
+		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
 		self->block_ix = LU_BLOCK_IX__NOT_SET; 
 
@@ -61,6 +62,7 @@
 		}
 
 		self->any_fired = false;
+		self->n_table = NULL;
 
 		return self;
 	}
