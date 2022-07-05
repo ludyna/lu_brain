@@ -14,8 +14,8 @@
 		// Starting position from which we read data from source
 		// src_start_x should be >= 0
 		// src_start_y should be >= 0
-		// src_end_x should be <= width
-		// src_end_y should be <= height
+		// src_end_x should be <= data.width
+		// src_end_y should be <= data.height
 		lu_size src_start_x; 
 		lu_size src_start_y;
 		lu_size src_start_z;
@@ -93,6 +93,18 @@
 		self->src_end_z = src_z;
 	}
 
+	//
+	// Methods
+	// 
+
+	static inline void lu_rec_view__update_to_dimensions(Lu_Rec_View self, lu_size w, lu_size h, lu_size d)
+	{
+		lu__assert(self);
+
+		if (self->src_end_x > w) self->src_end_x = w;
+		if (self->src_end_y > h) self->src_end_y = h;
+		if (self->src_end_z > d) self->src_end_z = d;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec

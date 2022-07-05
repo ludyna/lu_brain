@@ -42,9 +42,15 @@
 		for (z = 0; z < d; z++)
 		{
 			if (z > 0) lu__debug("\n\t");
+			lu__debug("\n\t  ");
+			for (x = 0; x < w; x++)
+			{
+				lu__debug("%ld ", x);
+			}
+
 			for (y = 0; y < h; y++)
 			{
-				lu__debug("\n\t");
+				lu__debug("\n\t%ld ", y);
 				for (x = 0; x < w; x++)
 				{
 					if(lu_macro__value_in_3d_array(values, x, y, z, w, h) > 0)

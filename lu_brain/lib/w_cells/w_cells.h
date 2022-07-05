@@ -160,32 +160,6 @@
 		self->p_2 = 0;
 	}
 
-	// static inline void lu_w_cell_p__register(
-	// 	Lu_W_Cell_P self, 
-	// 	lu_bool is_reset,
-	// 	lu_value p, 
-	// 	Lu_Process_Config config
-	// )
-	// {
-	// 	is_reset && (self->state = LU_W_CELL_P__START);
-
-	// 	#pragma GCC diagnostic ignored "-Wunused-value"
-	// 		self->state == LU_W_CELL_P__START && (self->p_1 = p);
-	// 		self->state == LU_W_CELL_P__ONE && (self->p_2 = p); 
-	// 	#pragma GCC diagnostic pop
-
-	// 	++self->state; 
-
-	// 	lu__debug_assert(self->state <= LU_W_CELL_P__READY);
-	// 	// self->state > LU_W_CELL_P__READY && self->state == LU_W_CELL_P__START;
-	// }
-
-	// static inline lu_bool lu_w_cell_p__is_ready(Lu_W_Cell_P self, lu_value signif_p)
-	// {
-	// 	// If no changes its important information for us
-	// 	return self->state == LU_W_CELL_P__READY; // && lu_value_abs(self->p_1 - self->p_2) >= signif_p;
-	// }
-
 	//
 	// Is
 	// 
@@ -306,6 +280,20 @@
 	{
 		self->p_1 = self->p_2;
 		self->p_2 = v;
+	}
+
+	static inline void lu_w_cell_p__print(Lu_W_Cell_P self)
+	{
+		lu__assert(self);
+
+		lu__debug(
+			"\nLU_W_CELL_P: n_column=%s, n_cell=%s, sig=%.1f, p_1=%.1f, p_2=%.1f",
+			self->n_column ? "Y" : "N", 
+			self->n_cell ? "Y" : "N",
+			self->sig,
+			self->p_1,
+			self->p_2
+		);
 	}
 
 

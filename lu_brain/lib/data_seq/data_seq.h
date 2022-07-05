@@ -48,12 +48,19 @@
 
 	static inline void lu_data__value_set(Lu_Data d, lu_size x, lu_size y, lu_size z, lu_value value) 
 	{ 
+		lu__assert(x < d->w);
+		lu__assert(y < d->h);
+		lu__assert(z < d->d);
+
 		lu_macro__value_in_3d_array(d->values, x, y, z, d->w, d->h) = value; 
 	}
 
 	static inline lu_value lu_data__get_value(Lu_Data d, lu_size x, lu_size y, lu_size z) 
 	{ 
-		// WARNING: Reading values in cycle using this method is bad due to a lot of multiplications for each value.
+		lu__assert(x < d->w);
+		lu__assert(y < d->h);
+		lu__assert(z < d->d);
+
 		return lu_macro__value_in_3d_array(d->values, x, y, z, d->w, d->h); 
 	}
 
@@ -84,6 +91,9 @@
 		self->d 		= d;
 		self->values 	= values;
 		self->view 		= view;
+
+		// Important (!) We receice view from Rec, but data can have smaller dimensions that rec
+		lu_rec_view__update_to_dimensions(&self->view, self->w, self->h, self->d);
 
 		return self;
 	}

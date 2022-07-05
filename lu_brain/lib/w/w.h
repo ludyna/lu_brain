@@ -180,10 +180,11 @@
 		lu_size x;
 		lu_size y;
 
-		Lu_W_Cell_P w_cell;
+		Lu_W_Cell_P w_cell_p;
 		lu_size y_shift;
 
-		lu__debug("\nLU_W_TABLE_P:");
+		lu__debug("\nLU_W_TABLE_P:"); 
+		char buff[4];
 
 
 		for (y = 0; y < self->h; y++)
@@ -192,22 +193,23 @@
 			lu__debug("\n\t");
 			for (x = 0; x < self->w; x++)
 			{
-				w_cell = lu_w_table_p__get_w_cell(self, x, y);
-				if (w_cell == NULL)
+				w_cell_p = lu_w_table_p__get_w_cell(self, x, y);
+				if (w_cell_p == NULL)
 				{
-					lu__debug("0 "); // error
+					lu__debug("00 "); // error
 				}
-				else if (lu_w_cell_p__is_not_set(w_cell))  // (self->n_cell == NULL) || (self->n_column == NULL)
+				else if (lu_w_cell_p__is_not_set(w_cell_p))  // (self->n_cell == NULL) || (self->n_column == NULL)
 				{
-					lu__debug("E "); // error
+					lu__debug("EE "); // error
 				}
-				else if (lu_w_cell_p__has_null_n_cell(w_cell)) // self->n_cell->addr.cell_ix == 0
+				else if (lu_w_cell_p__has_null_n_cell(w_cell_p)) // self->n_cell->addr.cell_ix == 0
 				{
-					lu__debug("N "); // just null (no changes for p)
+					lu__debug("NN "); // just null (no changes for p)
 				}
 				else
 				{
-					lu__debug("X "); // value
+					sprintf(buff, "%.0f", w_cell_p->p_2 - w_cell_p->p_1);
+					lu__debug("%2s ", buff); // value
 				}
 			}
 		}

@@ -86,7 +86,7 @@ void setUp(void)
 	rec_0 				= lu_brain__rec_add(
 		/*belongs to*/			brain, 
 		/*width*/				4, 
-		/*height*/				5, 
+		/*height*/				6, 
 		/*depth*/				1,
 		/*config*/ 				lu_rec_config__get_by_id(LU_REC__MONO1_IMAGE)
 	);	
