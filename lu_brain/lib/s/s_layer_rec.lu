@@ -115,6 +115,8 @@
 		enum lu_w_rec_state state;
 		Lu_W_Table curr_w_table;
 		Lu_N_Table curr_n_table;
+
+		Lu_W_Processor processor;
 	};
 
 	typedef struct lu_s_layer_rec_block_params* Lu_S_Layer_Rec_Block_Params;
@@ -286,7 +288,67 @@
 		
 	}
 
-	static void lu_s_layer_rec__process_data(
+	static void lu_s_layer_rec__block_collect_and_match(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+	{
+		lu__assert(p->processor);
+
+		Lu_S_Layer_Comp comp;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
+		Lu_W_Cell_P w_cell_p;
+		Lu_Comp_Calc p_comp_calc;
+		lu_value v;
+
+		Lu_N_Column n_column;
+		Lu_N_Cell n_cell;
+
+		// write destination w_cell (not w_cell_p)
+		Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
+		lu__assert(w_cell);
+		lu_w_cell__reset(w_cell);
+
+		lu_size children_count = p->src_end_z - p->src_start_z;
+		Lu_W_Cell_P children[children_count];
+
+		lu_s_layer__reset_children(children, children_count);
+
+		// Collect children
+		for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
+		{
+			comp = lu_s_layer_rec__get_layer_comp(self, src_z);
+			lu__assert(comp);
+
+			s_view_p = &comp->p_view;
+
+			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
+			lu__assert(w_table_p);
+
+			p_comp_calc = &s_view_p->comp_calc;
+
+			// write destination w_cell_p
+			w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
+
+			// Get value from Data
+			// v = data->values[src_z * wh + xy_shift];
+			v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
+
+			lu_w_cell_p__collect_and_shift(w_cell_p, v);
+
+			lu_w_cell_p__save(
+				w_cell_p, 
+				p->dest_x, 
+				p->dest_x, 
+				p_comp_calc, 
+				s_view_p->n_comp_table
+			);
+
+			// now that we have detected n_cell, we can fire it
+			lu_w_processor__fire_vp_parents_with_sig(p->processor, w_cell_p->n_cell, w_cell_p->n_column, 1.0);
+		} // for (lu_size src_z = 0
+		
+	}
+
+	static void lu_s_layer_rec__iterate_data_using_view(
 		Lu_S_Layer_Rec self, 
 		Lu_S_Layer_Rec_Block_Params p,
 		void (*block)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
@@ -340,20 +402,22 @@
 
 	}
 
-	static Lu_W_Table lu_s_layer_rec__save(
+	static Lu_W_Table lu_s_layer_rec__process_data(
 		Lu_S_Layer_Rec self, 
-		Lu_Save_Wave save_wave,
+		Lu_Wave wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Process_Config config
+		Lu_Process_Config config,
+		Lu_W_Processor processor,   
+		void (*collect)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
+		void (*collect_and_save)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
 	)
 	{
 		lu__assert(self);
+		lu__assert(wave);
 		lu__assert(self->rec);
 		lu__assert(data);
-		lu__assert(config);
-
-		Lu_Wave wave = (Lu_Wave) save_wave;
+		lu__assert(config);;
 
 		//
 		// Update w_rec state
@@ -396,6 +460,12 @@
 		p.curr_w_table = lu_s_layer__get_w_table(&self->super, wave->wave_ix);
 		lu__assert(p.curr_w_table);
 
+		p.processor = processor;
+
+		//
+		// Prepare curr_w_table
+		//
+
 		lu_w_table__prepare_for_wave(
 			p.curr_w_table,
 			wave->wave_id,
@@ -423,10 +493,10 @@
 				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
 				#endif
 
-				lu_s_layer_rec__process_data(self, &p, lu_s_layer_rec__block_collect);
+				lu_s_layer_rec__iterate_data_using_view(self, &p, collect);
 				break;
 			case LU_W_REC_STATE__COLLECT_AND_SAVE:
-				lu_s_layer_rec__process_data(self, &p, lu_s_layer_rec__block_collect_and_save);
+				lu_s_layer_rec__iterate_data_using_view(self, &p, collect_and_save);
 				
 				#ifdef LU__DEEP_DEBUG
 				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
@@ -441,6 +511,27 @@
 		return p.curr_w_table;
 	}
 
+	static Lu_W_Table lu_s_layer_rec__save(
+		Lu_S_Layer_Rec self, 
+		Lu_Save_Wave save_wave,
+		lu_size rec_id, 
+		Lu_Data data,
+		Lu_Process_Config config
+	)
+	{
+
+		return lu_s_layer_rec__process_data(
+			self, 
+			(Lu_Wave) save_wave,
+			rec_id,
+			data,
+			config,
+			NULL,
+			lu_s_layer_rec__block_collect,
+			lu_s_layer_rec__block_collect_and_save
+		);
+	}
+
 	static void lu_s_layer_rec__match(
 		Lu_S_Layer_Rec self, 
 		Lu_Match_Wave match_wave,
@@ -450,10 +541,20 @@
 		Lu_W_Processor processor
 	)
 	{
-		lu__assert(self);
-		lu__assert(self->rec);
-		lu__assert(data);
-		lu__assert(config);
+		lu__assert(processor);
+
+		lu_s_layer_rec__process_data(
+			self, 
+			(Lu_Wave) match_wave,
+			rec_id,
+			data,
+			config,
+			processor,
+			lu_s_layer_rec__block_collect,
+			lu_s_layer_rec__block_collect_and_match
+		);
+
+
 
 		// Lu_Wave wave = (Lu_Wave) match_wave;
 

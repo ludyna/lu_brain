@@ -244,7 +244,7 @@
 		lu_size p_reg = 0;
 		while((*p).value)
 		{
-			p_reg = lu_hash_comb(p_reg, (*p).value);
+			p_reg = lu_calc__hash_comb(p_reg, (*p).value);
 			++p;
 		}
 

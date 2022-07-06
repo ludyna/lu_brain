@@ -169,7 +169,7 @@
 		Lu_S_Layer frames_base = prev;
 		Lu_S_Layer frames = frames_base;
 
-		lu_size recs_layers_size = lu_s__Y(recs_count, 1);
+		lu_size recs_layers_size = lu_calc__layers_count(recs_count, 1);
 		for(lu_size i = 1; i < recs_layers_size; i++)
 		{
 			frames = lu_s_area__create_layer(frame_area, 1, 1, 1, 1);
@@ -218,7 +218,7 @@
 		// Rec 
 		//
 
-		Lu_S_Area rec_area = lu_s__create_area(s, config, lu_s__Y(rec->width, rec->height) + rec->depth, LU_AREA_TAG__REC);
+		Lu_S_Area rec_area = lu_s__create_area(s, config, lu_calc__layers_count(rec->width, rec->height) + rec->depth, LU_AREA_TAG__REC);
 		lu__assert(rec_area);
 
 		Lu_S_Layer_Rec rec_base = lu_s_area__create_layer_rec(rec_area, rec);
@@ -272,6 +272,8 @@
 
 			lu_s_layer_base__connect((Lu_S_Layer_Base) rec_layer, prev);
 			prev = (Lu_S_Layer_Base) rec_layer;
+
+			if (lu_calc__is_last_layer(w, h)) break;
 		}
 
 		// 

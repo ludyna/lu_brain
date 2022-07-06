@@ -274,7 +274,7 @@
 			lu__debug_assert(w_cell);
 			lu__debug_assert(w_cell->n_cell);
 
-			p_reg = lu_hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(w_cell->n_cell)->value);
+			p_reg = lu_calc__hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(w_cell->n_cell)->value);
 		}
 
 		return p_reg;
@@ -294,7 +294,7 @@
 
 			value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
 
-			p_reg = lu_hash_comb(p_reg, value);
+			p_reg = lu_calc__hash_comb(p_reg, value);
 		}
 
 		return p_reg;

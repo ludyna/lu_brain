@@ -2,13 +2,62 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */	
 
-///////////////////////////////////////////////////////////////////////////////
-// 
 
-	static inline lu_size lu_hash_comb(lu_size seed, lu_size value)
+///////////////////////////////////////////////////////////////////////////////
+//  lu_calc__
+
+	static inline lu_size lu_calc__hash_comb(lu_size seed, lu_size value)
 	{
 	    seed ^= value + 0x9e3779b9 + (seed<<6) + (seed>>2);
 	    return seed;
+	}
+
+	//
+	// (x Y y) = max(max(x - 1, 1) * max(y - 1, 1) - 1, 1)
+	// This calculation is only correct for "intersected squares cortex" type or similar 
+	// 
+	static inline lu_size lu_calc__layers_count(lu_size w, lu_size h)
+	{
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+
+		if (w > 1) --w;
+		if (h > 1) --h;
+
+		lu_size Y = w * h;
+
+		// minus one because apex is in the base layer of the next level
+		// Highest level should always have one layer.
+		if (Y > 1) --Y;
+
+		return Y;
+	}
+
+	static inline lu_size lu_calc__expected_child_size(lu_size w, lu_size h)
+	{
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+
+		if (w == 1 && h == 1)
+		{
+			return 1;
+		}
+		else if (w == 1 || h == 1)
+		{
+			return 2;
+		}
+		else
+		{
+			return 4;
+		}
+	}
+
+	static inline lu_bool lu_calc__is_last_layer(lu_size w, lu_size h)
+	{
+		lu__assert(w);
+		lu__assert(h);
+
+		return lu_calc__expected_child_size(w, h) == (w * h);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

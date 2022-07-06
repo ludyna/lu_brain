@@ -66,31 +66,6 @@
 	typedef struct lu_match_wave* Lu_Match_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
-// lu_s__Y
-//
-
-	//
-	// (x Y y) = max(max(x - 1, 1) * max(y - 1, 1) - 1, 1)
-	// This calculation is only correct for "intersected squares cortex" type or similar 
-	// 
-	static inline lu_size lu_s__Y(lu_size w, lu_size h)
-	{
-		lu__assert(w);
-		lu__assert(h);
-
-		if (w > 1) --w;
-		if (h > 1) --h;
-
-		lu_size Y = w * h;
-
-		// minus one because apex is in the base layer of the next level
-		// Highest level should always have one layer.
-		if (Y > 1) --Y;
-
-		return Y;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_P
 //
 

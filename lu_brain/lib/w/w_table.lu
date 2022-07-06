@@ -33,19 +33,7 @@
 		self->h_max = h_max;
 		self->wh_max = self->w * self->h_max;
 
-		if (w == 1 && h == 1)
-		{
-			self->normal_children_size = 1;
-		}
-		else if (w == 1 || h == 1)
-		{
-			self->normal_children_size = 2;
-		}
-		else
-		{
-			self->normal_children_size = 4;
-		}
-
+		self->normal_children_size = lu_calc__expected_child_size(w, h);
 		self->wave_id = LU_WAVE_ID__NOT_SET;
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
 		self->block_ix = LU_BLOCK_IX__NOT_SET; 
