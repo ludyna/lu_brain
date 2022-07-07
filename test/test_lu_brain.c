@@ -136,7 +136,7 @@ void tearDown(void)
 	// Destroy debugger
 	//
 
-	// lu_mem_debugger__print(md);
+	lu_mem_debugger__print(md);
 
 	TEST_ASSERT(lu_mem_debugger__is_all_freed(md));
     lu_mem_debugger__destroy(md, true);
@@ -184,7 +184,7 @@ void test_lu_brain_basics_01(void)
 	m_wave = lu_wave__create_match_wave(brain);
 
 		TEST_ASSERT(m_wave);
-		TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
+		// TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
 		TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
 		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
 
@@ -193,16 +193,17 @@ void test_lu_brain_basics_01(void)
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(s_wave, rec_0, values_dot, 3, 5, 1);
+		lu_wave__push(m_wave, rec_0, values_dot, 3, 5, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_dot, 3, 5, 1);
+		lu_wave__push(m_wave, rec_0, values_dot, 3, 5, 1);
 
 	lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
 	Lu_Label* results = lu_wave__get_result_labels(m_wave);
 	TEST_ASSERT(results);
+	TEST_ASSERT(results[0]);
 
 	TEST_ASSERT(lu_label__get_id(results[0]) == 15);
 }

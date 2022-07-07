@@ -2,7 +2,7 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-lu_bool g_user_assert = LU__USER_ASSERT_DEFAULT;
+lu_bool lu_g_user_assert = LU__USER_ASSERT_DEFAULT;
 
 void lu__throw_internal(enum lu_e e, const char* file, int line)
 {
@@ -30,7 +30,7 @@ void lu__throw_with_message_internal(enum lu_e e, const char* file, int line, co
 
 void* lu__user_debug_internal(const char* func, const char* file, int line, const char* fmt)
 {
-	if (!g_user_assert) return NULL;
+	if (!lu_g_user_assert) return NULL;
 
 	fprintf(stderr, "\n\x1B[31m%s(): <%s:%d> %s\033[0m", func, file, line, fmt);
     return NULL;

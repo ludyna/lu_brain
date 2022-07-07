@@ -24,5 +24,15 @@
 
 	lu_size lu_label__get_id(Lu_Label self)
 	{
+		if(!self)
+		{
+		 	if(lu_g_user_assert) 
+		 	{
+		 	 	lu__user_debug("Lu_Label is NULL");
+		 	}
+
+		 	return LU__SIZE_MAX;
+		}
+
 		return lu_la_cell__get_ix(self->la_cell);
 	}

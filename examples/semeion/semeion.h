@@ -77,6 +77,6 @@
 		return (rand() % (upper - lower + 1)) + lower;
 	} 
 
-	#define smn__user_assert(exp, msg) if(!(exp)) return g_user_assert ? printf(msg) : NULL;
-	#define smn__user_assert_void(exp, msg) if(!(exp)) { if (g_user_assert) printf(msg); return; }
+	#define smn__user_assert(exp, msg) if(!(exp)) return lu_g_user_assert ? printf(msg) : NULL;
+	#define smn__user_assert_void(exp, msg) if(!(exp)) { if (lu_g_user_assert) printf(msg); return; }
 	

@@ -244,7 +244,7 @@
 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
 		lu__assert(area);
 		lu__assert(area->tag == LU_AREA_TAG__REC);
-		 
+		 		
 		lu_s_area__match_rec(area, self, rec_id, data, config, &self->processor);
 
 		lu__debug("\n LIM_NEXT_COUNT = %ld\n", lu_lim_list__count(self->processor.next_list));
@@ -379,7 +379,7 @@
 	}
 
 	//
-	// Find
+	// Match
 	//
 
 	static void lu_match_wave__process_virtual(Lu_Wave self, Lu_Process_Config config)
@@ -392,7 +392,9 @@
 		Lu_Data_Block block = NULL;
 
 		while((block = lu_data_seq__next_block_get(match_wave->seq)))
+		{
 			lu_match_wave__process_block(match_wave, block, config);
+		}
 	}
 
 	//

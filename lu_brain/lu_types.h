@@ -9,7 +9,7 @@
 #include <wchar.h>
 
 #define lu_size size_t
-#define LU_SIZE__MAX SIZE_MAX
+#define LU__SIZE_MAX SIZE_MAX
 
 #define lu_int int 
 #define LU__INT_MAX INT_MAX

@@ -344,8 +344,8 @@
 
 			// now that we have detected n_cell, we can fire it
 			lu_w_processor__fire_vp_parents_with_sig(p->processor, w_cell_p->n_cell, w_cell_p->n_column, 1.0);
+			
 		} // for (lu_size src_z = 0
-		
 	}
 
 	static void lu_s_layer_rec__iterate_data_using_view(
@@ -432,7 +432,7 @@
 		char buffer[50];
 		lu_w_rec_state__to_str(w_rec->state, buffer);
 		lu__debug(
-			"\nREC_SAVE: w_state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld, view dest pos=[%ld, %ld]", 
+			"\nREC: w_state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld, view dest pos=[%ld, %ld]", 
 			buffer,
 			w_rec->wave_id,
 			w_rec->wave_ix,
@@ -543,9 +543,23 @@
 	{
 		lu__assert(processor);
 
+		Lu_Wave wave = (Lu_Wave) match_wave;
+
+		//
+		// Update processor
+		//
+
+		processor->wave_id = wave->wave_id;
+		processor->wave_ix = wave->wave_ix;
+		processor->block_ix = data->block_ix;
+
+		//
+		// Process data
+		// 
+
 		lu_s_layer_rec__process_data(
 			self, 
-			(Lu_Wave) match_wave,
+			wave,
 			rec_id,
 			data,
 			config,
@@ -553,8 +567,6 @@
 			lu_s_layer_rec__block_collect,
 			lu_s_layer_rec__block_collect_and_match
 		);
-
-
 
 		// Lu_Wave wave = (Lu_Wave) match_wave;
 

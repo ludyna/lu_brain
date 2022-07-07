@@ -62,7 +62,7 @@
 
 	static inline lu_p_void lu_arr__get_internal_debug(Lu_Arr self, lu_size index, const char* func, const char* file, int line)
 	{
-		if (g_user_assert && index >= self->size)
+		if (lu_g_user_assert && index >= self->size)
 			lu__user_debug_args_internal(func, file, line, "lu_arr__get: Out of range(index=%lu, size=%lu)", index, self->size);
 		
 		return lu_arr__get_internal(self, index);
@@ -70,7 +70,7 @@
 
 	static inline void lu_arr__set_internal_debug(Lu_Arr self, lu_size index, lu_p_void value, const char* func, const char* file, int line)
 	{
-		if (g_user_assert && index >= self->size)
+		if (lu_g_user_assert && index >= self->size)
 			lu__user_debug_args_internal(func, file, line, "lu_arr__set: Out of range(index=%lu, size=%lu)", index, self->size);
 
 		lu_arr__set_internal(self, index, value);

@@ -22,10 +22,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Data
 
-	#define LU_WAVE_ID__NOT_SET LU_SIZE__MAX
-	#define LU_WAVE_IX__NOT_SET LU_SIZE__MAX
-	#define LU_BLOCK_IX__NOT_SET LU_SIZE__MAX
-	#define LU_REC_ID__NOT_SET LU_SIZE__MAX
+	#define LU_WAVE_ID__NOT_SET LU__SIZE_MAX
+	#define LU_WAVE_IX__NOT_SET LU__SIZE_MAX
+	#define LU_BLOCK_IX__NOT_SET LU__SIZE_MAX
+	#define LU_REC_ID__NOT_SET LU__SIZE_MAX
 
 	struct lu_data {
 		lu_size wave_id;

@@ -78,7 +78,7 @@
 		lu__assert(self);
 
 		self->sig = 0;
-		self->wave_id = LU_SIZE__MAX; 
+		self->wave_id = LU__SIZE_MAX; 
 		self->mult = 1;
 	}
 
