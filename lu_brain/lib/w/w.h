@@ -110,7 +110,11 @@
 
 			lu_long diff = ((lu_long)block_ix) - ((lu_long)self->block_ix);
 
-			lu__assert(diff > 0); // if this fails, probably wave was not reset properly 
+			// if this fails, probably wave was not reset properly or 
+			// block_ix was not increased after lu_wave__process
+			lu__debug("\nLU_W_REC__UPDATE: block_ix=%ld, self->block_ix=%ld\n", block_ix, self->block_ix);
+
+			lu__assert(diff > 0);
 
 			if (diff > 1)
 			{

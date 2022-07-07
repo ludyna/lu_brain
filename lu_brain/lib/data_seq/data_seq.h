@@ -27,10 +27,17 @@
 	#define LU_BLOCK_IX__NOT_SET LU__SIZE_MAX
 	#define LU_REC_ID__NOT_SET LU__SIZE_MAX
 
+	enum lu_data_flags {
+		LU_DATA_FLAGS__CLEAR = 0,
+		LU_DATA_FLAGS__RESET_REC = 1,
+		LU_DATA_FLAGS__END
+	};
+
 	struct lu_data {
 		lu_size wave_id;
 		lu_size block_ix;
 		lu_size rec_id;
+		lu_flags flags;
 
 		lu_size w;
 		lu_size h;
@@ -79,12 +86,14 @@
 		lu_size h, 
 		lu_size d, 
 		lu_p_value values, 
-		struct lu_rec_view view
+		struct lu_rec_view view, 
+		lu_flags flags
 	)
 	{
 		self->wave_id 	= wave_id;
 		self->block_ix 	= block_ix;
 		self->rec_id 	= rec_id;
+		self->flags 	= flags;
 
 		self->w 		= w;
 		self->h 		= h;
@@ -114,7 +123,8 @@
 			0, 
 			0, 
 			NULL,
-			view
+			view,
+			0
 		);
 
 		return self;
@@ -191,7 +201,18 @@
 
 	static inline Lu_Data lu_data__shallow_copy(Lu_Data dest, Lu_Data src)
 	{
-		lu_data__set(dest, src->wave_id, src->block_ix, src->rec_id, src->w, src->h, src->d, src->values, src->view);
+		lu_data__set(
+			dest, 
+			src->wave_id, 
+			src->block_ix, 
+			src->rec_id, 
+			src->w, 
+			src->h, 
+			src->d, 
+			src->values, 
+			src->view, 
+			src->flags
+		);
 
 		return dest;
 	}
@@ -208,14 +229,21 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Data_Block 
 
+	enum lu_data_block_flags {
+		LU_DATA_BLOCK_FLAGS__CLEAR = 0,
+		LU_DATA_BLOCK_FLAGS__RESET_RECS = 1,
+		LU_DATA_BLOCK_FLAGS__END
+	};
+
 	struct lu_data_block {
 		Lu_Mem mem;
 
 		lu_size block_ix;
 
 		lu_size 			datum_size;
-		struct lu_data* 	datum;
+		struct lu_data* 	datum; 
 
+		lu_flags flags;
 	};
 
 	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size block_ix);
@@ -234,6 +262,10 @@
 		lu_size 			recs_size;
 
 		Lu_List 			blocks;
+
+		// We have separate count for block_ix. lu_list__count(blocks) will not work because 
+		// we reset it every process() call
+		lu_size  			blocks_count; 
 
 		lu_bool 			start_block_on_next_data;
 

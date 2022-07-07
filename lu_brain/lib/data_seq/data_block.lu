@@ -27,6 +27,8 @@
  			data->block_ix = self->block_ix;
  		}
 
+ 		self->flags = 0;
+
 		return self;
 	}
 

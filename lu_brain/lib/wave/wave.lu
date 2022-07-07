@@ -190,6 +190,15 @@
 		lu_size block_ix = data->block_ix;
 
 		//
+		// Pass reset flag from block to data if it is set
+		// 
+
+		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
+		{
+			data->flags |= LU_DATA_FLAGS__RESET_REC;
+		}
+
+		//
 		// Rec
 		// 
 
@@ -371,11 +380,18 @@
 
 		Lu_Data_Block block = NULL;
 
+		lu__debug("\n->current_read_pos = %ld\n", save_wave->seq->current_read_pos ? 1 : 0);
+
 		while((block = lu_data_seq__next_block_get(save_wave->seq)))
 		{
 			// lu__debug("\n BEFORE PROCESS BLOCK: wave_id=%ld, block_ix=%ld", save_wave->seq->wave_id, block->block_ix);
 			lu_save_wave__process_block(save_wave, block, config);
 		}
+
+		//
+		// Remove processed data
+		//
+		lu_data_seq__reset(save_wave->seq);
 	}
 
 	//
@@ -395,6 +411,11 @@
 		{
 			lu_match_wave__process_block(match_wave, block, config);
 		}
+
+		//
+		// Remove processed data
+		//
+		lu_data_seq__reset(match_wave->seq);
 	}
 
 	//
@@ -518,7 +539,7 @@
 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
 		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
 
-		self->seq = lu_data_seq__create(w_mem, self->super.wave_ix, lu_brain__recs_size(brain)); 
+		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
 		return (Lu_Wave) self;
@@ -559,7 +580,7 @@
 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
 		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
 
-		self->seq = lu_data_seq__create(w_mem, self->super.wave_ix, lu_brain__recs_size(brain)); 
+		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);
 
 		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);

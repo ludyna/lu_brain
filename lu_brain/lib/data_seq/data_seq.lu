@@ -17,6 +17,7 @@
 		self->wave_id					= wave_id;
 		self->recs_size 				= recs_size;
 		self->blocks 					= lu_list__create(self->mem);
+		self->blocks_count 				= 0; 
 		self->start_block_on_next_data 	= false;  
 
 		self->current_read_pos 			= NULL;
@@ -103,8 +104,10 @@
 		lu__assert(self->blocks);
 
 		// lu__debug("\n LIST_COUNT: %d", lu_list__count(self->blocks));
-		Lu_Data_Block block = lu_data_block__create(self->mem, self->recs_size, lu_list__count(self->blocks));
+		Lu_Data_Block block = lu_data_block__create(self->mem, self->recs_size, self->blocks_count);
 		lu__assert(block);
+
+		++self->blocks_count;
 
 		lu_list__append(self->blocks, (lu_p_void) block);
 
@@ -161,7 +164,9 @@
 		lu__assert(data);
 		lu__assert(data->values == NULL);
 
-	 	lu_data__set(data, self->wave_id, data->block_ix, rec->id, width, height, depth, values, view);
+		lu__debug("\n>>>>>wave_id=%ld, BLOCK_ix= %ld, rec_id = %ld \n", self->wave_id, data->block_ix, rec->id);
+
+	 	lu_data__set(data, self->wave_id, data->block_ix, rec->id, width, height, depth, values, view, data->flags);
 	}
 
 	static lu_bool lu_seq_blocks_non_empty_values_block(lu_p_void value, lu_p_void p1)
@@ -262,7 +267,16 @@
 			self->current_read_pos = lu_list__first_node(self->blocks);
 			if (self->current_read_pos == NULL) return NULL;
 
-			return (Lu_Data_Block) lu_l_node__value(self->current_read_pos);
+			Lu_Data_Block block = (Lu_Data_Block) lu_l_node__value(self->current_read_pos);
+
+			//
+			// Because we started new iterator through data seq, mark this block 
+			// to reset rec w states
+			// 
+
+			block->flags |= LU_DATA_BLOCK_FLAGS__RESET_RECS;
+
+			return block;
 		}
 
 		if (self->current_read_pos)

@@ -27,6 +27,14 @@ lu_value			values_dot[] 	= {
 										0, 0, 0, 
 									};
 
+lu_value			values_dot_2[] 	= { 
+										0, 0, 0, 
+										0, 1, 0, 
+										0, 0, 0, 
+										0, 1, 0, 
+										0, 0, 0, 
+									};
+
 lu_value			values_0[] 		= { 
 										1, 1, 1, 
 										1, 0, 1, 
@@ -76,6 +84,19 @@ lu_value			values_6[] 		= {
 										1, 0, 1, 
 										1, 1, 1, 
 									};
+
+#define LABEL_DOT 15
+#define LABEL_DOT_2 14
+
+#define LABEL_NUM_0 0
+#define LABEL_NUM_1 1
+#define LABEL_NUM_2 2
+#define LABEL_NUM_3 3
+#define LABEL_NUM_4 4
+#define LABEL_NUM_5 5
+#define LABEL_NUM_6 6
+
+
 
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
@@ -144,6 +165,9 @@ void tearDown(void)
 
 void test_lu_brain_basics_01(void) 
 { 
+
+	Lu_La_Cell label_cell;
+
 	//
 	// Save
 	//
@@ -173,8 +197,19 @@ void test_lu_brain_basics_01(void)
 		lu_wave__push(s_wave, rec_0, values_dot, 3, 5, 1);
 
 	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_DOT);
+	TEST_ASSERT(label_cell);
 
-	Lu_La_Cell label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, 15);
+		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+
+		lu_wave__push(s_wave, rec_0, values_dot_2, 3, 5, 1);
+
+		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+
+		lu_wave__push(s_wave, rec_0, values_dot_2, 3, 5, 1);
+
+	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_DOT_2);
 	TEST_ASSERT(label_cell);
 
 	//
@@ -184,7 +219,7 @@ void test_lu_brain_basics_01(void)
 	m_wave = lu_wave__create_match_wave(brain);
 
 		TEST_ASSERT(m_wave);
-		// TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
+		TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
 		TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
 		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
 
@@ -205,5 +240,5 @@ void test_lu_brain_basics_01(void)
 	TEST_ASSERT(results);
 	TEST_ASSERT(results[0]);
 
-	TEST_ASSERT(lu_label__get_id(results[0]) == 15);
+	TEST_ASSERT(lu_label__get_id(results[0]) == LABEL_DOT);
 }
