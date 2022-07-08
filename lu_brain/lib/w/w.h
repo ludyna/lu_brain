@@ -707,6 +707,52 @@
 	static void lu_w_processor__prepare_results(Lu_W_Processor self);
 
 ///////////////////////////////////////////////////////////////////////////////
+// lu_labels_
+
+	static inline void lu_labels__print(Lu_Label* self, lu_size size)
+	{
+		lu__assert(self);
+
+		lu__debug("\nLABELS:");
+		Lu_Label label;
+		Lu_La_Cell la_cell;
+		Lu_W_Match_Cell match_cell;
+
+		for (lu_size i = 0; i < size; i++)
+		{
+			label = self[i];
+			if (label == NULL) break;
+
+			la_cell = label->la_cell;
+			lu__assert(la_cell);
+
+			match_cell = label->match_cell;
+			lu__assert(match_cell);
+
+			lu__debug(
+				"\n\tlabel=%ld, sig=%.2f [wave_id=%ld, block_ix=%ld, MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
+				la_cell->addr.la_ix, 
+				match_cell->sig,
+				label->wave_id,
+				label->block_ix,
+				match_cell->wave_id,
+				match_cell->block_ix,
+				la_cell->children_count
+			);
+		}
+	}
+
+	static inline void lu_labels__reset(Lu_Label* self, lu_size size)
+	{
+		lu__assert(self);
+
+		for (lu_size i = 0; i < size; i++)
+		{
+			self[i] = NULL;
+		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Manager
 
 	struct lu_w_manager {

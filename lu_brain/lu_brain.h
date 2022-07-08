@@ -112,7 +112,7 @@
 		lu_size w_match_waves_size;					// match waves size
 		lu_size w_restore_waves_size;				// restore waves size
 		lu_size w_processor_queue_size;				// 
-		lu_size w_result_labels_size;		//
+		lu_size w_result_labels_size;				//
 		lu_size w_match_cells_size_per_wave;		//			
 
 
@@ -257,6 +257,8 @@
 		
 		lu_size 				block_layers_size;			// How many wave block_layers should we hold.
 															// Oldest ones are destroyed once limit is reached (FIFO).
+
+		lu_size 				result_labels_size;
 	};
 
 	Lu_Process_Config lu_process_config__validate(Lu_Process_Config self);

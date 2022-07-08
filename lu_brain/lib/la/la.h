@@ -45,7 +45,7 @@
 		if (label_2 && label_2->match_cell)
 			sig_2 = label_2->match_cell->sig;
 
-		return sig_1 - sig_2;
+		return sig_2 - sig_1;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

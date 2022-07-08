@@ -119,10 +119,7 @@
 		// Reset sorted results
 		//
 
-		for (i = 0; i < self->w_result_labels_size; i++)
-		{
-			self->sorted_results[i] = NULL;
-		}
+		lu_labels__reset(self->sorted_results, self->w_result_labels_size);
 
 		//
 		// Collect new results in s_list
@@ -159,10 +156,10 @@
 		Lu_S_Node curr = lu_s_list__get_first_node(self->s_list);
 		while (curr)
 		{
-			self->sorted_results[i] = (Lu_Label) lu_s_node__get_value(curr);
-			++i;
-
 			lu__assert(i < self->w_result_labels_size);
+
+			self->sorted_results[i] = (Lu_Label) lu_s_node__get_value(curr);
+			++i;	
 
 			curr = lu_s_node__get_next_node(curr);
 		}
