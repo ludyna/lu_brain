@@ -116,6 +116,7 @@
 		Lu_W_Cell_P* children;
 		lu_size children_count;
 		Lu_W_Cell w_cell;
+		Lu_W_Cell_P w_cell_p;
 	};
 
 	typedef struct lu_s_layer_rec_block_params* Lu_S_Layer_Rec_Block_Params;
@@ -192,163 +193,6 @@
 		}
 	}
 
-	// static void lu_s_layer_rec__block_collect_and_save(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
-	// {
-	// 	Lu_S_Layer_Comp comp;
-	// 	Lu_S_View_P s_view_p;
-	// 	Lu_W_Table_P w_table_p;
-	// 	Lu_W_Cell_P w_cell_p;
-	// 	Lu_Comp_Calc p_comp_calc;
-	// 	lu_value v;
-
-	// 	Lu_N_Column n_column;
-	// 	Lu_N_Cell n_cell;
-
-	// 	// write destination w_cell (not w_cell_p)
-	// 	Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
-	// 	lu__assert(w_cell);
-	// 	lu_w_cell__reset(w_cell);
-
-	// 	lu_size children_count = p->src_end_z - p->src_start_z;
-	// 	Lu_W_Cell_P children[children_count];
-
-	// 	lu_s_layer__reset_children(children, children_count);
-
-	// 	// Collect children
-	// 	for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
-	// 	{
-	// 		comp = lu_s_layer_rec__get_layer_comp(self, src_z);
-	// 		lu__assert(comp);
-
-	// 		s_view_p = &comp->p_view;
-
-	// 		w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
-	// 		lu__assert(w_table_p);
-
-	// 		p_comp_calc = &s_view_p->comp_calc;
-
-	// 		// write destination w_cell_p
-	// 		w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
-
-	// 		// Get value from Data
-	// 		// v = data->values[src_z * wh + xy_shift];
-	// 		v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
-
-	// 		#ifdef LU__DEEP_DEBUG
-
-	// 		if (p->dest_x == 3 && p->dest_y == 5)
-	// 		{
-	// 			lu__debug("\nSRC[%ld, %ld], DEST[%ld, %ld]: v=%.1f", p->src_x, p->src_y, p->dest_x, p->dest_y, v);
-	// 			lu__debug("\nCOLLECT AND SHIFT: CELL BEFORE SECOND COLLECT");
-	// 			lu_w_cell_p__print(w_cell_p);
-	// 		}
-
-	// 		#endif
-
-	// 		lu_w_cell_p__collect_and_shift(w_cell_p, v);
-
-	// 		#ifdef LU__DEEP_DEBUG
-
-	// 		if (p->dest_x == 3 && p->dest_y == 5)
-	// 		{
-	// 			lu__debug("\nCOLLECT AND SHIFT: CELL AFTER SECOND COLLECT");
-	// 			lu_w_cell_p__print(w_cell_p);
-	// 		}
-
-	// 		#endif
-
-	// 		children[src_z] = lu_w_cell_p__save(
-	// 			w_cell_p, 
-	// 			p->dest_x, 
-	// 			p->dest_x, 
-	// 			p_comp_calc, 
-	// 			s_view_p->n_comp_table
-	// 		);
-
-	// 		lu__assert(children[src_z]);
-
-	// 	} // for (lu_size src_z = 0
-
-	// 	//
-	// 	// N Cell save
-	// 	//
-
-	// 	n_column = lu_n_table__get_n_column(p->curr_n_table, p->dest_x, p->dest_y);
-	// 	lu__assert(n_column);
-		
-	// 	n_cell = lu_n_column__save_with_vp_children(n_column, children, children_count);
-	// 	lu__assert(n_cell);
-
-	// 	//
-	// 	// Parent W cell save
-	// 	//
-
-	// 	lu_w_cell__save(w_cell, n_cell, n_column);
-		
-	// }
-
-	// static void lu_s_layer_rec__block_collect_and_match(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
-	// {
-	// 	lu__assert(p->processor);
-
-	// 	Lu_S_Layer_Comp comp;
-	// 	Lu_S_View_P s_view_p;
-	// 	Lu_W_Table_P w_table_p;
-	// 	Lu_W_Cell_P w_cell_p;
-	// 	Lu_Comp_Calc p_comp_calc;
-	// 	lu_value v;
-
-	// 	Lu_N_Column n_column;
-	// 	Lu_N_Cell n_cell;
-
-	// 	// write destination w_cell (not w_cell_p)
-	// 	Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
-	// 	lu__assert(w_cell);
-	// 	lu_w_cell__reset(w_cell);
-
-	// 	lu_size children_count = p->src_end_z - p->src_start_z;
-	// 	Lu_W_Cell_P children[children_count];
-
-	// 	lu_s_layer__reset_children(children, children_count);
-
-	// 	// Collect children
-	// 	for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
-	// 	{
-	// 		comp = lu_s_layer_rec__get_layer_comp(self, src_z);
-	// 		lu__assert(comp);
-
-	// 		s_view_p = &comp->p_view;
-
-	// 		// SAVE TABLE LOL
-
-	// 		// w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
-	// 		lu__assert(w_table_p);
-
-	// 		p_comp_calc = &s_view_p->comp_calc;
-
-	// 		// write destination w_cell_p
-	// 		w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
-
-	// 		// Get value from Data
-	// 		// v = data->values[src_z * wh + xy_shift];
-	// 		v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
-
-	// 		lu_w_cell_p__collect_and_shift(w_cell_p, v);
-
-	// 		lu_w_cell_p__save(
-	// 			w_cell_p, 
-	// 			p->dest_x, 
-	// 			p->dest_y, 
-	// 			p_comp_calc, 
-	// 			s_view_p->n_comp_table
-	// 		);
-
-	// 		// now that we have detected n_cell, we can fire it
-	// 		lu_w_processor__fire_vp_parents_with_sig(p->processor, w_cell_p->n_cell, w_cell_p->n_column, 1.0);
-			
-	// 	} // for (lu_size src_z = 0
-	// }
-
 	static void lu_s_layer_rec__iterate_data_using_view(
 		Lu_S_Layer_Rec self, 
 		Lu_S_Layer_Rec_Block_Params p,
@@ -400,32 +244,6 @@
 			}  // for (src_x = 0
 		} // for (src_y = 0
 
-		// p->end_x = p->curr_w_table->w;
-		// p->end_y = p->curr_w_table->h;
-		// p->src_y = p->src_start_y;
-		// p->src_x = p->src_start_x;
-
-		// for (p->y = 0; p->y < p->end_y; p->y++)
-		// {
-		// 	p->dest_y = p->dest_start_y + (lu_long)(p->src_y - p->src_start_y);
-
-		// 	for (p->x = 0; p->x < p->end_x; p->x++)
-		// 	{
-		// 		p->dest_x = p->dest_start_x + (lu_long)(p->src_x - p->src_start_x);
-
-		// 		//
-		// 		// Execute block
-		// 		// 
-
-		// 		block(self, p);
-
-		// 		if (p->src_x >= p->src_start_x && p->src_x < p->src_end_x) ++p->src_x;
-		// 	}
-
-		// 	if (p->src_y >= p->src_start_y && p->src_y < p->src_end_y) ++p->src_y;
-		// }
-
-
 	}
 
 	static void lu_s_layer_rec__reset_all_w_table_p(Lu_S_Layer_Rec self, lu_size wave_ix, enum lu_wave_type wave_type)
@@ -451,8 +269,14 @@
 			lu_w_table_p__reset(w_table_p);
 		}
 	}
-
-
+	static void lu_s_layer_rec__finish_block_match(
+		Lu_S_Layer_Rec self, 
+		Lu_S_Layer_Rec_Block_Params p
+	)
+	{
+		// now that we have detected n_cell, we can fire it
+		lu_w_processor__fire_vp_parents_with_sig(p->processor, p->w_cell_p->n_cell, p->w_cell_p->n_column, 1.0);
+	}
 
 	static void lu_s_layer_rec__finish_block_save(
 		Lu_S_Layer_Rec self, 
@@ -480,7 +304,8 @@
 	static void lu_s_layer_rec__finish_process_data(
 		Lu_S_Layer_Rec self, 
 		Lu_S_Layer_Rec_Block_Params p,
-		void (*finish_block)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+		void (*block_at_end_of_z)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
+		void (*block_after_z)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
 	)
 	{
 		lu__assert(self);
@@ -494,7 +319,6 @@
 		Lu_S_Layer_Comp comp;
 		Lu_S_View_P s_view_p;
 		Lu_W_Table_P w_table_p;
-		Lu_W_Cell_P w_cell_p;
 		Lu_Comp_Calc p_comp_calc;
 		lu_value v;
 
@@ -530,10 +354,10 @@
 					p_comp_calc = &s_view_p->comp_calc;
 
 					// write destination w_cell_p
-					w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->x, p->y);
+					p->w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->x, p->y);
 
 					p->children[p->z] = lu_w_cell_p__save(
-						w_cell_p, 
+						p->w_cell_p, 
 						p->x, 
 						p->y, 
 						p_comp_calc, 
@@ -542,9 +366,11 @@
 
 					lu__assert(p->children[p->z]);
 
+					if (block_at_end_of_z) block_at_end_of_z(self, p);
+
 				} // for (lu_size src_z = 0
 
-				if (finish_block) finish_block(self, p);
+				if (block_after_z) block_after_z(self, p);
 				
 			}
 		}
@@ -560,7 +386,8 @@
 		Lu_W_Processor processor,   
 		Lu_W_Rec w_rec,
 		void (*collect)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
-		void (*collect_and_save)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+		void (*block_at_end_of_z)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
+		void (*block_after_z)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
 	)
 	{
 		lu__assert(self);
@@ -649,7 +476,7 @@
 				// Because of how Rec View works we might not process all rec cells and therefore
 				// not all curr_w_table cells will be set.
 				// Finish all unfinished w_cell_p and update appropriate w_cell in curr_w_table
-				lu_s_layer_rec__finish_process_data(self, &p, lu_s_layer_rec__finish_block_save);
+				lu_s_layer_rec__finish_process_data(self, &p, block_at_end_of_z, block_after_z);
 
 				#ifdef LU__DEEP_DEBUG
 				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
@@ -689,7 +516,8 @@
 			NULL,
 			w_rec,
 			lu_s_layer_rec__block_collect,
-			NULL
+			NULL,
+			lu_s_layer_rec__finish_block_save
 		);
 	}
 
@@ -708,7 +536,6 @@
 
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_match_w_rec(self, wave->wave_ix);
 		lu__assert(w_rec);
-
 
 		//
 		// Update processor
@@ -731,6 +558,7 @@
 			processor,
 			w_rec,
 			lu_s_layer_rec__block_collect,
+			lu_s_layer_rec__finish_block_match,
 			NULL
 		);
 	}
