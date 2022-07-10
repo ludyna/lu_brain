@@ -94,14 +94,37 @@
 	
 	static void lu_s_view_p__deinit(Lu_S_View_P self);
 
-	static inline Lu_W_Table_P lu_s_view_p__get_w_save_table(Lu_S_View_P self, lu_size wave_id)
+	static inline Lu_W_Table_P lu_s_view_p__get_w_save_table(Lu_S_View_P self, lu_size wave_ix)
 	{
-		return (Lu_W_Table_P) lu_arr__get(self->w_save_tables, wave_id);
+		lu__assert(wave_ix < lu_arr__count(self->w_save_tables));
+
+		return (Lu_W_Table_P) lu_arr__get(self->w_save_tables, wave_ix);
 	}
 
-	static inline Lu_W_Table_P lu_s_view_p__get_w_match_table(Lu_S_View_P self, lu_size wave_id)
+	static inline Lu_W_Table_P lu_s_view_p__get_w_match_table(Lu_S_View_P self, lu_size wave_ix)
 	{
-		return (Lu_W_Table_P) lu_arr__get(self->w_match_tables, wave_id);
+		lu__assert(wave_ix < lu_arr__count(self->w_match_tables));
+
+		return (Lu_W_Table_P) lu_arr__get(self->w_match_tables, wave_ix);
+	}
+
+	static inline Lu_W_Table_P lu_s_view_p__get_w_table(Lu_S_View_P self, lu_size wave_ix, enum lu_wave_type wave_type)
+	{
+		lu__assert(self);
+
+		switch(wave_type)
+		{
+			case LU_WAVE__SAVE:
+				return lu_s_view_p__get_w_save_table(self, wave_ix);
+				break;
+			case LU_WAVE__MATCH:
+				return lu_s_view_p__get_w_match_table(self, wave_ix);
+				break;
+			default:
+				lu__assert(false);
+		}
+
+		return NULL;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

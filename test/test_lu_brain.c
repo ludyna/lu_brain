@@ -21,9 +21,9 @@ Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
 
 lu_value			values_dot[] 	= { 
+										1, 0, 0, 
 										0, 0, 0, 
 										0, 0, 0, 
-										0, 1, 0, 
 										0, 0, 0, 
 										0, 0, 0, 
 									};
@@ -203,104 +203,104 @@ void test_lu_brain_basics_01(void)
 	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_DOT);
 	TEST_ASSERT(label_cell);
 
-		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(s_wave, rec_0, values_dot_2, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_dot_2, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_dot_2, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_dot_2, 3, 5, 1);
 
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_DOT_2);
-	TEST_ASSERT(label_cell);
+	// lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	// label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_DOT_2);
+	// TEST_ASSERT(label_cell);
 
-		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(s_wave, rec_0, values_0, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_0, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_0, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_0, 3, 5, 1);
 
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_0);
-	TEST_ASSERT(label_cell);
+	// lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	// label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_0);
+	// TEST_ASSERT(label_cell);
 
-		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(s_wave, rec_0, values_1, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_1, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_1, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_1, 3, 5, 1);
 
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_1);
-	TEST_ASSERT(label_cell);
-		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+	// lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	// label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_1);
+	// TEST_ASSERT(label_cell);
+	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(s_wave, rec_0, values_2, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_2, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_2, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_2, 3, 5, 1);
 
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_2);
-	TEST_ASSERT(label_cell);
-		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+	// lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	// label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_2);
+	// TEST_ASSERT(label_cell);
+	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(s_wave, rec_0, values_3, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_3, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_3, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_3, 3, 5, 1);
 
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_3);
-	TEST_ASSERT(label_cell);
-		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+	// lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	// label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_3);
+	// TEST_ASSERT(label_cell);
+	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(s_wave, rec_0, values_4, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_4, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_4, 3, 5, 1);
+	// 	lu_wave__push(s_wave, rec_0, values_4, 3, 5, 1);
 
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_4);
-	TEST_ASSERT(label_cell);
+	// lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	// label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_4);
+	// TEST_ASSERT(label_cell);
 
-	//
-	// Match
-	//
+	// //
+	// // Match
+	// //
 
-	m_wave = lu_wave__create_match_wave(brain);
+	// m_wave = lu_wave__create_match_wave(brain);
 
-		TEST_ASSERT(m_wave);
-		TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
-		TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
-		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
+	// 	TEST_ASSERT(m_wave);
+	// 	TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
+	// 	TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
+	// 	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
 
-		lu__debug("\nvalues_0 before push: ");
-		lu_values__print_symbols(values_2, 3, 5, 1);
+	// 	lu__debug("\nvalues_0 before push: ");
+	// 	lu_values__print_symbols(values_2, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
-		lu_wave__push(m_wave, rec_0, values_2, 3, 5, 1);
+	// 	lu_wave__push(m_wave, rec_0, values_2, 3, 5, 1);
 
-		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(m_wave, rec_0, values_2, 3, 5, 1);
+	// 	lu_wave__push(m_wave, rec_0, values_2, 3, 5, 1);
 
-	lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+	// lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
-	Lu_Label* results = lu_wave__get_result_labels(m_wave);
-	TEST_ASSERT(results);
-	TEST_ASSERT(results[0]);
+	// Lu_Label* results = lu_wave__get_result_labels(m_wave);
+	// TEST_ASSERT(results);
+	// TEST_ASSERT(results[0]);
 
-	lu_labels__print(results, brain_config.w_result_labels_size);
+	// lu_labels__print(results, brain_config.w_result_labels_size);
 
-	TEST_ASSERT(lu_label__get_id(results[0]) == LABEL_2);
+	// TEST_ASSERT(lu_label__get_id(results[0]) == LABEL_2);
 }

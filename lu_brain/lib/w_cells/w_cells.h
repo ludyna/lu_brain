@@ -300,12 +300,6 @@
 		return p_reg;
 	}
 
-	static inline void lu_w_cell_p__collect(Lu_W_Cell_P self, lu_value v)
-	{
-		// very simplified for now (should be array of values)
-		self->p_2 = v;
-	}
-
 	static inline void lu_w_cell_p__collect_and_shift(Lu_W_Cell_P self, lu_value v)
 	{
 		self->p_1 = self->p_2;
@@ -345,6 +339,19 @@
 			char buff[4];
 			sprintf(buff, "%.0f", self->p_2 - self->p_1);
 			lu__debug("%2s ", buff); // value
+		}
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// lu_w_children_p
+
+	static void lu_w_children_p__reset_children(Lu_W_Cell_P* children, lu_size depth)
+	{
+		lu__assert(children);
+
+		for (lu_size i = 0; i < depth; i++)
+		{
+			children[i] = NULL;
 		}
 	}
 

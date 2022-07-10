@@ -1,11 +1,11 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad
 */
-#ifndef _LU_CONSTANTS_H
-#define _LU_CONSTANTS_H
-
 
 // 0.3819660112501051518
 #define LU_GOLDEN_SIGNIF 0.382
 
-#endif // _LU_CONSTANTS_H
+#define LU_WAVE_ID__NOT_SET LU__SIZE_MAX
+#define LU_WAVE_IX__NOT_SET LU__SIZE_MAX
+#define LU_BLOCK_IX__NOT_SET LU__SIZE_MAX
+#define LU_REC_ID__NOT_SET LU__SIZE_MAX

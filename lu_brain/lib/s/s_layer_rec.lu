@@ -76,23 +76,17 @@
 		lu_mem__free(self->s_mem, (lu_p_byte) self);
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// 
-	static void lu_s_layer__reset_children(Lu_W_Cell_P* children, lu_size depth)
-	{
-		lu__assert(children);
-
-		for (lu_size i = 0; i < depth; i++)
-		{
-			children[i] = NULL;
-		}
-	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Rec_Block_Params
 
 	struct lu_s_layer_rec_block_params {
+		lu_size x;
+		lu_size y;
+		lu_size z;
+		lu_size end_x;
+		lu_size end_y;
+
 		lu_size src_start_x;
 		lu_size src_start_y;
 		lu_size src_start_z;
@@ -111,12 +105,17 @@
 		lu_long dest_start_y;
 
 		lu_size wave_ix;
+		enum lu_wave_type wave_type;
 		Lu_Data data;
 		enum lu_w_rec_state state;
 		Lu_W_Table curr_w_table;
 		Lu_N_Table curr_n_table;
 
 		Lu_W_Processor processor;
+
+		Lu_W_Cell_P* children;
+		lu_size children_count;
+		Lu_W_Cell w_cell;
 	};
 
 	typedef struct lu_s_layer_rec_block_params* Lu_S_Layer_Rec_Block_Params;
@@ -152,7 +151,7 @@
 
 			s_view_p = &comp->p_view;
 
-			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
+			w_table_p = lu_s_view_p__get_w_table(s_view_p, p->wave_ix, p->wave_type);
 			lu__assert(w_table_p);
 
 			p_comp_calc = &s_view_p->comp_calc;
@@ -160,193 +159,195 @@
 			// write destination w_cell_p
 			w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
 
-			lu_w_cell_p__reset(w_cell_p);
+			// lu_w_cell_p__reset(w_cell_p);  // dont need reset here , we will reset separately
 
-			#ifdef LU__DEEP_DEBUG
+			// #ifdef LU__DEEP_DEBUG
 
-			if (p->dest_x == 3 && p->dest_y == 5)
-			{
-				lu__debug("\nSRC[%ld, %ld], DEST[%ld, %ld]: v=%.1f", p->src_x, p->src_y, p->dest_x, p->dest_y, v);
-				lu__debug("\nCOLLECT CELL BEFORE FIRST COLLECT");
-				lu_w_cell_p__print(w_cell_p);
+			// if (p->dest_x == 3 && p->dest_y == 5)
+			// {
+			// 	lu__debug("\nSRC[%ld, %ld], DEST[%ld, %ld]: v=%.1f", p->src_x, p->src_y, p->dest_x, p->dest_y, v);
+			// 	lu__debug("\nCOLLECT CELL BEFORE FIRST COLLECT");
+			// 	lu_w_cell_p__print(w_cell_p);
 
-				lu_s_layer_rec_block_params__print(p);
-			}
+			// 	lu_s_layer_rec_block_params__print(p);
+			// }
 
-			#endif
+			// #endif
 
 			// Get value from Data
 			// v = data->values[src_z * wh + xy_shift];
 			v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
 
-			lu_w_cell_p__collect(w_cell_p, v);
+			lu_w_cell_p__collect_and_shift(w_cell_p, v);
 
-			#ifdef LU__DEEP_DEBUG
+			// #ifdef LU__DEEP_DEBUG
 
-			if (p->dest_x == 3 && p->dest_y == 5)
-			{
-				lu__debug("\nCOLLECT CELL AFTER FIRST COLLECT");
-				lu_w_cell_p__print(w_cell_p);
-			}
+			// if (p->dest_x == 3 && p->dest_y == 5)
+			// {
+			// 	lu__debug("\nCOLLECT CELL AFTER FIRST COLLECT");
+			// 	lu_w_cell_p__print(w_cell_p);
+			// }
 
-			#endif
+			// #endif
 		}
 	}
 
-	static void lu_s_layer_rec__block_collect_and_save(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
-	{
-		Lu_S_Layer_Comp comp;
-		Lu_S_View_P s_view_p;
-		Lu_W_Table_P w_table_p;
-		Lu_W_Cell_P w_cell_p;
-		Lu_Comp_Calc p_comp_calc;
-		lu_value v;
+	// static void lu_s_layer_rec__block_collect_and_save(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+	// {
+	// 	Lu_S_Layer_Comp comp;
+	// 	Lu_S_View_P s_view_p;
+	// 	Lu_W_Table_P w_table_p;
+	// 	Lu_W_Cell_P w_cell_p;
+	// 	Lu_Comp_Calc p_comp_calc;
+	// 	lu_value v;
 
-		Lu_N_Column n_column;
-		Lu_N_Cell n_cell;
+	// 	Lu_N_Column n_column;
+	// 	Lu_N_Cell n_cell;
 
-		// write destination w_cell (not w_cell_p)
-		Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
-		lu__assert(w_cell);
-		lu_w_cell__reset(w_cell);
+	// 	// write destination w_cell (not w_cell_p)
+	// 	Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
+	// 	lu__assert(w_cell);
+	// 	lu_w_cell__reset(w_cell);
 
-		lu_size children_count = p->src_end_z - p->src_start_z;
-		Lu_W_Cell_P children[children_count];
+	// 	lu_size children_count = p->src_end_z - p->src_start_z;
+	// 	Lu_W_Cell_P children[children_count];
 
-		lu_s_layer__reset_children(children, children_count);
+	// 	lu_s_layer__reset_children(children, children_count);
 
-		// Collect children
-		for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
-		{
-			comp = lu_s_layer_rec__get_layer_comp(self, src_z);
-			lu__assert(comp);
+	// 	// Collect children
+	// 	for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
+	// 	{
+	// 		comp = lu_s_layer_rec__get_layer_comp(self, src_z);
+	// 		lu__assert(comp);
 
-			s_view_p = &comp->p_view;
+	// 		s_view_p = &comp->p_view;
 
-			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
-			lu__assert(w_table_p);
+	// 		w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
+	// 		lu__assert(w_table_p);
 
-			p_comp_calc = &s_view_p->comp_calc;
+	// 		p_comp_calc = &s_view_p->comp_calc;
 
-			// write destination w_cell_p
-			w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
+	// 		// write destination w_cell_p
+	// 		w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
 
-			// Get value from Data
-			// v = data->values[src_z * wh + xy_shift];
-			v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
+	// 		// Get value from Data
+	// 		// v = data->values[src_z * wh + xy_shift];
+	// 		v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
 
-			#ifdef LU__DEEP_DEBUG
+	// 		#ifdef LU__DEEP_DEBUG
 
-			if (p->dest_x == 3 && p->dest_y == 5)
-			{
-				lu__debug("\nSRC[%ld, %ld], DEST[%ld, %ld]: v=%.1f", p->src_x, p->src_y, p->dest_x, p->dest_y, v);
-				lu__debug("\nCOLLECT AND SHIFT: CELL BEFORE SECOND COLLECT");
-				lu_w_cell_p__print(w_cell_p);
-			}
+	// 		if (p->dest_x == 3 && p->dest_y == 5)
+	// 		{
+	// 			lu__debug("\nSRC[%ld, %ld], DEST[%ld, %ld]: v=%.1f", p->src_x, p->src_y, p->dest_x, p->dest_y, v);
+	// 			lu__debug("\nCOLLECT AND SHIFT: CELL BEFORE SECOND COLLECT");
+	// 			lu_w_cell_p__print(w_cell_p);
+	// 		}
 
-			#endif
+	// 		#endif
 
-			lu_w_cell_p__collect_and_shift(w_cell_p, v);
+	// 		lu_w_cell_p__collect_and_shift(w_cell_p, v);
 
-			#ifdef LU__DEEP_DEBUG
+	// 		#ifdef LU__DEEP_DEBUG
 
-			if (p->dest_x == 3 && p->dest_y == 5)
-			{
-				lu__debug("\nCOLLECT AND SHIFT: CELL AFTER SECOND COLLECT");
-				lu_w_cell_p__print(w_cell_p);
-			}
+	// 		if (p->dest_x == 3 && p->dest_y == 5)
+	// 		{
+	// 			lu__debug("\nCOLLECT AND SHIFT: CELL AFTER SECOND COLLECT");
+	// 			lu_w_cell_p__print(w_cell_p);
+	// 		}
 
-			#endif
+	// 		#endif
 
-			children[src_z] = lu_w_cell_p__save(
-				w_cell_p, 
-				p->dest_x, 
-				p->dest_x, 
-				p_comp_calc, 
-				s_view_p->n_comp_table
-			);
+	// 		children[src_z] = lu_w_cell_p__save(
+	// 			w_cell_p, 
+	// 			p->dest_x, 
+	// 			p->dest_x, 
+	// 			p_comp_calc, 
+	// 			s_view_p->n_comp_table
+	// 		);
 
-			lu__assert(children[src_z]);
+	// 		lu__assert(children[src_z]);
 
-		} // for (lu_size src_z = 0
+	// 	} // for (lu_size src_z = 0
 
-		//
-		// N Cell save
-		//
+	// 	//
+	// 	// N Cell save
+	// 	//
 
-		n_column = lu_n_table__get_n_column(p->curr_n_table, p->dest_x, p->dest_y);
-		lu__assert(n_column);
+	// 	n_column = lu_n_table__get_n_column(p->curr_n_table, p->dest_x, p->dest_y);
+	// 	lu__assert(n_column);
 		
-		n_cell = lu_n_column__save_with_vp_children(n_column, children, children_count);
-		lu__assert(n_cell);
+	// 	n_cell = lu_n_column__save_with_vp_children(n_column, children, children_count);
+	// 	lu__assert(n_cell);
 
-		//
-		// Parent W cell save
-		//
+	// 	//
+	// 	// Parent W cell save
+	// 	//
 
-		lu_w_cell__save(w_cell, n_cell, n_column);
+	// 	lu_w_cell__save(w_cell, n_cell, n_column);
 		
-	}
+	// }
 
-	static void lu_s_layer_rec__block_collect_and_match(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
-	{
-		lu__assert(p->processor);
+	// static void lu_s_layer_rec__block_collect_and_match(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+	// {
+	// 	lu__assert(p->processor);
 
-		Lu_S_Layer_Comp comp;
-		Lu_S_View_P s_view_p;
-		Lu_W_Table_P w_table_p;
-		Lu_W_Cell_P w_cell_p;
-		Lu_Comp_Calc p_comp_calc;
-		lu_value v;
+	// 	Lu_S_Layer_Comp comp;
+	// 	Lu_S_View_P s_view_p;
+	// 	Lu_W_Table_P w_table_p;
+	// 	Lu_W_Cell_P w_cell_p;
+	// 	Lu_Comp_Calc p_comp_calc;
+	// 	lu_value v;
 
-		Lu_N_Column n_column;
-		Lu_N_Cell n_cell;
+	// 	Lu_N_Column n_column;
+	// 	Lu_N_Cell n_cell;
 
-		// write destination w_cell (not w_cell_p)
-		Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
-		lu__assert(w_cell);
-		lu_w_cell__reset(w_cell);
+	// 	// write destination w_cell (not w_cell_p)
+	// 	Lu_W_Cell w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->dest_x, p->dest_y);
+	// 	lu__assert(w_cell);
+	// 	lu_w_cell__reset(w_cell);
 
-		lu_size children_count = p->src_end_z - p->src_start_z;
-		Lu_W_Cell_P children[children_count];
+	// 	lu_size children_count = p->src_end_z - p->src_start_z;
+	// 	Lu_W_Cell_P children[children_count];
 
-		lu_s_layer__reset_children(children, children_count);
+	// 	lu_s_layer__reset_children(children, children_count);
 
-		// Collect children
-		for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
-		{
-			comp = lu_s_layer_rec__get_layer_comp(self, src_z);
-			lu__assert(comp);
+	// 	// Collect children
+	// 	for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
+	// 	{
+	// 		comp = lu_s_layer_rec__get_layer_comp(self, src_z);
+	// 		lu__assert(comp);
 
-			s_view_p = &comp->p_view;
+	// 		s_view_p = &comp->p_view;
 
-			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
-			lu__assert(w_table_p);
+	// 		// SAVE TABLE LOL
 
-			p_comp_calc = &s_view_p->comp_calc;
+	// 		// w_table_p = lu_s_view_p__get_w_save_table(s_view_p, p->wave_ix);
+	// 		lu__assert(w_table_p);
 
-			// write destination w_cell_p
-			w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
+	// 		p_comp_calc = &s_view_p->comp_calc;
 
-			// Get value from Data
-			// v = data->values[src_z * wh + xy_shift];
-			v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
+	// 		// write destination w_cell_p
+	// 		w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
 
-			lu_w_cell_p__collect_and_shift(w_cell_p, v);
+	// 		// Get value from Data
+	// 		// v = data->values[src_z * wh + xy_shift];
+	// 		v = lu_data__get_value(p->data, p->src_x, p->src_y, src_z);
 
-			lu_w_cell_p__save(
-				w_cell_p, 
-				p->dest_x, 
-				p->dest_x, 
-				p_comp_calc, 
-				s_view_p->n_comp_table
-			);
+	// 		lu_w_cell_p__collect_and_shift(w_cell_p, v);
 
-			// now that we have detected n_cell, we can fire it
-			lu_w_processor__fire_vp_parents_with_sig(p->processor, w_cell_p->n_cell, w_cell_p->n_column, 1.0);
+	// 		lu_w_cell_p__save(
+	// 			w_cell_p, 
+	// 			p->dest_x, 
+	// 			p->dest_y, 
+	// 			p_comp_calc, 
+	// 			s_view_p->n_comp_table
+	// 		);
+
+	// 		// now that we have detected n_cell, we can fire it
+	// 		lu_w_processor__fire_vp_parents_with_sig(p->processor, w_cell_p->n_cell, w_cell_p->n_column, 1.0);
 			
-		} // for (lu_size src_z = 0
-	}
+	// 	} // for (lu_size src_z = 0
+	// }
 
 	static void lu_s_layer_rec__iterate_data_using_view(
 		Lu_S_Layer_Rec self, 
@@ -394,13 +395,161 @@
 				//
 				// Execute block
 				// 
-
-				block(self, p);
+				if (block) block(self, p);
 
 			}  // for (src_x = 0
 		} // for (src_y = 0
 
+		// p->end_x = p->curr_w_table->w;
+		// p->end_y = p->curr_w_table->h;
+		// p->src_y = p->src_start_y;
+		// p->src_x = p->src_start_x;
+
+		// for (p->y = 0; p->y < p->end_y; p->y++)
+		// {
+		// 	p->dest_y = p->dest_start_y + (lu_long)(p->src_y - p->src_start_y);
+
+		// 	for (p->x = 0; p->x < p->end_x; p->x++)
+		// 	{
+		// 		p->dest_x = p->dest_start_x + (lu_long)(p->src_x - p->src_start_x);
+
+		// 		//
+		// 		// Execute block
+		// 		// 
+
+		// 		block(self, p);
+
+		// 		if (p->src_x >= p->src_start_x && p->src_x < p->src_end_x) ++p->src_x;
+		// 	}
+
+		// 	if (p->src_y >= p->src_start_y && p->src_y < p->src_end_y) ++p->src_y;
+		// }
+
+
 	}
+
+	static void lu_s_layer_rec__reset_all_w_table_p(Lu_S_Layer_Rec self, lu_size wave_ix, enum lu_wave_type wave_type)
+	{
+		lu__assert(self);
+		lu__assert(self->rec);
+
+		Lu_S_Layer_Comp comp;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
+
+		for (lu_size z = 0; z < self->rec->depth; z++)
+		{
+			comp = lu_s_layer_rec__get_layer_comp(self, z);
+			lu__assert(comp);
+
+			s_view_p = &comp->p_view;
+			lu__assert(s_view_p);
+
+			w_table_p = lu_s_view_p__get_w_table(s_view_p, wave_ix, wave_type);
+			lu__assert(w_table_p);
+
+			lu_w_table_p__reset(w_table_p);
+		}
+	}
+
+
+
+	static void lu_s_layer_rec__finish_block_save(
+		Lu_S_Layer_Rec self, 
+		Lu_S_Layer_Rec_Block_Params p
+	)
+	{
+		//
+		// N Cell save
+		//
+
+		Lu_N_Column n_column = lu_n_table__get_n_column(p->curr_n_table, p->x, p->y);
+		lu__assert(n_column);
+		
+		Lu_N_Cell n_cell = lu_n_column__save_with_vp_children(n_column, p->children, p->children_count);
+		lu__assert(n_cell);
+
+		//
+		// Parent W cell save
+		//
+
+		lu_w_cell__save(p->w_cell, n_cell, n_column);
+	}
+
+
+	static void lu_s_layer_rec__finish_process_data(
+		Lu_S_Layer_Rec self, 
+		Lu_S_Layer_Rec_Block_Params p,
+		void (*finish_block)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
+	)
+	{
+		lu__assert(self);
+		lu__assert(p);
+		lu__assert(self->rec);
+
+		lu_size w = p->curr_w_table->w;
+		lu_size h = p->curr_w_table->h;
+		lu_size d = self->rec->depth;
+
+		Lu_S_Layer_Comp comp;
+		Lu_S_View_P s_view_p;
+		Lu_W_Table_P w_table_p;
+		Lu_W_Cell_P w_cell_p;
+		Lu_Comp_Calc p_comp_calc;
+		lu_value v;
+
+		Lu_N_Column n_column;
+		Lu_N_Cell n_cell;
+		
+		p->children_count = d;
+		Lu_W_Cell_P children[p->children_count];
+		p->children = children;
+		
+
+		for (p->y = 0; p->y < h; p->y++)
+		{
+			for (p->x = 0; p->x < w; p->x++)
+			{
+				// write destination w_cell (not w_cell_p)
+				p->w_cell = lu_w_table__get_w_cell(p->curr_w_table, p->x, p->y);
+				lu__assert(p->w_cell);
+				lu_w_cell__reset(p->w_cell);
+
+				lu_w_children_p__reset_children(p->children, p->children_count);
+
+				for (p->z = 0; p->z < d; p->z++)
+				{
+					comp = lu_s_layer_rec__get_layer_comp(self, p->z);
+					lu__assert(comp);
+
+					s_view_p = &comp->p_view;
+
+					w_table_p = lu_s_view_p__get_w_table(s_view_p, p->wave_ix, p->wave_type);
+					lu__assert(w_table_p);
+
+					p_comp_calc = &s_view_p->comp_calc;
+
+					// write destination w_cell_p
+					w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->x, p->y);
+
+					p->children[p->z] = lu_w_cell_p__save(
+						w_cell_p, 
+						p->x, 
+						p->y, 
+						p_comp_calc, 
+						s_view_p->n_comp_table
+					);
+
+					lu__assert(p->children[p->z]);
+
+				} // for (lu_size src_z = 0
+
+				if (finish_block) finish_block(self, p);
+				
+			}
+		}
+	}
+
 
 	static Lu_W_Table lu_s_layer_rec__process_data(
 		Lu_S_Layer_Rec self, 
@@ -409,6 +558,7 @@
 		Lu_Data data,
 		Lu_Process_Config config,
 		Lu_W_Processor processor,   
+		Lu_W_Rec w_rec,
 		void (*collect)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
 		void (*collect_and_save)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p)
 	)
@@ -422,9 +572,6 @@
 		//
 		// Update w_rec state
 		//
-
-		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, wave->wave_ix);
-		lu__assert(w_rec);
 
 		if (data->flags & LU_DATA_FLAGS__RESET_REC)
 		{
@@ -455,7 +602,8 @@
 
 		struct lu_s_layer_rec_block_params p;
 
-		p.wave_ix = wave->wave_ix;
+		p.wave_ix = wave->wave_ix; 
+		p.wave_type = wave->type;
 		p.data = data;
 		p.state = w_rec->state;
 
@@ -480,29 +628,29 @@
 		);
 
 		//
-		// Because of how Rec View works we might not process all rec cells and therefore
-		// not all curr_w_table cells will be set. To avoid some curr_w_table cells without n_cell/n_column or having
-		// previous wave data, we reset every w_cell to appropriate n "null cells"
-		//
-
-		lu_w_table__reset_cells_to_null_cells(p.curr_w_table);
-		
-		//
 		// Process data 
 		//
 
 		switch(p.state)
 		{
 			case LU_W_REC_STATE__COLLECT:
+				lu_s_layer_rec__reset_all_w_table_p(self, p.wave_ix, p.wave_type);
+
+				lu_s_layer_rec__iterate_data_using_view(self, &p, collect);
+
 				#ifdef LU__DEEP_DEBUG
 				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
 				#endif
 
-				lu_s_layer_rec__iterate_data_using_view(self, &p, collect);
 				break;
 			case LU_W_REC_STATE__COLLECT_AND_SAVE:
-				lu_s_layer_rec__iterate_data_using_view(self, &p, collect_and_save);
+				lu_s_layer_rec__iterate_data_using_view(self, &p, collect);
 				
+				// Because of how Rec View works we might not process all rec cells and therefore
+				// not all curr_w_table cells will be set.
+				// Finish all unfinished w_cell_p and update appropriate w_cell in curr_w_table
+				lu_s_layer_rec__finish_process_data(self, &p, lu_s_layer_rec__finish_block_save);
+
 				#ifdef LU__DEEP_DEBUG
 				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
 				#endif
@@ -524,6 +672,13 @@
 		Lu_Process_Config config
 	)
 	{
+		Lu_Wave wave = (Lu_Wave) save_wave;
+ 
+		lu__assert(data->wave_id == wave->wave_id);
+
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, wave->wave_ix);
+		lu__assert(w_rec);
+
 		lu__debug("\nBEFORE SAVE PROCESS: data->wave_id = %ld, data->block_ix=%d\n", data->wave_id, data->block_ix);
 		return lu_s_layer_rec__process_data(
 			self, 
@@ -532,8 +687,9 @@
 			data,
 			config,
 			NULL,
+			w_rec,
 			lu_s_layer_rec__block_collect,
-			lu_s_layer_rec__block_collect_and_save
+			NULL
 		);
 	}
 
@@ -549,6 +705,10 @@
 		lu__assert(processor);
 
 		Lu_Wave wave = (Lu_Wave) match_wave;
+
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_match_w_rec(self, wave->wave_ix);
+		lu__assert(w_rec);
+
 
 		//
 		// Update processor
@@ -569,7 +729,8 @@
 			data,
 			config,
 			processor,
+			w_rec,
 			lu_s_layer_rec__block_collect,
-			lu_s_layer_rec__block_collect_and_match
+			NULL
 		);
 	}

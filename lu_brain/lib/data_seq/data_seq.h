@@ -22,11 +22,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Data
 
-	#define LU_WAVE_ID__NOT_SET LU__SIZE_MAX
-	#define LU_WAVE_IX__NOT_SET LU__SIZE_MAX
-	#define LU_BLOCK_IX__NOT_SET LU__SIZE_MAX
-	#define LU_REC_ID__NOT_SET LU__SIZE_MAX
-
 	enum lu_data_flags {
 		LU_DATA_FLAGS__CLEAR = 0,
 		LU_DATA_FLAGS__RESET_REC = 1,

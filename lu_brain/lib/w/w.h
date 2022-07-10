@@ -159,6 +159,21 @@
 	static Lu_W_Table_P lu_w_table_p__create(Lu_Config config, lu_size w, lu_size h);
 	static void lu_w_table_p__destroy(Lu_W_Table_P self);
 
+	static inline void lu_w_table_p__reset(Lu_W_Table_P self)
+	{
+		lu__assert(self);
+
+		lu_size wh = self->w * self->h;
+
+		Lu_W_Cell_P w_cell_p;
+		for (lu_size i = 0; i < wh; i++)
+		{
+			w_cell_p = &self->cells[i];
+
+			lu_w_cell_p__reset(w_cell_p);
+		}	
+	}
+
 	//
 	// Get
 	//

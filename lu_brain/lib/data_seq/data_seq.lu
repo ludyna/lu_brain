@@ -164,7 +164,7 @@
 		lu__assert(data);
 		lu__assert(data->values == NULL);
 
-		lu__debug("\n>>>>>wave_id=%ld, BLOCK_ix= %ld, rec_id = %ld \n", self->wave_id, data->block_ix, rec->id);
+		// lu__debug("\n>>>>>wave_id=%ld, BLOCK_ix= %ld, rec_id = %ld \n", self->wave_id, data->block_ix, rec->id);
 
 	 	lu_data__set(data, self->wave_id, data->block_ix, rec->id, width, height, depth, values, view, data->flags);
 	}

@@ -380,7 +380,7 @@
 
 		Lu_Data_Block block = NULL;
 
-		lu__debug("\n->current_read_pos = %ld\n", save_wave->seq->current_read_pos ? 1 : 0);
+		// lu__debug("\n->current_read_pos = %ld\n", save_wave->seq->current_read_pos ? 1 : 0);
 
 		while((block = lu_data_seq__next_block_get(save_wave->seq)))
 		{
