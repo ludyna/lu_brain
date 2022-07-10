@@ -460,6 +460,23 @@
 		return &self->match_w_recs[wave_ix];
 	}
 
+	static inline Lu_W_Rec lu_s_layer_rec__get_w_rec(Lu_S_Layer_Rec self, lu_size wave_ix, enum lu_wave_type wave_type)
+	{
+		switch(wave_type)
+		{
+			case LU_WAVE__SAVE:
+				return lu_s_layer_rec__get_save_w_rec(self, wave_ix);
+				break;
+			case LU_WAVE__MATCH:
+				return lu_s_layer_rec__get_match_w_rec(self, wave_ix);
+				break;
+			default:
+				lu__assert(false);
+		}
+
+		return NULL;
+	}
+
 	static inline Lu_N_Table lu_s_layer_rec__get_n_table(Lu_S_Layer_Rec self)
 	{
 		return self->super.n_table;
@@ -507,7 +524,13 @@
 		Lu_W_Processor processor
 	);
 
-	static inline void lu_s_layer_rec__print_comp_w_tables(Lu_S_Layer_Rec self, lu_size wave_ix, lu_size src_start_z, lu_size src_end_z)
+	static inline void lu_s_layer_rec__print_comp_w_tables(
+		Lu_S_Layer_Rec self, 
+		lu_size wave_ix, 
+		enum lu_wave_type wave_type,
+		lu_size src_start_z, 
+		lu_size src_end_z
+	)
 	{
 		Lu_S_Layer_Comp comp;
 		Lu_S_View_P s_view_p;
@@ -520,7 +543,7 @@
 
 			s_view_p = &comp->p_view;
 
-			w_table_p = lu_s_view_p__get_w_save_table(s_view_p, wave_ix);
+			w_table_p = lu_s_view_p__get_w_table(s_view_p, wave_ix, wave_type);
 			lu__assert(w_table_p);
 
 			lu_w_table_p__print(w_table_p);

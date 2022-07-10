@@ -206,7 +206,7 @@
 		Lu_Rec rec = self->rec;
 		lu__assert(rec);
 
-		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, p->wave_ix);
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_w_rec(self, p->wave_ix, p->wave_type);
 		lu__assert(w_rec);
 
 		Lu_Rec_View rec_view = &w_rec->view;
@@ -329,9 +329,15 @@
 		Lu_W_Cell_P children[p->children_count];
 		p->children = children;
 		
-
+		#ifdef LU__DEEP_DEBUG
+			lu__debug("\nFINISH_PROCESS w_cell_p table and n_cell table:");
+		#endif 
 		for (p->y = 0; p->y < h; p->y++)
 		{
+			#ifdef LU__DEEP_DEBUG
+				lu__debug("\n\t");
+			#endif 
+
 			for (p->x = 0; p->x < w; p->x++)
 			{
 				// write destination w_cell (not w_cell_p)
@@ -365,6 +371,12 @@
 					);
 
 					lu__assert(p->children[p->z]);
+
+					#ifdef LU__DEEP_DEBUG
+
+					lu__debug("%.1f ", p->w_cell_p->sig);
+
+					#endif 
 
 					if (block_at_end_of_z) block_at_end_of_z(self, p);
 
@@ -466,7 +478,7 @@
 				lu_s_layer_rec__iterate_data_using_view(self, &p, collect);
 
 				#ifdef LU__DEEP_DEBUG
-				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
+				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, wave->type, w_rec->view.src_start_z, w_rec->view.src_end_z);
 				#endif
 
 				break;
@@ -479,7 +491,7 @@
 				lu_s_layer_rec__finish_process_data(self, &p, block_at_end_of_z, block_after_z);
 
 				#ifdef LU__DEEP_DEBUG
-				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, w_rec->view.src_start_z, w_rec->view.src_end_z);
+				lu_s_layer_rec__print_comp_w_tables(self, p.wave_ix, wave->type, w_rec->view.src_start_z, w_rec->view.src_end_z);
 				#endif
 
 				p.curr_w_table->any_fired = true;
@@ -548,7 +560,7 @@
 		//
 		// Process data
 		// 
-
+		lu__debug("\nBEFORE MATCH PROCESS: data->wave_id = %ld, data->block_ix=%d\n", data->wave_id, data->block_ix);
 		lu_s_layer_rec__process_data(
 			self, 
 			wave,

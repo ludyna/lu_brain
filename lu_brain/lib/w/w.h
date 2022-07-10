@@ -620,7 +620,7 @@
 		lu__debug_assert(n_column);
 		lu__debug_assert(sig > 0);
 	
-		lu_n_addr__print(&n_cell->addr);
+		//lu_n_addr__print(&n_cell->addr);
 		if (lu_n_link_addr__is_present(&n_cell->parents))
 			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->parents);
 	}
