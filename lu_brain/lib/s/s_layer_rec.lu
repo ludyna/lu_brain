@@ -482,7 +482,7 @@
 				#endif
 
 				break;
-			case LU_W_REC_STATE__COLLECT_AND_SAVE:
+			case LU_W_REC_STATE__COLLECT_AND_FINISH:
 				lu_s_layer_rec__iterate_data_using_view(self, &p, collect);
 				
 				// Because of how Rec View works we might not process all rec cells and therefore

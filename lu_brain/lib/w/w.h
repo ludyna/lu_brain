@@ -37,8 +37,8 @@
 			case LU_W_REC_STATE__COLLECT:
 				strcpy(buffer, "COLLECT");
 				break;
-			case LU_W_REC_STATE__COLLECT_AND_SAVE:
-				strcpy(buffer, "COLLECT_AND_SAVE");
+			case LU_W_REC_STATE__COLLECT_AND_FINISH:
+				strcpy(buffer, "COLLECT_AND_FINISH");
 				break;
 			default:
 				strcpy(buffer, "(!) UNKNOWN");
@@ -124,7 +124,7 @@
 			{
 				if (self->state == LU_W_REC_STATE__COLLECT)
 				{
-					self->state = LU_W_REC_STATE__COLLECT_AND_SAVE;
+					self->state = LU_W_REC_STATE__COLLECT_AND_FINISH;
 				}
 			}
 		}

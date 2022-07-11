@@ -187,7 +187,7 @@
 		lu_size rec_id = 0; // NOTE: fixed temporarily
 
 		data = lu_data_block__get_data(block, rec_id);
-		lu_size block_ix = data->block_ix;
+		lu__assert(data);
 
 		//
 		// Pass reset flag from block to data if it is set
@@ -218,7 +218,7 @@
 		lu__assert(area);
 		lu__assert(area->tag == LU_AREA_TAG__FRAME);
 
-		curr_w_table = lu_s_area__save_frame(area, self, block_ix, curr_w_table, config);
+		curr_w_table = lu_s_area__save_frame(area, self, data->block_ix, curr_w_table, config);
 
 		if (curr_w_table == NULL) return;
 
@@ -230,7 +230,7 @@
 		lu__assert(area);
 		lu__assert(area->tag == LU_AREA_TAG__SEQ);
 
-		curr_w_table = lu_s_area__save_seq(area, self, block_ix, curr_w_table, config);
+		curr_w_table = lu_s_area__save_seq(area, self, data->block_ix, curr_w_table, config);
 	}
 
 	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Process_Config config)
@@ -249,6 +249,16 @@
 		lu_size rec_id = 0; // NOTE: fixed temporarily
 
 		data = lu_data_block__get_data(block, rec_id);
+		lu__assert(data);
+
+		//
+		// Pass reset flag from block to data if it is set
+		// 
+
+		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
+		{
+			data->flags |= LU_DATA_FLAGS__RESET_REC;
+		}
 
 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
 		lu__assert(area);
