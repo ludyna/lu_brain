@@ -498,6 +498,24 @@
 		return self;
 	}
 
+	static inline Lu_W_N_Item lu_w_n_item__print(Lu_W_N_Item self)
+	{
+		lu__assert(self);
+		lu__assert(self->n_cell);
+		lu__assert(self->n_column);
+		lu__assert(self->match_cell);
+		lu__assert(self->n_column->n_table);
+
+		lu__assert(self->n_cell->addr.column_ix == self->n_column->column_ix);
+
+		//lu_n_column__print(self->n_column);
+		lu__debug("\n[%ld, %ld] ", self->n_column->x, self->n_column->y);
+		lu_n_addr__print(&self->n_cell->addr);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_N_Item
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Processor
 
@@ -539,12 +557,12 @@
 		Lu_N_Column n_column
 	)
 	{
-		Lu_W_N_Item n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->n_mem_table);
+		Lu_W_N_Item w_n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->n_mem_table);
 
-		lu_w_n_item__init(n_item, match_cell, n_cell, n_column);
+		lu_w_n_item__init(w_n_item, match_cell, n_cell, n_column);
 
 		// prepend, because we want FIFO queue
-		lu_lim_list__prepend(self->next_list, (lu_p_void) n_item);
+		lu_lim_list__prepend(self->next_list, (lu_p_void) w_n_item);
 	}
 
 	static inline void lu_w_processor__fire_n_cell(
@@ -693,20 +711,21 @@
 		self->curr_list = self->next_list;
 		self->next_list = t;
 
-		Lu_Lim_List curr_list = self->curr_list;
-
-		Lu_W_N_Item n_item;
+		Lu_W_N_Item w_n_item;
 		lu_size cells_processed = 0;
-		while (lu_lim_list__is_present(curr_list))
+
+		while (lu_lim_list__is_present(self->curr_list))
 		{
-			n_item = (Lu_W_N_Item) lu_lim_list__pop_first_value(curr_list);
-			lu__assert(n_item);
+			w_n_item = (Lu_W_N_Item) lu_lim_list__pop_first_value(self->curr_list);
+			lu__assert(w_n_item);
 
-			lu_w_processor__fire_n_parents_with_sig(self, n_item->n_cell, n_item->n_column, 1.0);
+			// lu_w_n_item__print(w_n_item);
 
-			lu_w_processor__fire_n_labels_with_sig(self, n_item->n_cell->labels, self->la_column, 1.0);
+			lu_w_processor__fire_n_parents_with_sig(self, w_n_item->n_cell, w_n_item->n_column, 1.0);
 
-			lu_mem_record__free(self->n_mem_table, (lu_p_byte) n_item);
+			lu_w_processor__fire_n_labels_with_sig(self, w_n_item->n_cell->labels, self->la_column, 1.0);
+
+			lu_mem_record__free(self->n_mem_table, (lu_p_byte) w_n_item);
 
 			++cells_processed;
 		}
@@ -720,6 +739,25 @@
 	}
 
 	static void lu_w_processor__prepare_results(Lu_W_Processor self);
+
+
+	static inline void lu_w_processor__print_symbols(Lu_W_Processor self)
+	{
+		lu__assert(self);
+
+		Lu_W_N_Item w_n_item;
+		Lu_L_Node l_node = lu_lim_list__get_first_node(self->next_list);
+
+		while (l_node)
+		{
+			w_n_item = (Lu_W_N_Item) l_node->value;
+			lu__assert(w_n_item);
+
+			lu_w_n_item__print(w_n_item);
+
+			l_node = l_node->next;
+		}
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // lu_labels_

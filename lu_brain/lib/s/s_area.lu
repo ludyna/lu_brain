@@ -286,14 +286,15 @@
 
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
 
-		// lu__debug("\n======================================================================");
-		// lu__debug("\nMATCHING DATA (lu_s_layer_rec__match()):");
-		// lu_data__print_symbols(data);
-
 		lu_s_layer_rec__match(layer_rec, match_wave, rec_id, data, config, processor);
 
 		while (lu_w_processor__has_items_to_process(processor))
 		{
+			#ifdef LU__DEEP_DEBUG
+			lu__debug("\nPROCESSOR BATCH:");
+			lu_w_processor__print_symbols(processor);
+			#endif 
+
 			lu_w_processor__process(processor);
 		}
 

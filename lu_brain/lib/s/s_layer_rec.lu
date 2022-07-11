@@ -361,6 +361,7 @@
 
 					// write destination w_cell_p
 					p->w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->x, p->y);
+					lu__assert(p->w_cell_p);
 
 					p->children[p->z] = lu_w_cell_p__save(
 						p->w_cell_p, 
@@ -374,7 +375,14 @@
 
 					#ifdef LU__DEEP_DEBUG
 
-					lu__debug("%.1f ", p->w_cell_p->sig);
+					if (p->w_cell_p->n_cell == NULL)
+					{
+						lu__debug("N ");
+					}
+					else
+					{
+						lu__debug("%ld ", p->w_cell_p->n_cell->addr.cell_ix);
+					}
 
 					#endif 
 

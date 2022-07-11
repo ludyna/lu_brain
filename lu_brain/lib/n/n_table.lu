@@ -37,21 +37,50 @@
 		lu__alloc_assert(self->columns);
 
 		Lu_N_Column column;
-		for (lu_size i = 0; i < self->columns_size; i++)
-		{
-			column = &self->columns[i];
 
-			lu_n_column__init(
-				column, 
-				mem, 
-				config->n_column_h, 
-				config->n_column_d, 
-				area_ix, 
-				layer_ix, 
-				i, 
-				config
-			);
+		lu_size x;
+		lu_size y;
+		lu_size i;
+		for (y = 0, i= 0; y < h_max; y++)
+		{
+			for (x = 0; x < w; x++, i++)
+			{
+				column = &self->columns[i];
+
+
+				lu_n_column__init(
+					column, 
+					self,
+					mem, 
+					config->n_column_h, 
+					config->n_column_d, 
+					area_ix, 
+					layer_ix, 
+					i, 
+					config,
+					x,
+					y
+				);
+			}
 		}
+
+
+		// for (lu_size i = 0; i < self->columns_size; i++)
+		// {
+		// 	column = &self->columns[i];
+
+		// 	lu_n_column__init(
+		// 		column, 
+		// 		self,
+		// 		mem, 
+		// 		config->n_column_h, 
+		// 		config->n_column_d, 
+		// 		area_ix, 
+		// 		layer_ix, 
+		// 		i, 
+		// 		config
+		// 	);
+		// }
 
 		return self;
 	}

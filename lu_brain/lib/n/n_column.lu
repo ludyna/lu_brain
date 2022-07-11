@@ -7,24 +7,31 @@
 
 	static Lu_N_Column lu_n_column__init(
 		Lu_N_Column self, 
+		Lu_N_Table n_table,
 		Lu_Mem mem, 
 		lu_size h, 
 		lu_size d, 
 		lu_size area_ix,
 		lu_size layer_ix, 
 		lu_size column_ix,
-		Lu_Config config
+		Lu_Config config,
+		lu_size x,
+		lu_size y
 	)
 	{
 		lu__assert(self);
+		lu__assert(n_table);
 		lu__assert(mem);
 		lu__assert(h > 0);
 		lu__assert(d > 0);
 
+		self->n_table = n_table;
 		self->mem = mem;
 		self->column_ix = column_ix;
 		self->h = h;
 		self->d = d;
+		self->x = x;
+		self->y = y;
 
 		self->cells_size = h * d;
 

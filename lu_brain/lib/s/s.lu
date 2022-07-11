@@ -200,6 +200,6 @@
 
 			if (area == NULL) break;
 
-			lu_s_area__print(area, true);
+			lu_s_area__print(area, false);
 		}
 	}

@@ -804,6 +804,8 @@
 	struct lu_n_column {
 		Lu_Mem mem;
 
+		Lu_N_Table n_table;
+
 		lu_size column_ix;
 
 		lu_size h;
@@ -815,35 +817,45 @@
 		struct lu_n_link_mem link_mem;
 
 		lu_size w_match_cells_size;
+
+		// pos, mostly for debugging
+		lu_size x;
+		lu_size y;
 	};
+
+	//
+	// CDIR
+	// 
 
 	static Lu_N_Column lu_n_column__init(
 		Lu_N_Column self, 
+		Lu_N_Table n_table,
 		Lu_Mem mem, 
 		lu_size h, 
 		lu_size d, 
 		lu_size area_ix,
 		lu_size layer_ix, 
 		lu_size column_ix,
-		Lu_Config config
+		Lu_Config config,
+		lu_size x,
+		lu_size y
 	);
 	static void lu_n_column__deinit(Lu_N_Column self);
 
-	// static inline lu_size lu_n_column__get_cell_ix(Lu_N_Column self, Lu_N_Cell cell)
-	// {
-	// 	return cell - self->cells;
-	// }
+	static inline void lu_n_column__print(Lu_N_Column self)
+	{
+		//lu__debug("\n "
+	}
+
+	//
+	// Get
+	//
 
 	static inline Lu_N_Link_Mem lu_n_column__get_link_mem(Lu_N_Column self)
 	{
 		lu__debug_assert(self);
 
 		return &self->link_mem;
-	}
-
-	static inline lu_size lu_n_column__hash_to_ix(Lu_N_Column self, lu_size hash)
-	{
-		return hash % self->h; 
 	}
 
 	static inline Lu_N_Cell lu_n_column__get_null_cell(Lu_N_Column self)
@@ -864,6 +876,15 @@
 	static inline Lu_N_Cell lu_n_column__get_cell(Lu_N_Column self, lu_size z, lu_size ix)
 	{
 		return lu_n_column__get_cell_by_ix(self, z * self->h + ix);
+	}
+
+	//
+	// Methods
+	//
+
+	static inline lu_size lu_n_column__hash_to_ix(Lu_N_Column self, lu_size hash)
+	{
+		return hash % self->h; 
 	}
 
 	static inline lu_size lu_n_column__vp_children_to_ix(
@@ -1061,8 +1082,6 @@
 		*p_n_cell = n_cell;
 	}
 
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table
 
@@ -1099,7 +1118,7 @@
 
  	static inline Lu_N_Column lu_n_table__get_n_column(Lu_N_Table self, lu_size x, lu_size y)
  	{
- 		return lu_n_table__get_column_by_ix(self, y * self->w + x);
+ 		return lu_n_table__get_column_by_ix(self, lu_macro__xy_to_ix(x, y, self->w));
  	}
 
 	////
