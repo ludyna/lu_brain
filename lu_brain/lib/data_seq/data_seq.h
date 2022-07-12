@@ -80,6 +80,16 @@
 		return !lu_block_id__is_eq(self, block_id);
 	}
 
+	//
+	// Methods
+	//
+
+	static inline void lu_block_id__print(Lu_Block_Id self)
+	{
+		lu__assert(self);
+		lu__debug("[wave_id=%ld, block_ix=%ld]", self->wave_id, self->block_ix);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Data
 

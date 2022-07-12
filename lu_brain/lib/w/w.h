@@ -688,6 +688,8 @@
 			lu__assert(la_cell);
 
 			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->block_id, self->wave_ix, self->match_cell_mem);
+			lu__assert(match_cell);
+			
 			lu_w_match_cell__add_sig(match_cell, sig);
 
 			la_link_label = lu_la_link_mem__get_link(link_mem, la_link_label->next);

@@ -457,6 +457,10 @@
 		lu_value sig;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static inline Lu_W_Match_Cell lu_w_match_cell__init(
 		Lu_W_Match_Cell self, 
 		struct lu_block_id block_id,
@@ -479,6 +483,10 @@
 		return self;
 	}
 
+	//
+	// Methods
+	//
+
 	static inline void lu_w_match_cell__add_sig(Lu_W_Match_Cell self, lu_value sig)
 	{
 		self->sig += sig;
@@ -492,6 +500,12 @@
 	static inline lu_bool lu_w_match_cell__no_sig(Lu_W_Match_Cell self)
 	{
 		return self->sig == 0;
+	}
+
+	static inline void lu_w_match_cell__print(Lu_W_Match_Cell self)
+	{
+		lu_block_id__print(&self->block_id);
+		lu__debug(" SIG=%.1f", self->sig);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

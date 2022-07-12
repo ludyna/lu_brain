@@ -90,6 +90,7 @@
 
 	static inline union lu_w_match_addr lu_la_cell__get_w_match_cell_addr(Lu_La_Cell self, lu_size wave_ix)
 	{
+		lu__assert(self);
 		return self->w_cells[wave_ix];
 	}
 
@@ -162,6 +163,8 @@
 		Lu_W_Match_Cell match_cell = NULL;
 		if (lu_w_match_addr__is_blank(&match_addr))
 		{
+			lu__debug("\n !! lu_w_match_addr__is_blank(): wave_ix=%ld", wave_ix);
+
 			match_cell = lu_w_match_cell_mem__cell_alloc(match_cell_mem);
 			match_addr = lu_w_match_cell_mem__get_addr(match_cell_mem, match_cell);
 
@@ -175,9 +178,13 @@
 		match_cell = lu_w_match_cell_mem__get_cell(match_cell_mem, match_addr);
 		lu__assert(match_cell);
 
+		lu__debug("\n !! lu_w_match_cell_mem__get_cell()");
+		lu_w_match_cell__print(match_cell);
+
 		if (lu_block_id__is_not_eq(&match_cell->block_id, &block_id))
 		{
 			// reset
+			lu__debug("\n !! lu_w_match_cell__init(match_cell, block_id, 0);");
 			lu_w_match_cell__init(match_cell, block_id, 0);
 		}
 
@@ -218,29 +225,16 @@
 		Lu_Mem_Table mem_table;
 	};
 
+	//
+	// Constructors / Destructors
+	// 
+
 	Lu_La_Link_Mem lu_la_link_mem__init(Lu_La_Link_Mem self, Lu_Mem mem, lu_size size);
 	void lu_la_link_mem__deinit(Lu_La_Link_Mem self);
 
-	static inline Lu_La_Link lu_la_link_mem__link_alloc(Lu_La_Link_Mem self)
-	{
-		lu__debug_assert(self);
-
-		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
-
-		if (!record)
-		{
-			lu_mem_table__realloc(
-				self->mem_table, 
-				lu_mem_table__records_count(self->mem_table) * 2, 
-				LU_MEM_TABLE__DEFAULT
-			); 
-
-			record = lu_mem_record__alloc(self->mem_table);
-			lu__assert(record);
-		}
-
-		return (Lu_La_Link) record;
-	}
+	//
+	// Get
+	//
 
 	static inline Lu_La_Link lu_la_link_mem__get_link(Lu_La_Link_Mem self, union lu_la_link_addr addr)
 	{
@@ -265,6 +259,33 @@
 
 		return addr;
 	}
+	
+	//
+	// Methods
+	//
+
+	static inline Lu_La_Link lu_la_link_mem__link_alloc(Lu_La_Link_Mem self)
+	{
+		lu__debug_assert(self);
+
+		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
+
+		if (!record)
+		{
+			lu_mem_table__realloc(
+				self->mem_table, 
+				lu_mem_table__records_count(self->mem_table) * 2, 
+				LU_MEM_TABLE__DEFAULT
+			); 
+
+			record = lu_mem_record__alloc(self->mem_table);
+			lu__assert(record);
+		}
+
+		return (Lu_La_Link) record;
+	}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Column
