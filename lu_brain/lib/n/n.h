@@ -688,6 +688,7 @@
 		);
 
 		self->labels = lu_la_link_mem__get_addr(la_link_mem, la_link);
+		lu__assert(lu_la_link_addr__is_present(&self->labels));
 	}
 
 	static inline Lu_W_Match_Cell lu_n_cell__get_and_reset_match_cell(

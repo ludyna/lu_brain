@@ -23,7 +23,11 @@
 		self->restore_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_restore_waves_size, 0, LU_MEM_TABLE__FREEABLE);
 		lu__assert(self->restore_waves);
 
-		self->next_wave_id = 0;
+		#ifdef LU__DEEP_DEBUG
+			self->next_wave_id = 10000;
+		#else
+			self->next_wave_id = 1000;
+		#endif
 
 		return self;
 	}

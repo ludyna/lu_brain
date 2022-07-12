@@ -161,7 +161,6 @@ void test_lu_brain_basics_01(void)
 	m_wave = lu_wave__create_match_wave(brain);
 
 	TEST_ASSERT(m_wave);
-	TEST_ASSERT(lu_wave__get_id(m_wave) == 1);
 	TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
 	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
 	lu__debug("\n\n ======================== M A T C H =========================\n");
