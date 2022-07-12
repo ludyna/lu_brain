@@ -18,11 +18,13 @@ struct lu_data data_0 = {
 	.values = values_00
 };
 
+struct lu_rec_view rec_view;
 
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
 { 
-}
+	lu_rec_view__init(&rec_view, 3, 3, 1);
+}	
 
 void tearDown(void)
 {	
@@ -78,14 +80,14 @@ void test__lu_data_seq(void)
 
 	Lu_Data_Seq ds = lu_data_seq__create(lu_g_mem, 0, 1);
 
-	lu_data_seq__push(ds, &rec, values_00);
-	lu_data_seq__push(ds, &rec, values_00);
-	lu_data_seq__push(ds, &rec, values_00);
-	lu_data_seq__push(ds, &rec, values_00);
-	lu_data_seq__push(ds, &rec, values_00);
-	lu_data_seq__push(ds, &rec, values_00);
-	lu_data_seq__push(ds, &rec, values_00);
-	lu_data_seq__push(ds, &rec, values_00);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
+	lu_data_seq__push(ds, &rec, values_00, 3, 3, 1, rec_view);
 	
 
 	lu_data_seq__destroy(ds);

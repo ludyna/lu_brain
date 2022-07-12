@@ -79,6 +79,8 @@ lu_value			data_16[] 		= {
 										1, 1,
 									};
 
+struct lu_rec_view rec_0_view;
+struct lu_rec_view rec_1_view;
 
 // setUp is executed for each test, even if test does nothing
 void setUp(void)
@@ -110,6 +112,9 @@ void setUp(void)
 	TEST_ASSERT(rec_1);
 
 	TEST_ASSERT(brain->recs->count);
+
+	lu_rec_view__init(&rec_0_view, 3, 3, 1);
+	lu_rec_view__init(&rec_1_view, 2, 2, 1);
 }
 
 void tearDown(void)
@@ -130,17 +135,17 @@ void test_lu_seq_1(void)
  		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 0);
  		TEST_ASSERT(lu_data_seq__get_last_values(seq, 0) == NULL);
 		
-	lu_data_seq__push(seq, rec_0, data_00);
+	lu_data_seq__push(seq, rec_0, data_00, 3, 3, 1, rec_0_view);
 
 		d = lu_data_seq__get_last_values(seq, rec_0->id);
 		TEST_ASSERT(d[0] == 0);
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 1);
 
-	lu_data_seq__push(seq, rec_0, data_01);
+	lu_data_seq__push(seq, rec_0, data_01, 3, 3, 1, rec_0_view);
 		
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 2);
 
-	lu_data_seq__push(seq, rec_1, data_12);
+	lu_data_seq__push(seq, rec_1, data_12, 2, 2, 1, rec_1_view);
 
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 2);
 		d = lu_data_seq__get_last_values(seq, rec_0->id);
@@ -152,11 +157,11 @@ void test_lu_seq_1(void)
 
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 2);
 
-	lu_data_seq__push(seq, rec_0, data_02);
+	lu_data_seq__push(seq, rec_0, data_02, 3, 3, 1, rec_0_view);
 	
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 3);
 
-	lu_data_seq__push(seq, rec_1, data_13);
+	lu_data_seq__push(seq, rec_1, data_13, 2, 2, 1, rec_1_view);
 		
 		d = lu_data_seq__get_last_values(seq, rec_1->id);
 		TEST_ASSERT(d[0] == 3);
@@ -165,7 +170,7 @@ void test_lu_seq_1(void)
 		
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 3);
 
-	lu_data_seq__push(seq, rec_0, data_04);
+	lu_data_seq__push(seq, rec_0, data_04, 3, 3, 1, rec_0_view);
 		
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 4);
 
@@ -177,11 +182,11 @@ void test_lu_seq_1(void)
 		
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 0);
 
-	lu_data_seq__push(seq, rec_0, data_05);
+	lu_data_seq__push(seq, rec_0, data_05, 3, 3, 1, rec_0_view);
 
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 1);
 
-	lu_data_seq__push(seq, rec_1, data_16);
+	lu_data_seq__push(seq, rec_1, data_16, 2, 2, 1, rec_1_view);
 
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 1);
 
@@ -206,7 +211,7 @@ void test_lu_seq_2(void)
 	lu_data_seq__block_end(seq);
 		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 0);
 	lu_data_seq__block_end(seq);
-	lu_data_seq__push(seq, rec_0, data_00);
+	lu_data_seq__push(seq, rec_0, data_00, 3, 3, 1, rec_0_view);
 	lu_data_seq__block_begin(seq);
 	lu_data_seq__block_begin(seq);
 
@@ -233,7 +238,7 @@ void test_lu_seq_data(void)
 
 			TEST_ASSERT(data == NULL);
 
-	lu_data_seq__push(seq, rec_0, data_00);
+	lu_data_seq__push(seq, rec_0, data_00, 3, 3, 1, rec_0_view);
  		
  		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 1);
 		
@@ -244,7 +249,7 @@ void test_lu_seq_data(void)
 		TEST_ASSERT(data->w == 3);
  		TEST_ASSERT(data->h == 3);
 		
-	lu_data_seq__push(seq, rec_1, data_16);
+	lu_data_seq__push(seq, rec_1, data_16, 2, 2, 1, rec_1_view);
  		
  		TEST_ASSERT(lu_data_seq__blocks_count(seq) == 1);
 		
@@ -273,7 +278,7 @@ void test_lu_seq_validate(void)
 	TEST_ASSERT(lu_data_seq__validate(seq) == NULL); 
 	lu__user_assert_on();
 
-	lu_data_seq__push(seq, rec_0, data_00);
+	lu_data_seq__push(seq, rec_0, data_00, 3, 3, 1, rec_0_view);
 
 	TEST_ASSERT(lu_data_seq__validate(seq) != NULL); 
 
@@ -286,7 +291,7 @@ void test_lu_seq_prepare(void)
 	Lu_Data data;
 	Lu_Data_Seq seq = lu_data_seq__create(lu_g_mem, 0, lu_brain__recs_size(brain)); 
 
-	lu_data_seq__push(seq, rec_0, data_00);
+	lu_data_seq__push(seq, rec_0, data_00, 3, 3, 1, rec_0_view);
 
 	seq = lu_data_seq__prepare(seq);
 	TEST_ASSERT(seq);
