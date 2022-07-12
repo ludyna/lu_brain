@@ -114,9 +114,9 @@
 		self->children = lu_n_link_mem__get_addr(n_link_mem, n_link);
 	}
 
-	static inline union lu_w_match_addr lu_la_cell__get_w_match_cell_addr(Lu_La_Cell self, lu_size wave_id)
+	static inline union lu_w_match_addr lu_la_cell__get_w_match_cell_addr(Lu_La_Cell self, lu_size wave_ix)
 	{
-		return self->w_cells[wave_id];
+		return self->w_cells[wave_ix];
 	}
 
 	static inline void lu_la_cell__set_w_mach_cell_addr(Lu_La_Cell self, lu_size wave_id, union lu_w_match_addr w_addr)

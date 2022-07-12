@@ -96,6 +96,8 @@
 
 	static inline Lu_W_Table_P lu_s_view_p__get_w_save_table(Lu_S_View_P self, lu_size wave_ix)
 	{
+		lu__assert(self);
+		lu__assert(self->w_save_tables);
 		lu__assert(wave_ix < lu_arr__count(self->w_save_tables));
 
 		return (Lu_W_Table_P) lu_arr__get(self->w_save_tables, wave_ix);
@@ -103,6 +105,8 @@
 
 	static inline Lu_W_Table_P lu_s_view_p__get_w_match_table(Lu_S_View_P self, lu_size wave_ix)
 	{
+		lu__assert(self);
+		lu__assert(self->w_match_tables);
 		lu__assert(wave_ix < lu_arr__count(self->w_match_tables));
 
 		return (Lu_W_Table_P) lu_arr__get(self->w_match_tables, wave_ix);
@@ -154,8 +158,6 @@
 	);
 	
 	static void lu_s_view_v__deinit(Lu_S_View_V self);
-
-	static Lu_W_Table_V lu_s_view_v__get_w_table(Lu_S_View_V self, lu_size wave_id);
 
 	
 ///////////////////////////////////////////////////////////////////////////////
@@ -361,13 +363,31 @@
 		return self->n_table;
 	}
 
-	static inline Lu_W_Table lu_s_layer__get_w_table(Lu_S_Layer self, lu_size wave_id)
+	static inline Lu_W_Table lu_s_layer__get_save_w_table(Lu_S_Layer self,  lu_size wave_ix)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(self->w_save_tables);
-		lu__debug_assert(wave_id < lu_arr__size(self->w_save_tables));
+		lu__debug_assert(wave_ix < lu_arr__count(self->w_save_tables));
 
-		return lu_arr__get(self->w_save_tables, wave_id);
+		return lu_arr__get(self->w_save_tables, wave_ix);
+	}
+
+	static inline Lu_W_Table lu_s_layer__get_w_table(Lu_S_Layer self, enum lu_wave_type wave_type, lu_size wave_ix)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(self->w_save_tables);
+
+		switch(wave_type)
+		{
+			case LU_WAVE__SAVE:
+				return lu_s_layer__get_save_w_table(self, wave_ix);
+				break;
+			case LU_WAVE__MATCH:
+				lu__assert(false);
+				break;
+			default:
+				lu__assert(false);
+		}
 	}
 
 	static inline Lu_S_Layer lu_s_layer__get_parent(Lu_S_Layer self)
@@ -431,6 +451,7 @@
 		struct lu_w_rec* match_w_recs; 
 		lu_size match_w_recs_size;
 		
+		Lu_Arr w_match_tables;
 	};
 
 	//
@@ -503,6 +524,34 @@
 		return comp;
 	}
 
+	static inline Lu_W_Table lu_s_layer_rec__get_match_w_table(Lu_S_Layer_Rec self, lu_size wave_ix)
+	{
+		lu__assert(self);
+		lu__assert(self->w_match_tables);
+		lu__debug_assert(wave_ix < lu_arr__count(self->w_match_tables));
+
+		return lu_arr__get(self->w_match_tables, wave_ix);
+	}
+
+	static inline Lu_W_Table lu_s_layer_rec__get_w_table(
+		Lu_S_Layer_Rec self, 
+		enum lu_wave_type wave_type, 
+		lu_size wave_ix
+	)
+	{
+		switch(wave_type)
+		{
+			case LU_WAVE__SAVE:
+				lu_s_layer__get_save_w_table(&self->super, wave_ix);
+				break;
+			case LU_WAVE__MATCH:
+				lu_s_layer_rec__get_match_w_table(self, wave_ix);
+				break;
+			default:
+				lu__assert(false);
+		}
+	}
+
 	//
 	// Methods
 	// 
@@ -567,9 +616,9 @@
 	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_area_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
 
-	static inline Lu_W_Cell lu_s_area__get_w_cell(
+	static inline Lu_W_Cell lu_s_area__get_save_w_cell(
 		Lu_S_Area self, 
-		lu_size wave_id, 
+		lu_size wave_ix, 
 		lu_size layer_ix, 
 		lu_size x, 
 		lu_size y
@@ -588,7 +637,7 @@
 
 		lu__assert(lu_s_layer__get_layer_ix(layer) == layer_ix);
 
-		Lu_W_Table w_table = lu_s_layer__get_w_table(layer, wave_id);
+		Lu_W_Table w_table = lu_s_layer__get_save_w_table(layer, wave_ix);
 		lu__assert(w_table);
 
 		return lu_w_table__get_w_cell(w_table, x, y);
@@ -824,10 +873,10 @@
 		return (Lu_S_Layer_Rec) lu_arr__get(self->v_recs, rec_id);
 	}
 
-	static inline Lu_W_Cell lu_s__get_w_cell( 
+	static inline Lu_W_Cell lu_s__get_save_w_cell( 
 		Lu_S self, 
-		lu_size wave_id, 
-		lu_size area_ix, 
+		lu_size wave_ix, 
+		lu_size area_ix,
 		lu_size layer_ix, 
 		lu_size x, 
 		lu_size y
@@ -836,7 +885,7 @@
 		Lu_S_Area area = lu_s__get_area(self, area_ix);
 		if (area == NULL) return NULL;
 
-		return lu_s_area__get_w_cell(area, wave_id, layer_ix, x, y);
+		return lu_s_area__get_save_w_cell(area, wave_ix, layer_ix, x, y);
 	}
 
 

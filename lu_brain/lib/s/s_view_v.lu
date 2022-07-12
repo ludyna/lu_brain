@@ -78,11 +78,3 @@
 		self->n_comp_table = NULL;
 		self->w_save_tables = NULL;
 	}
-
-///////////////////////////////////////////////////////////////////////////////
-// 
-
-	static Lu_W_Table_V lu_s_view_v__get_w_table(Lu_S_View_V self, lu_size wave_id)
-	{
-		return (Lu_W_Table_V) lu_arr__get(self->w_save_tables, wave_id);
-	}

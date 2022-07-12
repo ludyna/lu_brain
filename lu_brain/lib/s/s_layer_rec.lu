@@ -54,6 +54,22 @@
 			lu_w_rec__reset(w_rec);
 		}
 		
+		//
+		// w_match_tables
+		//
+
+		self->w_match_tables = lu_arr__create(config->w_mem, config->w_match_waves_size, false);
+		lu__alloc_assert(self->w_match_tables);
+
+		Lu_W_Table w_table;
+		for (lu_size i = 0; i < lu_arr__size(self->w_match_tables); i++)
+		{
+			w_table = lu_w_table__create(&self->super, config, rec->width, rec->height, rec->height);
+			lu__alloc_assert(w_table);
+			
+			lu_arr__set(self->w_match_tables, i, (lu_p_void) w_table);
+		}
+
 		return self;	
 	}
 
@@ -65,6 +81,17 @@
 		lu__assert(self->type == LU_S_LAYER__REC);
 
 		Lu_S_Layer_Rec layer = (Lu_S_Layer_Rec) self;
+
+		Lu_W_Table w_table;
+		for (lu_size i = 0; i < lu_arr__count(layer->w_match_tables); i++)
+		{
+			w_table = (Lu_W_Table) lu_arr__get(layer->w_match_tables, i);
+			lu__assert(w_table);
+
+			lu_w_table__destroy(w_table);
+		}
+
+		lu_arr__destroy(layer->w_match_tables);
 
 		lu_mem__free(self->w_mem, (lu_p_byte) layer->match_w_recs);
 		lu_mem__free(self->w_mem, (lu_p_byte) layer->save_w_recs);
@@ -458,7 +485,7 @@
 		p.curr_n_table = lu_s_layer_rec__get_n_table(self);
 		lu__assert(p.curr_n_table);
 
-		p.curr_w_table = lu_s_layer__get_w_table(&self->super, wave->wave_ix);
+		p.curr_w_table = lu_s_layer_rec__get_w_table(self, wave->type, wave->wave_ix);
 		lu__assert(p.curr_w_table);
 
 		p.processor = processor;

@@ -78,6 +78,8 @@
 		for (lu_size i = 0; i < lu_arr__count(self->w_save_tables); i++)
 		{
 			w_table = (Lu_W_Table) lu_arr__get(self->w_save_tables, i);
+			lu__assert(w_table);
+
 			lu_w_table__destroy(w_table);
 		}
 
@@ -182,7 +184,7 @@
 		//
 		// Get curr_w_table
 		//
-		Lu_W_Table curr_w_table = lu_s_layer__get_w_table(self, wave->wave_ix);
+		Lu_W_Table curr_w_table = lu_s_layer__get_save_w_table(self, wave->wave_ix);
 		lu__assert(curr_w_table);
 
 		//
@@ -275,69 +277,3 @@
 
 		return curr_w_table;
 	}
-
-	// static Lu_W_Table lu_s_layer__frame_save(
-	// 	Lu_S_Layer self,
-	// 	lu_size rec_id,  
-	// 	lu_size wave_id, 
-	// 	lu_size block_ix, 
-	// 	Lu_W_Table prev_w_table, 
-	// 	Lu_Process_Config config
-	// )
-	// {
-	// 	lu__assert(self);
-	// 	lu__assert(prev_w_table);
-
-	// 	lu__assert(prev_w_table->wave_id == wave_id);
-	// 	lu__assert(prev_w_table->block_ix == block_ix);
-
-	// 	lu_size x;
-	// 	lu_size y;
-
-	// 	Lu_W_Table curr_w_table = lu_s_layer__get_w_table(self, wave_id);
-	// 	lu__assert(curr_w_table);
-
-	// 	curr_w_table->wave_id = wave_id;
-	// 	curr_w_table->block_ix = block_ix;
-
-	// 	lu_bool is_reset = prev_w_table->wave_id != wave_id || ((block_ix - prev_w_table->block_ix) > 1);
-
-	// 	Lu_N_Table curr_n_table = self->n_table;
-	// 	lu__assert(curr_n_table);
-
-	// 	lu__assert(curr_n_table->w == curr_w_table->w);
-	// 	lu__assert(curr_n_table->h == curr_w_table->h);
-
-	// 	union lu_n_addr children[LU_N_CELL__CHILDREN_MAX];
-
-	// 	lu_size cells_saved_count = 0;
-
-	// 	Lu_W_Cell curr_w_cell;
-	// 	union lu_n_addr n_addr;
-
-	// 	curr_w_table->any_fired = false;
-
-	// 	for (y = 0; y < curr_w_table->h; y++)
-	// 	{
-	// 		for (x = 0; x < curr_w_table->w; x++)
-	// 		{
-	// 			curr_w_cell = lu_w_table__get_w_cell(curr_w_table, x, y);
-	// 			lu__debug_assert(curr_w_cell);
-
-	// 			lu_w_cell__reset(curr_w_cell);
-
-	// 			lu_w_table__cipher_children(prev_w_table, x, y, children);
-
-	// 			if (lu_n_addr__is_present(&children[0]))
-	// 			{
-	// 				n_addr = lu_n_table__save_with_vp_children(curr_n_table, x, y, children);
-	// 				lu_w_cell__save(curr_w_cell, n_addr);
-	// 				++cells_saved_count;
-
-	// 				curr_w_table->any_fired = true;
-	// 			}
-	// 		}
-	// 	}
-
-	// 	return curr_w_table;
-	// }
