@@ -24,9 +24,10 @@
 		self->mem = config->w_mem;
 		self->w_result_labels_size = config->w_result_labels_size;
 
-		self->wave_id = LU_WAVE_ID__NOT_SET;
+		lu_block_id__reset(&self->block_id);
+
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
-		self->block_ix = LU_BLOCK_IX__NOT_SET;
+
 		self->s = s;
 		self->match_cell_mem = match_cell_mem;
 
@@ -143,7 +144,7 @@
 			label = (Lu_Label) lu_mem_record__alloc(self->la_mem_table);
 			lu__alloc_assert(label);
 
-			lu_label__init(label, self->wave_ix, self->block_ix, la_cell, match_cell);
+			lu_label__init(label, la_cell, match_cell);
 
 			lu_s_list__add(self->s_list, (lu_p_void) label);
 		}

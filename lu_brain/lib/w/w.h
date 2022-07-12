@@ -48,9 +48,8 @@
 
 	struct lu_w_rec {
 		// data for when we had last access to s_rec
-		lu_size wave_id;
+		struct lu_block_id block_id;
 		lu_size wave_ix;
-		lu_size block_ix;
 
 		enum lu_w_rec_state state;
 
@@ -63,9 +62,8 @@
 	{
 		lu__assert(self);
 
-		self->wave_id = LU_WAVE_ID__NOT_SET;
+		lu_block_id__reset(&self->block_id);
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
-		self->block_ix = LU_BLOCK_IX__NOT_SET;
 		self->state = LU_W_REC_STATE__COLLECT; 
 
 		return self;
@@ -73,19 +71,19 @@
 
 	static inline void lu_w_rec__update(
 		Lu_W_Rec self, 
-		lu_size wave_id, 
+		struct lu_block_id block_id,
 		lu_size wave_ix, 
-		lu_size block_ix,
 		struct lu_rec_view view
 	)
 	{
 		lu__assert(self);
+		lu__assert(lu_block_id__is_set(&block_id));
 
 		//
 		// Detect state first
 		//
 
-		if (self->wave_id != wave_id)
+		if (self->block_id.wave_id != block_id.wave_id)
 		{
 			// totally new wave, start with saving one
 			self->state = LU_W_REC_STATE__COLLECT;
@@ -97,22 +95,21 @@
 			// but put this code here noneless for completeness)
 			self->state = LU_W_REC_STATE__COLLECT;
 		}
-		else if (self->block_ix == block_ix)
+		else if (self->block_id.block_ix == block_id.block_ix)
 		{
 			// should not happen
 			lu__assert(false);
 		}
 		else
 		{
-			lu__assert(self->block_ix != LU_BLOCK_IX__NOT_SET);
-			lu__assert(block_ix < LU__LONG_MAX);
-			lu__assert(self->block_ix < LU__LONG_MAX);
+			lu__assert(block_id.block_ix < LU__LONG_MAX);
+			lu__assert(self->block_id.block_ix < LU__LONG_MAX);
 
-			lu_long diff = ((lu_long)block_ix) - ((lu_long)self->block_ix);
+			lu_long diff = ((lu_long)block_id.block_ix) - ((lu_long)self->block_id.block_ix);
 
 			// if this fails, probably wave was not reset properly or 
 			// block_ix was not increased after lu_wave__process
-			lu__debug("\nLU_W_REC__UPDATE: block_ix=%ld, self->block_ix=%ld\n", block_ix, self->block_ix);
+			lu__debug("\nLU_W_REC__UPDATE: block_ix=%ld, self->block_ix=%ld\n", block_id.block_ix, self->block_id.block_ix);
 
 			lu__assert(diff > 0);
 
@@ -133,9 +130,8 @@
 		// Update values
 		//
 
-		self->wave_id = wave_id;
+		self->block_id = block_id;
 		self->wave_ix = wave_ix;
-		self->block_ix = block_ix;
 		self->view = view; // copy struct data
 	}
 
@@ -242,9 +238,8 @@
 		Lu_Mem mem;
 		Lu_S_Layer s_layer;
 
-		lu_size wave_id;
+		struct lu_block_id block_id;
 		lu_size wave_ix;
-		lu_size block_ix;
 
 		lu_size w;
 		lu_size h;
@@ -301,9 +296,8 @@
 
 	static inline void lu_w_table__prepare_for_wave(
 		Lu_W_Table self,
-		lu_size wave_id,
+		struct lu_block_id block_id,
 		lu_size wave_ix,
-		lu_size block_ix,
 		Lu_N_Table n_table
 	)
 	{
@@ -314,25 +308,24 @@
 		// Sanity check
 		// 
 
-		lu__assert(self->wave_id != wave_id || self->wave_ix != wave_ix || self->block_ix != block_ix);
+		lu__assert(lu_block_id__is_not_eq(&self->block_id, &block_id));
 
 		//
 		// Prepare
 		//
 
-		self->wave_id = wave_id;
+		self->block_id = block_id;
 		self->wave_ix = wave_ix;
-		self->block_ix = block_ix;
 		self->n_table = n_table;
 
 		self->any_fired = false;
 	}
 
-	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, lu_size wave_ix, lu_size block_ix)
+	static inline lu_bool lu_w_table__any_fired(Lu_W_Table self, struct lu_block_id block_id)
 	{
 		if (self == NULL) return false;
 
-		if (self->wave_ix != wave_ix || self->block_ix != block_ix) return false;
+		if (lu_block_id__is_not_eq(&self->block_id, &block_id)) return false;
 
 		return self->any_fired;
 	}
@@ -509,7 +502,7 @@
 		lu__assert(self->n_cell->addr.column_ix == self->n_column->column_ix);
 
 		//lu_n_column__print(self->n_column);
-		lu__debug("\n[%ld, %ld] ", self->n_column->x, self->n_column->y);
+		lu__debug("\n[%ld, %ld] sig=%.f | ", self->n_column->x, self->n_column->y, self->match_cell->sig);
 		lu_n_addr__print(&self->n_cell->addr);
 	}
 
@@ -520,9 +513,9 @@
 // Lu_W_Processor
 
 	struct lu_w_processor {
-		lu_size wave_id;
+		struct lu_block_id block_id;
 		lu_size wave_ix;
-		lu_size block_ix;
+
 		Lu_S s;
 		Lu_Mem mem;
 		Lu_W_Match_Cell_Mem match_cell_mem;
@@ -574,7 +567,7 @@
 	{
 		lu__assert(self->wave_ix < n_column->w_match_cells_size);
 
-		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->wave_ix, self->block_ix, self->match_cell_mem);
+		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->block_id, self->wave_ix, self->match_cell_mem);
 
 		lu_w_match_cell__add_sig(match_cell, sig);
 
@@ -694,7 +687,7 @@
 			la_cell = lu_la_column__get_la_cell_by_addr(la_column, la_link_label->la_addr);
 			lu__assert(la_cell);
 
-			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->wave_ix, self->block_ix, self->match_cell_mem);
+			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->block_id, self->wave_ix, self->match_cell_mem);
 			lu_w_match_cell__add_sig(match_cell, sig);
 
 			la_link_label = lu_la_link_mem__get_link(link_mem, la_link_label->next);
@@ -705,6 +698,7 @@
 	{
 		lu__assert(self);
 		lu__assert(lu_list__is_blank((Lu_List) self->curr_list));
+		// wave_ix
 
 		Lu_Lim_List t;
 		t = self->curr_list;
@@ -721,9 +715,9 @@
 
 			// lu_w_n_item__print(w_n_item);
 
-			lu_w_processor__fire_n_parents_with_sig(self, w_n_item->n_cell, w_n_item->n_column, 1.0);
+			lu_w_processor__fire_n_parents_with_sig(self, w_n_item->n_cell, w_n_item->n_column, w_n_item->match_cell->sig);
 
-			lu_w_processor__fire_n_labels_with_sig(self, w_n_item->n_cell->labels, self->la_column, 1.0);
+			lu_w_processor__fire_n_labels_with_sig(self, w_n_item->n_cell->labels, self->la_column, w_n_item->match_cell->sig);
 
 			lu_mem_record__free(self->n_mem_table, (lu_p_byte) w_n_item);
 
@@ -762,7 +756,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // lu_labels_
 
-	static inline void lu_labels__print(Lu_Label* self, lu_size size)
+	static inline void lu_labels__print_results(Lu_Label* self, lu_size size)
 	{
 		lu__assert(self);
 
@@ -783,13 +777,11 @@
 			lu__assert(match_cell);
 
 			lu__debug(
-				"\n\tlabel=%ld, sig=%.2f [wave_id=%ld, block_ix=%ld, MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
+				"\n\tlabel=%ld, sig=%.2f [MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
 				la_cell->addr.la_ix, 
 				match_cell->sig,
-				label->wave_id,
-				label->block_ix,
-				match_cell->wave_id,
-				match_cell->block_ix,
+				match_cell->block_id.wave_id,
+				match_cell->block_id.block_ix,
 				la_cell->children_count
 			);
 		}

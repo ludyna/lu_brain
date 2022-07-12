@@ -386,7 +386,7 @@
 	static Lu_W_Table lu_s_layer__save(
 		Lu_S_Layer self, 
 		Lu_Save_Wave save_wave,
-		lu_size block_ix, 
+		struct lu_block_id block_id,
 		Lu_W_Table prev_w_table,
 		Lu_Process_Config config
 	);
@@ -684,7 +684,7 @@
 	static Lu_W_Table lu_s_area__save_frame(
 		Lu_S_Area self, 
 		Lu_Save_Wave save_wave, 
-		lu_size block_ix, 
+		struct lu_block_id block_id, 
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	);
@@ -692,7 +692,7 @@
 	static Lu_W_Table lu_s_area__save_seq(
 		Lu_S_Area self, 
 		Lu_Save_Wave save_wave,
-		lu_size block_ix, 
+		struct lu_block_id block_id, 
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	);

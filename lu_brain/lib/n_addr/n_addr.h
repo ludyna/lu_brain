@@ -84,7 +84,7 @@
 
 	static inline void lu_n_addr__print(Lu_N_Addr self)
 	{
-		lu__debug("AREA: %ld LAYER: %ld CELL: %ld",  self->area_ix, self->layer_ix, self->cell_ix);
+		lu__debug("CELL: %ld (AREA: %ld LAYER: %ld)", self->cell_ix, self->area_ix, self->layer_ix);
 	}
 
 	static inline void lu_n_addr__reset(Lu_N_Addr self)

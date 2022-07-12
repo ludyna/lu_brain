@@ -34,9 +34,11 @@
 		self->wh_max = self->w * self->h_max;
 
 		self->normal_children_size = lu_calc__expected_child_size(w, h);
-		self->wave_id = LU_WAVE_ID__NOT_SET;
+		
+		lu_block_id__reset(&self->block_id);
+
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
-		self->block_ix = LU_BLOCK_IX__NOT_SET; 
+
 
 		self->cells = (struct lu_w_cell*) lu_mem__alloc(
 			config->w_mem, 

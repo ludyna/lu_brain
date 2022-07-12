@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size block_ix)
+	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size wave_id, lu_size block_ix)
 	{	
 		lu__assert(mem);
 		lu__assert(recs_size > 0);
@@ -14,7 +14,9 @@
 		Lu_Data_Block self = (Lu_Data_Block) lu_mem__alloc(mem, sizeof(struct lu_data_block));
  
  		self->mem = mem;
- 		self->block_ix = block_ix;
+ 		
+ 		lu_block_id__init(&self->block_id, wave_id, block_ix);
+
  		self->datum_size = recs_size;
  		self->datum = (struct lu_data*) lu_mem__alloc(self->mem, sizeof(struct lu_data) * self->datum_size);
 
@@ -24,7 +26,8 @@
  			data = &self->datum[i];
  			lu_data__init_default(data);
 
- 			data->block_ix = self->block_ix;
+ 			// copy block_id
+ 			data->block_id = self->block_id;
  		}
 
  		self->flags = 0;

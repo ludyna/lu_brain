@@ -166,14 +166,12 @@
 
 		Lu_Wave wave = (Lu_Wave) save_wave;
 
-		lu_size block_ix = data->block_ix;
-
 		// lu__debug("\n SAVING DATA (lu_s_layer_rec__save()):");
 		// lu_data__print(data);
 
 		Lu_W_Table curr_w_table = lu_s_layer_rec__save(layer_rec, save_wave, rec_id, data, config);
 
-		if (!lu_w_table__any_fired(curr_w_table, wave->wave_ix, block_ix)) return NULL;
+		if (!lu_w_table__any_fired(curr_w_table, data->block_id)) return NULL;
 
 		//
 		// Continue saving until first frames layer
@@ -192,9 +190,9 @@
 			lu_s_layer_base__print_basic_info(parent_layer);
 			#endif
 
-			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
+			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, data->block_id, curr_w_table, config);
 
-			if (!lu_w_table__any_fired(curr_w_table, wave->wave_ix, block_ix)) return NULL;
+			if (!lu_w_table__any_fired(curr_w_table, data->block_id)) return NULL;
 
 			parent_layer = parent_layer->p;
 		}
@@ -209,7 +207,7 @@
 	static Lu_W_Table lu_s_area__save_frame(
 		Lu_S_Area self, 
 		Lu_Save_Wave save_wave, 
-		lu_size block_ix, 
+		struct lu_block_id block_id,
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	)
@@ -227,9 +225,9 @@
 			lu_s_layer_base__print_basic_info(parent_layer);
 			#endif
 
-			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
+			curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_id, curr_w_table, config);
 
-			if (!lu_w_table__any_fired(curr_w_table, wave->wave_ix, block_ix)) return NULL;
+			if (!lu_w_table__any_fired(curr_w_table, block_id)) return NULL;
 
 			parent_layer = parent_layer->p;
 		}
@@ -243,7 +241,7 @@
 	static Lu_W_Table lu_s_area__save_seq(
 		Lu_S_Area self, 
 		Lu_Save_Wave save_wave,
-		lu_size block_ix, 
+		struct lu_block_id block_id, 
 		Lu_W_Table curr_w_table, 
 		Lu_Process_Config config
 	)
@@ -262,7 +260,7 @@
 		lu_s_layer_base__print_basic_info(parent_layer);
 		#endif
 
-		curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_ix, curr_w_table, config);
+		curr_w_table = lu_s_layer__save((Lu_S_Layer) parent_layer, save_wave, block_id, curr_w_table, config);
 
 		return curr_w_table;
 	}

@@ -144,7 +144,7 @@
 	static Lu_W_Table lu_s_layer__save(
 		Lu_S_Layer self, 
 		Lu_Save_Wave save_wave,
-		lu_size block_ix, 
+		struct lu_block_id block_id, 
 		Lu_W_Table prev_w_table, 
 		Lu_Process_Config config
 	)
@@ -177,7 +177,7 @@
 		//
 
 		lu__assert(prev_w_table->wave_ix == wave->wave_ix);
-		lu__assert(prev_w_table->block_ix == block_ix);
+		lu__assert(lu_block_id__is_eq(&prev_w_table->block_id, &block_id));
 
 		//
 		// Get curr_w_table
@@ -205,9 +205,8 @@
 
 		lu_w_table__prepare_for_wave(
 			curr_w_table,
-			wave->wave_id,
+			block_id,
 			wave->wave_ix,
-			block_ix,
 			curr_n_table
 		);
 

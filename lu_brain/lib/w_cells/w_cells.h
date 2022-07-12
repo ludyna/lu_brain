@@ -453,28 +453,30 @@
 //  Lu_W_Match_Cell 
 
 	struct lu_w_match_cell {
-		lu_size wave_id;
-		lu_size block_ix;
+		struct lu_block_id block_id;
 		lu_value sig;
-	};	
+	};
 
 	static inline Lu_W_Match_Cell lu_w_match_cell__init(
 		Lu_W_Match_Cell self, 
-		lu_size wave_id, 
-		lu_size block_ix,
+		struct lu_block_id block_id,
 		lu_value sig
 	)
 	{	
-		self->wave_id = wave_id;
-		self->block_ix = block_ix;
-		self->sig = 0;
+		lu__assert(lu_block_id__is_set(&block_id));
+
+		self->block_id = block_id;
+		self->sig = sig;
 
 		return self;
 	}
 
 	static inline Lu_W_Match_Cell lu_w_match_cell__reset(Lu_W_Match_Cell self)
 	{
-		return lu_w_match_cell__init(self, LU_WAVE_IX__NOT_SET, LU_BLOCK_IX__NOT_SET, 0);
+		lu_block_id__reset(&self->block_id);
+		self->sig = 0;
+
+		return self;
 	}
 
 	static inline void lu_w_match_cell__add_sig(Lu_W_Match_Cell self, lu_value sig)
@@ -503,7 +505,7 @@
 	static Lu_W_Match_Cell_Mem lu_w_match_cell_mem__init(Lu_W_Match_Cell_Mem self, Lu_Mem mem, lu_size size);
 	static void lu_w_match_cell_mem___deinit(Lu_W_Match_Cell_Mem self);
 
-	static inline Lu_W_Match_Cell lu_w_match_cell_mem___cell_alloc(Lu_W_Match_Cell_Mem self)
+	static inline Lu_W_Match_Cell lu_w_match_cell_mem__cell_alloc(Lu_W_Match_Cell_Mem self)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(self->mem_table);

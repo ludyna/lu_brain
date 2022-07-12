@@ -300,7 +300,7 @@ void test_lu_brain_basics_01(void)
 	// TEST_ASSERT(results);
 	// TEST_ASSERT(results[0]);
 
-	// lu_labels__print(results, brain_config.w_result_labels_size);
+	// lu_labels__print_results(results, brain_config.w_result_labels_size);
 
 	// TEST_ASSERT(lu_label__get_id(results[0]) == LABEL_2);
 }

@@ -204,7 +204,7 @@
 		lu__assert(self);
 
 		lu__debug("\nData: ");
-		lu__debug("\n\twave_id: %d, block_id: %d, rec_id: %d", self->wave_id, self->block_ix, self->rec_id); 
+		lu__debug("\n\twave_id: %d, block_id: %d, rec_id: %d", self->block_id.wave_id, self->block_id.block_ix, self->rec_id); 
 		lu__debug("\n\tw: %d, h: %d, d: %d", self->w, self->h, self->d); 
 
 		if (self->values)
@@ -224,7 +224,7 @@
 		lu__assert(self);
 
 		lu__debug("\nData: ");
-		lu__debug("\n\twave_id: %d, block_id: %d, rec_id: %d", self->wave_id, self->block_ix, self->rec_id); 
+		lu__debug("\n\twave_id: %d, block_id: %d, rec_id: %d", self->block_id.wave_id, self->block_id.block_ix, self->rec_id); 
 		lu__debug("\n\tw: %d, h: %d, d: %d", self->w, self->h, self->d); 
 
 		if (self->values)

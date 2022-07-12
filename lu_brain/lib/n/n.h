@@ -453,6 +453,10 @@
 		union lu_w_match_addr* w_cells;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static inline Lu_N_Cell lu_n_cell__init(
 		Lu_N_Cell self, 
 		lu_size cell_ix, 
@@ -511,19 +515,23 @@
 		return self;
 	}
 
+	//
+	// Get / Set
+	//
+
 	static inline lu_value lu_n_cell__get_default_sig(Lu_N_Cell self)
 	{
 		return self->default_sig;
 	}
 
-	static inline union lu_w_match_addr lu_n_cell__get_w_match_cell_addr(Lu_N_Cell self, lu_size wave_id)
+	static inline union lu_w_match_addr lu_n_cell__get_w_match_cell_addr(Lu_N_Cell self, lu_size wave_ix)
 	{
-		return self->w_cells[wave_id];
+		return self->w_cells[wave_ix];
 	}
 
-	static inline void lu_n_cell__set_w_mach_cell_addr(Lu_N_Cell self, lu_size wave_id, union lu_w_match_addr w_addr)
+	static inline void lu_n_cell__set_w_mach_cell_addr(Lu_N_Cell self, lu_size wave_ix, union lu_w_match_addr w_addr)
 	{
-		self->w_cells[wave_id] = w_addr;
+		self->w_cells[wave_ix] = w_addr;
 	}
 
 	static inline Lu_N_Addr lu_n_cell__get_cell_addr(Lu_N_Cell self)
@@ -532,6 +540,10 @@
 
 		return &self->addr;
 	}
+
+	//
+	// Is
+	//
 
 	static inline lu_bool lu_n_cell__is_blank(Lu_N_Cell self)
 	{
@@ -546,6 +558,10 @@
 
 		return self->addr.cell_ix == 0;
 	}
+
+	//
+	// Methods
+	//
 
 	static inline Lu_N_Link lu_n_cell__children_prepend(Lu_N_Cell self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
@@ -676,22 +692,22 @@
 
 	static inline Lu_W_Match_Cell lu_n_cell__get_and_reset_match_cell(
 		Lu_N_Cell self,
-		lu_size wave_id,
-		lu_size block_ix, 
+		struct lu_block_id block_id,
+		lu_size wave_ix,
 		Lu_W_Match_Cell_Mem match_cell_mem
 	)
 	{
-		union lu_w_match_addr match_addr = lu_n_cell__get_w_match_cell_addr(self, wave_id);
+		union lu_w_match_addr match_addr = lu_n_cell__get_w_match_cell_addr(self, wave_ix);
 
 		Lu_W_Match_Cell match_cell = NULL;
 		if (lu_w_match_addr__is_blank(&match_addr))
 		{
-			match_cell = lu_w_match_cell_mem___cell_alloc(match_cell_mem);
+			match_cell = lu_w_match_cell_mem__cell_alloc(match_cell_mem);
 			match_addr = lu_w_match_cell_mem__get_addr(match_cell_mem, match_cell);
 
-			lu_n_cell__set_w_mach_cell_addr(self, wave_id, match_addr);
+			lu_n_cell__set_w_mach_cell_addr(self, wave_ix, match_addr);
 
-			lu_w_match_cell__init(match_cell, wave_id, block_ix, 0);
+			lu_w_match_cell__init(match_cell, block_id, 0);
 			
 			return match_cell;
 		}
@@ -699,10 +715,10 @@
 		match_cell = lu_w_match_cell_mem__get_cell(match_cell_mem, match_addr);
 		lu__assert(match_cell);
 
-		if (match_cell->wave_id != wave_id || match_cell->block_ix != block_ix)
+		if (lu_block_id__is_not_eq(&match_cell->block_id, &block_id))
 		{
 			// reset
-			lu_w_match_cell__init(match_cell, wave_id, block_ix, 0);
+			lu_w_match_cell__init(match_cell, block_id, 0);
 		}
 
 		return match_cell;

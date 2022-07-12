@@ -20,6 +20,67 @@
 	);
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Block_Id
+
+	////
+	// Structure that uniquely identifies data block (in time)
+	struct lu_block_id {
+		lu_size wave_id;	// id because not sequential, more random, after 3 next one can be 0
+		lu_size block_ix;   // ix because its sequential
+	};
+
+	//
+	// Constructors / Destructors
+	//
+
+	static inline Lu_Block_Id lu_block_id__reset(Lu_Block_Id self)
+	{
+		lu__assert(self);
+
+		self->wave_id = LU_WAVE_ID__NOT_SET;
+		self->block_ix = LU_BLOCK_IX__NOT_SET;
+
+		return self;
+	}
+
+	static inline Lu_Block_Id lu_block_id__init(Lu_Block_Id self, lu_size wave_id, lu_size block_ix)
+	{
+		lu__assert(self);
+
+		self->wave_id = wave_id;
+		self->block_ix = block_ix;
+
+		return self;
+	}
+
+	//
+	// Is
+	//
+
+	static inline lu_bool lu_block_id__is_set(Lu_Block_Id self)
+	{
+		if (self->wave_id == LU_WAVE_ID__NOT_SET) return false;
+		if (self->block_ix == LU_BLOCK_IX__NOT_SET) return false;
+
+		return true;
+	}
+
+	static inline lu_bool lu_block_id__is_not_set(Lu_Block_Id self)
+	{
+		return !lu_block_id__is_set(self);
+	}
+
+	static inline lu_bool lu_block_id__is_eq(Lu_Block_Id self, Lu_Block_Id block_id)
+	{
+		return (self->wave_id == block_id->wave_id) && (self->block_ix == block_id->block_ix);
+	}
+
+	static inline lu_bool lu_block_id__is_not_eq(Lu_Block_Id self, Lu_Block_Id block_id)
+	{
+		return !lu_block_id__is_eq(self, block_id);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_Data
 
 	enum lu_data_flags {
@@ -29,8 +90,8 @@
 	};
 
 	struct lu_data {
-		lu_size wave_id;
-		lu_size block_ix;
+		struct lu_block_id block_id;
+
 		lu_size rec_id;
 		lu_flags flags;
 
@@ -74,8 +135,7 @@
 
 	static inline Lu_Data lu_data__set(
 		Lu_Data self, 
-		lu_size wave_id,
-		lu_size block_ix,
+		struct lu_block_id block_id,
 		lu_size rec_id, 
 		lu_size w, 
 		lu_size h, 
@@ -85,8 +145,7 @@
 		lu_flags flags
 	)
 	{
-		self->wave_id 	= wave_id;
-		self->block_ix 	= block_ix;
+		self->block_id 	= block_id;
 		self->rec_id 	= rec_id;
 		self->flags 	= flags;
 
@@ -107,12 +166,14 @@
 
 		struct lu_rec_view view;
 
-		lu_rec_view__init(&view, 0, 0, 0);
+		lu_rec_view__init(&view, 0, 0, 0); 
+
+		struct lu_block_id block_id;
+		lu_block_id__reset(&block_id);
 
 		lu_data__set(
 			self, 
-			LU_WAVE_IX__NOT_SET, 
-			LU_BLOCK_IX__NOT_SET, 
+			block_id,
 			LU_REC_ID__NOT_SET, 
 			0, 
 			0, 
@@ -198,8 +259,7 @@
 	{
 		lu_data__set(
 			dest, 
-			src->wave_id, 
-			src->block_ix, 
+			src->block_id, 
 			src->rec_id, 
 			src->w, 
 			src->h, 
@@ -233,7 +293,7 @@
 	struct lu_data_block {
 		Lu_Mem mem;
 
-		lu_size block_ix;
+		struct lu_block_id block_id;
 
 		lu_size 			datum_size;
 		struct lu_data* 	datum; 
@@ -241,7 +301,7 @@
 		lu_flags flags;
 	};
 
-	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size block_ix);
+	static Lu_Data_Block lu_data_block__create(Lu_Mem mem, lu_size recs_size, lu_size wave_id, lu_size block_ix);
 	static void lu_data_block__destroy(Lu_Data_Block self);
 
 	static inline lu_size lu_data_block__get_size(Lu_Data_Block self) { return self->datum_size; }
