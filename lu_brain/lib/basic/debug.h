@@ -9,6 +9,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Debug related macroses
 
+#define LU__DEBUG 1
+// #define LU__DEEP_DEBUG 
+
 
 void lu__debug_internal(const char * format, ...);
 void lu__debug_message_internal(const char* file, int line, const char * message);
@@ -18,11 +21,10 @@ void lu__debug_message_internal(const char* file, int line, const char * message
 #define lu__debug_message_args(message, ...) lu__debug_message_internal(__FILE__, __LINE__, message, __VA_ARGS__)
 
 #define lu__save_debug printf
-
-#define LU__DEBUG 1
-#define LU__DEEP_DEBUG 1
-
 #define lu__assert assert
+
+#define lu__alloc_assert assert
+#define lu__create_assert assert
 
 #ifdef LU__PRODUCTION
 	#define lu__debug_assert 
@@ -30,8 +32,14 @@ void lu__debug_message_internal(const char* file, int line, const char * message
 	#define lu__debug_assert lu__assert
 #endif 
 
-#define lu__alloc_assert assert
-#define lu__create_assert assert
+///////////////////////////////////////////////////////////////////////////////
+// Label gen
+
+#ifdef LU__DEEP_DEBUG
+	#define lu__deep_debug lu__debug
+#else
+	#define lu__deep_debug
+#endif 
 
 ///////////////////////////////////////////////////////////////////////////////
 // Label gen

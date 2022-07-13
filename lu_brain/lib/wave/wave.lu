@@ -265,8 +265,6 @@
 		lu__assert(area->tag == LU_AREA_TAG__REC);
 		 		
 		lu_s_area__match_rec(area, self, rec_id, data, config, &self->processor);
-
-		lu__debug("\n LIM_NEXT_COUNT = %ld\n", lu_lim_list__count(self->processor.next_list));
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -681,8 +679,10 @@
 
 		if (lu_w_cell__is_not_set(w_cell)) return NULL;
 
-		lu__debug("\nLINKING LABEL %ld TO n_cell: ", label);
-		lu_n_addr__print(&w_cell->n_cell->addr);
+		#ifdef LU__DEEP_DEBUG
+			lu__debug("\nLINKING LABEL %ld TO n_cell: ", label);
+			lu_n_addr__print(&w_cell->n_cell->addr);
+		#endif
 
 		return lu_la_column__save_label(&self->brain->la_column, w_cell->n_cell, label);
 	}

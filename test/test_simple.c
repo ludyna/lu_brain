@@ -136,7 +136,7 @@ void test_lu_brain_basics_01(void)
 	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(s_wave), lu_wave__get_type(s_wave)) == s_wave);
 
 	lu__debug("\n\n ======================== S A V E - 0 =========================\n");
-	lu__debug("\nvalues_0 before push: ");
+	lu__debug("\nvalues before push: ");
 
 		lu_values__print_symbols(values[0], 2, 2, 1);
 
@@ -153,7 +153,9 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(label_cell);
 
 	lu__debug("\n\n ======================== S A V E - 1 =========================\n");
-	lu__debug("\nvalues_0 before push: ");
+	lu__debug("\nvalues before push: ");
+	lu_values__print_symbols(values[1], 2, 2, 1);
+
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
 		lu_wave__push(s_wave, rec_0, values[1], 2, 2, 1);
@@ -167,7 +169,9 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(label_cell);
 
 	lu__debug("\n\n ======================== S A V E - 2 =========================\n");
-	lu__debug("\nvalues_0 before push: ");
+	lu__debug("\nvalues before push: ");
+	lu_values__print_symbols(values[2], 2, 2, 1);
+
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
 		lu_wave__push(s_wave, rec_0, values[2], 2, 2, 1);
@@ -181,7 +185,9 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(label_cell);
 
 	lu__debug("\n\n ======================== S A V E - 3 =========================\n");
-	lu__debug("\nvalues_0 before push: ");
+	lu__debug("\nvalues before push: ");
+	lu_values__print_symbols(values[3], 2, 2, 1);
+
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
 
 		lu_wave__push(s_wave, rec_0, values[3], 2, 2, 1);
@@ -219,7 +225,7 @@ void test_lu_brain_basics_01(void)
 	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
 	lu__debug("\n\n ======================== M A T C H - 0 =========================\n");
 
-		lu__debug("\nvalues_0 before push: ");
+		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[0], 2, 2, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
@@ -241,7 +247,7 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[0]);
 
 	lu__debug("\n\n ======================== M A T C H - 1 =========================\n");
-		lu__debug("\nvalues_0 before push: ");
+		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[1], 2, 2, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
@@ -263,7 +269,7 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[1]);
 
 	lu__debug("\n\n ======================== M A T C H - 2 =========================\n");
-		lu__debug("\nvalues_0 before push: ");
+		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[2], 2, 2, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
@@ -285,7 +291,7 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[2]);
 
 	lu__debug("\n\n ======================== M A T C H - 3 =========================\n");
-		lu__debug("\nvalues_0 before push: ");
+		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[3], 2, 2, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
@@ -307,7 +313,7 @@ void test_lu_brain_basics_01(void)
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[3]);
 
 	lu__debug("\n\n ======================== M A T C H - 4 =========================\n");
-		lu__debug("\nvalues_0 before push: ");
+		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[4], 2, 2, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);

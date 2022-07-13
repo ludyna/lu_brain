@@ -163,7 +163,7 @@
 		Lu_W_Match_Cell match_cell = NULL;
 		if (lu_w_match_addr__is_blank(&match_addr))
 		{
-			lu__debug("\n !! lu_w_match_addr__is_blank(): wave_ix=%ld", wave_ix);
+			lu__deep_debug("\n !! lu_w_match_addr__is_blank(): wave_ix=%ld", wave_ix);
 
 			match_cell = lu_w_match_cell_mem__cell_alloc(match_cell_mem);
 			match_addr = lu_w_match_cell_mem__get_addr(match_cell_mem, match_cell);
@@ -178,13 +178,15 @@
 		match_cell = lu_w_match_cell_mem__get_cell(match_cell_mem, match_addr);
 		lu__assert(match_cell);
 
-		lu__debug("\n !! lu_w_match_cell_mem__get_cell()");
+		lu__deep_debug("\n !! lu_w_match_cell_mem__get_cell()");
+		#ifdef LU__DEEP_DEBUG
 		lu_w_match_cell__print(match_cell);
+		#endif
 
 		if (lu_block_id__is_not_eq(&match_cell->block_id, &block_id))
 		{
 			// reset
-			lu__debug("\n !! lu_w_match_cell__init(match_cell, block_id, 0);");
+			lu__deep_debug("\n !! lu_w_match_cell__init(match_cell, block_id, 0);");
 			lu_w_match_cell__init(match_cell, block_id, 0);
 		}
 
@@ -359,14 +361,18 @@
 
 		if (lu_la_cell__is_child(la_cell, n_cell->addr, &self->n_link_mem)) return la_cell;
 		
-		lu__debug("\nLA_CELL (n_cell->cell_ix=%ld) ", n_cell->addr.cell_ix);
+		lu__deep_debug("\nLA_CELL (n_cell->cell_ix=%ld) ", n_cell->addr.cell_ix);
+		#ifdef LU__DEEP_DEBUG
 		lu_la_cell__print(la_cell);
+		#endif
 
 		lu_la_cell__prepend_child(la_cell, n_cell->addr, &self->n_link_mem);
 		lu_n_cell__prepend_label(n_cell, la_cell->addr, &self->la_link_mem);
 
-		lu__debug("\nLA_CELL (n_cell->cell_ix=%ld) ", n_cell->addr.cell_ix);
+		lu__deep_debug("\nLA_CELL (n_cell->cell_ix=%ld) ", n_cell->addr.cell_ix);
+		#ifdef LU__DEEP_DEBUG
 		lu_la_cell__print(la_cell);
+		#endif
 
 		return la_cell;
 	}

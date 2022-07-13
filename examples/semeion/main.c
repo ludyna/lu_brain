@@ -47,8 +47,8 @@ int main()
 	
 	Lu_Rec image_rec = lu_brain__rec_add(
 		/*belongs to*/			brain, 
-		/*width*/				16, 
-		/*height*/				16, 
+		/*width*/				17, 
+		/*height*/				17, 
 		/*depth*/				1,
 		/*predefined config */ 	lu_rec_config__get_by_id(LU_REC__MONO1_IMAGE)
 	);	
@@ -82,17 +82,19 @@ int main()
 	
 	printf("\nTraining samples..");
 
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 1; i++)
 	// for (i = 0; i < smn_training_samples_count; i++)
 	{
 		d = smn_training_samples[i];
 		lu_wave__reset(save_wave);
 
-		printf("\nSTART OF %ld", i);
-		lu_wave__push_with_shift(save_wave, image_rec, d->pixels, 1, 1);
+		lu_rec__set_dest_start_pos(image_rec, 0, 0);
+		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
+
+		lu_rec__set_dest_start_pos(image_rec, 1, 1);
+		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-		printf("\nEND OF %ld", i);
 
 		lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
 

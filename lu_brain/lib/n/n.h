@@ -1009,8 +1009,6 @@
 
 		lu_size ix = lu_n_column__vp_children_to_ix(self, children, children_count);
 
-		//lu__debug("\nWHATTT ix=%ld\n", ix);
-
 		Lu_N_Cell cell;
 		lu_size z;
 		for (z = 0; z < self->d; z++)

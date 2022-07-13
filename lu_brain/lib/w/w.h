@@ -107,10 +107,10 @@
 
 			lu_long diff = ((lu_long)block_id.block_ix) - ((lu_long)self->block_id.block_ix);
 
+			lu__deep_debug("\nLU_W_REC__UPDATE: block_ix=%ld, self->block_ix=%ld\n", block_id.block_ix, self->block_id.block_ix);
+
 			// if this fails, probably wave was not reset properly or 
 			// block_ix was not increased after lu_wave__process
-			lu__debug("\nLU_W_REC__UPDATE: block_ix=%ld, self->block_ix=%ld\n", block_id.block_ix, self->block_id.block_ix);
-
 			lu__assert(diff > 0);
 
 			if (diff > 1)
@@ -196,13 +196,11 @@
 		lu_size y;
 
 		Lu_W_Cell_P w_cell_p;
-		lu_size y_shift;
 
 		lu__debug("\nLU_W_TABLE_P:"); 
 
 		for (y = 0; y < self->h; y++)
 		{
-			y_shift = y * self->w;
 			lu__debug("\n\t");
 			for (x = 0; x < self->w; x++)
 			{
@@ -339,7 +337,6 @@
 		lu_size y;
 
 		Lu_W_Cell w_cell;
-		lu_size y_shift;
 
 		lu__debug("\nLU_W_TABLE from s_layer (");
 		lu_s_layer__print_basic_info(self->s_layer);
@@ -347,7 +344,6 @@
 
 		for (y = 0; y < self->h_max; y++)
 		{
-			y_shift = y * self->w;
 			lu__debug("\n   ");
 			for (x = 0; x < self->w; x++)
 			{
@@ -414,7 +410,6 @@
 
 		Lu_N_Table n_table = lu_s_layer__get_n_table(self->s_layer);
 		lu__assert(n_table);
-		Lu_N_Column n_column;
 
 		////
 		// Possible situations:
@@ -458,7 +453,6 @@
 
 		*children_count = i;
 
-		// lu__debug("\n*children_count=%ld, self->normal_children_size=%ld\n", *children_count, self->normal_children_size);
 		lu__debug_assert(*children_count == self->normal_children_size);
 
 	}
@@ -611,8 +605,6 @@
 			lu__assert(n_cell_parent);
 			lu__assert(n_column_parent);
 
-			//lu__debug("\n YOO! \n");
-
 			lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent, sig);
 
 			n_link_parent = lu_n_link_mem__get_link(link_mem, n_link_parent->next);
@@ -721,7 +713,7 @@
 
 			if (lu_la_link_addr__is_present(&w_n_item->n_cell->labels))
 			{
-				lu__debug("\nYAY (n_cell->cell_ix=%ld) link_addr=%ld", w_n_item->n_cell->addr.cell_ix, w_n_item->n_cell->labels.value);
+				lu__deep_debug("\nN_CELL has label (n_cell->cell_ix=%ld) link_addr=%ld", w_n_item->n_cell->addr.cell_ix, w_n_item->n_cell->labels.value);
 				lu_w_processor__fire_n_labels_with_sig(self, w_n_item->n_cell->labels, self->la_column, w_n_item->match_cell->sig);
 			}
 

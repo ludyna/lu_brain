@@ -356,9 +356,8 @@
 		Lu_W_Cell_P children[p->children_count];
 		p->children = children;
 		
-		#ifdef LU__DEEP_DEBUG
-			lu__debug("\nFINISH_PROCESS w_cell_p table and n_cell table:");
-		#endif 
+		lu__deep_debug("\nFINISH_PROCESS w_cell_p table and n_cell table:");
+
 		for (p->y = 0; p->y < h; p->y++)
 		{
 			#ifdef LU__DEEP_DEBUG
@@ -458,7 +457,7 @@
 		#ifdef LU__DEEP_DEBUG
 		char buffer[50];
 		lu_w_rec_state__to_str(w_rec->state, buffer);
-		lu__debug(
+		lu__deep_debug(
 			"\nREC: w_state = %s, wave_id = %ld, wave_ix = %ld, block_ix = %ld, view dest pos=[%ld, %ld]", 
 			buffer,
 			w_rec->block_id.wave_id,
@@ -553,7 +552,7 @@
 		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(self, wave->wave_ix);
 		lu__assert(w_rec);
 
-		lu__debug("\nBEFORE SAVE PROCESS: data->wave_id = %ld, data->block_ix=%d\n", data->block_id.wave_id, data->block_id.block_ix);
+		lu__deep_debug("\nBEFORE SAVE PROCESS: data->wave_id = %ld, data->block_ix=%d\n", data->block_id.wave_id, data->block_id.block_ix);
 		return lu_s_layer_rec__process_data(
 			self, 
 			(Lu_Wave) save_wave,
@@ -594,7 +593,7 @@
 		//
 		// Process data
 		// 
-		lu__debug("\nBEFORE MATCH PROCESS: data->wave_id = %ld, data->block_ix=%d\n", data->block_id.wave_id, data->block_id.block_ix);
+		lu__deep_debug("\nBEFORE MATCH PROCESS: data->wave_id = %ld, data->block_ix=%d\n", data->block_id.wave_id, data->block_id.block_ix);
 		lu_s_layer_rec__process_data(
 			self, 
 			wave,
