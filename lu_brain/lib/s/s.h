@@ -131,6 +131,11 @@
 		return NULL;
 	}
 
+	static inline void lu_s_view_p__print_mem_stats(Lu_S_View_P self)
+	{
+		
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_V
 //
@@ -262,6 +267,12 @@
 		lu__debug("%s:%s area_ix=%ld, layer_ix=%ld", tag, type, self->area_ix, self->layer_ix);
 	}
 
+	static inline void lu_s_layer_base__print_mem_stats(Lu_S_Layer_Base self)
+	{
+		lu__debug("\n\t");
+		lu_s_layer_base__print_basic_info(self);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Comp
 //
@@ -273,6 +284,10 @@
 		struct lu_s_view_v v_view;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static Lu_S_Layer_Comp lu_s_layer_comp__create(
 		Lu_Config config, 
 		Lu_S_Layer_Rec frame, 
@@ -280,7 +295,17 @@
 		lu_size layer_ix,
 		lu_size area_ix
 	);
+
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
+
+	//
+	// Methods
+	//
+
+	static inline void lu_s_layer_comp__print_mem_stats(Lu_S_Layer_Comp self)
+	{
+		lu_s_layer_base__print_mem_stats(&self->super);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer
@@ -434,6 +459,13 @@
 	static inline void lu_s_layer__print_basic_info(Lu_S_Layer self)
 	{
 		lu_s_layer_base__print_basic_info(&self->super);
+	}
+
+	static inline void lu_s_layer__print_mem_stats(Lu_S_Layer self)
+	{
+		lu_s_layer_base__print_mem_stats(&self->super);
+
+		lu_n_table__print_mem_stats(self->n_table);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -599,6 +631,11 @@
 		}
 	}
 
+	static inline void lu_s_layer_rec__print_mem_stats(Lu_S_Layer_Rec self)
+	{
+		lu_s_layer__print_mem_stats(&self->super);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Area
 //
@@ -683,7 +720,7 @@
 		char buffer[50];
 		lu_area_tag__to_str(self->tag, buffer);
 
-		lu__debug("\n 	area_ix: %d, tag: %s", self->area_ix, buffer);
+		lu__debug("\n\tarea_ix: %d, tag: %s", self->area_ix, buffer);
 
 		if (short_version) return;
 
@@ -694,7 +731,38 @@
 
 			if (layer == NULL) break;
 
-			lu_s_layer_base__print(layer);
+			lu_s_layer_base__print_mem_stats(layer);
+		}
+	}
+
+	static inline void lu_s_area__print_mem_stats(Lu_S_Area self)
+	{
+		char buffer[50];
+		lu_area_tag__to_str(self->tag, buffer);
+
+		lu__debug("\narea_ix: %d, tag: %s", self->area_ix, buffer);
+
+		Lu_S_Layer_Base layer ;
+		for (lu_size i = 0; i < self->layers_count; i++)
+		{
+			layer = self->layers[i];
+
+			if (layer == NULL) break;
+
+			switch(layer->type)
+			{
+				case LU_S_LAYER__COMP:
+					lu_s_layer_comp__print_mem_stats((Lu_S_Layer_Comp) layer);
+					break;
+				case LU_S_LAYER__REC:
+					lu_s_layer_rec__print_mem_stats((Lu_S_Layer_Rec) layer);
+					break;
+				case LU_S_LAYER__LAYER:
+					lu_s_layer__print_mem_stats((Lu_S_Layer) layer);
+					break;
+				default:
+					lu__assert(false);
+			}
 		}
 	}
 
@@ -935,6 +1003,7 @@
 
 	static void lu_s__print_info(Lu_S self);
 	static void lu_s__print_areas(Lu_S self);
+	static void lu_s__print_mem_stats(Lu_S self);
 
 	static inline void lu_s__find_n_cell_and_n_column(		
 		Lu_S self,

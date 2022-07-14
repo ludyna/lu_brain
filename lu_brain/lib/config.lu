@@ -18,7 +18,7 @@
 			.b_max_seq_size_in_blocks = 16,
 
 			//
-			// Structure level
+			// Space level
 			//
 			.s_mem = NULL, 			
 			.s_apexes_size = 256,
@@ -31,7 +31,7 @@
 			.n_column_w = 5, 
 			.n_column_h = 64,
 			.n_column_d = 3,
-			.n_link_mem_size = 64,
+			.n_link_mem_size = 64 * 3 * 2,
 
 			//
 			// Waves level
@@ -64,7 +64,7 @@
 			.b_max_seq_size_in_blocks = 1,
 
 			//
-			// Structure level
+			// Space level
 			//
 			.s_mem = NULL, 			
 			.s_apexes_size = 256,

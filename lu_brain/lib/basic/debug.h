@@ -10,7 +10,8 @@
 // Debug related macroses
 
 #define LU__DEBUG 1
-// #define LU__DEEP_DEBUG 
+#define LU__DEBUG_MEM 1 
+// #define LU__DEEP_DEBUG 1
 
 
 void lu__debug_internal(const char * format, ...);

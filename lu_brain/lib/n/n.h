@@ -82,31 +82,33 @@
 
 	struct lu_n_link_mem {
 		Lu_Mem_Table mem_table;
-
 	};
+
+	//
+	// Constructors / Destructors
+	// 
 
 	Lu_N_Link_Mem lu_n_link_mem__init(Lu_N_Link_Mem self, Lu_Mem mem, lu_size size);
 	void lu_n_link_mem__deinit(Lu_N_Link_Mem self);
+ 
+ 	//
+ 	// Get
+ 	//
 
-	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self)
+	static inline lu_size lu_n_link_mem__get_links_count(Lu_N_Link_Mem self)
 	{
-		lu__debug_assert(self);
+		lu__assert(self);
+		lu__assert(self->mem_table);
 
-		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
+		return lu_mem_table__records_count(self->mem_table);
+	}
 
-		if (!record)
-		{
-			lu_mem_table__realloc(
-				self->mem_table, 
-				lu_mem_table__records_count(self->mem_table) * 2, 
-				LU_MEM_TABLE__DEFAULT
-			); 
+	static inline lu_size lu_n_link_mem__get_links_size(Lu_N_Link_Mem self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem_table);
 
-			record = lu_mem_record__alloc(self->mem_table);
-			lu__assert(record);
-		}
-
-		return (Lu_N_Link) record;
+		return lu_mem_table__records_size(self->mem_table);
 	}
 
 	////
@@ -134,6 +136,33 @@
 
 		return addr;
 	}
+
+	//
+	// Methods
+	//
+
+	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self)
+	{
+		lu__debug_assert(self);
+
+		lu_p_byte record = lu_mem_record__alloc(self->mem_table);
+
+		if (!record)
+		{
+			lu_mem_table__realloc(
+				self->mem_table, 
+				lu_mem_table__records_count(self->mem_table) * 2, 
+				LU_MEM_TABLE__DEFAULT
+			); 
+
+			record = lu_mem_record__alloc(self->mem_table);
+			lu__assert(record);
+		}
+
+		return (Lu_N_Link) record;
+	}
+
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Pos 
@@ -835,13 +864,22 @@
 
 		lu_size w_match_cells_size;
 
-		// pos, mostly for debugging
+		//
+		// Position, mostly for debugging
+		//
 		lu_size x;
 		lu_size y;
+
+		//
+		// Stats
+		// 
+		lu_size stat_cells_used;
+		lu_size stat_max_z;
+
 	};
 
 	//
-	// CDIR
+	// Constructors / Destructors
 	// 
 
 	static Lu_N_Column lu_n_column__init(
@@ -859,10 +897,6 @@
 	);
 	static void lu_n_column__deinit(Lu_N_Column self);
 
-	static inline void lu_n_column__print(Lu_N_Column self)
-	{
-		//lu__debug("\n "
-	}
 
 	//
 	// Get
@@ -994,7 +1028,20 @@
 				);
 			}
 		}
+	}
 
+	static inline void lu_n_column__increase_stats(Lu_N_Column self, lu_size z)
+	{
+		lu__assert(self);
+
+		if (z > self->stat_max_z) self->stat_max_z = z;
+		++self->stat_cells_used;
+
+		//
+		// Sanity checks
+		//
+		lu__assert(self->stat_cells_used <= self->cells_size);
+		lu__assert(self->stat_max_z < self->d);
 	}
 
 	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
@@ -1022,6 +1069,7 @@
 			if (lu_n_cell__is_blank(cell))
 			{
 				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
+				lu_n_column__increase_stats(self, z);
 				return cell;
 			}
 			else if (lu_n_link_addr__is_vp_eq(cell->children, children, children_count, &self->link_mem)) 
@@ -1036,6 +1084,7 @@
 		lu__assert(lu_n_cell__is_blank(cell));
 
 		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
+		lu_n_column__increase_stats(self, z);
 
 		return cell;
 	}
@@ -1065,6 +1114,7 @@
 			if (lu_n_cell__is_blank(cell))
 			{
 				lu_n_cell__save(cell, children, children_count, &self->link_mem);
+				lu_n_column__increase_stats(self, z);
 				return cell;
 			}
 			else if (lu_n_link_addr__is_eq(cell->children, children, children_count, &self->link_mem)) 
@@ -1079,6 +1129,7 @@
 		lu__assert(lu_n_cell__is_blank(cell));
 
 		lu_n_cell__save(cell, children, children_count, &self->link_mem);
+		lu_n_column__increase_stats(self, z);
 
 		return cell;
 	}
@@ -1097,6 +1148,21 @@
 		*p_n_cell = n_cell;
 	}
 
+	static inline void lu_n_column__print_mem_stats(Lu_N_Column self)
+	{
+		lu__debug(
+			"\n\t\t[%ld, %ld] cells: %ld/%ld, max_z: %ld/%ld, links: %ld/%ld",
+			self->x,
+			self->y,
+			self->stat_cells_used,
+			self->cells_size,
+			self->stat_max_z,
+			self->d,
+			lu_n_link_mem__get_links_count(&self->link_mem),
+			lu_n_link_mem__get_links_size(&self->link_mem)
+		);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table
 
@@ -1111,6 +1177,10 @@
 		lu_size columns_size;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	Lu_N_Table lu_n_table__create(
 		Lu_Mem mem, 
 		lu_size w, 
@@ -1122,6 +1192,10 @@
 	);
 
  	void lu_n_table__destroy(Lu_N_Table self);
+
+ 	//
+ 	// Get
+ 	// 
 
  	static inline Lu_N_Column lu_n_table__get_column_by_ix(Lu_N_Table self, lu_size column_ix)
  	{
@@ -1136,6 +1210,10 @@
  		return lu_n_table__get_column_by_ix(self, lu_macro__xy_to_ix(x, y, self->w));
  	}
 
+ 	//
+ 	// Methods
+ 	//
+
 	////
 	// Returns true if was able to expand
 	static inline lu_bool lu_n_table__expand(Lu_N_Table self)
@@ -1145,4 +1223,28 @@
 		++self->h;
 
 		return true;
+	}
+
+	static inline void lu_n_table__print_mem_stats(Lu_N_Table self)
+	{
+		lu__assert(self);
+
+		lu_size x;
+		lu_size y;
+		Lu_N_Column n_column;
+
+		lu__debug("\n\t\tN_TABLE [%ldx%ld]:", self->w, self->h_max);
+
+		for (y = 0; y < self->h_max; y++)
+		{
+			for (x = 0; x < self->w; x++)
+			{
+				n_column = lu_n_table__get_n_column(self, x, y);
+				lu__assert(n_column);
+				lu__assert(n_column->x == x);
+				lu__assert(n_column->y == y);
+
+				lu_n_column__print_mem_stats(n_column);
+			}
+		}
 	}

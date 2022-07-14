@@ -20,82 +20,125 @@ Lu_Wave  			m_wave;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
 
-lu_value			values_dot[] 	= { 
-										1, 0, 0, 
-										0, 0, 0, 
-										0, 0, 0, 
-										0, 0, 0, 
-										0, 0, 0, 
-									};
 
-lu_value			values_dot_2[] 	= { 
-										0, 0, 0, 
-										0, 1, 0, 
-										0, 0, 0, 
-										0, 1, 0, 
-										0, 0, 0, 
-									};
 
-lu_value			values_0[] 		= { 
-										1, 1, 1, 
-										1, 0, 1, 
-										1, 0, 1, 
-										1, 0, 1, 
-										1, 1, 1, 
-									};
-lu_value			values_1[] 		= { 
-										0, 0, 1, 
-										0, 1, 1, 
-										0, 0, 1, 
-										0, 0, 1, 
-										0, 0, 1, 
-									};
-lu_value			values_2[] 		= { 
-										1, 1, 1, 
-										0, 0, 1, 
-										0, 1, 0, 
-										1, 0, 0, 
-										1, 1, 1, 
-									};
-lu_value			values_3[] 		= { 
-										1, 1, 1, 
-										0, 0, 1, 
-										1, 1, 1, 
-										0, 0, 1, 
-										1, 1, 1, 
-									};
-lu_value			values_4[] 		= { 
-										1, 0, 1, 
-										1, 0, 1, 
-										1, 1, 1, 
-										0, 0, 1,
-										0, 0, 1,
-									};
-lu_value			values_5[] 		= { 
-										1, 1, 1, 
-										1, 0, 0,
-										1, 1, 1, 
-										0, 0, 1,
-										1, 1, 1, 
-									};
-lu_value			values_6[] 		= { 
-										1, 1, 1, 
-										1, 0, 0, 
-										1, 1, 1, 
-										1, 0, 1, 
-										1, 1, 1, 
-									};
+lu_value patterns[][15] = {
+	{ 
+		1, 1, 1, 
+		1, 0, 1, 
+		1, 0, 1, 
+		1, 0, 1, 
+		1, 1, 1, 
+	},
+	{ 
+		0, 0, 1, 
+		0, 1, 1, 
+		0, 0, 1, 
+		0, 0, 1, 
+		0, 0, 1, 
+	},
+	{ 
+		1, 1, 1, 
+		0, 0, 1, 
+		0, 1, 0, 
+		1, 0, 0, 
+		1, 1, 1, 
+	},
+	{ 
+		1, 1, 1, 
+		0, 0, 1, 
+		1, 1, 1, 
+		0, 0, 1, 
+		1, 1, 1, 
+	},
+	{ 
+		1, 0, 1, 
+		1, 0, 1, 
+		1, 1, 1, 
+		0, 0, 1,
+		0, 0, 1,
+	},
+	{ 
+		1, 1, 1, 
+		1, 0, 0,
+		1, 1, 1, 
+		0, 0, 1,
+		1, 1, 1, 
+	},
+	{ 
+		1, 1, 1, 
+		1, 0, 0, 
+		1, 1, 1, 
+		1, 0, 1, 
+		1, 1, 1, 
+	},
+	{ 
+		1, 1, 1, 
+		1, 0, 1, 
+		0, 0, 1, 
+		0, 0, 1, 
+		0, 0, 1, 
+	},
+	{ 
+		1, 1, 1, 
+		1, 0, 1, 
+		1, 1, 1, 
+		1, 0, 1, 
+		1, 1, 1, 
+	},
+	{ 
+		1, 1, 1, 
+		1, 0, 1, 
+		1, 1, 1, 
+		0, 0, 1, 
+		1, 1, 1, 
+	},
+	{ 
+		1, 0, 0, 
+		0, 0, 0, 
+		0, 0, 0, 
+		0, 0, 0, 
+		0, 0, 0, 
+	},
+	{ 
+		0, 0, 0, 
+		0, 1, 0, 
+		0, 0, 0, 
+		0, 1, 0, 
+		0, 0, 0, 
+	}
+};
 
-#define LABEL_DOT 15
-#define LABEL_DOT_2 14
+enum label_type {
+	LABEL_0 = 0,
+	LABEL_1 = 1,
+	LABEL_2 = 2,
+	LABEL_3 = 3,
+	LABEL_4 = 4,
+	LABEL_5 = 5,
+	LABEL_6 = 6,
+	LABEL_7 = 7,
+	LABEL_8 = 8,
+	LABEL_9 = 9,
+	LABEL_DOT = 14,
+	LABEL_DOT_2 = 15,
+	LABEL_END = 12
+};
 
-#define LABEL_0 0
-#define LABEL_1 1
-#define LABEL_2 2
-#define LABEL_3 3
-#define LABEL_4 4
-#define LABEL_5 5
-#define LABEL_6 6
+lu_size labels[] = { 
+	LABEL_0,
+	LABEL_1,
+	LABEL_2,
+	LABEL_3,
+	LABEL_4,
+	LABEL_5,
+	LABEL_6,
+	LABEL_7,
+	LABEL_8,
+	LABEL_9,
+	LABEL_DOT,
+	LABEL_DOT_2
+};
 
 
 
@@ -166,42 +209,83 @@ void tearDown(void)
     lu_mem_debugger__destroy(md, true);
 }
 
-void test_lu_brain_basics_01(void) 
-{ 
-
-	Lu_La_Cell label_cell;
-
-	//
-	// Save
-	//
-
-	TEST_ASSERT(brain);
-	TEST_ASSERT(brain->recs);
-	TEST_ASSERT(LU_N_ADDR__INACTIVE.value != LU_N_ADDR__NULL.value);
-	TEST_ASSERT(LU_N_ADDR__INACTIVE.area_ix < LU_N_AREA__SPECIAL_AREA_SKIP);
-
-	lu_brain__print_areas(brain);
-
+void save_all_paterns()
+{
 	s_wave = lu_wave__create_save_wave(brain); 
+	TEST_ASSERT(s_wave);
+	TEST_ASSERT(lu_wave__get_ix(s_wave) == 0);
+	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(s_wave), lu_wave__get_type(s_wave)) == s_wave);
 
-		TEST_ASSERT(s_wave);
-		TEST_ASSERT(lu_wave__get_ix(s_wave) == 0);
-		TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(s_wave), lu_wave__get_type(s_wave)) == s_wave);
+	lu_size label;
+	lu_value* values;
+	Lu_La_Cell label_cell;
+	for (lu_size i = 0; i < LABEL_END; i++)
+	{
+		label = labels[i];
+		values = patterns[i];
 
-		lu__debug("\nvalues_0 before push: ");
-		lu_values__print_symbols(values_dot, 3, 5, 1);
+		lu__debug("\nSAVING PATTERN FOR LABEL: %ld", label);
+		lu_values__print_symbols(values, 3, 5, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+		lu_wave__push(s_wave, rec_0, values, 3, 5, 1);
 
-		lu_wave__push(s_wave, rec_0, values_dot, 3, 5, 1);
+		lu_rec__set_dest_start_pos(rec_0, 1, 1);
+		lu_wave__push(s_wave, rec_0, values, 3, 5, 1);
+
+		lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+		label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, label);
+		TEST_ASSERT(label_cell);
+	}
+}
+
+void match_all_patterns()
+{
+	m_wave = lu_wave__create_match_wave(brain);
+
+	TEST_ASSERT(m_wave);
+	TEST_ASSERT(lu_wave__get_ix(m_wave) == 0);
+	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix(m_wave), lu_wave__get_type(m_wave)) == m_wave);
+
+	lu_size label;
+	lu_value* values;
+	Lu_La_Cell label_cell;
+	Lu_Label* results;
+
+	for (lu_size i = 0; i < LABEL_END; i++)
+	{
+		label = labels[i];
+		values = patterns[i];
+
+		lu__debug("\nMATCHING DATA: ");
+		lu_values__print_symbols(values, 3, 5, 1);
+
+		lu_rec__set_dest_start_pos(rec_0, 0, 0);
+		lu_wave__push(m_wave, rec_0, values, 3, 5, 1);
 
 		lu_rec__set_dest_start_pos(rec_0, 1, 1);
 
-		lu_wave__push(s_wave, rec_0, values_dot, 3, 5, 1);
+		lu_wave__push(m_wave, rec_0, values, 3, 5, 1);
 
-	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, LABEL_DOT);
-	TEST_ASSERT(label_cell);
+		lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+
+		results = lu_wave__get_result_labels(m_wave);
+		TEST_ASSERT(results);
+		TEST_ASSERT(results[0]);
+
+		lu_labels__print_results(results, brain_config.w_result_labels_size);
+
+		TEST_ASSERT(lu_label__get_id(results[0]) == label);
+	}
+}
+
+void test_lu_brain_basics_01(void) 
+{ 
+
+	save_all_paterns();
+	match_all_patterns();
+
+	lu_brain__print_mem_stats(brain);
 
 	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
 

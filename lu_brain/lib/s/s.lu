@@ -203,3 +203,18 @@
 			lu_s_area__print(area, false);
 		}
 	}
+
+	static void lu_s__print_mem_stats(Lu_S self)
+	{
+		lu__assert(self);
+
+		Lu_S_Area area;
+		for (lu_size i = LU_N_AREA__SPECIAL_AREA_SKIP; i < self->areas_count; i++)
+		{
+			area = self->areas[i];
+
+			if (area == NULL) break;
+
+			lu_s_area__print_mem_stats(area);
+		}
+	}

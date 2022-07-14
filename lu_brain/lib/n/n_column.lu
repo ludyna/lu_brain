@@ -35,6 +35,10 @@
 
 		self->cells_size = h * d;
 
+		// Stats
+		self->stat_cells_used = 0;
+		self->stat_max_z = 0;
+
 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
 		lu__alloc_assert(self->cells);
 

@@ -147,6 +147,7 @@
 	void lu_brain__print_info(Lu_Brain self);
 
 	void lu_brain__print_areas(Lu_Brain self);
+	void lu_brain__print_mem_stats(Lu_Brain self);
 
 	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_config config);
 

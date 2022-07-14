@@ -106,7 +106,21 @@
 
  		if (self->s)
  			lu_s__print_areas(self->s);
+	}
 
+	void lu_brain__print_mem_stats(Lu_Brain self)
+	{
+		lu__user_assert_void(self, "Lu_Brain is NULL");
+
+		lu__debug("\n\n=======================> Brain #%lu Mem Stats Info <=======================", self->config.b_id);
+		// lu__debug("\nMemory allocated (bytes): %lu", lu_mem__preallocated(b_mem));
+		// lu__debug("\nMemory used (bytes): %lu", lu_mem__used(b_mem));
+
+		Lu_Mem b_mem = self->config.b_mem;
+		lu__assert(b_mem);
+
+ 		if (self->s)
+ 			lu_s__print_mem_stats(self->s);
 	}
 
 	struct lu_config lu_brain_config_get(Lu_Brain self)

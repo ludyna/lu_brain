@@ -130,6 +130,7 @@
 	#define lu_mem_table__mem_get(mt) mt->mem_get(mt)
 
 	#define lu_mem_table__records_count(mt) mt->records_count
+	#define lu_mem_table__records_size(mt) mt->table_size_in_records
 
 	static inline lu_p_byte lu_mem_table__get_internal(Lu_Mem_Table self, lu_size index, const char* func, const char* file, int line)
 	{
