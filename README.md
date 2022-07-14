@@ -22,6 +22,7 @@ The mathematically most correct answer for provided data is always achievable. T
 
 ## Goals
 
+0. Human-like memory
 1. The fastest dynamic pattern learning and manipulation in the World
 2. Pattern database with complete data transparency and ease of access
 3. Easy to use, well designed and architected, fast and bug-free, enjoyable to contribute software

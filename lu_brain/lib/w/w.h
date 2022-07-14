@@ -565,7 +565,7 @@
 
 		lu_w_match_cell__add_sig(match_cell, sig);
 
-		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell))
+		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell, 2.0))
 		{
 			lu_w_processor__put_in_queue(self, match_cell, n_cell, n_column);
 		}
@@ -709,12 +709,16 @@
 
 			// lu_w_n_item__print(w_n_item);
 
-			lu_w_processor__fire_n_parents_with_sig(self, w_n_item->n_cell, w_n_item->n_column, w_n_item->match_cell->sig);
+			lu_w_processor__fire_n_parents_with_sig(self, w_n_item->n_cell, w_n_item->n_column, 1.0);
 
 			if (lu_la_link_addr__is_present(&w_n_item->n_cell->labels))
 			{
-				lu__deep_debug("\nN_CELL has label (n_cell->cell_ix=%ld) link_addr=%ld", w_n_item->n_cell->addr.cell_ix, w_n_item->n_cell->labels.value);
-				lu_w_processor__fire_n_labels_with_sig(self, w_n_item->n_cell->labels, self->la_column, w_n_item->match_cell->sig);
+				lu__deep_debug(
+					"\nN_CELL has label (n_cell->cell_ix=%ld) link_addr=%ld", 
+					w_n_item->n_cell->addr.cell_ix, 
+					w_n_item->n_cell->labels.value
+				);
+				lu_w_processor__fire_n_labels_with_sig(self, w_n_item->n_cell->labels, self->la_column, 1.0);
 			}
 
 			lu_mem_record__free(self->n_mem_table, (lu_p_byte) w_n_item);

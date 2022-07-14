@@ -492,9 +492,9 @@
 		self->sig += sig;
 	}
 
-	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self, Lu_N_Cell n_cell)
+	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
 	{
-		return (lu_n_cell__get_default_sig(n_cell) - self->sig) < 1.0;
+		return (lu_n_cell__get_default_sig(n_cell) - self->sig) <= breakpoint;
 	}
 
 	static inline lu_bool lu_w_match_cell__no_sig(Lu_W_Match_Cell self)

@@ -1,11 +1,7 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 
-	test_lu_brain tests public interfaces (from library user point of view) and includes 
-	general integration tests. It uses nouns with Lu_ prefix only and methods with lu_ prefixes 
-	only.
-
-	$ clear; ceedling clean; ceedling test:lu_brain --trace
+	$ clear; ceedling clean; ceedling test:brain_01 --trace
 */
 
 #include "unity.h"
@@ -113,7 +109,7 @@ void tearDown(void)
     lu_mem_debugger__destroy(md, true);
 }
 
-void test_lu_brain_basics_01(void) 
+void test_brain_01(void) 
 { 
 
 	Lu_La_Cell label_cell;
@@ -199,20 +195,6 @@ void test_lu_brain_basics_01(void)
 		lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 		label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, labels[3]);
 		TEST_ASSERT(label_cell);
-
-	// lu__debug("\n\n ======================== S A V E - 4 =========================\n");
-	// lu__debug("\nvalues_0 before push: ");
-	// 	lu_rec__set_dest_start_pos(rec_0, 0, 0);
-
-	// 	lu_wave__push(s_wave, rec_0, values[4], 2, 2, 1);
-
-	// 	lu_rec__set_dest_start_pos(rec_0, 1, 1);
-
-	// 	lu_wave__push(s_wave, rec_0, values[4], 2, 2, 1);
-
-	// 	lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
-	// 	label_cell = lu_wave__link_to_label(s_wave, 2, 0, 0, 0, labels[4]);
-	// 	TEST_ASSERT(label_cell);
 
 	//
 	// Match

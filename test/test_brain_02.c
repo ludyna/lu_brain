@@ -1,11 +1,7 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 
-	test_lu_brain tests public interfaces (from library user point of view) and includes 
-	general integration tests. It uses nouns with Lu_ prefix only and methods with lu_ prefixes 
-	only.
-
-	$ clear; ceedling clean; ceedling test:lu_brain --trace
+	$ clear; ceedling clean; ceedling test:brain_02 --trace
 */
 
 #include "unity.h"
@@ -279,7 +275,7 @@ void match_all_patterns()
 	}
 }
 
-void test_lu_brain_basics_01(void) 
+void test_brain_02(void) 
 { 
 	save_all_paterns();
 	match_all_patterns();
