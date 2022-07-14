@@ -1148,7 +1148,7 @@
 		*p_n_cell = n_cell;
 	}
 
-	static inline void lu_n_column__print_mem_stats(Lu_N_Column self)
+	static inline void lu_n_column__print_net_stats(Lu_N_Column self)
 	{
 		lu__debug(
 			"\n\t\t[%ld, %ld] cells: %ld/%ld, max_z: %ld/%ld, links: %ld/%ld",
@@ -1225,7 +1225,7 @@
 		return true;
 	}
 
-	static inline void lu_n_table__print_mem_stats(Lu_N_Table self)
+	static inline void lu_n_table__print_net_stats(Lu_N_Table self)
 	{
 		lu__assert(self);
 
@@ -1244,7 +1244,7 @@
 				lu__assert(n_column->x == x);
 				lu__assert(n_column->y == y);
 
-				lu_n_column__print_mem_stats(n_column);
+				lu_n_column__print_net_stats(n_column);
 			}
 		}
 	}
