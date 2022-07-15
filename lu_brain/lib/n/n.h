@@ -6,6 +6,8 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
+	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
+
 
 	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self);
 	static inline union lu_n_link_addr lu_n_link_mem__get_addr(Lu_N_Link_Mem self, Lu_N_Link link);
@@ -1014,7 +1016,8 @@
 		lu__assert(self);
 		lu__assert(self->mem);
 
-		lu__debug("\nN_COLUMN REALLOCATING\n");
+		lu__debug("\nN_COLUMN [%ld, %ld] REALLOCATING ");
+		// lu_n_table__print_
 
 		lu_size old_cells_size = self->cells_size;
 		lu_size old_d = self->d;
@@ -1240,6 +1243,7 @@
 
 	struct lu_n_table {
 		Lu_Mem mem;
+		Lu_S_Layer_Base layer;
 
 		lu_size w;
 		lu_size h;
@@ -1253,17 +1257,19 @@
 	// Constructors / Destructors
 	//
 
-	Lu_N_Table lu_n_table__create(
+	Lu_N_Table lu_n_table__init(
+		Lu_N_Table self,
 		Lu_Mem mem, 
 		lu_size w, 
 		lu_size h, 
 		lu_size h_max, 
 		Lu_Config config, 
 		lu_size layer_ix,
-		lu_size area_ix
+		lu_size area_ix,
+		Lu_S_Layer_Base layer
 	);
 
- 	void lu_n_table__destroy(Lu_N_Table self);
+ 	void lu_n_table__deinit(Lu_N_Table self);
 
  	//
  	// Get

@@ -76,11 +76,10 @@ int main()
 	size_t i;
 	Smn_Digit d;
 	
-	printf("\nTraining samples..");
+	printf("\nTraining samples.. (total: %ld)", smn_training_samples_count);
 
 	Lu_La_Cell la_cell;
-	for (i = 0; i < 1; i++)
-	// for (i = 0; i < smn_training_samples_count; i++)
+	for (i = 0; i < smn_training_samples_count - 100; i++)
 	{
 		d = smn_training_samples[i];
 

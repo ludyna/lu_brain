@@ -52,8 +52,17 @@
 			);
 		}
 
-		self->n_table = lu_n_table__create(config->n_mem, n_w, n_h, n_h_max, config, layer_ix, area_ix);
-		lu__alloc_assert(self->n_table);
+		lu_n_table__init(
+			&self->n_table, 
+			config->n_mem, 
+			n_w, 
+			n_h, 
+			n_h_max, 
+			config, 
+			layer_ix, 
+			area_ix, 
+			(Lu_S_Layer_Base) self
+		);
 
 		self->w_save_tables = lu_arr__create(config->w_mem, config->w_save_waves_size, false);
 		lu__alloc_assert(self->w_save_tables);
@@ -83,8 +92,8 @@
 
 			lu_w_table__destroy(w_table);
 		}
-		if (self->n_table)
-			lu_n_table__destroy(self->n_table);
+
+		lu_n_table__deinit(&self->n_table);
 
 		lu_arr__destroy(self->w_save_tables);
 
@@ -190,7 +199,7 @@
 		// Get curr_n_table
 		// 
 
-		Lu_N_Table curr_n_table = self->n_table;
+		Lu_N_Table curr_n_table = &self->n_table;
 		lu__assert(curr_n_table);
 
 		//

@@ -6,26 +6,27 @@
 // 
 
 
-	Lu_N_Table lu_n_table__create(
+	Lu_N_Table lu_n_table__init(
+		Lu_N_Table self,
 		Lu_Mem mem, 
 		lu_size w, 
 		lu_size h, 
 		lu_size h_max, 
 		Lu_Config config, 
 		lu_size layer_ix,
-		lu_size area_ix
+		lu_size area_ix, 
+		Lu_S_Layer_Base layer
 	)
 	{
+		lu__assert(self);
 		lu__assert(mem);
 		lu__assert(w > 0);
 		lu__assert(h > 0);
 		lu__assert(h_max >= h);
 		lu__assert(config);
 
-		Lu_N_Table self = (Lu_N_Table) lu_mem__alloc(mem, sizeof(struct lu_n_table));
-		lu__alloc_assert(self);
-
 		self->mem = mem; 
+		self->layer = layer;
 
 		self->w = w;
 		self->h = h;
@@ -46,7 +47,6 @@
 			for (x = 0; x < w; x++, i++)
 			{
 				column = &self->columns[i];
-
 
 				lu_n_column__init(
 					column, 
@@ -85,7 +85,7 @@
 		return self;
 	}
 
-	void lu_n_table__destroy(Lu_N_Table self)
+	void lu_n_table__deinit(Lu_N_Table self)
 	{
 		lu__assert(self);
 		lu__assert(self->columns);
@@ -100,6 +100,4 @@
 
 		lu_mem__free(self->mem, (lu_p_byte) self->columns);
 		self->columns = NULL;
-
-		lu_mem__free(self->mem, (lu_p_byte) self);
 	}

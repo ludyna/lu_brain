@@ -314,7 +314,7 @@
 	struct lu_s_layer {
 		struct lu_s_layer_base super;
 
-		Lu_N_Table n_table;
+		struct lu_n_table n_table;
 		Lu_Arr w_save_tables;
 	};
 
@@ -385,7 +385,7 @@
 	{
 		lu__debug_assert(self);
 
-		return self->n_table;
+		return &self->n_table;
 	}
 
 	static inline Lu_W_Table lu_s_layer__get_save_w_table(Lu_S_Layer self,  lu_size wave_ix)
@@ -440,7 +440,7 @@
 	{
 		lu__assert(self);
 
-		return lu_n_table__expand(self->n_table);
+		return lu_n_table__expand(&self->n_table);
 	}
 
 	static inline void lu_s_layer__find_n_cell_and_n_column(
@@ -450,7 +450,7 @@
 		Lu_N_Column* p_n_column
 	)
 	{
-		Lu_N_Column n_column = lu_n_table__get_column_by_ix(self->n_table, addr.column_ix);
+		Lu_N_Column n_column = lu_n_table__get_column_by_ix(&self->n_table, addr.column_ix);
 		*p_n_column = n_column;
 
 		lu_n_column__find_n_cell(n_column, addr, p_n_cell);
@@ -465,7 +465,7 @@
 	{
 		lu_s_layer_base__print_net_stats(&self->super);
 
-		lu_n_table__print_net_stats(self->n_table);
+		lu_n_table__print_net_stats(&self->n_table);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -532,7 +532,7 @@
 
 	static inline Lu_N_Table lu_s_layer_rec__get_n_table(Lu_S_Layer_Rec self)
 	{
-		return self->super.n_table;
+		return &self->super.n_table;
 	}
 
 	static inline Lu_S_Layer_Base lu_s_layer_rec__get_parent(Lu_S_Layer_Rec self)
