@@ -31,7 +31,7 @@
 		 	 	lu__user_debug("Lu_Label is NULL");
 		 	}
 
-		 	return LU__SIZE_MAX;
+		 	return LU_SIZE__MAX;
 		}
 
 		return lu_la_cell__get_ix(self->la_cell);

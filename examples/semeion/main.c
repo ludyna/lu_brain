@@ -57,10 +57,6 @@ int main()
 	// After we added all recs we need to build/rebuild brain
 	lu_brain__build(brain);
 
-	// Print brain areas structure
-
-	lu_brain__print_areas(brain);
-
 	// Create save_wave
 	
 	Lu_Wave save_wave = lu_wave__create_save_wave(brain);
@@ -82,11 +78,11 @@ int main()
 	
 	printf("\nTraining samples..");
 
+	Lu_La_Cell la_cell;
 	for (i = 0; i < 1; i++)
 	// for (i = 0; i < smn_training_samples_count; i++)
 	{
 		d = smn_training_samples[i];
-		lu_wave__reset(save_wave);
 
 		lu_rec__set_dest_start_pos(image_rec, 0, 0);
 		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
@@ -96,7 +92,8 @@ int main()
 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
-		lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
+		la_cell = lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
+		lu__assert(la_cell);
 
 		printf("\rTraining samples.. %lu trained.", i + 1);
 		// fflush(stdout);
@@ -147,7 +144,11 @@ int main()
 	printf("\n 	  Successfully recognized: %d", (int) success_count);
 	printf("\n 	  Failed recognition: %d", (int) failed_count);
 	printf("\n 	  Success rate: %f", success_count / (lu_value) smn_test_samples_count);
-	printf("\n\n");
+	printf("\n");
+
+	// Show network stast
+
+	lu_brain__print_net_stats(brain);
 
 	// Destroy save_wave and brain
 

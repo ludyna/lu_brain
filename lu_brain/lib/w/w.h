@@ -102,8 +102,8 @@
 		}
 		else
 		{
-			lu__assert(block_id.block_ix < LU__LONG_MAX);
-			lu__assert(self->block_id.block_ix < LU__LONG_MAX);
+			lu__assert(block_id.block_ix < LU_LONG__MAX);
+			lu__assert(self->block_id.block_ix < LU_LONG__MAX);
 
 			lu_long diff = ((lu_long)block_id.block_ix) - ((lu_long)self->block_id.block_ix);
 
