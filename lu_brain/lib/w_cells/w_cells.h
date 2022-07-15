@@ -444,10 +444,16 @@
 	// NULL addr
 	extern const union lu_w_match_addr LU_W_MATCH_ADDR__NULL; 
 
+	static inline void lu_w_match_addr__reset(Lu_W_Match_Addr self)
+	{
+		self->value = LU_W_MATCH_ADDR__NULL.value;
+	}
+
 	static inline lu_bool lu_w_match_addr__is_blank(Lu_W_Match_Addr self)
 	{
 		return self->value == LU_W_MATCH_ADDR__NULL.value;
 	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell 

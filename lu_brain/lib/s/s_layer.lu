@@ -75,6 +75,7 @@
 		lu__assert(self);
 
 		Lu_W_Table w_table;
+
 		for (lu_size i = 0; i < lu_arr__count(self->w_save_tables); i++)
 		{
 			w_table = (Lu_W_Table) lu_arr__get(self->w_save_tables, i);
@@ -82,7 +83,6 @@
 
 			lu_w_table__destroy(w_table);
 		}
-
 		if (self->n_table)
 			lu_n_table__destroy(self->n_table);
 

@@ -61,10 +61,10 @@
 
 		lu_n_link_mem__deinit(&self->link_mem);
 
-		for (lu_size i = 0; i < self->cells_size; i++)
-		{
-			lu_n_cell__deinit(&self->cells[i], self->mem);
-		}
+		// for (lu_size i = 0; i < self->cells_size; i++)
+		// {
+		// 	lu_n_cell__deinit(&self->cells[i], self->mem);
+		// }
 
 		lu_mem__free(self->mem, (lu_p_byte) self->cells);
 		

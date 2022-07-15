@@ -14,7 +14,7 @@
 			//
 			.b_mem = NULL,					
 			.b_id = 0, 						
-			.b_recs_size = 16,				
+			.b_recs_size = 3,				
 			.b_max_seq_size_in_blocks = 16,
 
 			//
@@ -83,7 +83,7 @@
 			// Waves level
 			//
 			.w_mem = NULL,	
-			.w_save_waves_size = 2,
+			.w_save_waves_size = 1,
 			.w_match_waves_size = 1,
 			.w_restore_waves_size = 1,
 			.w_processor_queue_size = 512,
@@ -95,7 +95,7 @@
 			//			
 
 			.la_mem = NULL,
-			.la_labels_size = 16,		
+			.la_labels_size = 11,		
 			.la_link_mem_size = 1024
 			},
 	};		

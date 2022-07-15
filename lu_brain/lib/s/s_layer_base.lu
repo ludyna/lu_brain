@@ -129,7 +129,7 @@
 	{
 		lu__assert(self);
 		lu__assert(self->s_mem);
-		
+
 		if (self->c)
 		{
 			if (self->c->type == LU_SLOT__ONE)

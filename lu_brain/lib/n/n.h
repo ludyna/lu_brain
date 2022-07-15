@@ -465,6 +465,11 @@
 // Lu_N_Cell
 //
 
+	////
+	// TODO: Need to replace this later with lu_mem_table , with dynamic w_cells size and access to list of w_cells
+	// using lu_n_cell.addr
+	#define LU_N_CELL__W_CELLS_SIZE 2
+
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
@@ -479,7 +484,7 @@
 
 		lu_value default_sig;
 		
-		union lu_w_match_addr* w_cells;
+		union lu_w_match_addr w_cells[LU_N_CELL__W_CELLS_SIZE];
 	};
 
 	//
@@ -515,11 +520,8 @@
 		self->children = LU_N_LINK_ADDR__NULL; 
 		self->default_sig = 0;
 
-		lu_size size = sizeof(union lu_w_match_addr*) * w_cells_size;
-		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(mem, size);
-		lu__alloc_assert(self->w_cells);
-
-		memset(self->w_cells, 0, size);
+		lu_w_match_addr__reset(&self->w_cells[0]);
+		lu_w_match_addr__reset(&self->w_cells[1]);
 
 		return self;
 	}
@@ -537,9 +539,9 @@
 
 		lu_n_addr__reset(&self->addr);
 
-		lu_mem__free(mem, (lu_p_byte) self->w_cells);
+		// lu_mem__free(mem, (lu_p_byte) self->w_cells);
 
-		self->w_cells = NULL;
+		// self->w_cells = NULL;
 
 		return self;
 	}
