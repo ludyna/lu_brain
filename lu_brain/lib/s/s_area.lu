@@ -164,11 +164,6 @@
 
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
 
-		Lu_Wave wave = (Lu_Wave) save_wave;
-
-		// lu__debug("\n SAVING DATA (lu_s_layer_rec__save()):");
-		// lu_data__print(data);
-
 		Lu_W_Table curr_w_table = lu_s_layer_rec__save(layer_rec, save_wave, rec_id, data, config);
 
 		if (!lu_w_table__any_fired(curr_w_table, data->block_id)) return NULL;
@@ -180,7 +175,6 @@
 
 		Lu_S_Layer_Base parent_layer = lu_s_layer_rec__get_parent(layer_rec);
 
-		char buffer[50];
 		while (parent_layer->tag != LU_AREA_TAG__FRAME)
 		{
 			lu__assert(parent_layer->type == LU_S_LAYER__LAYER);
@@ -213,9 +207,7 @@
 	)
 	{
 		Lu_S_Layer_Base parent_layer = lu_s_layer__get_parent_layer(curr_w_table->s_layer);
-		Lu_Wave wave = (Lu_Wave) save_wave;
 
-		char buffer[50];
 		while (parent_layer->tag != LU_AREA_TAG__SEQ)
 		{
 			lu__assert(parent_layer->type == LU_S_LAYER__LAYER);

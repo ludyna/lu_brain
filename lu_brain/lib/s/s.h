@@ -574,14 +574,16 @@
 		switch(wave_type)
 		{
 			case LU_WAVE__SAVE:
-				lu_s_layer__get_save_w_table(&self->super, wave_ix);
+				return lu_s_layer__get_save_w_table(&self->super, wave_ix);
 				break;
 			case LU_WAVE__MATCH:
-				lu_s_layer_rec__get_match_w_table(self, wave_ix);
+				return lu_s_layer_rec__get_match_w_table(self, wave_ix);
 				break;
 			default:
 				lu__assert(false);
 		}
+
+		return NULL;
 	}
 
 	//

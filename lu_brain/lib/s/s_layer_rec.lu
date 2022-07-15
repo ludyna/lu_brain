@@ -33,9 +33,16 @@
 
 		self->rec = rec;
 		self->save_w_recs_size = config->w_save_waves_size;
-		self->save_w_recs = (struct lu_w_rec*) lu_mem__alloc(self->super.super.w_mem, sizeof(struct lu_w_rec) * self->save_w_recs_size);
+		self->save_w_recs = (struct lu_w_rec*) lu_mem__alloc(
+			self->super.super.w_mem, 
+			sizeof(struct lu_w_rec) * self->save_w_recs_size
+		);
+
 		self->match_w_recs_size = config->w_match_waves_size;
-		self->match_w_recs = (struct lu_w_rec*) lu_mem__alloc(self->super.super.w_mem, sizeof(struct lu_w_rec) * self->match_w_recs_size);
+		self->match_w_recs = (struct lu_w_rec*) lu_mem__alloc(
+			self->super.super.w_mem, 
+			sizeof(struct lu_w_rec) * self->match_w_recs_size
+		);
 
 		Lu_W_Rec w_rec;
 		for (lu_size i = 0; i < self->save_w_recs_size; i++)
@@ -169,7 +176,6 @@
 		Lu_S_View_P s_view_p;
 		Lu_W_Table_P w_table_p;
 		Lu_W_Cell_P w_cell_p;
-		Lu_Comp_Calc p_comp_calc;
 		lu_value v;
 
 		for (lu_size src_z = p->src_start_z; src_z < p->src_end_z; src_z++)
@@ -181,8 +187,6 @@
 
 			w_table_p = lu_s_view_p__get_w_table(s_view_p, p->wave_ix, p->wave_type);
 			lu__assert(w_table_p);
-
-			p_comp_calc = &s_view_p->comp_calc;
 
 			// write destination w_cell_p
 			w_cell_p = lu_w_table_p__get_w_cell(w_table_p, p->dest_x, p->dest_y);
@@ -347,10 +351,6 @@
 		Lu_S_View_P s_view_p;
 		Lu_W_Table_P w_table_p;
 		Lu_Comp_Calc p_comp_calc;
-		lu_value v;
-
-		Lu_N_Column n_column;
-		Lu_N_Cell n_cell;
 		
 		p->children_count = d;
 		Lu_W_Cell_P children[p->children_count];

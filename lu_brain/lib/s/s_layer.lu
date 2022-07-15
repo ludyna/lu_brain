@@ -171,7 +171,6 @@
 		lu_size children_count = 0;
 		Lu_N_Column n_column;
 		Lu_N_Cell n_cell;
-		lu_size i;
 		Lu_W_Cell children[LU_N_CELL__CHILDREN_MAX];
 
 		//
