@@ -94,15 +94,16 @@
 
 	struct lu_mem_table {
 		void 		(*reset)(Lu_Mem_Table, const char* func, const char* file, int line);
-		void 		(*realloc)(Lu_Mem_Table, lu_size new_size_in_bytes, lu_flags flags, const char* func, const char* file, int line);
+		void 		(*realloc)(Lu_Mem_Table, lu_size new_size_in_records, lu_flags flags, const char* func, const char* file, int line);
 	 	void 		(*destroy)(Lu_Mem_Table, const char* func, const char* file, int line);
 
 		lu_p_byte 	(*record_alloc)(Lu_Mem_Table, const char* func, const char* file, int line);
 		void 		(*record_free)(Lu_Mem_Table, lu_p_byte record, const char* func, const char* file, int line);
 
 		lu_size 	(*size_in_bytes)(Lu_Mem_Table);
-		Lu_Mem 		(*mem_get)(Lu_Mem_Table);			// return Lu_Mem associated with the Lu_Mem_Table
+		Lu_Mem 		(*get_mem)(Lu_Mem_Table);			// return Lu_Mem associated with the Lu_Mem_Table
 
+		Lu_Mem 			mem;
 		lu_size 		record_size_in_bytes;
 		lu_size			table_size_in_records;
 		lu_flags		flags;
@@ -127,7 +128,7 @@
 	#define lu_mem_record__free(mt, p) mt->record_free(mt, p, __func__, __FILE__, __LINE__) 
 
 	#define lu_mem_table__size_in_bytes(mt) mt->size_in_bytes(mt)
-	#define lu_mem_table__mem_get(mt) mt->mem_get(mt)
+	#define lu_mem_table__get_mem(mt) mt->get_mem(mt)
 
 	#define lu_mem_table__records_count(mt) mt->records_count
 	#define lu_mem_table__records_size(mt) mt->table_size_in_records

@@ -42,8 +42,8 @@
 		Lu_Mem_Stack 			mem_stack;
 	};
 
-	Lu_Mem_Stack_Table lu_mem_stack_table_create(
-		Lu_Mem_Stack 			mem, 
+	Lu_Mem_Stack_Table lu_mem_stack_table__create(
+		Lu_Mem_Stack 		mem, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
 		lu_value 			percent,

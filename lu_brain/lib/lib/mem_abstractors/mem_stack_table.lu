@@ -6,7 +6,7 @@
 // Lu_Mem_Stack_Table
 
 	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
-	void lu_mem_stack_table_reset_internal(Lu_Mem_Table self, const char* func, const char* file, int line)
+	void lu_mem_stack_table__reset_internal(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
 		lu__assert(self);
 
@@ -22,7 +22,7 @@
 		st->super.free_count				= 0;
 	}
 
-	void lu_mem_stack_table_realloc_internal(
+	void lu_mem_stack_table__realloc_internal(
 		Lu_Mem_Table self, 
 		lu_size new_size_in_bytes, 
 		lu_flags flags, 
@@ -34,14 +34,14 @@
 		lu__debug_message("NOT IMPLEMENTED");
 	}
 
-	Lu_Mem lu_mem_stack_table_mem_get(Lu_Mem_Table self)
+	Lu_Mem lu_mem_stack_table__get_mem(Lu_Mem_Table self)
 	{
 		Lu_Mem_Stack_Table perm = (Lu_Mem_Stack_Table) self;
 
 		return (Lu_Mem) perm->mem_stack;
 	}
 
-	Lu_Mem_Stack_Table lu_mem_stack_table_create(
+	Lu_Mem_Stack_Table lu_mem_stack_table__create(
 		Lu_Mem_Stack 			mem_stack, 
 		lu_size 			record_size_in_bytes, 
 		lu_size 			table_size_in_records, 
@@ -87,13 +87,13 @@
 
 		// super
  
- 		self->super.reset 					= lu_mem_stack_table_reset_internal;
-		self->super.realloc 				= lu_mem_stack_table_realloc_internal;
+ 		self->super.reset 					= lu_mem_stack_table__reset_internal;
+		self->super.realloc 				= lu_mem_stack_table__realloc_internal;
 		self->super.destroy 				= lu_mem_table__destroy_default;
 		self->super.record_alloc 			= lu_mem_table__record_alloc_default;
 		self->super.record_free 			= lu_mem_table__record_free_default;
 		self->super.size_in_bytes 			= lu_mem_table__size_in_bytes_default;
-		self->super.mem_get 				= lu_mem_stack_table_mem_get;
+		self->super.get_mem 				= lu_mem_stack_table__get_mem;
 
 		self->super.record_size_in_bytes 	= record_size_in_bytes;
 		self->super.table_size_in_records 	= table_size_in_records;

@@ -10,7 +10,7 @@
 // Debug related macroses
 
 #define LU__DEBUG 1
-#define LU__DEBUG_MEM 1 
+#define LU__MEM_DEBUG 1 
 // #define LU__DEEP_DEBUG 1
 
 
@@ -34,12 +34,18 @@ void lu__debug_message_internal(const char* file, int line, const char * message
 #endif 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Label gen
+//
 
 #ifdef LU__DEEP_DEBUG
 	#define lu__deep_debug lu__debug
 #else
 	#define lu__deep_debug
+#endif 
+
+#ifdef LU__MEM_DEBUG
+	#define lu__mem_debug lu__debug
+#else
+	#define lu__mem_debug
 #endif 
 
 ///////////////////////////////////////////////////////////////////////////////

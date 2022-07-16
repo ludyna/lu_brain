@@ -76,8 +76,8 @@
 			.n_mem = NULL,		
 			.n_column_w = 5, 
 			.n_column_h = 1000,
-			.n_column_d = 3,
-			.n_link_mem_size = 2000,
+			.n_column_d = 10,
+			.n_link_mem_size = 5000,
 
 			//
 			// Waves level
@@ -88,7 +88,7 @@
 			.w_restore_waves_size = 1,
 			.w_processor_queue_size = 512,
 			.w_result_labels_size = 3,
-			.w_match_cells_size_per_wave = 1000,
+			.w_match_cells_size_per_wave = 10000,
 
 			//
 			// Labels

@@ -280,6 +280,8 @@
 				LU_MEM_TABLE__DEFAULT
 			); 
 
+			lu__mem_debug("\n (!) la_link_mem realloc");
+
 			record = lu_mem_record__alloc(self->mem_table);
 			lu__assert(record);
 		}

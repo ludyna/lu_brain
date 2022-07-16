@@ -43,7 +43,7 @@
 		lu__assert(mem_table);
 		lu__assert(limit_size > 0);
 
-		lu_list__init((Lu_List) self, lu_mem_table__mem_get(mem_table));
+		lu_list__init((Lu_List) self, lu_mem_table__get_mem	(mem_table));
 
 		self->mem_table = mem_table;
 		self->max_size 	= limit_size;

@@ -19,19 +19,56 @@
 
     void lu_mem_table__realloc_default(
 		Lu_Mem_Table self, 
-		lu_size new_size_in_bytes, 
+		lu_size new_size_in_records, 
 		lu_flags flags, 
 		const char* func, 
 		const char* file, 
 		int line
 	)
 	{
+		lu__assert(self);
+		lu__assert(new_size_in_records > self->table_size_in_records);
+
 		lu__debug_message("NOT IMPLEMENTED");
+
+		// //
+		// // If it is FREEABLE mem table, we need to copy free records somewhere and free space
+		// //
+
+		// lu_p_byte free_copy = lu_mem__alloc(
+
+		// lu_size full_size = sizeof(struct lu_mem_table) + self->record_size_in_bytes * new_size_in_records;
+		
+		// if (self->flags & LU_MEM_TABLE__FREEABLE) 
+		// 	full_size += sizeof(lu_p_byte) * new_size_in_records;
+
+		// lu_p_byte start = lu_mem__alloc(mem, full_size);
+
+		// if (start == NULL) return NULL;
+
+		// Lu_Mem_Table self 			= (Lu_Mem_Table) start;
+
+		// self->reset 				= lu_mem_table__reset_default;
+		// self->realloc 				= lu_mem_table__realloc_default;
+		// self->destroy 				= lu_mem_table__destroy_default;
+		// self->record_alloc 			= lu_mem_table__record_alloc_default;
+		// self->record_free 			= lu_mem_table__record_free_default;
+		// self->size_in_bytes 		= lu_mem_table__size_in_bytes_default;
+		// self->get_mem 				= lu_mem_table__mem_get_default;
+
+		// self->record_size_in_bytes 	= record_size_in_bytes;
+		// self->table_size_in_records = table_size_in_records;
+		// self->flags 				= flags;
+		// self->full_size_in_bytes 	= full_size;
+
+		// lu_mem_table__reset(self);
+
+		// return self;
 	}
 
 	void lu_mem_table__destroy_default(Lu_Mem_Table self, const char* func, const char* file, int line)
 	{
-		lu_mem__free(lu_mem_table__mem_get(self), (lu_p_byte) self);
+		lu_mem__free(lu_mem_table__get_mem	(self), (lu_p_byte) self);
 	}
 	
 	lu_p_byte lu_mem_table__record_alloc_default(Lu_Mem_Table self, const char* func, const char* file, int line)
@@ -61,8 +98,7 @@
 	{
 		if (record == NULL) return;  // should prob debug this
 
-		if (!(self->flags & LU_MEM_TABLE__FREEABLE)) return;
-
+		lu__assert(self->flags & LU_MEM_TABLE__FREEABLE);
 		lu__assert(self->records_count > 0);
 		lu__assert(self->free_count < self->table_size_in_records); 
 
@@ -79,7 +115,8 @@
 
 	Lu_Mem lu_mem_table__mem_get_default(Lu_Mem_Table self)
 	{
-		return lu_g_mem;
+		lu__assert(self);
+		return self->mem;
 	}
 
 	Lu_Mem_Table lu_mem_table__create_default(
@@ -93,6 +130,8 @@
 		int line
 	)
 	{
+		lu__assert(mem);
+
 		if (record_size_in_bytes == 0) return NULL;
 
 		if (table_size_in_records == 0) return NULL;
@@ -110,13 +149,14 @@
 
 		Lu_Mem_Table self 			= (Lu_Mem_Table) start;
 
+		self->mem 					= mem;
 		self->reset 				= lu_mem_table__reset_default;
 		self->realloc 				= lu_mem_table__realloc_default;
 		self->destroy 				= lu_mem_table__destroy_default;
 		self->record_alloc 			= lu_mem_table__record_alloc_default;
 		self->record_free 			= lu_mem_table__record_free_default;
 		self->size_in_bytes 		= lu_mem_table__size_in_bytes_default;
-		self->mem_get 				= lu_mem_table__mem_get_default;
+		self->get_mem 				= lu_mem_table__mem_get_default;
 
 		self->record_size_in_bytes 	= record_size_in_bytes;
 		self->table_size_in_records = table_size_in_records;

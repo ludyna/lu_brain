@@ -160,6 +160,8 @@
 				LU_MEM_TABLE__DEFAULT
 			); 
 
+			lu__mem_debug("\n (!) n_link_mem realloc");
+
 			record = lu_mem_record__alloc(self->mem_table);
 			lu__assert(record);
 		}
@@ -1189,6 +1191,17 @@
 
 	}
 
+	static inline void lu_n_column__print_mem_stats(Lu_N_Column self)
+	{
+		lu__debug("\nREALL n_col ");
+		lu_n_column__print_net_stats(self);
+		lu__debug(" ");
+		lu_s_layer_base__print_basic_info(lu_n_table__get_layer(self->n_table));
+		lu__debug(" ");
+		lu_n_column__print_distribution_stats(self, 10);
+	}
+
+
 	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
 		Lu_N_Column self, 
 		Lu_W_Cell_P* children, 
@@ -1230,6 +1243,10 @@
 
 		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
 		lu_n_column__increase_stats(self, z, cell);
+
+		#ifdef LU__MEM_DEBUG
+		lu_n_column__print_mem_stats(self);
+		#endif
 
 		return cell;
 	}
@@ -1276,16 +1293,13 @@
 		lu_n_cell__save(cell, children, children_count, &self->link_mem);
 		lu_n_column__increase_stats(self, z, cell);
 
-		lu__debug("\nREALL n_col ");
-		lu_n_column__print_net_stats(self);
-		lu__debug(" ");
-		lu_s_layer_base__print_basic_info(lu_n_table__get_layer(self->n_table));
-		lu__debug(" ");
-		lu_n_column__print_distribution_stats(self, 10);
+		#ifdef LU__MEM_DEBUG
+		lu_n_column__print_mem_stats(self);
+		#endif
 
 		return cell;
 	}
-	
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table
 

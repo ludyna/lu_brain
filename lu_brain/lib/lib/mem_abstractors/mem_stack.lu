@@ -53,7 +53,7 @@
 		lu_mem__free(parent_mem, (lu_p_byte) self);
 	}
 
-	Lu_Mem_Table lu_mem_stack_table_create_internal(
+	Lu_Mem_Table lu_mem_stack_table__create_internal(
 		Lu_Mem 		mem, 
 		lu_size 	record_size_in_bytes, 
 		lu_size 	table_size_in_records, 
@@ -64,7 +64,7 @@
 		int 		line
 	)
 	{
-		return (Lu_Mem_Table) lu_mem_stack_table_create(
+		return (Lu_Mem_Table) lu_mem_stack_table__create(
 			(Lu_Mem_Stack) mem,
 			record_size_in_bytes,
 			table_size_in_records,
@@ -118,7 +118,7 @@
 		self->super.used 			= lu_mem_stack_used_internal;
 
 		// table create
-		self->super.table_create 	= lu_mem_stack_table_create_internal;
+		self->super.table_create 	= lu_mem_stack_table__create_internal;
 
 		// variables
 		self->buff_start 			= (lu_p_byte) buff_start;
