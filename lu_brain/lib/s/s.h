@@ -264,7 +264,7 @@
 		lu_s_layer_type__to_str(self->type, type);
 		lu_area_tag__to_str(self->tag, tag);
 
-		lu__debug("%s:%s area_ix=%ld, layer_ix=%ld", tag, type, self->area_ix, self->layer_ix);
+		lu__debug("%s:%s A=%ld, L=%ld", tag, type, self->area_ix, self->layer_ix);
 	}
 
 	static inline void lu_s_layer_base__print_net_stats(Lu_S_Layer_Base self)

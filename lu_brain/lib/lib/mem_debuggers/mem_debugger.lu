@@ -206,7 +206,7 @@
 			return;
 		} 
 
-		lu__debug("\n!!! MEM DEBUGGER REGISTER REALLOC !!!");
+		lu__deep_debug("\n!!! MEM DEBUGGER REGISTER REALLOC");
 
 		mem_debugger_register_free(imd, old_address, func, file, line);
 

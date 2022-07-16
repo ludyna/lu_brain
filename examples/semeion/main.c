@@ -94,7 +94,7 @@ int main()
 		la_cell = lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
 		lu__assert(la_cell);
 
-		printf("\rTraining samples.. %lu trained.", i + 1);
+		//printf("\nTraining samples.. %lu trained.", i + 1);
 		// fflush(stdout);
 	}
 	printf("\n");
@@ -104,7 +104,7 @@ int main()
 	float failed_count 		= 0;
 	float success_count 	= 0;
 
-	printf("\rTesting samples.. ");
+	printf("\nTesting samples.. ");
 
 	// Lu_Label* labels = NULL;
 

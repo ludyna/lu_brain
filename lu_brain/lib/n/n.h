@@ -7,6 +7,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
+	static inline void lu_s_layer_base__print_basic_info(Lu_S_Layer_Base self);
 
 
 	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self);
@@ -23,6 +24,8 @@
 	static inline Lu_La_Link lu_la_link__init(Lu_La_Link self, union lu_la_addr la_addr, union lu_la_link_addr next);
 
 	static inline union lu_n_link_addr lu_n_link_addr__prepend(union lu_n_link_addr self, Lu_N_Link_Mem link_mem, union lu_n_addr addr);
+
+	static inline Lu_S_Layer_Base lu_n_table__get_layer(Lu_N_Table self);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
@@ -923,8 +926,12 @@
 		//
 		// Stats
 		// 
+
 		lu_size stat_cells_used;
 		lu_size stat_max_z;
+
+		// We have to use cell addr here, because pointer to Lu_N_Cell gets invalidated when reallocated
+		union lu_n_addr stat_max_n_cell_addr;
 
 	};
 
@@ -1006,86 +1013,21 @@
 		return lu_n_column__hash_to_ix(self, lu_w_cell__children_hash_comp(children, children_count));
 	}
 
-	static void lu_n_column__realloc(Lu_N_Column self)
-	{
-		//
-		// Current simple implementation is that we just simply increase d , calculate cells_size , 
-		// reinit additital "columns"
-		//
+	static void lu_n_column__realloc(Lu_N_Column self);
 
-		lu__assert(self);
-		lu__assert(self->mem);
 
-		lu__debug("\nN_COLUMN [%ld, %ld] REALLOCATING ");
-		// lu_n_table__print_
-
-		lu_size old_cells_size = self->cells_size;
-		lu_size old_d = self->d;
-
-		self->d *= 2;
-
-		self->cells_size = self->h * self->d;
-
-		self->cells = (struct lu_n_cell*) lu_mem__realloc(
-			self->mem, 
-			(lu_p_byte) self->cells, 
-			sizeof(struct lu_n_cell) * self->cells_size
-		);
-		lu__alloc_assert(self->cells);
-
-		//
-		// Init addr.cell_ix to 0 initally for new cells
-		//
-
-		lu_size i;
-		Lu_N_Cell n_cell;
-		for (i = old_cells_size; i < self->cells_size; i++)
-		{
-			n_cell = &self->cells[i];
-			n_cell->addr.cell_ix = 0;
-		}
-
-		//
-		// Init new cells only
-		//
-
-		lu_size z; 
-		lu_size ix;
-		lu_size z_shift;
-		
-		Lu_N_Cell null_n_cell = lu_n_column__get_null_cell(self);
-
-		for (z = old_d; z < self->d; z++)
-		{
-			z_shift = z * self->h;
-
-			for (ix = 0; ix < self->h; ix++)
-			{
-				i = z_shift + ix;
-				lu__assert(i < self->cells_size);
-
-				n_cell = &self->cells[i];
-
-				lu__assert(n_cell->addr.cell_ix == 0);
-
-				lu_n_cell__init(
-					n_cell, 
-					i, 
-					self->column_ix, 
-					null_n_cell->addr.layer_ix, 
-					null_n_cell->addr.area_ix, 
-					self->mem, 
-					self->w_match_cells_size
-				);
-			}
-		}
-	}
-
-	static inline void lu_n_column__increase_stats(Lu_N_Column self, lu_size z)
+	static inline void lu_n_column__increase_stats(Lu_N_Column self, lu_size z, Lu_N_Cell n_cell)
 	{
 		lu__assert(self);
+		lu__assert(n_cell);
+		lu__assert(z < self->d);
 
-		if (z > self->stat_max_z) self->stat_max_z = z;
+		if (z > self->stat_max_z) 
+		{
+
+			self->stat_max_z = z;
+			self->stat_max_n_cell_addr = n_cell->addr;
+		}
 		++self->stat_cells_used;
 
 		//
@@ -1093,6 +1035,158 @@
 		//
 		lu__assert(self->stat_cells_used <= self->cells_size);
 		lu__assert(self->stat_max_z < self->d);
+	}
+
+	static inline void lu_n_column__find_n_cell(
+		Lu_N_Column self, 
+		union lu_n_addr addr, 
+		Lu_N_Cell* p_n_cell
+	)
+	{
+		Lu_N_Cell n_cell = lu_n_column__get_cell_by_ix(self, addr.cell_ix);
+
+		// Make sure everything is correct
+		lu__assert(lu_n_addr__is_eq(&n_cell->addr, &addr));
+
+		*p_n_cell = n_cell;
+	}
+
+	static inline void lu_n_column__print_net_stats(Lu_N_Column self)
+	{
+		if (lu_n_addr__is_present(&self->stat_max_n_cell_addr))
+		{
+			lu__debug(
+				"[%ld, %ld] cells: %ld/%ld, max_z: %ld/%ld, max_cell: %ld, links: %ld/%ld",
+				self->x,
+				self->y,
+				self->stat_cells_used,
+				self->cells_size,
+				self->stat_max_z,
+				self->d,
+				self->stat_max_n_cell_addr.cell_ix,
+				lu_n_link_mem__get_links_count(&self->link_mem),
+				lu_n_link_mem__get_links_size(&self->link_mem)
+			);
+		}
+		else
+		{
+			lu__debug(
+				"[%ld, %ld] cells: %ld/%ld, max_z: %ld/%ld, max_cell: NA, links: %ld/%ld",
+				self->x,
+				self->y,
+				self->stat_cells_used,
+				self->cells_size,
+				self->stat_max_z,
+				self->d,
+				lu_n_link_mem__get_links_count(&self->link_mem),
+				lu_n_link_mem__get_links_size(&self->link_mem)
+			);
+		}
+	}
+
+	static inline void lu_n_column__print_distribution_symbols(Lu_N_Column self, lu_size blocks_count)
+	{
+		lu__assert(self);
+		lu__assert(blocks_count > 0);	
+
+		lu_size per_block = self->h / blocks_count;
+
+		lu__debug("]");
+		lu_size i;
+		lu_size curr_block = 0;
+		lu_size ix;
+		Lu_N_Cell n_cell;
+		lu_bool cell_used;
+
+		for (curr_block = 0; curr_block < blocks_count; curr_block++)
+		{
+			cell_used = false;
+			for (i = 0; i < per_block; i++)
+			{
+				ix = curr_block * per_block + i;
+				if (ix >= self->cells_size) break;
+
+				n_cell = &self->cells[ix];
+
+				if (!lu_n_cell__is_blank(n_cell))
+				{
+					cell_used = true;
+					break;
+				}
+
+			}
+
+			if (cell_used) lu__debug("█");
+			else lu__debug(" ");
+		}
+
+		lu__debug("[");
+
+	}
+
+	static inline void lu_n_column__print_distribution_stats(Lu_N_Column self, lu_size blocks_count)
+	{
+		lu__assert(self);
+		lu__assert(blocks_count > 0);	
+
+		lu_size per_block = self->h / blocks_count;
+
+		lu__debug("[");
+		lu_size i;
+		lu_size curr_block = 0;
+		lu_size ix;
+		Lu_N_Cell n_cell;
+		lu_size count_per_block;
+
+		for (curr_block = 0; curr_block < blocks_count; curr_block++)
+		{
+			count_per_block = 0;
+			for (i = 0; i < per_block; i++)
+			{
+				ix = curr_block * per_block + i;
+				if (ix >= self->cells_size) break;
+
+				n_cell = &self->cells[ix];
+
+				if (!lu_n_cell__is_blank(n_cell))
+				{
+					++count_per_block;
+				}
+
+			}
+
+			lu__debug("%ld", count_per_block);
+
+			if (curr_block + 1 < blocks_count)
+				lu__debug(",");
+		}
+
+		lu__debug("]");
+
+	}
+
+	static inline void lu_n_column__collect_net_stats(Lu_N_Column self, Lu_N_Table_Stats ts)
+	{
+		++ts->column_count;
+
+		if (self->stat_cells_used < ts->cells_used_min) ts->cells_used_min = self->stat_cells_used;
+		ts->cells_used_mean += self->stat_cells_used;
+		if (self->stat_cells_used > ts->cells_used_max) ts->cells_used_max = self->stat_cells_used;
+		ts->cells_size = self->cells_size;
+
+		if (self->stat_max_z < ts->max_z_min) ts->max_z_min = self->stat_max_z;
+		ts->max_z_mean += self->stat_max_z;
+		if (self->stat_max_z > ts->max_z_max) ts->max_z_max = self->stat_max_z;
+		ts->d = self->d;
+
+		lu_size links_count = lu_n_link_mem__get_links_count(&self->link_mem);
+
+		if (links_count < ts->links_count_min) ts->links_count_min = links_count;
+		ts->links_count_mean += links_count;
+		if (links_count > ts->links_count_max) ts->links_count_max = links_count;
+
+		ts->links_size = lu_n_link_mem__get_links_size(&self->link_mem);
+
 	}
 
 	static inline Lu_N_Cell lu_n_column__save_with_vp_children(
@@ -1120,7 +1214,7 @@
 			if (lu_n_cell__is_blank(cell))
 			{
 				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
-				lu_n_column__increase_stats(self, z);
+				lu_n_column__increase_stats(self, z, cell);
 				return cell;
 			}
 			else if (lu_n_link_addr__is_vp_eq(cell->children, children, children_count, &self->link_mem)) 
@@ -1135,7 +1229,7 @@
 		lu__assert(lu_n_cell__is_blank(cell));
 
 		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
-		lu_n_column__increase_stats(self, z);
+		lu_n_column__increase_stats(self, z, cell);
 
 		return cell;
 	}
@@ -1165,7 +1259,7 @@
 			if (lu_n_cell__is_blank(cell))
 			{
 				lu_n_cell__save(cell, children, children_count, &self->link_mem);
-				lu_n_column__increase_stats(self, z);
+				lu_n_column__increase_stats(self, z, cell);
 				return cell;
 			}
 			else if (lu_n_link_addr__is_eq(cell->children, children, children_count, &self->link_mem)) 
@@ -1180,64 +1274,18 @@
 		lu__assert(lu_n_cell__is_blank(cell));
 
 		lu_n_cell__save(cell, children, children_count, &self->link_mem);
-		lu_n_column__increase_stats(self, z);
+		lu_n_column__increase_stats(self, z, cell);
+
+		lu__debug("\nREALL n_col ");
+		lu_n_column__print_net_stats(self);
+		lu__debug(" ");
+		lu_s_layer_base__print_basic_info(lu_n_table__get_layer(self->n_table));
+		lu__debug(" ");
+		lu_n_column__print_distribution_stats(self, 10);
 
 		return cell;
 	}
-
-	static inline void lu_n_column__find_n_cell(
-		Lu_N_Column self, 
-		union lu_n_addr addr, 
-		Lu_N_Cell* p_n_cell
-	)
-	{
-		Lu_N_Cell n_cell = lu_n_column__get_cell_by_ix(self, addr.cell_ix);
-
-		// Make sure everything is correct
-		lu__assert(lu_n_addr__is_eq(&n_cell->addr, &addr));
-
-		*p_n_cell = n_cell;
-	}
-
-	static inline void lu_n_column__print_net_stats(Lu_N_Column self)
-	{
-		lu__debug(
-			"\n\t\t[%ld, %ld] cells: %ld/%ld, max_z: %ld/%ld, links: %ld/%ld",
-			self->x,
-			self->y,
-			self->stat_cells_used,
-			self->cells_size,
-			self->stat_max_z,
-			self->d,
-			lu_n_link_mem__get_links_count(&self->link_mem),
-			lu_n_link_mem__get_links_size(&self->link_mem)
-		);
-	}
-
-	static inline void lu_n_column__collect_net_stats(Lu_N_Column self, Lu_N_Table_Stats ts)
-	{
-		++ts->column_count;
-
-		if (self->stat_cells_used < ts->cells_used_min) ts->cells_used_min = self->stat_cells_used;
-		ts->cells_used_mean += self->stat_cells_used;
-		if (self->stat_cells_used > ts->cells_used_max) ts->cells_used_max = self->stat_cells_used;
-		ts->cells_size = self->cells_size;
-
-		if (self->stat_max_z < ts->max_z_min) ts->max_z_min = self->stat_max_z;
-		ts->max_z_mean += self->stat_max_z;
-		if (self->stat_max_z > ts->max_z_max) ts->max_z_max = self->stat_max_z;
-		ts->d = self->d;
-
-		lu_size links_count = lu_n_link_mem__get_links_count(&self->link_mem);
-
-		if (links_count < ts->links_count_min) ts->links_count_min = links_count;
-		ts->links_count_mean += links_count;
-		if (links_count > ts->links_count_max) ts->links_count_max = links_count;
-
-		ts->links_size = lu_n_link_mem__get_links_size(&self->link_mem);
-
-	}
-
+	
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table
 
@@ -1286,6 +1334,12 @@
  	static inline Lu_N_Column lu_n_table__get_n_column(Lu_N_Table self, lu_size x, lu_size y)
  	{
  		return lu_n_table__get_column_by_ix(self, lu_macro__xy_to_ix(x, y, self->w));
+ 	}
+
+ 	static inline Lu_S_Layer_Base lu_n_table__get_layer(Lu_N_Table self)
+ 	{
+ 		lu__assert(self);
+ 		return self->layer;
  	}
 
  	//
