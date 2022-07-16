@@ -83,10 +83,10 @@ int main()
 	{
 		d = smn_training_samples[i];
 
-		lu_rec__set_dest_start_pos(image_rec, 0, 0);
+		lu_wave__set_dest_start_pos(image_rec, 0, 0);
 		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
 
-		lu_rec__set_dest_start_pos(image_rec, 1, 1);
+		lu_wave__set_dest_start_pos(image_rec, 1, 1);
 		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -106,37 +106,42 @@ int main()
 
 	printf("\nTesting samples.. ");
 
-	// Lu_Label* labels = NULL;
+	Lu_Label* labels = NULL;
 
-	//for (i = 0; i < smn_test_samples_count; i++)
-	// for (i = 0; i < 1; i++)
-	// {
-	// 	d = smn_test_samples[i];
-	// 	lu_wave__push(match_wave, image_rec, d->pixels);
+	// for (i = 0; i < smn_test_samples_count; i++)
+	for (i = 0; i < 1; i++)
+	{
+		d = smn_test_samples[i]; 
 
-	// 	lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+		lu_wave__set_dest_start_pos(image_rec, 0, 0);
+		lu_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
 
-	// 	labels = lu_wave__get_result_labels(match_wave);
+		lu_wave__set_dest_start_pos(image_rec, 1, 1);
+		lu_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
 
-	// 	if (labels)
-	// 	{
-	// 		if (lu_label__get_id(labels[0]) == d->name)
-	// 		{
-	// 			++success_count;
-	// 		}
-	// 		else
-	// 		{
-	// 			++failed_count;
-	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		++failed_count;
-	// 	}
+		lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
-	// 	printf("\rTesting samples.. %lu tested.", i + 1);
-	// 	fflush(stdout);
-	// }
+		labels = lu_wave__get_result_labels(match_wave);
+
+		if (labels)
+		{
+			if(labels[0] && lu_label__get_id(labels[0]) == d->name)
+			{
+				++success_count;
+			}
+			else
+			{
+				++failed_count;
+			}
+		}
+		else
+		{
+			++failed_count;
+		}
+
+		printf("\rTesting samples.. %lu tested.", i + 1);
+		fflush(stdout);
+	}
 	printf("\n");
 
 	printf("\nReport:");

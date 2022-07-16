@@ -22,16 +22,17 @@
 		st->super.free_count				= 0;
 	}
 
-	void lu_mem_stack_table__realloc_internal(
+	Lu_Mem_Table lu_mem_stack_table__realloc_internal(
 		Lu_Mem_Table self, 
-		lu_size new_size_in_bytes, 
-		lu_flags flags, 
+		lu_size new_size_in_bytes,  
 		const char* func, 
 		const char* file, 
 		int line
 	)
 	{
 		lu__debug_message("NOT IMPLEMENTED");
+
+		return NULL;
 	}
 
 	Lu_Mem lu_mem_stack_table__get_mem(Lu_Mem_Table self)

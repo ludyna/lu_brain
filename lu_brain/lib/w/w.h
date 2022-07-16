@@ -501,9 +501,6 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_N_Item
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Processor
 
 	struct lu_w_processor {
@@ -545,6 +542,13 @@
 	)
 	{
 		Lu_W_N_Item w_n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->n_mem_table);
+		if (w_n_item == NULL)
+		{
+			lu_mem_table__print(self->n_mem_table);
+			lu__assert(w_n_item);
+		}
+
+		// lu_mem_table__print(self->n_mem_table);
 
 		lu_w_n_item__init(w_n_item, match_cell, n_cell, n_column);
 

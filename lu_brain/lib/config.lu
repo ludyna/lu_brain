@@ -77,7 +77,7 @@
 			.n_column_w = 5, 
 			.n_column_h = 1000,
 			.n_column_d = 10,
-			.n_link_mem_size = 5000,
+			.n_link_mem_size = 12000,
 
 			//
 			// Waves level
@@ -86,9 +86,9 @@
 			.w_save_waves_size = 1,
 			.w_match_waves_size = 1,
 			.w_restore_waves_size = 1,
-			.w_processor_queue_size = 512,
+			.w_processor_queue_size = 200000,
 			.w_result_labels_size = 3,
-			.w_match_cells_size_per_wave = 10000,
+			.w_match_cells_size_per_wave = 20000,
 
 			//
 			// Labels
@@ -96,7 +96,7 @@
 
 			.la_mem = NULL,
 			.la_labels_size = 11,		
-			.la_link_mem_size = 1024
+			.la_link_mem_size = 2000
 			},
 	};		
 

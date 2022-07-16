@@ -152,7 +152,6 @@
 		}
 	}
 
-
 	static Lu_N_Cell lu_n_column__save_with_vp_children(
 		Lu_N_Column self, 
 		Lu_W_Cell_P* children, 

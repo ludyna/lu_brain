@@ -534,11 +534,11 @@
 
 		if (!record)
 		{
-			lu_mem_table__realloc(
+			self->mem_table = lu_mem_table__realloc(
 				self->mem_table, 
-				lu_mem_table__records_count(self->mem_table) * 2, 
-				LU_MEM_TABLE__DEFAULT
+				lu_mem_table__records_count(self->mem_table) * 2
 			); 
+			lu__alloc_assert(self->mem_table);
 
 			lu__mem_debug("\n (!) w_match_cell_mem realloc");
 

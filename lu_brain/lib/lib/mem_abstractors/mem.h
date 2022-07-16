@@ -93,15 +93,15 @@
 	};
 
 	struct lu_mem_table {
-		void 		(*reset)(Lu_Mem_Table, const char* func, const char* file, int line);
-		void 		(*realloc)(Lu_Mem_Table, lu_size new_size_in_records, lu_flags flags, const char* func, const char* file, int line);
-	 	void 		(*destroy)(Lu_Mem_Table, const char* func, const char* file, int line);
+		void 			(*reset)(Lu_Mem_Table, const char* func, const char* file, int line);
+		Lu_Mem_Table 	(*realloc)(Lu_Mem_Table, lu_size new_size_in_records, const char* func, const char* file, int line);
+	 	void 			(*destroy)(Lu_Mem_Table, const char* func, const char* file, int line);
 
-		lu_p_byte 	(*record_alloc)(Lu_Mem_Table, const char* func, const char* file, int line);
-		void 		(*record_free)(Lu_Mem_Table, lu_p_byte record, const char* func, const char* file, int line);
+		lu_p_byte 		(*record_alloc)(Lu_Mem_Table, const char* func, const char* file, int line);
+		void 			(*record_free)(Lu_Mem_Table, lu_p_byte record, const char* func, const char* file, int line);
 
-		lu_size 	(*size_in_bytes)(Lu_Mem_Table);
-		Lu_Mem 		(*get_mem)(Lu_Mem_Table);			// return Lu_Mem associated with the Lu_Mem_Table
+		lu_size 		(*size_in_bytes)(Lu_Mem_Table);
+		Lu_Mem 			(*get_mem)(Lu_Mem_Table);			// return Lu_Mem associated with the Lu_Mem_Table
 
 		Lu_Mem 			mem;
 		lu_size 		record_size_in_bytes;
@@ -121,7 +121,7 @@
 
 	// Careful: reset "invalidates" record pointers. Make sure you are not using any.
 	#define lu_mem_table__reset(mt) mt->reset(mt, __func__, __FILE__, __LINE__)
-	#define lu_mem_table__realloc(mt, n_size, flags) mt->realloc(mt, n_size, flags, __func__, __FILE__, __LINE__)
+	#define lu_mem_table__realloc(mt, n_size) mt->realloc(mt, n_size, __func__, __FILE__, __LINE__)
 	#define lu_mem_table__destroy(mt) mt->destroy(mt, __func__, __FILE__, __LINE__)
 
 	#define lu_mem_record__alloc(mt) mt->record_alloc(mt, __func__, __FILE__, __LINE__)
@@ -133,7 +133,12 @@
 	#define lu_mem_table__records_count(mt) mt->records_count
 	#define lu_mem_table__records_size(mt) mt->table_size_in_records
 
-	static inline lu_p_byte lu_mem_table__get_internal(Lu_Mem_Table self, lu_size index, const char* func, const char* file, int line)
+	static inline lu_p_byte lu_mem_table__get_internal(
+		Lu_Mem_Table self, lu_size index, 
+		const char* func, 
+		const char* file, 
+		int line
+	)
 	{
 		lu_p_byte p =  (self->records_start + index * self->record_size_in_bytes);
 
@@ -158,4 +163,17 @@
 	static inline lu_size lu_mem_table__record_ix(Lu_Mem_Table self, lu_p_byte record_addr)
 	{
 		return lu_mem_table__record_shift(self, record_addr) / self->record_size_in_bytes;
+	}
+
+	static inline void lu_mem_table__print(Lu_Mem_Table self)
+	{
+		lu__assert(self);
+
+		lu__debug("\nMEM_TABLE");
+		lu__debug("\nrecord_size_in_bytes: %ld", self->record_size_in_bytes);
+		lu__debug("\nable_size_in_records: %ld", self->table_size_in_records);
+		lu__debug("\nflags: %s", self->flags & LU_MEM_TABLE__FREEABLE ? "FREEABLE" : "DEFAULT");
+		lu__debug("\nrecords_count: %ld", self->records_count);
+		lu__debug("\nfree_count: %ld", self->free_count);
+		lu__debug("\nfull_size_in_bytes: %ld", self->full_size_in_bytes);
 	}

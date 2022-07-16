@@ -154,11 +154,11 @@
 
 		if (!record)
 		{
-			lu_mem_table__realloc(
+			self->mem_table = lu_mem_table__realloc(
 				self->mem_table, 
-				lu_mem_table__records_count(self->mem_table) * 2, 
-				LU_MEM_TABLE__DEFAULT
+				lu_mem_table__records_count(self->mem_table) * 2
 			); 
+			lu__alloc_assert(self->mem_table);
 
 			lu__mem_debug("\n (!) n_link_mem realloc");
 
@@ -1174,7 +1174,7 @@
 		if (self->stat_cells_used < ts->cells_used_min) ts->cells_used_min = self->stat_cells_used;
 		ts->cells_used_mean += self->stat_cells_used;
 		if (self->stat_cells_used > ts->cells_used_max) ts->cells_used_max = self->stat_cells_used;
-		ts->cells_size = self->cells_size;
+		if (self->cells_size > ts->cells_size) ts->cells_size = self->cells_size;
 
 		if (self->stat_max_z < ts->max_z_min) ts->max_z_min = self->stat_max_z;
 		ts->max_z_mean += self->stat_max_z;
@@ -1187,7 +1187,8 @@
 		ts->links_count_mean += links_count;
 		if (links_count > ts->links_count_max) ts->links_count_max = links_count;
 
-		ts->links_size = lu_n_link_mem__get_links_size(&self->link_mem);
+		lu_size links_size = lu_n_link_mem__get_links_size(&self->link_mem);
+		if (links_size > ts->links_size) ts->links_size = links_size;
 
 	}
 
