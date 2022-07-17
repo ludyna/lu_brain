@@ -99,6 +99,10 @@ int main()
 	}
 	printf("\n");
 
+	// Show network stast
+
+	lu_brain__print_net_stats(brain);
+
 	// Testing samples
 	
 	float failed_count 		= 0;
@@ -138,10 +142,10 @@ int main()
 		{
 			++failed_count;
 		}
-
-		printf("\rTesting samples.. %lu tested.", i + 1);
-		fflush(stdout);
 	}
+
+	printf("\nTesting samples.. %lu tested.", i);
+	// fflush(stdout);
 	printf("\n");
 
 	printf("\nReport:");
@@ -149,10 +153,6 @@ int main()
 	printf("\n 	  Failed recognition: %d", (int) failed_count);
 	printf("\n 	  Success rate: %f", success_count / (lu_value) smn_test_samples_count);
 	printf("\n");
-
-	// Show network stast
-
-	lu_brain__print_net_stats(brain);
 
 	// Destroy save_wave and brain
 

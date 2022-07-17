@@ -883,20 +883,168 @@
 		self->cells_used_min = LU_SIZE__MAX;
 		self->cells_used_mean = 0;
 		self->cells_used_max = 0;
+		self->cells_size = 0;
 
 		self->max_z_min = LU_SIZE__MAX;
 		self->max_z_mean = 0;
 		self->max_z_max = 0;
+		self->d = 0;
 
 		self->links_count_min = LU_SIZE__MAX;
 		self->links_count_mean = 0;
 		self->links_count_max = 0;
-
-		self->d = 0;
 		self->links_size = 0;
 
 		return self;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Col
+// 
+
+	struct lu_n_col {
+		Lu_Mem mem;
+		Lu_N_Table n_table;
+
+		lu_size column_ix;
+
+		struct lu_n_cell* cells;
+		lu_size cells_size;
+		lu_size cells_count;
+
+		struct lu_n_link_mem link_mem;
+
+		//
+		lu_size w_match_cells_size;
+
+		//
+		// Position, mostly for debugging
+		//
+		lu_size x;
+		lu_size y;
+	};
+
+
+	//
+	// Constructors / Destructors
+	// 
+
+	static Lu_N_Col lu_n_col__init(
+		Lu_N_Col self, 
+		Lu_N_Table n_table,
+		Lu_Mem mem, 
+		lu_size cell_size, 
+		lu_size area_ix,
+		lu_size layer_ix, 
+		lu_size column_ix,
+		Lu_Config config,
+		lu_size x,
+		lu_size y
+	);
+	static void lu_n_col__deinit(Lu_N_Col self);
+
+
+	//
+	// Get
+	//
+
+	static inline Lu_N_Link_Mem lu_n_col__get_link_mem(Lu_N_Col self)
+	{
+		lu__debug_assert(self);
+
+		return &self->link_mem;
+	}
+
+	static inline Lu_N_Cell lu_n_col__get_null_cell(Lu_N_Col self)
+	{
+		lu__debug_assert(self);
+
+		return &self->cells[0];
+	} 
+
+	static inline Lu_N_Cell lu_n_col__get_cell_by_ix(Lu_N_Col self, lu_size cell_ix)
+	{
+		lu__assert(self);
+		lu__assert(cell_ix < self->cells_size);
+
+		return &self->cells[cell_ix];
+	}
+
+	//
+	// Methods
+	//
+
+
+	static void lu_n_col__realloc(Lu_N_Col self);
+
+
+	static inline void lu_n_col__find_n_cell(
+		Lu_N_Col self, 
+		union lu_n_addr addr, 
+		Lu_N_Cell* p_n_cell
+	)
+	{
+		Lu_N_Cell n_cell = lu_n_col__get_cell_by_ix(self, addr.cell_ix);
+
+		// Make sure everything is correct
+		lu__assert(lu_n_addr__is_eq(&n_cell->addr, &addr));
+
+		*p_n_cell = n_cell;
+	}
+
+	static inline void lu_n_col__print_net_stats(Lu_N_Col self)
+	{
+		lu__debug(
+			"[%ld, %ld] cells: %ld/%ld, links: %ld/%ld",
+			self->x,
+			self->y,
+			self->cells_count,
+			self->cells_size,
+			lu_n_link_mem__get_links_count(&self->link_mem),
+			lu_n_link_mem__get_links_size(&self->link_mem)
+		);
+	}
+
+	static inline void lu_n_col__collect_net_stats(Lu_N_Col self, Lu_N_Table_Stats ts)
+	{
+		++ts->column_count;
+
+		if (self->cells_count < ts->cells_used_min) ts->cells_used_min = self->cells_count;
+		ts->cells_used_mean += self->cells_count;
+		if (self->cells_count > ts->cells_used_max) ts->cells_used_max = self->cells_count;
+		if (self->cells_size > ts->cells_size) ts->cells_size = self->cells_size;
+
+		lu_size links_count = lu_n_link_mem__get_links_count(&self->link_mem);
+
+		if (links_count < ts->links_count_min) ts->links_count_min = links_count;
+		ts->links_count_mean += links_count;
+		if (links_count > ts->links_count_max) ts->links_count_max = links_count;
+
+		lu_size links_size = lu_n_link_mem__get_links_size(&self->link_mem);
+		if (links_size > ts->links_size) ts->links_size = links_size;
+
+	}
+
+	static inline void lu_n_col__print_mem_stats(Lu_N_Col self)
+	{
+		lu__debug("\nREALL n_col ");
+		lu_n_col__print_net_stats(self);
+		lu__debug(" ");
+		lu_s_layer_base__print_basic_info(lu_n_table__get_layer(self->n_table));
+	}
+
+
+	static Lu_N_Cell lu_n_col__save_with_vp_children(
+		Lu_N_Col self, 
+		Lu_W_Cell_P* children, 
+		lu_size children_count
+	);
+
+	static Lu_N_Cell lu_n_col__save_with_children(
+		Lu_N_Col self, 
+		Lu_W_Cell* children, 
+		lu_size children_count
+	);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column

@@ -86,9 +86,9 @@
 			.w_save_waves_size = 1,
 			.w_match_waves_size = 1,
 			.w_restore_waves_size = 1,
-			.w_processor_queue_size = 200000,
+			.w_processor_queue_size = 6000,
 			.w_result_labels_size = 3,
-			.w_match_cells_size_per_wave = 20000,
+			.w_match_cells_size_per_wave = 2000,
 
 			//
 			// Labels

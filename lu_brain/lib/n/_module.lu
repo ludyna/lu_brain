@@ -5,6 +5,7 @@
 #include "n_link.lu"
 #include "n_link_mem.lu"
 #include "n_cell.lu"
+#include "n_col.lu"
 #include "n_column.lu"
 #include "n_column_comp.lu"
 #include "n_table.lu"

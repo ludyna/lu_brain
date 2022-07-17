@@ -706,6 +706,8 @@
 		Lu_W_N_Item w_n_item;
 		lu_size cells_processed = 0;
 
+		lu_mem_table__print(self->n_mem_table);
+
 		while (lu_lim_list__is_present(self->curr_list))
 		{
 			w_n_item = (Lu_W_N_Item) lu_lim_list__pop_first_value(self->curr_list);
