@@ -501,6 +501,65 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// lu_labels_
+
+	static inline void lu_labels__print_results(Lu_Label* self, lu_size size)
+	{
+		lu__assert(self);
+
+		lu__debug("\nLABELS:");
+		Lu_Label label;
+		Lu_La_Cell la_cell;
+		Lu_W_Match_Cell match_cell;
+
+		for (lu_size i = 0; i < size; i++)
+		{
+			label = self[i];
+			if (label == NULL) break;
+
+			la_cell = label->la_cell;
+			lu__assert(la_cell);
+
+			match_cell = label->match_cell;
+			lu__assert(match_cell);
+
+			lu__debug(
+				"\n\tlabel=%ld, sig=%.2f [MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
+				la_cell->addr.la_ix, 
+				match_cell->sig,
+				match_cell->block_id.wave_id,
+				match_cell->block_id.block_ix,
+				la_cell->children_count
+			);
+		}
+	}
+
+	static inline void lu_labels__reset(Lu_Label* self, lu_size size)
+	{
+		lu__assert(self);
+
+		for (lu_size i = 0; i < size; i++)
+		{
+			self[i] = NULL;
+		}
+	}
+	
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Save_Proc
+
+	struct lu_w_save_proc {
+		
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Match_Proc
+
+	struct lu_w_match_proc {
+
+	};
+
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Processor
 
 	struct lu_w_processor {
@@ -544,11 +603,11 @@
 		Lu_W_N_Item w_n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->n_mem_table);
 		if (w_n_item == NULL)
 		{
-			lu_mem_table__print(self->n_mem_table);
+			lu_mem_table__print_counts(self->n_mem_table);
 			lu__assert(w_n_item);
 		}
 
-		// lu_mem_table__print(self->n_mem_table);
+		// lu_mem_table__print_counts(self->n_mem_table);
 
 		lu_w_n_item__init(w_n_item, match_cell, n_cell, n_column);
 
@@ -706,7 +765,7 @@
 		Lu_W_N_Item w_n_item;
 		lu_size cells_processed = 0;
 
-		lu_mem_table__print(self->n_mem_table);
+		// lu_mem_table__print_counts(self->n_mem_table);
 
 		while (lu_lim_list__is_present(self->curr_list))
 		{
@@ -761,48 +820,30 @@
 		}
 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// lu_labels_
-
-	static inline void lu_labels__print_results(Lu_Label* self, lu_size size)
+	static inline void lu_w_processor__reset_results(Lu_W_Processor self)
 	{
 		lu__assert(self);
+		//
+		// Reset s_list
+		//
+		
+		if (self->s_list) lu_s_list__destroy(self->s_list);
 
-		lu__debug("\nLABELS:");
-		Lu_Label label;
-		Lu_La_Cell la_cell;
-		Lu_W_Match_Cell match_cell;
+		lu__deep_debug("\n !! self->w_result_labels_size=%ld", self->w_result_labels_size);
 
-		for (lu_size i = 0; i < size; i++)
-		{
-			label = self[i];
-			if (label == NULL) break;
+		self->s_list = lu_s_list__create(self->mem, self->w_result_labels_size, lu_label__compare, LU_S_LST__LAST);
+		lu__alloc_assert(self->s_list);
+		
+		//
+		// Reset Lu Labels mem
+		//
+		lu_mem_table__reset(self->la_mem_table); // invalidates existing Lu_Labels
 
-			la_cell = label->la_cell;
-			lu__assert(la_cell);
+		//
+		// Reset sorted results
+		//
 
-			match_cell = label->match_cell;
-			lu__assert(match_cell);
-
-			lu__debug(
-				"\n\tlabel=%ld, sig=%.2f [MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
-				la_cell->addr.la_ix, 
-				match_cell->sig,
-				match_cell->block_id.wave_id,
-				match_cell->block_id.block_ix,
-				la_cell->children_count
-			);
-		}
-	}
-
-	static inline void lu_labels__reset(Lu_Label* self, lu_size size)
-	{
-		lu__assert(self);
-
-		for (lu_size i = 0; i < size; i++)
-		{
-			self[i] = NULL;
-		}
+		lu_labels__reset(self->sorted_results, self->w_result_labels_size);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

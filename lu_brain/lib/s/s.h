@@ -598,7 +598,7 @@
 		Lu_Process_Config config
 	);
 
-	static void lu_s_layer_rec__match(
+	static enum lu_w_rec_state lu_s_layer_rec__match(
 		Lu_S_Layer_Rec self, 
 		Lu_Match_Wave match_wave,
 		lu_size rec_id, 

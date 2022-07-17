@@ -276,17 +276,38 @@
 
 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
 
-		lu_s_layer_rec__match(layer_rec, match_wave, rec_id, data, config, processor);
+		//
+		// Rec collect and finish
+		//
 
-		while (lu_w_processor__has_items_to_process(processor))
+		enum lu_w_rec_state state = lu_s_layer_rec__match(layer_rec, match_wave, rec_id, data, config, processor);
+
+		//
+		// Processor
+		//
+
+		if (state == LU_W_REC_STATE__COLLECT)
 		{
-			#ifdef LU__DEEP_DEBUG
-			lu__debug("\nPROCESSOR BATCH:");
-			lu_w_processor__print_symbols(processor);
-			#endif 
-
-			lu_w_processor__process(processor);
+			lu_w_processor__reset_results(processor);
 		}
+		else if (state == LU_W_REC_STATE__COLLECT_AND_FINISH)
+		{
+			while (lu_w_processor__has_items_to_process(processor))
+			{
+				#ifdef LU__DEEP_DEBUG
+				lu__debug("\nPROCESSOR BATCH:");
+				lu_w_processor__print_symbols(processor);
+				#endif 
 
-		lu_w_processor__prepare_results(processor);
+				lu_w_processor__process(processor);
+			}
+
+			lu_mem_table__print_counts(processor->n_mem_table);
+
+			lu_w_processor__prepare_results(processor);
+		}
+		else 
+		{
+			lu__assert(false);
+		}
 	}

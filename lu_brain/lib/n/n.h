@@ -475,7 +475,7 @@
 	////
 	// TODO: Need to replace this later with lu_mem_table , with dynamic w_cells size and access to list of w_cells
 	// using lu_n_cell.addr
-	#define LU_N_CELL__W_CELLS_SIZE 2
+	#define LU_N_CELL__W_MATCH_CELLS_SIZE 1
 
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
@@ -491,7 +491,7 @@
 
 		lu_value default_sig;
 		
-		union lu_w_match_addr w_cells[LU_N_CELL__W_CELLS_SIZE];
+		union lu_w_match_addr w_cells[LU_N_CELL__W_MATCH_CELLS_SIZE];
 	};
 
 	//
@@ -922,6 +922,13 @@
 		//
 		lu_size x;
 		lu_size y;
+
+		//
+		// 
+		//
+
+		struct lu_w_save_proc* w_save_procs;
+		struct lu_w_match_proc* w_match_procs;
 	};
 
 

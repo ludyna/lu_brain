@@ -169,11 +169,21 @@
 	{
 		lu__assert(self);
 
-		lu__debug("\nMEM_TABLE");
+		lu__debug("\n=========> MEM_TABLE <=========");
 		lu__debug("\nrecord_size_in_bytes: %ld", self->record_size_in_bytes);
 		lu__debug("\nable_size_in_records: %ld", self->table_size_in_records);
 		lu__debug("\nflags: %s", self->flags & LU_MEM_TABLE__FREEABLE ? "FREEABLE" : "DEFAULT");
 		lu__debug("\nrecords_count: %ld", self->records_count);
 		lu__debug("\nfree_count: %ld", self->free_count);
 		lu__debug("\nfull_size_in_bytes: %ld", self->full_size_in_bytes);
+	}
+
+	static inline void lu_mem_table__print_counts(Lu_Mem_Table self)
+	{
+		lu__assert(self);
+
+		lu__debug("\n=========> MEM_TABLE <=========");
+		lu__debug("\nrecords_count: %ld", self->records_count);
+		lu__debug("\nfree_count: %ld", self->free_count);
+		lu__debug("\n===============================");
 	}
