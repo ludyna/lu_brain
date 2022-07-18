@@ -458,16 +458,16 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_N_Item
+// Lu_W_Proc_Item
 
-	struct lu_w_n_item {
+	struct lu_w_proc_item {
 		Lu_W_Match_Cell match_cell;
 		Lu_N_Cell n_cell;
 		Lu_N_Column n_column;
 	};
 
-	static inline Lu_W_N_Item lu_w_n_item__init(
-		Lu_W_N_Item self, 
+	static inline Lu_W_Proc_Item lu_w_proc_item__init(
+		Lu_W_Proc_Item self, 
 		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
 		Lu_N_Column n_column
@@ -485,7 +485,7 @@
 		return self;
 	}
 
-	static inline Lu_W_N_Item lu_w_n_item__print(Lu_W_N_Item self)
+	static inline Lu_W_Proc_Item lu_w_proc_item__print(Lu_W_Proc_Item self)
 	{
 		lu__assert(self);
 		lu__assert(self->n_cell);
@@ -499,6 +499,150 @@
 		lu__debug("\n[%ld, %ld] sig=%.f | ", self->n_column->x, self->n_column->y, self->match_cell->sig);
 		lu_n_addr__print(&self->n_cell->addr);
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Proc_List
+
+	struct lu_w_proc_list {
+		Lu_Mem mem;
+		struct lu_w_proc_item* items;
+		lu_size items_size;
+		lu_size items_count;
+	};
+
+	//
+	// Constructors / Destructors
+	//
+
+	static inline Lu_W_Proc_List lu_w_proc_list__init(Lu_W_Proc_List self, Lu_Mem mem, lu_size items_size)
+	{
+		lu__assert(self);
+		lu__assert(mem);
+		lu__assert(items_size > 0);
+
+		self->mem =	mem;
+
+		self->items_size = items_size;
+		self->items = (struct lu_w_proc_item*) lu_mem__alloc(
+			self->mem, 
+			sizeof(struct lu_w_proc_list) * self->items_size
+		);
+
+		lu__alloc_assert(self->items);
+
+		self->items_count = 0;
+
+		return self;
+	}
+
+	static inline void lu_w_proc_list__deinit(Lu_W_Proc_List self)
+	{
+		lu__assert(self);
+		lu__assert(self->items_size > 0);
+
+		lu_mem__free(self->mem, (lu_p_byte) self->items);
+
+		self->items = NULL;
+		self->items_size = 0;
+		self->items_count = 0;
+	}
+
+	static inline Lu_W_Proc_List lu_w_proc_list__create(Lu_Mem mem, lu_size items_size)
+	{
+		lu__assert(mem);
+
+		Lu_W_Proc_List self = (Lu_W_Proc_List) lu_mem__alloc(mem, sizeof(struct lu_w_proc_list));
+		lu__alloc_assert(self);
+
+		lu_w_proc_list__init(self, mem, items_size);
+
+		return self;
+	}
+
+	static inline void lu_w_proc_list__destroy(Lu_W_Proc_List self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem);
+
+		lu_w_proc_list__deinit(self);
+
+		lu_mem__free(self->mem, (lu_p_byte) self); 
+	}
+
+
+	//
+	// Is 
+	//
+
+	static inline lu_bool lu_w_proc_list__is_blank(Lu_W_Proc_List self)
+	{
+		return self->items_count == 0;
+	}
+
+	static inline lu_bool lu_w_proc_list__is_present(Lu_W_Proc_List self)
+	{
+		return self->items_count > 0;
+	}
+
+	//
+	// Methods
+	//
+
+	static inline void lu_w_proc_list__realloc(Lu_W_Proc_List self, lu_size new_items_size)
+	{
+		lu__assert(self);
+		lu__assert(self->items_count < new_items_size);
+		lu__assert(self->mem);
+
+		lu__mem_debug("\n (!) lu_w_proc_list__realloc");
+
+		self->items = (struct lu_w_proc_item*) lu_mem__realloc(
+			self->mem, 
+			(lu_p_byte) self->items, 
+			sizeof(struct lu_w_proc_item) * new_items_size
+		);
+		lu__alloc_assert(self->items);
+
+		self->items_size = new_items_size;
+	}
+
+	static inline Lu_W_Proc_Item lu_w_proc_list__alloc(
+		Lu_W_Proc_List self,
+		Lu_W_Match_Cell match_cell,
+		Lu_N_Cell n_cell,
+		Lu_N_Column n_column
+	)
+	{
+		lu__assert(self);
+		lu__assert(self->items);
+		lu__assert(self->items_size > 0);
+
+		if (self->items_count >= self->items_size)
+		{
+			lu_w_proc_list__realloc(self, self->items_size * 2);
+		}
+
+		Lu_W_Proc_Item w_proc_item = &self->items[self->items_count];
+		++self->items_count;
+
+		lu_w_proc_item__init(w_proc_item, match_cell, n_cell, n_column);
+
+		return w_proc_item;
+	}
+
+	static inline void lu_w_proc_list__reset(Lu_W_Proc_List self)
+	{
+		lu__assert(self);
+
+		self->items_count = 0;
+	}
+
+	static inline void lu_w_proc_list__print_counts(Lu_W_Proc_List self, char* name)
+	{
+		lu__assert(self);
+		lu__debug("\n%s: %ld / %ld", name, self->items_count, self->items_size);
+	}	
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // lu_labels_
@@ -543,7 +687,7 @@
 			self[i] = NULL;
 		}
 	}
-	
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Save_Proc
 
@@ -571,12 +715,11 @@
 		Lu_W_Match_Cell_Mem match_cell_mem;
 		Lu_La_Column la_column;
 
-		Lu_Mem_Table n_mem_table;
+		Lu_W_Proc_List curr_list;
+		Lu_W_Proc_List next_list;
+
 		Lu_Mem_Table la_mem_table;
 		lu_size w_result_labels_size;
-	
-		Lu_Lim_List curr_list;
-		Lu_Lim_List next_list;
 
 		Lu_S_List s_list;
 		Lu_Label* sorted_results;
@@ -591,29 +734,6 @@
 	);
 
 	static void lu_w_processor__deinit(Lu_W_Processor self);
-	//static inline void lu_w_process__
-
-	static inline void lu_w_processor__put_in_queue(
-		Lu_W_Processor self,
-		Lu_W_Match_Cell match_cell,
-		Lu_N_Cell n_cell,
-		Lu_N_Column n_column
-	)
-	{
-		Lu_W_N_Item w_n_item = (Lu_W_N_Item) lu_mem_record__alloc(self->n_mem_table);
-		if (w_n_item == NULL)
-		{
-			lu_mem_table__print_counts(self->n_mem_table);
-			lu__assert(w_n_item);
-		}
-
-		// lu_mem_table__print_counts(self->n_mem_table);
-
-		lu_w_n_item__init(w_n_item, match_cell, n_cell, n_column);
-
-		// prepend, because we want FIFO queue
-		lu_lim_list__prepend(self->next_list, (lu_p_void) w_n_item);
-	}
 
 	static inline void lu_w_processor__fire_n_cell(
 		Lu_W_Processor self,
@@ -630,7 +750,7 @@
 
 		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell, 2.0))
 		{
-			lu_w_processor__put_in_queue(self, match_cell, n_cell, n_column);
+			lu_w_proc_list__alloc(self->next_list, match_cell, n_cell, n_column);
 		}
 	}
 	
@@ -754,49 +874,49 @@
 	static inline lu_size lu_w_processor__process(Lu_W_Processor self)
 	{
 		lu__assert(self);
-		lu__assert(lu_list__is_blank((Lu_List) self->curr_list));
-		// wave_ix
+		lu__assert(lu_w_proc_list__is_blank(self->curr_list));
+		lu__assert(lu_w_proc_list__is_present(self->next_list));
 
-		Lu_Lim_List t;
+
+		Lu_W_Proc_List t;
 		t = self->curr_list;
 		self->curr_list = self->next_list;
 		self->next_list = t;
 
-		Lu_W_N_Item w_n_item;
+		Lu_W_Proc_Item w_proc_item;
 		lu_size cells_processed = 0;
 
-		// lu_mem_table__print_counts(self->n_mem_table);
+		// lu_w_proc_list__print_counts(self->curr_list, "Proc Items");
 
-		while (lu_lim_list__is_present(self->curr_list))
+		for (lu_size i = 0; i < self->curr_list->items_count; i++)
 		{
-			w_n_item = (Lu_W_N_Item) lu_lim_list__pop_first_value(self->curr_list);
-			lu__assert(w_n_item);
+			w_proc_item = &self->curr_list->items[i];
 
-			// lu_w_n_item__print(w_n_item);
+			// lu_w_proc_item__print(w_proc_item);
 
-			lu_w_processor__fire_n_parents_with_sig(self, w_n_item->n_cell, w_n_item->n_column, 1.0);
+			lu_w_processor__fire_n_parents_with_sig(self, w_proc_item->n_cell, w_proc_item->n_column, 1.0);
 
-			if (lu_la_link_addr__is_present(&w_n_item->n_cell->labels))
+			if (lu_la_link_addr__is_present(&w_proc_item->n_cell->labels))
 			{
 				lu__deep_debug(
 					"\nN_CELL has label (n_cell->cell_ix=%ld) link_addr=%ld", 
-					w_n_item->n_cell->addr.cell_ix, 
-					w_n_item->n_cell->labels.value
+					w_proc_item->n_cell->addr.cell_ix, 
+					w_proc_item->n_cell->labels.value
 				);
-				lu_w_processor__fire_n_labels_with_sig(self, w_n_item->n_cell->labels, self->la_column, 1.0);
+				lu_w_processor__fire_n_labels_with_sig(self, w_proc_item->n_cell->labels, self->la_column, 1.0);
 			}
-
-			lu_mem_record__free(self->n_mem_table, (lu_p_byte) w_n_item);
 
 			++cells_processed;
 		}
+
+		lu_w_proc_list__reset(self->curr_list);
 
 		return cells_processed;
 	}
 
 	static inline lu_bool lu_w_processor__has_items_to_process(Lu_W_Processor self)
 	{
-		return !lu_list__is_blank((Lu_List) self->next_list);
+		return lu_w_proc_list__is_present(self->next_list);
 	}
 
 	static void lu_w_processor__prepare_results(Lu_W_Processor self);
@@ -806,17 +926,13 @@
 	{
 		lu__assert(self);
 
-		Lu_W_N_Item w_n_item;
-		Lu_L_Node l_node = lu_lim_list__get_first_node(self->next_list);
+		Lu_W_Proc_Item w_proc_item;
 
-		while (l_node)
+		for (lu_size i = 0; i < self->next_list->items_count; i++)
 		{
-			w_n_item = (Lu_W_N_Item) l_node->value;
-			lu__assert(w_n_item);
+			w_proc_item = &self->next_list->items[i];
 
-			lu_w_n_item__print(w_n_item);
-
-			l_node = l_node->next;
+			lu_w_proc_item__print(w_proc_item);
 		}
 	}
 

@@ -302,8 +302,6 @@
 				lu_w_processor__process(processor);
 			}
 
-			lu_mem_table__print_counts(processor->n_mem_table);
-
 			lu_w_processor__prepare_results(processor);
 		}
 		else 

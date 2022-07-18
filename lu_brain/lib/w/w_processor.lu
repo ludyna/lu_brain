@@ -31,14 +31,11 @@
 		self->s = s;
 		self->match_cell_mem = match_cell_mem;
 
-		self->n_mem_table = lu_mem_table__create(
-			self->mem, 
-			sizeof(struct lu_w_n_item),
-			config->w_processor_queue_size * 2,  // because we have two lists (curr_list and next_list)
-			0,
-			LU_MEM_TABLE__FREEABLE
-		);
-		lu__alloc_assert(self->n_mem_table);
+		self->curr_list = lu_w_proc_list__create(self->mem, config->w_processor_queue_size);
+		lu__assert(self->curr_list);
+
+		self->next_list = lu_w_proc_list__create(self->mem, config->w_processor_queue_size);
+		lu__assert(self->next_list);
 
 		// For lu_labels
 		self->la_mem_table = lu_mem_table__create(
@@ -46,18 +43,11 @@
 			sizeof(struct lu_label),
 			config->la_labels_size, 
 			0,
-			LU_MEM_TABLE__FREEABLE
+			LU_MEM_TABLE__DEFAULT
 		);
-		lu__alloc_assert(self->la_mem_table);
-
-		self->curr_list = lu_lim_list__create(self->mem, config->w_processor_queue_size);
-		lu__alloc_assert(self->curr_list);
-
-		self->next_list = lu_lim_list__create(self->mem, config->w_processor_queue_size);
-		lu__alloc_assert(self->next_list);
+		lu__alloc_assert(self->la_mem_table);;
 
 		self->la_column = la_column;
-
 		self->s_list = NULL;
 
 		self->sorted_results = (Lu_Label*) lu_mem__alloc(self->mem, sizeof(Lu_Label) * self->w_result_labels_size);
@@ -70,7 +60,6 @@
 		lu__assert(self->mem);
 		lu__assert(self->next_list);
 		lu__assert(self->curr_list);
-		lu__assert(self->n_mem_table);
 		lu__assert(self->la_mem_table);
 
 		if (self->sorted_results)
@@ -79,12 +68,10 @@
 		if (self->s_list)
 			lu_s_list__destroy(self->s_list);
 
-		lu_lim_list__destroy(self->next_list);
-
-		lu_lim_list__destroy(self->curr_list);
+		lu_w_proc_list__destroy(self->curr_list);
+		lu_w_proc_list__destroy(self->next_list);
 
 		lu_mem_table__destroy(self->la_mem_table);
-		lu_mem_table__destroy(self->n_mem_table);
 	} 
 
 ///////////////////////////////////////////////////////////////////////////////

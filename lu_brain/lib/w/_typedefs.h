@@ -4,6 +4,7 @@
 	//
 	// Save
 	//
+
 	typedef struct lu_w_rec * Lu_W_Rec;
 	typedef struct lu_w_table_p* Lu_W_Table_P;
 	typedef struct lu_w_table_v* Lu_W_Table_V;
@@ -13,7 +14,9 @@
 	//
 	// Match
 	//
-	typedef struct lu_w_n_item* Lu_W_N_Item;
+
+	typedef struct lu_w_proc_item* Lu_W_Proc_Item;
+	typedef struct lu_w_proc_list* Lu_W_Proc_List;
 	typedef struct lu_w_processor* Lu_W_Processor;
 
 
