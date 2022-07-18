@@ -164,7 +164,26 @@
 	
 	static void lu_s_view_v__deinit(Lu_S_View_V self);
 
-	
+///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Layer_Net_Stats
+//
+
+	struct lu_s_layer_net_stats {
+		lu_size cells_count;
+		lu_size cells_size;
+		lu_size links_count;
+		lu_size links_size;
+	};
+
+	static inline void lu_s_layer_net_stats__reset(Lu_S_Layer_Net_Stats self)
+	{
+		self->cells_count = 0;
+		self->cells_size = 0;
+		self->links_count = 0;
+		self->links_size = 0;
+	}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Base
 //
@@ -639,6 +658,25 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Area_Net_Stats
+//
+
+	struct lu_s_area_net_stats {
+		lu_size cells_count;
+		lu_size cells_size;
+		lu_size links_count;
+		lu_size links_size;
+	};
+
+	static inline void lu_s_area_net_stats__reset(Lu_S_Area_Net_Stats self)
+	{
+		self->cells_count = 0;
+		self->cells_size = 0;
+		self->links_count = 0;
+		self->links_size = 0;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Area
 //
 
@@ -737,14 +775,21 @@
 		}
 	}
 
-	static inline void lu_s_area__print_net_stats(Lu_S_Area self)
+	static inline void lu_s_area__print_net_stats(Lu_S_Area self, Lu_S_Net_Stats s_ns)
 	{
+		lu__assert(self);
+		lu__assert(s_ns);
+
 		char buffer[50];
 		lu_area_tag__to_str(self->tag, buffer);
 
 		lu__debug("\narea_ix: %d, tag: %s", self->area_ix, buffer);
 
 		Lu_S_Layer_Base layer ;
+		struct lu_s_area_net_stats area_ns;
+
+		lu_s_area_net_stats__reset(&area_ns);
+
 		for (lu_size i = 0; i < self->layers_count; i++)
 		{
 			layer = self->layers[i];
@@ -896,6 +941,25 @@
 	static Lu_S_Map_Frame lu_s_map_frame__create(Lu_Rec, Lu_S_Map_Base p, Lu_Config config);
 	static void lu_s_map_frame__destroy(Lu_S_Map_Base self);
 
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_S_Net_Stats
+//
+
+	struct lu_s_net_stats {
+		lu_size cells_count;
+		lu_size cells_size;
+		lu_size links_count;
+		lu_size links_size;
+	};
+
+	static inline void lu_s_net_stats__reset(Lu_S_Net_Stats self)
+	{
+		self->cells_count = 0;
+		self->cells_size = 0;
+		self->links_count = 0;
+		self->links_size = 0;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S

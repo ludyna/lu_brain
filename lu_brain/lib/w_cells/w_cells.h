@@ -461,6 +461,9 @@
 	struct lu_w_match_cell {
 		struct lu_block_id block_id;
 		lu_value sig;
+
+		// We need fired flag, because with breakpoint 0.5 or less cells can fire more than one time
+		lu_bool fired;
 	};
 
 	//
@@ -469,25 +472,18 @@
 
 	static inline Lu_W_Match_Cell lu_w_match_cell__init(
 		Lu_W_Match_Cell self, 
-		struct lu_block_id block_id,
-		lu_value sig
+		struct lu_block_id block_id
 	)
 	{	
 		lu__assert(lu_block_id__is_set(&block_id));
 
 		self->block_id = block_id;
-		self->sig = sig;
-
-		return self;
-	}
-
-	static inline Lu_W_Match_Cell lu_w_match_cell__reset(Lu_W_Match_Cell self)
-	{
-		lu_block_id__reset(&self->block_id);
 		self->sig = 0;
+		self->fired = false;
 
 		return self;
 	}
+
 
 	//
 	// Methods
@@ -500,8 +496,23 @@
 
 	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
 	{
+		if (self->fired) return false;
+		
 		lu_value def_sig = lu_n_cell__get_default_sig(n_cell);
-		return (def_sig - self->sig) <= (def_sig * breakpoint);
+		lu_value res_sig = def_sig - self->sig;
+
+		lu__assert(res_sig >= 0); // should never go below 0
+
+		// lu__debug(
+		// 	"\n def_sig: %.1f, sig: %.1f, res_sig: %.1f, (def_sig * breakpoint): %.1f, res: %d",
+		// 	def_sig,
+		// 	self->sig,
+		// 	res_sig,
+		// 	(def_sig * breakpoint),
+		// 	self->sig >= (def_sig * breakpoint)
+		// );
+
+		return self->sig >= (def_sig * breakpoint);
 	}
 
 	static inline lu_bool lu_w_match_cell__no_sig(Lu_W_Match_Cell self)

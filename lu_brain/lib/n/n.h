@@ -746,7 +746,7 @@
 
 			lu_n_cell__set_w_mach_cell_addr(self, wave_ix, match_addr);
 
-			lu_w_match_cell__init(match_cell, block_id, 0);
+			lu_w_match_cell__init(match_cell, block_id);
 			
 			return match_cell;
 		}
@@ -757,7 +757,7 @@
 		if (lu_block_id__is_not_eq(&match_cell->block_id, &block_id))
 		{
 			// reset
-			lu_w_match_cell__init(match_cell, block_id, 0);
+			lu_w_match_cell__init(match_cell, block_id);
 		}
 
 		return match_cell;

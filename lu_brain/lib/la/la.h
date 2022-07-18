@@ -170,7 +170,7 @@
 
 			lu_la_cell__set_w_mach_cell_addr(self, wave_ix, match_addr);
 
-			lu_w_match_cell__init(match_cell, block_id, 0);
+			lu_w_match_cell__init(match_cell, block_id);
 			
 			return match_cell;
 		}
@@ -187,7 +187,7 @@
 		{
 			// reset
 			lu__deep_debug("\n !! lu_w_match_cell__init(match_cell, block_id, 0);");
-			lu_w_match_cell__init(match_cell, block_id, 0);
+			lu_w_match_cell__init(match_cell, block_id);
 		}
 
 		return match_cell;

@@ -81,6 +81,7 @@
 		LU_S_VIEW__P
 	};
 
+	typedef struct lu_s_layer_net_stats* Lu_S_Layer_Net_Stats;
 	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
 	typedef struct lu_s_layer_comp* Lu_S_Layer_Comp;
 	typedef struct lu_s_layer_rec* Lu_S_Layer_Rec;
@@ -90,6 +91,7 @@
 	// Area
 	//
 
+	typedef struct lu_s_area_net_stats* Lu_S_Area_Net_Stats;
 	typedef struct lu_s_area* Lu_S_Area;
 
 	// 
@@ -108,6 +110,7 @@
 	//
 	// S
 	//
-	
+
+	typedef struct lu_s_net_stats* Lu_S_Net_Stats;
 	typedef struct lu_s* Lu_S;
 

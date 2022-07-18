@@ -500,6 +500,11 @@
 		lu_n_addr__print(&self->n_cell->addr);
 	}
 
+	static inline lu_value lu_w_proc_item__calc_fire_sig(Lu_W_Proc_Item self)
+	{
+		return self->match_cell->sig / self->n_cell->default_sig;
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Proc_List
 
@@ -594,7 +599,7 @@
 		lu__assert(self->items_count < new_items_size);
 		lu__assert(self->mem);
 
-		lu__mem_debug("\n (!) lu_w_proc_list__realloc");
+		lu__mem_debug("\n (!) lu_w_proc_list__realloc, new_size: %ld", new_items_size);
 
 		self->items = (struct lu_w_proc_item*) lu_mem__realloc(
 			self->mem, 
@@ -606,7 +611,7 @@
 		self->items_size = new_items_size;
 	}
 
-	static inline Lu_W_Proc_Item lu_w_proc_list__alloc(
+	static inline Lu_W_Proc_Item lu_w_proc_list__add(
 		Lu_W_Proc_List self,
 		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
@@ -756,7 +761,9 @@
 
 		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell, self->w_match_sig_breakpoint))
 		{
-			lu_w_proc_list__alloc(self->next_list, match_cell, n_cell, n_column);
+			match_cell->fired = true;
+
+			lu_w_proc_list__add(self->next_list, match_cell, n_cell, n_column);
 		}
 	}
 	
@@ -883,7 +890,6 @@
 		lu__assert(lu_w_proc_list__is_blank(self->curr_list));
 		lu__assert(lu_w_proc_list__is_present(self->next_list));
 
-
 		Lu_W_Proc_List t;
 		t = self->curr_list;
 		self->curr_list = self->next_list;
@@ -892,15 +898,21 @@
 		Lu_W_Proc_Item w_proc_item;
 		lu_size cells_processed = 0;
 
-		// lu_w_proc_list__print_counts(self->curr_list, "Proc Items");
+		lu_value fire_sig = 0;
 
 		for (lu_size i = 0; i < self->curr_list->items_count; i++)
 		{
 			w_proc_item = &self->curr_list->items[i];
 
-			// lu_w_proc_item__print(w_proc_item);
+			fire_sig = lu_w_proc_item__calc_fire_sig(w_proc_item);
 
-			lu_w_processor__fire_n_parents_with_sig(self, w_proc_item->n_cell, w_proc_item->n_column, 1.0);
+			// proc_item with fire sig < breakpoint should not be here
+			lu__assert(fire_sig >= self->w_match_sig_breakpoint); 
+
+			// fire_sig should be always less or equal to one
+			lu__assert(fire_sig <= 1.0); 
+
+			lu_w_processor__fire_n_parents_with_sig(self, w_proc_item->n_cell, w_proc_item->n_column, fire_sig);
 
 			if (lu_la_link_addr__is_present(&w_proc_item->n_cell->labels))
 			{
@@ -909,7 +921,7 @@
 					w_proc_item->n_cell->addr.cell_ix, 
 					w_proc_item->n_cell->labels.value
 				);
-				lu_w_processor__fire_n_labels_with_sig(self, w_proc_item->n_cell->labels, self->la_column, 1.0);
+				lu_w_processor__fire_n_labels_with_sig(self, w_proc_item->n_cell->labels, self->la_column, fire_sig);
 			}
 
 			++cells_processed;
