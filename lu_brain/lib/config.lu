@@ -10,7 +10,7 @@
 			// LU_CONFIG__DEFAULT
 
 			//
-			// Brain level
+			// Brain 
 			//
 			.b_mem = NULL,					
 			.b_id = 0, 						
@@ -18,14 +18,14 @@
 			.b_max_seq_size_in_blocks = 16,
 
 			//
-			// Space level
+			// Space 
 			//
 			.s_mem = NULL, 			
 			.s_apexes_size = 256,
 			.s_areas_size = 16,		
 
 			//
-			// Network level
+			// Network 
 			//
 			.n_mem = NULL,		
 			.n_column_w = 5, 
@@ -34,15 +34,29 @@
 			.n_link_mem_size = 64 * 3 * 2,
 
 			//
-			// Waves level
+			// Waves
 			//
 			.w_mem = NULL,	
-			.w_save_waves_size = 2,
+
+			//
+			// Save wave
+			// 
+			.w_save_waves_size = 1,
+			.w_save_sig_breakpoint = 0.74, 
+
+			//
+			// Match wave
+			//
 			.w_match_waves_size = 1,
-			.w_restore_waves_size = 1,
-			.w_processor_queue_size = 1024,
-			.w_result_labels_size = 3,
+			.w_match_sig_breakpoint = 0.5,
+			.w_match_processor_queue_size = 1024,
 			.w_match_cells_size_per_wave = 1024,
+			.w_match_results_size = 3,
+			
+			//
+			// Restore wave
+			//
+			.w_restore_waves_size = 1,
 
 			//
 			// Labels
@@ -56,7 +70,7 @@
 			// LU_CONFIG__SEMEION
 
 			//
-			// Brain level
+			// Brain 
 			//
 			.b_mem = NULL,					
 			.b_id = 0, 						
@@ -64,14 +78,14 @@
 			.b_max_seq_size_in_blocks = 1,
 
 			//
-			// Space level
+			// Space 
 			//
 			.s_mem = NULL, 			
 			.s_apexes_size = 256,
 			.s_areas_size = 16,		
 
 			//
-			// Network level
+			// Network 
 			//
 			.n_mem = NULL,		
 			.n_column_w = 5, 
@@ -80,15 +94,29 @@
 			.n_link_mem_size = 12000,
 
 			//
-			// Waves level
+			// Waves
 			//
 			.w_mem = NULL,	
+
+			//
+			// Save wave
+			// 
 			.w_save_waves_size = 1,
+			.w_save_sig_breakpoint = 0.74, 
+
+			//
+			// Match wave
+			//
 			.w_match_waves_size = 1,
+			.w_match_sig_breakpoint = 0.5,
+			.w_match_processor_queue_size = 6000,
+			.w_match_cells_size_per_wave = 6000,
+			.w_match_results_size = 3,
+			
+			//
+			// Restore wave
+			//
 			.w_restore_waves_size = 1,
-			.w_processor_queue_size = 6000,
-			.w_result_labels_size = 3,
-			.w_match_cells_size_per_wave = 2000,
 
 			//
 			// Labels
@@ -156,14 +184,14 @@
 		lu__user_assert(self->b_recs_size > 0, "recs_size should be greater than 0");
 
 		//
-		// Structure level
+		// Space
 		//
 
 		lu__user_assert(self->s_mem, "s_mem is NULL");
 		lu__user_assert(self->s_areas_size > LU_N_AREA__SPECIAL_AREA_SKIP, "s_areas_size should be greater than LU_N_AREA__SPECIAL_AREA_SKIP");
 
 		//
-		// Network level
+		// Network 
 		//
 
 		lu__user_assert(self->n_mem, "n_mem is NULL");
@@ -173,14 +201,30 @@
 		lu__user_assert(self->n_link_mem_size > 16, "n_column_size should be greater than 16");
 
 		//
-		// Waves level
+		// Waves 
+		//
+		lu__user_assert(self->w_mem, "w_mem is NULL");
+
+		//
+		// Save wave
+		//
+		lu__user_assert(self->w_save_waves_size > 0, "w_save_waves_size should be greater than 0");
+		lu__user_assert(self->w_save_sig_breakpoint >= 0 && self->w_save_sig_breakpoint <= 1 , "w_match_sig_breakpoint should be in [0, 1]"); 
+
+		//
+		// Match wave 
 		//
 
-		lu__user_assert(self->w_mem, "w_mem is NULL");
-		lu__user_assert(self->w_save_waves_size > 0, "w_save_waves_size should be greater than 0");
 		lu__user_assert(self->w_match_waves_size > 0, "w_save_waves_size should be greater than 0");
-		lu__user_assert(self->w_restore_waves_size > 0, "w_save_waves_size should be greater than 0");
+		lu__user_assert(self->w_match_sig_breakpoint >= 0 && self->w_match_sig_breakpoint <= 1 , "w_match_sig_breakpoint should be in [0, 1]");
 		lu__user_assert(self->w_match_cells_size_per_wave > 1, "w_match_cells_size_per_wave should be greater than 1");
+		lu__user_assert(self->w_match_results_size > 0, "w_match_results_size should be greater than 0");
+
+		//
+		// Restore wave 
+		// 
+		
+		lu__user_assert(self->w_restore_waves_size > 0, "w_save_waves_size should be greater than 0");
 
 		//
 		// Labels

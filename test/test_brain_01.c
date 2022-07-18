@@ -224,7 +224,7 @@ void test_brain_01(void)
 		TEST_ASSERT(results);
 		TEST_ASSERT(results[0]);
 
-		lu_labels__print_results(results, brain_config.w_result_labels_size);
+		lu_labels__print_results(results, brain_config.w_match_results_size);
 
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[0]);
 
@@ -246,7 +246,7 @@ void test_brain_01(void)
 		TEST_ASSERT(results);
 		TEST_ASSERT(results[0]);
 
-		lu_labels__print_results(results, brain_config.w_result_labels_size);
+		lu_labels__print_results(results, brain_config.w_match_results_size);
 
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[1]);
 
@@ -268,7 +268,7 @@ void test_brain_01(void)
 		TEST_ASSERT(results);
 		TEST_ASSERT(results[0]);
 
-		lu_labels__print_results(results, brain_config.w_result_labels_size);
+		lu_labels__print_results(results, brain_config.w_match_results_size);
 
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[2]);
 
@@ -290,7 +290,7 @@ void test_brain_01(void)
 		TEST_ASSERT(results);
 		TEST_ASSERT(results[0]);
 
-		lu_labels__print_results(results, brain_config.w_result_labels_size);
+		lu_labels__print_results(results, brain_config.w_match_results_size);
 
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[3]);
 
@@ -312,7 +312,7 @@ void test_brain_01(void)
 		TEST_ASSERT(results);
 		TEST_ASSERT(results[0]);
 
-		lu_labels__print_results(results, brain_config.w_result_labels_size);
+		lu_labels__print_results(results, brain_config.w_match_results_size);
 
 		TEST_ASSERT(lu_label__get_id(results[0]) == labels[2]);
 

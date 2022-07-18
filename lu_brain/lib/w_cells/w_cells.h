@@ -500,7 +500,8 @@
 
 	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
 	{
-		return (lu_n_cell__get_default_sig(n_cell) - self->sig) <= breakpoint;
+		lu_value def_sig = lu_n_cell__get_default_sig(n_cell);
+		return (def_sig - self->sig) <= (def_sig * breakpoint);
 	}
 
 	static inline lu_bool lu_w_match_cell__no_sig(Lu_W_Match_Cell self)
@@ -511,7 +512,7 @@
 	static inline void lu_w_match_cell__print(Lu_W_Match_Cell self)
 	{
 		lu_block_id__print(&self->block_id);
-		lu__debug(" SIG=%.1f", self->sig);
+		lu__debug("SIG=%.1f", self->sig);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -719,10 +719,16 @@
 		Lu_W_Proc_List next_list;
 
 		Lu_Mem_Table la_mem_table;
-		lu_size w_result_labels_size;
 
 		Lu_S_List s_list;
 		Lu_Label* sorted_results;
+
+		// 
+		// Config
+		//
+
+		lu_size w_match_results_size;
+		lu_value w_match_sig_breakpoint;
 	};
 
 	static void lu_w_processor__init(
@@ -748,7 +754,7 @@
 
 		lu_w_match_cell__add_sig(match_cell, sig);
 
-		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell, 2.0))
+		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell, self->w_match_sig_breakpoint))
 		{
 			lu_w_proc_list__alloc(self->next_list, match_cell, n_cell, n_column);
 		}
@@ -945,9 +951,9 @@
 		
 		if (self->s_list) lu_s_list__destroy(self->s_list);
 
-		lu__deep_debug("\n !! self->w_result_labels_size=%ld", self->w_result_labels_size);
+		lu__deep_debug("\n !! self->w_match_results_size=%ld", self->w_match_results_size);
 
-		self->s_list = lu_s_list__create(self->mem, self->w_result_labels_size, lu_label__compare, LU_S_LST__LAST);
+		self->s_list = lu_s_list__create(self->mem, self->w_match_results_size, lu_label__compare, LU_S_LST__LAST);
 		lu__alloc_assert(self->s_list);
 		
 		//
@@ -959,7 +965,7 @@
 		// Reset sorted results
 		//
 
-		lu_labels__reset(self->sorted_results, self->w_result_labels_size);
+		lu_labels__reset(self->sorted_results, self->w_match_results_size);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

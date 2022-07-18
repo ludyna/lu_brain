@@ -17,24 +17,25 @@
 		lu__assert(s);
 		lu__assert(config); 
 		lu__assert(config->w_mem);
-		lu__assert(config->w_result_labels_size>0);
+		lu__assert(config->w_match_results_size>0);
 		lu__assert(match_cell_mem);
 		lu__assert(la_column);
 
 		self->mem = config->w_mem;
-		self->w_result_labels_size = config->w_result_labels_size;
+
+		self->w_match_results_size = config->w_match_results_size;
+		self->w_match_sig_breakpoint = config->w_match_sig_breakpoint;
 
 		lu_block_id__reset(&self->block_id);
-
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
 
 		self->s = s;
 		self->match_cell_mem = match_cell_mem;
 
-		self->curr_list = lu_w_proc_list__create(self->mem, config->w_processor_queue_size);
+		self->curr_list = lu_w_proc_list__create(self->mem, config->w_match_processor_queue_size);
 		lu__assert(self->curr_list);
 
-		self->next_list = lu_w_proc_list__create(self->mem, config->w_processor_queue_size);
+		self->next_list = lu_w_proc_list__create(self->mem, config->w_match_processor_queue_size);
 		lu__assert(self->next_list);
 
 		// For lu_labels
@@ -50,8 +51,10 @@
 		self->la_column = la_column;
 		self->s_list = NULL;
 
-		self->sorted_results = (Lu_Label*) lu_mem__alloc(self->mem, sizeof(Lu_Label) * self->w_result_labels_size);
+		self->sorted_results = (Lu_Label*) lu_mem__alloc(self->mem, sizeof(Lu_Label) * self->w_match_results_size);
 		lu__alloc_assert(self->sorted_results);
+
+
 	}
 
 	static void lu_w_processor__deinit(Lu_W_Processor self)
@@ -81,7 +84,7 @@
 	{
 		lu__assert(self);
 		lu__assert(self->la_column);
-		lu__assert(self->w_result_labels_size > 0);
+		lu__assert(self->w_match_results_size > 0);
 		lu__assert(self->mem);
 
 		lu_size i;
@@ -135,7 +138,7 @@
 		Lu_S_Node curr = lu_s_list__get_first_node(self->s_list);
 		while (curr)
 		{
-			lu__assert(i < self->w_result_labels_size);
+			lu__assert(i < self->w_match_results_size);
 
 			self->sorted_results[i] = (Lu_Label) lu_s_node__get_value(curr);
 			++i;	

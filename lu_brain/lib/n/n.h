@@ -862,6 +862,8 @@
 		lu_size cells_used_mean;
 		lu_size cells_used_max;
 		lu_size cells_size;
+		lu_size total_cells_count;
+		lu_size total_cells_size;
 
 		lu_size max_z_min;
 		lu_size max_z_mean;
@@ -872,6 +874,8 @@
 		lu_size links_count_mean;
 		lu_size links_count_max;
 		lu_size links_size;
+		lu_size total_links_count;
+		lu_size total_links_size;
 	};
 
 	static inline Lu_N_Table_Stats lu_n_table_stats__reset(Lu_N_Table_Stats self)
@@ -884,6 +888,8 @@
 		self->cells_used_mean = 0;
 		self->cells_used_max = 0;
 		self->cells_size = 0;
+		self->total_cells_count = 0;
+		self->total_cells_size = 0;
 
 		self->max_z_min = LU_SIZE__MAX;
 		self->max_z_mean = 0;
@@ -894,6 +900,8 @@
 		self->links_count_mean = 0;
 		self->links_count_max = 0;
 		self->links_size = 0;
+		self->total_links_count = 0;
+		self->total_links_size = 0;
 
 		return self;
 	}
@@ -1020,6 +1028,10 @@
 		ts->cells_used_mean += self->cells_count;
 		if (self->cells_count > ts->cells_used_max) ts->cells_used_max = self->cells_count;
 		if (self->cells_size > ts->cells_size) ts->cells_size = self->cells_size;
+		
+		ts->total_cells_count += self->cells_count;
+		ts->total_cells_size += self->cells_size;
+
 
 		lu_size links_count = lu_n_link_mem__get_links_count(&self->link_mem);
 
@@ -1029,6 +1041,9 @@
 
 		lu_size links_size = lu_n_link_mem__get_links_size(&self->link_mem);
 		if (links_size > ts->links_size) ts->links_size = links_size;
+
+		ts->total_links_count += links_count;
+		ts->total_links_size += links_size;
 
 	}
 
@@ -1331,6 +1346,9 @@
 		if (self->stat_cells_used > ts->cells_used_max) ts->cells_used_max = self->stat_cells_used;
 		if (self->cells_size > ts->cells_size) ts->cells_size = self->cells_size;
 
+		ts->total_cells_count += self->stat_cells_used;
+		ts->total_cells_size += self->cells_size;
+
 		if (self->stat_max_z < ts->max_z_min) ts->max_z_min = self->stat_max_z;
 		ts->max_z_mean += self->stat_max_z;
 		if (self->stat_max_z > ts->max_z_max) ts->max_z_max = self->stat_max_z;
@@ -1345,6 +1363,8 @@
 		lu_size links_size = lu_n_link_mem__get_links_size(&self->link_mem);
 		if (links_size > ts->links_size) ts->links_size = links_size;
 
+		ts->total_links_count += links_count;
+		ts->total_links_size += links_size;
 	}
 
 	static inline void lu_n_column__print_mem_stats(Lu_N_Column self)
@@ -1467,7 +1487,7 @@
 		}
 
 		lu__debug(
-			"\n\t\tN_TABLE [%ldx%ld]: cells: %ld/%ld/%ld(%ld), max_z: %ld/%ld/%ld(%ld), links: %ld/%ld/%ld(%ld)",
+			"\n\t\tN_TABLE [%ldx%ld]: cells: %ld/%ld/%ld(%ld), total cells: %ld/%ld, max_z: %ld/%ld/%ld(%ld), links: %ld/%ld/%ld(%ld)",
  			self->w, 
  			self->h_max,
  			
@@ -1475,6 +1495,9 @@
 			ts.cells_used_mean / ts.column_count,
 			ts.cells_used_max,
 			ts.cells_size,
+
+			ts.total_cells_count,
+			ts.total_cells_size,
 
 			ts.max_z_min,
 			ts.max_z_mean / ts.column_count,

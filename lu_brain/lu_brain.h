@@ -82,14 +82,14 @@
 		lu_size b_max_seq_size_in_blocks; 			// max seq size in blocks
 
 		//
-		// Structure level
+		// Space
 		//
 		Lu_Mem s_mem;								// if NULL initialize to default
 		lu_size s_apexes_size;						// initial maximum number of apexes
 		lu_size s_areas_size;						// initial number of areas
 
 		//
-		// Network level
+		// Network 
 		//
 		Lu_Mem n_mem;								// if NULL initialize to default
 		lu_size n_names_size; 						// initial maximum number of names
@@ -105,16 +105,30 @@
 		lu_size n_link_mem_size;
 
 		//
-		// Waves level
+		// Waves 
 		//
 		Lu_Mem w_mem;								// if NULL initialize to default
-		lu_size w_save_waves_size;					// save waves size
+
+		//
+		// Save wave
+		//
+		lu_size w_save_waves_size;					// save waves size 
+		lu_value w_save_sig_breakpoint;				// [0, 1]
+
+		//
+		// Match wave
+		//
 		lu_size w_match_waves_size;					// match waves size
-		lu_size w_restore_waves_size;				// restore waves size
-		lu_size w_processor_queue_size;				// 
-		lu_size w_result_labels_size;				//
+		lu_value w_match_sig_breakpoint;			// [0, 1]
+		lu_size w_match_processor_queue_size;		// 
+		lu_size w_match_results_size;				//
 		lu_size w_match_cells_size_per_wave;		//			
 
+		//
+		// Restore wave 
+		//
+
+		lu_size w_restore_waves_size;				// restore waves size
 
 		//
 		// Labels

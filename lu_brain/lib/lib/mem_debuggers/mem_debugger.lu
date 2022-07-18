@@ -98,7 +98,12 @@
 			return;
 		} 
 
-		//lu__debug("\nMEM DEBUGGER REGISTER ALLOC");
+		if(size == 0)
+		{
+			lu__debug_message_internal(file, line, "\nMem_Debugger: Alloc size is 0");
+			return;
+		}
+
 		lu__assert(imd);
 		lu__assert(size > 0);
 

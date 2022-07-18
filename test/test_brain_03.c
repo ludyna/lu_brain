@@ -199,7 +199,7 @@ Lu_Label* match_values(Lu_Wave m_wave, lu_size values_ix)
 	TEST_ASSERT(results);
 	// TEST_ASSERT(results[0]);
 
-	lu_labels__print_results(results, brain_config.w_result_labels_size);
+	lu_labels__print_results(results, brain_config.w_match_results_size);
 
 	return results;
 }
