@@ -16,6 +16,7 @@
 
 // Modules
 
+#include "stats/_module.h"
 #include "rec/_module.h"
 #include "data_seq/_module.h"
 #include "calcs/_module.h"

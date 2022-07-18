@@ -852,61 +852,6 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Table_Stats
-
-	struct lu_n_table_stats {
-		lu_size column_count;
-
-
-		lu_size cells_used_min;
-		lu_size cells_used_mean;
-		lu_size cells_used_max;
-		lu_size cells_size;
-		lu_size total_cells_count;
-		lu_size total_cells_size;
-
-		lu_size max_z_min;
-		lu_size max_z_mean;
-		lu_size max_z_max;
-		lu_size d;
-
-		lu_size links_count_min;
-		lu_size links_count_mean;
-		lu_size links_count_max;
-		lu_size links_size;
-		lu_size total_links_count;
-		lu_size total_links_size;
-	};
-
-	static inline Lu_N_Table_Stats lu_n_table_stats__reset(Lu_N_Table_Stats self)
-	{
-		lu__assert(self);
-
-		self->column_count = 0;
-
-		self->cells_used_min = LU_SIZE__MAX;
-		self->cells_used_mean = 0;
-		self->cells_used_max = 0;
-		self->cells_size = 0;
-		self->total_cells_count = 0;
-		self->total_cells_size = 0;
-
-		self->max_z_min = LU_SIZE__MAX;
-		self->max_z_mean = 0;
-		self->max_z_max = 0;
-		self->d = 0;
-
-		self->links_count_min = LU_SIZE__MAX;
-		self->links_count_mean = 0;
-		self->links_count_max = 0;
-		self->links_size = 0;
-		self->total_links_count = 0;
-		self->total_links_size = 0;
-
-		return self;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Col
 // 
 
@@ -1020,7 +965,7 @@
 		);
 	}
 
-	static inline void lu_n_col__collect_net_stats(Lu_N_Col self, Lu_N_Table_Stats ts)
+	static inline void lu_n_col__collect_net_stats(Lu_N_Col self, Lu_N_Table_Net_Stats ts)
 	{
 		++ts->column_count;
 
@@ -1337,7 +1282,7 @@
 
 	}
 
-	static inline void lu_n_column__collect_net_stats(Lu_N_Column self, Lu_N_Table_Stats ts)
+	static inline void lu_n_column__collect_net_stats(Lu_N_Column self, Lu_N_Table_Net_Stats ts)
 	{
 		++ts->column_count;
 
@@ -1461,7 +1406,7 @@
 		return true;
 	}
 
-	static inline void lu_n_table__print_net_stats(Lu_N_Table self)
+	static inline void lu_n_table__print_net_stats(Lu_N_Table self, Lu_S_Layer_Net_Stats layer_ns)
 	{
 		lu__assert(self);
 
@@ -1469,7 +1414,7 @@
 		lu_size y;
 		Lu_N_Column n_column;
 
-		struct lu_n_table_stats ts;
+		struct lu_n_table_net_stats ts;
 
 		lu_n_table_stats__reset(&ts);
 
@@ -1487,7 +1432,7 @@
 		}
 
 		lu__debug(
-			"\n\t\tN_TABLE [%ldx%ld]: cells: %ld/%ld/%ld(%ld), total cells: %ld/%ld, max_z: %ld/%ld/%ld(%ld), links: %ld/%ld/%ld(%ld)",
+			"\n\t\tN_TABLE [%ldx%ld]: cells: %ld/%ld/%ld(max size: %ld, total: %ld/%ld), max_z: %ld/%ld/%ld(%ld), links: %ld/%ld/%ld(max size: %ld, total: %ld/%ld)",
  			self->w, 
  			self->h_max,
  			
@@ -1507,8 +1452,13 @@
 			ts.links_count_min,
 			ts.links_count_mean / ts.column_count,
 			ts.links_count_max,
-			ts.links_size
+			ts.links_size,
+
+			ts.total_links_count,
+			ts.total_links_size
 		);
+ 	
+ 		lu_s_layer_net_stats__collect(layer_ns, &ts);
 	}
 
 

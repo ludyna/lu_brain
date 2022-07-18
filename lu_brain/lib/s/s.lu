@@ -221,4 +221,6 @@
 
 			lu_s_area__print_net_stats(area, &ns);
 		}
+
+		lu_s_net_stats__print(&ns);
 	}

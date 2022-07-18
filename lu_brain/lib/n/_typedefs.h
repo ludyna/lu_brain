@@ -28,8 +28,7 @@
 	typedef struct lu_n_column* Lu_N_Column;
 	typedef struct lu_n_column_comp* Lu_N_Column_Comp;
 	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
-	
-	typedef struct lu_n_table_stats* Lu_N_Table_Stats;
+
 	typedef struct lu_n_table* Lu_N_Table;
 
 	#define LU_N_CELL__CHILDREN_MAX 5
