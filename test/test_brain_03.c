@@ -16,6 +16,14 @@ Lu_Wave  			m_wave;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
 
+lu_value blank_values[] = 
+	{ 
+		0, 0, 0, 
+		0, 0, 0, 
+		0, 0, 0, 
+		0, 0, 0, 
+		0, 0, 0, 
+	};
 
 lu_value patterns[][15] = {
 	{ 
@@ -92,14 +100,16 @@ void setUp(void)
  
 	brain_config 		= lu_config__get_by_id(LU_CONFIG__DEFAULT);
 
+	brain_config.w_match_sig_breakpoint = 0.2;
+
 	brain 				= lu_brain__create(brain_config);
 	TEST_ASSERT(brain);
 	TEST_ASSERT(brain->recs);
 
 	rec_0 				= lu_brain__rec_add(
 		/*belongs to*/			brain, 
-		/*width*/				4, 
-		/*height*/				6, 
+		/*width*/				3, 
+		/*height*/				5, 
 		/*depth*/				1,
 		/*config*/ 				lu_rec_config__get_by_id(LU_REC__MONO1_IMAGE)
 	);	
@@ -170,10 +180,7 @@ void save_all_paterns()
 		lu__debug("\nSAVING PATTERN FOR LABEL: %ld", label);
 		lu_values__print_symbols(values, 3, 5, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-		lu_wave__push(s_wave, rec_0, values, 3, 5, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
+		lu_wave__push(s_wave, rec_0, blank_values, 3, 5, 1);
 		lu_wave__push(s_wave, rec_0, values, 3, 5, 1);
 
 		lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -187,10 +194,7 @@ Lu_Label* match_values(Lu_Wave m_wave, lu_size values_ix)
 	lu__debug("\nMATCHING DATA: ");
 	lu_values__print_symbols(patterns[values_ix], 3, 5, 1);
 
-	lu_wave__set_dest_start_pos(rec_0, 0, 0);
-	lu_wave__push(m_wave, rec_0, patterns[values_ix], 3, 5, 1);
-
-	lu_wave__set_dest_start_pos(rec_0, 1, 1);
+	lu_wave__push(m_wave, rec_0, blank_values, 3, 5, 1);
 	lu_wave__push(m_wave, rec_0, patterns[values_ix], 3, 5, 1);
 
 	lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));

@@ -1,7 +1,7 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 
-	NOTE: not working at this moment, WORK IN PROGRESS
+	WARNING: not working at this moment, WORK IN PROGRESS
 
 	Execute with 
 	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function -Wno-unused-value main.c -o ./build/semeion -lm; ./build/semeion 
@@ -112,10 +112,15 @@ int main()
 
 	Lu_Label* labels = NULL;
 
-	lu_size samples_to_test = 10;  // smn_test_samples_count
+	lu_size samples_to_test = 10;  // smn_test_samples_count there is accumulation bug atm, so dont test big numbers
 	for (i = 0; i < samples_to_test; i++)
 	{
-		d = smn_test_samples[i]; 
+		if (i >= smn_test_samples_count) break;
+
+		d = smn_test_samples[smn__rand_in_range(0, (int) smn_test_samples_count)]; 
+
+		printf("\nMATCHING UNTRAINED SAMPLE:");
+		smn_digit__print(d);
 
 		lu_wave__set_dest_start_pos(image_rec, 0, 0);
 		lu_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
@@ -129,12 +134,22 @@ int main()
 
 		if (labels)
 		{
-			if(labels[0] && lu_label__get_id(labels[0]) == d->name)
+			if(labels[0])
 			{
-				++success_count;
+				if (lu_label__get_id(labels[0]) == d->name)
+				{
+					printf("\nRESULT: %ld (SUCCESS)", lu_label__get_id(labels[0]));
+					++success_count;
+				}
+				else
+				{
+					printf("\nRESULT: %ld (FAILED)", lu_label__get_id(labels[0]));
+					++failed_count;
+				}
 			}
 			else
 			{
+				printf("\nRESULT: no match (FAILED)");
 				++failed_count;
 			}
 		}
