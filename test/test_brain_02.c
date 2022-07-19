@@ -269,7 +269,7 @@ void match_all_patterns()
 		TEST_ASSERT(results);
 		TEST_ASSERT(results[0]);
 
-		lu_labels__print_results(results, brain_config.w_match_results_size);
+		lu_wave__print_match_results(m_wave);
 
 		TEST_ASSERT(lu_label__get_id(results[0]) == label);
 	}

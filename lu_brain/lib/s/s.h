@@ -305,6 +305,14 @@
 	static inline void lu_s_layer_comp__print_net_stats(Lu_S_Layer_Comp self, Lu_S_Area_Net_Stats area_ns)
 	{
 		lu_s_layer_base__print_net_stats(&self->super, area_ns);
+
+		// struct lu_s_layer_net_stats layer_ns;
+
+		// lu_s_layer_net_stats__reset(&layer_ns);
+
+		// lu_n_table__print_net_stats(&self->n_table, &layer_ns);
+
+		// lu_s_area_net_stats__collect(area_ns, &layer_ns);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

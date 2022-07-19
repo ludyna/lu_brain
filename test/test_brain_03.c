@@ -195,11 +195,10 @@ Lu_Label* match_values(Lu_Wave m_wave, lu_size values_ix)
 
 	lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
+	lu_wave__print_match_results(m_wave);
+
 	Lu_Label* results = lu_wave__get_result_labels(m_wave);
 	TEST_ASSERT(results);
-	// TEST_ASSERT(results[0]);
-
-	lu_labels__print_results(results, brain_config.w_match_results_size);
 
 	return results;
 }
@@ -225,8 +224,6 @@ void match_all_patterns()
 
 	results = match_values(m_wave, 5);
 	TEST_ASSERT(lu_label__get_id(results[0]) == LABEL_0 || lu_label__get_id(results[0]) == LABEL_1);
-
-
 }
 
 void test_brain_02(void) 

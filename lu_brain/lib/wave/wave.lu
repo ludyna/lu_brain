@@ -52,7 +52,7 @@
 
 	struct lu_process_config lu_wave__get_process_config(Lu_Wave self)
 	{
-		lu__debug_assert(self);
+		lu__assert(self);
 		return self->config;
 	}
 
@@ -81,6 +81,16 @@
 	// 	lu__user_assert(self, "Lu_Wave is NULL");
 	// 	lu__user_assert(rec, "Lu_Rec is NULL");
 	// }
+
+	lu_size lu_wave__get_fired_cells_count(Lu_Wave self)
+	{
+		lu__assert(self);
+		lu__assert(self->type == LU_WAVE__MATCH);
+
+		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+
+		return match_wave->processor.stats.cells_processed;
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Block Begin
@@ -695,4 +705,16 @@
 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
 
 		return match_wave->processor.sorted_results;
+	}
+
+	void lu_wave__print_match_results(Lu_Wave self)
+	{
+		lu__user_assert_void(self, "Lu_Wave is NULL");
+		lu__user_assert_void(self->type == LU_WAVE__MATCH, "Lu_Wave is not match wave");
+
+		Lu_Label* results = lu_wave__get_result_labels(self);
+		lu__assert(results);
+
+		lu__debug("\nMATCH RESULTS (%ld cells fired):", lu_wave__get_fired_cells_count(self));
+		lu_labels__print_results(results, self->brain->config.w_match_results_size);
 	}

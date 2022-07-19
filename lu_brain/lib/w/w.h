@@ -656,7 +656,6 @@
 	{
 		lu__assert(self);
 
-		lu__debug("\nLABELS:");
 		Lu_Label label;
 		Lu_La_Cell la_cell;
 		Lu_W_Match_Cell match_cell;
@@ -770,6 +769,8 @@
 			match_cell->fired = true;
 
 			lu_w_proc_list__add(self->next_list, match_cell, n_cell, n_column);
+
+			++self->stats.cells_processed;
 		}
 	}
 	
