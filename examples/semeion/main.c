@@ -112,8 +112,8 @@ int main()
 
 	Lu_Label* labels = NULL;
 
-	// for (i = 0; i < smn_test_samples_count; i++)
-	for (i = 0; i < 1; i++)
+	lu_size samples_to_test = 10;  // smn_test_samples_count
+	for (i = 0; i < samples_to_test; i++)
 	{
 		d = smn_test_samples[i]; 
 
@@ -151,7 +151,7 @@ int main()
 	printf("\nReport:");
 	printf("\n 	  Successfully recognized: %d", (int) success_count);
 	printf("\n 	  Failed recognition: %d", (int) failed_count);
-	printf("\n 	  Success rate: %f", success_count / (lu_value) smn_test_samples_count);
+	printf("\n 	  Success rate: %.2f%%", (success_count / (lu_value) samples_to_test) * 100.0);
 	printf("\n");
 
 	// Destroy save_wave and brain

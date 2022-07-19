@@ -1432,7 +1432,7 @@
 		}
 
 		lu__debug(
-			"\n\t\tN_TABLE [%ldx%ld]: cells: %ld/%ld/%ld(max size: %ld, total: %ld/%ld), max_z: %ld/%ld/%ld(%ld), links: %ld/%ld/%ld(max size: %ld, total: %ld/%ld)",
+			"\n\t\tN_TABLE [%ldx%ld] cells: %ld/%ld/%ld(max: %ld, total: %ld/%ld), z: %ld/%ld/%ld(%ld), links: %ld/%ld/%ld(max: %ld, total: %ld/%ld)",
  			self->w, 
  			self->h_max,
  			
