@@ -47,8 +47,8 @@ int main()
 	
 	Lu_Rec image_rec = lu_brain__rec_add(
 		/*belongs to*/			brain, 
-		/*width*/				17, 
-		/*height*/				17, 
+		/*width*/				16, 
+		/*height*/				16, 
 		/*depth*/				1,
 		/*predefined config */ 	lu_rec_config__get_by_id(LU_REC__MONO1_IMAGE)
 	);	
@@ -83,10 +83,7 @@ int main()
 	{
 		d = smn_training_samples[i];
 
-		lu_wave__set_dest_start_pos(image_rec, 0, 0);
-		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
-
-		lu_wave__set_dest_start_pos(image_rec, 1, 1);
+		lu_wave__push(save_wave, image_rec, smn_blank_pixels, 16, 16, 1);
 		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
 
 		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -122,10 +119,7 @@ int main()
 		printf("\nMATCHING UNTRAINED SAMPLE:");
 		smn_digit__print(d);
 
-		lu_wave__set_dest_start_pos(image_rec, 0, 0);
-		lu_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
-
-		lu_wave__set_dest_start_pos(image_rec, 1, 1);
+		lu_wave__push(match_wave, image_rec, smn_blank_pixels, 16, 16, 1);
 		lu_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
 
 		lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
@@ -136,6 +130,8 @@ int main()
 		{
 			if(labels[0])
 			{
+				lu_wave__print_match_results(match_wave);
+
 				if (lu_label__get_id(labels[0]) == d->name)
 				{
 					printf("\nRESULT: %ld (SUCCESS)", lu_label__get_id(labels[0]));
