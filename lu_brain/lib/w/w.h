@@ -675,7 +675,7 @@
 			lu__debug(
 				"\n\tlabel=%ld, sig=%.2f [MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
 				la_cell->addr.la_ix, 
-				match_cell->sig,
+				lu_label__get_sig(label),
 				match_cell->block_id.wave_id,
 				match_cell->block_id.block_ix,
 				la_cell->children_count
@@ -734,6 +734,12 @@
 
 		lu_size w_match_results_size;
 		lu_value w_match_sig_breakpoint;
+
+		//
+		// Stats
+		//  
+
+		struct lu_w_processor_stats stats;
 	};
 
 	static void lu_w_processor__init(
@@ -978,6 +984,12 @@
 		//
 
 		lu_labels__reset(self->sorted_results, self->w_match_results_size);
+
+		//
+		// Reset proc stats
+		//
+
+		lu_w_processor_stats__reset(&self->stats);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -36,3 +36,22 @@
 
 		return lu_la_cell__get_ix(self->la_cell);
 	}
+
+	lu_value lu_label__get_sig(Lu_Label self)
+	{
+		if(!self)
+		{
+		 	if(lu_g_user_assert) 
+		 	{
+		 	 	lu__user_debug("Lu_Label is NULL");
+		 	}
+
+		 	return 0;
+		}
+
+		lu__assert(self->match_cell);
+		lu__assert(self->la_cell);
+		lu__assert(self->la_cell->children_count);
+
+		return self->match_cell->sig / ((lu_value) self->la_cell->children_count);
+	}

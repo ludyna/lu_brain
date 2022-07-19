@@ -361,6 +361,7 @@
 // Lu_Label
 
 	lu_size lu_label__get_id(Lu_Label self);
+	lu_value lu_label__get_sig(Lu_Label self);
 
 
 #endif // _LU_BRAIN_API_H

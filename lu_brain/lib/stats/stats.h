@@ -163,3 +163,18 @@
  			self->links_size
  		);
  	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Processor_Stats
+//
+
+ 	struct lu_w_processor_stats {
+ 		lu_size cells_processed;
+ 	};
+
+ 	static inline void lu_w_processor_stats__reset(Lu_W_Processor_Stats self)
+ 	{
+ 		lu__assert(self);
+
+ 		self->cells_processed = 0;
+ 	}
