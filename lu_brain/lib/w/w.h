@@ -658,7 +658,7 @@
 
 		Lu_Label label;
 		Lu_La_Cell la_cell;
-		Lu_W_Match_Cell match_cell;
+		Lu_W_La_Match_Cell match_cell;
 
 		for (lu_size i = 0; i < size; i++)
 		{
@@ -672,9 +672,10 @@
 			lu__assert(match_cell);
 
 			lu__debug(
-				"\n\tlabel=%ld, sig=%.2f [MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
+				"\n\tlabel=%ld, sig=%.2f (%.0f) [MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
 				la_cell->addr.la_ix, 
 				lu_label__get_sig(label),
+				match_cell->sig_received_count,
 				match_cell->block_id.wave_id,
 				match_cell->block_id.block_ix,
 				la_cell->children_count
@@ -873,7 +874,7 @@
 		Lu_La_Link la_link_label = lu_la_link_mem__get_link(link_mem, labels);
 
 		Lu_La_Cell la_cell;
-		Lu_W_Match_Cell match_cell;
+		Lu_W_La_Match_Cell match_cell;
  
 		while (la_link_label)
 		{
@@ -885,7 +886,7 @@
 			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->block_id, self->wave_ix, self->match_cell_mem);
 			lu__assert(match_cell);
 			
-			lu_w_match_cell__add_sig(match_cell, sig);
+			lu_w_la_match_cell__add_sig(match_cell, sig);
 
 			la_link_label = lu_la_link_mem__get_link(link_mem, la_link_label->next);
 		}

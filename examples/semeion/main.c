@@ -40,9 +40,14 @@ int main()
 
 	smn_data__samples_create();
 
+	// Get brain config 
+	struct lu_config config = lu_config__get_by_id(LU_CONFIG__SEMEION);
+
+	config.w_match_sig_breakpoint = 0.44;
+
 	// Create brain and related
 
-	Lu_Brain brain = lu_brain__create(lu_config__get_by_id(LU_CONFIG__SEMEION));
+	Lu_Brain brain = lu_brain__create(config);
 	lu__assert(brain);
 	
 	Lu_Rec image_rec = lu_brain__rec_add(
@@ -76,10 +81,13 @@ int main()
 	size_t i;
 	Smn_Digit d;
 	
-	printf("\nTraining samples.. (total: %ld)", smn_training_samples_count);
+	printf("\nTraining %ld samples.. ", smn_training_samples_count);
 
 	Lu_La_Cell la_cell;
-	for (i = 0; i < smn_training_samples_count - 100; i++)
+	clock_t start;
+	clock_t end;
+	start = clock();
+	for (i = 0; i < smn_training_samples_count; i++)
 	{
 		d = smn_training_samples[i];
 
@@ -94,9 +102,18 @@ int main()
 		//printf("\nTraining samples.. %lu trained.", i + 1);
 		// fflush(stdout);
 	}
-	printf("\n");
+	end = clock();
 
-	// Show network stast
+	// Calculating total time taken 
+    double time_taken = (double)(end - start) / (double)(CLOCKS_PER_SEC);
+
+	printf(
+		"\nTraining of %ld samples in a single thread without hardware acceleration took %.1f sec\n", 
+		smn_training_samples_count, 
+		time_taken
+	);
+
+	// Show network stats
 
 	lu_brain__print_net_stats(brain);
 
@@ -109,12 +126,12 @@ int main()
 
 	Lu_Label* labels = NULL;
 
-	lu_size samples_to_test = 10;  // smn_test_samples_count there is accumulation bug atm, so dont test big numbers
+	lu_size samples_to_test = 10; 
 	for (i = 0; i < samples_to_test; i++)
 	{
 		if (i >= smn_test_samples_count) break;
 
-		d = smn_test_samples[smn__rand_in_range(0, (int) smn_test_samples_count)]; 
+		d = smn_test_samples[smn__rand_in_range(0, (int) smn_test_samples_count - 1)]; 
 
 		printf("\nMATCHING UNTRAINED SAMPLE:");
 		smn_digit__print(d);

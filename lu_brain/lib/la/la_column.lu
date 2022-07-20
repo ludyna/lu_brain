@@ -17,14 +17,14 @@
 		lu__assert(config->la_mem);
 		lu__assert(config->w_mem);
 		lu__assert(config->n_mem);
-		lu__assert(config->w_save_waves_size > 0);
+		lu__assert(config->w_match_waves_size > 0);
 
 		self->la_mem = config->la_mem;
 		self->w_mem = config->w_mem;
 		self->n_mem = config->n_mem;
 
 		self->cells_size = config->la_labels_size;
-		self->w_save_waves_size = config->w_save_waves_size;
+		self->w_match_waves_size = config->w_match_waves_size;
 
 		lu_size size_bytes = sizeof(struct lu_la_cell) * self->cells_size;
 
@@ -36,7 +36,7 @@
 		{
 			la_cell = &self->cells[i];
 
-			lu_la_cell__init(la_cell, i, self->w_mem, self->w_save_waves_size);
+			lu_la_cell__init(la_cell, i, self->w_mem, self->w_match_waves_size);
 		}
 
 		lu_n_link_mem__init(&self->n_link_mem, self->n_mem, config->n_link_mem_size);

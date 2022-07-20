@@ -89,9 +89,9 @@
 
 		lu_size i;
 		Lu_La_Cell la_cell;
-		union lu_w_match_addr addr;
+		// union lu_w_match_addr addr;
 		Lu_La_Column la_column = self->la_column;
-		Lu_W_Match_Cell match_cell;
+		Lu_W_La_Match_Cell match_cell;
 
 		//
 		// Collect new results in s_list
@@ -109,14 +109,16 @@
 			lu_la_cell__print(la_cell);
 			#endif
 
-			addr = lu_la_cell__get_w_match_cell_addr(la_cell, self->wave_ix);
+			// addr = lu_la_cell__get_w_match_cell_addr(la_cell, self->wave_ix);
 
-			if (lu_w_match_addr__is_blank(&addr)) continue;
+			// if (lu_w_match_addr__is_blank(&addr)) continue;
 
-			match_cell = lu_w_match_cell_mem__get_cell(self->match_cell_mem, addr);
-			if (match_cell == NULL) continue;
+			// match_cell = lu_w_match_cell_mem__get_cell(self->match_cell_mem, addr);
+			// if (match_cell == NULL) continue;
 
-			if (lu_w_match_cell__no_sig(match_cell)) continue;
+			match_cell = lu_la_cell__get_w_match_cell(la_cell, self->wave_ix);
+
+			if (lu_w_la_match_cell__no_sig(match_cell)) continue;
 
 			if (lu_block_id__is_not_eq(&self->block_id, &match_cell->block_id)) continue;
 

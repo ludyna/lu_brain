@@ -10,20 +10,20 @@
 	// Lu_Label for end User
 	struct lu_label {
 		Lu_La_Cell la_cell;
-		Lu_W_Match_Cell match_cell;
+		Lu_W_La_Match_Cell match_cell;
 	};
 
 	static inline Lu_Label lu_label__init(
 		Lu_Label self, 
 		Lu_La_Cell la_cell,
-		Lu_W_Match_Cell match_cell
+		Lu_W_La_Match_Cell match_cell
 	)
 	{
 		self->la_cell = la_cell;
 		self->match_cell = match_cell;
 
 		return self;
-	} 
+	}
 
 	static lu_value lu_label__compare(lu_p_void p_1, lu_p_void p_2)
 	{
@@ -34,10 +34,26 @@
 		lu_value sig_2 = 0;
 
 		if (label_1 && label_1->match_cell)
-			sig_1 = label_1->match_cell->sig;
+		{
+			// sig_1 = label_1->match_cell->sig;
+			sig_1 = lu_w_la_match_cell__get_sig(label_1->match_cell);
+		}
 
 		if (label_2 && label_2->match_cell)
-			sig_2 = label_2->match_cell->sig;
+		{
+			//sig_2 = label_2->match_cell->sig;
+			sig_2 = lu_w_la_match_cell__get_sig(label_2->match_cell);
+		}
+
+		lu_value diff = sig_2 - sig_1;
+
+		if (diff < 0 ) diff = -diff;
+
+		if (diff < 0.01)
+		{
+			return lu_w_la_match_cell__get_sig_received_count(label_2->match_cell) - 
+					lu_w_la_match_cell__get_sig_received_count(label_1->match_cell);
+		}
 
 		return sig_2 - sig_1;
 	}
@@ -47,28 +63,40 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Cell
 
+	// Temporary shortcut
+	#define LU_LA_CELL__MATCH_CELLS_SIZE 1
+
 	struct lu_la_cell {
 		union lu_la_addr addr;
 
 		union lu_n_link_addr children;
 		lu_size children_count;
 
-		union lu_w_match_addr* w_cells;
+		//union lu_w_match_addr* w_cells;
+
+		struct lu_w_la_match_cell w_match_cells[LU_LA_CELL__MATCH_CELLS_SIZE];
 	};
 
 	//
 	// Constructor / Destructor
 	//
 
-	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, lu_size label, Lu_Mem w_mem, lu_size w_save_waves_size)
+	static inline Lu_La_Cell lu_la_cell__init(Lu_La_Cell self, lu_size label, Lu_Mem w_mem, lu_size w_match_waves_size)
 	{
 		lu__debug_assert(self);
 
 		self->addr.la_ix = label;
 		self->children = LU_N_LINK_ADDR__NULL;
 		self->children_count = 0;
-		self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(w_mem, sizeof(union lu_w_match_addr) * w_save_waves_size);
-		lu__alloc_assert(self->w_cells);
+		// self->w_cells = (union lu_w_match_addr*) lu_mem__alloc(w_mem, sizeof(union lu_w_match_addr) * w_match_waves_size);
+		// lu__alloc_assert(self->w_cells);
+
+		Lu_W_La_Match_Cell match_cell;
+		for (lu_size i = 0; i < LU_LA_CELL__MATCH_CELLS_SIZE; i++)
+		{
+			match_cell = &self->w_match_cells[i];
+			lu_w_la_match_cell__reset(match_cell);
+		}
 
 		return self;
 	}
@@ -78,33 +106,41 @@
 		lu__assert(self);
 		lu__assert(w_mem);
 
-		if (self->w_cells)
-			lu_mem__free(w_mem, (lu_p_byte) self->w_cells);
+		// if (self->w_cells)
+		// 	lu_mem__free(w_mem, (lu_p_byte) self->w_cells);
 
 		self->children = LU_N_LINK_ADDR__NULL;
 		self->children_count = 0;
-		self->w_cells = 0;
+		// self->w_cells = 0;
 	}
 
 	//
 	// Get / Set
 	//
 
-	static inline union lu_w_match_addr lu_la_cell__get_w_match_cell_addr(Lu_La_Cell self, lu_size wave_ix)
-	{
-		lu__assert(self);
-		return self->w_cells[wave_ix];
-	}
+	// static inline union lu_w_match_addr lu_la_cell__get_w_match_cell_addr(Lu_La_Cell self, lu_size wave_ix)
+	// {
+	// 	lu__assert(self);
+	// 	return self->w_cells[wave_ix];
+	// }
 
-	static inline void lu_la_cell__set_w_mach_cell_addr(Lu_La_Cell self, lu_size wave_id, union lu_w_match_addr w_addr)
-	{
-		self->w_cells[wave_id] = w_addr;
-	}
+	// static inline void lu_la_cell__set_w_mach_cell_addr(Lu_La_Cell self, lu_size wave_id, union lu_w_match_addr w_addr)
+	// {
+	// 	self->w_cells[wave_id] = w_addr;
+	// }
 
 	static inline lu_size lu_la_cell__get_ix(Lu_La_Cell self)
 	{
 		lu__assert(self);
 		return lu_la_addr__get_la_ix(&self->addr);
+	}
+
+	static inline Lu_W_La_Match_Cell lu_la_cell__get_w_match_cell(Lu_La_Cell self, lu_size wave_ix)
+	{
+		lu__assert(self);
+		lu__assert(wave_ix < LU_LA_CELL__MATCH_CELLS_SIZE);
+		
+		return &self->w_match_cells[wave_ix];
 	}
 
 	//
@@ -153,46 +189,69 @@
 	}
 
 
-	static inline Lu_W_Match_Cell lu_la_cell__get_and_reset_match_cell(
+	// static inline Lu_W_Match_Cell lu_la_cell__get_and_reset_match_cell(
+	// 	Lu_La_Cell self,
+	// 	struct lu_block_id block_id,
+	// 	lu_size wave_ix,
+	// 	Lu_W_Match_Cell_Mem match_cell_mem
+	// )
+	// {
+	// 	union lu_w_match_addr match_addr = lu_la_cell__get_w_match_cell_addr(self, wave_ix);
+
+	// 	Lu_W_Match_Cell match_cell = NULL;
+	// 	if (lu_w_match_addr__is_blank(&match_addr))
+	// 	{
+	// 		lu__deep_debug("\n !! lu_w_match_addr__is_blank(): wave_ix=%ld", wave_ix);
+
+	// 		match_cell = lu_w_match_cell_mem__cell_alloc(match_cell_mem);
+	// 		match_addr = lu_w_match_cell_mem__get_addr(match_cell_mem, match_cell);
+
+	// 		lu_la_cell__set_w_mach_cell_addr(self, wave_ix, match_addr);
+
+	// 		lu_w_match_cell__init(match_cell, block_id);
+			
+	// 		return match_cell;
+	// 	}
+
+	// 	match_cell = lu_w_match_cell_mem__get_cell(match_cell_mem, match_addr);
+	// 	lu__assert(match_cell);
+
+	// 	lu__deep_debug("\n !! lu_w_match_cell_mem__get_cell()");
+	// 	#ifdef LU__DEEP_DEBUG
+	// 	lu_w_match_cell__print(match_cell);
+	// 	#endif
+
+	// 	if (lu_block_id__is_not_eq(&match_cell->block_id, &block_id))
+	// 	{
+	// 		// reset
+	// 		lu__deep_debug("\n !! lu_w_match_cell__init(match_cell, block_id, 0);");
+	// 		lu_w_match_cell__init(match_cell, block_id);
+	// 	}
+
+	// 	return match_cell;
+	// }
+
+	static inline Lu_W_La_Match_Cell lu_la_cell__get_and_reset_match_cell(
 		Lu_La_Cell self,
 		struct lu_block_id block_id,
 		lu_size wave_ix,
 		Lu_W_Match_Cell_Mem match_cell_mem
 	)
 	{
-		union lu_w_match_addr match_addr = lu_la_cell__get_w_match_cell_addr(self, wave_ix);
+		lu__assert(self);
 
-		Lu_W_Match_Cell match_cell = NULL;
-		if (lu_w_match_addr__is_blank(&match_addr))
-		{
-			lu__deep_debug("\n !! lu_w_match_addr__is_blank(): wave_ix=%ld", wave_ix);
-
-			match_cell = lu_w_match_cell_mem__cell_alloc(match_cell_mem);
-			match_addr = lu_w_match_cell_mem__get_addr(match_cell_mem, match_cell);
-
-			lu_la_cell__set_w_mach_cell_addr(self, wave_ix, match_addr);
-
-			lu_w_match_cell__init(match_cell, block_id);
-			
-			return match_cell;
-		}
-
-		match_cell = lu_w_match_cell_mem__get_cell(match_cell_mem, match_addr);
+		Lu_W_La_Match_Cell match_cell = lu_la_cell__get_w_match_cell(self, wave_ix);
 		lu__assert(match_cell);
-
-		lu__deep_debug("\n !! lu_w_match_cell_mem__get_cell()");
-		#ifdef LU__DEEP_DEBUG
-		lu_w_match_cell__print(match_cell);
-		#endif
 
 		if (lu_block_id__is_not_eq(&match_cell->block_id, &block_id))
 		{
 			// reset
 			lu__deep_debug("\n !! lu_w_match_cell__init(match_cell, block_id, 0);");
-			lu_w_match_cell__init(match_cell, block_id);
+			lu_w_la_match_cell__init(match_cell, block_id);
 		}
 
 		return match_cell;
+
 	}
 
 	static inline void lu_la_cell__print(Lu_La_Cell self)
@@ -309,7 +368,7 @@
 		struct lu_n_link_mem n_link_mem;
 		struct lu_la_link_mem la_link_mem;
 
-		lu_size w_save_waves_size;
+		lu_size w_match_waves_size;
 	};
 
 	static Lu_La_Column lu_la_column__init(Lu_La_Column self, Lu_Config config);

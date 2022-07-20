@@ -584,3 +584,87 @@
 
 		return addr;
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+//  Lu_W_La_Match_Cell 
+
+	struct lu_w_la_match_cell {
+		struct lu_block_id block_id;
+		lu_value sig;
+		lu_value sig_received_count;
+	};
+
+	//
+	// Constructors / Destructors
+	//
+
+	static inline Lu_W_La_Match_Cell lu_w_la_match_cell__init(Lu_W_La_Match_Cell self, struct lu_block_id block_id)
+	{
+		lu__assert(self);
+
+		self->block_id = block_id;
+		self->sig = 0;
+		self->sig_received_count = 0;
+
+		return self;
+	}
+
+	static inline Lu_W_La_Match_Cell lu_w_la_match_cell__reset(Lu_W_La_Match_Cell self)
+	{
+		lu__assert(self);
+
+		lu_block_id__reset(&self->block_id);
+		self->sig = 0;
+		self->sig_received_count = 0;
+
+		return self;
+	}
+	
+	//
+	// Get
+	// 
+
+	static inline lu_value lu_w_la_match_cell__get_sig(Lu_W_La_Match_Cell self)
+	{
+		lu__assert(self);
+
+		return self->sig;
+	}
+
+	static inline lu_value lu_w_la_match_cell__get_normalized_sig(Lu_W_La_Match_Cell self)
+	{
+		lu__assert(self);
+
+		return self->sig / self->sig_received_count;
+	}
+
+	static inline lu_value lu_w_la_match_cell__get_sig_received_count(Lu_W_La_Match_Cell self)
+	{
+		lu__assert(self);
+
+		return self->sig_received_count;
+	}
+
+	//
+	// Is / Has
+	//
+
+
+	static inline lu_bool lu_w_la_match_cell__no_sig(Lu_W_La_Match_Cell self)
+	{
+		return self->sig == 0;
+	}
+
+	//
+	// Methods
+	//
+
+	static inline void lu_w_la_match_cell__add_sig(Lu_W_La_Match_Cell self, lu_value sig)
+	{
+		lu__assert(self);
+
+		self->sig += sig;
+		++self->sig_received_count;
+	}
+
+

@@ -9,6 +9,8 @@
 	typedef struct lu_w_match_cell* Lu_W_Match_Cell;
 	typedef struct lu_w_match_cell_mem* Lu_W_Match_Cell_Mem;
 
+	typedef struct lu_w_la_match_cell* Lu_W_La_Match_Cell;
+
 
 
 

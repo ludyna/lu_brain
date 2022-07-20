@@ -108,7 +108,7 @@
 			// Match wave
 			//
 			.w_match_waves_size = 1,
-			.w_match_sig_breakpoint = 0.44,
+			.w_match_sig_breakpoint = 0.44, 			// should be moved to match_wave_config
 			.w_match_processor_queue_size = 1000000,
 			.w_match_cells_size_per_wave = 2000000,
 			.w_match_results_size = 3,

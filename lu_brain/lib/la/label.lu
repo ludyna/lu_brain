@@ -53,5 +53,5 @@
 		lu__assert(self->la_cell);
 		lu__assert(self->la_cell->children_count);
 
-		return self->match_cell->sig / ((lu_value) self->la_cell->children_count);
+		return lu_w_la_match_cell__get_sig(self->match_cell);
 	}
