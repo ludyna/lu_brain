@@ -252,7 +252,6 @@
 	// Setup view 
 	//
 
-	void lu_wave__set_dest_start_pos(Lu_Rec, lu_long dest_x, lu_long dest_y);
 	void lu_rec__set_src_start_pos(Lu_Rec, lu_size src_x, lu_size src_y);
 	void lu_rec__set_src_end_pos(Lu_Rec self, lu_size src_x, lu_size src_y);
 	void lu_rec__set_src_start_z(Lu_Rec, lu_size src_z);
@@ -327,6 +326,11 @@
 
 	void lu_wave__block_begin(Lu_Wave);
 	void lu_wave__block_end(Lu_Wave);
+
+	//
+	// Focus
+	//
+	void lu_wave__set_dest_start_pos(Lu_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
 
 	//
 	// Wave Data

@@ -62,7 +62,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	void lu_wave__set_dest_start_pos(Lu_Rec self, lu_long dest_x, lu_long dest_y)
+	////
+	// TODO: should be moved to wave
+	void lu_wave__set_dest_start_pos(Lu_Wave wave, Lu_Rec self, lu_long dest_x, lu_long dest_y)
 	{
 		lu__user_assert_void(self, "Rec is NULL");
 

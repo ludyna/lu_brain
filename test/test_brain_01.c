@@ -16,6 +16,11 @@ Lu_Wave  			m_wave;
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1; 
 
+lu_value blank_values[] = {
+	0, 0,
+	0, 0
+};
+
 lu_value values[][4] = {
 	{ 
 		1, 0,  
@@ -133,15 +138,9 @@ void test_brain_01(void)
 
 	lu__debug("\n\n ======================== S A V E - 0 =========================\n");
 	lu__debug("\nvalues before push: ");
+	lu_values__print_symbols(values[0], 2, 2, 1);
 
-		lu_values__print_symbols(values[0], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(s_wave, rec_0, values[0], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(s_wave, rec_0, values[0], 2, 2, 1);
 
 		lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -152,12 +151,7 @@ void test_brain_01(void)
 	lu__debug("\nvalues before push: ");
 	lu_values__print_symbols(values[1], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(s_wave, rec_0, values[1], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(s_wave, rec_0, values[1], 2, 2, 1);
 
 		lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -168,12 +162,7 @@ void test_brain_01(void)
 	lu__debug("\nvalues before push: ");
 	lu_values__print_symbols(values[2], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(s_wave, rec_0, values[2], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(s_wave, rec_0, values[2], 2, 2, 1);
 
 		lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -184,12 +173,7 @@ void test_brain_01(void)
 	lu__debug("\nvalues before push: ");
 	lu_values__print_symbols(values[3], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(s_wave, rec_0, values[3], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(s_wave, rec_0, values[3], 2, 2, 1);
 
 		lu_wave__process(s_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -210,12 +194,7 @@ void test_brain_01(void)
 		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[0], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(m_wave, rec_0, values[0], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(m_wave, rec_0, values[0], 2, 2, 1);
 
 		lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
@@ -232,12 +211,7 @@ void test_brain_01(void)
 		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[1], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(m_wave, rec_0, values[1], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(m_wave, rec_0, values[1], 2, 2, 1);
 
 		lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
@@ -254,12 +228,7 @@ void test_brain_01(void)
 		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[2], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(m_wave, rec_0, values[2], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(m_wave, rec_0, values[2], 2, 2, 1);
 
 		lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
@@ -276,12 +245,7 @@ void test_brain_01(void)
 		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[3], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(m_wave, rec_0, values[3], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(m_wave, rec_0, values[3], 2, 2, 1);
 
 		lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
@@ -298,12 +262,7 @@ void test_brain_01(void)
 		lu__debug("\nvalues before push: ");
 		lu_values__print_symbols(values[4], 2, 2, 1);
 
-		lu_wave__set_dest_start_pos(rec_0, 0, 0);
-
-		lu_wave__push(m_wave, rec_0, values[4], 2, 2, 1);
-
-		lu_wave__set_dest_start_pos(rec_0, 1, 1);
-
+		lu_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_wave__push(m_wave, rec_0, values[4], 2, 2, 1);
 
 		lu_wave__process(m_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
