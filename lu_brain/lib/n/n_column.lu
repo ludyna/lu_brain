@@ -152,7 +152,7 @@
 		}
 	}
 
-	static Lu_N_Cell lu_n_column__save_with_vp_children(
+	static Lu_N_Cell lu_n_column__create_or_find_n_cell_by_vp_children(
 		Lu_N_Column self, 
 		Lu_W_Cell_P* children, 
 		lu_size children_count
@@ -201,7 +201,7 @@
 		return cell;
 	}
 
-	static Lu_N_Cell lu_n_column__save_with_children(
+	static Lu_N_Cell lu_n_column__create_or_find_n_cell_by_children(
 		Lu_N_Column self, 
 		Lu_W_Cell* children, 
 		lu_size children_count

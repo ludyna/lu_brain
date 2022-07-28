@@ -627,14 +627,12 @@
 	)
 	{
 		lu__assert(self);
-		lu__assert(children); // we don't even save NULL cell
+		lu__assert(children); 
 
 		lu_size i;
 		lu_size ix;
 
 		Lu_W_Cell_P w_cell = NULL;
-
-		// We dont need to use default_sig because all links present (even if they are to NULL cells)
 
 		for (i = 0; i < children_count; i++)
 		{
@@ -643,9 +641,6 @@
 			w_cell = children[ix]; 
 			lu__assert(w_cell);
 			lu__debug_assert(w_cell->n_cell);
-
-			// We create links even if sig = 0.
-			// We dont create links only if all children are NULL (which means we will not get here).
 
 			lu_n_cell__children_prepend(self, link_mem, w_cell->n_cell->addr);
 
@@ -1323,13 +1318,13 @@
 	}
 
 
-	static Lu_N_Cell lu_n_column__save_with_vp_children(
+	static Lu_N_Cell lu_n_column__create_or_find_n_cell_by_vp_children(
 		Lu_N_Column self, 
 		Lu_W_Cell_P* children, 
 		lu_size children_count
 	);
 
-	static Lu_N_Cell lu_n_column__save_with_children(
+	static Lu_N_Cell lu_n_column__create_or_find_n_cell_by_children(
 		Lu_N_Column self, 
 		Lu_W_Cell* children, 
 		lu_size children_count

@@ -266,7 +266,7 @@
 				n_column = lu_n_table__get_n_column(curr_n_table, x, y);
 				lu__assert(n_column);
 
-				n_cell = lu_n_column__save_with_children(
+				n_cell = lu_n_column__create_or_find_n_cell_by_children(
 					n_column, 
 					children, 
 					children_count

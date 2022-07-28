@@ -332,7 +332,12 @@
 		Lu_N_Column n_column = lu_n_table__get_n_column(p->curr_n_table, p->x, p->y);
 		lu__assert(n_column);
 		
-		Lu_N_Cell n_cell = lu_n_column__save_with_vp_children(n_column, p->children, p->children_count);
+		Lu_N_Cell n_cell = lu_n_column__create_or_find_n_cell_by_vp_children(
+			n_column, 
+			p->children, 
+			p->children_count
+		);
+		
 		lu__assert(n_cell);
 
 		//

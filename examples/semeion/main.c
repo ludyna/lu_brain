@@ -179,7 +179,7 @@ int main()
 	printf("\nReport:");
 	printf("\n 	  Successfully recognized: %d", (int) success_count);
 	printf("\n 	  Failed recognition: %d", (int) failed_count);
-	printf("\n 	  Success rate: %.2f%%", (success_count / (lu_value) samples_to_test) * 100.0);
+	printf("\n 	  Accuracy rate: %.2f%%", (success_count / (lu_value) samples_to_test) * 100.0);
 	printf("\n");
 
 	// Destroy save_wave and brain
