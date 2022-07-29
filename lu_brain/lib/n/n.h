@@ -27,6 +27,13 @@
 
 	static inline Lu_S_Layer_Base lu_n_table__get_layer(Lu_N_Table self);
 
+
+	////
+	// TODO: Need to replace this later with lu_mem_table , with dynamic w_cells size and access to list of w_cells
+	// using lu_n_cell.addr
+	#define LU_N_CELL__W_MATCH_CELLS_SIZE 1
+	#define LU_N_CELL__W_SAVE_CELLS_SIZE 1
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //
@@ -376,6 +383,20 @@
 		return n_link;
 	}
 
+	static inline void lu_n_cell_vp__send_sig_to_parents_and_return_cell_with_max_sig(
+		Lu_N_Cell_VP self,
+		Lu_Block_Id block_id,
+		lu_size wave_ix,
+		Lu_W_Save_Cell* max_w_save_cell,
+		Lu_N_Cell* max_n_cell,
+		lu_value sig
+	)
+	{
+		lu__assert(self);
+		lu__assert(sig > 0);
+
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column_Comp
@@ -472,11 +493,6 @@
 // Lu_N_Cell
 //
 
-	////
-	// TODO: Need to replace this later with lu_mem_table , with dynamic w_cells size and access to list of w_cells
-	// using lu_n_cell.addr
-	#define LU_N_CELL__W_MATCH_CELLS_SIZE 1
-
 	struct lu_n_cell { 
 		union lu_n_addr addr; 
 
@@ -491,7 +507,11 @@
 
 		lu_value default_sig;
 		
-		union lu_w_match_addr w_cells[LU_N_CELL__W_MATCH_CELLS_SIZE];
+		union lu_w_match_addr w_match_cells[LU_N_CELL__W_MATCH_CELLS_SIZE];
+
+		// This is temp info, that will not be persistent, so I will try to use 
+		// struct directly here
+		struct lu_w_save_cell w_save_cells[LU_N_CELL__W_SAVE_CELLS_SIZE];
 	};
 
 	//
@@ -527,9 +547,18 @@
 		self->children = LU_N_LINK_ADDR__NULL; 
 		self->default_sig = 0;
 
-		lu_w_match_addr__reset(&self->w_cells[0]);
-		lu_w_match_addr__reset(&self->w_cells[1]);
-
+		lu_size i;
+		for (i = 0; i < LU_N_CELL__W_MATCH_CELLS_SIZE; i++)
+		{
+			lu_w_match_addr__reset(&self->w_match_cells[i]);
+		}
+		
+		for (i = 0; i < LU_N_CELL__W_SAVE_CELLS_SIZE; i++)
+		{
+			// lu_w_save_addr__reset(&self->w_save_cells[i]);
+			lu_w_save_cell__reset(&self->w_save_cells[i]);
+		}
+		
 		return self;
 	}
 
@@ -540,15 +569,15 @@
 	{
 		lu__assert(self);
 		lu__assert(mem);
-		lu__assert(self->w_cells);
+		lu__assert(self->w_match_cells);
 
 		lu__debug_assert(self);
 
 		lu_n_addr__reset(&self->addr);
 
-		// lu_mem__free(mem, (lu_p_byte) self->w_cells);
+		// lu_mem__free(mem, (lu_p_byte) self->w_match_cells);
 
-		// self->w_cells = NULL;
+		// self->w_match_cells = NULL;
 
 		return self;
 	}
@@ -564,12 +593,12 @@
 
 	static inline union lu_w_match_addr lu_n_cell__get_w_match_cell_addr(Lu_N_Cell self, lu_size wave_ix)
 	{
-		return self->w_cells[wave_ix];
+		return self->w_match_cells[wave_ix];
 	}
 
 	static inline void lu_n_cell__set_w_mach_cell_addr(Lu_N_Cell self, lu_size wave_ix, union lu_w_match_addr w_addr)
 	{
-		self->w_cells[wave_ix] = w_addr;
+		self->w_match_cells[wave_ix] = w_addr;
 	}
 
 	static inline Lu_N_Addr lu_n_cell__get_cell_addr(Lu_N_Cell self)
@@ -577,6 +606,14 @@
 		lu__debug_assert(self);
 
 		return &self->addr;
+	}
+
+	static inline Lu_W_Save_Cell lu_n_cell__get_w_save_cell(Lu_N_Cell self, lu_size wave_ix)
+	{
+		lu__assert(self);
+		lu__assert(wave_ix < LU_N_CELL__W_SAVE_CELLS_SIZE);
+
+		return &self->w_save_cells[wave_ix];
 	}
 
 	//
@@ -875,8 +912,13 @@
 		// 
 		//
 
-		struct lu_w_save_proc* w_save_procs;
-		struct lu_w_match_proc* w_match_procs;
+		// pry save my mayemo tilky 4 neurona, nam ne potribno zberihaty nichosho
+		// 
+		// struct lu_w_save_processor* w_save_processor;
+
+		// dlia w_match processor my zberihayemo vsi sho zbudylysia
+		// ale ce poky sho ne oboviazkovo realizovuvaty
+		// struct lu_w_match_processor* w_match_processor;
 	};
 
 
@@ -929,9 +971,20 @@
 	// Methods
 	//
 
+	static inline void lu_n_col__realloc(Lu_N_Col self);
 
-	static void lu_n_col__realloc(Lu_N_Col self);
+	static inline Lu_N_Cell lu_n_col__alloc_n_cell(Lu_N_Col self)
+	{
+		lu__assert(self);
 
+		if (self->cells_count >= self->cells_size) return NULL;
+
+		Lu_N_Cell n_cell = &self->cells[self->cells_count];
+
+		++self->cells_count;
+
+		return n_cell;
+	}
 
 	static inline void lu_n_col__find_n_cell(
 		Lu_N_Col self, 

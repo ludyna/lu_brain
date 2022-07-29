@@ -11,7 +11,9 @@
 
 	typedef struct lu_w_la_match_cell* Lu_W_La_Match_Cell;
 
-
+	typedef union lu_w_save_addr* Lu_W_Save_Addr;
+	typedef struct lu_w_save_cell* Lu_W_Save_Cell;
+	typedef struct lu_w_save_cell_mem* Lu_W_Save_Cell_Mem;
 
 
 

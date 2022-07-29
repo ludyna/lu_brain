@@ -502,7 +502,9 @@
 
 	static inline lu_value lu_w_proc_item__calc_fire_sig(Lu_W_Proc_Item self)
 	{
-		return self->match_cell->sig / self->n_cell->default_sig;
+		// return self->match_cell->sig / self->n_cell->default_sig;
+
+		return lu_w_match_cell__calc_fire_sig(self->match_cell, self->n_cell->default_sig);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -696,14 +698,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Save_Proc
 
-	struct lu_w_save_proc {
+	struct lu_w_save_processor {
 		
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Match_Proc
 
-	struct lu_w_match_proc {
+	struct lu_w_match_processor {
 
 	};
 
@@ -765,7 +767,7 @@
 
 		lu_w_match_cell__add_sig(match_cell, sig);
 
-		if (lu_w_match_cell__ready_to_fire(match_cell, n_cell, self->w_match_sig_breakpoint))
+		if (lu_w_match_cell__is_sig_over_breakpoint(match_cell, n_cell, self->w_match_sig_breakpoint))
 		{
 			match_cell->fired = true;
 

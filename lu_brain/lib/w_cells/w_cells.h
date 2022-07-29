@@ -494,7 +494,7 @@
 		self->sig += sig;
 	}
 
-	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
+	static inline lu_bool lu_w_match_cell__is_sig_over_breakpoint(Lu_W_Match_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
 	{
 		if (self->fired) return false;
 		
@@ -515,6 +515,11 @@
 		return self->sig >= (def_sig * breakpoint);
 	}
 
+	static inline lu_value lu_w_match_cell__calc_fire_sig(Lu_W_Match_Cell self, lu_value default_sig)
+	{
+		return self->sig / default_sig;
+	}
+
 	static inline lu_bool lu_w_match_cell__no_sig(Lu_W_Match_Cell self)
 	{
 		return self->sig == 0;
@@ -525,6 +530,108 @@
 		lu_block_id__print(&self->block_id);
 		lu__debug("SIG=%.1f", self->sig);
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//  Lu_W_Save_Addr
+
+	////
+	// Using as an index in Lu_W_Save_Cell_Mem so reallocation will not break pointer
+	union lu_w_save_addr {
+		lu_size value;
+	};
+
+	// NULL addr
+	extern const union lu_w_save_addr LU_W_SAVE_ADDR__NULL; 
+
+	static inline void lu_w_save_addr__reset(Lu_W_Save_Addr self)
+	{
+		self->value = LU_W_SAVE_ADDR__NULL.value;
+	}
+
+	static inline lu_bool lu_w_save_addr__is_blank(Lu_W_Save_Addr self)
+	{
+		return self->value == LU_W_SAVE_ADDR__NULL.value;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//  Lu_W_Save_Cell 
+
+	struct lu_w_save_cell {
+		struct lu_block_id block_id;
+		lu_value sig;
+	};
+
+	//
+	// Constructors / Destructors
+	//
+
+	static inline Lu_W_Save_Cell lu_w_save_cell__init(
+		Lu_W_Save_Cell self, 
+		struct lu_block_id block_id
+	)
+	{	
+		lu__assert(lu_block_id__is_set(&block_id));
+
+		self->block_id = block_id;
+		self->sig = 0;
+
+		return self;
+	}
+
+	static inline void lu_w_save_cell__reset(Lu_W_Save_Cell self)
+	{
+		lu__assert(self);
+
+		lu_block_id__reset(&self->block_id);
+		self->sig = 0;
+	}
+
+	//
+	// Methods
+	//
+
+	static inline void lu_w_save_cell__add_sig(Lu_W_Save_Cell self, lu_value sig)
+	{
+		self->sig += sig;
+	}
+
+	static inline lu_bool lu_w_save_cell__is_sig_over_breakpoint(Lu_W_Save_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
+	{
+		lu_value def_sig = lu_n_cell__get_default_sig(n_cell);
+		lu_value res_sig = def_sig - self->sig;
+
+		lu__assert(res_sig >= 0); // should never go below 0
+
+		// lu__debug(
+		// 	"\n def_sig: %.1f, sig: %.1f, res_sig: %.1f, (def_sig * breakpoint): %.1f, res: %d",
+		// 	def_sig,
+		// 	self->sig,
+		// 	res_sig,
+		// 	(def_sig * breakpoint),
+		// 	self->sig >= (def_sig * breakpoint)
+		// );
+
+		return self->sig >= (def_sig * breakpoint);
+	}
+
+	static inline lu_value lu_w_save_cell__calc_fire_sig(Lu_W_Save_Cell self, lu_value default_sig)
+	{
+		return self->sig / default_sig;
+	}
+
+	static inline lu_bool lu_w_save_cell__no_sig(Lu_W_Save_Cell self)
+	{
+		return self->sig == 0;
+	}
+
+	static inline void lu_w_save_cell__print(Lu_W_Save_Cell self)
+	{
+		lu_block_id__print(&self->block_id);
+		lu__debug("SIG=%.1f", self->sig);
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell_Mem

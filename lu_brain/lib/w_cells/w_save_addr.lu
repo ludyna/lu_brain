@@ -1,0 +1,11 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	const union lu_w_save_addr LU_W_SAVE_ADDR__NULL = {
+			.value = 0
+	};

@@ -72,11 +72,6 @@
 
 	static void lu_n_col__realloc(Lu_N_Col self)
 	{
-		//
-		// Current simple implementation is that we just simply increase d , calculate cells_size , 
-		// reinit additital "columns"
-		//
-
 		lu__assert(self);
 		lu__assert(self->mem);
 
@@ -114,100 +109,118 @@
 		}
 	}
 
-	static Lu_N_Cell lu_n_col__save_with_vp_children(
+	static Lu_N_Cell lu_n_col__create_or_find_n_cell_by_vp_children(
 		Lu_N_Col self, 
 		Lu_W_Cell_P* children, 
-		lu_size children_count
+		lu_size children_count,
+		Lu_Block_Id block_id,
+		lu_size wave_ix
 	)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(children);
 		lu__debug_assert(children_count > 0);
 
-		// lu_size ix = lu_n_column__vp_children_to_ix(self, children, children_count);
 
-		Lu_N_Cell cell = NULL;
-		// lu_size z;
-		// for (z = 0; z < self->d; z++)
-		// {
-		// 	cell = lu_n_column__get_cell(self, z, ix);
-		// 	lu__debug_assert(cell);
+		Lu_N_Cell_VP n_cell_vp = NULL;
+		Lu_W_Cell_P w_cell_p = NULL;
 
-		// 	// We don't save INTO n_column null cell (which is for z = 0 only), find another.
-		// 	if (z == 0 && lu_n_cell__is_n_column_null_cell(cell)) continue;
+		Lu_W_Save_Cell max_save_cell = NULL;
+		Lu_N_Cell max_n_cell = NULL;
 
-		// 	if (lu_n_cell__is_blank(cell))
-		// 	{
-		// 		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
-		// 		lu_n_column__increase_stats(self, z, cell);
-		// 		return cell;
-		// 	}
-		// 	else if (lu_n_link_addr__is_vp_eq(cell->children, children, children_count, &self->link_mem)) 
-		// 	{
-		// 		return cell; // no need to do anything, we already have that cell
-		// 	}
-		// }
+		lu_size i;
+		for (i = 0; i < children_count; i++)
+		{
+			w_cell_p = children[i];
+			lu__assert(w_cell_p);
 
-		// lu_n_column__realloc(self);
+			n_cell_vp = w_cell_p->n_cell;
+			lu__assert(n_cell_vp);
 
-		// cell = lu_n_column__get_cell(self, z, ix);
-		// lu__assert(lu_n_cell__is_blank(cell));
+			if(lu_n_link_addr__is_blank(&n_cell_vp->parents)) continue;
 
-		// lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
-		// lu_n_column__increase_stats(self, z, cell);
+			lu_n_cell_vp__send_sig_to_parents_and_return_cell_with_max_sig(
+				n_cell_vp, 
+				block_id,
+				wave_ix,
+				&max_save_cell,
+				&max_n_cell, 
+				1.0  // 1.0 from n_cell_vp, but will be w_save_cell->sig for next layers
+			);
+		}
 
-		// #ifdef LU__MEM_DEBUG
-		// lu_n_column__print_mem_stats(self);
-		// #endif
+		if (max_save_cell == NULL || !lu_w_save_cell__is_sig_over_breakpoint(max_save_cell, max_n_cell, .76))
+		{
+			// create new neuron
+			max_n_cell = lu_n_col__alloc_n_cell(self);
 
-		return cell;
+			if (max_n_cell == NULL)
+			{
+				lu_n_col__realloc(self);
+				max_n_cell = lu_n_col__alloc_n_cell(self);
+				lu__assert(max_n_cell);
+			}
+
+			lu_n_cell__vp_save(max_n_cell, children, children_count, &self->link_mem);
+		}
+
+		return max_n_cell;
 	}
 
-	static Lu_N_Cell lu_n_col__save_with_children(
+	static Lu_N_Cell lu_n_col__create_or_find_n_cell_by_children(
 		Lu_N_Col self, 
 		Lu_W_Cell* children, 
-		lu_size children_count
+		lu_size children_count,
+		Lu_Block_Id block_id,
+		lu_size wave_ix
 	)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(children);
 		lu__debug_assert(children_count > 0);
 
-		// lu_size ix = lu_n_column__children_to_ix(self, children, children_count);
+		Lu_W_Cell w_cell= NULL;
+		Lu_N_Cell n_cell = NULL;
+		Lu_W_Save_Cell prev_w_save_cell = NULL;
 
-		Lu_N_Cell cell = NULL;
-		// lu_size z;
-		// for (z = 0; z < self->d; z++)
-		// {
-		// 	cell = lu_n_column__get_cell(self, z, ix);
-		// 	lu__debug_assert(cell);
+		Lu_W_Save_Cell max_save_cell = NULL;
+		Lu_N_Cell max_n_cell = NULL;
 
-		// 	// We don't save INTO n_column null cell (which is for z = 0 only), find another.
-		// 	if (z == 0 && lu_n_cell__is_n_column_null_cell(cell)) continue;
+		lu_size i;
+		for (i = 0; i < children_count; i++)
+		{
+			w_cell = children[i];
+			lu__assert(w_cell);
 
-		// 	if (lu_n_cell__is_blank(cell))
-		// 	{
-		// 		lu_n_cell__save(cell, children, children_count, &self->link_mem);
-		// 		lu_n_column__increase_stats(self, z, cell);
-		// 		return cell;
-		// 	}
-		// 	else if (lu_n_link_addr__is_eq(cell->children, children, children_count, &self->link_mem)) 
-		// 	{
-		// 		return cell; // no need to do anything, we already have that cell
-		// 	}
-		// }
+			n_cell = w_cell->n_cell;
+			lu__assert(n_cell);
 
-		// lu_n_column__realloc(self);
+			prev_w_save_cell = lu_n_cell__get_w_save_cell(n_cell, wave_ix);
 
-		// cell = lu_n_column__get_cell(self, z, ix);
-		// lu__assert(lu_n_cell__is_blank(cell));
+			lu_n_cell__send_sig_to_parents_and_return_cell_with_max_sig(
+				n_cell, 
+				block_id,
+				wave_ix,
+				&max_save_cell,
+				&max_n_cell, 
+				lu_w_save_cell__calc_fire_sig(prev_w_save_cell, n_cell->default_sig)
+			);
+		}
 
-		// lu_n_cell__save(cell, children, children_count, &self->link_mem);
-		// lu_n_column__increase_stats(self, z, cell);
+		if (max_save_cell == NULL || !lu_w_save_cell__is_sig_over_breakpoint(max_save_cell, max_n_cell, .76))
+		{
+			// create new neuron
+			max_n_cell = lu_n_col__alloc_n_cell(self);
 
-		// #ifdef LU__MEM_DEBUG
-		// lu_n_column__print_mem_stats(self);
-		// #endif
+			if (max_n_cell == NULL)
+			{
+				lu_n_col__realloc(self);
+				max_n_cell = lu_n_col__alloc_n_cell(self);
+				lu__assert(max_n_cell);
+			}
 
-		return cell;
+			lu_n_cell__save(max_n_cell, children, children_count, &self->link_mem);
+		}
+
+		return max_save_cell;
 	}
