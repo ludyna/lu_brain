@@ -497,6 +497,8 @@
 		struct lu_w_rec* match_w_recs; 
 		lu_size match_w_recs_size;
 		
+		// w_match_tables are needed to start match process, we don't need
+		// w_match_tables in higher layers (Lu_S_Layer)
 		Lu_Arr w_match_tables;
 	};
 

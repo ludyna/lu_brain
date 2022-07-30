@@ -654,19 +654,19 @@
 		lu_size i;
 		lu_size ix;
 
-		Lu_W_Cell_P w_cell = NULL;
+		Lu_W_Cell_P w_cell_p = NULL;
 
 		for (i = 0; i < children_count; i++)
 		{
 			ix = children_count - i - 1;
 
-			w_cell = children[ix]; 
-			lu__assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
+			w_cell_p = children[ix]; 
+			lu__assert(w_cell_p);
+			lu__debug_assert(w_cell_p->n_cell_vp);
 
-			lu_n_cell__children_prepend(self, link_mem, w_cell->n_cell->addr);
+			lu_n_cell__children_prepend(self, link_mem, w_cell_p->n_cell_vp->addr);
 
-			lu_n_cell_vp__parent_prepend(w_cell->n_cell, &w_cell->n_column->link_mem, self->addr);
+			lu_n_cell_vp__parent_prepend(w_cell_p->n_cell_vp, &w_cell_p->n_column_comp->link_mem, self->addr);
 		}
 	}
 
@@ -799,19 +799,19 @@
 		if (lu_n_link_addr__is_blank(&self)) return false;
 
 		Lu_N_Link n_link;
-		Lu_W_Cell_P w_cell;
+		Lu_W_Cell_P w_cell_p;
 		for(lu_size i = 0; i < children_count; i++)
 		{
 			if (lu_n_link_addr__is_blank(&self)) return false;
 
-			w_cell = children[i];
-			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
+			w_cell_p = children[i];
+			lu__debug_assert(w_cell_p);
+			lu__debug_assert(w_cell_p->n_cell_vp);
 
 			n_link = lu_n_link_mem__get_link(link_mem, self);
 			if (!n_link) return false;
 
-			if (!lu_n_addr__is_eq(&n_link->cell_addr, lu_n_cell_vp__get_cell_addr(w_cell->n_cell))) return false;
+			if (!lu_n_addr__is_eq(&n_link->cell_addr, lu_n_cell_vp__get_cell_addr(w_cell_p->n_cell_vp))) return false;
 
 			self = n_link->next;
 		}
@@ -1032,18 +1032,6 @@
 		lu_s_layer_base__print_basic_info(lu_n_table__get_layer(self->n_table));
 	}
 
-
-	static Lu_N_Cell lu_n_col__save_with_vp_children(
-		Lu_N_Col self, 
-		Lu_W_Cell_P* children, 
-		lu_size children_count
-	);
-
-	static Lu_N_Cell lu_n_col__save_with_children(
-		Lu_N_Col self, 
-		Lu_W_Cell* children, 
-		lu_size children_count
-	);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column

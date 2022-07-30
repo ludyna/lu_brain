@@ -154,21 +154,41 @@
 		}
 	}
 
-	static inline void lu_w_cell__send_sig_to_parents_and_return_cell_with_max_sig(
+	static inline void lu_w_cell__find_matching_parent(
 		Lu_W_Cell self,
 		Lu_Block_Id block_id,
 		lu_size wave_ix,
 		Lu_W_Save_Cell* max_w_save_cell,
 		Lu_N_Cell* max_n_cell
 	);
+
+	static inline lu_size lu_w_cell__children_hash_comp(Lu_W_Cell* children, lu_size children_count)
+	{
+		lu_size p_reg = 0;
+
+		Lu_W_Cell w_cell;
+		lu_size value;
+		for (lu_size i = 0; i < children_count; i++)
+		{
+			w_cell = children[i];
+			lu__assert(w_cell);
+			lu__assert(w_cell->n_cell); // this is correct
+
+			value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
+
+			p_reg = lu_calc__hash_comb(p_reg, value);
+		}
+
+		return p_reg;
+	}
  
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_P
 
 	struct lu_w_cell_p {
 		
-		Lu_N_Cell_VP n_cell;
-		Lu_N_Column_Comp n_column;
+		Lu_N_Cell_VP n_cell_vp;
+		Lu_N_Column_Comp n_column_comp;
 		
 		// sig doesn't make much sense for save cell, but
 		// we have it here to indicate if cell was active (not "null" cell)
@@ -186,8 +206,8 @@
 	{
 		lu__debug_assert(self);
 
-		self->n_column = NULL;
-		self->n_cell = NULL;
+		self->n_column_comp = NULL;
+		self->n_cell_vp = NULL;
 		self->sig = 0;
 		self->p_1 = 0;
 		self->p_2 = 0;
@@ -201,7 +221,7 @@
 	{
 		lu__assert(self);
 
-		return (self->n_cell == NULL) || (self->n_column == NULL);
+		return (self->n_cell_vp == NULL) || (self->n_column_comp == NULL);
 	}
 
  	static inline lu_bool lu_w_cell_p__is_set(Lu_W_Cell_P self)
@@ -212,9 +232,9 @@
 	static inline lu_bool lu_w_cell_p__has_null_n_cell(Lu_W_Cell_P self)
 	{
 		if (self == NULL) return false;
-		if (self->n_cell == NULL) return false;
+		if (self->n_cell_vp == NULL) return false;
 
-		return lu_n_addr__get_cell_ix(lu_n_cell_vp__get_cell_addr(self->n_cell)) == 0;
+		return lu_n_addr__get_cell_ix(lu_n_cell_vp__get_cell_addr(self->n_cell_vp)) == 0;
 	}
 
 	//
@@ -263,10 +283,10 @@
 		// If difference between p_1 and p_2 is small, z will 0, which means its "NULL" cell
 		// z being 0 doesnt mean addr->cell_x is 0 (!)
 		
-		self->n_column = lu_n_table_comp__get_column(n_table, x, y);
-		self->n_cell = lu_n_column_comp__get_cell(self->n_column, z);
+		self->n_column_comp = lu_n_table_comp__get_column(n_table, x, y);
+		self->n_cell_vp = lu_n_column_comp__get_cell(self->n_column_comp, z);
 
-		lu__debug_assert(self->n_cell);
+		lu__debug_assert(self->n_cell_vp);
 
 		return self;
 	}
@@ -280,29 +300,9 @@
 		{
 			w_cell = children[i];
 			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
+			lu__debug_assert(w_cell->n_cell_vp);
 
-			p_reg = lu_calc__hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(w_cell->n_cell)->value);
-		}
-
-		return p_reg;
-	}
-
-	static inline lu_size lu_w_cell__children_hash_comp(Lu_W_Cell* children, lu_size children_count)
-	{
-		lu_size p_reg = 0;
-
-		Lu_W_Cell w_cell;
-		lu_size value;
-		for (lu_size i = 0; i < children_count; i++)
-		{
-			w_cell = children[i];
-			lu__assert(w_cell);
-			lu__assert(w_cell->n_cell); // this is correct
-
-			value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
-
-			p_reg = lu_calc__hash_comb(p_reg, value);
+			p_reg = lu_calc__hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(w_cell->n_cell_vp)->value);
 		}
 
 		return p_reg;
@@ -320,8 +320,8 @@
 
 		lu__debug(
 			"\nLU_W_CELL_P: n_column=%s, n_cell=%s, sig=%.1f, p_1=%.1f, p_2=%.1f",
-			self->n_column ? "Y" : "N", 
-			self->n_cell ? "Y" : "N",
+			self->n_column_comp ? "Y" : "N", 
+			self->n_cell_vp ? "Y" : "N",
 			self->sig,
 			self->p_1,
 			self->p_2
@@ -349,14 +349,6 @@
 			lu__debug("%2s ", buff); // value
 		}
 	}
-
-	static inline void lu_w_cell_p__send_sig_to_parents_and_return_cell_with_max_sig(
-		Lu_W_Cell_P self,
-		Lu_Block_Id block_id,
-		lu_size wave_ix,
-		Lu_W_Save_Cell* max_w_save_cell,
-		Lu_N_Cell* max_n_cell
-	);
 
 ///////////////////////////////////////////////////////////////////////////////
 // lu_w_children_p

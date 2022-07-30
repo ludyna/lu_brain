@@ -317,7 +317,7 @@
 	)
 	{
 		// now that we have detected n_cell, we can fire it
-		lu_w_processor__fire_vp_parents_with_sig(p->processor, p->w_cell_p->n_cell, p->w_cell_p->n_column, 1.0);
+		lu_w_processor__fire_vp_parents_with_sig(p->processor, p->w_cell_p->n_cell_vp, p->w_cell_p->n_column_comp, 1.0);
 	}
 
 	static void lu_s_layer_rec__finish_block_save(

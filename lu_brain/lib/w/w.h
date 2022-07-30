@@ -502,7 +502,7 @@
 
 	static inline lu_value lu_w_proc_item__calc_fire_sig(Lu_W_Proc_Item self)
 	{
-		// return self->match_cell->sig / self->n_cell->default_sig;
+		return self->match_cell->sig / self->n_cell->default_sig;
 
 		return lu_w_match_cell__calc_fire_sig(self->match_cell, self->n_cell->default_sig);
 	}
