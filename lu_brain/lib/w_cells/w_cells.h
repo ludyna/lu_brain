@@ -71,7 +71,7 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Cell 
+// Lu_W_Cell - winner cell
 
 	////
 	// We are using this cell and related "infrastructure" for both save and restore operations.
@@ -153,6 +153,14 @@
 			lu__debug("X ");
 		}
 	}
+
+	static inline void lu_w_cell__send_sig_to_parents_and_return_cell_with_max_sig(
+		Lu_W_Cell self,
+		Lu_Block_Id block_id,
+		lu_size wave_ix,
+		Lu_W_Save_Cell* max_w_save_cell,
+		Lu_N_Cell* max_n_cell
+	);
  
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_P
@@ -341,6 +349,14 @@
 			lu__debug("%2s ", buff); // value
 		}
 	}
+
+	static inline void lu_w_cell_p__send_sig_to_parents_and_return_cell_with_max_sig(
+		Lu_W_Cell_P self,
+		Lu_Block_Id block_id,
+		lu_size wave_ix,
+		Lu_W_Save_Cell* max_w_save_cell,
+		Lu_N_Cell* max_n_cell
+	);
 
 ///////////////////////////////////////////////////////////////////////////////
 // lu_w_children_p

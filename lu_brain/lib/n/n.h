@@ -383,21 +383,6 @@
 		return n_link;
 	}
 
-	static inline void lu_n_cell_vp__send_sig_to_parents_and_return_cell_with_max_sig(
-		Lu_N_Cell_VP self,
-		Lu_Block_Id block_id,
-		lu_size wave_ix,
-		Lu_W_Save_Cell* max_w_save_cell,
-		Lu_N_Cell* max_n_cell,
-		lu_value sig
-	)
-	{
-		lu__assert(self);
-		lu__assert(sig > 0);
-
-
-	}
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Column_Comp
 //
@@ -794,7 +779,6 @@
 
 		return match_cell;
 	}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr

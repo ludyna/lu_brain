@@ -422,6 +422,7 @@
 
 		Lu_La_Cell la_cell = &self->cells[lu_la_column__label_to_ix(self, label)];
 
+		// Do not create link if it already exists
 		if (lu_la_cell__is_child(la_cell, n_cell->addr, &self->n_link_mem)) return la_cell;
 		
 		lu__deep_debug("\nLA_CELL (n_cell->cell_ix=%ld) ", n_cell->addr.cell_ix);

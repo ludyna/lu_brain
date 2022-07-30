@@ -122,30 +122,18 @@
 		lu__debug_assert(children_count > 0);
 
 
-		Lu_N_Cell_VP n_cell_vp = NULL;
-		Lu_W_Cell_P w_cell_p = NULL;
-
 		Lu_W_Save_Cell max_save_cell = NULL;
 		Lu_N_Cell max_n_cell = NULL;
 
 		lu_size i;
 		for (i = 0; i < children_count; i++)
 		{
-			w_cell_p = children[i];
-			lu__assert(w_cell_p);
-
-			n_cell_vp = w_cell_p->n_cell;
-			lu__assert(n_cell_vp);
-
-			if(lu_n_link_addr__is_blank(&n_cell_vp->parents)) continue;
-
-			lu_n_cell_vp__send_sig_to_parents_and_return_cell_with_max_sig(
-				n_cell_vp, 
+			lu_w_cell_p__send_sig_to_parents_and_return_cell_with_max_sig(
+				children[i], 
 				block_id,
 				wave_ix,
 				&max_save_cell,
-				&max_n_cell, 
-				1.0  // 1.0 from n_cell_vp, but will be w_save_cell->sig for next layers
+				&max_n_cell
 			);
 		}
 
@@ -179,35 +167,25 @@
 		lu__debug_assert(children);
 		lu__debug_assert(children_count > 0);
 
-		Lu_W_Cell w_cell= NULL;
-		Lu_N_Cell n_cell = NULL;
-		Lu_W_Save_Cell prev_w_save_cell = NULL;
-
 		Lu_W_Save_Cell max_save_cell = NULL;
 		Lu_N_Cell max_n_cell = NULL;
 
 		lu_size i;
 		for (i = 0; i < children_count; i++)
 		{
-			w_cell = children[i];
-			lu__assert(w_cell);
+			// prev_w_save_cell = lu_n_cell__get_w_save_cell(n_cell, wave_ix);
+			// lu_w_save_cell__calc_fire_sig(prev_w_save_cell, n_cell->default_sig)
 
-			n_cell = w_cell->n_cell;
-			lu__assert(n_cell);
-
-			prev_w_save_cell = lu_n_cell__get_w_save_cell(n_cell, wave_ix);
-
-			lu_n_cell__send_sig_to_parents_and_return_cell_with_max_sig(
-				n_cell, 
+			lu_w_cell__send_sig_to_parents_and_return_cell_with_max_sig(
+				children[i], 
 				block_id,
 				wave_ix,
 				&max_save_cell,
-				&max_n_cell, 
-				lu_w_save_cell__calc_fire_sig(prev_w_save_cell, n_cell->default_sig)
+				&max_n_cell
 			);
 		}
 
-		if (max_save_cell == NULL || !lu_w_save_cell__is_sig_over_breakpoint(max_save_cell, max_n_cell, .76))
+		if (max_save_cell == NULL || !lu_w_save_cell__is_sig_over_breakpoint(max_save_cell, max_n_cell, .73))
 		{
 			// create new neuron
 			max_n_cell = lu_n_col__alloc_n_cell(self);
@@ -222,5 +200,5 @@
 			lu_n_cell__save(max_n_cell, children, children_count, &self->link_mem);
 		}
 
-		return max_save_cell;
+		return max_n_cell;
 	}

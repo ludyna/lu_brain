@@ -1,0 +1,25 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static inline void lu_w_cell__send_sig_to_parents_and_return_cell_with_max_sig(
+		Lu_W_Cell self,
+		Lu_Block_Id block_id,
+		lu_size wave_ix,
+		Lu_W_Save_Cell* max_w_save_cell,
+		Lu_N_Cell* max_n_cell
+	)
+	{
+		lu__assert(self);
+		lu__assert(self->n_cell);
+		lu__assert(self->n_column);
+
+		// if(lu_n_link_addr__is_blank(&self->n_cell_vp->parents)) return;
+
+		
+
+	}

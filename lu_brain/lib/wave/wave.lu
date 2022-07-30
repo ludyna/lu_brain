@@ -683,7 +683,7 @@
 		lu__user_assert(self->brain, "Lu_Wave brain is NULL");
 		lu__user_assert(self->brain->s, "Lu_Wave brain structure is NULL");
 
-		Lu_W_Cell w_cell = lu_s__get_save_w_cell(self->brain->s, self->wave_ix, area_ix, layer_ix, x, y);
+		Lu_W_Cell w_cell = lu_s__get_w_cell_from_save_w_table(self->brain->s, self->wave_ix, area_ix, layer_ix, x, y);
 
 		if (w_cell == NULL) return NULL;
 

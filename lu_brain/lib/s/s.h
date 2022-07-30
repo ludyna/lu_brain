@@ -669,7 +669,7 @@
 	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_area_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
 
-	static inline Lu_W_Cell lu_s_area__get_save_w_cell(
+	static inline Lu_W_Cell lu_s_area__get_w_cell_from_save_w_table(
 		Lu_S_Area self, 
 		lu_size wave_ix, 
 		lu_size layer_ix, 
@@ -966,7 +966,7 @@
 		return (Lu_S_Layer_Rec) lu_arr__get(self->v_recs, rec_id);
 	}
 
-	static inline Lu_W_Cell lu_s__get_save_w_cell( 
+	static inline Lu_W_Cell lu_s__get_w_cell_from_save_w_table( 
 		Lu_S self, 
 		lu_size wave_ix, 
 		lu_size area_ix,
@@ -978,7 +978,7 @@
 		Lu_S_Area area = lu_s__get_area(self, area_ix);
 		if (area == NULL) return NULL;
 
-		return lu_s_area__get_save_w_cell(area, wave_ix, layer_ix, x, y);
+		return lu_s_area__get_w_cell_from_save_w_table(area, wave_ix, layer_ix, x, y);
 	}
 
 
