@@ -600,8 +600,15 @@
 	// Methods
 	//
 
-	static inline void lu_w_save_cell__add_sig(Lu_W_Save_Cell self, lu_value sig)
+	static inline void lu_w_save_cell__add_sig(Lu_W_Save_Cell self, Lu_Block_Id block_id, lu_value sig)
 	{
+		if(lu_block_id__is_not_eq(&self->block_id, block_id))
+		{
+			self->block_id = *block_id;
+			self->sig = sig;
+			return;
+		}
+
 		self->sig += sig;
 	}
 

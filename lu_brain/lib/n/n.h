@@ -65,7 +65,7 @@
 
 	struct lu_n_link {
 		// We cannot use pointer because of reallocations
-		union lu_n_addr cell_addr;
+		union lu_n_addr n_cell_addr;
 
 		union lu_n_link_addr next;
 	};
@@ -74,12 +74,12 @@
 	{
 		while (1)
 		{
-			if (!self || self->cell_addr.value != (*b).value)
+			if (!self || self->n_cell_addr.value != (*b).value)
 			{
 				return false;
 			}
 
-			if (self->cell_addr.value == 0 || (*b).value == 0) break;
+			if (self->n_cell_addr.value == 0 || (*b).value == 0) break;
 
 			self = lu_n_link_mem__get_link(link_mem, self->next);
 			++b;
@@ -374,7 +374,7 @@
 
 		n_link->next = self->parents;
 
-		n_link->cell_addr = addr;
+		n_link->n_cell_addr = addr;
 
 		self->parents = lu_n_link_mem__get_addr(link_mem, n_link);
 
@@ -631,7 +631,7 @@
 
 		n_link->next = self->children;
 
-		n_link->cell_addr = addr;
+		n_link->n_cell_addr = addr;
 
 		self->children = lu_n_link_mem__get_addr(link_mem, n_link);
 
@@ -811,7 +811,7 @@
 			n_link = lu_n_link_mem__get_link(link_mem, self);
 			if (!n_link) return false;
 
-			if (!lu_n_addr__is_eq(&n_link->cell_addr, lu_n_cell_vp__get_cell_addr(w_cell_p->n_cell_vp))) return false;
+			if (!lu_n_addr__is_eq(&n_link->n_cell_addr, lu_n_cell_vp__get_cell_addr(w_cell_p->n_cell_vp))) return false;
 
 			self = n_link->next;
 		}
@@ -846,7 +846,7 @@
 			n_link = lu_n_link_mem__get_link(link_mem, self);
 			if (!n_link) return false;
 
-			if (!lu_n_addr__is_eq(&n_link->cell_addr, lu_n_cell__get_cell_addr(w_cell->n_cell))) return false;
+			if (!lu_n_addr__is_eq(&n_link->n_cell_addr, lu_n_cell__get_cell_addr(w_cell->n_cell))) return false;
 
 			self = n_link->next;
 		}
@@ -862,7 +862,7 @@
 
 		n_link->next = self;
 
-		n_link->cell_addr = addr;
+		n_link->n_cell_addr = addr;
 
 		return lu_n_link_mem__get_addr(link_mem, n_link);
 	}

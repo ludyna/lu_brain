@@ -156,7 +156,7 @@
 
 		while (n_link)
 		{
-			if (lu_n_addr__is_eq(&n_link->cell_addr, &n_addr)) return true;
+			if (lu_n_addr__is_eq(&n_link->n_cell_addr, &n_addr)) return true;
 
 			// Will be NULL for &LU_N_LINK_ADDR__NULL (addr.value == 0)
 			n_link = lu_n_link_mem__get_link(n_link_mem, n_link->next);
@@ -180,7 +180,7 @@
 
 		n_link->next = self->children;  
 
-		n_link->cell_addr = n_addr;
+		n_link->n_cell_addr = n_addr;
 
 		self->children = lu_n_link_mem__get_addr(n_link_mem, n_link);
 		lu__assert(lu_n_link_addr__is_present(&self->children));

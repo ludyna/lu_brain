@@ -806,7 +806,7 @@
 			n_cell_parent = NULL;
 			n_column_parent = NULL;
 
-			lu_w_processor__find_n_cell_and_n_column(self, n_link_parent->cell_addr, &n_cell_parent, &n_column_parent);
+			lu_w_processor__find_n_cell_and_n_column(self, n_link_parent->n_cell_addr, &n_cell_parent, &n_column_parent);
 		
 			lu__assert(n_cell_parent);
 			lu__assert(n_column_parent);
