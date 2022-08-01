@@ -25,11 +25,11 @@
 
 		self->n_table = n_table;
 		self->mem = mem;
-		self->column_ix = column_ix;
 		self->x = x;
 		self->y = y;
 		self->cells_size = cells_size;
 
+		lu_n_addr__init(&self->col_addr, 0, column_ix, layer_ix, area_ix);
 
 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
 		lu__alloc_assert(self->cells);
@@ -92,7 +92,6 @@
 
 		lu_size i;
 		Lu_N_Cell n_cell;
-		Lu_N_Cell null_n_cell = lu_n_col__get_null_cell(self);
 		for (i = old_cells_size; i < self->cells_size; i++)
 		{
 			n_cell = &self->cells[i];
@@ -100,9 +99,9 @@
 			lu_n_cell__init(
 				n_cell, 
 				i, 
-				self->column_ix, 
-				null_n_cell->addr.layer_ix, 
-				null_n_cell->addr.area_ix, 
+				self->col_addr.column_ix, 
+				self->col_addr.layer_ix, 
+				self->col_addr.area_ix, 
 				self->mem, 
 				self->w_match_cells_size
 			);
@@ -142,7 +141,7 @@
 			n_addr = &n_link_parent->n_cell_addr;
 
 			// parents should be in the same column for n_cell_vp_child, otherwise something wrong
-			lu__assert(n_addr->column_ix == self->column_ix); 
+			lu__assert(n_addr->column_ix == self->col_addr.column_ix); 
 
 			n_cell_parent = lu_n_col__get_cell_by_ix(self, n_addr->cell_ix);
 			lu__assert(n_cell_parent);
@@ -240,18 +239,25 @@
 		Lu_N_Link n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->tl);
 
 		Lu_N_Cell n_cell_parent;
-		Lu_N_Addr n_addr;
+		union lu_n_addr n_addr;
 
 		Lu_W_Save_Cell w_save_cell_parent = NULL;
 
 		while (n_link_parent)
 		{
-			n_addr = &n_link_parent->n_cell_addr;
+			n_addr = n_link_parent->n_cell_addr;
 
-			// parents should be in the same column for n_cell_vp_child, otherwise something wrong
-			if (n_addr->column_ix == self->column_ix); 
+			#if LU__DEBUG
+			
+			// Ignore links that direct to other cols
+			if (lu_n_addr__is_space_not_eq(n_addr, self->col_addr))
+			{
+				lu__assert(false); // should never happen
+			} 
 
-			n_cell_parent = lu_n_col__get_cell_by_ix(self, n_addr->cell_ix);
+			#endif
+
+			n_cell_parent = lu_n_col__get_cell_by_ix(self, n_addr.cell_ix);
 			lu__assert(n_cell_parent);
 
 			w_save_cell_parent = lu_n_cell__get_w_save_cell(n_cell_parent, wave_ix);

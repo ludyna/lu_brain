@@ -78,6 +78,24 @@
 		return self->value == b->value;
 	}
 
+	////
+	// space equal ignores cell_ix
+	static inline lu_bool lu_n_addr__is_space_eq(union lu_n_addr a, union lu_n_addr b)
+	{
+		a.cell_ix = 0;
+		b.cell_ix = 0;
+
+		return a.value == b.value;
+	}
+
+	static inline lu_bool lu_n_addr__is_space_not_eq(union lu_n_addr a, union lu_n_addr b)
+	{
+		a.cell_ix = 0;
+		b.cell_ix = 0;
+
+		return a.value != b.value;
+	}
+
 	//
 	// Methods
 	//

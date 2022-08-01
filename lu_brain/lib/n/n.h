@@ -866,7 +866,7 @@
 
 		return lu_n_link_mem__get_addr(link_mem, n_link);
 	}
-
+ 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Col
 // 
@@ -875,7 +875,7 @@
 		Lu_Mem mem;
 		Lu_N_Table n_table;
 
-		lu_size column_ix;
+		union lu_n_addr col_addr;
 
 		struct lu_n_cell* cells;
 		lu_size cells_size;

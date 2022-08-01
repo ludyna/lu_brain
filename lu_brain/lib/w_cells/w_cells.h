@@ -351,6 +351,22 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Child
+// 
+	enum lu_w_child_pos {
+		LU_N_CHILD_POS__TL = 0,
+		LU_N_CHILD_POS__TR,
+		LU_N_CHILD_POS__BL,
+		LU_N_CHILD_POS__BR,
+		LU_N_CHILD_POS__END,
+	};
+
+	struct lu_w_child {
+		lu_size pos;
+		Lu_W_Cell w_cell;
+	};
+	
+///////////////////////////////////////////////////////////////////////////////
 // lu_w_children_p
 
 	static void lu_w_children_p__reset_children(Lu_W_Cell_P* children, lu_size depth)
