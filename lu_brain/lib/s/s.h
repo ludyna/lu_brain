@@ -59,11 +59,6 @@
 	Tobto potribno yak minimum 2 frame z shiftom shob maty C.
 */
 
-///////////////////////////////////////////////////////////////////////////////
-// 
-//
-	typedef struct lu_save_wave* Lu_Save_Wave;
-	typedef struct lu_match_wave* Lu_Match_Wave;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_P
@@ -74,7 +69,7 @@
 
 		struct lu_comp_calc comp_calc;
 
-		Lu_N_Table_Comp n_comp_table;
+		Lu_S_Table_Comp n_comp_table;
 		Lu_Arr w_save_tables;
 		Lu_Arr w_match_tables;
 	};
@@ -145,7 +140,7 @@
 
 		struct lu_comp_calc comp_calc;
 
-		Lu_N_Table_Comp n_comp_table;
+		Lu_S_Table_Comp n_comp_table;
 		Lu_Arr w_save_tables;
 	};
 
@@ -225,14 +220,14 @@
 	static void lu_s_layer_base__connect(Lu_S_Layer_Base p, Lu_S_Layer_Base c);
 	static void lu_s_layer_base__recursive_destroy(Lu_S_Layer_Base layer);
 
-	static void lu_s_layer_base__create_n_table(
+	static void lu_s_layer_base__create_s_table(
 		Lu_S_Layer_Base self, 
 		Lu_Mem n_mem, 
 		lu_size size_in_cells, 
 		lu_byte cell_type
 	);
 
-	static void lu_s_layer_base__destroy_n_table(Lu_S_Layer_Base self);
+	static void lu_s_layer_base__destroy_s_table(Lu_S_Layer_Base self);
 
 	static inline enum lu_s_layer_type lu_s_layer_base__get_type(Lu_S_Layer_Base self)
 	{
@@ -310,7 +305,7 @@
 
 		// lu_s_layer_net_stats__reset(&layer_ns);
 
-		// lu_n_table__print_net_stats(&self->n_table, &layer_ns);
+		// lu_s_table__print_net_stats(&self->s_table, &layer_ns);
 
 		// lu_s_area_net_stats__collect(area_ns, &layer_ns);
 	}
@@ -322,7 +317,7 @@
 	struct lu_s_layer {
 		struct lu_s_layer_base super;
 
-		struct lu_n_table n_table;
+		struct lu_s_table s_table;
 		Lu_Arr w_save_tables;
 	};
 
@@ -389,11 +384,11 @@
 		return self->super.p;
 	}
 
-	static inline Lu_N_Table lu_s_layer__get_n_table(Lu_S_Layer self)
+	static inline Lu_S_Table lu_s_layer__get_s_table(Lu_S_Layer self)
 	{
 		lu__debug_assert(self);
 
-		return &self->n_table;
+		return &self->s_table;
 	}
 
 	static inline Lu_W_Table lu_s_layer__get_save_w_table(Lu_S_Layer self,  lu_size wave_ix)
@@ -448,20 +443,20 @@
 	{
 		lu__assert(self);
 
-		return lu_n_table__expand(&self->n_table);
+		return lu_s_table__expand(&self->s_table);
 	}
 
-	static inline void lu_s_layer__find_n_cell_and_n_column(
+	static inline void lu_s_layer__find_n_cell_and_s_column(
 		Lu_S_Layer self, 
 		union lu_n_addr addr, 
 		Lu_N_Cell* p_n_cell, 
-		Lu_N_Column* p_n_column
+		Lu_S_Column* p_s_column
 	)
 	{
-		Lu_N_Column n_column = lu_n_table__get_column_by_ix(&self->n_table, addr.column_ix);
-		*p_n_column = n_column;
+		Lu_S_Column s_column = lu_s_table__get_column_by_ix(&self->s_table, addr.column_ix);
+		*p_s_column = s_column;
 
-		lu_n_column__find_n_cell(n_column, addr, p_n_cell);
+		lu_s_column__find_n_cell(s_column, addr, p_n_cell);
 	}
 
 	static inline void lu_s_layer__print_basic_info(Lu_S_Layer self)
@@ -477,7 +472,7 @@
 
 		lu_s_layer_net_stats__reset(&layer_ns);
 
-		lu_n_table__print_net_stats(&self->n_table, &layer_ns);
+		lu_s_table__print_net_stats(&self->s_table, &layer_ns);
 
 		lu_s_area_net_stats__collect(area_ns, &layer_ns);
 	}
@@ -546,9 +541,9 @@
 		return NULL;
 	}
 
-	static inline Lu_N_Table lu_s_layer_rec__get_n_table(Lu_S_Layer_Rec self)
+	static inline Lu_S_Table lu_s_layer_rec__get_s_table(Lu_S_Layer_Rec self)
 	{
-		return &self->super.n_table;
+		return &self->super.s_table;
 	}
 
 	static inline Lu_S_Layer_Base lu_s_layer_rec__get_parent(Lu_S_Layer_Rec self)
@@ -801,18 +796,18 @@
 		return self->layers[layer_ix];
 	}
 
-	static inline void lu_s_area__find_n_cell_and_n_column(
+	static inline void lu_s_area__find_n_cell_and_s_column(
 		Lu_S_Area self, 
 		union lu_n_addr addr, 
 		Lu_N_Cell* n_cell, 
-		Lu_N_Column* n_column
+		Lu_S_Column* s_column
 	)
 	{
 		Lu_S_Layer_Base s_layer_base = lu_s_area__get_layer_by_ix(self, addr.layer_ix);
 
 		lu__assert(lu_s_layer_base__is_layer_type(s_layer_base));
 
-		lu_s_layer__find_n_cell_and_n_column((Lu_S_Layer) s_layer_base, addr, n_cell, n_column);
+		lu_s_layer__find_n_cell_and_s_column((Lu_S_Layer) s_layer_base, addr, n_cell, s_column);
 	}
 
 	static lu_bool lu_s_area__expand(Lu_S_Area self);
@@ -1032,14 +1027,14 @@
 	static void lu_s__print_areas(Lu_S self);
 	static void lu_s__print_net_stats(Lu_S self);
 
-	static inline void lu_s__find_n_cell_and_n_column(		
+	static inline void lu_s__find_n_cell_and_s_column(		
 		Lu_S self,
 		union lu_n_addr addr,
 		Lu_N_Cell* n_cell,
-		Lu_N_Column* n_column
+		Lu_S_Column* s_column
 	)
 	{
 		Lu_S_Area s_area = lu_s__get_area(self, addr.area_ix);
 
-		lu_s_area__find_n_cell_and_n_column(s_area, addr, n_cell, n_column);
+		lu_s_area__find_n_cell_and_s_column(s_area, addr, n_cell, s_column);
 	}

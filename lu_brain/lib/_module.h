@@ -25,6 +25,7 @@
 #include "w_cells/_module.h"
 #include "n/_module.h"
 #include "la/_module.h"
+#include "s_tables/_module.h"
 #include "w/_module.h"
 #include "s/_module.h"
 #include "wave/_module.h"

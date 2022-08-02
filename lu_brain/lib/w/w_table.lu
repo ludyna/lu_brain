@@ -52,7 +52,7 @@
 		}
 
 		self->any_fired = false;
-		self->n_table = NULL;
+		self->s_table = NULL;
 
 		return self;
 	}

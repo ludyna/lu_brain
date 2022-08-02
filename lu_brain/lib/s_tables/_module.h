@@ -3,4 +3,4 @@
 */
 
 #include "_module_head.h"
-#include "la.h"
+#include "s_tables.h"

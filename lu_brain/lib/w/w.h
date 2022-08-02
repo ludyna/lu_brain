@@ -3,31 +3,6 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
-//
-
-	//
-	// Lu_S_Layer
-	//
-
-	typedef struct lu_s_layer* Lu_S_Layer;
-
-	static inline Lu_N_Table lu_s_layer__get_n_table(Lu_S_Layer self);
-	static inline void lu_s_layer__print_basic_info(Lu_S_Layer self);
-
-	//
-	// Lu_S 
-	//
-
-	typedef struct lu_s* Lu_S;
-	static inline void lu_s__find_n_cell_and_n_column(		
-		Lu_S self,
-		union lu_n_addr addr,
-		Lu_N_Cell* n_cell,
-		Lu_N_Column* n_column
-	);
-
-///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Rec 
 
 	static inline void lu_w_rec_state__to_str(enum lu_w_rec_state self, char buffer[])
@@ -252,7 +227,7 @@
 
 		lu_bool any_fired;
 
-		Lu_N_Table n_table;
+		Lu_S_Table s_table;
 	};
 
 	//
@@ -296,11 +271,11 @@
 		Lu_W_Table self,
 		struct lu_block_id block_id,
 		lu_size wave_ix,
-		Lu_N_Table n_table
+		Lu_S_Table s_table
 	)
 	{
 		lu__assert(self);
-		lu__assert(n_table);
+		lu__assert(s_table);
 
 		//
 		// Sanity check
@@ -314,7 +289,7 @@
 
 		self->block_id = block_id;
 		self->wave_ix = wave_ix;
-		self->n_table = n_table;
+		self->s_table = s_table;
 
 		self->any_fired = false;
 	}
@@ -356,14 +331,14 @@
 	static inline void lu_w_table__reset_cells_to_null_cells(Lu_W_Table self)
 	{
 		lu__assert(self);
-		lu__assert(self->n_table);
+		lu__assert(self->s_table);
 
 		//
 		// Sanity check
 		//
 
-		lu__assert(self->w == self->n_table->w);
-		lu__assert(self->h == self->n_table->h);
+		lu__assert(self->w == lu_s_table__get_w(self->s_table));
+		lu__assert(self->h == lu_s_table__get_h(self->s_table));
 
 		//
 		// Reset
@@ -372,7 +347,7 @@
 		lu_size y;
 		lu_size x;
 		Lu_W_Cell w_cell;
-		Lu_N_Column n_column;
+		Lu_S_Column s_column;
 		Lu_N_Cell n_cell;
 
 		for (y = 0; y < self->h; y++)
@@ -382,13 +357,13 @@
 				w_cell = lu_w_table__get_w_cell(self, x, y);
 				lu__assert(w_cell);
 
-				n_column = lu_n_table__get_n_column(self->n_table, x, y);
-				lu__assert(n_column);
+				s_column = lu_s_table__get_s_column(self->s_table, x, y);
+				lu__assert(s_column);
 
-				n_cell = lu_n_column__get_null_cell(n_column);
+				n_cell = lu_s_column__get_null_cell(s_column);
 				lu__assert(n_cell);
 
-				lu_w_cell__save(w_cell, n_cell, n_column);
+				lu_w_cell__save(w_cell, n_cell, s_column);
 			}
 		}
 	}
@@ -408,8 +383,8 @@
 		lu_byte i = 0;
 		*children_count = 0;
 
-		Lu_N_Table n_table = lu_s_layer__get_n_table(self->s_layer);
-		lu__assert(n_table);
+		Lu_S_Table s_table = lu_s_layer__get_s_table(self->s_layer);
+		lu__assert(s_table);
 
 		////
 		// Possible situations:
@@ -417,7 +392,7 @@
 		//		children[i] = NULL;
 		// 		
 		// 2. w_cell was not fired for this wave (w_cell->n_cell == NULL)
-		//		We should set w_cell->n_cell to appropriate n_column "NULL" cell
+		//		We should set w_cell->n_cell to appropriate s_column "NULL" cell
 		// 
 		// 3. w_cell was fired for this wave (w_cell->n_cell != NULL)
 
@@ -463,24 +438,24 @@
 	struct lu_w_proc_item {
 		Lu_W_Match_Cell match_cell;
 		Lu_N_Cell n_cell;
-		Lu_N_Column n_column;
+		Lu_S_Column s_column;
 	};
 
 	static inline Lu_W_Proc_Item lu_w_proc_item__init(
 		Lu_W_Proc_Item self, 
 		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
-		Lu_N_Column n_column
+		Lu_S_Column s_column
 	)
 	{
 		lu__assert(self);
 		lu__assert(match_cell);
 		lu__assert(n_cell);
-		lu__assert(n_column);
+		lu__assert(s_column);
 
 		self->match_cell = match_cell;
 		self->n_cell = n_cell;
-		self->n_column = n_column;
+		self->s_column = s_column;
 
 		return self;
 	}
@@ -489,14 +464,13 @@
 	{
 		lu__assert(self);
 		lu__assert(self->n_cell);
-		lu__assert(self->n_column);
+		lu__assert(self->s_column);
 		lu__assert(self->match_cell);
-		lu__assert(self->n_column->n_table);
 
-		lu__assert(self->n_cell->addr.column_ix == self->n_column->column_ix);
+		lu__assert(self->n_cell->addr.column_ix == lu_s_column__get_column_ix(self->s_column));
 
-		//lu_n_column__print(self->n_column);
-		lu__debug("\n[%ld, %ld] sig=%.f | ", self->n_column->x, self->n_column->y, self->match_cell->sig);
+		//lu_s_column__print(self->s_column);
+		lu__debug("\n[%ld, %ld] sig=%.f | ", self->s_column->x, self->s_column->y, self->match_cell->sig);
 		lu_n_addr__print(&self->n_cell->addr);
 	}
 
@@ -617,7 +591,7 @@
 		Lu_W_Proc_List self,
 		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
-		Lu_N_Column n_column
+		Lu_S_Column s_column
 	)
 	{
 		lu__assert(self);
@@ -632,7 +606,7 @@
 		Lu_W_Proc_Item w_proc_item = &self->items[self->items_count];
 		++self->items_count;
 
-		lu_w_proc_item__init(w_proc_item, match_cell, n_cell, n_column);
+		lu_w_proc_item__init(w_proc_item, match_cell, n_cell, s_column);
 
 		return w_proc_item;
 	}
@@ -757,11 +731,11 @@
 	static inline void lu_w_processor__fire_n_cell(
 		Lu_W_Processor self,
 		Lu_N_Cell n_cell,
-		Lu_N_Column n_column,
+		Lu_S_Column s_column,
 		lu_value sig
 	)
 	{
-		lu__assert(self->wave_ix < n_column->w_match_cells_size);
+		lu__assert(self->wave_ix < s_column->w_match_cells_size);
 
 		Lu_W_Match_Cell match_cell = lu_n_cell__get_and_reset_match_cell(n_cell, self->block_id, self->wave_ix, self->match_cell_mem);
 
@@ -771,22 +745,22 @@
 		{
 			match_cell->fired = true;
 
-			lu_w_proc_list__add(self->next_list, match_cell, n_cell, n_column);
+			lu_w_proc_list__add(self->next_list, match_cell, n_cell, s_column);
 
 			++self->stats.cells_processed;
 		}
 	}
 	
-	static inline void lu_w_processor__find_n_cell_and_n_column(
+	static inline void lu_w_processor__find_n_cell_and_s_column(
 		Lu_W_Processor self,
 		union lu_n_addr addr,
 		Lu_N_Cell* n_cell,
-		Lu_N_Column* n_column
+		Lu_S_Column* s_column
 	)
 	{
 		lu__assert(self);
 
-		lu_s__find_n_cell_and_n_column(self->s, addr, n_cell, n_column);
+		lu_s__find_n_cell_and_s_column(self->s, addr, n_cell, s_column);
 	}
 
 	static inline void lu_w_processor__fire_n_parents(
@@ -799,19 +773,19 @@
 		Lu_N_Link n_link_parent = lu_n_link_mem__get_link(link_mem, parent_link_addr);
 
 		Lu_N_Cell n_cell_parent;
-		Lu_N_Column n_column_parent;
+		Lu_S_Column s_column_parent;
  
 		while (n_link_parent)
 		{
 			n_cell_parent = NULL;
-			n_column_parent = NULL;
+			s_column_parent = NULL;
 
-			lu_w_processor__find_n_cell_and_n_column(self, n_link_parent->n_cell_addr, &n_cell_parent, &n_column_parent);
+			lu_w_processor__find_n_cell_and_s_column(self, n_link_parent->n_cell_addr, &n_cell_parent, &s_column_parent);
 		
 			lu__assert(n_cell_parent);
-			lu__assert(n_column_parent);
+			lu__assert(s_column_parent);
 
-			lu_w_processor__fire_n_cell(self, n_cell_parent, n_column_parent, sig);
+			lu_w_processor__fire_n_cell(self, n_cell_parent, s_column_parent, sig);
 
 			n_link_parent = lu_n_link_mem__get_link(link_mem, n_link_parent->next);
 		}
@@ -820,43 +794,43 @@
 	static inline void lu_w_processor__fire_vp_parents_with_sig(
 		Lu_W_Processor self, 
 		Lu_N_Cell_VP n_cell, 
-		Lu_N_Column_Comp n_column,
+		Lu_S_Column_Comp s_column,
 		lu_value sig
 	)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(n_cell);
-		lu__debug_assert(n_column);
+		lu__debug_assert(s_column);
 		lu__debug_assert(sig > 0);
 	
 		//lu_n_addr__print(&n_cell->addr);
 		if (lu_n_link_addr__is_present(&n_cell->parents))
-			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->parents);
+			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->parents);
 	}
 
 	static inline void lu_w_processor__fire_n_parents_with_sig(
 		Lu_W_Processor self, 
 		Lu_N_Cell n_cell, 
-		Lu_N_Column n_column,
+		Lu_S_Column s_column,
 		lu_value sig
 	)
 	{
 		lu__debug_assert(self);
 		lu__debug_assert(n_cell);
-		lu__debug_assert(n_column);
+		lu__debug_assert(s_column);
 		lu__debug_assert(sig > 0);
 
 		if (lu_n_link_addr__is_present(&n_cell->tl))
-			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->tl);
+			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->tl);
 
 		if (lu_n_link_addr__is_present(&n_cell->tr))
-			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->tr);
+			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->tr);
 
 		if (lu_n_link_addr__is_present(&n_cell->bl))
-			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->bl);
+			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->bl);
 
 		if (lu_n_link_addr__is_present(&n_cell->br))
-			lu_w_processor__fire_n_parents(self, &n_column->link_mem, sig, n_cell->br);
+			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->br);
 	}
 
 	static inline void lu_w_processor__fire_n_labels_with_sig(
@@ -922,7 +896,7 @@
 			// fire_sig should be always less or equal to one
 			lu__assert(fire_sig <= 1.0); 
 
-			lu_w_processor__fire_n_parents_with_sig(self, w_proc_item->n_cell, w_proc_item->n_column, fire_sig);
+			lu_w_processor__fire_n_parents_with_sig(self, w_proc_item->n_cell, w_proc_item->s_column, fire_sig);
 
 			if (lu_la_link_addr__is_present(&w_proc_item->n_cell->labels))
 			{

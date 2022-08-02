@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Table_Net_Stats
 
-	struct lu_n_table_net_stats {
+	struct lu_s_table_net_stats {
 		lu_size column_count;
 
 
@@ -33,7 +33,7 @@
 		lu_size total_links_size;
 	};
 
-	static inline Lu_N_Table_Net_Stats lu_n_table_stats__reset(Lu_N_Table_Net_Stats self)
+	static inline Lu_N_Table_Net_Stats lu_s_table_stats__reset(Lu_N_Table_Net_Stats self)
 	{
 		lu__assert(self);
 

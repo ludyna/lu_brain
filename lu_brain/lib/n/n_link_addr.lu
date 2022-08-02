@@ -6,6 +6,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 	
-	const union lu_n_link_addr LU_N_LINK_ADDR__NULL = {
+	union lu_n_link_addr LU_N_LINK_ADDR__NULL = {
 			.value = 0
 	};

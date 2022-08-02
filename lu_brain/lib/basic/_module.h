@@ -18,10 +18,10 @@
 
 #include "../vendor/CException.h"
 
+#include "_module_head.h"
 #include "types.h"
 #include "debug.h"
 #include "version.h"
-#include "constants.h"
 #include "exception.h"
 #include "util.h"
 #include "macro.h"

@@ -5,7 +5,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_N_Table_Comp lu_n_table_comp__create(
+	static Lu_S_Table_Comp lu_s_table_comp__create(
 		Lu_Config config, 
 		Lu_Comp_Calc comp_calc, 
 		lu_size width, 
@@ -23,7 +23,7 @@
 		lu__assert(comp_calc->cells_size == depth);
 		lu__assert(area_ix >= LU_N_AREA__SPECIAL_AREA_SKIP);
 
-		Lu_N_Table_Comp self = (Lu_N_Table_Comp) lu_mem__alloc(config->n_mem, sizeof(struct lu_n_table_comp));
+		Lu_S_Table_Comp self = (Lu_S_Table_Comp) lu_mem__alloc(config->n_mem, sizeof(struct lu_s_table_comp));
 		lu__assert(self);
 
 		self->mem = config->n_mem;
@@ -32,13 +32,13 @@
 		self->d = depth;
 		self->wh = self->w * self->h;
 
-		self->columns = (struct lu_n_column_comp*) lu_mem__alloc(
+		self->columns = (struct lu_s_column_comp*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct lu_n_column_comp) * self->wh
+			sizeof(struct lu_s_column_comp) * self->wh
 		);
 		lu__alloc_assert(self->columns);
 
-		Lu_N_Column_Comp column;
+		Lu_S_Column_Comp column;
 		lu_size column_ix = 0;
 		lu_size y;
 		lu_size x;
@@ -48,7 +48,7 @@
 			{
 				column = &self->columns[column_ix];
 
-				lu_n_column_comp__init(
+				lu_s_column_comp__init(
 					column,
 					self->mem,
 					depth,
@@ -66,16 +66,16 @@
 		return self;
 	}
 
-	static void lu_n_table_comp__destroy(Lu_N_Table_Comp self)
+	static void lu_s_table_comp__destroy(Lu_S_Table_Comp self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);  
 
-		Lu_N_Column_Comp column = NULL;
+		Lu_S_Column_Comp column = NULL;
 		for (lu_size i = 0; i < self->wh; i++)
 		{
 			column = &self->columns[i];
-			lu_n_column_comp__deinit(column);
+			lu_s_column_comp__deinit(column);
 		}
 
 		lu_mem__free(self->mem, (lu_p_byte) self->columns);

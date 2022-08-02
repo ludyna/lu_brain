@@ -1,3 +1,4 @@
+
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
@@ -5,8 +6,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-	static Lu_N_Column_Comp lu_n_column_comp__init(
-		Lu_N_Column_Comp self, 
+	static Lu_S_Column_Comp lu_s_column_comp__init(
+		Lu_S_Column_Comp self, 
 		Lu_Mem mem, 
 		lu_size cell_size, 
 		lu_size x, 
@@ -44,7 +45,7 @@
 		return self;
 	}
 
-	static void lu_n_column_comp__deinit(Lu_N_Column_Comp self)
+	static void lu_s_column_comp__deinit(Lu_S_Column_Comp self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
