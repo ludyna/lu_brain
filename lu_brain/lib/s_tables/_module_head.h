@@ -10,7 +10,7 @@
 	// Columns
 	//
 
-	typedef struct lu_s_col* Lu_S_Col;
+	typedef struct lu_s_column* Lu_S_Column;
 	typedef struct lu_s_column* Lu_S_Column;
 	typedef struct lu_s_column_comp* Lu_S_Column_Comp;
 

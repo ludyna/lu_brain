@@ -357,11 +357,41 @@
 // Lu_N_Cell
 //
 
+	// enum lu_n_rel_pos {
+	// 	LU_N_CHILD_POS__TL = 0,
+	// 	LU_N_CHILD_POS__TR,
+	// 	LU_N_CHILD_POS__BL,
+	// 	LU_N_CHILD_POS__BR,
+	// 	LU_N_CHILD_POS__END,
+	// };
+
+	// union lu_n_link_2 {
+
+	// };
+
+	// union lu_n_rel_pos {
+	// 	struct {
+
+	// 	};
+	// 	lu_size value;
+	// };
+
+	// struct lu_n_column_link {
+	// 	lu_size column_ix;
+
+	// }:
+
+	// struct lu_n_link_23 {
+	// 	  // if its parent link, then it is child pos, if its child link, then it is parent pos
+	// 	// lu_size column_ix; // dont need column_ix since i have rel pos
+	// 	union lu_n_link_addr link;
+	// };
+
 	struct lu_n_cell { 
 		
 		// If s_table will be reallocated, we need to reinit pointers to s_column for every n_cell involved.
 		// And it is OK.
-		Lu_S_Col s_column;
+		// Lu_S_Column s_column;
 
 		union lu_n_addr addr; 
 
@@ -371,6 +401,10 @@
 		union lu_n_link_addr tr;
 		union lu_n_link_addr bl;
 		union lu_n_link_addr br;
+
+		// Potentially in the future we will have direct links to n_cells in higher layers (skipping 
+		// immediate parent layer). 
+		// union lu_n_link_addr other_parents;
 
 		union lu_n_link_addr children; 
 
@@ -556,7 +590,7 @@
 
 	static inline void lu_n_cell__save( 
 		Lu_N_Cell self, 
-		Lu_W_Cell* children, 
+		struct lu_w_child* children, 
 		lu_size children_count,
 		Lu_N_Link_Mem link_mem
 	)
@@ -575,7 +609,7 @@
 		{
 			ix = children_count - i - 1;
 
-			w_cell = children[ix]; 
+			w_cell = children[ix].w_cell; 
 			
 			// Out of bounds situation
 			if (w_cell == NULL) continue;

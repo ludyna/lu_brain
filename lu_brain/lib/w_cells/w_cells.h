@@ -354,15 +354,15 @@
 // Lu_W_Child
 // 
 	enum lu_w_child_pos {
-		LU_N_CHILD_POS__TL = 0,
-		LU_N_CHILD_POS__TR,
-		LU_N_CHILD_POS__BL,
-		LU_N_CHILD_POS__BR,
-		LU_N_CHILD_POS__END,
+		LU_W_CHILD_POS__TL = 0,
+		LU_W_CHILD_POS__TR,
+		LU_W_CHILD_POS__BL,
+		LU_W_CHILD_POS__BR,
+		LU_W_CHILD_POS__END,
 	};
 
 	struct lu_w_child {
-		lu_size pos;
+		lu_size child_pos;
 		Lu_W_Cell w_cell;
 	};
 	
@@ -382,7 +382,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  lu_w_children
 
-	static inline void lu_w_children__print_symbols(Lu_W_Cell* self, lu_size children_count)
+	static inline void lu_w_children__print_symbols(struct lu_w_child* self, lu_size children_count)
 	{
 		lu__assert(self);
 
@@ -390,17 +390,18 @@
 		Lu_W_Cell w_cell;
 		for (lu_size i = 0; i < children_count; i++)
 		{
-			w_cell = self[i];
+			w_cell = self[i].w_cell;
 			lu_w_cell__print_symbol(w_cell);
 		}
 	}
 
-	static inline void lu_w_children__reset(Lu_W_Cell* self, lu_size children_count)
+	static inline void lu_w_children__reset(struct lu_w_child* self, lu_size children_count)
 	{
 		lu__assert(self);
 		for (lu_size i = 0; i < children_count; i++)
 		{
-			self[i] = NULL;
+			self[i].w_cell = NULL;
+			self[i].child_pos = LU_W_CHILD_POS__END;
 		}
 	}
 

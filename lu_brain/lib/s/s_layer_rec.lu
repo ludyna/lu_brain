@@ -311,6 +311,7 @@
 			lu_w_table_p__reset(w_table_p);
 		}
 	}
+	
 	static void lu_s_layer_rec__finish_block_match(
 		Lu_S_Layer_Rec self, 
 		Lu_S_Layer_Rec_Block_Params p
@@ -332,10 +333,12 @@
 		Lu_S_Column s_column = lu_s_table__get_s_column(p->curr_s_table, p->x, p->y);
 		lu__assert(s_column);
 		
-		Lu_N_Cell n_cell = lu_s_column__create_or_find_n_cell_by_vp_children(
+		Lu_N_Cell n_cell = lu_s_column__find_or_create_parent_for_vp_children(
 			s_column, 
 			p->children, 
-			p->children_count
+			p->children_count,
+			&p->data->block_id,
+			p->wave_ix
 		);
 		
 		lu__assert(n_cell);

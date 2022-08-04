@@ -182,7 +182,7 @@
 		lu_size children_count = 0;
 		Lu_S_Column s_column;
 		Lu_N_Cell n_cell;
-		Lu_W_Cell children[LU_S_LAYER__CHILDREN_MAX];
+		struct lu_w_child children[LU_S_LAYER__CHILDREN_MAX];
 
 		//
 		// Sanity check
@@ -268,10 +268,12 @@
 				s_column = lu_s_table__get_s_column(curr_s_table, x, y);
 				lu__assert(s_column);
 
-				n_cell = lu_s_column__create_or_find_n_cell_by_children(
+				n_cell = lu_s_column__find_or_create_parent(
 					s_column, 
 					children, 
-					children_count
+					children_count,
+					&block_id,
+					wave->wave_ix
 				);
 				lu__assert(n_cell);
 

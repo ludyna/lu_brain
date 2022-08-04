@@ -2,250 +2,250 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-///////////////////////////////////////////////////////////////////////////////
-// 
+// ///////////////////////////////////////////////////////////////////////////////
+// // 
 
-	static Lu_S_Column lu_s_column__init(
-		Lu_S_Column self, 
-		Lu_S_Table s_table,
-		Lu_Mem mem, 
-		lu_size h, 
-		lu_size d, 
-		lu_size area_ix,
-		lu_size layer_ix, 
-		lu_size column_ix,
-		Lu_Config config,
-		lu_size x,
-		lu_size y
-	)
-	{
-		lu__assert(self);
-		lu__assert(s_table);
-		lu__assert(mem);
-		lu__assert(h > 0);
-		lu__assert(d > 0);
+// 	static Lu_S_Column lu_s_column__init(
+// 		Lu_S_Column self, 
+// 		Lu_S_Table s_table,
+// 		Lu_Mem mem, 
+// 		lu_size h, 
+// 		lu_size d, 
+// 		lu_size area_ix,
+// 		lu_size layer_ix, 
+// 		lu_size column_ix,
+// 		Lu_Config config,
+// 		lu_size x,
+// 		lu_size y
+// 	)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(s_table);
+// 		lu__assert(mem);
+// 		lu__assert(h > 0);
+// 		lu__assert(d > 0);
 
-		self->s_table = s_table;
-		self->mem = mem;
-		self->column_ix = column_ix;
-		self->h = h;
-		self->d = d;
-		self->x = x;
-		self->y = y;
+// 		self->s_table = s_table;
+// 		self->mem = mem;
+// 		self->column_ix = column_ix;
+// 		self->h = h;
+// 		self->d = d;
+// 		self->x = x;
+// 		self->y = y;
 
-		self->cells_size = h * d;
+// 		self->cells_size = h * d;
 
-		// Stats
-		self->stat_cells_used = 0;
-		self->stat_max_z = 0;
-		self->stat_max_n_cell_addr = LU_N_ADDR__NULL;
+// 		// Stats
+// 		self->stat_cells_used = 0;
+// 		self->stat_max_z = 0;
+// 		self->stat_max_n_cell_addr = LU_N_ADDR__NULL;
 
-		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
-		lu__alloc_assert(self->cells);
+// 		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
+// 		lu__alloc_assert(self->cells);
 
-		self->w_match_cells_size = config->w_match_waves_size;
+// 		self->w_match_cells_size = config->w_match_waves_size;
 
-		for (lu_size i = 0; i < self->cells_size; i++)
-		{
-			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix, mem, self->w_match_cells_size);
-		}
+// 		for (lu_size i = 0; i < self->cells_size; i++)
+// 		{
+// 			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix, mem, self->w_match_cells_size);
+// 		}
 
-		lu_n_link_mem__init(&self->link_mem, mem, config->n_link_mem_size);
+// 		lu_n_link_mem__init(&self->link_mem, mem, config->n_link_mem_size);
 
-		return self;
-	}
+// 		return self;
+// 	}
 
-	static void lu_s_column__deinit(Lu_S_Column self)
-	{
-		lu__assert(self);
-		lu__assert(self->mem);
+// 	static void lu_s_column__deinit(Lu_S_Column self)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(self->mem);
 
-		lu_n_link_mem__deinit(&self->link_mem);
+// 		lu_n_link_mem__deinit(&self->link_mem);
 
-		// for (lu_size i = 0; i < self->cells_size; i++)
-		// {
-		// 	lu_n_cell__deinit(&self->cells[i], self->mem);
-		// }
+// 		// for (lu_size i = 0; i < self->cells_size; i++)
+// 		// {
+// 		// 	lu_n_cell__deinit(&self->cells[i], self->mem);
+// 		// }
 
-		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+// 		lu_mem__free(self->mem, (lu_p_byte) self->cells);
 		
-		self->cells = NULL;
-		self->h = 0;
-		self->d = 0;
-		self->mem = NULL;
-		self->stat_max_n_cell_addr = LU_N_ADDR__NULL;
-	}
+// 		self->cells = NULL;
+// 		self->h = 0;
+// 		self->d = 0;
+// 		self->mem = NULL;
+// 		self->stat_max_n_cell_addr = LU_N_ADDR__NULL;
+// 	}
 
 
-///////////////////////////////////////////////////////////////////////////////
-// 
+// ///////////////////////////////////////////////////////////////////////////////
+// // 
 
-	static void lu_s_column__realloc(Lu_S_Column self)
-	{
-		//
-		// Current simple implementation is that we just simply increase d , calculate cells_size , 
-		// reinit additital "columns"
-		//
+// 	static void lu_s_column__realloc(Lu_S_Column self)
+// 	{
+// 		//
+// 		// Current simple implementation is that we just simply increase d , calculate cells_size , 
+// 		// reinit additital "columns"
+// 		//
 
-		lu__assert(self);
-		lu__assert(self->mem);
+// 		lu__assert(self);
+// 		lu__assert(self->mem);
 
-		lu_size old_cells_size = self->cells_size;
-		lu_size old_d = self->d;
+// 		lu_size old_cells_size = self->cells_size;
+// 		lu_size old_d = self->d;
 
-		self->d *= 2;
+// 		self->d *= 2;
 
-		self->cells_size = self->h * self->d;
+// 		self->cells_size = self->h * self->d;
 
-		self->cells = (struct lu_n_cell*) lu_mem__realloc(
-			self->mem, 
-			(lu_p_byte) self->cells, 
-			sizeof(struct lu_n_cell) * self->cells_size
-		);
-		lu__alloc_assert(self->cells);
+// 		self->cells = (struct lu_n_cell*) lu_mem__realloc(
+// 			self->mem, 
+// 			(lu_p_byte) self->cells, 
+// 			sizeof(struct lu_n_cell) * self->cells_size
+// 		);
+// 		lu__alloc_assert(self->cells);
 
-		//
-		// Init addr.cell_ix to 0 initally for new cells
-		//
+// 		//
+// 		// Init addr.cell_ix to 0 initally for new cells
+// 		//
 
-		lu_size i;
-		Lu_N_Cell n_cell;
-		for (i = old_cells_size; i < self->cells_size; i++)
-		{
-			n_cell = &self->cells[i];
-			n_cell->addr.cell_ix = 0;
-		}
+// 		lu_size i;
+// 		Lu_N_Cell n_cell;
+// 		for (i = old_cells_size; i < self->cells_size; i++)
+// 		{
+// 			n_cell = &self->cells[i];
+// 			n_cell->addr.cell_ix = 0;
+// 		}
 
-		//
-		// Init new cells only
-		//
+// 		//
+// 		// Init new cells only
+// 		//
 
-		lu_size z; 
-		lu_size ix;
-		lu_size z_shift;
+// 		lu_size z; 
+// 		lu_size ix;
+// 		lu_size z_shift;
 		
-		Lu_N_Cell null_n_cell = lu_s_column__get_null_cell(self);
+// 		Lu_N_Cell null_n_cell = lu_s_column__get_null_cell(self);
 
-		for (z = old_d; z < self->d; z++)
-		{
-			z_shift = z * self->h;
+// 		for (z = old_d; z < self->d; z++)
+// 		{
+// 			z_shift = z * self->h;
 
-			for (ix = 0; ix < self->h; ix++)
-			{
-				i = z_shift + ix;
-				lu__assert(i < self->cells_size);
+// 			for (ix = 0; ix < self->h; ix++)
+// 			{
+// 				i = z_shift + ix;
+// 				lu__assert(i < self->cells_size);
 
-				n_cell = &self->cells[i];
+// 				n_cell = &self->cells[i];
 
-				lu__assert(n_cell->addr.cell_ix == 0);
+// 				lu__assert(n_cell->addr.cell_ix == 0);
 
-				lu_n_cell__init(
-					n_cell, 
-					i, 
-					self->column_ix, 
-					null_n_cell->addr.layer_ix, 
-					null_n_cell->addr.area_ix, 
-					self->mem, 
-					self->w_match_cells_size
-				);
-			}
-		}
-	}
+// 				lu_n_cell__init(
+// 					n_cell, 
+// 					i, 
+// 					self->column_ix, 
+// 					null_n_cell->addr.layer_ix, 
+// 					null_n_cell->addr.area_ix, 
+// 					self->mem, 
+// 					self->w_match_cells_size
+// 				);
+// 			}
+// 		}
+// 	}
 
-	static Lu_N_Cell lu_s_column__create_or_find_n_cell_by_vp_children(
-		Lu_S_Column self, 
-		Lu_W_Cell_P* children, 
-		lu_size children_count
-	)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(children);
-		lu__debug_assert(children_count > 0);
+// 	static Lu_N_Cell lu_s_column__create_or_find_n_cell_by_vp_children(
+// 		Lu_S_Column self, 
+// 		Lu_W_Cell_P* children, 
+// 		lu_size children_count
+// 	)
+// 	{
+// 		lu__debug_assert(self);
+// 		lu__debug_assert(children);
+// 		lu__debug_assert(children_count > 0);
 
-		lu_size ix = lu_s_column__vp_children_to_ix(self, children, children_count);
+// 		lu_size ix = lu_s_column__vp_children_to_ix(self, children, children_count);
 
-		Lu_N_Cell cell;
-		lu_size z;
-		for (z = 0; z < self->d; z++)
-		{
-			cell = lu_s_column__get_cell(self, z, ix);
-			lu__debug_assert(cell);
+// 		Lu_N_Cell cell;
+// 		lu_size z;
+// 		for (z = 0; z < self->d; z++)
+// 		{
+// 			cell = lu_s_column__get_cell(self, z, ix);
+// 			lu__debug_assert(cell);
 
-			// We don't save INTO s_column null cell (which is for z = 0 only), find another.
-			if (z == 0 && lu_n_cell__is_s_column_null_cell(cell)) continue;
+// 			// We don't save INTO s_column null cell (which is for z = 0 only), find another.
+// 			if (z == 0 && lu_n_cell__is_s_column_null_cell(cell)) continue;
 
-			if (lu_n_cell__is_blank(cell))
-			{
-				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
-				lu_s_column__increase_stats(self, z, cell);
-				return cell;
-			}
-			else if (lu_n_link_addr__is_vp_eq(cell->children, children, children_count, &self->link_mem)) 
-			{
-				return cell; // no need to do anything, we already have that cell
-			}
-		}
+// 			if (lu_n_cell__is_blank(cell))
+// 			{
+// 				lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
+// 				lu_s_column__increase_stats(self, z, cell);
+// 				return cell;
+// 			}
+// 			else if (lu_n_link_addr__is_vp_eq(cell->children, children, children_count, &self->link_mem)) 
+// 			{
+// 				return cell; // no need to do anything, we already have that cell
+// 			}
+// 		}
 
-		lu_s_column__realloc(self);
+// 		lu_s_column__realloc(self);
 
-		cell = lu_s_column__get_cell(self, z, ix);
-		lu__assert(lu_n_cell__is_blank(cell));
+// 		cell = lu_s_column__get_cell(self, z, ix);
+// 		lu__assert(lu_n_cell__is_blank(cell));
 
-		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
-		lu_s_column__increase_stats(self, z, cell);
+// 		lu_n_cell__vp_save(cell, children, children_count, &self->link_mem);
+// 		lu_s_column__increase_stats(self, z, cell);
 
-		#ifdef LU__MEM_DEBUG
-		lu_s_column__print_mem_stats(self);
-		#endif
+// 		#ifdef LU__MEM_DEBUG
+// 		lu_s_column__print_mem_stats(self);
+// 		#endif
 
-		return cell;
-	}
+// 		return cell;
+// 	}
 
-	static Lu_N_Cell lu_s_column__create_or_find_n_cell_by_children(
-		Lu_S_Column self, 
-		Lu_W_Cell* children, 
-		lu_size children_count
-	)
-	{
-		lu__debug_assert(self);
-		lu__debug_assert(children);
-		lu__debug_assert(children_count > 0);
+// 	static Lu_N_Cell lu_s_column__create_or_find_n_cell_by_children(
+// 		Lu_S_Column self, 
+// 		Lu_W_Cell* children, 
+// 		lu_size children_count
+// 	)
+// 	{
+// 		lu__debug_assert(self);
+// 		lu__debug_assert(children);
+// 		lu__debug_assert(children_count > 0);
 
-		lu_size ix = lu_s_column__children_to_ix(self, children, children_count);
+// 		lu_size ix = lu_s_column__children_to_ix(self, children, children_count);
 
-		Lu_N_Cell cell;
-		lu_size z;
-		for (z = 0; z < self->d; z++)
-		{
-			cell = lu_s_column__get_cell(self, z, ix);
-			lu__debug_assert(cell);
+// 		Lu_N_Cell cell;
+// 		lu_size z;
+// 		for (z = 0; z < self->d; z++)
+// 		{
+// 			cell = lu_s_column__get_cell(self, z, ix);
+// 			lu__debug_assert(cell);
 
-			// We don't save INTO s_column null cell (which is for z = 0 only), find another.
-			if (z == 0 && lu_n_cell__is_s_column_null_cell(cell)) continue;
+// 			// We don't save INTO s_column null cell (which is for z = 0 only), find another.
+// 			if (z == 0 && lu_n_cell__is_s_column_null_cell(cell)) continue;
 
-			if (lu_n_cell__is_blank(cell))
-			{
-				lu_n_cell__save(cell, children, children_count, &self->link_mem);
-				lu_s_column__increase_stats(self, z, cell);
-				return cell;
-			}
-			else if (lu_n_link_addr__is_eq(cell->children, children, children_count, &self->link_mem)) 
-			{
-				return cell; // no need to do anything, we already have that cell
-			}
-		}
+// 			if (lu_n_cell__is_blank(cell))
+// 			{
+// 				lu_n_cell__save(cell, children, children_count, &self->link_mem);
+// 				lu_s_column__increase_stats(self, z, cell);
+// 				return cell;
+// 			}
+// 			else if (lu_n_link_addr__is_eq(cell->children, children, children_count, &self->link_mem)) 
+// 			{
+// 				return cell; // no need to do anything, we already have that cell
+// 			}
+// 		}
 
-		lu_s_column__realloc(self);
+// 		lu_s_column__realloc(self);
 
-		cell = lu_s_column__get_cell(self, z, ix);
-		lu__assert(lu_n_cell__is_blank(cell));
+// 		cell = lu_s_column__get_cell(self, z, ix);
+// 		lu__assert(lu_n_cell__is_blank(cell));
 
-		lu_n_cell__save(cell, children, children_count, &self->link_mem);
-		lu_s_column__increase_stats(self, z, cell);
+// 		lu_n_cell__save(cell, children, children_count, &self->link_mem);
+// 		lu_s_column__increase_stats(self, z, cell);
 
-		#ifdef LU__MEM_DEBUG
-		lu_s_column__print_mem_stats(self);
-		#endif
+// 		#ifdef LU__MEM_DEBUG
+// 		lu_s_column__print_mem_stats(self);
+// 		#endif
 
-		return cell;
-	}
+// 		return cell;
+// 	}

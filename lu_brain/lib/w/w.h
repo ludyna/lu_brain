@@ -368,12 +368,11 @@
 		}
 	}
 
-
 	static inline void lu_w_table__collect_children(
 		Lu_W_Table self, 
 		lu_size x, 
 		lu_size y, 
-		Lu_W_Cell children[], 
+		struct lu_w_child children[], 
 		lu_size *children_count
 	)
 	{
@@ -382,9 +381,6 @@
 
 		lu_byte i = 0;
 		*children_count = 0;
-
-		Lu_S_Table s_table = lu_s_layer__get_s_table(self->s_layer);
-		lu__assert(s_table);
 
 		////
 		// Possible situations:
@@ -402,28 +398,36 @@
 		if (w_cell)
 		{
 			lu__assert(lu_w_cell__is_set(w_cell));
-			children[i++] = w_cell;
+			children[i].w_cell = w_cell;
+			children[i].child_pos = LU_W_CHILD_POS__TL;
+			++i;
 		}
 
 		w_cell = lu_w_table__get_w_cell(self, x + 1, y);
 		if (w_cell)
 		{
 			lu__assert(lu_w_cell__is_set(w_cell));
-			children[i++] = w_cell;
+			children[i].w_cell = w_cell;
+			children[i].child_pos = LU_W_CHILD_POS__TR;
+			++i;
 		}
 
 		w_cell = lu_w_table__get_w_cell(self, x, y + 1);
 		if (w_cell) 
 		{
 			lu__assert(lu_w_cell__is_set(w_cell));
-			children[i++] = w_cell;
+			children[i].w_cell = w_cell;
+			children[i].child_pos = LU_W_CHILD_POS__BL;
+			++i;
 		}
 
 		w_cell = lu_w_table__get_w_cell(self, x + 1, y + 1);
 		if (w_cell) 
 		{
 			lu__assert(lu_w_cell__is_set(w_cell));
-			children[i++] = w_cell;
+			children[i].w_cell = w_cell;
+			children[i].child_pos = LU_W_CHILD_POS__BR;
+			++i;
 		}
 
 		*children_count = i;

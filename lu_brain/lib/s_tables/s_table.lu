@@ -53,7 +53,6 @@
 					self,
 					mem, 
 					config->s_column_h, 
-					config->s_column_d, 
 					area_ix, 
 					layer_ix, 
 					i, 
