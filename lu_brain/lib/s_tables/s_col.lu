@@ -237,18 +237,38 @@
 
 		Lu_N_Link_Mem link_mem = &s_column_child->link_mem;
 
-		Lu_N_Link n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->tl);
+		Lu_N_Link n_link_parent = NULL;
+
+		switch(w_child->child_pos)
+		{
+			case LU_W_CHILD_POS__TL:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->tl);
+				break;
+			case LU_W_CHILD_POS__TR:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->tr);
+				break;
+			case LU_W_CHILD_POS__BL:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->bl);
+				break;
+			case LU_W_CHILD_POS__BR:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->br);
+				break;
+			default:
+				lu__assert(false);
+		}
 
 		Lu_N_Cell n_cell_parent;
 		union lu_n_addr n_addr;
 
 		Lu_W_Save_Cell w_save_cell_parent = NULL;
+		Lu_W_Save_Cell w_save_cell_child = lu_n_cell__get_w_save_cell(n_cell_child, wave_ix);
+		lu__assert(w_save_cell_child);
 
 		while (n_link_parent)
 		{
 			n_addr = n_link_parent->n_cell_addr;
 
-			#if LU__DEBUG
+			// #if LU__DEBUG
 			
 			// Ignore links that direct to other cols
 			if (lu_n_addr__is_space_not_eq(n_addr, self->col_addr))
@@ -256,7 +276,7 @@
 				lu__assert(false); // should never happen
 			}
 
-			#endif
+			// #endif
 
 			n_cell_parent = lu_s_column__get_cell_by_ix(self, n_addr.cell_ix);
 			lu__assert(n_cell_parent);
@@ -264,7 +284,11 @@
 			w_save_cell_parent = lu_n_cell__get_w_save_cell(n_cell_parent, wave_ix);
 			lu__assert(w_save_cell_parent);
 
-			lu_w_save_cell__add_sig(w_save_cell_parent, block_id, 1.0);
+			lu_w_save_cell__add_sig(
+				w_save_cell_parent, 
+				block_id, 
+				lu_w_save_cell__calc_fire_sig(w_save_cell_child, n_cell_child->default_sig)
+			);
 
 			if (*w_save_cell_output == NULL || (w_save_cell_parent->sig > (*w_save_cell_output)->sig))
 			{
@@ -304,7 +328,7 @@
 			);
 		}
 
-		if (w_save_cell_output == NULL || !lu_w_save_cell__is_sig_over_breakpoint(w_save_cell_output, n_cell_output, .73))
+		if (w_save_cell_output == NULL || !lu_w_save_cell__is_sig_over_breakpoint(w_save_cell_output, n_cell_output, 0.82))
 		{
 			// create new neuron
 			n_cell_output = lu_s_column__alloc_n_cell(self);

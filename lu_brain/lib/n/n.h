@@ -589,7 +589,7 @@
 	}
 
 	static inline void lu_n_cell__save( 
-		Lu_N_Cell self, 
+		Lu_N_Cell self, // parent
 		struct lu_w_child* children, 
 		lu_size children_count,
 		Lu_N_Link_Mem link_mem
@@ -622,18 +622,20 @@
 	
 			lu_n_cell__children_prepend(self, link_mem, n_cell->addr);
 
-			switch(i)
+			// NOTE!: link from child to parent is saved in link with name (TL, TR, ..) that child pos was 
+			// relative to parent
+			switch(children[ix].child_pos)
 			{
-				case 0:
+				case LU_W_CHILD_POS__TL:
 					n_cell->tl = lu_n_link_addr__prepend(n_cell->tl, lu_s_column__get_link_mem(s_column), self->addr);
 					break;
-				case 1:
+				case LU_W_CHILD_POS__TR:
 					n_cell->tr = lu_n_link_addr__prepend(n_cell->tr, lu_s_column__get_link_mem(s_column), self->addr);
 					break;
-				case 2:
+				case LU_W_CHILD_POS__BL:
 					n_cell->bl = lu_n_link_addr__prepend(n_cell->bl, lu_s_column__get_link_mem(s_column), self->addr);
 					break;
-				case 3:
+				case LU_W_CHILD_POS__BR:
 					n_cell->br = lu_n_link_addr__prepend(n_cell->br, lu_s_column__get_link_mem(s_column), self->addr);
 					break;
 				default:
