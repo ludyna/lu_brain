@@ -32,7 +32,7 @@
 
 		lu_comp_calc__init(comp_calc, config->s_mem, min, max, cells_size);
 	
-		self->n_comp_table = lu_n_table_comp__create(
+		self->n_comp_table = lu_s_table_comp__create(
 			config, 
 			comp_calc, 
 			width, 
@@ -62,7 +62,7 @@
 	{
 		lu__assert(self);
 
-		lu_n_table_comp__destroy(self->n_comp_table);
+		lu_s_table_comp__destroy(self->n_comp_table);
 
 		Lu_W_Table_V w_table;
 		for (lu_size i = 0; i < lu_arr__count(self->w_save_tables); i++)

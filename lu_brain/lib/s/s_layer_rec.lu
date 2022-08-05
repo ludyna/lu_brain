@@ -27,7 +27,7 @@
 			lu_s_layer_rec__destroy,
 			rec->width,
 			rec->height,
-			rec->height, // fixed n_table
+			rec->height, // fixed s_table
 			LU_AREA_TAG__REC
 		);
 
@@ -154,7 +154,7 @@
 		Lu_Data data;
 		enum lu_w_rec_state state;
 		Lu_W_Table curr_w_table;
-		Lu_N_Table curr_n_table;
+		Lu_S_Table curr_s_table;
 
 		Lu_W_Processor processor;
 
@@ -311,13 +311,14 @@
 			lu_w_table_p__reset(w_table_p);
 		}
 	}
+	
 	static void lu_s_layer_rec__finish_block_match(
 		Lu_S_Layer_Rec self, 
 		Lu_S_Layer_Rec_Block_Params p
 	)
 	{
 		// now that we have detected n_cell, we can fire it
-		lu_w_processor__fire_vp_parents_with_sig(p->processor, p->w_cell_p->n_cell, p->w_cell_p->n_column, 1.0);
+		lu_w_processor__fire_vp_parents_with_sig(p->processor, p->w_cell_p->n_cell_vp, p->w_cell_p->s_column_comp, 1.0);
 	}
 
 	static void lu_s_layer_rec__finish_block_save(
@@ -329,13 +330,15 @@
 		// N Cell save
 		//
 
-		Lu_N_Column n_column = lu_n_table__get_n_column(p->curr_n_table, p->x, p->y);
-		lu__assert(n_column);
+		Lu_S_Column s_column = lu_s_table__get_s_column(p->curr_s_table, p->x, p->y);
+		lu__assert(s_column);
 		
-		Lu_N_Cell n_cell = lu_n_column__create_or_find_n_cell_by_vp_children(
-			n_column, 
+		Lu_N_Cell n_cell = lu_s_column__find_or_create_parent_for_vp_children(
+			s_column, 
 			p->children, 
-			p->children_count
+			p->children_count,
+			&p->data->block_id,
+			p->wave_ix
 		);
 		
 		lu__assert(n_cell);
@@ -344,7 +347,7 @@
 		// Parent W cell save
 		//
 
-		lu_w_cell__save(p->w_cell, n_cell, n_column);
+		lu_w_cell__save(p->w_cell, n_cell, s_column);
 	}
 
 
@@ -497,8 +500,8 @@
 		p.data = data;
 		p.state = w_rec->state;
 
-		p.curr_n_table = lu_s_layer_rec__get_n_table(self);
-		lu__assert(p.curr_n_table);
+		p.curr_s_table = lu_s_layer_rec__get_s_table(self);
+		lu__assert(p.curr_s_table);
 
 		p.curr_w_table = lu_s_layer_rec__get_w_table(self, wave->type, wave->wave_ix);
 		lu__assert(p.curr_w_table);
@@ -513,7 +516,7 @@
 			p.curr_w_table,
 			data->block_id,
 			wave->wave_ix,
-			p.curr_n_table
+			p.curr_s_table
 		);
 
 		//

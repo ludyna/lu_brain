@@ -4,7 +4,11 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// S
+// S typedefs
+
+	//
+	// Views
+	//
 
 	typedef struct lu_s_view_p* Lu_S_View_P;
 	typedef struct lu_s_view_v* Lu_S_View_V;
@@ -111,3 +115,8 @@
 
 	typedef struct lu_s* Lu_S;
 
+///////////////////////////////////////////////////////////////////////////////
+// Prototypes 
+//
+	typedef struct lu_save_wave* Lu_Save_Wave;
+	typedef struct lu_match_wave* Lu_Match_Wave;

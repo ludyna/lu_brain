@@ -52,8 +52,8 @@
 			);
 		}
 
-		lu_n_table__init(
-			&self->n_table, 
+		lu_s_table__init(
+			&self->s_table, 
 			config->n_mem, 
 			n_w, 
 			n_h, 
@@ -93,7 +93,7 @@
 			lu_w_table__destroy(w_table);
 		}
 
-		lu_n_table__deinit(&self->n_table);
+		lu_s_table__deinit(&self->s_table);
 
 		lu_arr__destroy(self->w_save_tables);
 
@@ -152,6 +152,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
+	#define LU_S_LAYER__CHILDREN_MAX 5
+
 	static Lu_W_Table lu_s_layer__save(
 		Lu_S_Layer self, 
 		Lu_Save_Wave save_wave,
@@ -178,9 +180,9 @@
 		lu_size y;
 		Lu_W_Cell curr_w_cell;
 		lu_size children_count = 0;
-		Lu_N_Column n_column;
+		Lu_S_Column s_column;
 		Lu_N_Cell n_cell;
-		Lu_W_Cell children[LU_N_CELL__CHILDREN_MAX];
+		struct lu_w_child children[LU_S_LAYER__CHILDREN_MAX];
 
 		//
 		// Sanity check
@@ -196,18 +198,18 @@
 		lu__assert(curr_w_table);
 
 		//
-		// Get curr_n_table
+		// Get curr_s_table
 		// 
 
-		Lu_N_Table curr_n_table = &self->n_table;
-		lu__assert(curr_n_table);
+		Lu_S_Table curr_s_table = &self->s_table;
+		lu__assert(curr_s_table);
 
 		//
 		// Sanity check
 		//
 
-		lu__assert(curr_n_table->w == curr_w_table->w);
-		lu__assert(curr_n_table->h == curr_w_table->h);
+		lu__assert(curr_s_table->w == curr_w_table->w);
+		lu__assert(curr_s_table->h == curr_w_table->h);
 
 		//
 		// Prepare curr_w_table for wave 
@@ -217,7 +219,7 @@
 			curr_w_table,
 			block_id,
 			wave->wave_ix,
-			curr_n_table
+			curr_s_table
 		);
 
 		#ifdef LU__DEEP_DEBUG
@@ -245,7 +247,7 @@
 				//
 
 				lu_w_cell__reset(curr_w_cell);
-				lu_w_children__reset(children, LU_N_CELL__CHILDREN_MAX);
+				lu_w_children__reset(children, LU_S_LAYER__CHILDREN_MAX);
 
 				//
 				// Collect "new" children
@@ -263,13 +265,15 @@
 				// Create new or get existing n_cell 
 				//
 
-				n_column = lu_n_table__get_n_column(curr_n_table, x, y);
-				lu__assert(n_column);
+				s_column = lu_s_table__get_s_column(curr_s_table, x, y);
+				lu__assert(s_column);
 
-				n_cell = lu_n_column__create_or_find_n_cell_by_children(
-					n_column, 
+				n_cell = lu_s_column__find_or_create_parent(
+					s_column, 
 					children, 
-					children_count
+					children_count,
+					&block_id,
+					wave->wave_ix
 				);
 				lu__assert(n_cell);
 
@@ -277,7 +281,7 @@
 				// Save results
 				//
 
-				lu_w_cell__save(curr_w_cell, n_cell, n_column);
+				lu_w_cell__save(curr_w_cell, n_cell, s_column);
 			}
 		}
 

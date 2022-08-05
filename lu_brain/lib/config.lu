@@ -28,9 +28,9 @@
 			// Network 
 			//
 			.n_mem = NULL,		
-			.n_column_w = 5, 
-			.n_column_h = 64,
-			.n_column_d = 3,
+			.s_column_w = 5, 
+			.s_column_h = 64,
+			.s_column_d = 3,
 			.n_link_mem_size = 64 * 3 * 2,
 
 			//
@@ -88,9 +88,9 @@
 			// Network 
 			//
 			.n_mem = NULL,		
-			.n_column_w = 5, 
-			.n_column_h = 1000,
-			.n_column_d = 10,
+			.s_column_w = 5, 
+			.s_column_h = 1000,
+			.s_column_d = 10,
 			.n_link_mem_size = 12000,
 
 			//
@@ -195,10 +195,10 @@
 		//
 
 		lu__user_assert(self->n_mem, "n_mem is NULL");
-		lu__user_assert(self->n_column_w > 4, "n_column_size should be greater than 4");
-		lu__user_assert(self->n_column_h > 9, "n_column_size should be greater than 9");
-		lu__user_assert(self->n_column_d > 2, "n_column_size should be greater than 2");
-		lu__user_assert(self->n_link_mem_size > 16, "n_column_size should be greater than 16");
+		lu__user_assert(self->s_column_w > 4, "s_column_size should be greater than 4");
+		lu__user_assert(self->s_column_h > 9, "s_column_size should be greater than 9");
+		lu__user_assert(self->s_column_d > 2, "s_column_size should be greater than 2");
+		lu__user_assert(self->n_link_mem_size > 16, "s_column_size should be greater than 16");
 
 		//
 		// Waves 

@@ -1,0 +1,347 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static Lu_S_Column lu_s_column__init(
+		Lu_S_Column self, 
+		Lu_S_Table s_table,
+		Lu_Mem mem, 
+		lu_size cells_size, 
+		lu_size area_ix,
+		lu_size layer_ix, 
+		lu_size column_ix,
+		Lu_Config config,
+		lu_size x,
+		lu_size y
+	)
+	{
+		lu__assert(self);
+		lu__assert(s_table);
+		lu__assert(mem);
+		lu__assert(cells_size > 1);
+
+		self->s_table = s_table;
+		self->mem = mem;
+		self->x = x;
+		self->y = y;
+		self->cells_size = cells_size;
+
+		lu_n_addr__init(&self->col_addr, 0, column_ix, layer_ix, area_ix);
+
+		self->cells = (struct lu_n_cell*) lu_mem__alloc(mem, sizeof(struct lu_n_cell) * self->cells_size);
+		lu__alloc_assert(self->cells);
+
+		self->w_match_cells_size = config->w_match_waves_size;
+
+		for (lu_size i = 0; i < self->cells_size; i++)
+		{
+			lu_n_cell__init(&self->cells[i], i, column_ix, layer_ix, area_ix, mem, self->w_match_cells_size);
+		}
+
+		lu_n_link_mem__init(&self->link_mem, mem, config->n_link_mem_size);
+
+		return self;
+	}
+
+	static void lu_s_column__deinit(Lu_S_Column self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem);
+
+		lu_n_link_mem__deinit(&self->link_mem);
+
+		// for (lu_size i = 0; i < self->cells_size; i++)
+		// {
+		// 	lu_n_cell__deinit(&self->cells[i], self->mem);
+		// }
+
+		lu_mem__free(self->mem, (lu_p_byte) self->cells);
+		
+		self->cells = NULL;
+		self->cells_size = 0;
+		self->cells_count = 0;
+		self->mem = NULL;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	static void lu_s_column__realloc(Lu_S_Column self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem);
+
+		lu_size old_cells_size = self->cells_size;
+
+		self->cells_size = old_cells_size * 2;
+
+		self->cells = (struct lu_n_cell*) lu_mem__realloc(
+			self->mem, 
+			(lu_p_byte) self->cells, 
+			sizeof(struct lu_n_cell) * self->cells_size
+		);
+		lu__alloc_assert(self->cells);
+
+		//
+		// Init new cells
+		//
+
+		lu_size i;
+		Lu_N_Cell n_cell;
+		for (i = old_cells_size; i < self->cells_size; i++)
+		{
+			n_cell = &self->cells[i];
+
+			lu_n_cell__init(
+				n_cell, 
+				i, 
+				self->col_addr.column_ix, 
+				self->col_addr.layer_ix, 
+				self->col_addr.area_ix, 
+				self->mem, 
+				self->w_match_cells_size
+			);
+		}
+	}
+
+	////
+	// Here it is important to understant that Lu_N_Cell_VP/Lu_W_Cell_P only connect to cells in one parent col (self).
+	static inline void lu_s_column__find_matching_parent_vp(
+		Lu_S_Column self, // this is parent col for child
+		Lu_W_Cell_P w_cell_p_child, 
+		Lu_Block_Id block_id,
+		lu_size wave_ix,
+		Lu_W_Save_Cell* w_save_cell_output,
+		Lu_N_Cell* n_cell_output
+	)
+	{
+		lu__assert(w_cell_p_child);
+
+		Lu_N_Cell_VP n_cell_vp_child = w_cell_p_child->n_cell_vp;
+		Lu_S_Column_Comp s_column_comp_child = w_cell_p_child->s_column_comp;
+
+		lu__assert(n_cell_vp_child);
+		lu__assert(s_column_comp_child);
+
+		Lu_N_Link_Mem link_mem = &s_column_comp_child->link_mem;
+
+		Lu_N_Link n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_vp_child->parents);
+
+		Lu_N_Cell n_cell_parent;
+		Lu_N_Addr n_addr;
+
+		Lu_W_Save_Cell w_save_cell_parent = NULL;
+
+		while (n_link_parent)
+		{
+			n_addr = &n_link_parent->n_cell_addr;
+
+			// parents should be in the same column for n_cell_vp_child, otherwise something wrong
+			lu__assert(n_addr->column_ix == self->col_addr.column_ix); 
+
+			n_cell_parent = lu_s_column__get_cell_by_ix(self, n_addr->cell_ix);
+			lu__assert(n_cell_parent);
+
+			w_save_cell_parent = lu_n_cell__get_w_save_cell(n_cell_parent, wave_ix);
+			lu__assert(w_save_cell_parent);
+
+			lu_w_save_cell__add_sig(w_save_cell_parent, block_id, 1.0);
+
+			if (*w_save_cell_output == NULL || (w_save_cell_parent->sig > (*w_save_cell_output)->sig))
+			{
+				*w_save_cell_output = w_save_cell_parent;
+				*n_cell_output = n_cell_parent;
+			}
+
+			n_link_parent = lu_n_link_mem__get_link(link_mem, n_link_parent->next);
+		}
+	}
+
+
+	static inline Lu_N_Cell lu_s_column__find_or_create_parent_for_vp_children(
+		Lu_S_Column self, // this is parent col for children
+		Lu_W_Cell_P* children, 
+		lu_size children_count,
+		Lu_Block_Id block_id,
+		lu_size wave_ix
+	)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(children);
+		lu__debug_assert(children_count > 0);
+
+		Lu_W_Save_Cell w_save_cell_output = NULL;
+		Lu_N_Cell n_cell_output = NULL;
+
+		lu_size i;
+		for (i = 0; i < children_count; i++)
+		{
+			lu_s_column__find_matching_parent_vp(
+				self, 
+				children[i], 
+				block_id, 
+				wave_ix, 
+				&w_save_cell_output, 
+				&n_cell_output
+			);
+		}
+
+		if (w_save_cell_output == NULL || 
+			!lu_w_save_cell__is_sig_over_breakpoint(w_save_cell_output, n_cell_output, .76))
+		{
+			// create new neuron
+			n_cell_output = lu_s_column__alloc_n_cell(self);
+
+			if (n_cell_output == NULL)
+			{
+				lu_s_column__realloc(self);
+				n_cell_output = lu_s_column__alloc_n_cell(self);
+				lu__assert(n_cell_output);
+			}
+
+			lu_n_cell__vp_save(n_cell_output, children, children_count, &self->link_mem);
+		}
+
+		return n_cell_output;
+	}
+
+	////
+	// Unlike Lu_W_Cell_P which connect only to one parent col, Lu_W_Cell can connect to cells in multiple cols,
+	// We are interested only in current col (self), we should not send sig or process connections to other cols.
+	static inline void lu_s_column__find_matching_parent(
+		Lu_S_Column self, // this is parent col for child
+		Lu_W_Child w_child, 
+		Lu_Block_Id block_id,
+		lu_size wave_ix,
+		Lu_W_Save_Cell* w_save_cell_output,
+		Lu_N_Cell* n_cell_output
+	)
+	{
+		// if(lu_n_link_addr__is_blank(&self->n_cell_vp->parents)) return;
+
+		// prev_w_save_cell = lu_n_cell__get_w_save_cell(n_cell, wave_ix);
+		// lu_w_save_cell__calc_fire_sig(prev_w_save_cell, n_cell->default_sig)
+
+		lu__assert(w_child);
+		lu__assert(w_child->w_cell);
+
+		Lu_N_Cell n_cell_child = w_child->w_cell->n_cell;
+		Lu_S_Column s_column_child = w_child->w_cell->s_column;
+
+		lu__assert(n_cell_child);
+		lu__assert(s_column_child);
+
+		Lu_N_Link_Mem link_mem = &s_column_child->link_mem;
+
+		Lu_N_Link n_link_parent = NULL;
+
+		switch(w_child->child_pos)
+		{
+			case LU_W_CHILD_POS__TL:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->tl);
+				break;
+			case LU_W_CHILD_POS__TR:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->tr);
+				break;
+			case LU_W_CHILD_POS__BL:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->bl);
+				break;
+			case LU_W_CHILD_POS__BR:
+				n_link_parent = lu_n_link_mem__get_link(link_mem, n_cell_child->br);
+				break;
+			default:
+				lu__assert(false);
+		}
+
+		Lu_N_Cell n_cell_parent;
+		union lu_n_addr n_addr;
+
+		Lu_W_Save_Cell w_save_cell_parent = NULL;
+		Lu_W_Save_Cell w_save_cell_child = lu_n_cell__get_w_save_cell(n_cell_child, wave_ix);
+		lu__assert(w_save_cell_child);
+
+		while (n_link_parent)
+		{
+			n_addr = n_link_parent->n_cell_addr;
+
+			// #if LU__DEBUG
+			
+			// Ignore links that direct to other cols
+			if (lu_n_addr__is_space_not_eq(n_addr, self->col_addr))
+			{
+				lu__assert(false); // should never happen
+			}
+
+			// #endif
+
+			n_cell_parent = lu_s_column__get_cell_by_ix(self, n_addr.cell_ix);
+			lu__assert(n_cell_parent);
+
+			w_save_cell_parent = lu_n_cell__get_w_save_cell(n_cell_parent, wave_ix);
+			lu__assert(w_save_cell_parent);
+
+			lu_w_save_cell__add_sig(
+				w_save_cell_parent, 
+				block_id, 
+				lu_w_save_cell__calc_fire_sig(w_save_cell_child, n_cell_child->default_sig)
+			);
+
+			if (*w_save_cell_output == NULL || (w_save_cell_parent->sig > (*w_save_cell_output)->sig))
+			{
+				*w_save_cell_output = w_save_cell_parent;
+				*n_cell_output = n_cell_parent;
+			}
+
+			n_link_parent = lu_n_link_mem__get_link(link_mem, n_link_parent->next);
+		}
+	}
+
+	static inline Lu_N_Cell lu_s_column__find_or_create_parent(
+		Lu_S_Column self, // this is parent col for child
+		struct lu_w_child* children, 
+		lu_size children_count,
+		Lu_Block_Id block_id,
+		lu_size wave_ix
+	)
+	{
+		lu__debug_assert(self);
+		lu__debug_assert(children);
+		lu__debug_assert(children_count > 0);
+
+		Lu_W_Save_Cell w_save_cell_output = NULL;
+		Lu_N_Cell n_cell_output = NULL;
+
+		lu_size i;
+		for (i = 0; i < children_count; i++)
+		{
+			lu_s_column__find_matching_parent(
+				self, 
+				&children[i], 
+				block_id, 
+				wave_ix, 
+				&w_save_cell_output, 
+				&n_cell_output
+			);
+		}
+
+		if (w_save_cell_output == NULL || !lu_w_save_cell__is_sig_over_breakpoint(w_save_cell_output, n_cell_output, 0.82))
+		{
+			// create new neuron
+			n_cell_output = lu_s_column__alloc_n_cell(self);
+
+			if (n_cell_output == NULL)
+			{
+				lu_s_column__realloc(self);
+				n_cell_output = lu_s_column__alloc_n_cell(self);
+				lu__assert(n_cell_output);
+			}
+
+			lu_n_cell__save(n_cell_output, children, children_count, &self->link_mem);
+		}
+
+		return n_cell_output;
+	}

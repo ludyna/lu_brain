@@ -10,17 +10,17 @@
 
 	typedef struct lu_n_cell* Lu_N_Cell;
 	typedef struct lu_n_cell_vp* Lu_N_Cell_VP;
-	typedef struct lu_n_column_comp* Lu_N_Column_Comp;
-	typedef struct lu_n_column* Lu_N_Column;
-	typedef struct lu_n_table_comp* Lu_N_Table_Comp;
+	typedef struct lu_s_column_comp* Lu_S_Column_Comp;
+	typedef struct lu_s_column* Lu_S_Column;
+	typedef struct lu_s_table_comp* Lu_S_Table_Comp;
 
 	static inline lu_value lu_n_cell__get_default_sig(Lu_N_Cell self);
 	static inline Lu_N_Addr lu_n_cell_vp__get_cell_addr(Lu_N_Cell_VP self);
 	static inline Lu_N_Addr lu_n_cell__get_cell_addr(Lu_N_Cell self);
 
-	static inline Lu_N_Cell_VP lu_n_table_comp__get_cell(Lu_N_Table_Comp self, lu_size x, lu_size y, lu_size z);
-	static inline Lu_N_Column_Comp lu_n_table_comp__get_column(Lu_N_Table_Comp self, lu_size x, lu_size y);
-	static inline Lu_N_Cell_VP lu_n_column_comp__get_cell(Lu_N_Column_Comp self, lu_size z);
+	static inline Lu_N_Cell_VP lu_s_table_comp__get_cell(Lu_S_Table_Comp self, lu_size x, lu_size y, lu_size z);
+	static inline Lu_S_Column_Comp lu_s_table_comp__get_column(Lu_S_Table_Comp self, lu_size x, lu_size y);
+	static inline Lu_N_Cell_VP lu_s_column_comp__get_cell(Lu_S_Column_Comp self, lu_size z);
 
 	enum lu_w_rec_state {
 		LU_W_REC_STATE__COLLECT,
@@ -71,13 +71,13 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Cell 
+// Lu_W_Cell - winner cell
 
 	////
 	// We are using this cell and related "infrastructure" for both save and restore operations.
 	struct lu_w_cell {
 		Lu_N_Cell n_cell;
-		Lu_N_Column n_column;
+		Lu_S_Column s_column;
 	};
 
 	//
@@ -89,7 +89,7 @@
 		lu__debug_assert(self);
 
 		self->n_cell = NULL;
-		self->n_column = NULL;
+		self->s_column = NULL;
 	}
 
 	//
@@ -100,7 +100,7 @@
 	{
 		lu__assert(self);
 
-		return (self->n_cell == NULL) || (self->n_column == NULL);
+		return (self->n_cell == NULL) || (self->s_column == NULL);
 	}
 
  	static inline lu_bool lu_w_cell__is_set(Lu_W_Cell self)
@@ -123,13 +123,13 @@
 	static inline Lu_W_Cell lu_w_cell__save(
 		Lu_W_Cell self,
 		Lu_N_Cell n_cell,
-		Lu_N_Column n_column
+		Lu_S_Column s_column
 	)
 	{
 		lu__assert(self);
 
 		self->n_cell = n_cell;
-		self->n_column = n_column;
+		self->s_column = s_column;
 
 		return self;
 	}
@@ -153,14 +153,42 @@
 			lu__debug("X ");
 		}
 	}
+
+	static inline void lu_w_cell__find_matching_parent(
+		Lu_W_Cell self,
+		Lu_Block_Id block_id,
+		lu_size wave_ix,
+		Lu_W_Save_Cell* max_w_save_cell,
+		Lu_N_Cell* max_n_cell
+	);
+
+	static inline lu_size lu_w_cell__children_hash_comp(Lu_W_Cell* children, lu_size children_count)
+	{
+		lu_size p_reg = 0;
+
+		Lu_W_Cell w_cell;
+		lu_size value;
+		for (lu_size i = 0; i < children_count; i++)
+		{
+			w_cell = children[i];
+			lu__assert(w_cell);
+			lu__assert(w_cell->n_cell); // this is correct
+
+			value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
+
+			p_reg = lu_calc__hash_comb(p_reg, value);
+		}
+
+		return p_reg;
+	}
  
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Cell_P
 
 	struct lu_w_cell_p {
 		
-		Lu_N_Cell_VP n_cell;
-		Lu_N_Column_Comp n_column;
+		Lu_N_Cell_VP n_cell_vp;
+		Lu_S_Column_Comp s_column_comp;
 		
 		// sig doesn't make much sense for save cell, but
 		// we have it here to indicate if cell was active (not "null" cell)
@@ -178,8 +206,8 @@
 	{
 		lu__debug_assert(self);
 
-		self->n_column = NULL;
-		self->n_cell = NULL;
+		self->s_column_comp = NULL;
+		self->n_cell_vp = NULL;
 		self->sig = 0;
 		self->p_1 = 0;
 		self->p_2 = 0;
@@ -193,7 +221,7 @@
 	{
 		lu__assert(self);
 
-		return (self->n_cell == NULL) || (self->n_column == NULL);
+		return (self->n_cell_vp == NULL) || (self->s_column_comp == NULL);
 	}
 
  	static inline lu_bool lu_w_cell_p__is_set(Lu_W_Cell_P self)
@@ -204,9 +232,9 @@
 	static inline lu_bool lu_w_cell_p__has_null_n_cell(Lu_W_Cell_P self)
 	{
 		if (self == NULL) return false;
-		if (self->n_cell == NULL) return false;
+		if (self->n_cell_vp == NULL) return false;
 
-		return lu_n_addr__get_cell_ix(lu_n_cell_vp__get_cell_addr(self->n_cell)) == 0;
+		return lu_n_addr__get_cell_ix(lu_n_cell_vp__get_cell_addr(self->n_cell_vp)) == 0;
 	}
 
 	//
@@ -231,7 +259,7 @@
 		lu_size x,
 		lu_size y, 
 		Lu_Comp_Calc comp_calc, 
-		Lu_N_Table_Comp n_table
+		Lu_S_Table_Comp s_table
 	)
 	{
 		lu_value p = lu_w_cell_p__calc_p(self);
@@ -255,10 +283,10 @@
 		// If difference between p_1 and p_2 is small, z will 0, which means its "NULL" cell
 		// z being 0 doesnt mean addr->cell_x is 0 (!)
 		
-		self->n_column = lu_n_table_comp__get_column(n_table, x, y);
-		self->n_cell = lu_n_column_comp__get_cell(self->n_column, z);
+		self->s_column_comp = lu_s_table_comp__get_column(s_table, x, y);
+		self->n_cell_vp = lu_s_column_comp__get_cell(self->s_column_comp, z);
 
-		lu__debug_assert(self->n_cell);
+		lu__debug_assert(self->n_cell_vp);
 
 		return self;
 	}
@@ -272,29 +300,9 @@
 		{
 			w_cell = children[i];
 			lu__debug_assert(w_cell);
-			lu__debug_assert(w_cell->n_cell);
+			lu__debug_assert(w_cell->n_cell_vp);
 
-			p_reg = lu_calc__hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(w_cell->n_cell)->value);
-		}
-
-		return p_reg;
-	}
-
-	static inline lu_size lu_w_cell__children_hash_comp(Lu_W_Cell* children, lu_size children_count)
-	{
-		lu_size p_reg = 0;
-
-		Lu_W_Cell w_cell;
-		lu_size value;
-		for (lu_size i = 0; i < children_count; i++)
-		{
-			w_cell = children[i];
-			lu__assert(w_cell);
-			lu__assert(w_cell->n_cell); // this is correct
-
-			value = lu_n_cell__get_cell_addr(w_cell->n_cell)->value;
-
-			p_reg = lu_calc__hash_comb(p_reg, value);
+			p_reg = lu_calc__hash_comb(p_reg, lu_n_cell_vp__get_cell_addr(w_cell->n_cell_vp)->value);
 		}
 
 		return p_reg;
@@ -311,9 +319,9 @@
 		lu__assert(self);
 
 		lu__debug(
-			"\nLU_W_CELL_P: n_column=%s, n_cell=%s, sig=%.1f, p_1=%.1f, p_2=%.1f",
-			self->n_column ? "Y" : "N", 
-			self->n_cell ? "Y" : "N",
+			"\nLU_W_CELL_P: s_column=%s, n_cell=%s, sig=%.1f, p_1=%.1f, p_2=%.1f",
+			self->s_column_comp ? "Y" : "N", 
+			self->n_cell_vp ? "Y" : "N",
 			self->sig,
 			self->p_1,
 			self->p_2
@@ -326,7 +334,7 @@
 		{
 			lu__debug("00 "); // error
 		}
-		else if (lu_w_cell_p__is_not_set(self))  // (self->n_cell == NULL) || (self->n_column == NULL)
+		else if (lu_w_cell_p__is_not_set(self))  // (self->n_cell == NULL) || (self->s_column == NULL)
 		{
 			lu__debug("EE "); // error
 		}
@@ -343,6 +351,22 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_W_Child
+// 
+	enum lu_w_child_pos {
+		LU_W_CHILD_POS__TL = 0,
+		LU_W_CHILD_POS__TR,
+		LU_W_CHILD_POS__BL,
+		LU_W_CHILD_POS__BR,
+		LU_W_CHILD_POS__END,
+	};
+
+	struct lu_w_child {
+		lu_size child_pos;
+		Lu_W_Cell w_cell;
+	};
+	
+///////////////////////////////////////////////////////////////////////////////
 // lu_w_children_p
 
 	static void lu_w_children_p__reset_children(Lu_W_Cell_P* children, lu_size depth)
@@ -358,7 +382,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  lu_w_children
 
-	static inline void lu_w_children__print_symbols(Lu_W_Cell* self, lu_size children_count)
+	static inline void lu_w_children__print_symbols(struct lu_w_child* self, lu_size children_count)
 	{
 		lu__assert(self);
 
@@ -366,17 +390,18 @@
 		Lu_W_Cell w_cell;
 		for (lu_size i = 0; i < children_count; i++)
 		{
-			w_cell = self[i];
+			w_cell = self[i].w_cell;
 			lu_w_cell__print_symbol(w_cell);
 		}
 	}
 
-	static inline void lu_w_children__reset(Lu_W_Cell* self, lu_size children_count)
+	static inline void lu_w_children__reset(struct lu_w_child* self, lu_size children_count)
 	{
 		lu__assert(self);
 		for (lu_size i = 0; i < children_count; i++)
 		{
-			self[i] = NULL;
+			self[i].w_cell = NULL;
+			self[i].child_pos = LU_W_CHILD_POS__END;
 		}
 	}
 
@@ -415,14 +440,14 @@
 		lu_size x,
 		lu_size y, 
 		Lu_Comp_Calc comp_calc, 
-		Lu_N_Table_Comp n_table
+		Lu_S_Table_Comp s_table
 	)
 	{
 		// lu_value v = self->v;
 		// v = lu_comp_calc__norm(comp_calc, v);
 		// lu_size column_ix = lu_comp_calc__ix(comp_calc, v);
 
-		// self->n_addr = lu_n_table_comp__get_cell(n_table, x, y, column_ix)->addr;
+		// self->n_addr = lu_s_table_comp__get_cell(s_table, x, y, column_ix)->addr;
 		// self->sig = 1.0;
 	}
 
@@ -494,7 +519,7 @@
 		self->sig += sig;
 	}
 
-	static inline lu_bool lu_w_match_cell__ready_to_fire(Lu_W_Match_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
+	static inline lu_bool lu_w_match_cell__is_sig_over_breakpoint(Lu_W_Match_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
 	{
 		if (self->fired) return false;
 		
@@ -515,6 +540,11 @@
 		return self->sig >= (def_sig * breakpoint);
 	}
 
+	static inline lu_value lu_w_match_cell__calc_fire_sig(Lu_W_Match_Cell self, lu_value default_sig)
+	{
+		return self->sig / default_sig;
+	}
+
 	static inline lu_bool lu_w_match_cell__no_sig(Lu_W_Match_Cell self)
 	{
 		return self->sig == 0;
@@ -525,6 +555,115 @@
 		lu_block_id__print(&self->block_id);
 		lu__debug("SIG=%.1f", self->sig);
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//  Lu_W_Save_Addr
+
+	////
+	// Using as an index in Lu_W_Save_Cell_Mem so reallocation will not break pointer
+	union lu_w_save_addr {
+		lu_size value;
+	};
+
+	// NULL addr
+	extern const union lu_w_save_addr LU_W_SAVE_ADDR__NULL; 
+
+	static inline void lu_w_save_addr__reset(Lu_W_Save_Addr self)
+	{
+		self->value = LU_W_SAVE_ADDR__NULL.value;
+	}
+
+	static inline lu_bool lu_w_save_addr__is_blank(Lu_W_Save_Addr self)
+	{
+		return self->value == LU_W_SAVE_ADDR__NULL.value;
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+//  Lu_W_Save_Cell 
+
+	struct lu_w_save_cell {
+		struct lu_block_id block_id;
+		lu_value sig;
+	};
+
+	//
+	// Constructors / Destructors
+	//
+
+	static inline Lu_W_Save_Cell lu_w_save_cell__init(
+		Lu_W_Save_Cell self, 
+		struct lu_block_id block_id
+	)
+	{	
+		lu__assert(lu_block_id__is_set(&block_id));
+
+		self->block_id = block_id;
+		self->sig = 0;
+
+		return self;
+	}
+
+	static inline void lu_w_save_cell__reset(Lu_W_Save_Cell self)
+	{
+		lu__assert(self);
+
+		lu_block_id__reset(&self->block_id);
+		self->sig = 0;
+	}
+
+	//
+	// Methods
+	//
+
+	static inline void lu_w_save_cell__add_sig(Lu_W_Save_Cell self, Lu_Block_Id block_id, lu_value sig)
+	{
+		if(lu_block_id__is_not_eq(&self->block_id, block_id))
+		{
+			self->block_id = *block_id;
+			self->sig = sig;
+			return;
+		}
+
+		self->sig += sig;
+	}
+
+	static inline lu_bool lu_w_save_cell__is_sig_over_breakpoint(Lu_W_Save_Cell self, Lu_N_Cell n_cell, lu_value breakpoint)
+	{
+		lu_value def_sig = lu_n_cell__get_default_sig(n_cell);
+		lu_value res_sig = def_sig - self->sig;
+
+		lu__assert(res_sig >= 0); // should never go below 0
+
+		// lu__debug(
+		// 	"\n def_sig: %.1f, sig: %.1f, res_sig: %.1f, (def_sig * breakpoint): %.1f, res: %d",
+		// 	def_sig,
+		// 	self->sig,
+		// 	res_sig,
+		// 	(def_sig * breakpoint),
+		// 	self->sig >= (def_sig * breakpoint)
+		// );
+
+		return self->sig >= (def_sig * breakpoint);
+	}
+
+	static inline lu_value lu_w_save_cell__calc_fire_sig(Lu_W_Save_Cell self, lu_value default_sig)
+	{
+		return self->sig / default_sig;
+	}
+
+	static inline lu_bool lu_w_save_cell__no_sig(Lu_W_Save_Cell self)
+	{
+		return self->sig == 0;
+	}
+
+	static inline void lu_w_save_cell__print(Lu_W_Save_Cell self)
+	{
+		lu_block_id__print(&self->block_id);
+		lu__debug("SIG=%.1f", self->sig);
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell_Mem

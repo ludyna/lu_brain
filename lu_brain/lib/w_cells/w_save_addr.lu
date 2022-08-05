@@ -4,8 +4,8 @@
 
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_N_Link
-//
-	union lu_n_link_addr LU_N_LINK_ADDR__NULL = {
+// 
+
+	const union lu_w_save_addr LU_W_SAVE_ADDR__NULL = {
 			.value = 0
 	};

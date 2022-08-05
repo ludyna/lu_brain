@@ -253,11 +253,11 @@
 		Lu_S_Layer rec_layer;
 
 
-		Lu_N_Table n_table = lu_s_layer_rec__get_n_table(rec_base);
-		lu__assert(n_table);
+		Lu_S_Table s_table = lu_s_layer_rec__get_s_table(rec_base);
+		lu__assert(s_table);
 
-		lu_size w = n_table->w;
-		lu_size h = n_table->h;
+		lu_size w = s_table->w;
+		lu_size h = s_table->h;
 
 		lu__assert(w > 0);
 		lu__assert(h > 0);

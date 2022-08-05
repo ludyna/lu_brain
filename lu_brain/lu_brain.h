@@ -98,10 +98,10 @@
 		lu_size n_size_in_cell_2;
 		lu_size n_size_in_cell_3; 
 		lu_size n_size_in_cell_4;
-		lu_size n_table_mod;	
-		lu_size n_column_w;
-		lu_size n_column_h;
-		lu_size n_column_d;
+		lu_size s_table_mod;	
+		lu_size s_column_w;
+		lu_size s_column_h;
+		lu_size s_column_d;
 		lu_size n_link_mem_size;
 
 		//
