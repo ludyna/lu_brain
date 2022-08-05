@@ -328,7 +328,7 @@
 			);
 		}
 
-		if (w_save_cell_output == NULL || !lu_w_save_cell__is_sig_over_breakpoint(w_save_cell_output, n_cell_output, 0.82))
+		if (w_save_cell_output == NULL || !lu_w_save_cell__is_sig_over_breakpoint(w_save_cell_output, n_cell_output, 0.8))
 		{
 			// create new neuron
 			n_cell_output = lu_s_column__alloc_n_cell(self);

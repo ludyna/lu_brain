@@ -67,7 +67,7 @@
 			.la_link_mem_size = 1024
 		},
 		{
-			// LU_CONFIG__SEMEION
+			// LU_CONFIG__SEMEION_01_01
 
 			//
 			// Brain 
@@ -125,7 +125,67 @@
 			.la_mem = NULL,
 			.la_labels_size = 11,		
 			.la_link_mem_size = 2000
-			},
+		},
+		{
+			// LU_CONFIG__SEMEION_01_02
+
+			//
+			// Brain 
+			//
+			.b_mem = NULL,					
+			.b_id = 0, 						
+			.b_recs_size = 1,				
+			.b_max_seq_size_in_blocks = 1,
+
+			//
+			// Space 
+			//
+			.s_mem = NULL, 			
+			.s_apexes_size = 256,
+			.s_areas_size = 16,		
+
+			//
+			// Network 
+			//
+			.n_mem = NULL,		
+			.s_column_w = 5, 
+			.s_column_h = 1000,
+			.s_column_d = 10,
+			.n_link_mem_size = 6000,
+
+			//
+			// Waves
+			//
+			.w_mem = NULL,	
+
+			//
+			// Save wave
+			// 
+			.w_save_waves_size = 1,
+			.w_save_sig_breakpoint = 0.74, 
+
+			//
+			// Match wave
+			//
+			.w_match_waves_size = 1,
+			.w_match_sig_breakpoint = 0.44, 			// should be moved to match_wave_config
+			.w_match_processor_queue_size = 100000,
+			.w_match_cells_size_per_wave = 200000,
+			.w_match_results_size = 3,
+			
+			//
+			// Restore wave
+			//
+			.w_restore_waves_size = 1,
+
+			//
+			// Labels
+			//			
+
+			.la_mem = NULL,
+			.la_labels_size = 11,		
+			.la_link_mem_size = 2000
+		},
 	};		
 
 	struct lu_config lu_config__get_by_id(lu_size id)

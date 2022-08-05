@@ -146,7 +146,8 @@
 
 	enum lu_config_type {
 		LU_CONFIG__DEFAULT 	= 0,
-		LU_CONFIG__SEMEION = 1,
+		LU_CONFIG__SEMEION_01 = 1,
+		LU_CONFIG__SEMEION_02 = 2,
 		LU_CONFIG__END 				
 	};
 

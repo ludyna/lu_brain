@@ -65,7 +65,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Data
 
-	#define SMN_TRAINING_SAMPLES_PERCENT 0.9
+	#define SMN_TRAINING_SAMPLES_PERCENT 0.93
 
 	extern Smn_Digit 				smn_data;
 	extern size_t 					smn_data_count;
@@ -86,7 +86,7 @@
 	void smn_data__load();
 	void smn_data__free();
 
-	void smn_data__samples_create();;
+	void smn_data__samples_create();
 	void smn_data__samples_free();
 
 ///////////////////////////////////////////////////////////////////////////////

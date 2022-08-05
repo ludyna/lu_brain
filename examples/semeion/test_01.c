@@ -4,12 +4,14 @@
 	WARNING: not working at this moment, WORK IN PROGRESS
 
 	Execute with 
-	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function -Wno-unused-value main.c -o ./build/semeion -lm; ./build/semeion 
+	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function -Wno-unused-value test_01.c -o ./build/semeion -lm; ./build/semeion 
 
 	Flags:
 	-Wno-unused-function - to not show warning about unused functions
-	-Wno-unused-value - we have unused vaues because some pieces of code it
-
+	-Wno-unused-value - to not show warning about unused values
+	
+	DESCRIPTION:
+		DUMB WAY
 */
 
 #include "semeion.h"
@@ -41,9 +43,9 @@ int main()
 	smn_data__samples_create();
 
 	// Get brain config 
-	struct lu_config config = lu_config__get_by_id(LU_CONFIG__SEMEION);
+	struct lu_config config = lu_config__get_by_id(LU_CONFIG__SEMEION_01);
 
-	config.w_match_sig_breakpoint = 0.44;
+	config.w_match_sig_breakpoint = 0.4;
 
 	// Create brain and related
 
@@ -126,12 +128,13 @@ int main()
 
 	Lu_Label* labels = NULL;
 
-	lu_size samples_to_test = 100; 
-	for (i = 0; i < samples_to_test; i++)
+	lu_size samples_to_test = smn_test_samples_count; 
+	for (i = 0; i < smn_test_samples_count; i++)
 	{
 		if (i >= smn_test_samples_count) break;
 
-		d = smn_test_samples[smn__rand_in_range(0, (int) smn_test_samples_count - 1)]; 
+		// d = smn_test_samples[smn__rand_in_range(0, (int) smn_test_samples_count - 1)]; 
+		d = smn_test_samples[i];
 
 		printf("\nMATCHING UNTRAINED SAMPLE:");
 		smn_digit__print(d);
