@@ -32,11 +32,11 @@
 		}
 		printf("\n--------------------------------------------------");
 		printf("\nDigit: %d, type: %s, id: %lu\n\n", self->name, type_string, self->id);
-		for(y = 0; y < SMN_DIGIT_H; y++)
+		for(y = 0; y < SMN_DIGIT__H; y++)
 		{
-			for(x = 0; x < SMN_DIGIT_W; x++)
+			for(x = 0; x < SMN_DIGIT__W; x++)
 			{
-				val = self->pixels[y * SMN_DIGIT_W + x];
+				val = self->pixels[y * SMN_DIGIT__W + x];
 				if (val > 0)
 					printf("X");
 				else 
@@ -50,13 +50,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Groups
 
-	struct smn_group smn_groups[SMN_DIGIT_VALUE_COUNT];
+	struct smn_group smn_groups[SMN_DIGIT__VALUE_COUNT];
 
 	void smn_groups__init()
 	{
 		size_t i;
 		Smn_Group group;
-		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 		{
 			group 					= &smn_groups[i];
 			group->name 			= i;
@@ -72,7 +72,7 @@
 	{
 		size_t i;
 		Smn_Group group;
-		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 		{
 			group = &smn_groups[i];
 			if (group->size)
@@ -108,12 +108,14 @@
 	{
 		size_t i;
 		Smn_Group group;
-		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 		{
 			group 			= &smn_groups[i];
 			if (group->data)
 			{
 				free(group->data);
+				free(group->training_samples);
+				free(group->test_samples);
 			}
 		}
 	}
@@ -168,7 +170,7 @@
 			
 			digit->id = i;
 
-			for (j = 0; j < SMN_DIGIT_PIXEL_COUNT; j++)
+			for (j = 0; j < SMN_DIGIT__PIXEL_COUNT; j++)
 			{
 				read = fscanf(fp, "%f", &val_f);
 				if (read == -1) goto exit;
@@ -176,7 +178,7 @@
 			}
 
 			non_zero_ix = 100;
-			for (j = 0; j < SMN_DIGIT_VALUE_COUNT; j++)
+			for (j = 0; j < SMN_DIGIT__VALUE_COUNT; j++)
 			{
 				read = fscanf(fp, "%d", &val_i);
 				if (read == -1) goto exit;
@@ -186,9 +188,9 @@
 			digit->name = non_zero_ix;
 			digit->type = SD_NONE;
 
-			if (digit->name >= SMN_DIGIT_VALUE_COUNT)
+			if (digit->name >= SMN_DIGIT__VALUE_COUNT)
 			{
-				printf("\ndigit->name >= SMN_DIGIT_VALUE_COUNT!!!\n");
+				printf("\ndigit->name >= SMN_DIGIT__VALUE_COUNT!!!\n");
 				goto exit;
 			}
 
@@ -216,7 +218,7 @@
 
 		size_t i;
 		Smn_Group group;
-		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 		{
 			group = &smn_groups[i];
 
@@ -225,6 +227,11 @@
 
 			smn_training_samples_count += group->training_size;
 			smn_test_samples_count += group->test_size;
+
+			group->training_samples = (Smn_Digit*) calloc(group->training_size, sizeof(Smn_Digit));
+			group->training_count = 0;
+			group->test_samples = (Smn_Digit*) calloc(group->test_size, sizeof(Smn_Digit));
+			group->test_count = 0;
 
 			printf("\n %d: test(%lu), training(%lu), total(%lu)", group->name, group->test_size, group->training_size, group->count);
 		}
@@ -239,7 +246,7 @@
 		Smn_Digit d;
 		size_t test_count = 0;
 		size_t training_count = 0;
-		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 		{
 			group = &smn_groups[i];
 
@@ -253,6 +260,9 @@
 				{
 	 				d->type = SD_SELECTED_FOR_TEST;
 	 				smn_test_samples[test_count] = d;
+	 				lu__assert(group->test_count < group->test_size);
+	 				group->test_samples[group->test_count] = d;
+	 				++group->test_count;
 	 				++test_count;
 	 				++j;
 				}
@@ -263,7 +273,7 @@
 
 		printf("\nSelected %lu random test samples", smn_test_samples_count);
 
-		for (i = 0; i < SMN_DIGIT_VALUE_COUNT; i++)
+		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 		{
 			group = &smn_groups[i];
 
@@ -275,6 +285,9 @@
 				{
 					d->type = SD_SELECTED_FOR_TRAINING;
 					smn_training_samples[training_count] = d;
+					lu__assert(group->training_count < group->training_size);
+					group->training_samples[group->training_count] = d;
+					++group->training_count;
 					++training_count;
 				}
 			}

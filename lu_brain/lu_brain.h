@@ -332,6 +332,7 @@
 	// Focus
 	//
 	void lu_wave__set_dest_start_pos(Lu_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
+	void lu_wave__set_src_start_pos(Lu_Wave, Lu_Rec, lu_long src_x, lu_long src_y);
 
 	//
 	// Wave Data

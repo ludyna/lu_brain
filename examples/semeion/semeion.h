@@ -7,10 +7,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Smn_Digit
 
-	#define SMN_DIGIT_W 16
-	#define SMN_DIGIT_H 16
-	#define SMN_DIGIT_PIXEL_COUNT (SMN_DIGIT_W*SMN_DIGIT_H)
-	#define SMN_DIGIT_VALUE_COUNT 10
+	#define SMN_DIGIT__W 16
+	#define SMN_DIGIT__H 16
+	#define SMN_DIGIT__PIXEL_COUNT (SMN_DIGIT__W*SMN_DIGIT__H)
+	#define SMN_DIGIT__VALUE_COUNT 10
 	#define SMN_FILE_NAME "data/semeion.data"
 
 	typedef struct smn_digit* Smn_Digit;
@@ -25,7 +25,7 @@
 	// Single digit sample
 	struct smn_digit {
 		size_t 			id;
-		lu_value 		pixels[SMN_DIGIT_PIXEL_COUNT];
+		lu_value 		pixels[SMN_DIGIT__PIXEL_COUNT];
 		int 			name;
 		enum 			sd_type type;
 	};
@@ -39,7 +39,11 @@
 		size_t 			count;
 		Smn_Digit* 		data;
 		size_t			training_size;
+		size_t 			training_count;
 		size_t 			test_size;
+		size_t  		test_count;
+		Smn_Digit* 	    training_samples;
+		Smn_Digit* 	    test_samples;
 	};
 
 	lu_value smn_blank_pixels[] = 
@@ -70,7 +74,7 @@
 	extern Smn_Digit 				smn_data;
 	extern size_t 					smn_data_count;
 
-	extern struct smn_group			smn_groups[SMN_DIGIT_VALUE_COUNT];
+	extern struct smn_group			smn_groups[SMN_DIGIT__VALUE_COUNT];
 
 	extern Smn_Digit* 				smn_training_samples;
 	extern size_t 					smn_training_samples_count;

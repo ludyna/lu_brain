@@ -71,6 +71,13 @@
 		lu_rec_view__set_dest_start_pos(&self->view, dest_x, dest_y);
 	}
 
+	void lu_wave__set_src_start_pos(Lu_Wave wave, Lu_Rec self, lu_long src_x, lu_long src_y)
+	{
+		lu__user_assert_void(self, "Rec is NULL");
+
+		lu_rec_view__set_src_start_pos(&self->view, src_x, src_y);
+	}
+
 	void lu_rec__set_src_start_pos(Lu_Rec self, lu_size src_x, lu_size src_y)
 	{
 		lu__user_assert_void(self, "Rec is NULL");

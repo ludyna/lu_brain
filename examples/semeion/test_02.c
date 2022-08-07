@@ -11,10 +11,11 @@
 	-Wno-unused-value - to not show warning about unused values
 
 	DESCRIPTION:
-		SMART WAY
+		SMARTER WAY
 */
 
 #include "brain_objects.h"
+
 
 int main()
 {
@@ -37,7 +38,7 @@ int main()
 	smn_groups__data_alloc();
 	smn_groups__data_fill();
 
-	// Select random samples from group
+	// Select random samples from each group
 
 	smn_data__samples_create();
 
@@ -45,6 +46,8 @@ int main()
 	struct lu_config config = lu_config__get_by_id(LU_CONFIG__SEMEION_02);
 
 	config.w_match_sig_breakpoint = 0.4;
+
+	focuses__create(config);
 
 	// Create brain and related
 
@@ -166,6 +169,8 @@ int main()
 	// lu_wave__destroy(match_wave);
 	// lu_wave__destroy(save_wave);
 	// lu_brain__destroy(brain_tl);
+
+	focuses__destroy();
 
 	// Clean up memory for data
 
