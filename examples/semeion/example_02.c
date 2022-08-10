@@ -4,7 +4,7 @@
 	WARNING: not working at this moment, WORK IN PROGRESS
 
 	Execute with 
-	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function -Wno-unused-value test_02.c -o ./build/semeion -lm; ./build/semeion 
+	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function -Wno-unused-value example_02.c -o ./build/semeion -lm; ./build/semeion 
 
 	Flags:
 	-Wno-unused-function - to not show warning about unused functions
@@ -51,6 +51,8 @@ int main()
 
 	// Create brain and related
 
+	focuses__learn_samples();
+
 	// Show random digit
 
 	// printf("\nRandom sample:");
@@ -77,7 +79,7 @@ int main()
 
 	// 	lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
-	// 	la_cell = lu_wave__link_to_label(match_wave, 2, 0, 0, 0, d->name);
+	// 	la_cell = lu_wave__link_to_label(save_wave, 2, 0, 0, 0, d->name);
 	// 	lu__assert(la_cell);
 
 	// 	//printf("\nTraining samples.. %lu trained.", i + 1);
@@ -94,9 +96,9 @@ int main()
 	// 	time_taken
 	// );
 
-	// // Show network stats
+	// Show network stats
 
-	// lu_brain__print_net_stats(brain);
+	focuses__net_stats();
 
 	// // Testing samples
 	
