@@ -814,7 +814,13 @@
 	{
 		lu__assert(self);
 
-		self->sig += sig;
+		//self->sig += sig;
+
+		if (sig > self->sig)
+		{
+			self->sig = sig;
+		}
+
 		++self->sig_received_count;
 	}
 
