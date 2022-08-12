@@ -839,14 +839,17 @@
 
 	static inline void lu_w_processor__fire_n_labels_with_sig(
 		Lu_W_Processor self, 
-		union lu_la_link_addr labels,
+		Lu_N_Cell n_cell,
 		Lu_La_Column la_column,
 		lu_value sig
 	)
 	{
 		lu__debug_assert(self);
+		lu__assert(n_cell);
 		lu__debug_assert(la_column);
 		lu__debug_assert(sig > 0);
+
+		union lu_la_link_addr labels = n_cell->labels;
 
 		Lu_La_Link_Mem link_mem = lu_la_column__get_la_link_mem(la_column);
 		lu__assert(link_mem);
@@ -866,7 +869,7 @@
 			match_cell = lu_la_cell__get_and_reset_match_cell(la_cell, self->block_id, self->wave_ix, self->match_cell_mem);
 			lu__assert(match_cell);
 			
-			lu_w_la_match_cell__add_sig(match_cell, sig);
+			lu_w_la_match_cell__add_sig(match_cell, n_cell, sig);
 
 			la_link_label = lu_la_link_mem__get_link(link_mem, la_link_label->next);
 		}
@@ -909,7 +912,7 @@
 					w_proc_item->n_cell->addr.cell_ix, 
 					w_proc_item->n_cell->labels.value
 				);
-				lu_w_processor__fire_n_labels_with_sig(self, w_proc_item->n_cell->labels, self->la_column, fire_sig);
+				lu_w_processor__fire_n_labels_with_sig(self, w_proc_item->n_cell, self->la_column, fire_sig);
 			}
 
 			++cells_processed;

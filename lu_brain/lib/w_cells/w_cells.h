@@ -742,6 +742,7 @@
 	struct lu_w_la_match_cell {
 		struct lu_block_id block_id;
 		lu_value sig;
+		Lu_N_Cell n_cell;
 		lu_value sig_received_count;
 	};
 
@@ -810,7 +811,7 @@
 	// Methods
 	//
 
-	static inline void lu_w_la_match_cell__add_sig(Lu_W_La_Match_Cell self, lu_value sig)
+	static inline void lu_w_la_match_cell__add_sig(Lu_W_La_Match_Cell self, Lu_N_Cell n_cell, lu_value sig)
 	{
 		lu__assert(self);
 
@@ -818,7 +819,8 @@
 
 		if (sig > self->sig)
 		{
-			self->sig = sig;
+			self->sig = sig; 
+			self->n_cell = n_cell;
 		}
 
 		++self->sig_received_count;
