@@ -73,31 +73,36 @@
 		lu_brain__destroy(self->brain);
 	}
 
-	static inline void brain_objects__learn(Brain_Objects self, Smn_Digit d, enum focus_type focus_type)
+	static inline void brain_objects__set_src(Lu_Wave wave, Lu_Rec rec, enum focus_type focus_type)
 	{
-		lu_wave__push(self->save_wave, self->rec, smn_blank_pixels, 8, 8, 1);
-
 		switch(focus_type)
 		{
 			case FOCUS_TYPE__TL:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 0, 0);
-				lu_wave__set_src_end_pos(self->save_wave, self->rec, 8, 8);
+				lu_wave__set_src_start_pos(wave, rec, 0, 0);
+				lu_wave__set_src_end_pos(wave, rec, 8, 8);
 				break;
 			case FOCUS_TYPE__TR:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 8, 0);
-				lu_wave__set_src_end_pos(self->save_wave, self->rec, 16, 8);
+				lu_wave__set_src_start_pos(wave, rec, 8, 0);
+				lu_wave__set_src_end_pos(wave, rec, 16, 8);
 				break;
 			case FOCUS_TYPE__BL:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 0, 8);
-				lu_wave__set_src_end_pos(self->save_wave, self->rec, 8, 16);
+				lu_wave__set_src_start_pos(wave, rec, 0, 8);
+				lu_wave__set_src_end_pos(wave, rec, 8, 16);
 				break;
 			case FOCUS_TYPE__BR:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 8, 8);
-				lu_wave__set_src_end_pos(self->save_wave, self->rec, 16, 16);
+				lu_wave__set_src_start_pos(wave, rec, 8, 8);
+				lu_wave__set_src_end_pos(wave, rec, 16, 16);
 				break;
 			default:
 				lu__assert(false);
 		} 
+	}
+
+	static inline void brain_objects__learn(Brain_Objects self, Smn_Digit d, enum focus_type focus_type)
+	{
+		lu_wave__push(self->save_wave, self->rec, smn_blank_pixels, 8, 8, 1);
+
+		brain_objects__set_src(self->save_wave, self->rec, focus_type);
 
 		lu_wave__push(self->save_wave, self->rec, d->pixels, 16, 16, 1);
 		lu_wave__process(self->save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
@@ -107,32 +112,47 @@
 
 	}
 
-	static inline void brain_objects__match(Brain_Objects self, Smn_Digit d, enum focus_type focus_type)
+	static inline void brain_objects__match(
+		Brain_Objects self, 
+		Smn_Digit d, 
+		enum focus_type focus_type, 
+		lu_value* out_labels,
+		lu_size w_match_results_size
+	)
 	{
 		lu_wave__push(self->match_wave, self->rec, smn_blank_pixels, 8, 8, 1);
 
-		switch(focus_type)
-		{
-			case FOCUS_TYPE__TR:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 0, 0);
-				break;
-			case FOCUS_TYPE__TL:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 8, 0);
-				break;
-			case FOCUS_TYPE__BL:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 0, 8);
-				break;
-			case FOCUS_TYPE__BR:
-				lu_wave__set_src_start_pos(self->save_wave, self->rec, 8, 8);
-				break;
-			default:
-				lu__assert(false);
-		}
+		brain_objects__set_src(self->match_wave, self->rec, focus_type);
 
-		lu_wave__push(self->match_wave, self->rec, d->pixels, 8, 8, 1);
+		lu_wave__push(self->match_wave, self->rec, d->pixels, 16, 16, 1);
 		lu_wave__process(self->match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+
+		Lu_Label* labels = lu_wave__get_result_labels(self->match_wave);
+
+		if (labels == NULL) return;
+		
+		Lu_Label label;
+		for(lu_size i = 0; i < w_match_results_size; i++)
+		{
+			label = labels[i];
+			if (label == NULL) break;
+
+			out_labels[lu_label__get_id(label)] += lu_label__get_sig(label);
+		}
+		
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+// labels_
+//
+
+	static inline void labels__reset(lu_value* self, lu_size count)
+	{
+		for (lu_size i = 0; i < count; i++)
+		{
+			self[i] = 0;
+		}
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Focuses
@@ -158,14 +178,44 @@
 			brain_objects__deinit(&focuses[i]);
 		}
 	}
+ 	static inline void focuses__net_stats()
+ 	{
+ 		for (lu_size i = 0; i < FOCUSES_SIZE; i++)
+ 		{
+ 			lu_brain__print_net_stats(focuses[i].brain);
+ 		}
+ 	}
+
+	static inline void focuses__match_sample(Smn_Digit d)
+	{
+		lu_value labels[SMN_DIGIT__VALUE_COUNT];
+
+		labels__reset(labels, SMN_DIGIT__VALUE_COUNT);
+
+		brain_objects__match(&focuses[0], d, FOCUS_TYPE__TL, labels, 3);
+		brain_objects__match(&focuses[1], d, FOCUS_TYPE__TR, labels, 3);
+		brain_objects__match(&focuses[2], d, FOCUS_TYPE__BL, labels, 3);
+		brain_objects__match(&focuses[3], d, FOCUS_TYPE__BR, labels, 3); 
+
+		lu_size max_id = SMN_DIGIT__VALUE_COUNT;
+		lu_value max_sig = 0;
+		for (lu_size i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
+		{
+			if (labels[i] > max_sig)
+			{
+				max_id = i;
+				max_sig = labels[i];
+			}
+		}
+	}
 
  	static inline void focuses__learn_samples()
  	{
  		Smn_Group group;
- 		Smn_Digit digit;
+ 		Smn_Digit d;
 
  		size_t i;
- 		for (size_t learnt_count = 0; learnt_count < 151; learnt_count++)
+ 		for (size_t learnt_count = 0; learnt_count < 1; learnt_count++)
  		{
 	 		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 	 		{
@@ -174,22 +224,18 @@
 
 	 			if (learnt_count < group->training_size)
 	 			{
-	 				digit = group->training_samples[learnt_count];
-	 				lu__assert(digit);
+	 				d = group->training_samples[learnt_count];
+	 				lu__assert(d);
 
-	 				brain_objects__learn(&focuses[0], digit, FOCUS_TYPE__TL);
-	 				brain_objects__learn(&focuses[1], digit, FOCUS_TYPE__TR);
-	 				brain_objects__learn(&focuses[2], digit, FOCUS_TYPE__BL);
-	 				brain_objects__learn(&focuses[3], digit, FOCUS_TYPE__BR);
+	 				// smn_digit__print(d);
+
+ 					// printf("\n\n========== Digit: %d \n", d->name);
+	 				brain_objects__learn(&focuses[0], d, FOCUS_TYPE__TL);
+	 				brain_objects__learn(&focuses[1], d, FOCUS_TYPE__TR);
+	 				brain_objects__learn(&focuses[2], d, FOCUS_TYPE__BL);
+	 				brain_objects__learn(&focuses[3], d, FOCUS_TYPE__BR);
 	 			}
 	 		}
  		}
  	}
 
- 	static inline void focuses__net_stats()
- 	{
- 		for (lu_size i = 0; i < FOCUSES_SIZE; i++)
- 		{
- 			lu_brain__print_net_stats(focuses[i].brain);
- 		}
- 	}

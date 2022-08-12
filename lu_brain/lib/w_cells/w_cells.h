@@ -330,23 +330,35 @@
 
 	static inline void lu_w_cell_p__print_symbol(Lu_W_Cell_P self)
 	{
+		// if (self == NULL)
+		// {
+		// 	lu__debug("00 "); // error
+		// }
+		// else if (lu_w_cell_p__is_not_set(self))  // (self->n_cell == NULL) || (self->s_column == NULL)
+		// {
+		// 	lu__debug("EE "); // error
+		// }
+		// else if (lu_w_cell_p__has_null_n_cell(self)) // self->n_cell->addr.cell_ix == 0
+		// {
+		// 	lu__debug("NN "); // just null (no changes for p)
+		// }
+		// else
+		// {
+		// 	char buff[4];
+		// 	sprintf(buff, "%.0f", self->p_2 - self->p_1);
+		// 	lu__debug("%2s ", buff); // value
+		// }
 		if (self == NULL)
 		{
-			lu__debug("00 "); // error
+			lu__debug(" ");
 		}
-		else if (lu_w_cell_p__is_not_set(self))  // (self->n_cell == NULL) || (self->s_column == NULL)
+		else if (lu_w_cell_p__has_null_n_cell(self))
 		{
-			lu__debug("EE "); // error
+			lu__debug(" ");
 		}
-		else if (lu_w_cell_p__has_null_n_cell(self)) // self->n_cell->addr.cell_ix == 0
+		else 
 		{
-			lu__debug("NN "); // just null (no changes for p)
-		}
-		else
-		{
-			char buff[4];
-			sprintf(buff, "%.0f", self->p_2 - self->p_1);
-			lu__debug("%2s ", buff); // value
+			lu__debug("X");
 		}
 	}
 

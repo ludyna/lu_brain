@@ -172,11 +172,11 @@
 
 		Lu_W_Cell_P w_cell_p;
 
-		lu__debug("\nLU_W_TABLE_P:"); 
+		lu__debug("\n-------- Lu_W_Table_P:"); 
 
 		for (y = 0; y < self->h; y++)
 		{
-			lu__debug("\n\t");
+			lu__debug("\n");
 			for (x = 0; x < self->w; x++)
 			{
 				w_cell_p = lu_w_table_p__get_w_cell(self, x, y);
