@@ -44,6 +44,7 @@ int main()
 
 	// Get brain config 
 	struct lu_config config = lu_config__get_by_id(LU_CONFIG__SEMEION_02);
+	config.w_match_results_size = MATCH_RESULTS_SIZE;
 
 	config.w_match_sig_breakpoint = 0.4;
 
@@ -51,7 +52,7 @@ int main()
 
 	// Create brain and related
 
-	focuses__learn_samples();
+	// focuses__train_samples();
 
 	// Show random digit
 
@@ -98,7 +99,9 @@ int main()
 
 	// Show network stats
 
-	focuses__net_stats();
+	// focuses__net_stats();
+
+	// focuses__test_samples();
 
 	// // Testing samples
 	

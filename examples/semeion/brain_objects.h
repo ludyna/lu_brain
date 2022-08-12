@@ -18,6 +18,8 @@
 		FOCUS_TYPE__END
 	};
 
+	#define MATCH_RESULTS_SIZE 3
+
 ///////////////////////////////////////////////////////////////////////////////
 // Brain_Objects
 //
@@ -116,8 +118,7 @@
 		Brain_Objects self, 
 		Smn_Digit d, 
 		enum focus_type focus_type, 
-		lu_value* out_labels,
-		lu_size w_match_results_size
+		lu_value* out_labels
 	)
 	{
 		lu_wave__push(self->match_wave, self->rec, smn_blank_pixels, 8, 8, 1);
@@ -132,7 +133,7 @@
 		if (labels == NULL) return;
 		
 		Lu_Label label;
-		for(lu_size i = 0; i < w_match_results_size; i++)
+		for(lu_size i = 0; i < MATCH_RESULTS_SIZE; i++)
 		{
 			label = labels[i];
 			if (label == NULL) break;
@@ -186,16 +187,22 @@
  		}
  	}
 
-	static inline void focuses__match_sample(Smn_Digit d)
+ 	struct focuses_win_label {
+ 		lu_size name;
+ 		lu_value sig;
+ 	};
+
+
+	static inline struct focuses_win_label focuses__match_sample(Smn_Digit d)
 	{
 		lu_value labels[SMN_DIGIT__VALUE_COUNT];
 
 		labels__reset(labels, SMN_DIGIT__VALUE_COUNT);
 
-		brain_objects__match(&focuses[0], d, FOCUS_TYPE__TL, labels, 3);
-		brain_objects__match(&focuses[1], d, FOCUS_TYPE__TR, labels, 3);
-		brain_objects__match(&focuses[2], d, FOCUS_TYPE__BL, labels, 3);
-		brain_objects__match(&focuses[3], d, FOCUS_TYPE__BR, labels, 3); 
+		brain_objects__match(&focuses[0], d, FOCUS_TYPE__TL, labels);
+		brain_objects__match(&focuses[1], d, FOCUS_TYPE__TR, labels);
+		brain_objects__match(&focuses[2], d, FOCUS_TYPE__BL, labels);
+		brain_objects__match(&focuses[3], d, FOCUS_TYPE__BR, labels); 
 
 		lu_size max_id = SMN_DIGIT__VALUE_COUNT;
 		lu_value max_sig = 0;
@@ -207,15 +214,30 @@
 				max_sig = labels[i];
 			}
 		}
+
+		struct focuses_win_label win_label;
+		win_label.name = max_id;
+		win_label.sig = max_sig;
+
+		return win_label;
+	} 
+
+	static inline void focuses__learn_one_sample(Smn_Digit d)
+	{
+		brain_objects__learn(&focuses[0], d, FOCUS_TYPE__TL);
+	 	brain_objects__learn(&focuses[1], d, FOCUS_TYPE__TR);
+	 	brain_objects__learn(&focuses[2], d, FOCUS_TYPE__BL);
+	 	brain_objects__learn(&focuses[3], d, FOCUS_TYPE__BR);
 	}
 
- 	static inline void focuses__learn_samples()
+ 	static inline void focuses__train_samples()
  	{
  		Smn_Group group;
  		Smn_Digit d;
+ 		struct focuses_win_label win_label;
 
  		size_t i;
- 		for (size_t learnt_count = 0; learnt_count < 1; learnt_count++)
+ 		for (size_t learnt_count = 0; learnt_count < 151; learnt_count++)
  		{
 	 		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
 	 		{
@@ -227,15 +249,63 @@
 	 				d = group->training_samples[learnt_count];
 	 				lu__assert(d);
 
+	 				// win_label = focuses__match_sample(d);
+
+	 				// if (win_label.name != d->name)
+	 				// {
+	 					focuses__learn_one_sample(d);
+	 				// }
+
 	 				// smn_digit__print(d);
 
  					// printf("\n\n========== Digit: %d \n", d->name);
-	 				brain_objects__learn(&focuses[0], d, FOCUS_TYPE__TL);
-	 				brain_objects__learn(&focuses[1], d, FOCUS_TYPE__TR);
-	 				brain_objects__learn(&focuses[2], d, FOCUS_TYPE__BL);
-	 				brain_objects__learn(&focuses[3], d, FOCUS_TYPE__BR);
+
 	 			}
 	 		}
  		}
+ 	}
+
+ 	static inline void focuses__test_samples()
+ 	{
+ 		Smn_Group group;
+ 		Smn_Digit d;
+ 		struct focuses_win_label win_label;
+
+ 		size_t total_tested = 0;
+ 		size_t success_count = 0;
+ 		size_t i;
+ 		for (size_t test_count = 0; test_count < 12; test_count++)
+ 		{
+	 		for (i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
+	 		{
+	 			group = &smn_groups[i];
+	 			lu__assert(group);
+
+	 			if (test_count < group->test_size)
+	 			{
+	 				d = group->test_samples[test_count];
+	 				lu__assert(d);
+
+	 				win_label = focuses__match_sample(d);
+	 				++total_tested;
+
+	 				if (win_label.name == d->name)
+	 				{
+	 					++success_count;
+	 				}
+
+	 				// smn_digit__print(d);
+
+ 					// printf("\n\n========== Digit: %d \n", d->name);
+
+	 			}
+	 		}
+ 		}
+
+		printf("\nReport:");
+		printf("\n 	  Successfully recognized: %ld", success_count);
+		printf("\n 	  Failed recognition: %ld", total_tested - success_count);
+		printf("\n 	  Accuracy rate: %.2f%%", (success_count / (lu_value) total_tested) * 100.0);
+		printf("\n");
  	}
 
