@@ -513,6 +513,13 @@
 		return self->col_addr.column_ix;
 	}
 
+	static inline Lu_N_Cell lu_s_column__get_n_cell(Lu_S_Column self, union lu_n_addr n_addr)
+	{
+		lu__assert(n_addr.cell_ix < self->cells_count);
+
+		return &self->cells[n_addr.cell_ix];
+	}
+
 	//
 	// Methods
 	//
@@ -654,6 +661,13 @@
 
  	static inline lu_size lu_s_table__get_w(Lu_S_Table self) { return self->w; }
  	static inline lu_size lu_s_table__get_h(Lu_S_Table self) { return self->h; }
+
+ 	static inline Lu_N_Cell lu_s_table__get_n_cell(Lu_S_Table self, union lu_n_addr n_addr)
+ 	{
+ 		lu__assert(n_addr.column_ix < self->columns_size);
+
+ 		return lu_s_column__get_n_cell(&self->columns[n_addr.column_ix], n_addr);
+ 	}
 
  	//
  	// Methods

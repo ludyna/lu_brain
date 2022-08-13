@@ -21,11 +21,11 @@
 
 		// skip NULL addr
 		#if LU__DEBUG
-			Lu_N_Link n_link = lu_n_link_mem__link_alloc(self);
+			Lu_N_Link n_link = lu_n_link_mem__alloc_link(self);
 			union lu_n_link_addr addr = lu_n_link_mem__get_addr(self, n_link);
 			lu__assert(lu_n_link_addr__is_blank(&addr));
 		#else
-			lu_n_link_mem__link_alloc(self);
+			lu_n_link_mem__alloc_link(self);
 		#endif
 
 		return self;

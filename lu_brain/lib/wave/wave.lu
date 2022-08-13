@@ -718,3 +718,58 @@
 		lu__debug("\nMATCH RESULTS (%ld cells fired):", lu_wave__get_fired_cells_count(self));
 		lu_labels__print_results(results, self->brain->config.w_match_results_size);
 	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// 
+
+	////
+	// This method can be improved later with threads etc.
+	void lu_wave__delete_label(Lu_Wave self, lu_size label, lu_bool including_all_children)
+	{
+		lu__user_assert_void(self, "Lu_Wave is NULL");
+		lu__user_assert_void(self->type == LU_WAVE__DELETE, "Lu_Wave is not DELETE type");
+
+		lu__assert(self->brain);
+
+		Lu_La_Column la_column = &self->brain->la_column;
+		lu__assert(la_column);
+
+		Lu_La_Cell la_cell = lu_la_column__get_la_cell(la_column, label);
+		lu__user_assert_void(la_cell, "Cannot find label");
+
+		if (la_cell->children_count == 0) return;
+
+		union lu_n_link_addr n_link_addr = la_cell->children;
+		Lu_N_Link_Mem n_link_mem = &la_column->n_link_mem;
+		Lu_N_Link n_link;
+
+		while (lu_n_link_addr__is_present(&n_link_addr))
+		{
+			n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
+			lu__assert(n_link);
+
+			lu_wave__delete_neuron(self, n_link->n_cell_addr, including_all_children);
+
+			n_link_addr = n_link->next;
+
+			lu_n_link_mem__free_link(n_link_mem, n_link);
+		}
+
+		lu_la_cell__reset(la_cell);
+	}
+
+	struct lu_n_delete_processor {
+
+	};
+
+ 	////
+	// This method can be improved later with threads etc.
+	void lu_wave__delete_neuron(Lu_Wave self, union lu_n_addr n_addr, lu_bool including_all_children)
+	{
+		lu__user_assert_void(self, "Lu_Wave is NULL");
+		lu__assert(self->brain);
+		lu__assert(self->brain->s);
+
+		
+	}

@@ -128,7 +128,7 @@ int main()
 
 	Lu_Label* labels = NULL;
 
-	lu_size samples_to_test = 10;//smn_test_samples_count; 
+	lu_size samples_to_test = 100;//smn_test_samples_count; 
 	for (i = 0; i < samples_to_test; i++)
 	{
 		if (i >= smn_test_samples_count) break;

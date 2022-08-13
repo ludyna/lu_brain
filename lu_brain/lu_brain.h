@@ -394,8 +394,8 @@
 	// Delete 
 	//
 
-	void lu_wave__delete_label(Lu_Wave, lu_size label);
-	void lu_wave__delete_neuron(Lu_Wave, union lu_n_addr, lu_bool);
+	void lu_wave__delete_label(Lu_Wave, lu_size label, lu_bool including_all_children);
+	void lu_wave__delete_neuron(Lu_Wave, union lu_n_addr, lu_bool including_all_children);
 
 	//
 	// Restore 

@@ -123,7 +123,7 @@
 	// Methods
 	//
 
-	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self)
+	static inline Lu_N_Link lu_n_link_mem__alloc_link(Lu_N_Link_Mem self)
 	{
 		lu__debug_assert(self);
 
@@ -146,6 +146,14 @@
 		return (Lu_N_Link) record;
 	}
 
+	static inline void lu_n_link_mem__free_link(Lu_N_Link_Mem self, Lu_N_Link link)
+	{
+		lu__assert(self);
+		lu__assert(self->mem_table);
+		lu__assert(link);
+
+		lu_mem_record__free(self->mem_table, (lu_p_byte) link);
+	}
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -339,7 +347,7 @@
 	static inline Lu_N_Link lu_n_cell_vp__parent_prepend(Lu_N_Cell_VP self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
 		// new child link
-		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
+		Lu_N_Link n_link = lu_n_link_mem__alloc_link(link_mem);
 		lu__assert(n_link);
 
 		n_link->next = self->parents;
@@ -544,7 +552,7 @@
 	static inline Lu_N_Link lu_n_cell__children_prepend(Lu_N_Cell self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
 		// New child link
-		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
+		Lu_N_Link n_link = lu_n_link_mem__alloc_link(link_mem);
 		lu__assert(n_link);
 
 		n_link->next = self->children;
@@ -777,7 +785,7 @@
 	static inline union lu_n_link_addr lu_n_link_addr__prepend(union lu_n_link_addr self, Lu_N_Link_Mem link_mem, union lu_n_addr addr)
 	{
 		// new child link
-		Lu_N_Link n_link = lu_n_link_mem__link_alloc(link_mem);
+		Lu_N_Link n_link = lu_n_link_mem__alloc_link(link_mem);
 		lu__assert(n_link);
 
 		n_link->next = self;

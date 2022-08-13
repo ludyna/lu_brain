@@ -114,6 +114,15 @@
 		// self->w_cells = 0;
 	}
 
+	static inline void lu_la_cell__reset(Lu_La_Cell self)
+	{
+		lu__assert(self);
+
+		self->children = LU_N_LINK_ADDR__NULL;
+		self->children_count = 0;
+	}
+
+
 	//
 	// Get / Set
 	//
@@ -175,7 +184,7 @@
 		lu__assert(n_link_mem);
 
 		// New child link
-		Lu_N_Link n_link = lu_n_link_mem__link_alloc(n_link_mem);
+		Lu_N_Link n_link = lu_n_link_mem__alloc_link(n_link_mem);
 		lu__assert(n_link);
 
 		n_link->next = self->children;  
@@ -393,7 +402,10 @@
 	{
 		lu__debug_assert(self);
 
-		lu__assert(label < self->cells_size); // simplified, when we add realloc, everything will be fine
+		if (label >= self->cells_size)
+		{
+			return LU_SIZE__MAX;
+		}
 
 		return label;
 	}
@@ -403,6 +415,8 @@
 		lu__debug_assert(self);
 
 		lu_size label_ix = lu_la_column__label_to_ix(self, label);
+
+		if (label_ix == LU_SIZE__MAX) return NULL;
 
 		return &self->cells[label_ix];
 	}

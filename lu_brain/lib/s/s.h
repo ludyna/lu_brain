@@ -426,6 +426,11 @@
 		return (Lu_S_Layer) layer_base;
 	}
 
+	static inline Lu_N_Cell lu_s_layer__get_n_cell(Lu_S_Layer self, union lu_n_addr n_addr)
+	{
+		return lu_s_table__get_n_cell(&self->s_table, n_addr);
+	}
+
 	//
 	// Methods
 	//
@@ -663,8 +668,16 @@
 		lu_size layers_count;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static Lu_S_Area lu_s_area__create(Lu_Config config, lu_size area_ix, lu_size size, enum lu_area_tag tag);
 	static void lu_s_area__destroy(Lu_S_Area self);
+
+	//
+	// Get
+	//
 
 	static inline Lu_W_Cell lu_s_area__get_w_cell_from_save_w_table(
 		Lu_S_Area self, 
@@ -699,6 +712,32 @@
 
 		return self->layers[self->layers_count - 1];
 	}
+
+	static inline Lu_S_Layer_Base lu_s_area__get_layer_by_ix(Lu_S_Area self, lu_size layer_ix)
+	{
+		lu__assert(self);
+		lu__assert(layer_ix < self->layers_count);
+
+		return self->layers[layer_ix];
+	}
+
+	static inline Lu_N_Cell lu_s_area__get_n_cell(Lu_S_Area self, union lu_n_addr n_addr)
+	{
+		lu__assert(n_addr.layer_ix < self->layers_count);
+
+		Lu_S_Layer_Base layer_base = self->layers[n_addr.layer_ix];
+
+		lu__assert(layer_base->type == LU_S_LAYER__LAYER);
+
+		Lu_S_Layer layer = (Lu_S_Layer) layer_base;
+
+		return lu_s_layer__get_n_cell(layer, n_addr);
+	}
+
+
+	//
+	// Methods
+	//
 
 	static inline Lu_S_Layer_Base lu_s_area__register_layer(Lu_S_Area self, Lu_S_Layer_Base layer)
 	{
@@ -786,14 +825,6 @@
 		}
 
 		lu_s_net_stats__collect(s_ns, &area_ns);
-	}
-
-	static inline Lu_S_Layer_Base lu_s_area__get_layer_by_ix(Lu_S_Area self, lu_size layer_ix)
-	{
-		lu__assert(self);
-		lu__assert(layer_ix < self->layers_count);
-
-		return self->layers[layer_ix];
 	}
 
 	static inline void lu_s_area__find_n_cell_and_s_column(
@@ -978,6 +1009,13 @@
 		return lu_s_area__get_w_cell_from_save_w_table(area, wave_ix, layer_ix, x, y);
 	}
 
+	static inline Lu_N_Cell lu_s__get_n_cell(Lu_S self, union lu_n_addr n_addr)
+	{
+		Lu_S_Area area = lu_s__get_area(self, n_addr.area_ix);
+		if (area == NULL) return NULL;
+
+		return lu_s_area__get_n_cell(area, n_addr);
+	}
 
 	//
 	// Create and destroy

@@ -34,7 +34,7 @@
 	static inline void lu_s_layer_base__print_basic_info(Lu_S_Layer_Base self);
 
 
-	static inline Lu_N_Link lu_n_link_mem__link_alloc(Lu_N_Link_Mem self);
+	static inline Lu_N_Link lu_n_link_mem__alloc_link(Lu_N_Link_Mem self);
 	static inline union lu_n_link_addr lu_n_link_mem__get_addr(Lu_N_Link_Mem self, Lu_N_Link link);
 	static inline Lu_N_Link lu_n_link_mem__get_link(Lu_N_Link_Mem self, union lu_n_link_addr addr);
 	static inline Lu_N_Link_Mem lu_s_column__get_link_mem(Lu_S_Column self);
