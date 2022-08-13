@@ -52,12 +52,9 @@
 	enum lu_wave_type {
 		LU_WAVE__SAVE,
 		LU_WAVE__MATCH,
-		LU_WAVE__RESTORE
+		LU_WAVE__RESTORE,
+		LU_WAVE__DELETE
 	};
-
-
-	typedef union lu_w_addr* Lu_W_Addr;
-	typedef struct lu_w_cell* Lu_W_Cell; 
 
 	typedef struct lu_process_config*	Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave; 
@@ -68,6 +65,27 @@
 
 	typedef struct lu_label* Lu_Label;
 	typedef struct lu_la_cell* Lu_La_Cell;
+
+	//
+	// Lu_N_Addr
+	// 
+
+	#define LU_N_CELL_IX__SIZE 16
+	#define LU_N_COLUMN_IX__SIZE 24
+	#define LU_N_LAYER_IX__SIZE 16
+	#define LU_N_AREA_IX__SIZE 8
+
+	union lu_n_addr {
+		struct {
+			lu_size cell_ix : LU_N_CELL_IX__SIZE;
+			lu_size column_ix: LU_N_COLUMN_IX__SIZE;
+			lu_size layer_ix: LU_N_LAYER_IX__SIZE;
+			lu_size area_ix: LU_N_AREA_IX__SIZE;
+		};
+		lu_size value;
+	};
+
+	typedef union lu_n_addr* Lu_N_Addr;
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Config 
@@ -302,6 +320,7 @@
 	Lu_Wave lu_wave__create_save_wave(Lu_Brain); 
 	Lu_Wave lu_wave__create_match_wave(Lu_Brain);
 	Lu_Wave lu_wave__create_restore_wave(Lu_Brain);
+	Lu_Wave lu_wave__create_delete_wave(Lu_Brain);
 
 	//
 	// Destroy
@@ -316,7 +335,7 @@
 	void lu_wave__reset(Lu_Wave);
 
 	//
-	// Wave Level
+	// Wave 
 	//
 
 	void lu_wave__start_layer(Lu_Wave, lu_size level);
@@ -362,14 +381,27 @@
 	//
 
 	Lu_La_Cell lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
-	Lu_Label* lu_wave__get_result_labels(Lu_Wave);
 
 	//
-	// Match only
+	// Match 
 	// 
 
 	lu_size lu_wave__get_fired_cells_count(Lu_Wave self);
 	void lu_wave__print_match_results(Lu_Wave self);
+	Lu_Label* lu_wave__get_result_labels(Lu_Wave);
+
+	//
+	// Delete 
+	//
+
+	void lu_wave__delete_label(Lu_Wave, lu_size label);
+	void lu_wave__delete_neuron(Lu_Wave, union lu_n_addr, lu_bool);
+
+	//
+	// Restore 
+	//
+
+	void lu_wave__restore(Lu_Wave, union lu_n_addr);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Label

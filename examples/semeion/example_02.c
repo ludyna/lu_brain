@@ -11,7 +11,7 @@
 	-Wno-unused-value - to not show warning about unused values
 
 	DESCRIPTION:
-		SMARTER WAY
+
 */
 
 #include "brain_objects.h"

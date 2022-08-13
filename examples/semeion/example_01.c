@@ -11,7 +11,7 @@
 	-Wno-unused-value - to not show warning about unused values
 	
 	DESCRIPTION:
-		DUMB WAY
+
 */
 
 #include "semeion.h"
@@ -128,13 +128,13 @@ int main()
 
 	Lu_Label* labels = NULL;
 
-	lu_size samples_to_test = smn_test_samples_count; 
-	for (i = 0; i < smn_test_samples_count; i++)
+	lu_size samples_to_test = 10;//smn_test_samples_count; 
+	for (i = 0; i < samples_to_test; i++)
 	{
 		if (i >= smn_test_samples_count) break;
 
-		// d = smn_test_samples[smn__rand_in_range(0, (int) smn_test_samples_count - 1)]; 
-		d = smn_test_samples[i];
+		d = smn_test_samples[smn__rand_in_range(0, (int) smn_test_samples_count - 1)]; 
+		// d = smn_test_samples[i];
 
 		printf("\nMATCHING UNTRAINED SAMPLE:");
 		smn_digit__print(d);
