@@ -447,7 +447,7 @@
 		Lu_Wave wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Process_Config config,
+		Lu_Save_Config config,
 		Lu_W_Processor processor,   
 		Lu_W_Rec w_rec,
 		void (*collect)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
@@ -561,7 +561,7 @@
 		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Process_Config config
+		Lu_Save_Config config
 	)
 	{
 		Lu_Wave wave = (Lu_Wave) save_wave;
@@ -591,7 +591,7 @@
 		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Process_Config config,
+		Lu_Save_Config config,
 		Lu_W_Processor processor
 	)
 	{

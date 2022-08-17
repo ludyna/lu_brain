@@ -5,13 +5,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config
 
- 	static Lu_Process_Config lu_wave_config__init(Lu_Process_Config self);
- 	static inline lu_bool lu_wave_config__is_set(Lu_Process_Config self) { return self->flags != 0; }
+ 	static Lu_Save_Config lu_wave_config__init(Lu_Save_Config self);
+ 	static inline lu_bool lu_wave_config__is_set(Lu_Save_Config self) { return self->flags != 0; }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Rec_Config Predefined 
 
-	extern struct lu_process_config lu_g_wc_predefined[LU_PROCESS__END];
+	extern struct lu_save_config lu_g_wc_predefined[LU_PROCESS__END];
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave 
@@ -28,7 +28,7 @@
 
 		Lu_Mem mem;
 		Lu_Brain brain;
-		struct lu_process_config config;
+		struct lu_save_config config;
 
 		// virtual destructor
 		void (*destroy)(Lu_Wave);
@@ -41,8 +41,8 @@
 
 		void (*reset)(Lu_Wave);
 
-		void (*step)(Lu_Wave, Lu_Process_Config);
-		void (*process)(Lu_Wave, Lu_Process_Config);
+		void (*step)(Lu_Wave, Lu_Save_Config);
+		void (*process)(Lu_Wave, Lu_Save_Config);
 	};
 
 	static inline Lu_Wave lu_wave__init(
@@ -86,6 +86,14 @@
 // Lu_Restore_Wave 
 
 	struct lu_restore_wave {
+		struct lu_wave super;
+
+	};
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Delete_Wave 
+
+	struct lu_delete_wave {
 		struct lu_wave super;
 
 	};

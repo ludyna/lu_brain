@@ -8,7 +8,7 @@
 #include "lu_types.h"
 
 ///////////////////////////////////////////////////////////////////////////////
-// Typedefs
+// Header
 
 	//
 	// Mem
@@ -56,8 +56,19 @@
 		LU_WAVE__DELETE
 	};
 
-	typedef struct lu_process_config*	Lu_Process_Config;
 	typedef struct lu_wave* 			Lu_Wave; 
+
+	typedef struct lu_save_config* 		Lu_Save_Config;
+	typedef struct lu_save_wave* 		Lu_Save_Wave;
+
+	typedef struct lu_match_config* 	Lu_Match_Config;
+	typedef struct lu_match_wave* 		Lu_Match_Wave;
+
+	typedef struct lu_restore_config* 	Lu_Restore_Config;
+	typedef struct lu_restore_wave* 	Lu_Restore_Wave;
+
+	typedef struct lu_delete_config*  	Lu_Delete_Config;
+	typedef struct lu_delete_wave*		Lu_Delete_Wave;
 
 	//
 	// Label
@@ -277,9 +288,9 @@
 	void lu_rec__set_src_end_z(Lu_Rec self, lu_size src_z);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Process_Config 
+// Lu_Save_Config 
 
-	struct lu_process_config {
+	struct lu_save_config {
 		lu_flags 				flags;						// 0 oznachaye not set
 
 		lu_value 				p_potency;					// "contrast" potency
@@ -294,10 +305,10 @@
 		lu_size 				result_labels_size;
 	};
 
-	Lu_Process_Config lu_process_config__validate(Lu_Process_Config self);
+	Lu_Save_Config lu_process_config__validate(Lu_Save_Config self);
 	
 	//
-	// Lu_Process_Config Predefined
+	// Lu_Save_Config Predefined
 	//
 
 	enum lu_process_config_type {
@@ -307,7 +318,7 @@
 		LU_PROCESS__END			
 	};
 
-	struct lu_process_config lu_process_config__get_by_id(lu_size id);
+	struct lu_save_config lu_process_config__get_by_id(lu_size id);
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -364,14 +375,14 @@
 	// Process
 	//
 
-	void lu_wave__step(Lu_Wave, struct lu_process_config);
-	void lu_wave__process(Lu_Wave, struct lu_process_config);
+	void lu_wave__step(Lu_Wave, struct lu_save_config);
+	void lu_wave__process(Lu_Wave, struct lu_save_config);
 
 	//
 	// Get
 	//
 
-	struct lu_process_config lu_wave__get_process_config(Lu_Wave);
+	struct lu_save_config lu_wave__get_process_config(Lu_Wave);
 	lu_size lu_wave__get_id(Lu_Wave);
 	lu_size lu_wave__get_ix(Lu_Wave);
 	enum lu_wave_type lu_wave__get_type(Lu_Wave);
@@ -394,8 +405,12 @@
 	// Delete 
 	//
 
-	void lu_wave__delete_label(Lu_Wave, lu_size label, lu_bool including_all_children);
-	void lu_wave__delete_neuron(Lu_Wave, union lu_n_addr, lu_bool including_all_children);
+	struct lu_delete_config {
+		lu_bool including_all_children;
+	};
+
+	void lu_wave__delete_label(Lu_Wave, lu_size label, struct lu_delete_config);
+	void lu_wave__delete_neuron(Lu_Wave, union lu_n_addr, struct lu_delete_config);
 
 	//
 	// Restore 

@@ -30,8 +30,8 @@
 		self->brain = brain;
 
 		// Setting last proccess config to default
-		struct lu_process_config config = lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT);
-		Lu_Process_Config p_config = lu_process_config__validate(&config);
+		struct lu_save_config config = lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT);
+		Lu_Save_Config p_config = lu_process_config__validate(&config);
 		lu__assert(p_config);
 
 		self->config = config;
@@ -50,7 +50,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Get
 
-	struct lu_process_config lu_wave__get_process_config(Lu_Wave self)
+	struct lu_save_config lu_wave__get_process_config(Lu_Wave self)
 	{
 		lu__assert(self);
 		return self->config;
@@ -166,7 +166,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Process block
 
-	static void lu_save_wave__process_block(Lu_Save_Wave self, Lu_Data_Block block, Lu_Process_Config config)
+	static void lu_save_wave__process_block(Lu_Save_Wave self, Lu_Data_Block block, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(block);
@@ -243,7 +243,7 @@
 		curr_w_table = lu_s_area__save_seq(area, self, data->block_id, curr_w_table, config);
 	}
 
-	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Process_Config config)
+	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(block);
@@ -315,12 +315,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Step
 
-	void lu_wave__step(Lu_Wave self, struct lu_process_config config)
+	void lu_wave__step(Lu_Wave self, struct lu_save_config config)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
-		Lu_Process_Config p_config = lu_process_config__validate(&config);
-		lu__user_assert_void(p_config, "Lu_Process_Config is invalid");
+		Lu_Save_Config p_config = lu_process_config__validate(&config);
+		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
 
 		self->config = config;
 
@@ -330,7 +330,7 @@
 	}
 
 
-	static void lu_save_wave__step_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_save_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_save(self));
@@ -344,7 +344,7 @@
 		lu_save_wave__process_block(save_wave, block, config);
 	}
 
-	static void lu_match_wave__step_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_match_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_match(self));
@@ -358,7 +358,7 @@
 		lu_match_wave__process_block(match_wave, block, config);
 	}
 
-	static void lu_restore_wave__step_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_restore_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_restore(self));
@@ -371,12 +371,12 @@
 	// Wave
 	//
 
-	void lu_wave__process(Lu_Wave self, struct lu_process_config config)
+	void lu_wave__process(Lu_Wave self, struct lu_save_config config)
 	{
 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
-		Lu_Process_Config p_config = lu_process_config__validate(&config);
-		lu__user_assert_void(p_config, "Lu_Process_Config is invalid");
+		Lu_Save_Config p_config = lu_process_config__validate(&config);
+		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
 
 		self->config = config; // save last process config 
 
@@ -389,7 +389,7 @@
 	// Save
 	//
 
-	static void lu_save_wave__process_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_save_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_save(self));
@@ -416,7 +416,7 @@
 	// Match
 	//
 
-	static void lu_match_wave__process_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_match_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_match(self));
@@ -440,7 +440,7 @@
 	// Restore
 	//
 
-	static void lu_restore_wave__process_virtual(Lu_Wave self, Lu_Process_Config config)
+	static void lu_restore_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
 	{
 		lu__assert(self);
 		lu__assert(lu_wave__is_restore(self));
@@ -725,51 +725,90 @@
 
 	////
 	// This method can be improved later with threads etc.
-	void lu_wave__delete_label(Lu_Wave self, lu_size label, lu_bool including_all_children)
+	void lu_wave__delete_label(Lu_Wave self, lu_size label, struct lu_delete_config config)
 	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-		lu__user_assert_void(self->type == LU_WAVE__DELETE, "Lu_Wave is not DELETE type");
+		// lu__user_assert_void(self, "Lu_Wave is NULL");
+		// lu__user_assert_void(self->type == LU_WAVE__DELETE, "Lu_Wave is not DELETE type");
 
-		lu__assert(self->brain);
+		// lu__assert(self->brain);
 
-		Lu_La_Column la_column = &self->brain->la_column;
-		lu__assert(la_column);
+		// Lu_S s = lu_brain__get_s(self->brain);
+		// lu__assert(s);
 
-		Lu_La_Cell la_cell = lu_la_column__get_la_cell(la_column, label);
-		lu__user_assert_void(la_cell, "Cannot find label");
+		// Lu_La_Column la_column = &self->brain->la_column;
+		// lu__assert(la_column);
 
-		if (la_cell->children_count == 0) return;
+		// Lu_La_Cell la_cell = lu_la_column__get_la_cell(la_column, label);
+		// lu__user_assert_void(la_cell, "Cannot find label");
 
-		union lu_n_link_addr n_link_addr = la_cell->children;
-		Lu_N_Link_Mem n_link_mem = &la_column->n_link_mem;
-		Lu_N_Link n_link;
+		// if (la_cell->children_count == 0) return;
 
-		while (lu_n_link_addr__is_present(&n_link_addr))
-		{
-			n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
-			lu__assert(n_link);
+		// union lu_n_link_addr n_link_addr = la_cell->children;
+		// Lu_N_Link_Mem n_link_mem = &la_column->n_link_mem;
+		// Lu_N_Link n_link;
 
-			lu_wave__delete_neuron(self, n_link->n_cell_addr, including_all_children);
+		// while (lu_n_link_addr__is_present(&n_link_addr))
+		// {
+		// 	n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
+		// 	lu__assert(n_link);
 
-			n_link_addr = n_link->next;
+		// 	//
+		// 	// Get cell data
+		// 	//
 
-			lu_n_link_mem__free_link(n_link_mem, n_link);
-		}
 
-		lu_la_cell__reset(la_cell);
+
+		// 	// 
+		// 	// Delete link to parent
+		// 	// likns up and down are separate, 
+		// 	// similar to processor
+		// 	//
+
+
+
+		// 	//
+		// 	// Delete neuror
+		// 	//
+		// 	lu_wave__delete_neuron(self, n_link->n_cell_addr, config);
+
+		// 	n_link_addr = n_link->next;
+
+		// 	lu_n_link_mem__free_link(n_link_mem, n_link);
+		// }
+
+		// lu_la_cell__reset(la_cell);
 	}
 
-	struct lu_n_delete_processor {
-
-	};
 
  	////
 	// This method can be improved later with threads etc.
-	void lu_wave__delete_neuron(Lu_Wave self, union lu_n_addr n_addr, lu_bool including_all_children)
+	void lu_wave__delete_neuron(Lu_Wave self, union lu_n_addr n_addr, struct lu_delete_config config)
 	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-		lu__assert(self->brain);
-		lu__assert(self->brain->s);
+		// lu__user_assert_void(self, "Lu_Wave is NULL");
+		// lu__assert(self->brain);
 
-		
+		// Lu_S s = self->brain->s;
+		// lu__assert(s);
+
+		// Lu_N_Cell n_cell = lu_s__get_n_cell(s, n_addr);
+		// lu__assert(n_cell);
+
+		// Lu_N_Column n_column = lu_s__
+
+		// //
+		// // Delete only if there is no parent
+		// // (we delete link to parent when we delete parent)
+		// //  
+
+		// if (lu_n_link_addr__is_present(n_cell->tl)) return;
+		// if (lu_n_link_addr__is_present(n_cell->tr)) return;
+		// if (lu_n_link_addr__is_present(n_cell->bl)) return;
+		// if (lu_n_link_addr__is_present(n_cell->br)) return;
+		// if (lu_la_link_addr__is_present(n_cell->labels)) return;
+
+		// //
+		// // Send each childrent to delete processor
+		// //
+
+
 	}

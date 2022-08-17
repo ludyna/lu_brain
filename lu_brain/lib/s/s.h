@@ -441,7 +441,7 @@
 		Lu_Save_Wave save_wave,
 		struct lu_block_id block_id,
 		Lu_W_Table prev_w_table,
-		Lu_Process_Config config
+		Lu_Save_Config config
 	);
 
 	static inline lu_bool lu_s_layer__expand(Lu_S_Layer self)
@@ -611,7 +611,7 @@
 		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Process_Config config
+		Lu_Save_Config config
 	);
 
 	static enum lu_w_rec_state lu_s_layer_rec__match(
@@ -619,7 +619,7 @@
 		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Process_Config config,
+		Lu_Save_Config config,
 		Lu_W_Processor processor
 	);
 
@@ -848,7 +848,7 @@
 		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	);
 
 	static Lu_W_Table lu_s_area__save_frame(
@@ -856,7 +856,7 @@
 		Lu_Save_Wave save_wave, 
 		struct lu_block_id block_id, 
 		Lu_W_Table curr_w_table, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	);
 
 	static Lu_W_Table lu_s_area__save_seq(
@@ -864,7 +864,7 @@
 		Lu_Save_Wave save_wave,
 		struct lu_block_id block_id, 
 		Lu_W_Table curr_w_table, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	);
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1009,6 +1009,10 @@
 		return lu_s_area__get_w_cell_from_save_w_table(area, wave_ix, layer_ix, x, y);
 	}
 
+	struct lu_n_cell_info {
+
+	};
+
 	static inline Lu_N_Cell lu_s__get_n_cell(Lu_S self, union lu_n_addr n_addr)
 	{
 		Lu_S_Area area = lu_s__get_area(self, n_addr.area_ix);
@@ -1016,6 +1020,7 @@
 
 		return lu_s_area__get_n_cell(area, n_addr);
 	}
+
 
 	//
 	// Create and destroy

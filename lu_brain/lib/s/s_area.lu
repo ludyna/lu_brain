@@ -155,7 +155,7 @@
 		Lu_Save_Wave save_wave,
 		lu_size rec_id, 
 		Lu_Data data, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	)
 	{
 		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(self, 0);
@@ -203,7 +203,7 @@
 		Lu_Save_Wave save_wave, 
 		struct lu_block_id block_id,
 		Lu_W_Table curr_w_table, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	)
 	{
 		Lu_S_Layer_Base parent_layer = lu_s_layer__get_parent_layer(curr_w_table->s_layer);
@@ -235,7 +235,7 @@
 		Lu_Save_Wave save_wave,
 		struct lu_block_id block_id, 
 		Lu_W_Table curr_w_table, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	)
 	{
 		lu__assert(self);
@@ -266,7 +266,7 @@
 		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data, 
-		Lu_Process_Config config,
+		Lu_Save_Config config,
 		Lu_W_Processor processor
 	)
 	{

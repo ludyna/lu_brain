@@ -43,9 +43,9 @@ void setUp(void)
 	n_cell_3.addr.value = 3;
 	n_cell_4.addr.value = 4;
 
-	children_1[0]->n_cell = &n_cell_1;
-	children_1[1]->n_cell = &n_cell_2;
-	children_1[2]->n_cell = &n_cell_3;
+	children_1[0]->n_cell_vp = &n_cell_1;
+	children_1[1]->n_cell_vp = &n_cell_2;
+	children_1[2]->n_cell_vp = &n_cell_3;
 
 }
 

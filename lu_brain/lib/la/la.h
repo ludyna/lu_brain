@@ -58,8 +58,6 @@
 		return sig_2 - sig_1;
 	}
 
-	
-
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_La_Cell
 
@@ -121,7 +119,6 @@
 		self->children = LU_N_LINK_ADDR__NULL;
 		self->children_count = 0;
 	}
-
 
 	//
 	// Get / Set

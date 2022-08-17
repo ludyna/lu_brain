@@ -435,7 +435,7 @@
 		Lu_W_Cell_V self, 
 		lu_bool is_reset,
 		lu_value v, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	)
 	{
 		self->v = v;

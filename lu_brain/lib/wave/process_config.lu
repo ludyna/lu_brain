@@ -3,9 +3,9 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Process_Config 
+// Lu_Save_Config 
 
-    static Lu_Process_Config lu_wave_config__init(Lu_Process_Config self)
+    static Lu_Save_Config lu_wave_config__init(Lu_Save_Config self)
     {
         self->flags                 = 0;
         self->p_potency             = 1.0,    
@@ -17,9 +17,9 @@
     }   
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Process_Config predefined
+// Lu_Save_Config predefined
     
-    struct lu_process_config lu_g_wc_predefined[LU_PROCESS__END] = { 
+    struct lu_save_config lu_g_wc_predefined[LU_PROCESS__END] = { 
     	// LU_PROCESS__SAVE_DEFAULT
     	{
             .flags                        = 0,
@@ -44,16 +44,16 @@
     	}
     };
 
-  	struct lu_process_config lu_process_config__get_by_id(lu_size id)
+  	struct lu_save_config lu_process_config__get_by_id(lu_size id)
   	{
   		lu__assert(id < LU_PROCESS__END);
   		return lu_g_wc_predefined[id];
   	}
 
 ///////////////////////////////////////////////////////////////////////////////
-//  Lu_Process_Config
+//  Lu_Save_Config
 
-  	Lu_Process_Config lu_process_config__validate(Lu_Process_Config self) 
+  	Lu_Save_Config lu_process_config__validate(Lu_Save_Config self) 
   	{
   		lu__user_assert(self->p_potency >= 0 && self->p_potency <= 1, "p_potency should be in [0, 1]");
         lu__user_assert(self->v_potency >= 0 && self->v_potency <= 1, "p_potency should be in [0, 1]");

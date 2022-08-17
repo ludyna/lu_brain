@@ -24,15 +24,23 @@ void setUp(void)
 	TEST_ASSERT(s_table->columns);
 
 	Lu_S_Column column = lu_s_table__get_s_column(s_table, 1, 1);
-	TEST_ASSERT(column);
+	TEST_ASSERT(column); 
 
-	Lu_N_Cell cell = lu_s_column__get_cell(column, 0, 3);
+	lu_s_column__alloc_n_cell(column);
+
+	union lu_n_addr n_addr;
+
+	lu_n_addr__reset(&n_addr);
+
+	n_addr.cell_ix = 0;
+
+	Lu_N_Cell cell = lu_s_column__get_n_cell(column, n_addr);
 	TEST_ASSERT(cell);
 
 	lu_n_addr__print(&cell->addr);
 
 	TEST_ASSERT(cell->addr.layer_ix == 32);
-	TEST_ASSERT(cell->addr.cell_ix == 3);
+	TEST_ASSERT(cell->addr.cell_ix == 0);
 
 	struct lu_n_pos pos = lu_n_pos__from_column_ix(cell->addr.column_ix, s_table->w);
  
@@ -40,7 +48,7 @@ void setUp(void)
 
  	TEST_ASSERT(column_2 == column);
 
-	Lu_N_Cell cell_2 = lu_s_column__get_cell(column, 0, 3);
+	Lu_N_Cell cell_2 = lu_s_column__get_n_cell(column, n_addr);
 
 	TEST_ASSERT(cell_2 == cell);
 }

@@ -159,7 +159,7 @@
 		Lu_Save_Wave save_wave,
 		struct lu_block_id block_id, 
 		Lu_W_Table prev_w_table, 
-		Lu_Process_Config config
+		Lu_Save_Config config
 	)
 	{
 		//
