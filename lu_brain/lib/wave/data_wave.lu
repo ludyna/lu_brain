@@ -1,0 +1,51 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Constructor / Destructor
+
+
+	static void lu_data_wave__init(Lu_Data_Wave self)
+	{
+
+	}
+
+	static void lu_data_wave__deinit(Lu_Data_Wave self)
+	{
+
+	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Data 
+
+	static void lu_data_wave__reset(Lu_Data_Wave self)
+	{
+
+	}
+
+	static void lu_data_wave__block_begin(Lu_Data_Wave self)
+	{
+
+	}
+
+	static void lu_data_wave__block_end(Lu_Data_Wave self)
+	{
+
+	}
+
+	static void lu_data_wave__set_dest_start_pos(Lu_Data_Wave self, Lu_Rec rec, lu_long dest_x, lu_long dest_y)
+	{
+		
+	}
+
+	static void lu_data_wave__set_src_start_pos(Lu_Data_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
+	{
+
+	}
+
+	static void lu_data_wave__set_src_end_pos(Lu_Data_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
+	{
+
+	}

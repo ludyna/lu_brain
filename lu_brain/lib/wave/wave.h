@@ -66,9 +66,17 @@
 	};
 
 	//
-	// Methods
+	// Constructor / Destructor
 	//
 
+	static void lu_data_wave__init(Lu_Data_Wave self);
+	static void lu_data_wave__deinit(Lu_Data_Wave self);
+
+	//
+	// Data
+	//
+
+	static void lu_data_wave__reset(Lu_Data_Wave);
 	static void lu_data_wave__block_begin(Lu_Data_Wave);
 	static void lu_data_wave__block_end(Lu_Data_Wave);
 

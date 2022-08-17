@@ -1,0 +1,58 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Focus
+
+	void lu_save_wave__set_dest_start_pos(Lu_Save_Wave self, Lu_Rec rec, lu_long dest_x, lu_long dest_y)
+	{
+
+	}
+
+	void lu_save_wave__set_src_start_pos(Lu_Save_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
+	{
+
+	}
+
+	void lu_save_wave__set_src_end_pos(Lu_Save_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Data
+
+	void lu_save_wave__block_begin(Lu_Save_Wave self)
+	{
+
+	}
+
+	void lu_sace_wave__block_end(Lu_Save_Wave self)
+	{
+
+	}
+
+	void lu_save_wave__push(Lu_Save_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
+
+	void lu_save_wave__step(Lu_Save_Wave, struct lu_save_config config);
+	void lu_save_wave__process(Lu_Save_Wave, struct lu_save_config config);
+
+	Lu_La_Cell lu_save_wave__link_to_label(Lu_Save_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
+
+///////////////////////////////////////////////////////////////////////////////
+// Fractal Memory
+
+	void lu_save_wave__start_layer(Lu_Save_Wave self, lu_size level)
+	{
+
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Other
+
+	void lu_save_wave__reset_2(Lu_Save_Wave self)
+	{
+
+	}
+

@@ -330,24 +330,29 @@
 	enum lu_wave_type lu_wave__get_type(Lu_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Save_Wave  
+// Lu_Save_Wave 
+
+	//
+	// Constructor / Destructor
+	// 
 
 	Lu_Save_Wave lu_save_wave__create(Lu_Brain); 
 	void lu_save_wave__destroy(Lu_Save_Wave);
 
 	//
-	// Methods
+	// Focus
 	//
-
-	void lu_save_wave__reset(Lu_Wave);
-	void lu_save_wave__start_layer(Lu_Wave, lu_size level);
-
-	void lu_save_wave__block_begin(Lu_Save_Wave);
-	void lu_sace_wave__block_end(Lu_Save_Wave);
 
 	void lu_save_wave__set_dest_start_pos(Lu_Save_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
 	void lu_save_wave__set_src_start_pos(Lu_Save_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
 	void lu_save_wave__set_src_end_pos(Lu_Save_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
+
+	//
+	// Data
+	//
+
+	void lu_save_wave__block_begin(Lu_Save_Wave);
+	void lu_sace_wave__block_end(Lu_Save_Wave);
 
 	void lu_save_wave__push(Lu_Save_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
 
@@ -356,27 +361,44 @@
 
 	Lu_La_Cell lu_save_wave__link_to_label(Lu_Save_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
 
+	//
+	// Fractal Memory
+	//
+
+	void lu_save_wave__start_layer(Lu_Save_Wave, lu_size level);
+
+	//
+	// Other
+	// 
+
+	void lu_save_wave__reset_2(Lu_Save_Wave);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Match_Wave   
+
+	//
+	// Constructor / Destructor
+	// 
 
 	Lu_Match_Wave lu_match_wave__create(Lu_Brain); 
 	void lu_match_wave__destroy(Lu_Match_Wave);
 
 	//
-	// Methods
+	// Focus
 	//
-
-	void lu_match_wave__reset(Lu_Wave);
-
-	void lu_match_wave__block_begin(Lu_Wave);
-	void lu_match_wave__block_end(Lu_Wave);
 
 	void lu_match_wave__set_dest_start_pos(Lu_Match_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
 	void lu_match_wave__set_src_start_pos(Lu_Match_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
 	void lu_match_wave__set_src_end_pos(Lu_Match_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
 
-	void lu_match_wave__push(Lu_Match_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
+	//
+	// Data
+	//
 
+	void lu_match_wave__block_begin(Lu_Wave);
+	void lu_match_wave__block_end(Lu_Wave);
+
+	void lu_match_wave__push(Lu_Match_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
 
 	void lu_match_wave__step(Lu_Match_Wave, struct lu_save_config);
 	void lu_match_wave__process(Lu_Match_Wave, struct lu_save_config); 
@@ -385,11 +407,25 @@
 	void lu_match_wave__print_results(Lu_Match_Wave self);
 	Lu_Label* lu_match_wave__get_result_labels(Lu_Match_Wave);
 
+	//
+	// Other
+	//
+
+	void lu_match_wave__reset(Lu_Wave);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Delete_Wave  
 
+	//
+	// Constructor / Destructor
+	// 
+
 	Lu_Delete_Wave lu_delete_wave__create(Lu_Brain); 
 	void lu_delete_wave__destroy(Lu_Delete_Wave);
+
+	//
+	// Methods
+	//
 
 	struct lu_delete_config {
 		lu_bool including_all_children;
@@ -401,12 +437,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Restore_Wave  
 
+	//
+	// Constructor / Destructor
+	// 
+
 	Lu_Restore_Wave lu_restore_wave__create(Lu_Brain); 
 	void lu_restore_wave__destroy(Lu_Restore_Wave);
 
+	//
+	// Methods
+	//
+
 	void lu_restore_wave__process(Lu_Wave, union lu_n_addr);
 
-////
+///////////////////////////////////////////////////////////////////////////////
+// OLD, to be deleted:
+
 	//
 	// Sync Create
 	//
