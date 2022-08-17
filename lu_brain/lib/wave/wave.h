@@ -53,7 +53,28 @@
 
 	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE__SAVE; }
 	static inline lu_bool lu_wave__is_match(Lu_Wave self) { return self->type == LU_WAVE__MATCH; }
-	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE__RESTORE; }
+	static inline lu_bool lu_wave__is_restore(Lu_Wave self) { return self->type == LU_WAVE__RESTORE; } 
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Data_Wave (data flow wave)
+
+	struct lu_data_wave {
+		struct lu_wave super;
+
+		Lu_Data_Seq seq;
+	};
+
+	//
+	// Methods
+	//
+
+	static void lu_data_wave__block_begin(Lu_Data_Wave);
+	static void lu_data_wave__block_end(Lu_Data_Wave);
+
+	static void lu_data_wave__set_dest_start_pos(Lu_Data_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
+	static void lu_data_wave__set_src_start_pos(Lu_Data_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
+	static void lu_data_wave__set_src_end_pos(Lu_Data_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
