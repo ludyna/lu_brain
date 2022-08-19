@@ -1,0 +1,19 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Save_Config
+
+    struct lu_save_config LU_SAVE_CONFIG__DEFAULT = {
+        
+    };
+
+  	Lu_Save_Config lu_save_config__validate(Lu_Save_Config self) 
+  	{
+  		// lu__user_assert(self->p_potency >= 0 && self->p_potency <= 1, "p_potency should be in [0, 1]");
+        // lu__user_assert(self->v_potency >= 0 && self->v_potency <= 1, "p_potency should be in [0, 1]");
+  		// lu__user_assert(self->min_fire_potency > 0 && self->min_fire_potency < 1, "min_fire_potency should be in (0, 1)");
+
+  		return self;
+  	}

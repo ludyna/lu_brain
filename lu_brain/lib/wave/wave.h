@@ -3,17 +3,6 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Rec_Config
-
- 	static Lu_Save_Config lu_wave_config__init(Lu_Save_Config self);
- 	static inline lu_bool lu_wave_config__is_set(Lu_Save_Config self) { return self->flags != 0; }
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Rec_Config Predefined 
-
-	extern struct lu_save_config lu_g_wc_predefined[LU_PROCESS__END];
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave 
 
 	/*
@@ -28,21 +17,6 @@
 
 		Lu_Mem mem;
 		Lu_Brain brain;
-		struct lu_save_config config;
-
-		// virtual destructor
-		void (*destroy)(Lu_Wave);
-
-		// virtual methods
-		void (*block_begin)(Lu_Wave);
-		void (*block_end)(Lu_Wave);
-
-		void (*push)(Lu_Wave, Lu_Rec, lu_value* data, lu_size, lu_size, lu_size);
-
-		void (*reset)(Lu_Wave);
-
-		void (*step)(Lu_Wave, Lu_Save_Config);
-		void (*process)(Lu_Wave, Lu_Save_Config);
 	};
 
 	static inline Lu_Wave lu_wave__init(
@@ -50,6 +24,8 @@
 		enum lu_wave_type type, 
 		Lu_Brain brain
 	);
+
+	static inline void lu_wave__deinit(Lu_Wave self);
 
 	static inline lu_bool lu_wave__is_save(Lu_Wave self) { return self->type == LU_WAVE__SAVE; }
 	static inline lu_bool lu_wave__is_match(Lu_Wave self) { return self->type == LU_WAVE__MATCH; }
@@ -69,7 +45,7 @@
 	// Constructor / Destructor
 	//
 
-	static void lu_data_wave__init(Lu_Data_Wave self);
+	static void lu_data_wave__init(Lu_Data_Wave self, enum lu_wave_type type, Lu_Brain brain);
 	static void lu_data_wave__deinit(Lu_Data_Wave self);
 
 	//
@@ -88,23 +64,18 @@
 // Lu_Save_Wave 
 
 	struct lu_save_wave {
-		struct lu_wave super;
+		struct lu_data_wave super;
 
-		Lu_Data_Seq seq;
+		struct lu_save_config config;
 	};
-
-	static inline lu_size lu_save_wave__get_wave_ix(Lu_Save_Wave self)
-	{
-		return self->super.wave_ix;
-	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Match_Wave 
 
 	struct lu_match_wave {
-		struct lu_wave super;
+		struct lu_data_wave super;
 
-		Lu_Data_Seq seq;
+		struct lu_match_config config;
 
 		struct lu_w_processor processor;
 
@@ -117,6 +88,8 @@
 	struct lu_restore_wave {
 		struct lu_wave super;
 
+		struct lu_restore_config config;
+
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -125,5 +98,6 @@
 	struct lu_delete_wave {
 		struct lu_wave super;
 
+		struct lu_delete_config config;
 	};
 

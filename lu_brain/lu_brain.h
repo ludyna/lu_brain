@@ -98,8 +98,9 @@
 
 	typedef union lu_n_addr* Lu_N_Addr;
 
-///////////////////////////////////////////////////////////////////////////////
-// Lu_Config 
+	//
+	// Brain Config
+	// 
 
 	struct lu_config {
 		//
@@ -288,40 +289,6 @@
 	void lu_rec__set_src_end_z(Lu_Rec self, lu_size src_z);
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Save_Config 
-
-	struct lu_save_config {
-		lu_flags 				flags;						// 0 oznachaye not set
-
-		lu_value 				p_potency;					// "contrast" potency
-		lu_value 				v_potency;					// value potency
-
-		lu_value 				min_potency;				// ignore potencies below this value
-		lu_value 				min_fire_potency;			// fire neurons with potency above this value
-		
-		lu_size 				block_layers_size;			// How many wave block_layers should we hold.
-															// Oldest ones are destroyed once limit is reached (FIFO).
-
-		lu_size 				result_labels_size;
-	};
-
-	Lu_Save_Config lu_process_config__validate(Lu_Save_Config self);
-	
-	//
-	// Lu_Save_Config Predefined
-	//
-
-	enum lu_process_config_type {
-		LU_PROCESS__SAVE_DEFAULT = 0,
-		LU_PROCESS__MATCH_DIFF_ONLY, 
-		LU_PROCESS__MATCH_VALUE_ONLY,
-		LU_PROCESS__END			
-	};
-
-	struct lu_save_config lu_process_config__get_by_id(lu_size id);
-
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_Wave  
 
 	struct lu_save_config lu_wave__get_process_config(Lu_Wave);
@@ -331,6 +298,26 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Save_Wave 
+
+	// 
+	// Save Config
+	// 
+	struct lu_save_config {
+		// lu_flags 				flags;						// 0 oznachaye not set
+
+		// lu_value 				p_potency;					// "contrast" potency
+		// lu_value 				v_potency;					// value potency
+
+		// lu_value 				min_potency;				// ignore potencies below this value
+		// lu_value 				min_fire_potency;			// fire neurons with potency above this value
+		
+		// lu_size 				block_layers_size;			// How many wave block_layers should we hold.
+		// 													// Oldest ones are destroyed once limit is reached (FIFO).
+
+		// lu_size 				result_labels_size;
+	};
+
+	extern struct lu_save_config LU_SAVE_CONFIG__DEFAULT;
 
 	//
 	// Constructor / Destructor
@@ -351,6 +338,8 @@
 	// Data
 	//
 
+	
+
 	void lu_save_wave__block_begin(Lu_Save_Wave);
 	void lu_sace_wave__block_end(Lu_Save_Wave);
 
@@ -362,7 +351,7 @@
 	Lu_La_Cell lu_save_wave__link_to_label(Lu_Save_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
 
 	//
-	// Fractal Memory
+	// Fractal
 	//
 
 	void lu_save_wave__start_layer(Lu_Save_Wave, lu_size level);
@@ -375,6 +364,18 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Match_Wave   
+
+	//
+	// Match Config
+	//
+
+	struct lu_match_config {
+		lu_size w_match_results_size;
+	};
+
+	extern struct lu_match_config LU_MATCH_CONFIG__DEFAULT;
+
+	Lu_Match_Config lu_match_config__validate(Lu_Match_Config self);
 
 	//
 	// Constructor / Destructor
@@ -395,26 +396,34 @@
 	// Data
 	//
 
-	void lu_match_wave__block_begin(Lu_Wave);
-	void lu_match_wave__block_end(Lu_Wave);
+	void lu_match_wave__block_begin(Lu_Match_Wave);
+	void lu_match_wave__block_end(Lu_Match_Wave);
 
 	void lu_match_wave__push(Lu_Match_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
 
-	void lu_match_wave__step(Lu_Match_Wave, struct lu_save_config);
-	void lu_match_wave__process(Lu_Match_Wave, struct lu_save_config); 
+	void lu_match_wave__step(Lu_Match_Wave, struct lu_match_config);
+	void lu_match_wave__process(Lu_Match_Wave, struct lu_match_config); 
 
 	lu_size lu_match_wave__get_fired_cells_count(Lu_Match_Wave self);
-	void lu_match_wave__print_results(Lu_Match_Wave self);
 	Lu_Label* lu_match_wave__get_result_labels(Lu_Match_Wave);
+	void lu_match_wave__print_results(Lu_Match_Wave self);
 
 	//
 	// Other
 	//
 
-	void lu_match_wave__reset(Lu_Wave);
+	void lu_match_wave__reset(Lu_Match_Wave);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Delete_Wave  
+
+	//
+	// Delete Config
+	//
+
+	struct lu_delete_config {
+		lu_bool including_all_children;
+	};
 
 	//
 	// Constructor / Destructor
@@ -427,15 +436,21 @@
 	// Methods
 	//
 
-	struct lu_delete_config {
-		lu_bool including_all_children;
-	};
 
 	void lu_wave__delete_label(Lu_Wave, lu_size label, struct lu_delete_config);
 	void lu_wave__delete_neuron(Lu_Wave, union lu_n_addr, struct lu_delete_config);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Restore_Wave  
+
+	//
+	// Restore Config
+	//
+
+	struct lu_restore_config {
+		
+	};
+
 
 	//
 	// Constructor / Destructor
@@ -457,80 +472,80 @@
 	// Sync Create
 	//
 
-	Lu_Wave lu_wave__create_save_wave(Lu_Brain); 
-	Lu_Wave lu_wave__create_match_wave(Lu_Brain);
-	Lu_Wave lu_wave__create_restore_wave(Lu_Brain);
-	Lu_Wave lu_wave__create_delete_wave(Lu_Brain);
+	// Lu_Wave lu_wave__create_save_wave(Lu_Brain); 
+	// Lu_Wave lu_wave__create_match_wave(Lu_Brain);
+	// Lu_Wave lu_wave__create_restore_wave(Lu_Brain);
+	// Lu_Wave lu_wave__create_delete_wave(Lu_Brain);
 
-	//
-	// Destroy
-	//
+	// //
+	// // Destroy
+	// //
 
-	void lu_wave__destroy(Lu_Wave); 
+	// void lu_wave__destroy(Lu_Wave); 
 
-	//
-	// Wave Reset
-	//
+	// //
+	// // Wave Reset
+	// //
 
-	void lu_wave__reset(Lu_Wave);
+	// void lu_wave__reset(Lu_Wave);
 
-	//
-	// Wave 
-	//
+	// //
+	// // Wave 
+	// //
 
-	void lu_wave__start_layer(Lu_Wave, lu_size level);
+	// void lu_wave__start_layer(Lu_Wave, lu_size level);
 
-	//
-	// Wave Block
-	//
+	// //
+	// // Wave Block
+	// //
 
-	void lu_wave__block_begin(Lu_Wave);
-	void lu_wave__block_end(Lu_Wave);
+	// void lu_wave__block_begin(Lu_Wave);
+	// void lu_wave__block_end(Lu_Wave);
 
-	//
-	// Focus
-	//
-	void lu_wave__set_dest_start_pos(Lu_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
-	void lu_wave__set_src_start_pos(Lu_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
-	void lu_wave__set_src_end_pos(Lu_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
+	// //
+	// // Focus
+	// //
+	// void lu_wave__set_dest_start_pos(Lu_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
+	// void lu_wave__set_src_start_pos(Lu_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
+	// void lu_wave__set_src_end_pos(Lu_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
 
-	//
-	// Wave Data
-	//
+	// //
+	// // Wave Data
+	// //
 
-	void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
+	// void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
 
-	//
-	// Process
-	//
+	// //
+	// // Process
+	// //
 
-	void lu_wave__step(Lu_Wave, struct lu_save_config);
-	void lu_wave__process(Lu_Wave, struct lu_save_config);
+	// void lu_wave__step(Lu_Wave, struct lu_save_config);
+	// void lu_wave__process(Lu_Wave, struct lu_save_config);
 
 
-	//
-	// Wave label
-	//
+	// //
+	// // Wave label
+	// //
 
-	Lu_La_Cell lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
+	// Lu_La_Cell lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
 
-	//
-	// Match 
-	// 
+	// //
+	// // Match 
+	// // 
 
-	lu_size lu_wave__get_fired_cells_count(Lu_Wave self);
-	void lu_wave__print_match_results(Lu_Wave self);
-	Lu_Label* lu_wave__get_result_labels(Lu_Wave);
+	// lu_size lu_wave__get_fired_cells_count(Lu_Wave self);
+	// void lu_wave__print_match_results(Lu_Wave self);
+	// Lu_Label* lu_wave__get_result_labels(Lu_Wave);
 
-	//
-	// Delete 
-	//
+	// //
+	// // Delete 
+	// //
 
-	//
-	// Restore 
-	//
+	// //
+	// // Restore 
+	// //
 
-	void lu_wave__restore(Lu_Wave, union lu_n_addr);
+	// void lu_wave__restore(Lu_Wave, union lu_n_addr);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Label

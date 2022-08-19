@@ -78,7 +78,7 @@ int main()
 	// 	lu_wave__push(save_wave, image_rec, smn_blank_pixels, 16, 16, 1);
 	// 	lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
 
-	// 	lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+	// 	lu_wave__process(save_wave, lu_save_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
 	// 	la_cell = lu_wave__link_to_label(save_wave, 2, 0, 0, 0, d->name);
 	// 	lu__assert(la_cell);
@@ -126,7 +126,7 @@ int main()
 	// 	lu_wave__push(match_wave, image_rec, smn_blank_pixels, 16, 16, 1);
 	// 	lu_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
 
-	// 	lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+	// 	lu_wave__process(match_wave, lu_save_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
 	// 	labels = lu_wave__get_result_labels(match_wave);
 

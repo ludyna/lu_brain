@@ -107,7 +107,7 @@
 		brain_objects__set_src(self->save_wave, self->rec, focus_type);
 
 		lu_wave__push(self->save_wave, self->rec, d->pixels, 16, 16, 1);
-		lu_wave__process(self->save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+		lu_wave__process(self->save_wave, lu_save_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
 
 		Lu_La_Cell la_cell = lu_wave__link_to_label(self->save_wave, 2, 0, 0, 0, d->name);
 		lu__assert(la_cell);
@@ -126,7 +126,7 @@
 		brain_objects__set_src(self->match_wave, self->rec, focus_type);
 
 		lu_wave__push(self->match_wave, self->rec, d->pixels, 16, 16, 1);
-		lu_wave__process(self->match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+		lu_wave__process(self->match_wave, lu_save_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
 
 		Lu_Label* labels = lu_wave__get_result_labels(self->match_wave);
 

@@ -2,10 +2,15 @@
 	Copyright © 2022 Oleh Ihorovych Novosad 
 */
 
-#include "process_config.lu" 
+#include "save_config.lu"  
+#include "match_config.lu"  
+#include "delete_config.lu" 
+#include "restore_config.lu" 
+
 #include "data_wave.lu"
 #include "save_wave.lu"
 #include "match_wave.lu"
 #include "delete_wave.lu"
 #include "restore_wave.lu"
+
 #include "wave.lu"

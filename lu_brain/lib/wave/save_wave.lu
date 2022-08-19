@@ -3,21 +3,56 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Constructor / Destructor
+
+	Lu_Save_Wave lu_save_wave__create(Lu_Brain brain)
+	{
+		lu__user_assert(brain, "Lu_Brain is NULL");
+
+		Lu_Mem w_mem = brain->config.w_mem;
+		lu__assert(w_mem);
+
+		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_save_wave));
+
+		lu_data_wave__init(
+			&self->super, 
+			LU_WAVE__SAVE, 
+			brain
+		); 
+
+		return self;
+	}
+
+	void lu_save_wave__destroy(Lu_Save_Wave self)
+	{
+		lu__user_assert_void(self, "Lu_Save_Wave is NULL");
+
+		Lu_Wave wave = (Lu_Wave) self;
+
+		lu_data_wave__deinit(&self->super);
+
+		lu_mem__free(wave->mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Focus
 
 	void lu_save_wave__set_dest_start_pos(Lu_Save_Wave self, Lu_Rec rec, lu_long dest_x, lu_long dest_y)
 	{
-
+		lu__user_assert_void(self, "Rec is NULL");
+		lu_data_wave__set_dest_start_pos(&self->super, rec, dest_x, dest_y);
 	}
 
 	void lu_save_wave__set_src_start_pos(Lu_Save_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
 	{
-
+		lu__user_assert_void(self, "Rec is NULL");
+		lu_data_wave__set_src_start_pos(&self->super, rec, src_x, src_y);
 	}
 
 	void lu_save_wave__set_src_end_pos(Lu_Save_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
 	{
-
+		lu__user_assert_void(self, "Rec is NULL");
+		lu_data_wave__set_src_end_pos(&self->super, rec, src_x, src_y);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,20 +60,175 @@
 
 	void lu_save_wave__block_begin(Lu_Save_Wave self)
 	{
-
+		lu_data_wave__block_begin(&self->super);
 	}
 
 	void lu_sace_wave__block_end(Lu_Save_Wave self)
 	{
-
+		lu_data_wave__block_end(&self->super);
 	}
 
-	void lu_save_wave__push(Lu_Save_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
+	void lu_save_wave__push(
+		Lu_Save_Wave self, 
+		Lu_Rec rec, 
+		lu_value* src, 
+		lu_size src_width, 
+		lu_size src_height, 
+		lu_size src_depth
+	)
+	{
+		lu__user_assert_void(self, "Lu_Save_Wave is NULL");
+		lu__user_assert_void(rec, "Lu_Rec is NULL");
+		lu__user_assert_void(src, "src is NULL");
+		lu__user_assert_void(src_width > 0, "src_width should be greater than 0");
+		lu__user_assert_void(src_height > 0, "src_height should be greater than 0");
+		lu__user_assert_void(src_depth > 0, "src_depth should be greater than 0");
 
-	void lu_save_wave__step(Lu_Save_Wave, struct lu_save_config config);
-	void lu_save_wave__process(Lu_Save_Wave, struct lu_save_config config);
+		lu_data_seq__push(self->super.seq, rec, src, src_width, src_height, src_depth, rec->view);
+	}
 
-	Lu_La_Cell lu_save_wave__link_to_label(Lu_Save_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
+	static void lu_save_wave__process_block(Lu_Save_Wave self, Lu_Data_Block block)
+	{
+		lu__assert(self);
+		lu__assert(block);
+
+		Lu_Wave wave = (Lu_Wave) self;
+		Lu_Brain brain = wave->brain;
+		lu__assert(brain);
+
+		Lu_S s = brain->s;
+		lu__assert(s);
+
+		// lu_size rec_id;
+		// lu_size size = lu_data_block__get_size(block);
+		// Lu_Data data;
+		// for (rec_id = 0; rec_id < size; rec_id++)
+		// {
+		// 	data = lu_data_block__get_data(block, rec_id);
+		// 	lu__assert(data);
+
+		// 	if (lu_data__is_empty(data)) continue;
+			
+		// 	lu_data__print(data);
+
+		// lu_s__save_rec_data(s, wave, rec_id, data, config);
+		// }
+
+		Lu_Data data;
+		lu_size rec_id = 0; // NOTE: fixed temporarily
+
+		data = lu_data_block__get_data(block, rec_id);
+		lu__assert(data);
+
+		//
+		// Pass reset flag from block to data if it is set
+		// 
+
+		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
+		{
+			data->flags |= LU_DATA_FLAGS__RESET_REC;
+		}
+
+		//
+		// Rec
+		// 
+
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__REC);
+		 
+		Lu_W_Table curr_w_table = lu_s_area__save_rec(area, self, rec_id, data, &self->config);
+
+		if (curr_w_table == NULL) return;
+
+		//
+		// Frame
+		//
+
+		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__FRAME);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__FRAME);
+
+		curr_w_table = lu_s_area__save_frame(area, self, data->block_id, curr_w_table, &self->config);
+
+		if (curr_w_table == NULL) return;
+
+		//
+		// Seq
+		//
+
+		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__SEQ);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__SEQ);
+
+		curr_w_table = lu_s_area__save_seq(area, self, data->block_id, curr_w_table, &self->config);
+	}
+
+	void lu_save_wave__step(Lu_Save_Wave self, struct lu_save_config config)
+	{
+		lu__user_assert_void(self, "Lu_Save_Wave is NULL");
+
+		Lu_Save_Config p_config = lu_save_config__validate(&config);
+		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
+
+		self->config = config;
+
+		Lu_Data_Block block = lu_data_seq__next_block_get(self->super.seq);
+		if (!block) return; // nothing to process
+
+		lu_save_wave__process_block(self, block);
+	}
+
+	void lu_save_wave__process(Lu_Save_Wave self, struct lu_save_config config)
+	{
+		lu__user_assert_void(self, "Lu_Save_Wave is NULL");
+
+		Lu_Save_Config p_config = lu_save_config__validate(&config);
+		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
+
+		self->config = config; // save last process config 
+
+		Lu_Data_Block block = NULL;
+
+		// lu__debug("\n->current_read_pos = %ld\n", save_wave->seq->current_read_pos ? 1 : 0);
+
+		while((block = lu_data_seq__next_block_get(self->super.seq)))
+		{
+			// lu__debug("\n BEFORE PROCESS BLOCK: wave_id=%ld, block_ix=%ld", save_wave->seq->wave_id, block->block_ix);
+			lu_save_wave__process_block(self, block);
+		}
+
+		//
+		// Remove processed data
+		//
+		Lu_Data_Wave data_wave = (Lu_Data_Wave) self;
+		lu_data_seq__reset(data_wave->seq);
+	}
+
+	Lu_La_Cell lu_save_wave__link_to_label(Lu_Save_Wave self, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label)
+	{
+		lu__user_assert(self, "Lu_Save_Wave is NULL");
+
+		Lu_Wave wave = (Lu_Wave) self;
+		Lu_Brain brain = wave->brain;
+		lu__assert(brain);
+
+		Lu_S s = brain->s;
+		lu__assert(s);
+
+		Lu_W_Cell w_cell = lu_s__get_w_cell_from_save_w_table(s, wave->wave_ix, area_ix, layer_ix, x, y);
+
+		if (w_cell == NULL) return NULL;
+
+		if (lu_w_cell__is_not_set(w_cell)) return NULL;
+
+		#ifdef LU__DEEP_DEBUG
+			lu__debug("\nLINKING LABEL %ld TO n_cell: ", label);
+			lu_n_addr__print(&w_cell->n_cell->addr);
+		#endif
+
+		return lu_la_column__save_label(&brain->la_column, w_cell->n_cell, label);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Fractal Memory
@@ -51,8 +241,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Other
 
-	void lu_save_wave__reset_2(Lu_Save_Wave self)
+	void lu_save_wave__reset(Lu_Save_Wave self)
 	{
+		lu__user_assert_void(self, "Lu_Save_Wave is NULL");
 
+		lu_data_wave__reset(&self->super);
 	}
 

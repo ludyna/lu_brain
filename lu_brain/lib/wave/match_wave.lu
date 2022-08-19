@@ -3,4 +3,208 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// 
+// Constructor / Destructor
+
+	Lu_Match_Wave lu_match_wave__create(Lu_Brain brain)
+	{
+		lu__user_assert(brain, "Lu_Brain is NULL");
+
+		Lu_Mem w_mem = brain->config.w_mem;
+		lu__assert(w_mem);
+
+		Lu_Match_Wave self = (Lu_Match_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_match_wave));
+
+		lu_data_wave__init(
+			&self->super,
+			LU_WAVE__MATCH,
+			brain
+		);
+
+		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
+
+		lu_w_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
+
+		return self;
+	}
+
+	void lu_match_wave__destroy(Lu_Match_Wave self)
+	{
+		lu__assert(self);
+
+		lu_w_processor__deinit(&self->processor);
+
+		lu_w_match_cell_mem__deinit(&self->match_cell_mem);
+
+		lu_data_wave__deinit(&self->super);
+
+		Lu_Wave wave = (Lu_Wave) self;
+
+		lu_mem__free(wave->mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Focus
+
+
+	void lu_match_wave__set_dest_start_pos(Lu_Match_Wave self, Lu_Rec rec, lu_long dest_x, lu_long dest_y)
+	{
+		lu__user_assert_void(self, "Rec is NULL");
+		lu_data_wave__set_dest_start_pos(&self->super, rec, dest_x, dest_y);
+	}
+
+	void lu_match_wave__set_src_start_pos(Lu_Match_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
+	{
+		lu__user_assert_void(self, "Rec is NULL");
+		lu_data_wave__set_src_start_pos(&self->super, rec, src_x, src_y);
+	}
+
+	void lu_match_wave__set_src_end_pos(Lu_Match_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
+	{
+		lu__user_assert_void(self, "Rec is NULL");
+		lu_data_wave__set_src_end_pos(&self->super, rec, src_x, src_y);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Data
+
+
+	void lu_match_wave__block_begin(Lu_Match_Wave self)
+	{
+		lu_data_wave__block_begin(&self->super);
+	}
+
+	void lu_match_wave__block_end(Lu_Match_Wave self)
+	{
+		lu_data_wave__block_end(&self->super);
+	}
+
+	void lu_match_wave__push(
+		Lu_Match_Wave self, 
+		Lu_Rec rec, 
+		lu_value* src, 
+		lu_size src_width, 
+		lu_size src_height, 
+		lu_size src_depth
+	)
+	{
+		lu__user_assert_void(self, "Lu_Save_Wave is NULL");
+		lu__user_assert_void(rec, "Lu_Rec is NULL");
+		lu__user_assert_void(src, "src is NULL");
+		lu__user_assert_void(src_width > 0, "src_width should be greater than 0");
+		lu__user_assert_void(src_height > 0, "src_height should be greater than 0");
+		lu__user_assert_void(src_depth > 0, "src_depth should be greater than 0");
+
+		lu_data_seq__push(self->super.seq, rec, src, src_width, src_height, src_depth, rec->view);
+	}
+
+
+	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block)
+	{
+		lu__assert(self);
+		lu__assert(block);
+
+		Lu_Wave wave = (Lu_Wave) self;
+		Lu_Brain brain = wave->brain;
+		lu__assert(brain);
+
+		Lu_S s = brain->s;
+		lu__assert(s);
+
+		Lu_Data data;
+		lu_size rec_id = 0; // NOTE: fixed temporarily
+
+		data = lu_data_block__get_data(block, rec_id);
+		lu__assert(data);
+
+		//
+		// Pass reset flag from block to data if it is set
+		// 
+
+		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
+		{
+			data->flags |= LU_DATA_FLAGS__RESET_REC;
+		}
+
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__REC);
+		 		
+		lu_s_area__match_rec(area, self, rec_id, data, &self->config, &self->processor);
+	}
+
+
+	void lu_match_wave__step(Lu_Match_Wave self, struct lu_match_config config)
+	{
+		lu__user_assert_void(self, "Lu_Match_Wave is NULL");
+		
+		Lu_Match_Config p_config = lu_match_config__validate(&config);
+		lu__user_assert_void(p_config, "Lu_Match_Config is invalid");
+
+		self->config = config;
+
+		Lu_Data_Wave data_wave = (Lu_Data_Wave) self;
+
+		Lu_Data_Block block = lu_data_seq__next_block_get(data_wave->seq);
+		if (!block) return; // nothing to process
+
+		lu_match_wave__process_block(self, block);
+	}
+
+	void lu_match_wave__process(Lu_Match_Wave self, struct lu_match_config config)
+	{
+		lu__user_assert_void(self, "Lu_Match_Wave is NULL");
+		
+		Lu_Match_Config p_config = lu_match_config__validate(&config);
+		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
+
+		self->config = config;
+
+		Lu_Data_Block block = NULL;
+
+		Lu_Data_Wave data_wave = (Lu_Data_Wave) self;
+
+		while((block = lu_data_seq__next_block_get(data_wave->seq)))
+		{
+			lu_match_wave__process_block(self, block);
+		}
+
+		//
+		// Remove processed data
+		//
+		lu_data_seq__reset(data_wave->seq);
+	}
+
+	lu_size lu_match_wave__get_fired_cells_count(Lu_Match_Wave self)
+	{
+		lu__assert(self);
+
+		return self->processor.stats.cells_processed;
+	}
+
+	Lu_Label* lu_match_wave__get_result_labels(Lu_Match_Wave self)
+	{
+		lu__user_assert(self, "Lu_Match_Wave is NULL");
+
+		return self->processor.sorted_results;
+	}
+
+	void lu_match_wave__print_results(Lu_Match_Wave self)
+	{
+		lu__user_assert_void(self, "Lu_Match_Wave is NULL");
+
+		Lu_Label* results = lu_match_wave__get_result_labels(self);
+		lu__assert(results);
+
+		lu__debug("\nMATCH RESULTS (%ld cells fired):", lu_match_wave__get_fired_cells_count(self));
+		lu_labels__print_results(results, self->config.w_match_results_size);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Other
+
+	void lu_match_wave__reset(Lu_Match_Wave self)
+	{
+		lu__user_assert_void(self, "Lu_Match_Wave is NULL");
+
+		lu_data_wave__reset(&self->super);
+	}

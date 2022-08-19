@@ -266,7 +266,7 @@
 		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data, 
-		Lu_Save_Config config,
+		Lu_Match_Config config,
 		Lu_W_Processor processor
 	)
 	{

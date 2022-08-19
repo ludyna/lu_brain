@@ -1,0 +1,15 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Match_Config
+
+    struct lu_match_config LU_MATCH_CONFIG__DEFAULT = {
+        .w_match_results_size = 3
+    };
+
+    Lu_Match_Config lu_match_config__validate(Lu_Match_Config self)
+    {
+        return self;
+    }

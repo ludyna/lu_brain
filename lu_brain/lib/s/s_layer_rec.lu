@@ -447,7 +447,6 @@
 		Lu_Wave wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Save_Config config,
 		Lu_W_Processor processor,   
 		Lu_W_Rec w_rec,
 		void (*collect)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
@@ -459,7 +458,6 @@
 		lu__assert(wave);
 		lu__assert(self->rec);
 		lu__assert(data);
-		lu__assert(config);
 		lu__assert(wave->wave_id == data->block_id.wave_id);
 
 		//
@@ -564,7 +562,9 @@
 		Lu_Save_Config config
 	)
 	{
-		Lu_Wave wave = (Lu_Wave) save_wave;
+		Lu_Wave wave = (Lu_Wave) save_wave; 
+
+		// lu__debug("\n\n%ld, %ld\n\n", data->block_id.wave_id, wave->wave_id);
  
 		lu__assert(data->block_id.wave_id == wave->wave_id);
 
@@ -577,7 +577,6 @@
 			(Lu_Wave) save_wave,
 			rec_id,
 			data,
-			config,
 			NULL,
 			w_rec,
 			lu_s_layer_rec__block_collect,
@@ -591,7 +590,7 @@
 		Lu_Match_Wave match_wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_Save_Config config,
+		Lu_Match_Config config,
 		Lu_W_Processor processor
 	)
 	{
@@ -618,7 +617,6 @@
 			wave,
 			rec_id,
 			data,
-			config,
 			processor,
 			w_rec,
 			lu_s_layer_rec__block_collect,

@@ -29,32 +29,22 @@
 
 		self->brain = brain;
 
-		// Setting last proccess config to default
-		struct lu_save_config config = lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT);
-		Lu_Save_Config p_config = lu_process_config__validate(&config);
-		lu__assert(p_config);
-
-		self->config = config;
-
-		self->destroy = NULL;
-		self->block_begin = NULL;
-		self->block_end = NULL;
-		self->push = NULL;
-		self->reset = NULL;
-		self->step = NULL;
-		self->process = NULL;
-
 		return self;
 	}
- 
+
+	static inline void lu_wave__deinit(Lu_Wave self)
+	{
+
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Get
 
-	struct lu_save_config lu_wave__get_process_config(Lu_Wave self)
-	{
-		lu__assert(self);
-		return self->config;
-	}
+	// struct lu_save_config lu_wave__get_process_config(Lu_Wave self)
+	// {
+	// 	lu__assert(self);
+	// 	return self->config;
+	// }
 
 	lu_size lu_wave__get_id(Lu_Wave self)
 	{
@@ -82,642 +72,636 @@
 	// 	lu__user_assert(rec, "Lu_Rec is NULL");
 	// }
 
-	lu_size lu_wave__get_fired_cells_count(Lu_Wave self)
-	{
-		lu__assert(self);
-		lu__assert(self->type == LU_WAVE__MATCH);
+	// lu_size lu_wave__get_fired_cells_count(Lu_Wave self)
+	// {
+	// 	lu__assert(self);
+	// 	lu__assert(self->type == LU_WAVE__MATCH);
 
-		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+	// 	Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
 
-		return match_wave->processor.stats.cells_processed;
-	}
+	// 	return match_wave->processor.stats.cells_processed;
+	// }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Block Begin
 
-	void lu_wave__block_begin(Lu_Wave self)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
+// 	void lu_wave__block_begin(Lu_Wave self)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
-		if (self->block_begin)
-			self->block_begin(self);
-		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
-	}
+// 		if (self->block_begin)
+// 			self->block_begin(self);
+// 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
+// 	}
 
-	static void lu_save_wave__block_begin_virtual(Lu_Wave self)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_save(self));
+// 	static void lu_save_wave__block_begin_virtual(Lu_Wave self)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_save(self));
 
-		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_data_seq__block_begin(save_wave->seq);
-	} 
+// 		Lu_Data_Wave data_wave = (Lu_Data_Wave) self;
+// 		lu_data_wave__block_begin(data_wave);
+// 	} 
 
-	static void lu_match_wave__block_begin_virtual(Lu_Wave self)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_match(self));
+// 	static void lu_match_wave__block_begin_virtual(Lu_Wave self)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_match(self));
 
-		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
-		lu_data_seq__block_begin(match_wave->seq);
-	} 
+// 		Lu_Data_Wave data_wave = (Lu_Data_Wave) self;
+// 		lu_data_wave__block_begin(data_wave);
+// 	} 
 
-	static void lu_restore_wave__block_begin_virtual(Lu_Wave self)
-	{
+// 	static void lu_restore_wave__block_begin_virtual(Lu_Wave self)
+// 	{
 
-	} 
+// 	} 
 
-///////////////////////////////////////////////////////////////////////////////
-// Block End
+// ///////////////////////////////////////////////////////////////////////////////
+// // Block End
 
-	void lu_wave__block_end(Lu_Wave self)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
+// 	void lu_wave__block_end(Lu_Wave self)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
 
-		if (self->block_end)
-			self->block_end(self);
-		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
-	}
+// 		if (self->block_end)
+// 			self->block_end(self);
+// 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
+// 	}
 
-	static void lu_save_wave__block_end_virtual(Lu_Wave self)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_save(self));
+// 	static void lu_save_wave__block_end_virtual(Lu_Wave self)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_save(self));
 
-		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_data_seq__block_end(save_wave->seq);
-	} 
+// 		Lu_Data_Wave data_wave = (Lu_Data_Wave) self;
+// 		lu_data_wave__block_end(data_wave);
+// 	} 
 
-	static void lu_match_wave__block_end_virtual(Lu_Wave self)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_save(self));
+// 	static void lu_match_wave__block_end_virtual(Lu_Wave self)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_save(self));
 
-		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
-		lu_data_seq__block_end(match_wave->seq);
-	} 
+// 		Lu_Data_Wave data_wave = (Lu_Data_Wave) self;
+// 		lu_data_wave__block_end(data_wave);
+// 	} 
 
-	static void lu_restore_wave__block_end_virtual(Lu_Wave self)
-	{
+// 	static void lu_restore_wave__block_end_virtual(Lu_Wave self)
+// 	{
 
-	}  
+// 	}  
 
 
-///////////////////////////////////////////////////////////////////////////////
-// Process block
+// ///////////////////////////////////////////////////////////////////////////////
+// // Process block
 
-	static void lu_save_wave__process_block(Lu_Save_Wave self, Lu_Data_Block block, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(block);
+// 	static void lu_save_wave__process_block_old(Lu_Save_Wave self, Lu_Data_Block block, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(block);
 
-		Lu_Wave wave = (Lu_Wave) self;
-		Lu_Brain brain = wave->brain;
-		lu__assert(brain);
+// 		Lu_Wave wave = (Lu_Wave) self;
+// 		Lu_Brain brain = wave->brain;
+// 		lu__assert(brain);
 
-		Lu_S s = brain->s;
-		lu__assert(s);
+// 		Lu_S s = brain->s;
+// 		lu__assert(s);
 
-		// lu_size rec_id;
-		// lu_size size = lu_data_block__get_size(block);
-		// Lu_Data data;
-		// for (rec_id = 0; rec_id < size; rec_id++)
-		// {
-		// 	data = lu_data_block__get_data(block, rec_id);
-		// 	lu__assert(data);
+// 		// lu_size rec_id;
+// 		// lu_size size = lu_data_block__get_size(block);
+// 		// Lu_Data data;
+// 		// for (rec_id = 0; rec_id < size; rec_id++)
+// 		// {
+// 		// 	data = lu_data_block__get_data(block, rec_id);
+// 		// 	lu__assert(data);
 
-		// 	if (lu_data__is_empty(data)) continue;
+// 		// 	if (lu_data__is_empty(data)) continue;
 			
-		// 	lu_data__print(data);
+// 		// 	lu_data__print(data);
 
-		// lu_s__save_rec_data(s, wave, rec_id, data, config);
-		// }
+// 		// lu_s__save_rec_data(s, wave, rec_id, data, config);
+// 		// }
 
-		Lu_Data data;
-		lu_size rec_id = 0; // NOTE: fixed temporarily
+// 		Lu_Data data;
+// 		lu_size rec_id = 0; // NOTE: fixed temporarily
 
-		data = lu_data_block__get_data(block, rec_id);
-		lu__assert(data);
+// 		data = lu_data_block__get_data(block, rec_id);
+// 		lu__assert(data);
 
-		//
-		// Pass reset flag from block to data if it is set
-		// 
+// 		//
+// 		// Pass reset flag from block to data if it is set
+// 		// 
 
-		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
-		{
-			data->flags |= LU_DATA_FLAGS__RESET_REC;
-		}
+// 		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
+// 		{
+// 			data->flags |= LU_DATA_FLAGS__RESET_REC;
+// 		}
 
-		//
-		// Rec
-		// 
+// 		//
+// 		// Rec
+// 		// 
 
-		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
-		lu__assert(area);
-		lu__assert(area->tag == LU_AREA_TAG__REC);
+// 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+// 		lu__assert(area);
+// 		lu__assert(area->tag == LU_AREA_TAG__REC);
 		 
-		Lu_W_Table curr_w_table = lu_s_area__save_rec(area, self, rec_id, data, config);
+// 		Lu_W_Table curr_w_table = lu_s_area__save_rec(area, self, rec_id, data, config);
 
-		if (curr_w_table == NULL) return;
+// 		if (curr_w_table == NULL) return;
 
-		//
-		// Frame
-		//
+// 		//
+// 		// Frame
+// 		//
 
-		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__FRAME);
-		lu__assert(area);
-		lu__assert(area->tag == LU_AREA_TAG__FRAME);
+// 		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__FRAME);
+// 		lu__assert(area);
+// 		lu__assert(area->tag == LU_AREA_TAG__FRAME);
 
-		curr_w_table = lu_s_area__save_frame(area, self, data->block_id, curr_w_table, config);
+// 		curr_w_table = lu_s_area__save_frame(area, self, data->block_id, curr_w_table, config);
 
-		if (curr_w_table == NULL) return;
+// 		if (curr_w_table == NULL) return;
 
-		//
-		// Seq
-		//
+// 		//
+// 		// Seq
+// 		//
 
-		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__SEQ);
-		lu__assert(area);
-		lu__assert(area->tag == LU_AREA_TAG__SEQ);
+// 		area = lu_s__get_area_by_tag(s, LU_AREA_TAG__SEQ);
+// 		lu__assert(area);
+// 		lu__assert(area->tag == LU_AREA_TAG__SEQ);
 
-		curr_w_table = lu_s_area__save_seq(area, self, data->block_id, curr_w_table, config);
-	}
+// 		curr_w_table = lu_s_area__save_seq(area, self, data->block_id, curr_w_table, config);
+// 	}
 
-	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(block);
+// 	static void lu_match_wave__process_block(Lu_Match_Wave self, Lu_Data_Block block, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(block);
 
-		Lu_Wave wave = (Lu_Wave) self;
-		Lu_Brain brain = wave->brain;
-		lu__assert(brain);
+// 		Lu_Wave wave = (Lu_Wave) self;
+// 		Lu_Brain brain = wave->brain;
+// 		lu__assert(brain);
 
-		Lu_S s = brain->s;
-		lu__assert(s);
+// 		Lu_S s = brain->s;
+// 		lu__assert(s);
 
-		Lu_Data data;
-		lu_size rec_id = 0; // NOTE: fixed temporarily
+// 		Lu_Data data;
+// 		lu_size rec_id = 0; // NOTE: fixed temporarily
 
-		data = lu_data_block__get_data(block, rec_id);
-		lu__assert(data);
+// 		data = lu_data_block__get_data(block, rec_id);
+// 		lu__assert(data);
 
-		//
-		// Pass reset flag from block to data if it is set
-		// 
+// 		//
+// 		// Pass reset flag from block to data if it is set
+// 		// 
 
-		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
-		{
-			data->flags |= LU_DATA_FLAGS__RESET_REC;
-		}
+// 		if (block->flags & LU_DATA_BLOCK_FLAGS__RESET_RECS)
+// 		{
+// 			data->flags |= LU_DATA_FLAGS__RESET_REC;
+// 		}
 
-		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
-		lu__assert(area);
-		lu__assert(area->tag == LU_AREA_TAG__REC);
+// 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+// 		lu__assert(area);
+// 		lu__assert(area->tag == LU_AREA_TAG__REC);
 		 		
-		lu_s_area__match_rec(area, self, rec_id, data, config, &self->processor);
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Push
-
-	void lu_wave__push(Lu_Wave self, Lu_Rec rec, lu_value* data, lu_size width, lu_size height, lu_size depth)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-		lu__user_assert_void(rec, "Lu_Rec is NULL");
-		lu__user_assert_void(data, "data is NULL");
-		lu__user_assert_void(width > 0, "width should be greater than 0");
-		lu__user_assert_void(height > 0, "height should be greater than 0");
-		lu__user_assert_void(depth > 0, "depth should be greater than 0");
-
-		if (self->push)
-			self->push(self, rec, data, width, height, depth);
-		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
-	}
-
-	static void lu_save_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data, lu_size w, lu_size h, lu_size d)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_save(self));
-
-		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-		lu_data_seq__push(save_wave->seq, rec, data, w, h, d, rec->view);
-	}
-
-	static void lu_match_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data, lu_size w, lu_size h, lu_size d)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_match(self));
-
-		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
-		lu_data_seq__push(match_wave->seq, rec, data, w, h, d, rec->view);
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Step
-
-	void lu_wave__step(Lu_Wave self, struct lu_save_config config)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-
-		Lu_Save_Config p_config = lu_process_config__validate(&config);
-		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
-
-		self->config = config;
-
-		if (self->step)
-			self->step(self, &self->config);
-		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
-	}
-
-
-	static void lu_save_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_save(self));
-		lu__assert(config);
-
-		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-
-		Lu_Data_Block block = lu_data_seq__next_block_get(save_wave->seq);
-		if (!block) return; // nothing to process
-
-		lu_save_wave__process_block(save_wave, block, config);
-	}
-
-	static void lu_match_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_match(self));
-		lu__assert(config);
-
-		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
-
-		Lu_Data_Block block = lu_data_seq__next_block_get(match_wave->seq);
-		if (!block) return; // nothing to process
-
-		lu_match_wave__process_block(match_wave, block, config);
-	}
-
-	static void lu_restore_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_restore(self));
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Process
-
-	//
-	// Wave
-	//
-
-	void lu_wave__process(Lu_Wave self, struct lu_save_config config)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-
-		Lu_Save_Config p_config = lu_process_config__validate(&config);
-		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
-
-		self->config = config; // save last process config 
-
-		if (self->process)
-			self->process(self, &self->config);
-		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
-	}
-
-	//
-	// Save
-	//
-
-	static void lu_save_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_save(self));
-
-		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-
-		Lu_Data_Block block = NULL;
-
-		// lu__debug("\n->current_read_pos = %ld\n", save_wave->seq->current_read_pos ? 1 : 0);
-
-		while((block = lu_data_seq__next_block_get(save_wave->seq)))
-		{
-			// lu__debug("\n BEFORE PROCESS BLOCK: wave_id=%ld, block_ix=%ld", save_wave->seq->wave_id, block->block_ix);
-			lu_save_wave__process_block(save_wave, block, config);
-		}
-
-		//
-		// Remove processed data
-		//
-		lu_data_seq__reset(save_wave->seq);
-	}
-
-	//
-	// Match
-	//
-
-	static void lu_match_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_match(self));
-
-		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
-
-		Lu_Data_Block block = NULL;
-
-		while((block = lu_data_seq__next_block_get(match_wave->seq)))
-		{
-			lu_match_wave__process_block(match_wave, block, config);
-		}
-
-		//
-		// Remove processed data
-		//
-		lu_data_seq__reset(match_wave->seq);
-	}
-
-	//
-	// Restore
-	//
-
-	static void lu_restore_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__is_restore(self));
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Reset
-
-	void lu_wave__reset(Lu_Wave self)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-
-		if (self->reset)
-			self->reset(self);
-		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
-	}
-
-	void lu_save_wave__reset(Lu_Wave self)
-	{
-		lu__assert(self);
-		lu__assert(self->brain);
-		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-
-		lu_data_seq__reset(save_wave->seq);  	
-
-		//
-		// Reset w_recs
-		//
-
-		Lu_S s = self->brain->s;
-		lu__assert(s);
-
-		// NOTE: fixed temporarily
-		//lu_size rec_id = 0; 
-
-		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
-		lu__assert(area);
-		lu__assert(area->tag == LU_AREA_TAG__REC);
-
-		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(area, 0);
-		lu__assert(layer_base);
-		lu__assert(layer_base->type == LU_S_LAYER__REC);
-
-		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
-
-		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(layer_rec, self->wave_ix);
-		lu__assert(w_rec);
-
-		lu_w_rec__reset(w_rec);
-	}
-
-	void lu_match_wave__reset(Lu_Wave self)
-	{
-		lu__assert(self);
-		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
-
-		lu_data_seq__reset(save_wave->seq);  	
-
-		//
-		// Reset w_recs
-		//
-
-		Lu_S s = self->brain->s;
-		lu__assert(s);
-
-		// NOTE: fixed temporarily
-		//lu_size rec_id = 0; 
-
-		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
-		lu__assert(area);
-		lu__assert(area->tag == LU_AREA_TAG__REC);
-
-		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(area, 0);
-		lu__assert(layer_base);
-		lu__assert(layer_base->type == LU_S_LAYER__REC);
-
-		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
-
-		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(layer_rec, self->wave_ix);
-		lu__assert(w_rec);
-
-		lu_w_rec__reset(w_rec);
-	}
-
-///////////////////////////////////////////////////////////////////////////////
-// Create
-
-	Lu_Wave lu_wave__create_save_wave(Lu_Brain brain) 
-	{
-		lu__user_assert(brain, "Lu_Brain is NULL");
-
-		Lu_Mem w_mem = brain->config.w_mem;
-		lu__user_assert(w_mem, "w_mem is NULL");
-
-		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_save_wave));
-
-		lu_wave__init(
-			&self->super, 
-			LU_WAVE__SAVE, 
-			brain
-		); 
-
-		self->super.destroy = lu_save_wave__destroy_virtual;
+// 		lu_s_area__match_rec(area, self, rec_id, data, config, &self->processor);
+// 	}
+
+// ///////////////////////////////////////////////////////////////////////////////
+// // Push
+
+// 	void lu_wave__push(Lu_Wave self, Lu_Rec rec, lu_value* data, lu_size width, lu_size height, lu_size depth)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
+// 		lu__user_assert_void(rec, "Lu_Rec is NULL");
+// 		lu__user_assert_void(data, "data is NULL");
+// 		lu__user_assert_void(width > 0, "width should be greater than 0");
+// 		lu__user_assert_void(height > 0, "height should be greater than 0");
+// 		lu__user_assert_void(depth > 0, "depth should be greater than 0");
+
+// 		if (self->push)
+// 			self->push(self, rec, data, width, height, depth);
+// 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
+// 	}
+
+// 	static void lu_save_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data, lu_size w, lu_size h, lu_size d)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_save(self));
+
+// 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+// 		lu_data_seq__push(save_wave->seq, rec, data, w, h, d, rec->view);
+// 	}
+
+// 	static void lu_match_wave__push_virtual(Lu_Wave self, Lu_Rec rec, lu_value *data, lu_size w, lu_size h, lu_size d)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_match(self));
+
+// 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+// 		lu_data_seq__push(match_wave->seq, rec, data, w, h, d, rec->view);
+// 	}
+
+// ///////////////////////////////////////////////////////////////////////////////
+// // Step
+
+// 	void lu_wave__step(Lu_Wave self, struct lu_save_config config)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
+
+// 		Lu_Save_Config p_config = lu_save_config__validate(&config);
+// 		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
+
+// 		self->config = config;
+
+// 		if (self->step)
+// 			self->step(self, &self->config);
+// 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
+// 	}
+
+
+// 	static void lu_save_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
 		
-		self->super.block_begin = lu_save_wave__block_begin_virtual;
-		self->super.block_end = lu_save_wave__block_end_virtual;
+// 		lu__assert(config);
 
-		self->super.push = lu_save_wave__push_virtual;
-		self->super.reset = lu_save_wave__reset;
+// 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
 
-		self->super.step = lu_save_wave__step_virtual;
-		self->super.process = lu_save_wave__process_virtual;
+// 		Lu_Data_Block block = lu_data_seq__next_block_get(save_wave->seq);
+// 		if (!block) return; // nothing to process
 
-		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
-		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
+// 		lu_save_wave__process_block_old(save_wave, block, config);
+// 	}
 
-		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
-		lu__assert(self->seq);
+// 	static void lu_match_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_match(self));
+// 		lu__assert(config);
 
-		return (Lu_Wave) self;
-	}
+// 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+
+// 		Lu_Data_Block block = lu_data_seq__next_block_get(match_wave->seq);
+// 		if (!block) return; // nothing to process
+
+// 		lu_match_wave__process_block(match_wave, block, config);
+// 	}
+
+// 	static void lu_restore_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_restore(self));
+// 	}
+
+// ///////////////////////////////////////////////////////////////////////////////
+// // Process
+
+// 	//
+// 	// Wave
+// 	//
+
+// 	void lu_wave__process(Lu_Wave self, struct lu_save_config config)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
+
+// 		Lu_Save_Config p_config = lu_save_config__validate(&config);
+// 		lu__user_assert_void(p_config, "Lu_Save_Config is invalid");
+
+// 		self->config = config; // save last process config 
+
+// 		if (self->process)
+// 			self->process(self, &self->config);
+// 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
+// 	}
+
+// 	//
+// 	// Save
+// 	//
+
+// 	static void lu_save_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_save(self));
+
+// 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+// 		Lu_Data_Block block = NULL;
+
+// 		// lu__debug("\n->current_read_pos = %ld\n", save_wave->seq->current_read_pos ? 1 : 0);
+
+// 		while((block = lu_data_seq__next_block_get(save_wave->seq)))
+// 		{
+// 			// lu__debug("\n BEFORE PROCESS BLOCK: wave_id=%ld, block_ix=%ld", save_wave->seq->wave_id, block->block_ix);
+// 			lu_save_wave__process_block_old(save_wave, block, config);
+// 		}
+
+// 		//
+// 		// Remove processed data
+// 		//
+// 		lu_data_seq__reset(save_wave->seq);
+// 	}
+
+// 	//
+// 	// Match
+// 	//
+
+// 	static void lu_match_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_match(self));
+
+// 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+
+// 		Lu_Data_Block block = NULL;
+
+// 		while((block = lu_data_seq__next_block_get(match_wave->seq)))
+// 		{
+// 			lu_match_wave__process_block(match_wave, block, config);
+// 		}
+
+// 		//
+// 		// Remove processed data
+// 		//
+// 		lu_data_seq__reset(match_wave->seq);
+// 	}
+
+// 	//
+// 	// Restore
+// 	//
+
+// 	static void lu_restore_wave__process_virtual(Lu_Wave self, Lu_Save_Config config)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__is_restore(self));
+// 	}
+
+// ///////////////////////////////////////////////////////////////////////////////
+// // Reset
+
+// 	void lu_wave__reset(Lu_Wave self)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
+
+// 		if (self->reset)
+// 			self->reset(self);
+// 		else lu__user_assert_void(false, "Method is not supported by this wave implementation");
+// 	}
+
+// 	void lu_save_wave__reset_old(Lu_Wave self)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(self->brain);
+// 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+// 		lu_data_seq__reset(save_wave->seq);  	
+
+// 		//
+// 		// Reset w_recs
+// 		//
+
+// 		Lu_S s = self->brain->s;
+// 		lu__assert(s);
+
+// 		// NOTE: fixed temporarily
+// 		//lu_size rec_id = 0; 
+
+// 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+// 		lu__assert(area);
+// 		lu__assert(area->tag == LU_AREA_TAG__REC);
+
+// 		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(area, 0);
+// 		lu__assert(layer_base);
+// 		lu__assert(layer_base->type == LU_S_LAYER__REC);
+
+// 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
+
+// 		Lu_W_Rec w_rec = lu_s_layer_rec__get_w_rec(layer_rec, self->wave_ix, self->wave_type);
+// 		lu__assert(w_rec);
+
+// 		lu_w_rec__reset(w_rec);
+// 	}
+
+// 	void lu_match_wave__reset(Lu_Wave self)
+// 	{
+// 		lu__assert(self);
+// 		Lu_Save_Wave save_wave = (Lu_Save_Wave) self;
+
+// 		lu_data_seq__reset(save_wave->seq);  	
+
+// 		//
+// 		// Reset w_recs
+// 		//
+
+// 		Lu_S s = self->brain->s;
+// 		lu__assert(s);
+
+// 		// NOTE: fixed temporarily
+// 		//lu_size rec_id = 0; 
+
+// 		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+// 		lu__assert(area);
+// 		lu__assert(area->tag == LU_AREA_TAG__REC);
+
+// 		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(area, 0);
+// 		lu__assert(layer_base);
+// 		lu__assert(layer_base->type == LU_S_LAYER__REC);
+
+// 		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
+
+// 		Lu_W_Rec w_rec = lu_s_layer_rec__get_save_w_rec(layer_rec, self->wave_ix);
+// 		lu__assert(w_rec);
+
+// 		lu_w_rec__reset(w_rec);
+// 	}
+
+// ///////////////////////////////////////////////////////////////////////////////
+// // Create
+
+// 	Lu_Wave lu_wave__create_save_wave(Lu_Brain brain) 
+// 	{
+// 		lu__user_assert(brain, "Lu_Brain is NULL");
+
+// 		Lu_Mem w_mem = brain->config.w_mem;
+// 		lu__user_assert(w_mem, "w_mem is NULL");
+
+// 		Lu_Save_Wave self = (Lu_Save_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_save_wave));
+
+// 		lu_wave__init(
+// 			&self->super, 
+// 			LU_WAVE__SAVE, 
+// 			brain
+// 		); 
+
+// 		self->super.destroy = lu_save_wave__destroy_virtual;
+		
+// 		self->super.block_begin = lu_save_wave__block_begin_virtual;
+// 		self->super.block_end = lu_save_wave__block_end_virtual;
+
+// 		self->super.push = lu_save_wave__push_virtual;
+// 		self->super.reset = lu_save_wave__reset_old;
+
+// 		self->super.step = lu_save_wave__step_virtual;
+// 		self->super.process = lu_save_wave__process_virtual;
+
+// 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
+// 		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
+
+// 		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
+// 		lu__assert(self->seq);
+
+// 		return (Lu_Wave) self;
+// 	}
 	
-	//
-	// Match is more generalized "find".
-	// 
-	Lu_Wave lu_wave__create_match_wave(Lu_Brain brain)
-	{
-		lu__user_assert(brain, "Lu_Brain is NULL");
+// 	//
+// 	// Match is more generalized "find".
+// 	// 
+// 	Lu_Wave lu_wave__create_match_wave(Lu_Brain brain)
+// 	{
+// 		lu__user_assert(brain, "Lu_Brain is NULL");
 
-		Lu_Mem w_mem = brain->config.w_mem;
-		lu__user_assert(w_mem, "w_mem is NULL");
+// 		Lu_Mem w_mem = brain->config.w_mem;
+// 		lu__user_assert(w_mem, "w_mem is NULL");
 
-		Lu_Match_Wave self = (Lu_Match_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_match_wave));
+// 		Lu_Match_Wave self = (Lu_Match_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_match_wave));
 
-		lu_wave__init(
-			&self->super,
-			LU_WAVE__MATCH,
-			brain
-		);
+// 		lu_wave__init(
+// 			&self->super,
+// 			LU_WAVE__MATCH,
+// 			brain
+// 		);
 
-		lu__assert(lu_wave__is_match((Lu_Wave) self));
-		lu__assert(lu_wave__get_type((Lu_Wave) self) == LU_WAVE__MATCH);
+// 		lu__assert(lu_wave__is_match((Lu_Wave) self));
+// 		lu__assert(lu_wave__get_type((Lu_Wave) self) == LU_WAVE__MATCH);
 
-		self->super.destroy = lu_match_wave__destroy_virtual;
+// 		self->super.destroy = lu_match_wave__destroy_virtual;
 		
-		self->super.block_begin = lu_match_wave__block_begin_virtual;
-		self->super.block_end = lu_match_wave__block_end_virtual;
+// 		self->super.block_begin = lu_match_wave__block_begin_virtual;
+// 		self->super.block_end = lu_match_wave__block_end_virtual;
 
-		self->super.push = lu_match_wave__push_virtual;
-		self->super.reset = lu_match_wave__reset;
+// 		self->super.push = lu_match_wave__push_virtual;
+// 		self->super.reset = lu_match_wave__reset;
 
-		self->super.step = lu_match_wave__step_virtual;
-		self->super.process = lu_match_wave__process_virtual;
+// 		self->super.step = lu_match_wave__step_virtual;
+// 		self->super.process = lu_match_wave__process_virtual;
 
-		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
-		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
+// 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
+// 		lu__user_assert(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
 
-		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
-		lu__assert(self->seq);
+// 		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
+// 		lu__assert(self->seq);
 
-		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
+// 		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
 
-		lu_w_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
+// 		lu_w_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
 
-		return (Lu_Wave) self;
-	}
+// 		return (Lu_Wave) self;
+// 	}
 
-	Lu_Wave lu_wave__create_restore_wave(Lu_Brain brain)
-	{
-		return NULL;
-	}
+// 	Lu_Wave lu_wave__create_restore_wave(Lu_Brain brain)
+// 	{
+// 		return NULL;
+// 	}
 
-///////////////////////////////////////////////////////////////////////////////
-// Destroy
+// ///////////////////////////////////////////////////////////////////////////////
+// // Destroy
 
-	void lu_wave__destroy(Lu_Wave self)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-		lu__user_assert_void(self->brain, "Something went wrong. Lu_Wave is not linked to any Lu_Brain");
-		lu__assert(self->brain->w_manager);
+// 	void lu_wave__destroy(Lu_Wave self)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
+// 		lu__user_assert_void(self->brain, "Something went wrong. Lu_Wave is not linked to any Lu_Brain");
+// 		lu__assert(self->brain->w_manager);
 
-		lu_w_manager__unregister_wave(self->brain->w_manager, self);
+// 		lu_w_manager__unregister_wave(self->brain->w_manager, self);
 
-		self->destroy(self);
+// 		self->destroy(self);
 
-		lu_mem__free(self->mem, (lu_p_byte) self);
-	} 
+// 		lu_mem__free(self->mem, (lu_p_byte) self);
+// 	} 
 
-	//
-	// Save
-	//
+// 	//
+// 	// Save
+// 	//
 
-	static void lu_save_wave__destroy_virtual(Lu_Wave wave)
-	{
-		lu__assert(wave);
-		lu__assert(lu_wave__is_save(wave));
+// 	static void lu_save_wave__destroy_virtual(Lu_Wave wave)
+// 	{
+// 		lu__assert(wave);
+// 		lu__assert(lu_wave__is_save(wave));
+// 	}
 
-		Lu_Save_Wave self = (Lu_Save_Wave) wave;
+// 	//
+// 	// Find
+// 	//
 
-		lu_data_seq__destroy(self->seq);
-	}
+// 	static void lu_match_wave__destroy_virtual(Lu_Wave wave)
+// 	{
+// 		lu__assert(wave);
+// 		lu__assert(lu_wave__is_match(wave));
 
-	//
-	// Find
-	//
+// 		Lu_Match_Wave self = (Lu_Match_Wave) wave;
 
-	static void lu_match_wave__destroy_virtual(Lu_Wave wave)
-	{
-		lu__assert(wave);
-		lu__assert(lu_wave__is_match(wave));
+// 		lu_w_processor__deinit(&self->processor);
 
-		Lu_Match_Wave self = (Lu_Match_Wave) wave;
+// 		lu_w_match_cell_mem__deinit(&self->match_cell_mem);
+// 	}
 
-		lu_w_processor__deinit(&self->processor);
+// 	//
+// 	// Restore
+// 	//
 
-		lu_w_match_cell_mem__deinit(&self->match_cell_mem);
+// 	static void lu_restore_wave__destroy_virtual(Lu_Wave wave)
+// 	{
+// 		// lu__assert(wave);
+// 		// Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
 
-		lu_data_seq__destroy(self->seq);
-	}
-
-	//
-	// Restore
-	//
-
-	static void lu_restore_wave__destroy_virtual(Lu_Wave wave)
-	{
-		// lu__assert(wave);
-		// Lu_Restore_Wave self = (Lu_Restore_Wave) wave;
-
-		//lu_list__destroy(self->seq);
-	}
+// 		//lu_list__destroy(self->seq);
+// 	}
 
 
-///////////////////////////////////////////////////////////////////////////////
-// 
+// ///////////////////////////////////////////////////////////////////////////////
+// // 
 
-	Lu_La_Cell lu_wave__link_to_label(Lu_Wave self, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label)
-	{
-		lu__user_assert(self, "Lu_Wave is NULL");
-		lu__user_assert(self->brain, "Lu_Wave brain is NULL");
-		lu__user_assert(self->brain->s, "Lu_Wave brain structure is NULL");
+// 	Lu_La_Cell lu_wave__link_to_label(Lu_Wave self, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label)
+// 	{
+// 		lu__user_assert(self, "Lu_Wave is NULL");
+// 		lu__user_assert(self->brain, "Lu_Wave brain is NULL");
+// 		lu__user_assert(self->brain->s, "Lu_Wave brain structure is NULL");
 
-		Lu_W_Cell w_cell = lu_s__get_w_cell_from_save_w_table(self->brain->s, self->wave_ix, area_ix, layer_ix, x, y);
+// 		Lu_W_Cell w_cell = lu_s__get_w_cell_from_save_w_table(self->brain->s, self->wave_ix, area_ix, layer_ix, x, y);
 
-		if (w_cell == NULL) return NULL;
+// 		if (w_cell == NULL) return NULL;
 
-		if (lu_w_cell__is_not_set(w_cell)) return NULL;
+// 		if (lu_w_cell__is_not_set(w_cell)) return NULL;
 
-		#ifdef LU__DEEP_DEBUG
-			lu__debug("\nLINKING LABEL %ld TO n_cell: ", label);
-			lu_n_addr__print(&w_cell->n_cell->addr);
-		#endif
+// 		#ifdef LU__DEEP_DEBUG
+// 			lu__debug("\nLINKING LABEL %ld TO n_cell: ", label);
+// 			lu_n_addr__print(&w_cell->n_cell->addr);
+// 		#endif
 
-		return lu_la_column__save_label(&self->brain->la_column, w_cell->n_cell, label);
-	}
+// 		return lu_la_column__save_label(&self->brain->la_column, w_cell->n_cell, label);
+// 	}
 
-	Lu_Label* lu_wave__get_result_labels(Lu_Wave self)
-	{
-		lu__assert(self);
-		lu__assert(lu_wave__get_type(self) == LU_WAVE__MATCH);
+// 	Lu_Label* lu_wave__get_result_labels(Lu_Wave self)
+// 	{
+// 		lu__assert(self);
+// 		lu__assert(lu_wave__get_type(self) == LU_WAVE__MATCH);
 
-		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
+// 		Lu_Match_Wave match_wave = (Lu_Match_Wave) self;
 
-		return match_wave->processor.sorted_results;
-	}
+// 		return match_wave->processor.sorted_results;
+// 	}
 
-	void lu_wave__print_match_results(Lu_Wave self)
-	{
-		lu__user_assert_void(self, "Lu_Wave is NULL");
-		lu__user_assert_void(self->type == LU_WAVE__MATCH, "Lu_Wave is not match wave");
+// 	void lu_wave__print_match_results(Lu_Wave self)
+// 	{
+// 		lu__user_assert_void(self, "Lu_Wave is NULL");
+// 		lu__user_assert_void(self->type == LU_WAVE__MATCH, "Lu_Wave is not match wave");
 
-		Lu_Label* results = lu_wave__get_result_labels(self);
-		lu__assert(results);
+// 		Lu_Label* results = lu_wave__get_result_labels(self);
+// 		lu__assert(results);
 
-		lu__debug("\nMATCH RESULTS (%ld cells fired):", lu_wave__get_fired_cells_count(self));
-		lu_labels__print_results(results, self->brain->config.w_match_results_size);
-	}
+// 		lu__debug("\nMATCH RESULTS (%ld cells fired):", lu_wave__get_fired_cells_count(self));
+// 		lu_labels__print_results(results, self->brain->config.w_match_results_size);
+// 	}
 
 
 ///////////////////////////////////////////////////////////////////////////////

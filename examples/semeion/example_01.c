@@ -66,10 +66,10 @@ int main()
 
 	// Create save_wave
 	
-	Lu_Wave save_wave = lu_wave__create_save_wave(brain);
+	Lu_Save_Wave save_wave = lu_save_wave__create(brain);
 	lu__assert(save_wave);  
 
-	Lu_Wave match_wave = lu_wave__create_match_wave(brain);
+	Lu_Match_Wave match_wave = lu_match_wave__create(brain);
 	lu__assert(match_wave);
 
 	// Show random digit
@@ -93,12 +93,12 @@ int main()
 	{
 		d = smn_training_samples[i];
 
-		lu_wave__push(save_wave, image_rec, smn_blank_pixels, 16, 16, 1);
-		lu_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
+		lu_save_wave__push(save_wave, image_rec, smn_blank_pixels, 16, 16, 1);
+		lu_save_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
 
-		lu_wave__process(save_wave, lu_process_config__get_by_id(LU_PROCESS__SAVE_DEFAULT));
+		lu_save_wave__process(save_wave, LU_SAVE_CONFIG__DEFAULT);
 
-		la_cell = lu_wave__link_to_label(save_wave, 2, 0, 0, 0, d->name);
+		la_cell = lu_save_wave__link_to_label(save_wave, 2, 0, 0, 0, d->name);
 		lu__assert(la_cell);
 
 		//printf("\nTraining samples.. %lu trained.", i + 1);
@@ -139,18 +139,18 @@ int main()
 		printf("\nMATCHING UNTRAINED SAMPLE:");
 		smn_digit__print(d);
 
-		lu_wave__push(match_wave, image_rec, smn_blank_pixels, 16, 16, 1);
-		lu_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
+		lu_match_wave__push(match_wave, image_rec, smn_blank_pixels, 16, 16, 1);
+		lu_match_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
 
-		lu_wave__process(match_wave, lu_process_config__get_by_id(LU_PROCESS__MATCH_DIFF_ONLY));
+		lu_match_wave__process(match_wave, LU_MATCH_CONFIG__DEFAULT);
 
-		labels = lu_wave__get_result_labels(match_wave);
+		labels = lu_match_wave__get_result_labels(match_wave);
 
 		if (labels)
 		{
 			if(labels[0])
 			{
-				lu_wave__print_match_results(match_wave);
+				lu_match_wave__print_results(match_wave);
 
 				if (lu_label__get_id(labels[0]) == d->name)
 				{
@@ -187,8 +187,8 @@ int main()
 
 	// Destroy save_wave and brain
 
-	lu_wave__destroy(match_wave);
-	lu_wave__destroy(save_wave);
+	lu_match_wave__destroy(match_wave);
+	lu_save_wave__destroy(save_wave);
 	lu_brain__destroy(brain);
 
 	// Clean up memory for data

@@ -6,14 +6,39 @@
 // Constructor / Destructor
 
 
-	static void lu_data_wave__init(Lu_Data_Wave self)
+	static void lu_data_wave__init(Lu_Data_Wave self, enum lu_wave_type type, Lu_Brain brain)
 	{
+		lu__assert(self);
+		lu__assert(brain);
 
+		lu_wave__init(
+			&self->super, 
+			type, 
+			brain
+		); 
+
+		Lu_Mem w_mem = brain->config.w_mem;
+		lu__user_assert_void(w_mem, "w_mem is NULL");
+
+		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
+		lu__user_assert_void(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
+
+		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
+		lu__assert(self->seq);
 	}
 
 	static void lu_data_wave__deinit(Lu_Data_Wave self)
 	{
+		lu__assert(self);
+		
+		Lu_Wave wave = (Lu_Wave) self;
+		lu__user_assert_void(wave->brain, "Something went wrong. Lu_Wave is not linked to any Lu_Brain");
+		lu__assert(wave->brain->w_manager);
 
+		lu_w_manager__unregister_wave(wave->brain->w_manager, wave);
+
+		lu_data_seq__destroy(self->seq);
+		lu_wave__deinit(&self->super);
 	}
 
 
@@ -22,30 +47,60 @@
 
 	static void lu_data_wave__reset(Lu_Data_Wave self)
 	{
+		lu__assert(self);
 
+		Lu_Brain brain = self->super.brain;
+		lu__assert(brain);
+
+		lu_data_seq__reset(self->seq);  	
+
+		//
+		// Reset w_recs
+		//
+
+		Lu_S s = brain->s;
+		lu__assert(s);
+
+		// NOTE: fixed temporarily
+		//lu_size rec_id = 0; 
+
+		Lu_S_Area area = lu_s__get_area_by_tag(s, LU_AREA_TAG__REC/*, rec_id */);
+		lu__assert(area);
+		lu__assert(area->tag == LU_AREA_TAG__REC);
+
+		Lu_S_Layer_Base layer_base = lu_s_area__get_layer_by_ix(area, 0);
+		lu__assert(layer_base);
+		lu__assert(layer_base->type == LU_S_LAYER__REC);
+
+		Lu_S_Layer_Rec layer_rec = (Lu_S_Layer_Rec) layer_base;
+
+		Lu_W_Rec w_rec = lu_s_layer_rec__get_w_rec(layer_rec, self->super.wave_ix, self->super.type);
+		lu__assert(w_rec);
+
+		lu_w_rec__reset(w_rec);
 	}
 
 	static void lu_data_wave__block_begin(Lu_Data_Wave self)
 	{
-
+		lu_data_seq__block_begin(self->seq);
 	}
 
 	static void lu_data_wave__block_end(Lu_Data_Wave self)
 	{
-
+		lu_data_seq__block_end(self->seq);
 	}
 
 	static void lu_data_wave__set_dest_start_pos(Lu_Data_Wave self, Lu_Rec rec, lu_long dest_x, lu_long dest_y)
 	{
-		
+		lu_rec_view__set_dest_start_pos(&rec->view, dest_x, dest_y);
 	}
 
 	static void lu_data_wave__set_src_start_pos(Lu_Data_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
 	{
-
+		lu_rec_view__set_src_start_pos(&rec->view, src_x, src_y);
 	}
 
 	static void lu_data_wave__set_src_end_pos(Lu_Data_Wave self, Lu_Rec rec, lu_size src_x, lu_size src_y)
 	{
-
+		lu_rec_view__set_src_end_pos(&rec->view, src_x, src_y);
 	}
