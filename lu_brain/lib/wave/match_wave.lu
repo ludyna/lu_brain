@@ -22,7 +22,7 @@
 
 		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
 
-		lu_w_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
+		lu_w_match_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
 
 		return self;
 	}
@@ -31,7 +31,7 @@
 	{
 		lu__assert(self);
 
-		lu_w_processor__deinit(&self->processor);
+		lu_w_match_processor__deinit(&self->processor);
 
 		lu_w_match_cell_mem__deinit(&self->match_cell_mem);
 
@@ -133,7 +133,7 @@
 	}
 
 
-	void lu_match_wave__step(Lu_Match_Wave self, struct lu_match_config config)
+	void lu_match_wave__match_step(Lu_Match_Wave self, struct lu_match_config config)
 	{
 		lu__user_assert_void(self, "Lu_Match_Wave is NULL");
 		
@@ -150,7 +150,7 @@
 		lu_match_wave__process_block(self, block);
 	}
 
-	void lu_match_wave__process(Lu_Match_Wave self, struct lu_match_config config)
+	void lu_match_wave__match(Lu_Match_Wave self, struct lu_match_config config)
 	{
 		lu__user_assert_void(self, "Lu_Match_Wave is NULL");
 		

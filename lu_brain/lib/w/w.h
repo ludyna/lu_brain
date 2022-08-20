@@ -674,24 +674,9 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Save_Proc
-
-	struct lu_w_save_processor {
-		
-	};
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Match_Proc
+// Lu_W_Match_Processor 
 
 	struct lu_w_match_processor {
-
-	};
-
-
-///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Processor (match)
-
-	struct lu_w_processor {
 		struct lu_block_id block_id;
 		lu_size wave_ix;
 
@@ -722,18 +707,18 @@
 		struct lu_w_processor_stats stats;
 	};
 
-	static void lu_w_processor__init(
-		Lu_W_Processor self,  
+	static void lu_w_match_processor__init(
+		Lu_W_Match_Processor self,  
 		Lu_S s, 
 		Lu_Config config, 
 		Lu_W_Match_Cell_Mem match_cell_mem,
 		Lu_La_Column la_column
 	);
 
-	static void lu_w_processor__deinit(Lu_W_Processor self);
+	static void lu_w_match_processor__deinit(Lu_W_Match_Processor self);
 
-	static inline void lu_w_processor__fire_n_cell(
-		Lu_W_Processor self,
+	static inline void lu_w_match_processor__fire_n_cell(
+		Lu_W_Match_Processor self,
 		Lu_N_Cell n_cell,
 		Lu_S_Column s_column,
 		lu_value sig
@@ -755,8 +740,8 @@
 		}
 	}
 	
-	static inline void lu_w_processor__find_n_cell_and_s_column(
-		Lu_W_Processor self,
+	static inline void lu_w_match_processor__find_n_cell_and_s_column(
+		Lu_W_Match_Processor self,
 		union lu_n_addr addr,
 		Lu_N_Cell* n_cell,
 		Lu_S_Column* s_column
@@ -767,8 +752,8 @@
 		lu_s__find_n_cell_and_s_column(self->s, addr, n_cell, s_column);
 	}
 
-	static inline void lu_w_processor__fire_n_parents(
-		Lu_W_Processor self, 
+	static inline void lu_w_match_processor__fire_n_parents(
+		Lu_W_Match_Processor self, 
 		Lu_N_Link_Mem link_mem,
 		lu_value sig,
 		union lu_n_link_addr parent_link_addr
@@ -784,19 +769,19 @@
 			n_cell_parent = NULL;
 			s_column_parent = NULL;
 
-			lu_w_processor__find_n_cell_and_s_column(self, n_link_parent->n_cell_addr, &n_cell_parent, &s_column_parent);
+			lu_w_match_processor__find_n_cell_and_s_column(self, n_link_parent->n_cell_addr, &n_cell_parent, &s_column_parent);
 		
 			lu__assert(n_cell_parent);
 			lu__assert(s_column_parent);
 
-			lu_w_processor__fire_n_cell(self, n_cell_parent, s_column_parent, sig);
+			lu_w_match_processor__fire_n_cell(self, n_cell_parent, s_column_parent, sig);
 
 			n_link_parent = lu_n_link_mem__get_link(link_mem, n_link_parent->next);
 		}
 	}
 
-	static inline void lu_w_processor__fire_vp_parents_with_sig(
-		Lu_W_Processor self, 
+	static inline void lu_w_match_processor__fire_vp_parents_with_sig(
+		Lu_W_Match_Processor self, 
 		Lu_N_Cell_VP n_cell, 
 		Lu_S_Column_Comp s_column,
 		lu_value sig
@@ -809,11 +794,11 @@
 	
 		//lu_n_addr__print(&n_cell->addr);
 		if (lu_n_link_addr__is_present(&n_cell->parents))
-			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->parents);
+			lu_w_match_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->parents);
 	}
 
-	static inline void lu_w_processor__fire_n_parents_with_sig(
-		Lu_W_Processor self, 
+	static inline void lu_w_match_processor__fire_n_parents_with_sig(
+		Lu_W_Match_Processor self, 
 		Lu_N_Cell n_cell, 
 		Lu_S_Column s_column,
 		lu_value sig
@@ -825,20 +810,20 @@
 		lu__debug_assert(sig > 0);
 
 		if (lu_n_link_addr__is_present(&n_cell->tl))
-			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->tl);
+			lu_w_match_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->tl);
 
 		if (lu_n_link_addr__is_present(&n_cell->tr))
-			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->tr);
+			lu_w_match_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->tr);
 
 		if (lu_n_link_addr__is_present(&n_cell->bl))
-			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->bl);
+			lu_w_match_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->bl);
 
 		if (lu_n_link_addr__is_present(&n_cell->br))
-			lu_w_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->br);
+			lu_w_match_processor__fire_n_parents(self, &s_column->link_mem, sig, n_cell->br);
 	}
 
-	static inline void lu_w_processor__fire_n_labels_with_sig(
-		Lu_W_Processor self, 
+	static inline void lu_w_match_processor__fire_n_labels_with_sig(
+		Lu_W_Match_Processor self, 
 		Lu_N_Cell n_cell,
 		Lu_La_Column la_column,
 		lu_value sig
@@ -875,7 +860,7 @@
 		}
 	}
 
-	static inline lu_size lu_w_processor__process(Lu_W_Processor self)
+	static inline lu_size lu_w_match_processor__process(Lu_W_Match_Processor self)
 	{
 		lu__assert(self);
 		lu__assert(lu_w_proc_list__is_blank(self->curr_list));
@@ -903,7 +888,7 @@
 			// fire_sig should be always less or equal to one
 			lu__assert(fire_sig <= 1.0); 
 
-			lu_w_processor__fire_n_parents_with_sig(self, w_proc_item->n_cell, w_proc_item->s_column, fire_sig);
+			lu_w_match_processor__fire_n_parents_with_sig(self, w_proc_item->n_cell, w_proc_item->s_column, fire_sig);
 
 			if (lu_la_link_addr__is_present(&w_proc_item->n_cell->labels))
 			{
@@ -912,7 +897,7 @@
 					w_proc_item->n_cell->addr.cell_ix, 
 					w_proc_item->n_cell->labels.value
 				);
-				lu_w_processor__fire_n_labels_with_sig(self, w_proc_item->n_cell, self->la_column, fire_sig);
+				lu_w_match_processor__fire_n_labels_with_sig(self, w_proc_item->n_cell, self->la_column, fire_sig);
 			}
 
 			++cells_processed;
@@ -923,15 +908,15 @@
 		return cells_processed;
 	}
 
-	static inline lu_bool lu_w_processor__has_items_to_process(Lu_W_Processor self)
+	static inline lu_bool lu_w_match_processor__has_items_to_process(Lu_W_Match_Processor self)
 	{
 		return lu_w_proc_list__is_present(self->next_list);
 	}
 
-	static void lu_w_processor__prepare_results(Lu_W_Processor self);
+	static void lu_w_match_processor__prepare_results(Lu_W_Match_Processor self);
 
 
-	static inline void lu_w_processor__print_symbols(Lu_W_Processor self)
+	static inline void lu_w_match_processor__print_symbols(Lu_W_Match_Processor self)
 	{
 		lu__assert(self);
 
@@ -945,7 +930,7 @@
 		}
 	}
 
-	static inline void lu_w_processor__reset_results(Lu_W_Processor self)
+	static inline void lu_w_match_processor__reset_results(Lu_W_Match_Processor self)
 	{
 		lu__assert(self);
 		//
@@ -977,14 +962,40 @@
 		lu_w_processor_stats__reset(&self->stats);
 	}
 
-
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Delete_Processor
+// Lu_W_Del_Processor
 
+	struct lu_w_del_processor {
+		struct lu_block_id block_id;
+		lu_size wave_ix;
 
-	struct lu_w_delete_processor {
+		Lu_S s;
+		Lu_Mem mem;
+		Lu_W_Match_Cell_Mem match_cell_mem;
+		Lu_La_Column la_column;
 
+		Lu_W_Proc_List curr_list;
+		Lu_W_Proc_List next_list;
+
+		Lu_Mem_Table la_mem_table;
+
+		//
+		// Stats
+		//  
+
+		struct lu_w_processor_stats stats;
 	};
+
+	static void lu_w_del_processor__init(
+		Lu_W_Match_Processor self,  
+		Lu_S s, 
+		Lu_Config config, 
+		Lu_W_Match_Cell_Mem match_cell_mem,
+		Lu_La_Column la_column
+	);
+
+	static void lu_w_del_processor__deinit(Lu_W_Match_Processor self);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_W_Manager

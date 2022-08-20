@@ -233,7 +233,7 @@ void save_all_paterns()
 		lu_save_wave__push(s_wave, rec_0, blank_values, 3, 5, 1);
 		lu_save_wave__push(s_wave, rec_0, values, 3, 5, 1);
 
-		lu_save_wave__process(s_wave, LU_SAVE_CONFIG__DEFAULT);
+		lu_save_wave__save(s_wave, LU_SAVE_CONFIG__DEFAULT);
 		label_cell = lu_save_wave__link_to_label(s_wave, 2, 0, 0, 0, label);
 		TEST_ASSERT(label_cell);
 	}
@@ -263,7 +263,7 @@ void match_all_patterns()
 		lu_match_wave__push(m_wave, rec_0, blank_values, 3, 5, 1);
 		lu_match_wave__push(m_wave, rec_0, values, 3, 5, 1);
 
-		lu_match_wave__process(m_wave, LU_MATCH_CONFIG__DEFAULT);
+		lu_match_wave__match(m_wave, LU_MATCH_CONFIG__DEFAULT);
 
 		results = lu_match_wave__get_result_labels(m_wave);
 		TEST_ASSERT(results);

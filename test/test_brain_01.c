@@ -143,7 +143,7 @@ void test_brain_01(void)
 		lu_save_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_save_wave__push(s_wave, rec_0, values[0], 2, 2, 1);
 
-		lu_save_wave__process(s_wave, LU_SAVE_CONFIG__DEFAULT);
+		lu_save_wave__save(s_wave, LU_SAVE_CONFIG__DEFAULT);
 		label_cell = lu_save_wave__link_to_label(s_wave, 2, 0, 0, 0, labels[0]);
 		TEST_ASSERT(label_cell);
 
@@ -154,7 +154,7 @@ void test_brain_01(void)
 		lu_save_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_save_wave__push(s_wave, rec_0, values[1], 2, 2, 1);
 
-		lu_save_wave__process(s_wave, LU_SAVE_CONFIG__DEFAULT);
+		lu_save_wave__save(s_wave, LU_SAVE_CONFIG__DEFAULT);
 		label_cell = lu_save_wave__link_to_label(s_wave, 2, 0, 0, 0, labels[1]);
 		TEST_ASSERT(label_cell);
 
@@ -165,7 +165,7 @@ void test_brain_01(void)
 		lu_save_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_save_wave__push(s_wave, rec_0, values[2], 2, 2, 1);
 
-		lu_save_wave__process(s_wave, LU_SAVE_CONFIG__DEFAULT);
+		lu_save_wave__save(s_wave, LU_SAVE_CONFIG__DEFAULT);
 		label_cell = lu_save_wave__link_to_label(s_wave, 2, 0, 0, 0, labels[2]);
 		TEST_ASSERT(label_cell);
 
@@ -176,7 +176,7 @@ void test_brain_01(void)
 		lu_save_wave__push(s_wave, rec_0, blank_values, 2, 2, 1);
 		lu_save_wave__push(s_wave, rec_0, values[3], 2, 2, 1);
 
-		lu_save_wave__process(s_wave, LU_SAVE_CONFIG__DEFAULT);
+		lu_save_wave__save(s_wave, LU_SAVE_CONFIG__DEFAULT);
 		label_cell = lu_save_wave__link_to_label(s_wave, 2, 0, 0, 0, labels[3]);
 		TEST_ASSERT(label_cell);
 
@@ -197,7 +197,7 @@ void test_brain_01(void)
 		lu_match_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_match_wave__push(m_wave, rec_0, values[0], 2, 2, 1);
 
-		lu_match_wave__process(m_wave, LU_MATCH_CONFIG__DEFAULT);
+		lu_match_wave__match(m_wave, LU_MATCH_CONFIG__DEFAULT);
 
 		Lu_Label* results = lu_match_wave__get_result_labels(m_wave);
 		TEST_ASSERT(results);
@@ -214,7 +214,7 @@ void test_brain_01(void)
 		lu_match_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_match_wave__push(m_wave, rec_0, values[1], 2, 2, 1);
 
-		lu_match_wave__process(m_wave, LU_MATCH_CONFIG__DEFAULT);
+		lu_match_wave__match(m_wave, LU_MATCH_CONFIG__DEFAULT);
 
 		results = lu_match_wave__get_result_labels(m_wave);
 		TEST_ASSERT(results);
@@ -231,7 +231,7 @@ void test_brain_01(void)
 		lu_match_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_match_wave__push(m_wave, rec_0, values[2], 2, 2, 1);
 
-		lu_match_wave__process(m_wave, LU_MATCH_CONFIG__DEFAULT);
+		lu_match_wave__match(m_wave, LU_MATCH_CONFIG__DEFAULT);
 
 		results = lu_match_wave__get_result_labels(m_wave);
 		TEST_ASSERT(results);
@@ -248,7 +248,7 @@ void test_brain_01(void)
 		lu_match_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_match_wave__push(m_wave, rec_0, values[3], 2, 2, 1);
 
-		lu_match_wave__process(m_wave, LU_MATCH_CONFIG__DEFAULT);
+		lu_match_wave__match(m_wave, LU_MATCH_CONFIG__DEFAULT);
 
 		results = lu_match_wave__get_result_labels(m_wave);
 		TEST_ASSERT(results);
@@ -265,7 +265,7 @@ void test_brain_01(void)
 		lu_match_wave__push(m_wave, rec_0, blank_values, 2, 2, 1);
 		lu_match_wave__push(m_wave, rec_0, values[4], 2, 2, 1);
 
-		lu_match_wave__process(m_wave, LU_MATCH_CONFIG__DEFAULT);
+		lu_match_wave__match(m_wave, LU_MATCH_CONFIG__DEFAULT);
 
 		results = lu_match_wave__get_result_labels(m_wave);
 		TEST_ASSERT(results);

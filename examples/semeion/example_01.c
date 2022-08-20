@@ -96,7 +96,7 @@ int main()
 		lu_save_wave__push(save_wave, image_rec, smn_blank_pixels, 16, 16, 1);
 		lu_save_wave__push(save_wave, image_rec, d->pixels, 16, 16, 1);
 
-		lu_save_wave__process(save_wave, LU_SAVE_CONFIG__DEFAULT);
+		lu_save_wave__save(save_wave, LU_SAVE_CONFIG__DEFAULT);
 
 		la_cell = lu_save_wave__link_to_label(save_wave, 2, 0, 0, 0, d->name);
 		lu__assert(la_cell);
@@ -142,7 +142,7 @@ int main()
 		lu_match_wave__push(match_wave, image_rec, smn_blank_pixels, 16, 16, 1);
 		lu_match_wave__push(match_wave, image_rec, d->pixels, 16, 16, 1);
 
-		lu_match_wave__process(match_wave, LU_MATCH_CONFIG__DEFAULT);
+		lu_match_wave__match(match_wave, LU_MATCH_CONFIG__DEFAULT);
 
 		labels = lu_match_wave__get_result_labels(match_wave);
 

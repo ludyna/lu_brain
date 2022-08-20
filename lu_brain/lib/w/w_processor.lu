@@ -5,8 +5,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
-	static void lu_w_processor__init(
-		Lu_W_Processor self, 
+	static void lu_w_match_processor__init(
+		Lu_W_Match_Processor self, 
 		Lu_S s, 
 		Lu_Config config, 
 		Lu_W_Match_Cell_Mem match_cell_mem,
@@ -57,7 +57,7 @@
 
 	}
 
-	static void lu_w_processor__deinit(Lu_W_Processor self)
+	static void lu_w_match_processor__deinit(Lu_W_Match_Processor self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
@@ -80,7 +80,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  
 
-	static void lu_w_processor__prepare_results(Lu_W_Processor self)
+	static void lu_w_match_processor__prepare_results(Lu_W_Match_Processor self)
 	{
 		lu__assert(self);
 		lu__assert(self->la_column);

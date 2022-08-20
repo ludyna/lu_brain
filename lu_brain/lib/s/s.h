@@ -620,7 +620,7 @@
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Match_Config config,
-		Lu_W_Processor processor
+		Lu_W_Match_Processor processor
 	);
 
 	static inline void lu_s_layer_rec__print_comp_w_tables(

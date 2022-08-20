@@ -320,7 +320,7 @@
 // 	}
 
 
-// 	static void lu_save_wave__step_virtual(Lu_Wave self, Lu_Save_Config config)
+// 	static void lu_save_wave__save_step_virtual(Lu_Wave self, Lu_Save_Config config)
 // 	{
 // 		lu__assert(self);
 		
@@ -541,7 +541,7 @@
 // 		self->super.push = lu_save_wave__push_virtual;
 // 		self->super.reset = lu_save_wave__reset_old;
 
-// 		self->super.step = lu_save_wave__step_virtual;
+// 		self->super.step = lu_save_wave__save_step_virtual;
 // 		self->super.process = lu_save_wave__process_virtual;
 
 // 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
@@ -593,7 +593,7 @@
 
 // 		lu_w_match_cell_mem__init(&self->match_cell_mem, w_mem, brain->config.w_match_cells_size_per_wave);
 
-// 		lu_w_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
+// 		lu_w_match_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
 
 // 		return (Lu_Wave) self;
 // 	}
@@ -640,7 +640,7 @@
 
 // 		Lu_Match_Wave self = (Lu_Match_Wave) wave;
 
-// 		lu_w_processor__deinit(&self->processor);
+// 		lu_w_match_processor__deinit(&self->processor);
 
 // 		lu_w_match_cell_mem__deinit(&self->match_cell_mem);
 // 	}

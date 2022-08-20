@@ -156,7 +156,7 @@
 		Lu_W_Table curr_w_table;
 		Lu_S_Table curr_s_table;
 
-		Lu_W_Processor processor;
+		Lu_W_Match_Processor processor;
 
 		Lu_W_Cell_P* children;
 		lu_size children_count;
@@ -318,7 +318,7 @@
 	)
 	{
 		// now that we have detected n_cell, we can fire it
-		lu_w_processor__fire_vp_parents_with_sig(p->processor, p->w_cell_p->n_cell_vp, p->w_cell_p->s_column_comp, 1.0);
+		lu_w_match_processor__fire_vp_parents_with_sig(p->processor, p->w_cell_p->n_cell_vp, p->w_cell_p->s_column_comp, 1.0);
 	}
 
 	static void lu_s_layer_rec__finish_block_save(
@@ -447,7 +447,7 @@
 		Lu_Wave wave,
 		lu_size rec_id, 
 		Lu_Data data,
-		Lu_W_Processor processor,   
+		Lu_W_Match_Processor processor,   
 		Lu_W_Rec w_rec,
 		void (*collect)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
 		void (*block_at_end_of_z)(Lu_S_Layer_Rec self, Lu_S_Layer_Rec_Block_Params p),
@@ -591,7 +591,7 @@
 		lu_size rec_id, 
 		Lu_Data data,
 		Lu_Match_Config config,
-		Lu_W_Processor processor
+		Lu_W_Match_Processor processor
 	)
 	{
 		lu__assert(processor);

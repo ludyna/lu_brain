@@ -77,7 +77,7 @@
 
 		struct lu_match_config config;
 
-		struct lu_w_processor processor;
+		struct lu_w_match_processor processor;
 
 		struct lu_w_match_cell_mem match_cell_mem;
 	};
@@ -99,5 +99,7 @@
 		struct lu_wave super;
 
 		struct lu_delete_config config;
+
+		struct lu_w_del_processor processor;
 	};
 

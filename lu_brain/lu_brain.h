@@ -345,8 +345,8 @@
 
 	void lu_save_wave__push(Lu_Save_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
 
-	void lu_save_wave__step(Lu_Save_Wave, struct lu_save_config);
-	void lu_save_wave__process(Lu_Save_Wave, struct lu_save_config);
+	void lu_save_wave__save_step(Lu_Save_Wave, struct lu_save_config);
+	void lu_save_wave__save(Lu_Save_Wave, struct lu_save_config);
 
 	Lu_La_Cell lu_save_wave__link_to_label(Lu_Save_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
 
@@ -401,8 +401,8 @@
 
 	void lu_match_wave__push(Lu_Match_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
 
-	void lu_match_wave__step(Lu_Match_Wave, struct lu_match_config);
-	void lu_match_wave__process(Lu_Match_Wave, struct lu_match_config); 
+	void lu_match_wave__match_step(Lu_Match_Wave, struct lu_match_config);
+	void lu_match_wave__match(Lu_Match_Wave, struct lu_match_config); 
 
 	lu_size lu_match_wave__get_fired_cells_count(Lu_Match_Wave self);
 	Lu_Label* lu_match_wave__get_result_labels(Lu_Match_Wave);
@@ -463,89 +463,7 @@
 	// Methods
 	//
 
-	void lu_restore_wave__process(Lu_Wave, union lu_n_addr);
-
-///////////////////////////////////////////////////////////////////////////////
-// OLD, to be deleted:
-
-	//
-	// Sync Create
-	//
-
-	// Lu_Wave lu_wave__create_save_wave(Lu_Brain); 
-	// Lu_Wave lu_wave__create_match_wave(Lu_Brain);
-	// Lu_Wave lu_wave__create_restore_wave(Lu_Brain);
-	// Lu_Wave lu_wave__create_delete_wave(Lu_Brain);
-
-	// //
-	// // Destroy
-	// //
-
-	// void lu_wave__destroy(Lu_Wave); 
-
-	// //
-	// // Wave Reset
-	// //
-
-	// void lu_wave__reset(Lu_Wave);
-
-	// //
-	// // Wave 
-	// //
-
-	// void lu_wave__start_layer(Lu_Wave, lu_size level);
-
-	// //
-	// // Wave Block
-	// //
-
-	// void lu_wave__block_begin(Lu_Wave);
-	// void lu_wave__block_end(Lu_Wave);
-
-	// //
-	// // Focus
-	// //
-	// void lu_wave__set_dest_start_pos(Lu_Wave, Lu_Rec, lu_long dest_x, lu_long dest_y);
-	// void lu_wave__set_src_start_pos(Lu_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
-	// void lu_wave__set_src_end_pos(Lu_Wave, Lu_Rec, lu_size src_x, lu_size src_y);
-
-	// //
-	// // Wave Data
-	// //
-
-	// void lu_wave__push(Lu_Wave, Lu_Rec, lu_value* src, lu_size src_width, lu_size src_height, lu_size src_depth);
-
-	// //
-	// // Process
-	// //
-
-	// void lu_wave__step(Lu_Wave, struct lu_save_config);
-	// void lu_wave__process(Lu_Wave, struct lu_save_config);
-
-
-	// //
-	// // Wave label
-	// //
-
-	// Lu_La_Cell lu_wave__link_to_label(Lu_Wave, lu_size area_ix, lu_size layer_ix, lu_size x, lu_size y, lu_size label); 
-
-	// //
-	// // Match 
-	// // 
-
-	// lu_size lu_wave__get_fired_cells_count(Lu_Wave self);
-	// void lu_wave__print_match_results(Lu_Wave self);
-	// Lu_Label* lu_wave__get_result_labels(Lu_Wave);
-
-	// //
-	// // Delete 
-	// //
-
-	// //
-	// // Restore 
-	// //
-
-	// void lu_wave__restore(Lu_Wave, union lu_n_addr);
+	void lu_restore_wave__restore(Lu_Wave, union lu_n_addr);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Label

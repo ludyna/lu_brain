@@ -267,7 +267,7 @@
 		lu_size rec_id, 
 		Lu_Data data, 
 		Lu_Match_Config config,
-		Lu_W_Processor processor
+		Lu_W_Match_Processor processor
 	)
 	{
 		Lu_S_Layer_Base layer_base = self->layers[0];
@@ -288,21 +288,21 @@
 
 		if (state == LU_W_REC_STATE__COLLECT)
 		{
-			lu_w_processor__reset_results(processor);
+			lu_w_match_processor__reset_results(processor);
 		}
 		else if (state == LU_W_REC_STATE__COLLECT_AND_FINISH)
 		{
-			while (lu_w_processor__has_items_to_process(processor))
+			while (lu_w_match_processor__has_items_to_process(processor))
 			{
 				#ifdef LU__DEEP_DEBUG
 				lu__debug("\nPROCESSOR BATCH:");
-				lu_w_processor__print_symbols(processor);
+				lu_w_match_processor__print_symbols(processor);
 				#endif 
 
-				lu_w_processor__process(processor);
+				lu_w_match_processor__process(processor);
 			}
 
-			lu_w_processor__prepare_results(processor);
+			lu_w_match_processor__prepare_results(processor);
 		}
 		else 
 		{
