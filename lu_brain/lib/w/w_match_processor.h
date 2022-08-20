@@ -52,9 +52,9 @@
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_W_Proc_List
+// Lu_W_Match_List
 
-	struct lu_w_proc_list {
+	struct lu_w_match_list {
 		Lu_Mem mem;
 		struct lu_w_match_item* items;
 		lu_size items_size;
@@ -65,7 +65,7 @@
 	// Constructors / Destructors
 	//
 
-	static inline Lu_W_Proc_List lu_w_proc_list__init(Lu_W_Proc_List self, Lu_Mem mem, lu_size items_size)
+	static inline Lu_W_Match_List lu_w_match_list__init(Lu_W_Match_List self, Lu_Mem mem, lu_size items_size)
 	{
 		lu__assert(self);
 		lu__assert(mem);
@@ -76,7 +76,7 @@
 		self->items_size = items_size;
 		self->items = (struct lu_w_match_item*) lu_mem__alloc(
 			self->mem, 
-			sizeof(struct lu_w_proc_list) * self->items_size
+			sizeof(struct lu_w_match_list) * self->items_size
 		);
 
 		lu__alloc_assert(self->items);
@@ -86,7 +86,7 @@
 		return self;
 	}
 
-	static inline void lu_w_proc_list__deinit(Lu_W_Proc_List self)
+	static inline void lu_w_match_list__deinit(Lu_W_Match_List self)
 	{
 		lu__assert(self);
 		lu__assert(self->items_size > 0);
@@ -98,24 +98,24 @@
 		self->items_count = 0;
 	}
 
-	static inline Lu_W_Proc_List lu_w_proc_list__create(Lu_Mem mem, lu_size items_size)
+	static inline Lu_W_Match_List lu_w_match_list__create(Lu_Mem mem, lu_size items_size)
 	{
 		lu__assert(mem);
 
-		Lu_W_Proc_List self = (Lu_W_Proc_List) lu_mem__alloc(mem, sizeof(struct lu_w_proc_list));
+		Lu_W_Match_List self = (Lu_W_Match_List) lu_mem__alloc(mem, sizeof(struct lu_w_match_list));
 		lu__alloc_assert(self);
 
-		lu_w_proc_list__init(self, mem, items_size);
+		lu_w_match_list__init(self, mem, items_size);
 
 		return self;
 	}
 
-	static inline void lu_w_proc_list__destroy(Lu_W_Proc_List self)
+	static inline void lu_w_match_list__destroy(Lu_W_Match_List self)
 	{
 		lu__assert(self);
 		lu__assert(self->mem);
 
-		lu_w_proc_list__deinit(self);
+		lu_w_match_list__deinit(self);
 
 		lu_mem__free(self->mem, (lu_p_byte) self); 
 	}
@@ -125,12 +125,12 @@
 	// Is 
 	//
 
-	static inline lu_bool lu_w_proc_list__is_blank(Lu_W_Proc_List self)
+	static inline lu_bool lu_w_match_list__is_blank(Lu_W_Match_List self)
 	{
 		return self->items_count == 0;
 	}
 
-	static inline lu_bool lu_w_proc_list__is_present(Lu_W_Proc_List self)
+	static inline lu_bool lu_w_match_list__is_present(Lu_W_Match_List self)
 	{
 		return self->items_count > 0;
 	}
@@ -139,13 +139,13 @@
 	// Methods
 	//
 
-	static inline void lu_w_proc_list__realloc(Lu_W_Proc_List self, lu_size new_items_size)
+	static inline void lu_w_match_list__realloc(Lu_W_Match_List self, lu_size new_items_size)
 	{
 		lu__assert(self);
 		lu__assert(self->items_count < new_items_size);
 		lu__assert(self->mem);
 
-		lu__mem_debug("\n (!) lu_w_proc_list__realloc, new_size: %ld", new_items_size);
+		lu__mem_debug("\n (!) lu_w_match_list__realloc, new_size: %ld", new_items_size);
 
 		self->items = (struct lu_w_match_item*) lu_mem__realloc(
 			self->mem, 
@@ -157,8 +157,8 @@
 		self->items_size = new_items_size;
 	}
 
-	static inline Lu_W_Match_Item lu_w_proc_list__add(
-		Lu_W_Proc_List self,
+	static inline Lu_W_Match_Item lu_w_match_list__add(
+		Lu_W_Match_List self,
 		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
 		Lu_S_Column s_column
@@ -170,7 +170,7 @@
 
 		if (self->items_count >= self->items_size)
 		{
-			lu_w_proc_list__realloc(self, self->items_size * 2);
+			lu_w_match_list__realloc(self, self->items_size * 2);
 		}
 
 		Lu_W_Match_Item w_proc_item = &self->items[self->items_count];
@@ -181,14 +181,14 @@
 		return w_proc_item;
 	}
 
-	static inline void lu_w_proc_list__reset(Lu_W_Proc_List self)
+	static inline void lu_w_match_list__reset(Lu_W_Match_List self)
 	{
 		lu__assert(self);
 
 		self->items_count = 0;
 	}
 
-	static inline void lu_w_proc_list__print_counts(Lu_W_Proc_List self, char* name)
+	static inline void lu_w_match_list__print_counts(Lu_W_Match_List self, char* name)
 	{
 		lu__assert(self);
 		lu__debug("\n%s: %ld / %ld", name, self->items_count, self->items_size);
@@ -251,8 +251,8 @@
 		Lu_W_Match_Cell_Mem match_cell_mem;
 		Lu_La_Column la_column;
 
-		Lu_W_Proc_List curr_list;
-		Lu_W_Proc_List next_list;
+		Lu_W_Match_List curr_list;
+		Lu_W_Match_List next_list;
 
 		Lu_Mem_Table la_mem_table;
 
@@ -300,7 +300,7 @@
 		{
 			match_cell->fired = true;
 
-			lu_w_proc_list__add(self->next_list, match_cell, n_cell, s_column);
+			lu_w_match_list__add(self->next_list, match_cell, n_cell, s_column);
 
 			++self->stats.cells_processed;
 		}
@@ -429,10 +429,10 @@
 	static inline lu_size lu_w_match_processor__process(Lu_W_Match_Processor self)
 	{
 		lu__assert(self);
-		lu__assert(lu_w_proc_list__is_blank(self->curr_list));
-		lu__assert(lu_w_proc_list__is_present(self->next_list));
+		lu__assert(lu_w_match_list__is_blank(self->curr_list));
+		lu__assert(lu_w_match_list__is_present(self->next_list));
 
-		Lu_W_Proc_List t;
+		Lu_W_Match_List t;
 		t = self->curr_list;
 		self->curr_list = self->next_list;
 		self->next_list = t;
@@ -469,14 +469,14 @@
 			++cells_processed;
 		}
 
-		lu_w_proc_list__reset(self->curr_list);
+		lu_w_match_list__reset(self->curr_list);
 
 		return cells_processed;
 	}
 
 	static inline lu_bool lu_w_match_processor__has_items_to_process(Lu_W_Match_Processor self)
 	{
-		return lu_w_proc_list__is_present(self->next_list);
+		return lu_w_match_list__is_present(self->next_list);
 	}
 
 	static void lu_w_match_processor__prepare_results(Lu_W_Match_Processor self);

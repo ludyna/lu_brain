@@ -6,4 +6,5 @@
 	#include "w_table_p.lu"
 	#include "w_table_v.lu"
 	#include "w_match_processor.lu"
+	#include "w_del_processor.lu"
 	#include "w_manager.lu"

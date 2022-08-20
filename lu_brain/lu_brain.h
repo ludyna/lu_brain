@@ -422,7 +422,8 @@
 	//
 
 	struct lu_delete_config {
-		lu_bool including_all_children;
+		lu_bool include_children;
+		lu_size processor_list_size;
 	};
 
 	//
@@ -437,8 +438,8 @@
 	//
 
 
-	void lu_wave__delete_label(Lu_Wave, lu_size label, struct lu_delete_config);
-	void lu_wave__delete_neuron(Lu_Wave, union lu_n_addr, struct lu_delete_config);
+	void lu_delete_wave__delete_label(Lu_Delete_Wave, lu_size label, struct lu_delete_config);
+	void lu_delete_wave__delete_neuron(Lu_Delete_Wave, union lu_n_addr, struct lu_delete_config);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Restore_Wave  

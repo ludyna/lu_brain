@@ -3,4 +3,141 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Constructor / Destructor
+
+	Lu_Delete_Wave lu_delete_wave__create(Lu_Brain brain)
+	{
+		lu__user_assert(brain, "Lu_Brain is NULL");
+
+		Lu_Mem w_mem = brain->config.w_mem;
+		lu__assert(w_mem);
+
+		Lu_Delete_Wave self = (Lu_Delete_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_delete_wave));
+
+		lu_wave__init(
+			&self->super,
+			LU_WAVE__DELETE,
+			brain
+		);
+
+		// lu_w_delete_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
+
+		return self;
+	}
+
+	void lu_delete_wave__destroy(Lu_Delete_Wave self)
+	{
+		lu__assert(self);
+
+		// lu_w_delete_processor__deinit(&self->processor);
+
+		lu_wave__deinit(&self->super);
+
+		Lu_Wave wave = (Lu_Wave) self;
+
+		lu_mem__free(wave->mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // 
+
+	////
+	// This method can be improved later with threads etc.
+	void lu_delete_wave__delete_label(Lu_Delete_Wave self, lu_size label, struct lu_delete_config config)
+	{
+
+		// while (lu_w_match_processor__has_items_to_process(processor))
+		// {
+		// 	#ifdef LU__DEEP_DEBUG
+		// 	lu__debug("\nPROCESSOR BATCH:");
+		// 	lu_w_match_processor__print_symbols(processor);
+		// 	#endif 
+
+		// 	lu_w_match_processor__process(processor);
+		// }
+
+		// lu__user_assert_void(self, "Lu_Wave is NULL");
+		// lu__user_assert_void(self->type == LU_WAVE__DELETE, "Lu_Wave is not DELETE type");
+
+		// lu__assert(self->brain);
+
+		// Lu_S s = lu_brain__get_s(self->brain);
+		// lu__assert(s);
+
+		// Lu_La_Column la_column = &self->brain->la_column;
+		// lu__assert(la_column);
+
+		// Lu_La_Cell la_cell = lu_la_column__get_la_cell(la_column, label);
+		// lu__user_assert_void(la_cell, "Cannot find label");
+
+		// if (la_cell->children_count == 0) return;
+
+		// union lu_n_link_addr n_link_addr = la_cell->children;
+		// Lu_N_Link_Mem n_link_mem = &la_column->n_link_mem;
+		// Lu_N_Link n_link;
+
+		// while (lu_n_link_addr__is_present(&n_link_addr))
+		// {
+		// 	n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
+		// 	lu__assert(n_link);
+
+		// 	//
+		// 	// Get cell data
+		// 	//
+
+
+
+		// 	// 
+		// 	// Delete link to parent
+		// 	// likns up and down are separate, 
+		// 	// similar to processor
+		// 	//
+
+
+
+		// 	//
+		// 	// Delete neuror
+		// 	//
+		// 	lu_wave__delete_neuron(self, n_link->n_cell_addr, config);
+
+		// 	n_link_addr = n_link->next;
+
+		// 	lu_n_link_mem__free_link(n_link_mem, n_link);
+		// }
+
+		// lu_la_cell__reset(la_cell);
+	}
+
+
+ 	////
+	// This method can be improved later with threads etc.
+	void lu_delete_wave__delete_neuron(Lu_Delete_Wave self, union lu_n_addr n_addr, struct lu_delete_config config)
+	{
+		// lu__user_assert_void(self, "Lu_Wave is NULL");
+		// lu__assert(self->brain);
+
+		// Lu_S s = self->brain->s;
+		// lu__assert(s);
+
+		// Lu_N_Cell n_cell = lu_s__get_n_cell(s, n_addr);
+		// lu__assert(n_cell);
+
+		// Lu_N_Column n_column = lu_s__
+
+		// //
+		// // Delete only if there is no parent
+		// // (we delete link to parent when we delete parent)
+		// //  
+
+		// if (lu_n_link_addr__is_present(n_cell->tl)) return;
+		// if (lu_n_link_addr__is_present(n_cell->tr)) return;
+		// if (lu_n_link_addr__is_present(n_cell->bl)) return;
+		// if (lu_n_link_addr__is_present(n_cell->br)) return;
+		// if (lu_la_link_addr__is_present(n_cell->labels)) return;
+
+		// //
+		// // Send each childrent to delete processor
+		// //
+
+
+	}

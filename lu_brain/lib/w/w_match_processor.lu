@@ -32,10 +32,10 @@
 		self->s = s;
 		self->match_cell_mem = match_cell_mem;
 
-		self->curr_list = lu_w_proc_list__create(self->mem, config->w_match_processor_queue_size);
+		self->curr_list = lu_w_match_list__create(self->mem, config->w_match_processor_queue_size);
 		lu__assert(self->curr_list);
 
-		self->next_list = lu_w_proc_list__create(self->mem, config->w_match_processor_queue_size);
+		self->next_list = lu_w_match_list__create(self->mem, config->w_match_processor_queue_size);
 		lu__assert(self->next_list);
 
 		// For lu_labels
@@ -71,8 +71,8 @@
 		if (self->s_list)
 			lu_s_list__destroy(self->s_list);
 
-		lu_w_proc_list__destroy(self->curr_list);
-		lu_w_proc_list__destroy(self->next_list);
+		lu_w_match_list__destroy(self->curr_list);
+		lu_w_match_list__destroy(self->next_list);
 
 		lu_mem_table__destroy(self->la_mem_table);
 	} 
