@@ -699,7 +699,7 @@
 				}
 				else
 				{
-					self->labels = LU_LA_LINK_ADDR__NULL;
+					self->labels = la_link->next;
 				}
 
 				lu_la_link_mem__free_link(la_link_mem, la_link);
