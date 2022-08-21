@@ -674,6 +674,44 @@
 		lu__assert(lu_la_link_addr__is_present(&self->labels));
 	}
 
+	static inline void lu_n_cell__remove_label(
+		Lu_N_Cell self, 
+		union lu_la_addr la_addr, 
+		Lu_La_Link_Mem la_link_mem
+	)
+	{
+		lu__assert(self);
+		lu__assert(la_link_mem);
+
+		union lu_la_link_addr la_link_addr = self->labels;
+
+		Lu_La_Link la_link = NULL;
+		Lu_La_Link la_link_prev = NULL;
+		while(lu_la_link_addr__is_present(&la_link_addr))
+		{
+			la_link = lu_la_link_mem__link_alloc(la_link_mem);
+
+			if (lu_la_addr__is_eq(&la_link->la_addr, &la_addr))
+			{
+				if (la_link_prev)
+				{
+					la_link_prev->next = la_link->next;
+				}
+				else
+				{
+					self->labels = LU_LA_LINK_ADDR__NULL;
+				}
+
+				lu_la_link_mem__free_link(la_link_mem, la_link);
+
+				break;
+			}
+
+			la_link_prev = la_link;
+			la_link_addr = la_link->next;
+		}
+	}
+
 	static inline Lu_W_Match_Cell lu_n_cell__get_and_reset_match_cell(
 		Lu_N_Cell self,
 		struct lu_block_id block_id,

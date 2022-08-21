@@ -437,7 +437,6 @@
 	// Methods
 	//
 
-
 	void lu_delete_wave__delete_label(Lu_Delete_Wave, lu_size label, struct lu_delete_config);
 	void lu_delete_wave__delete_neuron(Lu_Delete_Wave, union lu_n_addr, struct lu_delete_config);
 
