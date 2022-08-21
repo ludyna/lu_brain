@@ -113,17 +113,8 @@
 
 		lu_la_cell__reset(la_cell);
 
-		while (lu_w_del_processor__has_items_to_process(processor))
-		{
-			#ifdef LU__DEEP_DEBUG
-			lu__debug("\nPROCESSOR BATCH:");
-			lu_w_del_processor__print_symbols(processor);
-			#endif 
-
-			lu_w_del_processor__process(processor);
-		}
+		lu_w_del_processor__run(processor);
 	}
-
 
  	////
 	// This method can be improved later with threads etc.
@@ -148,13 +139,5 @@
 
 		lu_w_del_list__add(processor->next_list, n_cell, s_column);
 
-		while (lu_w_del_processor__has_items_to_process(processor))
-		{
-			#ifdef LU__DEEP_DEBUG
-			lu__debug("\nPROCESSOR BATCH:");
-			lu_w_del_processor__print_symbols(processor);
-			#endif 
-
-			lu_w_del_processor__process(processor);
-		}
+		lu_w_del_processor__run(processor);
 	}

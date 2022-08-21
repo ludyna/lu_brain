@@ -242,7 +242,7 @@
 		}
 	}
 
-	static inline lu_size lu_w_del_processor__process(Lu_W_Del_Processor self)
+	static inline lu_size lu_w_del_processor__run_iteration(Lu_W_Del_Processor self)
 	{
 		lu__assert(self);
 		lu__assert(lu_w_del_list__is_blank(self->curr_list));
@@ -288,4 +288,19 @@
 		lu_w_del_list__reset(self->curr_list);
 
 		return cells_processed;
+	}
+
+	static inline void lu_w_del_processor__run(Lu_W_Del_Processor self)
+	{
+		lu__assert(self);
+
+		while (lu_w_del_processor__has_items_to_process(self))
+		{
+			#ifdef LU__DEEP_DEBUG
+			lu__debug("\nDEL PROCESSOR BATCH:");
+			lu_w_del_processor__print_symbols(self);
+			#endif 
+
+			lu_w_del_processor__run_iteration(self);
+		}
 	}

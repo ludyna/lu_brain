@@ -292,17 +292,7 @@
 		}
 		else if (state == LU_W_REC_STATE__COLLECT_AND_FINISH)
 		{
-			while (lu_w_match_processor__has_items_to_process(processor))
-			{
-				#ifdef LU__DEEP_DEBUG
-				lu__debug("\nPROCESSOR BATCH:");
-				lu_w_match_processor__print_symbols(processor);
-				#endif 
-
-				lu_w_match_processor__process(processor);
-			}
-
-			lu_w_match_processor__prepare_results(processor);
+			lu_w_match_processor__run(processor);
 		}
 		else 
 		{
