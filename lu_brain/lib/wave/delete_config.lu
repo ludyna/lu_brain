@@ -4,3 +4,14 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Delete_Config
+
+
+    struct lu_delete_config LU_DELETE_CONFIG__DEFAULT = {
+        .include_children = true,
+		.processor_list_size = 1024
+    };
+
+    Lu_Delete_Config lu_delete_config__validate(Lu_Delete_Config self)
+    {
+        return self;
+    }

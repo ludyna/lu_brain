@@ -5,9 +5,12 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Constructor / Destructor
 
-	Lu_Delete_Wave lu_delete_wave__create(Lu_Brain brain)
+	Lu_Delete_Wave lu_delete_wave__create(Lu_Brain brain, struct lu_delete_config config)
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
+
+		Lu_Delete_Config p_config = lu_delete_config__validate(&config);
+		lu__user_assert(p_config, "Invalid Lu_Delete_Config");
 
 		Lu_Mem w_mem = brain->config.w_mem;
 		lu__assert(w_mem);
@@ -20,7 +23,9 @@
 			brain
 		);
 
-		// lu_w_delete_processor__init(&self->processor, brain->s, &brain->config, &self->match_cell_mem, &brain->la_column);
+		self->config = config;
+
+		lu_w_del_processor__init(&self->processor, w_mem, brain->s, &self->config);
 
 		return self;
 	}
@@ -29,7 +34,7 @@
 	{
 		lu__assert(self);
 
-		// lu_w_delete_processor__deinit(&self->processor);
+		lu_w_del_processor__deinit(&self->processor);
 
 		lu_wave__deinit(&self->super);
 
@@ -43,19 +48,8 @@
 
 	////
 	// This method can be improved later with threads etc.
-	void lu_delete_wave__delete_label(Lu_Delete_Wave self, lu_size label, struct lu_delete_config config)
+	void lu_delete_wave__delete_label(Lu_Delete_Wave self, lu_size label)
 	{
-
-		// while (lu_w_match_processor__has_items_to_process(processor))
-		// {
-		// 	#ifdef LU__DEEP_DEBUG
-		// 	lu__debug("\nPROCESSOR BATCH:");
-		// 	lu_w_match_processor__print_symbols(processor);
-		// 	#endif 
-
-		// 	lu_w_match_processor__process(processor);
-		// }
-
 		lu__user_assert_void(self, "Lu_Delete_Wave is NULL");
 
 		Lu_Wave wave = (Lu_Wave) self;
@@ -78,6 +72,9 @@
 
 		Lu_N_Cell n_cell = NULL;
 		Lu_S_Column s_column = NULL;
+
+		Lu_W_Del_Processor processor = &self->processor;
+		lu__assert(processor);
 
 		while (lu_n_link_addr__is_present(&n_link_addr))
 		{
@@ -102,7 +99,8 @@
 			//
 			// Delete neuror
 			//
-			// lu_wave__delete_neuron(self, n_link->n_cell_addr, config);
+
+			lu_w_del_list__add(processor->next_list, n_cell, s_column);
 
 			n_link_addr = n_link->next;
 
@@ -110,12 +108,23 @@
 		}
 
 		lu_la_cell__reset(la_cell);
+
+
+		while (lu_w_del_processor__has_items_to_process(processor))
+		{
+			#ifdef LU__DEEP_DEBUG
+			lu__debug("\nPROCESSOR BATCH:");
+			lu_w_del_processor__print_symbols(processor);
+			#endif 
+
+			lu_w_del_processor__process(processor);
+		}
 	}
 
 
  	////
 	// This method can be improved later with threads etc.
-	void lu_delete_wave__delete_neuron(Lu_Delete_Wave self, union lu_n_addr n_addr, struct lu_delete_config config)
+	void lu_delete_wave__delete_neuron(Lu_Delete_Wave self, union lu_n_addr n_addr)
 	{
 		// lu__user_assert_void(self, "Lu_Wave is NULL");
 		// lu__assert(self->brain);

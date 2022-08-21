@@ -148,7 +148,6 @@
 
 	static inline Lu_W_Del_Item lu_w_del_list__add(
 		Lu_W_Del_List self,
-		Lu_W_Match_Cell match_cell,
 		Lu_N_Cell n_cell,
 		Lu_S_Column s_column
 	)
@@ -203,6 +202,10 @@
 		struct lu_w_processor_stats stats;
 	};
 
+	//
+	// Constructor / Destructor
+	//
+
 	static void lu_w_del_processor__init(
 		Lu_W_Del_Processor self,  
 		Lu_Mem mem, 
@@ -211,3 +214,78 @@
 	);
 
 	static void lu_w_del_processor__deinit(Lu_W_Del_Processor self);
+
+	//
+	// Is / Has
+	// 
+
+	static inline lu_bool lu_w_del_processor__has_items_to_process(Lu_W_Del_Processor self)
+	{
+		return lu_w_del_list__is_present(self->next_list);
+	}
+
+	//
+	// Methods
+	//
+
+	static inline void lu_w_del_processor__print_symbols(Lu_W_Del_Processor self)
+	{
+		lu__assert(self);
+
+		Lu_W_Del_Item w_del_item;
+
+		for (lu_size i = 0; i < self->next_list->items_count; i++)
+		{
+			w_del_item = &self->next_list->items[i];
+
+			lu_w_del_item__print(w_del_item);
+		}
+	}
+
+	static inline lu_size lu_w_del_processor__process(Lu_W_Del_Processor self)
+	{
+		lu__assert(self);
+		lu__assert(lu_w_del_list__is_blank(self->curr_list));
+		lu__assert(lu_w_del_list__is_present(self->next_list));
+
+		Lu_W_Del_List t;
+		t = self->curr_list;
+		self->curr_list = self->next_list;
+		self->next_list = t;
+
+		Lu_W_Del_Item w_del_item;
+		lu_size cells_processed = 0;
+
+		lu_value fire_sig = 0;
+
+		for (lu_size i = 0; i < self->curr_list->items_count; i++)
+		{
+			w_del_item = &self->curr_list->items[i];
+
+			// fire_sig = lu_w_match_item__calc_fire_sig(w_del_item);
+
+			// // proc_item with fire sig < breakpoint should not be here
+			// lu__assert(fire_sig >= self->w_match_sig_breakpoint); 
+
+			// // fire_sig should be always less or equal to one
+			// lu__assert(fire_sig <= 1.0); 
+
+			// lu_w_del_processor__fire_n_parents_with_sig(self, w_del_item->n_cell, w_del_item->s_column, fire_sig);
+
+			// if (lu_la_link_addr__is_present(&w_del_item->n_cell->labels))
+			// {
+			// 	lu__deep_debug(
+			// 		"\nN_CELL has label (n_cell->cell_ix=%ld) link_addr=%ld", 
+			// 		w_del_item->n_cell->addr.cell_ix, 
+			// 		w_del_item->n_cell->labels.value
+			// 	);
+			// 	lu_w_del_processor__fire_n_labels_with_sig(self, w_del_item->n_cell, self->la_column, fire_sig);
+			// }
+
+			++cells_processed;
+		}
+
+		lu_w_del_list__reset(self->curr_list);
+
+		return cells_processed;
+	}

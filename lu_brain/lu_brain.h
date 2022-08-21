@@ -426,19 +426,21 @@
 		lu_size processor_list_size;
 	};
 
+	extern struct lu_delete_config LU_DELETE_CONFIG__DEFAULT;
+
 	//
 	// Constructor / Destructor
 	// 
 
-	Lu_Delete_Wave lu_delete_wave__create(Lu_Brain); 
+	Lu_Delete_Wave lu_delete_wave__create(Lu_Brain, struct lu_delete_config config); 
 	void lu_delete_wave__destroy(Lu_Delete_Wave);
 
 	//
 	// Methods
 	//
 
-	void lu_delete_wave__delete_label(Lu_Delete_Wave, lu_size label, struct lu_delete_config);
-	void lu_delete_wave__delete_neuron(Lu_Delete_Wave, union lu_n_addr, struct lu_delete_config);
+	void lu_delete_wave__delete_label(Lu_Delete_Wave, lu_size label);
+	void lu_delete_wave__delete_neuron(Lu_Delete_Wave, union lu_n_addr);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Restore_Wave  
