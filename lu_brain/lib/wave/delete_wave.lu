@@ -90,25 +90,28 @@
 			lu__assert(s_column);
 
 			// 
-			// Delete link to parent, likns up and down are separate, similar to processor
+			// Delete link to parent (neuron=>label), likns up and down are separate
 			//
 
 			lu_n_cell__remove_label(n_cell, la_cell->addr, &la_column->la_link_mem);
 
 
 			//
-			// Delete neuror
+			// Add neuron to process list
 			//
 
 			lu_w_del_list__add(processor->next_list, n_cell, s_column);
 
 			n_link_addr = n_link->next;
 
+			//
+			// Free label=>neuron link
+			//
+
 			lu_n_link_mem__free_link(n_link_mem, n_link);
 		}
 
 		lu_la_cell__reset(la_cell);
-
 
 		while (lu_w_del_processor__has_items_to_process(processor))
 		{
@@ -126,31 +129,32 @@
 	// This method can be improved later with threads etc.
 	void lu_delete_wave__delete_neuron(Lu_Delete_Wave self, union lu_n_addr n_addr)
 	{
-		// lu__user_assert_void(self, "Lu_Wave is NULL");
-		// lu__assert(self->brain);
+		lu__user_assert_void(self, "Lu_Delete_Wave is NULL");
+		Lu_N_Cell n_cell = NULL;
+		Lu_S_Column s_column = NULL;
 
-		// Lu_S s = self->brain->s;
-		// lu__assert(s);
+		Lu_Wave wave = (Lu_Wave) self;
+		lu__assert(wave->brain);
 
-		// Lu_N_Cell n_cell = lu_s__get_n_cell(s, n_addr);
-		// lu__assert(n_cell);
+		Lu_S s = lu_brain__get_s(wave->brain);
+		lu__assert(s);
 
-		// Lu_N_Column n_column = lu_s__
+		lu_s__find_n_cell_and_s_column(s, n_addr, &n_cell, &s_column);
+		lu__user_assert_void(n_cell, "Cannot find neuron for provided address");
+		lu__assert(s_column);
 
-		// //
-		// // Delete only if there is no parent
-		// // (we delete link to parent when we delete parent)
-		// //  
+		Lu_W_Del_Processor processor = &self->processor;
+		lu__assert(processor);
 
-		// if (lu_n_link_addr__is_present(n_cell->tl)) return;
-		// if (lu_n_link_addr__is_present(n_cell->tr)) return;
-		// if (lu_n_link_addr__is_present(n_cell->bl)) return;
-		// if (lu_n_link_addr__is_present(n_cell->br)) return;
-		// if (lu_la_link_addr__is_present(n_cell->labels)) return;
+		lu_w_del_list__add(processor->next_list, n_cell, s_column);
 
-		// //
-		// // Send each childrent to delete processor
-		// //
+		while (lu_w_del_processor__has_items_to_process(processor))
+		{
+			#ifdef LU__DEEP_DEBUG
+			lu__debug("\nPROCESSOR BATCH:");
+			lu_w_del_processor__print_symbols(processor);
+			#endif 
 
-
+			lu_w_del_processor__process(processor);
+		}
 	}
