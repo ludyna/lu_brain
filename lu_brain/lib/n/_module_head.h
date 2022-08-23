@@ -4,6 +4,16 @@
  
 ///////////////////////////////////////////////////////////////////////////////
 //  
+	//
+	// Lu_N_Located_Cell
+	//
+	
+	typedef struct lu_n_located_cell* Lu_N_Located_Cell;
+
+	//
+	//
+	//
+	
 	typedef struct lu_n_pos* Lu_N_Pos;
 	typedef struct lu_n_pos_3d* Lu_N_Pos_3d;
 	
@@ -13,7 +23,7 @@
 
 	enum lu_n_cell_type {
 		LU_N_CELL__0,
-		LU_N_CELL_VP, // for p and v
+		LU_N_CELL__VP, // for p and v
 		LU_N_CELL__N,
 		LU_N_CELL__END
 	};

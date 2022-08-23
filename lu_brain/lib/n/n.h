@@ -5,6 +5,35 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Lu_N_Located_Cell
+//
+	struct lu_n_located_cell {
+		enum lu_n_cell_type n_cell_type;
+		union {
+			struct {
+				Lu_N_Cell n_cell;
+				Lu_S_Column s_column;
+			};
+
+			struct {
+				Lu_N_Cell_VP n_cell_vp;
+				Lu_S_Column_Comp s_column_comp;
+			};
+		};	
+	};
+
+	static inline Lu_N_Located_Cell lu_n_located_cell__reset(Lu_N_Located_Cell self)
+	{
+		self->n_cell_type = LU_N_CELL__END; // none
+		self->n_cell = NULL;
+		self->s_column = NULL;
+		self->n_cell_vp = NULL;
+		self->s_column_comp = NULL;
+
+		return self;
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Link_Addr
 //
 

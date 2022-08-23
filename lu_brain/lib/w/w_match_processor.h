@@ -317,13 +317,22 @@
 
 		Lu_N_Cell n_cell_parent;
 		Lu_S_Column s_column_parent;
+
+		struct lu_n_located_cell located_cell;
  
 		while (n_link_parent)
 		{
 			n_cell_parent = NULL;
 			s_column_parent = NULL;
 
-			lu_s__find_n_cell_and_s_column(self->s, n_link_parent->n_cell_addr, &n_cell_parent, &s_column_parent);
+			lu_n_located_cell__reset(&located_cell);
+
+			lu_s__find_n_cell_and_s_column(self->s, n_link_parent->n_cell_addr, &located_cell);
+
+			lu__assert(located_cell.n_cell_type == LU_N_CELL__N);
+
+			n_cell_parent = located_cell.n_cell;
+			s_column_parent = located_cell.s_column;
 
 			lu__assert(n_cell_parent);
 			lu__assert(s_column_parent);

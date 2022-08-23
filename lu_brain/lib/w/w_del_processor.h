@@ -256,8 +256,6 @@
 		Lu_W_Del_Item w_del_item;
 		lu_size cells_processed = 0;
 
-		lu_value fire_sig = 0;
-
 		Lu_N_Cell n_cell;
 		Lu_S_Column s_column;
 
@@ -292,7 +290,8 @@
 			// 
 
 			child_link_addr = n_cell->children;
-			enum lu_s_layer_type layer_type;
+			
+			struct lu_n_located_cell located_cell;
 
 			while (lu_n_link_addr__is_present(&child_link_addr))
 			{
@@ -304,25 +303,32 @@
 				child_n_cell = NULL;
 				child_s_column = NULL;
 
-				layer_type = lu_s__find_n_cell_and_s_column(
+				lu_n_located_cell__reset(&located_cell);
+
+				lu_s__find_n_cell_and_s_column(
 					self->s, 
 					child_link->n_cell_addr, 
-					&child_n_cell, 
-					&child_s_column
+					&located_cell
 				);
 
-				// Wrong layer type, continue
-				if (layer_type != LU_S_LAYER__LAYER) goto next_child;
+				// Wrong cell type, continue
+				if (located_cell.n_cell_type != LU_N_CELL__N) goto next_child;
+
+				child_n_cell = located_cell.n_cell;
+				child_s_column = located_cell.s_column;
 
 				lu__assert(child_n_cell);
 				lu__assert(child_s_column);
 
 				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tl);
+				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tr);
+				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->bl);
+				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->br);
 
 				// Queue child to be deleted next
 				lu_w_del_list__add(self->next_list, child_n_cell, child_s_column);
 
-				next_child:
+next_child:
 
 				child_link_addr = child_link->next;
 			}

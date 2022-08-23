@@ -7,12 +7,6 @@
 // S typedefs
 
 	//
-	// Lu_S_Located_Cell
-	//
-	
-	typedef struct lu_s_located_cell* Lu_S_Located_Cell;
-
-	//
 	// Views
 	//
 

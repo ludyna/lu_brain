@@ -60,35 +60,6 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_S_Located_Cell
-//
-	struct lu_s_located_cell {
-		enum lu_n_cell_type cell_type;
-		union {
-			struct {
-				Lu_N_Cell n_cell;
-				Lu_S_Column s_column;
-			};
-
-			struct {
-				Lu_N_Cell_VP n_cell_vp;
-				Lu_S_Column_Comp s_column_comp;
-			};
-		};	
-	};
-
-	static inline Lu_S_Located_Cell lu_s_located_cell__reset(Lu_S_Located_Cell self)
-	{
-		self->cell_type = LU_N_CELL__END; // none
-		self->n_cell = NULL;
-		self->s_column = NULL;
-		self->n_cell_vp = NULL;
-		self->s_column_comp = NULL;
-
-		return self;
-	}
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_S_View_P
 //
 
@@ -494,14 +465,15 @@
 	static inline void lu_s_layer__find_n_cell_and_s_column(
 		Lu_S_Layer self, 
 		union lu_n_addr addr, 
-		Lu_N_Cell* p_n_cell, 
-		Lu_S_Column* p_s_column
+		Lu_N_Located_Cell located_cell
 	)
 	{
 		Lu_S_Column s_column = lu_s_table__get_column_by_ix(&self->s_table, addr.column_ix);
-		*p_s_column = s_column;
 
-		lu_s_column__find_n_cell(s_column, addr, p_n_cell);
+		located_cell->n_cell_type = LU_N_CELL__N;
+		located_cell->s_column = s_column;
+
+		lu_s_column__find_n_cell(s_column, addr, &located_cell->n_cell);
 	}
 
 	static inline void lu_s_layer__print_basic_info(Lu_S_Layer self)
@@ -867,24 +839,35 @@
 		lu_s_net_stats__collect(s_ns, &area_ns);
 	}
 
-	static inline enum lu_s_layer_type lu_s_area__find_n_cell_and_s_column(
+	static inline void lu_s_area__find_n_cell_and_s_column(
 		Lu_S_Area self, 
 		union lu_n_addr addr, 
-		Lu_N_Cell* n_cell, 
-		Lu_S_Column* s_column
+		Lu_N_Located_Cell located_cell
 	)
 	{
 		Lu_S_Layer_Base s_layer_base = lu_s_area__get_layer_by_ix(self, addr.layer_ix);
 
-		if (!lu_s_layer_base__is_n_cell_layer(s_layer_base))
+		// if (!lu_s_layer_base__is_n_cell_layer(s_layer_base))
+		// {
+		// 	lu_n_located_cell__reset(located_cell);
+		// 	return;
+		// }
+
+		switch (s_layer_base->type)
 		{
-			*n_cell = NULL;
-			*s_column = NULL;
-			return s_layer_base->type;
+			case LU_S_LAYER__LAYER:
+			case LU_S_LAYER__REC:
+				lu_s_layer__find_n_cell_and_s_column((Lu_S_Layer) s_layer_base, addr, located_cell);
+				break;
+			case LU_S_LAYER__COMP:
+				lu_n_located_cell__reset(located_cell);
+				located_cell->n_cell_type = LU_N_CELL__VP;
+				break;
+			default:
+				lu__assert(false);
 		}
 
-		lu_s_layer__find_n_cell_and_s_column((Lu_S_Layer) s_layer_base, addr, n_cell, s_column);
-		return s_layer_base->type;;
+		
 	}
 
 	static lu_bool lu_s_area__expand(Lu_S_Area self);
@@ -1116,14 +1099,13 @@
 	static void lu_s__print_areas(Lu_S self);
 	static void lu_s__print_net_stats(Lu_S self);
 
-	static inline enum lu_s_layer_type lu_s__find_n_cell_and_s_column(		
+	static inline void lu_s__find_n_cell_and_s_column(		
 		Lu_S self,
 		union lu_n_addr addr,
-		Lu_N_Cell* n_cell,
-		Lu_S_Column* s_column
+		Lu_N_Located_Cell located_cell
 	)
 	{
 		Lu_S_Area s_area = lu_s__get_area(self, addr.area_ix);
 
-		return lu_s_area__find_n_cell_and_s_column(s_area, addr, n_cell, s_column);
+		return lu_s_area__find_n_cell_and_s_column(s_area, addr, located_cell);
 	}

@@ -56,9 +56,8 @@
 	//
 
 	typedef struct lu_s* Lu_S;
-	static inline enum lu_s_layer_type lu_s__find_n_cell_and_s_column(		
+	static inline void lu_s__find_n_cell_and_s_column(		
 		Lu_S self,
 		union lu_n_addr addr,
-		Lu_N_Cell* n_cell,
-		Lu_S_Column* s_column
+		Lu_N_Located_Cell located_cell
 	);

@@ -74,7 +74,9 @@
 		Lu_S_Column s_column = NULL;
 
 		Lu_W_Del_Processor processor = &self->processor;
-		lu__assert(processor);
+		lu__assert(processor); 
+
+		struct lu_n_located_cell located_cell;
 
 		while (lu_n_link_addr__is_present(&n_link_addr))
 		{
@@ -85,7 +87,15 @@
 			// Get cell data
 			//
 
-			lu_s__find_n_cell_and_s_column(s, n_link->n_cell_addr, &n_cell, &s_column);
+			lu_n_located_cell__reset(&located_cell);
+
+			lu_s__find_n_cell_and_s_column(s, n_link->n_cell_addr, &located_cell);
+
+			if (located_cell.n_cell_type != LU_N_CELL__N) goto next_link;
+
+			n_cell = located_cell.n_cell;
+			s_column = located_cell.s_column;
+
 			lu__assert(n_cell);
 			lu__assert(s_column);
 
@@ -101,6 +111,8 @@
 			//
 
 			lu_w_del_list__add(processor->next_list, n_cell, s_column);
+
+next_link:
 
 			n_link_addr = n_link->next;
 
@@ -130,7 +142,15 @@
 		Lu_S s = lu_brain__get_s(wave->brain);
 		lu__assert(s);
 
-		lu_s__find_n_cell_and_s_column(s, n_addr, &n_cell, &s_column);
+		struct lu_n_located_cell located_cell;
+
+		lu_n_located_cell__reset(&located_cell);
+
+		lu_s__find_n_cell_and_s_column(s, n_addr, &located_cell);
+
+		n_cell = located_cell.n_cell;
+		s_column =  located_cell.s_column;
+		
 		lu__user_assert_void(n_cell, "Cannot find neuron for provided address");
 		lu__assert(s_column);
 
