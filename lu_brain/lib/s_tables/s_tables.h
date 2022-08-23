@@ -437,6 +437,19 @@
 		struct lu_n_cell* cells;
 		lu_size cells_size;
 		lu_size cells_count;
+		lu_size free_count;
+
+		// we can build indexes later to speed up save
+		// whene hash => i where indexes[i] contains index to N_Cell in cells
+		// that way we can avoid iterating (one below one above) to find our n_cell using hash
+		// also this way we can FREE n_cells easily!
+		// what if we get hash1 => 3 and hash2=>3, zvychayno my mozhemo zrobyty indexes 2d array
+		// prychomu komirky v cells vydiliayutsia v poslidovnomu poriadku
+		// yaksho komirka dlia hash1=>3 vydalena, my prosto poznachayemo yiyi yak vydalenu i 
+		// pry nastupnomu save , mozhna she raz reuse it
+		// pershyy layer budut counters?
+
+		// lu_size* indexes; 
 
 		struct lu_n_link_mem link_mem;
 
@@ -520,6 +533,17 @@
 		return &self->cells[n_addr.cell_ix];
 	}
 
+	static inline lu_size lu_s_column__get_n_cell_count(Lu_S_Column self)
+	{
+		return self->cells_count - self->free_count;
+	}
+
+	static inline lu_size lu_s_column__get_n_cell_size(Lu_S_Column self)
+	{
+		return self->cells_size;
+	}
+
+
 	//
 	// Methods
 	//
@@ -537,6 +561,16 @@
 		++self->cells_count;
 
 		return n_cell;
+	}
+
+	static inline void lu_s_column__free_n_cell(Lu_S_Column self, Lu_N_Cell n_cell)
+	{
+		lu__assert(self);
+
+		//
+		// We need to implement indexes to reuse n_cell memory correctly. 
+		// For now, just increase counter
+		++self->free_count;
 	}
 
 	static inline void lu_s_column__find_n_cell(
@@ -559,7 +593,7 @@
 			"[%ld, %ld] cells: %ld/%ld, links: %ld/%ld",
 			self->x,
 			self->y,
-			self->cells_count,
+			lu_s_column__get_n_cell_count(self),
 			self->cells_size,
 			lu_n_link_mem__get_links_count(&self->link_mem),
 			lu_n_link_mem__get_links_size(&self->link_mem)
@@ -570,13 +604,16 @@
 	{
 		++ts->column_count;
 
-		if (self->cells_count < ts->cells_used_min) ts->cells_used_min = self->cells_count;
-		ts->cells_used_mean += self->cells_count;
-		if (self->cells_count > ts->cells_used_max) ts->cells_used_max = self->cells_count;
-		if (self->cells_size > ts->cells_size) ts->cells_size = self->cells_size;
+		lu_size cells_count = lu_s_column__get_n_cell_count(self); 
+		lu_size cells_size = lu_s_column__get_n_cell_size(self);
+
+		if (cells_count < ts->cells_used_min) ts->cells_used_min = cells_count;
+		ts->cells_used_mean += cells_count;
+		if (cells_count > ts->cells_used_max) ts->cells_used_max = cells_count;
+		if (cells_size > ts->cells_size) ts->cells_size = cells_size;
 		
-		ts->total_cells_count += self->cells_count;
-		ts->total_cells_size += self->cells_size;
+		ts->total_cells_count += cells_count;
+		ts->total_cells_size += cells_size;
 
 
 		lu_size links_count = lu_n_link_mem__get_links_count(&self->link_mem);
@@ -590,7 +627,6 @@
 
 		ts->total_links_count += links_count;
 		ts->total_links_size += links_size;
-
 	}
 
 	static inline void lu_s_column__print_mem_stats(Lu_S_Column self)
@@ -600,8 +636,6 @@
 		lu__debug(" ");
 		lu_s_layer_base__print_basic_info(lu_s_table__get_layer(self->s_table));
 	}
-
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Table

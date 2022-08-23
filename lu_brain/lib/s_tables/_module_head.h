@@ -6,6 +6,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 // S typedefs
 
+	enum lu_s_layer_type {
+		LU_S_LAYER__COMP,
+		LU_S_LAYER__REC,
+		LU_S_LAYER__LAYER,
+		LU_S_LAYER__END
+	};
+
 	//
 	// Columns
 	//

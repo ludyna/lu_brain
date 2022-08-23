@@ -7,6 +7,12 @@
 // S typedefs
 
 	//
+	// Lu_S_Located_Cell
+	//
+	
+	typedef struct lu_s_located_cell* Lu_S_Located_Cell;
+
+	//
 	// Views
 	//
 
@@ -16,13 +22,6 @@
 	//
 	// Layers
 	//
-
-	enum lu_s_layer_type {
-		LU_S_LAYER__COMP,
-		LU_S_LAYER__REC,
-		LU_S_LAYER__LAYER,
-		LU_S_LAYER__END
-	};
 
 	static inline void lu_s_layer_type__to_str(enum lu_s_layer_type type, char buffer[])
 	{

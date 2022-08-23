@@ -93,7 +93,7 @@
 			// Delete link to parent (neuron=>label), likns up and down are separate
 			//
 
-			lu_n_cell__remove_label(n_cell, la_cell->addr, &la_column->la_link_mem);
+			lu_n_cell__remove_link_to_label(n_cell, la_cell->addr, &la_column->la_link_mem);
 
 
 			//

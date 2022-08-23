@@ -305,18 +305,6 @@
 			++self->stats.cells_processed;
 		}
 	}
-	
-	static inline void lu_w_match_processor__find_n_cell_and_s_column(
-		Lu_W_Match_Processor self,
-		union lu_n_addr addr,
-		Lu_N_Cell* n_cell,
-		Lu_S_Column* s_column
-	)
-	{
-		lu__assert(self);
-
-		lu_s__find_n_cell_and_s_column(self->s, addr, n_cell, s_column);
-	}
 
 	static inline void lu_w_match_processor__fire_n_parents(
 		Lu_W_Match_Processor self, 
@@ -335,8 +323,8 @@
 			n_cell_parent = NULL;
 			s_column_parent = NULL;
 
-			lu_w_match_processor__find_n_cell_and_s_column(self, n_link_parent->n_cell_addr, &n_cell_parent, &s_column_parent);
-		
+			lu_s__find_n_cell_and_s_column(self->s, n_link_parent->n_cell_addr, &n_cell_parent, &s_column_parent);
+
 			lu__assert(n_cell_parent);
 			lu__assert(s_column_parent);
 

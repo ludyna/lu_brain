@@ -11,13 +11,9 @@
 	typedef struct lu_n_link* Lu_N_Link;
 	typedef struct lu_n_link_mem* Lu_N_Link_Mem;
 
-	enum n_cell_type {
+	enum lu_n_cell_type {
 		LU_N_CELL__0,
 		LU_N_CELL_VP, // for p and v
-		LU_N_CELL__1,
-		LU_N_CELL__2,
-		LU_N_CELL__3,
-		LU_N_CELL__4,
 		LU_N_CELL__N,
 		LU_N_CELL__END
 	};

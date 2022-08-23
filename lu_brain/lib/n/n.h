@@ -82,7 +82,8 @@
 		lu__assert(self);
 		lu__assert(self->mem_table);
 
-		return lu_mem_table__records_count(self->mem_table);
+		// -1 because we should not count NULL links
+		return lu_mem_table__records_count(self->mem_table) - 1;
 	}
 
 	static inline lu_size lu_n_link_mem__get_links_size(Lu_N_Link_Mem self)
@@ -90,7 +91,8 @@
 		lu__assert(self);
 		lu__assert(self->mem_table);
 
-		return lu_mem_table__records_size(self->mem_table);
+		// -1 because we should not count NULL links
+		return lu_mem_table__records_size(self->mem_table) - 1;
 	}
 
 	////
@@ -674,9 +676,9 @@
 		lu__assert(lu_la_link_addr__is_present(&self->labels));
 	}
 
-	static inline void lu_n_cell__remove_label(
+	static inline void lu_n_cell__remove_link_to_label(
 		Lu_N_Cell self, 
-		union lu_la_addr la_addr, 
+		union lu_la_addr la_addr, // label addr
 		Lu_La_Link_Mem la_link_mem
 	)
 	{
@@ -689,7 +691,7 @@
 		Lu_La_Link la_link_prev = NULL;
 		while(lu_la_link_addr__is_present(&la_link_addr))
 		{
-			la_link = lu_la_link_mem__link_alloc(la_link_mem);
+			la_link = lu_la_link_mem__get_link(la_link_mem, la_link_addr);
 
 			if (lu_la_addr__is_eq(&la_link->la_addr, &la_addr))
 			{
@@ -710,6 +712,64 @@
 			la_link_prev = la_link;
 			la_link_addr = la_link->next;
 		}
+	}
+
+	static inline void lu_n_cell__remove_link_to_parent(
+		Lu_N_Cell self, 
+		union lu_n_addr n_addr, // parent
+		Lu_N_Link_Mem n_link_mem,
+		union lu_n_link_addr *links
+	)
+	{
+		lu__assert(self);
+		lu__assert(n_link_mem);
+
+		union lu_n_link_addr n_link_addr = *links;
+
+		
+		Lu_N_Link n_link_prev = NULL;
+		Lu_N_Link n_link = NULL;
+		while(lu_n_link_addr__is_present(&n_link_addr))
+		{
+			n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
+
+			if (lu_n_addr__is_eq(&n_link->n_cell_addr, &n_addr))
+			{
+				if (n_link_prev)
+				{
+					n_link_prev->next = n_link->next;
+				}
+				else
+				{
+					*links = n_link->next;
+				}
+
+				lu_n_link_mem__free_link(n_link_mem, n_link);
+
+				break;
+			}
+
+			n_link_prev = n_link;
+			n_link_addr = n_link->next;
+		}
+	}
+
+	static inline void lu_n_cell__free_children_links(Lu_N_Cell self, Lu_N_Link_Mem n_link_mem)
+	{
+		lu__assert(self);
+
+		union lu_n_link_addr n_link_addr = self->children;
+
+		Lu_N_Link n_link = NULL;
+		while(lu_n_link_addr__is_present(&n_link_addr))
+		{
+			n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
+			n_link_addr = n_link->next;
+
+			lu_n_link_mem__free_link(n_link_mem, n_link);
+		}
+
+		self->children = LU_N_LINK_ADDR__NULL;
 	}
 
 	static inline Lu_W_Match_Cell lu_n_cell__get_and_reset_match_cell(

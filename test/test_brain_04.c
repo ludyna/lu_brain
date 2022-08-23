@@ -126,7 +126,7 @@ enum label_type {
 	LABEL_9 = 9,
 	LABEL_DOT = 14,
 	LABEL_DOT_2 = 15,
-	LABEL_END = 12
+	LABEL_END = 1
 };
 
 lu_size labels[] = { 
@@ -282,7 +282,10 @@ void del_all_patterns()
 {
 	d_wave = lu_delete_wave__create(brain, LU_DELETE_CONFIG__DEFAULT);
 
-	lu_delete_wave__delete_label(d_wave, 0);
+	for (lu_size i = 0; i < LABEL_END; i++)
+	{
+		lu_delete_wave__delete_label(d_wave, i);
+	}
 }
 
 void test_brain_02(void) 
@@ -290,6 +293,8 @@ void test_brain_02(void)
 	save_all_paterns();
 	
 	match_all_patterns();
+
+	lu_brain__print_net_stats(brain);
 
 	del_all_patterns();
 

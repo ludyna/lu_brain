@@ -258,29 +258,86 @@
 
 		lu_value fire_sig = 0;
 
+		Lu_N_Cell n_cell;
+		Lu_S_Column s_column;
+
+		union lu_n_link_addr child_link_addr;
+		Lu_N_Link child_link;
+		Lu_N_Cell child_n_cell;
+		Lu_S_Column child_s_column;
+
 		for (lu_size i = 0; i < self->curr_list->items_count; i++)
 		{
 			w_del_item = &self->curr_list->items[i];
 
-			// fire_sig = lu_w_match_item__calc_fire_sig(w_del_item);
+			n_cell = w_del_item->n_cell;
+			lu__assert(n_cell);
 
-			// // proc_item with fire sig < breakpoint should not be here
-			// lu__assert(fire_sig >= self->w_match_sig_breakpoint); 
+			s_column = w_del_item->s_column;
+			lu__assert(s_column);
 
-			// // fire_sig should be always less or equal to one
-			// lu__assert(fire_sig <= 1.0); 
+			//
+			// Still connected to parents?
+			//
 
-			// lu_w_del_processor__fire_n_parents_with_sig(self, w_del_item->n_cell, w_del_item->s_column, fire_sig);
+			if (lu_n_link_addr__is_present(&n_cell->tl) || lu_n_link_addr__is_present(&n_cell->tr) ||
+				lu_n_link_addr__is_present(&n_cell->bl) || lu_n_link_addr__is_present(&n_cell->br))
+			{
+				// this neuron is used in other patterns, we cant delete it.
+				continue;
+			}
 
-			// if (lu_la_link_addr__is_present(&w_del_item->n_cell->labels))
-			// {
-			// 	lu__deep_debug(
-			// 		"\nN_CELL has label (n_cell->cell_ix=%ld) link_addr=%ld", 
-			// 		w_del_item->n_cell->addr.cell_ix, 
-			// 		w_del_item->n_cell->labels.value
-			// 	);
-			// 	lu_w_del_processor__fire_n_labels_with_sig(self, w_del_item->n_cell, self->la_column, fire_sig);
-			// }
+			//
+			// Free children=>n_cell links
+			// 
+
+			child_link_addr = n_cell->children;
+			enum lu_s_layer_type layer_type;
+
+			while (lu_n_link_addr__is_present(&child_link_addr))
+			{
+				child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
+				lu__assert(child_link);
+
+				lu__assert(lu_n_addr__is_present(&child_link->n_cell_addr)); 
+
+				child_n_cell = NULL;
+				child_s_column = NULL;
+
+				layer_type = lu_s__find_n_cell_and_s_column(
+					self->s, 
+					child_link->n_cell_addr, 
+					&child_n_cell, 
+					&child_s_column
+				);
+
+				// Wrong layer type, continue
+				if (layer_type != LU_S_LAYER__LAYER) goto next_child;
+
+				lu__assert(child_n_cell);
+				lu__assert(child_s_column);
+
+				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tl);
+
+				// Queue child to be deleted next
+				lu_w_del_list__add(self->next_list, child_n_cell, child_s_column);
+
+				next_child:
+
+				child_link_addr = child_link->next;
+			}
+
+			//
+			// Free children links (n_cell=>children)
+			//
+
+			lu_n_cell__free_children_links(n_cell, &s_column->link_mem);
+
+			//
+			// Free neuron
+			//
+
+			lu_s_column__free_n_cell(s_column, n_cell);
 
 			++cells_processed;
 		}
