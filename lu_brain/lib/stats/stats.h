@@ -178,3 +178,26 @@
 
  		self->cells_processed = 0;
  	}
+
+
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Brain_Net_Stats
+//
+
+ 	static inline Lu_Brain_Net_Stats lu_brain_net_stats__reset(Lu_Brain_Net_Stats self)
+ 	{
+ 		self->n_cells_count = 0;
+ 		self->n_cells_size = 0;
+ 		self->n_links_count = 0;
+ 		self->n_links_size = 0;
+
+ 		return self;
+ 	}
+
+ 	static inline void lu_brain_net_stats__collect(Lu_Brain_Net_Stats self, Lu_S_Net_Stats s_ns)
+ 	{
+ 		self->n_cells_count = s_ns->cells_count;
+ 		self->n_cells_size = s_ns->cells_size;
+ 		self->n_links_count = s_ns->links_count;
+ 		self->n_links_size = s_ns->links_size;
+ 	} 

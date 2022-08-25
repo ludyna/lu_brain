@@ -615,7 +615,6 @@
 		ts->total_cells_count += cells_count;
 		ts->total_cells_size += cells_size;
 
-
 		lu_size links_count = lu_n_link_mem__get_links_count(&self->link_mem);
 
 		if (links_count < ts->links_count_min) ts->links_count_min = links_count;
@@ -773,5 +772,31 @@
  		lu_s_layer_net_stats__collect(layer_ns, &ts);
 	}
 
+	static inline void lu_s_table__get_net_stats(Lu_S_Table self, Lu_S_Layer_Net_Stats layer_ns)
+	{
+		lu__assert(self);
 
+		lu_size x;
+		lu_size y;
+		Lu_S_Column s_column;
+
+		struct lu_s_table_net_stats ts;
+
+		lu_s_table_stats__reset(&ts);
+
+		for (y = 0; y < self->h_max; y++)
+		{
+			for (x = 0; x < self->w; x++)
+			{
+				s_column = lu_s_table__get_s_column(self, x, y);
+				lu__assert(s_column);
+				lu__assert(s_column->x == x);
+				lu__assert(s_column->y == y);
+
+				lu_s_column__collect_net_stats(s_column, &ts);
+			}
+		}
+		
+ 		lu_s_layer_net_stats__collect(layer_ns, &ts);
+	}
 

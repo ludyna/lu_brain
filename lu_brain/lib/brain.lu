@@ -127,9 +127,11 @@
 	{
 		struct lu_brain_net_stats brain_ns;
 
-		struct lu_s_net_stats s_ns;
+		lu_brain_net_stats__reset(&brain_ns);
 
-		
+		lu_s__get_net_stats(self->s, &brain_ns);
+
+		return brain_ns;
 	}
 
 	struct lu_config lu_brain_config_get(Lu_Brain self)

@@ -288,6 +288,11 @@ void del_all_patterns()
 		label = labels[i];
 		lu_delete_wave__delete_label(d_wave, label);
 	}
+
+	struct lu_brain_net_stats stats = lu_brain__get_net_stats(brain);
+
+	// Because we deleted everything, make sure we dont have neurons anymore
+	TEST_ASSERT(stats.n_cells_count == 0);
 }
 
 void test_brain_02(void) 

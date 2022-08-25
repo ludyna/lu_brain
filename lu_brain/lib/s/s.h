@@ -278,6 +278,10 @@
 		lu_s_layer_base__print_basic_info(self);
 	}
 
+	static inline void lu_s_layer_base__get_net_stats(Lu_S_Layer_Base self, Lu_S_Area_Net_Stats area_ns)
+	{
+
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Comp
@@ -320,6 +324,13 @@
 
 		// lu_s_area_net_stats__collect(area_ns, &layer_ns);
 	}
+
+	static inline void lu_s_layer_comp__get_net_stats(Lu_S_Layer_Comp self, Lu_S_Area_Net_Stats area_ns)
+	{
+		lu_s_layer_base__print_net_stats(&self->super, area_ns);
+		lu_s_layer_base__get_net_stats(&self->super, area_ns);
+	}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer
@@ -494,6 +505,20 @@
 		lu_s_area_net_stats__collect(area_ns, &layer_ns);
 	}
 
+	static inline void lu_s_layer__get_net_stats(Lu_S_Layer self, Lu_S_Area_Net_Stats area_ns)
+	{
+		lu_s_layer_base__print_net_stats(&self->super, area_ns);
+
+		struct lu_s_layer_net_stats layer_ns;
+
+		lu_s_layer_net_stats__reset(&layer_ns);
+
+		lu_s_table__get_net_stats(&self->s_table, &layer_ns);
+
+		lu_s_area_net_stats__collect(area_ns, &layer_ns);
+	}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer_Rec
 //
@@ -666,6 +691,11 @@
 		lu_s_layer__print_net_stats(&self->super, area_ns);
 	}
 
+	static inline void lu_s_layer_rec__get_net_stats(Lu_S_Layer_Rec self, Lu_S_Area_Net_Stats area_ns)
+	{
+		lu_s_layer__get_net_stats(&self->super, area_ns);
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Area
 //
@@ -830,6 +860,41 @@
 					break;
 				case LU_S_LAYER__LAYER:
 					lu_s_layer__print_net_stats((Lu_S_Layer) layer, &area_ns);
+					break;
+				default:
+					lu__assert(false);
+			}
+		}
+
+		lu_s_net_stats__collect(s_ns, &area_ns);
+	}
+
+	static inline void lu_s_area__get_net_stats(Lu_S_Area self, Lu_S_Net_Stats s_ns)
+	{
+		lu__assert(self);
+		lu__assert(s_ns);
+
+		Lu_S_Layer_Base layer ;
+		struct lu_s_area_net_stats area_ns;
+
+		lu_s_area_net_stats__reset(&area_ns);
+
+		for (lu_size i = 0; i < self->layers_count; i++)
+		{
+			layer = self->layers[i];
+
+			if (layer == NULL) break;
+
+			switch(layer->type)
+			{
+				case LU_S_LAYER__COMP:
+					lu_s_layer_comp__get_net_stats((Lu_S_Layer_Comp) layer, &area_ns);
+					break;
+				case LU_S_LAYER__REC:
+					lu_s_layer_rec__get_net_stats((Lu_S_Layer_Rec) layer, &area_ns);
+					break;
+				case LU_S_LAYER__LAYER:
+					lu_s_layer__get_net_stats((Lu_S_Layer) layer, &area_ns);
 					break;
 				default:
 					lu__assert(false);
@@ -1111,7 +1176,7 @@
 	}
 
 
-	static struct lu_s_net_stats lu_s__get_net_stats(Lu_S self)
+	static void lu_s__get_net_stats(Lu_S self, Lu_Brain_Net_Stats b_ns)
 	{
 		lu__assert(self);
 
@@ -1126,10 +1191,9 @@
 
 			if (area == NULL) break;
 
-			//lu_s_area__print_net_stats(area, &ns);
-			//lu_s_area__get_net_stats(area, &ns);
+			lu_s_area__get_net_stats(area, &ns);
 		}
 
-		return ns;
+		lu_brain_net_stats__collect(b_ns, &ns);
 	}
 
