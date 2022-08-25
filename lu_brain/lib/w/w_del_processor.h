@@ -293,57 +293,65 @@
 			
 			struct lu_n_located_cell located_cell;
 
-			while (lu_n_link_addr__is_present(&child_link_addr))
+			// same children can have links to multiple parents
+			// it means that multiple parents can queue the same child to be deleted 
+			// we can check if child was already deleted or not if it has no children links
+			// only type of n_cell that dont have children links are n_cell_vp, and we dont delete
+			// those anywaaw
+			if (lu_n_link_addr__is_present(&child_link_addr))
 			{
-				child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
-				lu__assert(child_link);
+				while (lu_n_link_addr__is_present(&child_link_addr))
+				{
+					child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
+					lu__assert(child_link);
 
-				lu__assert(lu_n_addr__is_present(&child_link->n_cell_addr)); 
+					lu__assert(lu_n_addr__is_present(&child_link->n_cell_addr)); 
 
-				child_n_cell = NULL;
-				child_s_column = NULL;
+					child_n_cell = NULL;
+					child_s_column = NULL;
 
-				lu_n_located_cell__reset(&located_cell);
+					lu_n_located_cell__reset(&located_cell);
 
-				lu_s__find_n_cell_and_s_column(
-					self->s, 
-					child_link->n_cell_addr, 
-					&located_cell
-				);
+					lu_s__find_n_cell_and_s_column(
+						self->s, 
+						child_link->n_cell_addr, 
+						&located_cell
+					);
 
-				// Wrong cell type, continue
-				if (located_cell.n_cell_type != LU_N_CELL__N) goto next_child;
+					// Wrong cell type, continue
+					if (located_cell.n_cell_type != LU_N_CELL__N) goto next_child;
 
-				child_n_cell = located_cell.n_cell;
-				child_s_column = located_cell.s_column;
+					child_n_cell = located_cell.n_cell;
+					child_s_column = located_cell.s_column;
 
-				lu__assert(child_n_cell);
-				lu__assert(child_s_column);
+					lu__assert(child_n_cell);
+					lu__assert(child_s_column);
 
-				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tl);
-				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tr);
-				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->bl);
-				lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->br);
+					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tl);
+					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tr);
+					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->bl);
+					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->br);
 
-				// Queue child to be deleted next
-				lu_w_del_list__add(self->next_list, child_n_cell, child_s_column);
+					// Queue child to be deleted next
+					lu_w_del_list__add(self->next_list, child_n_cell, child_s_column);
 
 next_child:
+					child_link_addr = child_link->next;
+					lu_n_link_mem__free_link(&s_column->link_mem, child_link);
+				}
 
-				child_link_addr = child_link->next;
+				//
+				// We freed links in prev while cycle (n_cell=>children), now dont forget to set it to NULL
+				//
+				
+				n_cell->children = LU_N_LINK_ADDR__NULL;
+
+				//
+				// Free neuron
+				//
+
+				lu_s_column__free_n_cell(s_column, n_cell);
 			}
-
-			//
-			// Free children links (n_cell=>children)
-			//
-
-			lu_n_cell__free_children_links(n_cell, &s_column->link_mem);
-
-			//
-			// Free neuron
-			//
-
-			lu_s_column__free_n_cell(s_column, n_cell);
 
 			++cells_processed;
 		}

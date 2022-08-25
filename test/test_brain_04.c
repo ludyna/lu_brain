@@ -126,7 +126,7 @@ enum label_type {
 	LABEL_9 = 9,
 	LABEL_DOT = 14,
 	LABEL_DOT_2 = 15,
-	LABEL_END = 1
+	LABEL_END = 12
 };
 
 lu_size labels[] = { 
@@ -282,9 +282,11 @@ void del_all_patterns()
 {
 	d_wave = lu_delete_wave__create(brain, LU_DELETE_CONFIG__DEFAULT);
 
+	lu_size label;
 	for (lu_size i = 0; i < LABEL_END; i++)
 	{
-		lu_delete_wave__delete_label(d_wave, i);
+		label = labels[i];
+		lu_delete_wave__delete_label(d_wave, label);
 	}
 }
 

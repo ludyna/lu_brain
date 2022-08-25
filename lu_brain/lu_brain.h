@@ -21,6 +21,7 @@
 	//
  
 	typedef struct lu_config* 			Lu_Config;
+	typedef struct lu_brain_net_stats*	Lu_Brain_Net_Stats;
 
 	typedef struct lu_brain* 			Lu_Brain;	
 	
@@ -183,6 +184,20 @@
 
 	struct lu_config lu_config__get_by_id(lu_size id);
 
+	//
+	// Brain stats
+	// 
+
+	struct lu_brain_net_stats {
+
+		// to be expanded later..
+
+		lu_size n_cells_count;
+		lu_size n_cells_size;
+		lu_size n_links_count;
+		lu_size n_links_size;
+	};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Brain 
 
@@ -193,6 +208,7 @@
 
 	void lu_brain__print_areas(Lu_Brain self);
 	void lu_brain__print_net_stats(Lu_Brain self);
+	struct lu_brain_net_stats lu_brain__get_net_stats(Lu_Brain self);
 
 	Lu_Brain lu_brain__reconfig(Lu_Brain self, struct lu_config config);
 

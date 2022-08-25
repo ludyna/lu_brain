@@ -123,6 +123,15 @@
  			lu_s__print_net_stats(self->s);
 	}
 
+	struct lu_brain_net_stats lu_brain__get_net_stats(Lu_Brain self)
+	{
+		struct lu_brain_net_stats brain_ns;
+
+		struct lu_s_net_stats s_ns;
+
+		
+	}
+
 	struct lu_config lu_brain_config_get(Lu_Brain self)
 	{
 		lu__assert(self);

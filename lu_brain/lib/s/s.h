@@ -1109,3 +1109,27 @@
 
 		return lu_s_area__find_n_cell_and_s_column(s_area, addr, located_cell);
 	}
+
+
+	static struct lu_s_net_stats lu_s__get_net_stats(Lu_S self)
+	{
+		lu__assert(self);
+
+		Lu_S_Area area;
+		struct lu_s_net_stats ns;
+
+		lu_s_net_stats__reset(&ns);
+
+		for (lu_size i = LU_N_AREA__SPECIAL_AREA_SKIP; i < self->areas_count; i++)
+		{
+			area = self->areas[i];
+
+			if (area == NULL) break;
+
+			//lu_s_area__print_net_stats(area, &ns);
+			//lu_s_area__get_net_stats(area, &ns);
+		}
+
+		return ns;
+	}
+
