@@ -83,16 +83,6 @@
 	};
 
 ///////////////////////////////////////////////////////////////////////////////
-// Lu_Restore_Wave 
-
-	struct lu_restore_wave {
-		struct lu_wave super;
-
-		struct lu_restore_config config;
-
-	};
-
-///////////////////////////////////////////////////////////////////////////////
 // Lu_Delete_Wave 
 
 	struct lu_delete_wave {
@@ -103,3 +93,13 @@
 		struct lu_w_del_processor processor;
 	};
 
+///////////////////////////////////////////////////////////////////////////////
+// Lu_Restore_Wave 
+
+	struct lu_restore_wave {
+		struct lu_wave super;
+
+		struct lu_restore_config config;
+
+		struct lu_w_restore_processor processor;
+	};

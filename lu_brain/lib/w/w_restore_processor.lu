@@ -1,0 +1,43 @@
+/**
+	Copyright © 2022 Oleh Ihorovych Novosad 
+*/
+
+///////////////////////////////////////////////////////////////////////////////
+//  
+
+	static void lu_w_restore_processor__init(
+		Lu_W_Restore_Processor self,  
+		Lu_Mem mem,
+		Lu_S s, 
+		Lu_Restore_Config config
+	)
+	{
+		lu__assert(self);
+		lu__assert(s); 
+		lu__assert(mem);
+		lu__assert(config); 
+
+		self->mem = mem;
+
+		lu_block_id__reset(&self->block_id);
+		self->wave_ix = LU_WAVE_IX__NOT_SET;
+
+		self->s = s;
+
+		self->curr_list = lu_w_restore_list__create(self->mem, config->processor_list_size);
+		lu__assert(self->curr_list);
+
+		self->next_list = lu_w_restore_list__create(self->mem, config->processor_list_size);
+		lu__assert(self->next_list);
+	}
+
+	static void lu_w_restore_processor__deinit(Lu_W_Restore_Processor self)
+	{
+		lu__assert(self);
+		lu__assert(self->mem);
+		lu__assert(self->next_list);
+		lu__assert(self->curr_list);
+
+		lu_w_restore_list__destroy(self->curr_list);
+		lu_w_restore_list__destroy(self->next_list);
+	} 

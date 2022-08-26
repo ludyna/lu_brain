@@ -466,22 +466,24 @@
 	//
 
 	struct lu_restore_config {
-		
+		lu_size processor_list_size;
 	};
 
+	extern struct lu_restore_config LU_RESTORE_CONFIG__DEFAULT;
 
 	//
 	// Constructor / Destructor
 	// 
 
-	Lu_Restore_Wave lu_restore_wave__create(Lu_Brain); 
+	Lu_Restore_Wave lu_restore_wave__create(Lu_Brain, struct lu_restore_config); 
 	void lu_restore_wave__destroy(Lu_Restore_Wave);
 
 	//
 	// Methods
 	//
 
-	void lu_restore_wave__restore(Lu_Wave, union lu_n_addr);
+	void lu_restore_wave__restore_from_label(Lu_Restore_Wave, lu_size label);
+	void lu_restore_wave__restore_from_neuron(Lu_Restore_Wave, union lu_n_addr);
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Label

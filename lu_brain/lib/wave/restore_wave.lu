@@ -3,4 +3,143 @@
 */
 
 ///////////////////////////////////////////////////////////////////////////////
+// Constructor / Destructor
+
+	Lu_Restore_Wave lu_restore_wave__create(Lu_Brain brain, struct lu_restore_config config)
+	{
+		lu__user_assert(brain, "Lu_Brain is NULL");
+
+		Lu_Restore_Config p_config = lu_restore_config__validate(&config);
+		lu__user_assert(p_config, "Invalid Lu_Restore_Config");
+
+		Lu_Mem w_mem = brain->config.w_mem;
+		lu__assert(w_mem);
+
+		Lu_Restore_Wave self = (Lu_Restore_Wave) lu_mem__alloc(w_mem, sizeof(struct lu_restore_wave));
+
+		lu_wave__init(
+			&self->super,
+			LU_WAVE__RESTORE,
+			brain
+		);
+
+		self->config = config;
+
+		lu_w_restore_processor__init(&self->processor, w_mem, brain->s, &self->config);
+
+		return self;
+	}
+
+	void lu_restore_wave__destroy(Lu_Restore_Wave self)
+	{
+		lu__assert(self);
+
+		lu_w_restore_processor__deinit(&self->processor);
+
+		lu_wave__deinit(&self->super);
+
+		Lu_Wave wave = (Lu_Wave) self;
+
+		lu_mem__free(wave->mem, (lu_p_byte) self);
+	}
+
+///////////////////////////////////////////////////////////////////////////////
 // 
+
+	////
+	// This method can be improved later with threads etc.
+	void lu_restore_wave__restore_from_label(Lu_Restore_Wave self, lu_size label)
+	{
+		lu__user_assert_void(self, "Lu_Restore_Wave is NULL");
+
+		Lu_Wave wave = (Lu_Wave) self;
+		lu__assert(wave->brain);
+
+		Lu_S s = lu_brain__get_s(wave->brain);
+		lu__assert(s);
+
+		Lu_La_Column la_column = &wave->brain->la_column;
+		lu__assert(la_column);
+
+		Lu_La_Cell la_cell = lu_la_column__get_la_cell(la_column, label);
+		lu__user_assert_void(la_cell, "Cannot find label");
+
+		if (la_cell->children_count == 0) return;
+
+		union lu_n_link_addr n_link_addr = la_cell->children;
+		Lu_N_Link_Mem n_link_mem = &la_column->n_link_mem;
+		Lu_N_Link n_link;
+
+		Lu_N_Cell n_cell = NULL;
+		Lu_S_Column s_column = NULL;
+
+		Lu_W_Restore_Processor processor = &self->processor;
+		lu__assert(processor); 
+
+		struct lu_n_located_cell located_cell;
+
+		while (lu_n_link_addr__is_present(&n_link_addr))
+		{
+			n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
+			lu__assert(n_link);
+
+			//
+			// Get cell data
+			//
+
+			lu_n_located_cell__reset(&located_cell);
+
+			lu_s__find_n_cell_and_s_column(s, n_link->n_cell_addr, &located_cell);
+
+			if (located_cell.n_cell_type != LU_N_CELL__N) goto next_link;
+
+
+			//
+			// Add neuron to process list
+			//
+
+			lu_w_restore_list__add(processor->next_list, n_cell, s_column);
+
+next_link:
+
+			n_link_addr = n_link->next;
+		}
+
+		lu_la_cell__reset(la_cell);
+
+		lu_w_restore_processor__run(processor);
+	}
+
+ 	////
+	// This method can be improved later with threads etc.
+	void lu_restore_wave__restore_from_neuron(Lu_Restore_Wave self, union lu_n_addr n_addr)
+	{
+		lu__user_assert_void(self, "Lu_Restore_Wave is NULL");
+		Lu_N_Cell n_cell = NULL;
+		Lu_S_Column s_column = NULL;
+
+		Lu_Wave wave = (Lu_Wave) self;
+		lu__assert(wave->brain);
+
+		Lu_S s = lu_brain__get_s(wave->brain);
+		lu__assert(s);
+
+		struct lu_n_located_cell located_cell;
+
+		lu_n_located_cell__reset(&located_cell);
+
+		lu_s__find_n_cell_and_s_column(s, n_addr, &located_cell);
+
+		n_cell = located_cell.n_cell;
+		s_column =  located_cell.s_column;
+		
+		lu__user_assert_void(n_cell, "Cannot find neuron for provided address");
+		lu__assert(s_column);
+
+		Lu_W_Restore_Processor processor = &self->processor;
+		lu__assert(processor);
+
+		lu_w_restore_list__add(processor->next_list, n_cell, s_column);
+
+		lu_w_restore_processor__run(processor);
+	}

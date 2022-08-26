@@ -4,3 +4,12 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Restore_Config
+
+    struct lu_restore_config LU_RESTORE_CONFIG__DEFAULT = {
+		.processor_list_size = 1024
+    };
+
+    Lu_Restore_Config lu_restore_config__validate(Lu_Restore_Config self)
+    {
+        return self;
+    }

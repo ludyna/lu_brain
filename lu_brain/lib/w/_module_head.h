@@ -32,6 +32,14 @@
 	typedef struct lu_w_del_list* Lu_W_Del_List;
 	typedef struct lu_w_del_processor* Lu_W_Del_Processor;
 
+	//
+	// Restore
+	//
+
+	typedef struct lu_w_restore_item* Lu_W_Restore_Item;
+	typedef struct lu_w_restore_list* Lu_W_Restore_List;
+	typedef struct lu_w_restore_processor* Lu_W_Restore_Processor;
+
 	// 
 	// General
 	//
