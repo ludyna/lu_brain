@@ -32,3 +32,9 @@ The mathematically most correct answer for provided data is always achievable. T
 ___The library is free to use by everyone with good intentions (MIT_LICENSE).___
 
 The library is our expression of goodwill and good intention towards humanity.
+
+<div align="center">
+  <p align="center">
+ <img align="center" src="https://res.cloudinary.com/ludyna/image/upload/v1522859417/blog/oleh/rabbit_circle.png" alt="ludyna" width="128"/>
+  </p>
+</div>
