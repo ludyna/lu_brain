@@ -230,7 +230,7 @@ void match_all_patterns()
 	TEST_ASSERT(lu_label__get_id(results[0]) == LABEL_0 || lu_label__get_id(results[0]) == LABEL_1);
 }
 
-void test_brain_02(void) 
+void test_brain_03(void) 
 { 
 	save_all_paterns();
 	match_all_patterns();

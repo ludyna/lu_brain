@@ -11,8 +11,7 @@ Lu_Mem_Debugger     md;
 Lu_Brain 			brain;
 struct lu_config 	brain_config;
 Lu_Save_Wave 		s_wave;
-Lu_Match_Wave  		m_wave;
-Lu_Delete_Wave 		d_wave;
+Lu_Restore_Wave 	r_wave;
 
 Lu_Rec 				rec_0;
 Lu_Rec 				rec_1;
@@ -185,8 +184,7 @@ void setUp(void)
 	// 
 
 	s_wave = NULL;
-	m_wave = NULL;
-	d_wave = NULL;
+	r_wave = NULL;
 }
 
 void tearDown(void)
@@ -196,8 +194,7 @@ void tearDown(void)
 	//
 
 	if (s_wave) lu_save_wave__destroy(s_wave); 
-	if (m_wave) lu_match_wave__destroy(m_wave);
-	if (d_wave) lu_delete_wave__destroy(d_wave);
+	if (r_wave) lu_restore_wave__destroy(r_wave);
 
 	//
 	// Destroy brain
@@ -242,68 +239,25 @@ void save_all_paterns()
 	}
 }
 
-void match_all_patterns()
+
+void restore_all_patterns()
 {
-	m_wave = lu_match_wave__create(brain);
-
-	TEST_ASSERT(m_wave);
-	TEST_ASSERT(lu_wave__get_ix((Lu_Wave)m_wave) == 0);
-	TEST_ASSERT(lu_brain__get_wave_by_ix(brain, lu_wave__get_ix((Lu_Wave)m_wave), lu_wave__get_type((Lu_Wave)m_wave)) == (Lu_Wave)m_wave);
-
-	lu_size label;
-	lu_value* values;
-	Lu_La_Cell label_cell;
-	Lu_Label* results;
-
-	for (lu_size i = 0; i < LABEL_END; i++)
-	{
-		label = labels[i];
-		values = patterns[i];
-
-		lu__debug("\nMATCHING DATA: ");
-		lu_values__print_symbols(values, 3, 5, 1);
-
-		lu_match_wave__push(m_wave, rec_0, blank_values, 3, 5, 1);
-		lu_match_wave__push(m_wave, rec_0, values, 3, 5, 1);
-
-		lu_match_wave__match(m_wave, LU_MATCH_CONFIG__DEFAULT);
-
-		results = lu_match_wave__get_result_labels(m_wave);
-		TEST_ASSERT(results);
-		TEST_ASSERT(results[0]);
-
-		lu_match_wave__print_results(m_wave);
-
-		TEST_ASSERT(lu_label__get_id(results[0]) == label);
-	}
-}
-
-void del_all_patterns()
-{
-	d_wave = lu_delete_wave__create(brain, LU_DELETE_CONFIG__DEFAULT);
+	r_wave = lu_restore_wave__create(brain, LU_RESTORE_CONFIG__DEFAULT);
 
 	lu_size label;
 	for (lu_size i = 0; i < LABEL_END; i++)
 	{
 		label = labels[i];
-		lu_delete_wave__delete_label(d_wave, label);
+		lu_restore_wave__restore_from_label(r_wave, label);
 	}
 
-	struct lu_brain_net_stats stats = lu_brain__get_net_stats(brain);
-
-	// Because we deleted everything, make sure we dont have neurons anymore
-	TEST_ASSERT(stats.n_cells_count == 0);
 }
 
-void test_brain_04(void) 
+void test_brain_05(void) 
 { 
 	save_all_paterns();
 	
-	match_all_patterns();
 
-	lu_brain__print_net_stats(brain);
-
-	del_all_patterns();
 
 	lu_brain__print_net_stats(brain);
 }
