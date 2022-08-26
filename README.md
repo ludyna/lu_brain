@@ -1,6 +1,6 @@
 # Lu_Brain 
 
-Lu_Brain is a next-generation AI _pattern database_ open-source C library.
+Lu_Brain is a next-generation black box AI. 
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
