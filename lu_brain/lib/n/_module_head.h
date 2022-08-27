@@ -36,8 +36,7 @@
 
 ///////////////////////////////////////////////////////////////////////////////
 // 
-	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
-	static inline void lu_s_layer_base__print_basic_info(Lu_S_Layer_Base self);
+
 
 
 	static inline Lu_N_Link lu_n_link_mem__alloc_link(Lu_N_Link_Mem self);
@@ -62,6 +61,19 @@
 	#define LU_N_CELL__W_MATCH_CELLS_SIZE 1
 	#define LU_N_CELL__W_SAVE_CELLS_SIZE 1
 
+	//
+	// Lu_S_Layer_Comp
+	//
+
+	typedef struct lu_s_layer_comp* Lu_S_Layer_Comp;
+
+
+	//
+	// Lu_S_Layer
+	//
+
+	typedef struct lu_s_layer_base* Lu_S_Layer_Base;
+	static inline void lu_s_layer_base__print_basic_info(Lu_S_Layer_Base self);
 
 	//
 	// S Columns

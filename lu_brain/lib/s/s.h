@@ -310,6 +310,23 @@
 	static void lu_s_layer_comp__destroy(Lu_S_Layer_Base self);
 
 	//
+	// Get
+	//
+
+	static inline Lu_Data lu_s_layer_comp__get_p_restore_data(Lu_S_Layer_Comp self, lu_size wave_ix)
+	{
+		lu__assert(self);
+
+		return (Lu_Data) lu_arr__get(self->p_view.w_restore_data, wave_ix);
+	}
+
+	static inline void lu_s_layer_comp__get_net_stats(Lu_S_Layer_Comp self, Lu_S_Area_Net_Stats area_ns)
+	{
+		lu_s_layer_base__print_net_stats(&self->super, area_ns);
+		lu_s_layer_base__get_net_stats(&self->super, area_ns);
+	}
+
+	//
 	// Methods
 	//
 
@@ -326,12 +343,6 @@
 		// lu_s_area_net_stats__collect(area_ns, &layer_ns);
 	}
 
-	static inline void lu_s_layer_comp__get_net_stats(Lu_S_Layer_Comp self, Lu_S_Area_Net_Stats area_ns)
-	{
-		lu_s_layer_base__print_net_stats(&self->super, area_ns);
-		lu_s_layer_base__get_net_stats(&self->super, area_ns);
-	}
-
 	static inline void lu_s_layer_comp__find_n_cell_and_s_column(
 		Lu_S_Layer_Comp self, 
 		union lu_n_addr addr, 
@@ -343,6 +354,7 @@
 
 		located_cell->n_cell_type = LU_N_CELL__VP;
 		located_cell->s_column_comp = s_column_comp;
+		located_cell->s_layer_comp = self;
 
 		lu_s_column_comp__find_n_cell(s_column_comp, addr, &located_cell->n_cell_vp);
 	}

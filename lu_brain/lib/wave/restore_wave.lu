@@ -76,6 +76,11 @@
 		Lu_W_Restore_Processor processor = &self->processor;
 		lu__assert(processor); 
 
+		//
+		// Remember to set processor wave_ix
+		//
+		processor->wave_ix = wave->wave_ix;
+
 		struct lu_n_located_cell located_cell;
 
 		while (lu_n_link_addr__is_present(&n_link_addr))
@@ -143,6 +148,11 @@ next_link:
 
 		Lu_W_Restore_Processor processor = &self->processor;
 		lu__assert(processor);
+
+		//
+		// Remember to set processor wave_ix
+		//
+		processor->wave_ix = wave->wave_ix;
 
 		lu_w_restore_list__add(processor->next_list, n_cell, s_column);
 

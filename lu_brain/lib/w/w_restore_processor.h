@@ -186,7 +186,6 @@
 // Lu_W_Restore_Processor
 
 	struct lu_w_restore_processor {
-		struct lu_block_id block_id;
 		lu_size wave_ix;
 
 		Lu_S s;
@@ -242,104 +241,6 @@
 		}
 	}
 
-	static inline lu_size lu_w_restore_processor__run_iteration(Lu_W_Restore_Processor self)
-	{
-		lu__assert(self);
-		lu__assert(lu_w_restore_list__is_blank(self->curr_list));
-		lu__assert(lu_w_restore_list__is_present(self->next_list));
+	static inline lu_size lu_w_restore_processor__run_iteration(Lu_W_Restore_Processor self);
 
-		Lu_W_Restore_List t;
-		t = self->curr_list;
-		self->curr_list = self->next_list;
-		self->next_list = t;
-
-		Lu_W_Restore_Item w_restore_item;
-		lu_size cells_processed = 0;
-
-		Lu_N_Cell n_cell;
-		Lu_S_Column s_column;
-
-		union lu_n_link_addr child_link_addr;
-		Lu_N_Link child_link;
-		Lu_N_Cell child_n_cell;
-		Lu_S_Column child_s_column;
-
-		for (lu_size i = 0; i < self->curr_list->items_count; i++)
-		{
-			w_restore_item = &self->curr_list->items[i];
-
-			n_cell = w_restore_item->n_cell;
-			lu__assert(n_cell);
-
-			s_column = w_restore_item->s_column;
-			lu__assert(s_column);
-
-
-			child_link_addr = n_cell->children;
-			
-			struct lu_n_located_cell located_cell;
-
-			while (lu_n_link_addr__is_present(&child_link_addr))
-			{
-				child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
-				lu__assert(child_link);
-
-				lu__assert(lu_n_addr__is_present(&child_link->n_cell_addr)); 
-
-				child_n_cell = NULL;
-				child_s_column = NULL;
-
-				lu_n_located_cell__reset(&located_cell);
-
-				lu_s__find_n_cell_and_s_column(
-					self->s, 
-					child_link->n_cell_addr, 
-					&located_cell
-				);
-
-				// Wrong cell type, continue
-				if (located_cell.n_cell_type != LU_N_CELL__N) 
-				{
-					lu__debug("\nYO");
-					goto next_child;
-				}
-
-				child_n_cell = located_cell.n_cell;
-				child_s_column = located_cell.s_column;
-
-				lu__assert(child_n_cell);
-				lu__assert(child_s_column);
-
-				//...
-
-				// Queue child
-				lu_w_restore_list__add(self->next_list, child_n_cell, child_s_column);
-
-next_child:
-				child_link_addr = child_link->next;
-				lu_n_link_mem__free_link(&s_column->link_mem, child_link);
-			}
-
-
-			++cells_processed;
-		}
-
-		lu_w_restore_list__reset(self->curr_list);
-
-		return cells_processed;
-	}
-
-	static inline void lu_w_restore_processor__run(Lu_W_Restore_Processor self)
-	{
-		lu__assert(self);
-
-		while (lu_w_restore_processor__has_items_to_process(self))
-		{
-			#ifdef LU__DEEP_DEBUG
-			lu__debug("\nDEL PROCESSOR BATCH:");
-			lu_w_restore_processor__print_symbols(self);
-			#endif 
-
-			lu_w_restore_processor__run_iteration(self);
-		}
-	}
+	static inline void lu_w_restore_processor__run(Lu_W_Restore_Processor self);

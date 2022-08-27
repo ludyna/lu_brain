@@ -50,6 +50,15 @@
 // Prototypes 
 //
 
+
+	//
+	// Lu_S_Layer_Come
+	//
+
+	typedef struct lu_s_layer_comp* Lu_S_Layer_Comp;
+
+	static inline Lu_Data lu_s_layer_comp__get_p_restore_data(Lu_S_Layer_Comp self, lu_size wave_ix);
+
 	//
 	// Lu_S_Layer
 	//

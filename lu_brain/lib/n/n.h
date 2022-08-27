@@ -18,6 +18,7 @@
 			struct {
 				Lu_N_Cell_VP n_cell_vp;
 				Lu_S_Column_Comp s_column_comp;
+				Lu_S_Layer_Comp s_layer_comp;
 			};
 		};	
 	};
@@ -29,6 +30,7 @@
 		self->s_column = NULL;
 		self->n_cell_vp = NULL;
 		self->s_column_comp = NULL;
+		self->s_layer_comp = NULL;
 
 		return self;
 	}
