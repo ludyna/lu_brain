@@ -199,6 +199,12 @@
 		//  
 
 		struct lu_w_processor_stats stats;
+
+		//
+		// This is temporary solution
+		//
+
+		Lu_Data data;
 	};
 
 	//
@@ -213,6 +219,19 @@
 	);
 
 	static void lu_w_restore_processor__deinit(Lu_W_Restore_Processor self);
+
+	static inline void lu_w_restore_processor__reset(Lu_W_Restore_Processor self)
+	{
+		lu__assert(self);
+
+		self->wave_ix = LU_WAVE_IX__NOT_SET;
+
+		lu_w_restore_list__reset(self->curr_list);
+		lu_w_restore_list__reset(self->next_list);
+
+		lu_w_processor_stats__reset(&self->stats);
+		self->data = NULL;
+	}	
 
 	//
 	// Is / Has

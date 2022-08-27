@@ -245,10 +245,17 @@ void restore_all_patterns()
 	r_wave = lu_restore_wave__create(brain, LU_RESTORE_CONFIG__DEFAULT);
 
 	lu_size label;
-	for (lu_size i = 0; i < 1; i++)
+	lu_p_value values;
+	for (lu_size i = 0; i < LABEL_END; i++)
 	{
 		label = labels[i];
 		lu_restore_wave__restore_from_label(r_wave, label);
+
+		values = lu_restore_wave__get_values_temp(r_wave);
+		lu__assert(values);
+
+		lu__debug("\nRESTORED PATTERN FOR LABEL: %ld", label);
+		lu_values__print_symbols(values, 3, 5, 1);
 	}
 
 }

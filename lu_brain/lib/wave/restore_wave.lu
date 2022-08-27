@@ -79,6 +79,7 @@
 		//
 		// Remember to set processor wave_ix
 		//
+		lu_w_restore_processor__reset(processor);
 		processor->wave_ix = wave->wave_ix;
 
 		struct lu_n_located_cell located_cell;
@@ -152,9 +153,18 @@ next_link:
 		//
 		// Remember to set processor wave_ix
 		//
+		lu_w_restore_processor__reset(processor);
 		processor->wave_ix = wave->wave_ix;
 
 		lu_w_restore_list__add(processor->next_list, n_cell, s_column);
 
 		lu_w_restore_processor__run(processor);
+	}
+
+	lu_p_value lu_restore_wave__get_values_temp(Lu_Restore_Wave self)
+	{
+		lu__assert(self);
+		lu__assert(self->processor.data);
+
+		return self->processor.data->values;
 	}

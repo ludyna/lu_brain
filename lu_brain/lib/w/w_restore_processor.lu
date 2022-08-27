@@ -21,6 +21,7 @@
 		self->wave_ix = LU_WAVE_IX__NOT_SET;
 
 		self->s = s;
+		self->data = NULL;
 
 		self->curr_list = lu_w_restore_list__create(self->mem, config->processor_list_size);
 		lu__assert(self->curr_list);
@@ -84,6 +85,9 @@
 			
 			struct lu_n_located_cell located_cell;
 
+			lu_size column_ix;
+			lu_value value;
+
 			while (lu_n_link_addr__is_present(&child_link_addr))
 			{
 				child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
@@ -105,14 +109,27 @@
 				if (located_cell.n_cell_type == LU_N_CELL__VP) 
 				{
 					lu__assert(located_cell.s_layer_comp);
+					lu__assert(located_cell.s_column_comp);
 					lu__assert(located_cell.n_cell_vp);
 
 					data = lu_s_layer_comp__get_p_restore_data(located_cell.s_layer_comp, self->wave_ix);
 					lu__assert(data);
 					lu__assert(data->values);
 
-					// Restore data
-					data->values[located_cell.n_cell_vp->addr.cell_ix] = located_cell.n_cell_vp->value;
+					// temporary solution
+					if (self->data == NULL)
+					{
+						memset(data->values, 0, sizeof(lu_p_value) * data->w * data->h * data->d);
+						self->data = data;
+					}
+
+					// Restore data.  
+					column_ix = located_cell.s_column_comp->column_ix;
+					value = located_cell.n_cell_vp->value;
+
+					// lu__debug("\n column_ix = %ld, value=%.1f", column_ix, value);
+
+					if (value > data->values[column_ix]) data->values[column_ix] = value;
 
 					goto next_child;
 				}
@@ -134,7 +151,6 @@
 
 next_child:
 				child_link_addr = child_link->next;
-				lu_n_link_mem__free_link(&s_column->link_mem, child_link);
 			}
 
 

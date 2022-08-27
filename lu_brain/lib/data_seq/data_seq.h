@@ -221,6 +221,8 @@
 		self->values = (lu_p_value) lu_mem__alloc(mem, size);
 		lu__assert(self->values);
 
+		memset(self->values, 0, size);
+
 		return self;
 	}
 

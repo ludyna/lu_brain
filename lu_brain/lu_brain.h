@@ -485,6 +485,9 @@
 	void lu_restore_wave__restore_from_label(Lu_Restore_Wave, lu_size label);
 	void lu_restore_wave__restore_from_neuron(Lu_Restore_Wave, union lu_n_addr);
 
+	// temporary solution
+	lu_p_value lu_restore_wave__get_values_temp(Lu_Restore_Wave);
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Label
 
