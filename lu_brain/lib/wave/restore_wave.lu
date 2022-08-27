@@ -93,6 +93,11 @@
 
 			if (located_cell.n_cell_type != LU_N_CELL__N) goto next_link;
 
+			n_cell = located_cell.n_cell;
+			s_column = located_cell.s_column;
+
+			lu__assert(n_cell);
+			lu__assert(s_column); 
 
 			//
 			// Add neuron to process list

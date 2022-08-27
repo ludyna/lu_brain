@@ -1175,7 +1175,6 @@
 		return lu_s_area__find_n_cell_and_s_column(s_area, addr, located_cell);
 	}
 
-
 	static void lu_s__get_net_stats(Lu_S self, Lu_Brain_Net_Stats b_ns)
 	{
 		lu__assert(self);

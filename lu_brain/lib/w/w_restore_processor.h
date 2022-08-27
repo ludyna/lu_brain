@@ -274,70 +274,52 @@
 			s_column = w_restore_item->s_column;
 			lu__assert(s_column);
 
-			//
-			// Still connected to parents?
-			//
-
-			if (lu_n_link_addr__is_present(&n_cell->tl) || lu_n_link_addr__is_present(&n_cell->tr) ||
-				lu_n_link_addr__is_present(&n_cell->bl) || lu_n_link_addr__is_present(&n_cell->br))
-			{
-				// this neuron is used in other patterns, we cant delete it.
-				continue;
-			}
-
-			//
-			// Free children=>n_cell links
-			// 
 
 			child_link_addr = n_cell->children;
 			
 			struct lu_n_located_cell located_cell;
 
-			if (lu_n_link_addr__is_present(&child_link_addr))
+			while (lu_n_link_addr__is_present(&child_link_addr))
 			{
-				while (lu_n_link_addr__is_present(&child_link_addr))
+				child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
+				lu__assert(child_link);
+
+				lu__assert(lu_n_addr__is_present(&child_link->n_cell_addr)); 
+
+				child_n_cell = NULL;
+				child_s_column = NULL;
+
+				lu_n_located_cell__reset(&located_cell);
+
+				lu_s__find_n_cell_and_s_column(
+					self->s, 
+					child_link->n_cell_addr, 
+					&located_cell
+				);
+
+				// Wrong cell type, continue
+				if (located_cell.n_cell_type != LU_N_CELL__N) 
 				{
-					child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
-					lu__assert(child_link);
-
-					lu__assert(lu_n_addr__is_present(&child_link->n_cell_addr)); 
-
-					child_n_cell = NULL;
-					child_s_column = NULL;
-
-					lu_n_located_cell__reset(&located_cell);
-
-					lu_s__find_n_cell_and_s_column(
-						self->s, 
-						child_link->n_cell_addr, 
-						&located_cell
-					);
-
-					// Wrong cell type, continue
-					if (located_cell.n_cell_type != LU_N_CELL__N) goto next_child;
-
-					child_n_cell = located_cell.n_cell;
-					child_s_column = located_cell.s_column;
-
-					lu__assert(child_n_cell);
-					lu__assert(child_s_column);
-
-					//...
-
-					// Queue child to be deleted next
-					lu_w_restore_list__add(self->next_list, child_n_cell, child_s_column);
-
-next_child:
-					child_link_addr = child_link->next;
-					lu_n_link_mem__free_link(&s_column->link_mem, child_link);
+					lu__debug("\nYO");
+					goto next_child;
 				}
 
-				//
-				// We freed links in prev while cycle (n_cell=>children), now dont forget to set it to NULL
-				//
-				
-				n_cell->children = LU_N_LINK_ADDR__NULL;
+				child_n_cell = located_cell.n_cell;
+				child_s_column = located_cell.s_column;
+
+				lu__assert(child_n_cell);
+				lu__assert(child_s_column);
+
+				//...
+
+				// Queue child
+				lu_w_restore_list__add(self->next_list, child_n_cell, child_s_column);
+
+next_child:
+				child_link_addr = child_link->next;
+				lu_n_link_mem__free_link(&s_column->link_mem, child_link);
 			}
+
 
 			++cells_processed;
 		}

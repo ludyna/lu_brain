@@ -245,7 +245,7 @@ void restore_all_patterns()
 	r_wave = lu_restore_wave__create(brain, LU_RESTORE_CONFIG__DEFAULT);
 
 	lu_size label;
-	for (lu_size i = 0; i < LABEL_END; i++)
+	for (lu_size i = 0; i < 1; i++)
 	{
 		label = labels[i];
 		lu_restore_wave__restore_from_label(r_wave, label);
@@ -257,7 +257,7 @@ void test_brain_05(void)
 { 
 	save_all_paterns();
 	
-
+	restore_all_patterns();
 
 	lu_brain__print_net_stats(brain);
 }
