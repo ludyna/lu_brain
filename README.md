@@ -1,6 +1,6 @@
 # <img align="center" src="https://res.cloudinary.com/ludyna/image/upload/v1522859417/blog/oleh/rabbit_circle.png" alt="ludyna" width="64"/> Lu_Brain 
 
-Lu_Brain is a next-generation black box AI. 
+Lu_Brain is a next-generation open-source black box AI.  
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
