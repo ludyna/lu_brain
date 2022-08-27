@@ -71,6 +71,7 @@
 		Lu_S_Table_Comp n_comp_table;
 		Lu_Arr w_save_tables;
 		Lu_Arr w_match_tables;
+		Lu_Arr w_restore_data;
 	};
 
 	static Lu_S_View_P lu_s_view_p__init(
@@ -331,6 +332,20 @@
 		lu_s_layer_base__get_net_stats(&self->super, area_ns);
 	}
 
+	static inline void lu_s_layer_comp__find_n_cell_and_s_column(
+		Lu_S_Layer_Comp self, 
+		union lu_n_addr addr, 
+		Lu_N_Located_Cell located_cell
+	)
+	{ 
+		// 
+		Lu_S_Column_Comp s_column_comp = lu_s_table_comp__get_column_by_ix(self->p_view.n_comp_table, addr.column_ix);
+
+		located_cell->n_cell_type = LU_N_CELL__VP;
+		located_cell->s_column_comp = s_column_comp;
+
+		lu_s_column_comp__find_n_cell(s_column_comp, addr, &located_cell->n_cell_vp);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_S_Layer
@@ -912,12 +927,6 @@
 	{
 		Lu_S_Layer_Base s_layer_base = lu_s_area__get_layer_by_ix(self, addr.layer_ix);
 
-		// if (!lu_s_layer_base__is_n_cell_layer(s_layer_base))
-		// {
-		// 	lu_n_located_cell__reset(located_cell);
-		// 	return;
-		// }
-
 		switch (s_layer_base->type)
 		{
 			case LU_S_LAYER__LAYER:
@@ -925,8 +934,7 @@
 				lu_s_layer__find_n_cell_and_s_column((Lu_S_Layer) s_layer_base, addr, located_cell);
 				break;
 			case LU_S_LAYER__COMP:
-				lu_n_located_cell__reset(located_cell);
-				located_cell->n_cell_type = LU_N_CELL__VP;
+				lu_s_layer_comp__find_n_cell_and_s_column((Lu_S_Layer_Comp) s_layer_base, addr, located_cell);
 				break;
 			default:
 				lu__assert(false);

@@ -19,6 +19,10 @@
 		lu_size w_match_cells_size;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static Lu_S_Column_Comp lu_s_column_comp__init(
 		Lu_S_Column_Comp self, 
 		Lu_Mem mem, 
@@ -34,17 +38,39 @@
 
 	static void lu_s_column_comp__deinit(Lu_S_Column_Comp self);
 
-	static inline Lu_N_Cell_VP lu_s_column_comp__get_cell(Lu_S_Column_Comp self, lu_size z)
+	//
+	// Get
+	//
+
+	static inline Lu_N_Cell_VP lu_s_column_comp__get_cell_by_ix(Lu_S_Column_Comp self, lu_size cell_ix)
 	{
 		lu__debug_assert(self);
-		lu__debug_assert(z < self->cells_size);
+		lu__debug_assert(cell_ix < self->cells_size);
 
-		return &self->cells[z];
+		return &self->cells[cell_ix];
 	}
 
 	static inline Lu_N_Link_Mem lu_s_column_comp__get_n_link_mem(Lu_S_Column_Comp self)
 	{
 		return &self->link_mem;
+	}
+
+	//
+	// Methods
+	//
+
+	static inline void lu_s_column_comp__find_n_cell(
+		Lu_S_Column_Comp self, 
+		union lu_n_addr addr, 
+		Lu_N_Cell_VP* p_n_cell_vp
+	)
+	{
+		Lu_N_Cell_VP n_cell_vp = lu_s_column_comp__get_cell_by_ix(self, addr.cell_ix);
+
+		// Make sure everything is correct
+		lu__assert(lu_n_addr__is_eq(&n_cell_vp->addr, &addr));
+
+		*p_n_cell_vp = n_cell_vp;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,6 +87,10 @@
 		struct lu_s_column_comp* columns;
 	};
 
+	//
+	// Constructors / Destructors
+	//
+
 	static Lu_S_Table_Comp lu_s_table_comp__create(
 		Lu_Config config, 
 		Lu_Comp_Calc comp_calc, 
@@ -73,10 +103,9 @@
 
 	static void lu_s_table_comp__destroy(Lu_S_Table_Comp self);
 
-	static inline lu_size lu_s_table_comp__calc_cell_ix(Lu_S_Table_Comp self, lu_size x, lu_size y, lu_size z)
-	{
-		return z * self->wh + y * self->w + x;
-	}
+	//
+	// Get
+	//
 
 	static inline Lu_S_Column_Comp lu_s_table_comp__get_column(Lu_S_Table_Comp self, lu_size x, lu_size y)
 	{
@@ -93,7 +122,23 @@
 	{
 		Lu_S_Column_Comp column = lu_s_table_comp__get_column(self, x, y);
 
-		return lu_s_column_comp__get_cell(column, z);
+		return lu_s_column_comp__get_cell_by_ix(column, z);
+	}
+
+	static inline Lu_S_Column_Comp lu_s_table_comp__get_column_by_ix(Lu_S_Table_Comp self, lu_size column_ix)
+	{
+		lu__assert(column_ix < (self->w * self->h * self->d));
+
+		return &self->columns[column_ix];	
+	}
+
+	//
+	// Methods
+	//
+		
+	static inline lu_size lu_s_table_comp__calc_cell_ix(Lu_S_Table_Comp self, lu_size x, lu_size y, lu_size z)
+	{
+		return z * self->wh + y * self->w + x;
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

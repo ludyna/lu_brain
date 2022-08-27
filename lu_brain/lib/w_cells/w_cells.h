@@ -20,7 +20,7 @@
 
 	static inline Lu_N_Cell_VP lu_s_table_comp__get_cell(Lu_S_Table_Comp self, lu_size x, lu_size y, lu_size z);
 	static inline Lu_S_Column_Comp lu_s_table_comp__get_column(Lu_S_Table_Comp self, lu_size x, lu_size y);
-	static inline Lu_N_Cell_VP lu_s_column_comp__get_cell(Lu_S_Column_Comp self, lu_size z);
+	static inline Lu_N_Cell_VP lu_s_column_comp__get_cell_by_ix(Lu_S_Column_Comp self, lu_size z);
 
 	enum lu_w_rec_state {
 		LU_W_REC_STATE__COLLECT,
@@ -284,7 +284,7 @@
 		// z being 0 doesnt mean addr->cell_x is 0 (!)
 		
 		self->s_column_comp = lu_s_table_comp__get_column(s_table, x, y);
-		self->n_cell_vp = lu_s_column_comp__get_cell(self->s_column_comp, z);
+		self->n_cell_vp = lu_s_column_comp__get_cell_by_ix(self->s_column_comp, z);
 
 		lu__debug_assert(self->n_cell_vp);
 

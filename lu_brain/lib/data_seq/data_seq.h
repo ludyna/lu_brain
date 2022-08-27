@@ -202,6 +202,28 @@
 	// Create / Destroy
 	//
 
+	static inline Lu_Data lu_data__create(Lu_Mem mem, lu_size w, lu_size h, lu_size d)
+	{
+		lu__assert(mem);
+		lu__assert(w > 0);
+		lu__assert(h > 0);
+		lu__assert(d > 0);
+
+		Lu_Data self = (Lu_Data) lu_mem__alloc(mem, sizeof(struct lu_data));
+		lu__assert(self);
+
+		self->w 		= w;
+		self->h 		= h;
+		self->d 		= d;
+
+		lu_size size = sizeof(lu_value) * self->w * self->h * self->d;
+
+		self->values = (lu_p_value) lu_mem__alloc(mem, size);
+		lu__assert(self->values);
+
+		return self;
+	}
+
 	Lu_Data lu_data__create_via_mem_copy_internal(
 		Lu_Mem mem, 
 		lu_p_value src, 
