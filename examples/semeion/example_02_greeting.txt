@@ -1,0 +1,26 @@
+┌────────────────────────────────────────────┐
+│ ┌──────┐                                   │ 
+│ │ (\/) │                                   │ 
+│ │ (..) │  Lu_Brain Example 02              │ 
+│ │(")(")│                                   │ 
+│ └──────┘                                   │
+│                                            │ 
+│ Commands:                                  │ 
+│                                            │ 
+│      learn:                                │ 
+│         learn train_set %number||all       │ 
+│         learn test_set %number||all        │
+│                                            │ 
+│      match:                                │ 
+│         match train_set %number||all       │ 
+│         match test_ste %number||all        │ 
+│                                            │ 
+│      delete:                               │ 
+│         delete %label %pattern||all        │ 
+│                                            │  
+│      restore:                              │ 
+│         restore %label %pattern||all       │ 
+│                                            │ 
+│      exit - to exit                        │
+│                                            │
+└────────────────────────────────────────────┘
