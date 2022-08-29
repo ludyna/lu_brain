@@ -8,7 +8,7 @@
 // Tokens
 
 	// LE shortcut to Ludyna Example 
-	#define LE__GREETING_SIZE 2000
+	#define LE__GREETING_SIZE 4000
 
 	enum le_set_type {
 		LE_DATA_SET__TRAIN,
@@ -53,7 +53,11 @@
 	Lu_Rec le_image_rec;
 	Lu_Save_Wave le_save_wave;
 	Lu_Match_Wave le_match_wave;
+
+	struct lu_delete_config le_delete_config;
 	Lu_Delete_Wave le_delete_wave;
+
+	struct lu_restore_config le_restore_config;
 	Lu_Restore_Wave le_restore_wave;
 
 	static inline void le_brain_and_waves__create()
@@ -85,10 +89,12 @@
 		le_match_wave = lu_match_wave__create(le_brain);
 		lu__assert(le_match_wave);
 
-		le_delete_wave = lu_delete_wave__create(le_brain, LU_DELETE_CONFIG__DEFAULT);
+		le_delete_config.processor_list_size = 100000;
+		le_delete_wave = lu_delete_wave__create(le_brain, le_delete_config);
 		lu__assert(le_delete_wave);
 
-		le_restore_wave = lu_restore_wave__create(le_brain, LU_RESTORE_CONFIG__DEFAULT);
+		le_restore_config.processor_list_size = 100000;
+		le_restore_wave = lu_restore_wave__create(le_brain, le_restore_config);
 		lu__assert(le_restore_wave);
 	}
 
@@ -228,7 +234,6 @@
 			default:
 				printf("Unknown data set.");
 		}
-
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -236,9 +241,11 @@
 
 	static inline void le_match_print_results(Smn_Digit d, int res)
 	{
+		lu_match_wave__print_results(le_match_wave);
+		printf("\n");
+
 		if (res == d->name)
 		{
-			lu_match_wave__print_results(le_match_wave);
 			printf("\nRESULT: %d (SUCCESS)", res);
 		}
 		else
@@ -380,15 +387,44 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Delete
 
-	static inline void le_user_action__delete(int label, int sample)
+	static inline void le_user_action__delete(int label)
 	{
+		if (label == -1)
+		{
+			for (lu_size i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
+			{
+				lu_delete_wave__delete_label(le_delete_wave, i);
+			}
 
+			printf("Neurons and links for all labels were deleted.");
+			return;
+		}
+
+		if(label < 0 || label >= SMN_DIGIT__VALUE_COUNT)
+		{
+			printf("%%label is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
+			return;
+		}
+
+		lu_delete_wave__delete_label(le_delete_wave, label);
+		printf("Neurons and links related to label %d were deleted.", label);
 	}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Restore
 
-	static inline void le_user_action__restore(int label, int sample)
+	static inline void le_user_action__restore(int label)
 	{
+		if(label < 0 || label >= SMN_DIGIT__VALUE_COUNT)
+		{
+			printf("%%label is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
+			return;
+		}
 
+		lu_restore_wave__restore_from_label(le_restore_wave, label);
+		lu_p_value values = lu_restore_wave__get_values_temp(le_restore_wave);
+		lu__assert(values);
+
+		lu__debug("\nRESTORED PATTERN FOR LABEL: %ld", label);
+		lu_values__print_symbols(values, 16, 16, 1);
 	}

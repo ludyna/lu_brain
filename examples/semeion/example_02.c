@@ -140,16 +140,28 @@ int main()
 		} 
 		else if (strcmp(token_1, "delete") == 0)
 		{
-			le_user_action__delete(0, 0);
+			sample = le_token__to_num(token_2);
+			le_user_action__delete(sample);
 		} 
 		else if (strcmp(token_1, "restore") == 0)
 		{
-			le_user_action__restore(0, 0);
+			sample = le_token__to_num(token_2);
+			le_user_action__restore(sample);
 		} 
 		else if (strcmp(token_1, "net_stats") == 0)
 		{
 			lu_brain__print_net_stats(le_brain);
 		}
+		else if (strcmp(token_1, "reset") == 0)
+		{
+			le_brain_and_waves__destroy();
+			le_brain_and_waves__create();
+			printf("Lu_Brain was reset.");
+		}
+	    else if (strcmp(token_1, "help") == 0)
+	    {
+	    	printf("Not implemented yet.");
+	    }
 		else if (strcmp(token_1, "mem_stats") == 0)
 		{
 			lu_mem_debugger__print_stats(md);

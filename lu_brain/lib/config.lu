@@ -91,7 +91,7 @@
 			.s_column_w = 5, 
 			.s_column_h = 1000,
 			.s_column_d = 10,
-			.n_link_mem_size = 12000,
+			.n_link_mem_size = 15000,
 
 			//
 			// Waves

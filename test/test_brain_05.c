@@ -1,7 +1,7 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 
-	$ clear; ceedling clean; ceedling test:brain_02 --trace
+	$ clear; ceedling clean; ceedling test:brain_05 --trace
 */
 
 #include "unity.h"

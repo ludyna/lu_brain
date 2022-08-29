@@ -217,6 +217,7 @@
 			match_cell = label->match_cell;
 			lu__assert(match_cell);
 
+			#if LU__DEEP_DEBUG
 			lu__debug(
 				"\n\tlabel=%ld, sig=%.2f (%.0f) [MATCH_CELL: wave_id=%ld, block_ix=%ld, LA_CELL: children_count=%ld]", 
 				la_cell->addr.la_ix, 
@@ -226,6 +227,14 @@
 				match_cell->block_id.block_ix,
 				la_cell->children_count
 			);
+			#else
+			lu__debug(
+				"\n\tlabel=%ld, sig=%.2f (%.0f)", 
+				la_cell->addr.la_ix, 
+				lu_label__get_sig(label),
+				match_cell->sig_received_count
+			);
+			#endif
 		}
 	}
 

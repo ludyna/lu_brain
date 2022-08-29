@@ -7,25 +7,28 @@
 │                                            │ 
 │ Commands:                                  │
 │      show:                                 │
-│         show train_set %number             │
-│         show test_set %number              │ 
+│         show train_set %sample_num         │
+│         show test_set %sample_num          │ 
 │                                            │ 
 │      learn:                                │ 
-│         learn train_set %number||all       │ 
-│         learn test_set %number||all        │
+│         learn train_set %digit||all        │ 
+│         learn test_set %digit||all         │
 │                                            │ 
 │      match:                                │ 
-│         match train_set %number||all       │ 
-│         match test_set %number||all        │ 
+│         match train_set %digit||all        │ 
+│         match test_set %digit||all         │ 
 │                                            │ 
 │      delete:                               │ 
-│         delete %label %pattern||all        │ 
+│         delete %digit                      │ 
 │                                            │  
 │      restore:                              │ 
-│         restore %label %pattern||all       │ 
+│         restore %digit                     │ 
 │                                            │ 
-│      net_stats - to show the neural        │
-│                  network stats             │  
+│      net_stats                             │
+│                                            │
+│      reset                                 │
+│                                            │
+│      help %command                         │
 │                                            │ 
 │      exit - to exit                        │
 │                                            │
