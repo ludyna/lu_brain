@@ -1,7 +1,9 @@
 /**
 	Copyright © 2022 Oleh Ihorovych Novosad 
 
-	WARNING: not working at this moment, WORK IN PROGRESS
+	Lu Brain Example 01
+
+	WARNING: WORK IN PROGRESS
 
 	Execute with 
 	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function -Wno-unused-value example_01.c -o ./build/semeion -lm; ./build/semeion 

@@ -788,27 +788,27 @@
 		}
 
 		lu__debug(
-			"\n\t\tN_TABLE [%ldx%ld] cells: %ld/%ld/%ld(max: %ld, total: %ld/%ld), z: %ld/%ld/%ld(%ld), links: %ld/%ld/%ld(max: %ld, total: %ld/%ld)",
+			"\n\t\tS_TABLE [%ldx%ld] cells: %ld/%ld, links: %ld/%ld",
  			self->w, 
  			self->h_max,
  			
- 			ts.cells_used_min,
-			ts.cells_used_mean / ts.column_count,
-			ts.cells_used_max,
-			ts.cells_size,
+ 		// 	ts.cells_used_min,
+			// ts.cells_used_mean / ts.column_count,
+			// ts.cells_used_max,
+			// ts.cells_size,
 
 			ts.total_cells_count,
 			ts.total_cells_size,
 
-			ts.max_z_min,
-			ts.max_z_mean / ts.column_count,
-			ts.max_z_max,
-			ts.d,
+			// ts.max_z_min,
+			// ts.max_z_mean / ts.column_count,
+			// ts.max_z_max,
+			// ts.d,
 
-			ts.links_count_min,
-			ts.links_count_mean / ts.column_count,
-			ts.links_count_max,
-			ts.links_size,
+			// ts.links_count_min,
+			// ts.links_count_mean / ts.column_count,
+			// ts.links_count_max,
+			// ts.links_size,
 
 			ts.total_links_count,
 			ts.total_links_size

@@ -5,7 +5,10 @@
 │ │(")(")│                                   │ 
 │ └──────┘                                   │
 │                                            │ 
-│ Commands:                                  │ 
+│ Commands:                                  │
+│      show:                                 │
+│         show train_set %number             │
+│         show test_set %number              │ 
 │                                            │ 
 │      learn:                                │ 
 │         learn train_set %number||all       │ 
@@ -13,13 +16,16 @@
 │                                            │ 
 │      match:                                │ 
 │         match train_set %number||all       │ 
-│         match test_ste %number||all        │ 
+│         match test_set %number||all        │ 
 │                                            │ 
 │      delete:                               │ 
 │         delete %label %pattern||all        │ 
 │                                            │  
 │      restore:                              │ 
 │         restore %label %pattern||all       │ 
+│                                            │ 
+│      net_stats - to show the neural        │
+│                  network stats             │  
 │                                            │ 
 │      exit - to exit                        │
 │                                            │

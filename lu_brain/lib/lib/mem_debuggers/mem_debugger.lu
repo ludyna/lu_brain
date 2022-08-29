@@ -56,15 +56,21 @@
 		free((lu_p_void) self);
 	}
 
-	void lu_mem_debugger__print(Lu_Mem_Debugger self)
+	void lu_mem_debugger__print_stats(Lu_Mem_Debugger self)
 	{
 		lu__assert(self);
 
-		lu__debug("\n=========> Lu_Mem_Debugger <=========");
-		lu__debug("\n%-12s %lu", "alloc_size:", self->alloc_size);
-		lu__debug("\n%-12s %lu", "freed_size:", self->freed_size);
-		lu__debug("\n%-12s %lu", "alloc_count:", self->alloc_count);
-		lu__debug("\n%-12s %lu", "freed_count:", self->freed_count);
+		lu__debug("\n┌────────────► Lu_Mem_Debugger ◄─────────────┐");
+		lu__debug("\n│%-12s %-20lu           │", "alloc_size:", self->alloc_size);
+		lu__debug("\n│%-12s %-20lu           │", "freed_size:", self->freed_size);
+		lu__debug("\n│%-12s %-20lu           │", "alloc_count:", self->alloc_count);
+		lu__debug("\n│%-12s %-20lu           │", "freed_count:", self->freed_count);
+		lu__debug("\n└────────────────────────────────────────────┘");
+	}
+
+	void lu_mem_debugger__print(Lu_Mem_Debugger self)
+	{
+		lu__assert(self);
 
 		if (!lu_mem_debugger__is_all_freed(self))
 		{
@@ -85,6 +91,8 @@
 				}
 			}
 		}
+
+		lu_mem_debugger__print_stats(self);
 
 		lu__debug("\n");
 	}
