@@ -74,7 +74,7 @@
 // Lu_W_Cell - winner cell
 
 	////
-	// We are using this cell and related "infrastructure" for both save and restore operations.
+	// We are using this cell and related "infrastructure"
 	struct lu_w_cell {
 		Lu_N_Cell n_cell;
 		Lu_S_Column s_column;
@@ -676,6 +676,20 @@
 		lu__debug("SIG=%.1f", self->sig);
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+//  Lu_W_Restore_Cell 
+
+	struct lu_w_restore_cell {
+		struct lu_block_id block_id;
+	};
+
+
+	static inline void lu_w_restore_cell__reset(Lu_W_Restore_Cell self)
+	{
+		lu__assert(self);
+
+		lu_block_id__reset(&self->block_id);
+	}
 
 ///////////////////////////////////////////////////////////////////////////////
 //  Lu_W_Match_Cell_Mem

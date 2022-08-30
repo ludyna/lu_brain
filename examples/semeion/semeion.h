@@ -30,6 +30,26 @@
 		enum 			sd_type type;
 	};
 
+	static inline void smn_values__print(lu_p_value values)
+	{
+		size_t x;
+		size_t y;
+		lu_value val;
+
+		for(y = 0; y < SMN_DIGIT__H; y++)
+		{
+			for(x = 0; x < SMN_DIGIT__W; x++)
+			{
+				val = values[y * SMN_DIGIT__W + x];
+				if (val >= 0.25)
+					printf("X");
+				else 
+					printf(" ");
+			}
+			printf("\n");
+		}
+	}
+
 	void smn_digit__print(Smn_Digit self);
 
 	// Group digit samples with the same name 

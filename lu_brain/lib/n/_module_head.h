@@ -60,6 +60,7 @@
 	// using lu_n_cell.addr
 	#define LU_N_CELL__W_MATCH_CELLS_SIZE 1
 	#define LU_N_CELL__W_SAVE_CELLS_SIZE 1
+	#define LU_N_CELL__W_RESTORE_CELLS_SIZE 1
 
 	//
 	// Lu_S_Layer_Comp

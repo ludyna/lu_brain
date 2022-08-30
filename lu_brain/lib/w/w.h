@@ -443,6 +443,7 @@
 		Lu_Mem mem;
 		Lu_Mem_Table save_waves;
 		Lu_Mem_Table match_waves;
+		Lu_Mem_Table delete_waves;
 		Lu_Mem_Table restore_waves;
 
 		lu_size next_wave_id;

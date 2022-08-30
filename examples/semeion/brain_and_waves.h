@@ -423,8 +423,17 @@
 
 		lu_restore_wave__restore_from_label(le_restore_wave, label);
 		lu_p_value values = lu_restore_wave__get_values_temp(le_restore_wave);
-		lu__assert(values);
 
-		lu__debug("\nRESTORED PATTERN FOR LABEL: %ld", label);
-		lu_values__print_symbols(values, 16, 16, 1);
+		if (values == NULL)
+		{
+			lu__debug("Cannot restore data for label %ld. Doesn't exist?", label);
+		}
+		else
+		{
+			lu__debug("RESTORED PATTERN FOR LABEL: %ld", label);
+
+			printf("\n--------------------------------------------------\n");
+			smn_values__print(values);
+			printf("\n--------------------------------------------------\n");
+		}
 	}

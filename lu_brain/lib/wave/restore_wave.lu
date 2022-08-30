@@ -25,7 +25,10 @@
 
 		self->config = config;
 
-		lu_w_restore_processor__init(&self->processor, w_mem, brain->s, &self->config);
+		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
+		lu__user_assert(success, "Cannot register Lu_Restore_Wave. Not enough memory? Check Lu_Config w_restore_waves_size.");
+
+		lu_w_restore_processor__init(&self->processor, &self->super, w_mem, brain->s, &self->config);
 
 		return self;
 	}
@@ -36,9 +39,10 @@
 
 		lu_w_restore_processor__deinit(&self->processor);
 
-		lu_wave__deinit(&self->super);
-
 		Lu_Wave wave = (Lu_Wave) self;
+		lu_w_manager__unregister_wave(wave->brain->w_manager, wave);
+
+		lu_wave__deinit(&self->super);
 
 		lu_mem__free(wave->mem, (lu_p_byte) self);
 	}
@@ -77,10 +81,9 @@
 		lu__assert(processor); 
 
 		//
-		// Remember to set processor wave_ix
+		// Don't forget to reset list and update block_ix
 		//
 		lu_w_restore_processor__reset(processor);
-		processor->wave_ix = wave->wave_ix;
 
 		struct lu_n_located_cell located_cell;
 
@@ -151,10 +154,9 @@ next_link:
 		lu__assert(processor);
 
 		//
-		// Remember to set processor wave_ix
+		// Don't forget to reset list and update block_ix
 		//
 		lu_w_restore_processor__reset(processor);
-		processor->wave_ix = wave->wave_ix;
 
 		lu_w_restore_list__add(processor->next_list, n_cell, s_column);
 
@@ -164,7 +166,8 @@ next_link:
 	lu_p_value lu_restore_wave__get_values_temp(Lu_Restore_Wave self)
 	{
 		lu__assert(self);
-		lu__assert(self->processor.data);
+
+		if (self->processor.data == NULL) return NULL;
 
 		return self->processor.data->values;
 	}

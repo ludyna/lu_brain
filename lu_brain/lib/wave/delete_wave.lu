@@ -25,6 +25,9 @@
 
 		self->config = config;
 
+		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
+		lu__user_assert(success, "Cannot register Lu_Delete_Wave. Not enough memory? Check Lu_Config w_delete_waves_size.");
+
 		lu_w_del_processor__init(&self->processor, w_mem, brain->s, &self->config);
 
 		return self;
@@ -36,9 +39,10 @@
 
 		lu_w_del_processor__deinit(&self->processor);
 
-		lu_wave__deinit(&self->super);
-
 		Lu_Wave wave = (Lu_Wave) self;
+		lu_w_manager__unregister_wave(wave->brain->w_manager, wave);
+
+		lu_wave__deinit(&self->super);
 
 		lu_mem__free(wave->mem, (lu_p_byte) self);
 	}

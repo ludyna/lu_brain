@@ -156,6 +156,12 @@
 		lu_size w_match_cells_size_per_wave;		//			
 
 		//
+		// Delete wave
+		//
+
+		lu_size w_delete_waves_size;
+
+		//
 		// Restore wave 
 		//
 

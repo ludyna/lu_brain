@@ -59,6 +59,12 @@
 			.w_restore_waves_size = 1,
 
 			//
+			// Delete wave
+			//
+
+			.w_delete_waves_size = 1,
+
+			//
 			// Labels
 			//			
 
@@ -119,6 +125,12 @@
 			.w_restore_waves_size = 1,
 
 			//
+			// Delete wave
+			//
+
+			.w_delete_waves_size = 1,
+
+			//
 			// Labels
 			//			
 
@@ -177,6 +189,13 @@
 			// Restore wave
 			//
 			.w_restore_waves_size = 1,
+
+
+			//
+			// Delete wave
+			//
+
+			.w_delete_waves_size = 1,
 
 			//
 			// Labels
@@ -281,10 +300,17 @@
 		lu__user_assert(self->w_match_results_size > 0, "w_match_results_size should be greater than 0");
 
 		//
+		// Delete wave 
+		// 
+		
+		lu__user_assert(self->w_delete_waves_size > 0, "w_delete_waves_size should be greater than 0");
+
+		//
 		// Restore wave 
 		// 
 		
 		lu__user_assert(self->w_restore_waves_size > 0, "w_save_waves_size should be greater than 0");
+
 
 		//
 		// Labels

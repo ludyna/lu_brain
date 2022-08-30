@@ -20,6 +20,9 @@
 		self->match_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_match_waves_size, 0, LU_MEM_TABLE__FREEABLE);
 		lu__assert(self->match_waves);
 
+		self->delete_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_delete_waves_size, 0, LU_MEM_TABLE__FREEABLE);
+		lu__assert(self->delete_waves);
+
 		self->restore_waves = lu_mem_table__create(mem, sizeof(Lu_Wave), config->w_restore_waves_size, 0, LU_MEM_TABLE__FREEABLE);
 		lu__assert(self->restore_waves);
 
@@ -42,6 +45,7 @@
 
 		lu_mem_table__destroy(self->save_waves);
 		lu_mem_table__destroy(self->match_waves);
+		lu_mem_table__destroy(self->delete_waves);
 		lu_mem_table__destroy(self->restore_waves);
 
 		lu_mem__free(self->mem, (lu_p_byte) self);
@@ -61,6 +65,9 @@
 				break;
 			case LU_WAVE__MATCH:
 				return self->match_waves;
+				break;
+			case LU_WAVE__DELETE:
+				return self->delete_waves;
 				break;
 			case LU_WAVE__RESTORE:
 				return self->restore_waves;

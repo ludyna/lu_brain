@@ -10,10 +10,6 @@
 
 	void smn_digit__print(Smn_Digit self)
 	{
-		size_t x;
-		size_t y;
-		lu_value val;
-
 		char* type_string;
 
 		switch(self->type)
@@ -32,18 +28,7 @@
 		}
 		printf("\n--------------------------------------------------");
 		printf("\nDigit: %d, type: %s, id: %lu\n\n", self->name, type_string, self->id);
-		for(y = 0; y < SMN_DIGIT__H; y++)
-		{
-			for(x = 0; x < SMN_DIGIT__W; x++)
-			{
-				val = self->pixels[y * SMN_DIGIT__W + x];
-				if (val > 0)
-					printf("X");
-				else 
-					printf(" ");
-			}
-			printf("\n");
-		}
+		smn_values__print(self->pixels);
 		printf("\n--------------------------------------------------\n");
 	}
 

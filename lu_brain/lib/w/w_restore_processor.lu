@@ -6,7 +6,8 @@
 //  
 
 	static void lu_w_restore_processor__init(
-		Lu_W_Restore_Processor self,  
+		Lu_W_Restore_Processor self, 
+		Lu_Wave wave,  
 		Lu_Mem mem,
 		Lu_S s, 
 		Lu_Restore_Config config
@@ -18,7 +19,8 @@
 		lu__assert(config); 
 
 		self->mem = mem;
-		self->wave_ix = LU_WAVE_IX__NOT_SET;
+		lu_block_id__init(&self->block_id, wave->wave_id, 0);
+		self->wave_ix = wave->wave_ix;
 
 		self->s = s;
 		self->data = NULL;
@@ -88,6 +90,8 @@
 			lu_size column_ix;
 			lu_value value;
 
+			Lu_W_Restore_Cell w_restore_cell;
+
 			while (lu_n_link_addr__is_present(&child_link_addr))
 			{
 				child_link = lu_n_link_mem__get_link(&s_column->link_mem, child_link_addr);
@@ -106,7 +110,31 @@
 					&located_cell
 				);
 
-				if (located_cell.n_cell_type == LU_N_CELL__VP) 
+				
+				if (located_cell.n_cell_type == LU_N_CELL__N) 
+				{
+					child_n_cell = located_cell.n_cell;
+					child_s_column = located_cell.s_column;
+
+					lu__assert(child_n_cell);
+					lu__assert(child_s_column);
+
+					w_restore_cell = lu_n_cell__get_w_restore_cell(child_n_cell, self->wave_ix);
+					lu__assert(w_restore_cell);
+
+					if (lu_block_id__is_eq(&self->block_id, &w_restore_cell->block_id))
+					{
+						child_link_addr = child_link->next;
+						continue;
+					}
+
+					// Mark this child_n_cell as one that was queued, so we dont q it again
+					w_restore_cell->block_id = self->block_id;
+
+					// Queue child
+					lu_w_restore_list__add(self->next_list, child_n_cell, child_s_column);
+				}
+				else if (located_cell.n_cell_type == LU_N_CELL__VP) 
 				{
 					lu__assert(located_cell.s_layer_comp);
 					lu__assert(located_cell.s_column_comp);
@@ -129,30 +157,12 @@
 
 					// lu__debug("\n column_ix = %ld, value=%.1f", column_ix, value);
 
-					if (value > data->values[column_ix]) data->values[column_ix] = value;
-
-					goto next_child;
-				}
-				else if (located_cell.n_cell_type != LU_N_CELL__N) 
-				{
-					goto next_child;
+					// Average
+					data->values[column_ix] = (data->values[column_ix] + value) / 2;
 				}
 
-				child_n_cell = located_cell.n_cell;
-				child_s_column = located_cell.s_column;
-
-				lu__assert(child_n_cell);
-				lu__assert(child_s_column);
-
-				//...
-
-				// Queue child
-				lu_w_restore_list__add(self->next_list, child_n_cell, child_s_column);
-
-next_child:
 				child_link_addr = child_link->next;
 			}
-
 
 			++cells_processed;
 		}
@@ -171,7 +181,7 @@ next_child:
 			#ifdef LU__DEEP_DEBUG
 			lu__debug("\nDEL PROCESSOR BATCH:");
 			lu_w_restore_processor__print_symbols(self);
-			#endif 
+			#endif
 
 			lu_w_restore_processor__run_iteration(self);
 		}

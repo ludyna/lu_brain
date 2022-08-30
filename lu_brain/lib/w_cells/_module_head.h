@@ -18,5 +18,5 @@
 	typedef struct lu_w_save_cell* Lu_W_Save_Cell;
 	typedef struct lu_w_save_cell_mem* Lu_W_Save_Cell_Mem;
 
-
+	typedef struct lu_w_restore_cell* Lu_W_Restore_Cell;
 

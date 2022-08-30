@@ -90,6 +90,20 @@
 		lu__debug("[wave_id=%ld, block_ix=%ld]", self->wave_id, self->block_ix);
 	}
 
+	static inline void lu_block_id__increase_block_ix(Lu_Block_Id self)
+	{
+		lu__assert(self);
+
+		if (self->block_ix == LU_BLOCK_IX__NOT_SET)
+		{
+			self->block_ix = 0;
+		}
+		else
+		{
+			++self->block_ix;
+		}
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_Data
 

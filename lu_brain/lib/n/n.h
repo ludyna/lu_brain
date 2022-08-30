@@ -456,6 +456,7 @@
 		// This is temp info, that will not be persistent, so I will try to use 
 		// struct directly here
 		struct lu_w_save_cell w_save_cells[LU_N_CELL__W_SAVE_CELLS_SIZE];
+		struct lu_w_restore_cell w_restore_cells[LU_N_CELL__W_RESTORE_CELLS_SIZE];
 	};
 
 	//
@@ -501,6 +502,12 @@
 		{
 			// lu_w_save_addr__reset(&self->w_save_cells[i]);
 			lu_w_save_cell__reset(&self->w_save_cells[i]);
+		}
+
+		for (i = 0; i < LU_N_CELL__W_RESTORE_CELLS_SIZE; i++)
+		{
+			// lu_w_save_addr__reset(&self->w_save_cells[i]);
+			lu_w_restore_cell__reset(&self->w_restore_cells[i]);
 		}
 		
 		return self;
@@ -558,6 +565,14 @@
 		lu__assert(wave_ix < LU_N_CELL__W_SAVE_CELLS_SIZE);
 
 		return &self->w_save_cells[wave_ix];
+	}
+
+	static inline Lu_W_Restore_Cell lu_n_cell__get_w_restore_cell(Lu_N_Cell self, lu_size wave_ix)
+	{
+		lu__assert(self);
+		lu__assert(wave_ix < LU_N_CELL__W_RESTORE_CELLS_SIZE);
+
+		return &self->w_restore_cells[wave_ix];
 	}
 
 	//

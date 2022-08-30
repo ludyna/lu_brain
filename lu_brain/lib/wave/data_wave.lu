@@ -21,7 +21,7 @@
 		lu__user_assert_void(w_mem, "w_mem is NULL");
 
 		bool success = lu_w_manager__register_wave(brain->w_manager, (Lu_Wave) self);
-		lu__user_assert_void(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config w_save_waves_size.");
+		lu__user_assert_void(success, "Cannot register Lu_Wave. Not enough memory? Check Lu_Config.");
 
 		self->seq = lu_data_seq__create(w_mem, self->super.wave_id, lu_brain__recs_size(brain)); 
 		lu__assert(self->seq);

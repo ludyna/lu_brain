@@ -186,6 +186,7 @@
 // Lu_W_Restore_Processor
 
 	struct lu_w_restore_processor {
+		struct lu_block_id block_id;
 		lu_size wave_ix;
 
 		Lu_S s;
@@ -213,6 +214,7 @@
 
 	static void lu_w_restore_processor__init(
 		Lu_W_Restore_Processor self,  
+		Lu_Wave wave,  
 		Lu_Mem mem, 
 		Lu_S s, 
 		Lu_Restore_Config config
@@ -224,7 +226,7 @@
 	{
 		lu__assert(self);
 
-		self->wave_ix = LU_WAVE_IX__NOT_SET;
+		lu_block_id__increase_block_ix(&self->block_id);
 
 		lu_w_restore_list__reset(self->curr_list);
 		lu_w_restore_list__reset(self->next_list);
