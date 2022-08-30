@@ -118,9 +118,7 @@ next_link:
 
 			n_link_addr = n_link->next;
 		}
-
-		lu_la_cell__reset(la_cell);
-
+		
 		lu_w_restore_processor__run(processor);
 	}
 
