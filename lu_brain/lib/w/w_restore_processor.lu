@@ -158,7 +158,14 @@
 					// lu__debug("\n column_ix = %ld, value=%.1f", column_ix, value);
 
 					// Average
-					data->values[column_ix] = (data->values[column_ix] + value) / 2;
+					if (data->values[column_ix] > 0)
+					{
+						data->values[column_ix] = (data->values[column_ix] + value) / 2;
+					}
+					else
+					{
+						data->values[column_ix] = value;
+					}
 				}
 
 				child_link_addr = child_link->next;

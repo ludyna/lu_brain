@@ -41,7 +41,7 @@
 			for(x = 0; x < SMN_DIGIT__W; x++)
 			{
 				val = values[y * SMN_DIGIT__W + x];
-				if (val >= 0.25)
+				if (val >= 0.5)
 					printf("X");
 				else 
 					printf(" ");

@@ -5,15 +5,19 @@
 
 	WARNING: WORK IN PROGRESS
 
-	Execute with 
+	Execute from file folder:
 	$  clear && printf '\e[3J'; rm ./build/semeion; gcc -g -Wall -Wno-unused-function -Wno-unused-value example_01.c -o ./build/semeion -lm; ./build/semeion 
+
+	parts:
+		clear && printf '\e[3J';   - this is just to clear screen (optional)
+		rm ./build/semeion; - this is to delete previous executable to make sure we run new one (optional)
+		gcc ... - and this is to complile this file using gcc compiler (required)
 
 	Flags:
 	-Wno-unused-function - to not show warning about unused functions
 	-Wno-unused-value - to not show warning about unused values
 	
 	DESCRIPTION:
-
 */
 
 #include "semeion.h"

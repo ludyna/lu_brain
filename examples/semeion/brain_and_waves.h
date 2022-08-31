@@ -37,6 +37,46 @@
 		{
 			return -1; // means all
 		}
+		else if (strcmp(self, "all0") == 0)
+		{
+			return -20;
+		}
+		else if (strcmp(self, "all1") == 0)
+		{
+			return -19;
+		}
+		else if (strcmp(self, "all2") == 0)
+		{
+			return -18;
+		}
+		else if (strcmp(self, "all3") == 0)
+		{
+			return -17;
+		}
+		else if (strcmp(self, "all4") == 0)
+		{
+			return -16;
+		}
+		else if (strcmp(self, "all5") == 0)
+		{
+			return -15;
+		}
+		else if (strcmp(self, "all6") == 0)
+		{
+			return -14;
+		}
+		else if (strcmp(self, "all7") == 0)
+		{
+			return -13;
+		}
+		else if (strcmp(self, "all8") == 0)
+		{
+			return -12;
+		}
+		else if (strcmp(self, "all9") == 0)
+		{
+			return -11;
+		}
 
 		int num;
 		sscanf(self, "%d", &num);
@@ -165,6 +205,33 @@
 		lu__assert(la_cell);
 	}
 
+	static inline void le_user_action__learn_all_test_samples_for_digit(int sample)
+	{
+		if (sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
+		{
+			printf("digit %d is out of scope [0, %d).", sample, SMN_DIGIT__VALUE_COUNT);
+			return;
+		}
+
+		struct smn_group group = smn_groups[sample];
+
+		for (lu_size i = 0; i < group.test_count; i++)
+		{
+			le_learn_sample(group.test_samples[i]);
+		}
+
+		printf("Learned %ld test samples learned for digit %d.", group.test_count, sample);
+	}
+
+	static inline void le_user_action__learn_all_training_samples_for_digit(int sample)
+	{
+		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
+		{
+			printf("digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
+			return;
+		}
+	}
+
 	static inline void le_user_action__learn_all_test_samples()
 	{
 		for (lu_size i = 0; i < smn_test_samples_count; i++)
@@ -190,6 +257,11 @@
 			le_user_action__learn_all_test_samples();
 			return;
 		}
+		else if (sample < -1)
+		{
+			le_user_action__learn_all_test_samples_for_digit(sample + 20);
+			return;
+		}
 
 		if(sample < 0 || sample >= smn_test_samples_count)
 		{
@@ -207,6 +279,11 @@
 		if (sample == -1)
 		{
 			le_user_action__learn_all_training_samples();
+			return;
+		}
+		else if (sample < -1)
+		{
+			le_user_action__learn_all_training_samples_for_digit(sample + 20);
 			return;
 		}
 
@@ -270,6 +347,16 @@
 		}
 
 		return	-1;
+	}
+
+	static inline void le_user_action__match_all_training_samples_for_digit(int sample)
+	{
+
+	}
+
+	static inline void le_user_action__match_all_test_samples_for_digit(int sample)
+	{
+
 	}
 
 	static inline void le_user_action__match_all_training_samples()
@@ -337,6 +424,11 @@
 			le_user_action__match_all_training_samples();
 			return;
 		}
+		else if (sample < -1)
+		{
+			le_user_action__match_all_training_samples_for_digit(sample + 20);
+			return;
+		}
 
 		if(sample < 0 || sample >= smn_training_samples_count)
 		{
@@ -354,6 +446,11 @@
 		if (sample == -1)
 		{
 			le_user_action__match_all_test_samples();
+			return;
+		}
+		else if (sample < -1)
+		{
+			le_user_action__match_all_test_samples_for_digit(sample + 20);
 			return;
 		}
 

@@ -7,22 +7,22 @@
 │                                            │ 
 │ Commands:                                  │
 │      show:                                 │
-│         show train_set %sample_num         │
-│         show test_set %sample_num          │ 
+│         show train_set %s                  │
+│         show test_set %s                   │ 
 │                                            │ 
 │      learn:                                │ 
-│         learn train_set %digit||all        │ 
-│         learn test_set %digit||all         │
+│         learn train_set %s||all%d||all     │ 
+│         learn test_set %s||all%d||all      │
 │                                            │ 
 │      match:                                │ 
-│         match train_set %digit||all        │ 
-│         match test_set %digit||all         │ 
+│         match train_set %s||all%d||all     │
+│         match test_set %s||all%d||all      │
 │                                            │ 
 │      delete:                               │ 
-│         delete %digit                      │ 
+│         delete %d                          │ 
 │                                            │  
 │      restore:                              │ 
-│         restore %digit                     │ 
+│         restore %d                         │ 
 │                                            │ 
 │      net_stats                             │
 │                                            │
