@@ -230,6 +230,15 @@
 			printf("digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
 			return;
 		}
+
+		struct smn_group group = smn_groups[sample];
+
+		for (lu_size i = 0; i < group.training_count; i++)
+		{
+			le_learn_sample(group.training_samples[i]);
+		}
+
+		printf("Learned %ld training samples learned for digit %d.", group.training_count, sample);
 	}
 
 	static inline void le_user_action__learn_all_test_samples()
@@ -316,6 +325,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Match
 
+	static inline void lu_match__print_batch_results(lu_size success_count, lu_size failed_count)
+	{
+		printf(
+			"Match success: %ld, failed %ld, accuracy: %.2f%%", 
+			success_count, 
+			failed_count, 
+			(success_count / (lu_value) (success_count + failed_count)) * 100.0
+		);
+	}
+
 	static inline void le_match_print_results(Smn_Digit d, int res)
 	{
 		lu_match_wave__print_results(le_match_wave);
@@ -351,12 +370,66 @@
 
 	static inline void le_user_action__match_all_training_samples_for_digit(int sample)
 	{
+		if (sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
+		{
+			printf("digit %d is out of scope [0, %d).", sample, SMN_DIGIT__VALUE_COUNT);
+			return;
+		}
 
+		struct smn_group group = smn_groups[sample];
+		int res;
+		lu_size success_count = 0;
+		lu_size failed_count = 0;
+		Smn_Digit d;
+
+		for (lu_size i = 0; i < group.training_count; i++)
+		{
+			d = group.training_samples[i];
+			res = le_match_sample(d); 
+
+			if (res == d->name)
+			{
+				++success_count;
+			}
+			else
+			{
+				++failed_count;
+			}
+		}
+
+		lu_match__print_batch_results(success_count, failed_count);
 	}
 
 	static inline void le_user_action__match_all_test_samples_for_digit(int sample)
 	{
+		if (sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
+		{
+			printf("digit %d is out of scope [0, %d).", sample, SMN_DIGIT__VALUE_COUNT);
+			return;
+		}
 
+		struct smn_group group = smn_groups[sample];
+		int res;
+		lu_size success_count = 0;
+		lu_size failed_count = 0;
+		Smn_Digit d;
+
+		for (lu_size i = 0; i < group.test_count; i++)
+		{
+			d = group.test_samples[i];
+			res = le_match_sample(d); 
+
+			if (res == d->name)
+			{
+				++success_count;
+			}
+			else
+			{
+				++failed_count;
+			}
+		}
+
+		lu_match__print_batch_results(success_count, failed_count);
 	}
 
 	static inline void le_user_action__match_all_training_samples()
@@ -380,12 +453,7 @@
 			}
 		}
 
-		printf(
-			"Match success: %ld, failed %ld, accuracy: %.2f%%", 
-			success_count, 
-			failed_count, 
-			(success_count / (lu_value) smn_training_samples_count) * 100.0
-		);
+		lu_match__print_batch_results(success_count, failed_count);
 	}
 
 	static inline void le_user_action__match_all_test_samples()
@@ -409,12 +477,7 @@
 			}
 		}
 
-		printf(
-			"Match success: %ld, failed %ld, accuracy: %.2f%%", 
-			success_count, 
-			failed_count, 
-			(success_count / (lu_value) smn_test_samples_count) * 100.0
-		);
+		lu_match__print_batch_results(success_count, failed_count);
 	}
 
 	static inline void le_user_action__match_train_sample(int sample)
