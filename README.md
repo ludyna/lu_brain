@@ -1,6 +1,6 @@
 # <img align="center" src="https://res.cloudinary.com/ludyna/image/upload/v1522859417/blog/oleh/rabbit_circle.png" alt="ludyna" width="64"/> Lu_Brain 
 
-Lu_Brain is a next-generation open-source black box AI.  
+Ludyna Brain (Lu_Brain) is a next-generation open-source black box AI.
 
 Ludyna Memory (Lu\_Mem) is currently part of the Ludyna Brain project. But we will make it a separate open-source product too. Lu_Mem is a human-like fractal pattern database (memory).
 
