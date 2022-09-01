@@ -41,12 +41,33 @@
 			for(x = 0; x < SMN_DIGIT__W; x++)
 			{
 				val = values[y * SMN_DIGIT__W + x];
-				if (val >= 0.5)
+				if (val > 0.4)
 					printf("X");
 				else 
 					printf(" ");
 			}
 			printf("\n");
+		}
+	}
+
+	static inline void smn_values__convert_to_01(lu_p_value values)
+	{
+		size_t x;
+		size_t y;
+		lu_value val;
+		lu_size pos;
+
+		for(y = 0; y < SMN_DIGIT__H; y++)
+		{
+			for(x = 0; x < SMN_DIGIT__W; x++)
+			{
+				pos = y * SMN_DIGIT__W + x;
+				val = values[pos];
+				if (val > 0.4)
+					values[pos] = 0;
+				else 
+					values[pos] = 1;
+			}
 		}
 	}
 

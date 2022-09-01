@@ -153,25 +153,31 @@
 
 	static inline void le_user_action__show_test_sample(int sample)
 	{
-		if(sample < 0 || sample >= smn_test_samples_count)
+		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
-			printf("%%number is out of scope [0, %ld).", smn_test_samples_count);
+			printf("%%digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
 			return;
 		}
 
-		Smn_Digit digit = smn_test_samples[sample];
+		struct smn_group group = smn_groups[sample];
+
+		printf("Showing random sample for digit %d from test_set.", sample);
+		Smn_Digit digit = group.test_samples[smn__rand_in_range(0, (int) group.test_count - 1)];
 		smn_digit__print(digit);
 	}
 
 	static inline void le_user_action__show_train_sample(int sample)
 	{
-		if(sample < 0 || sample >= smn_training_samples_count)
+		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
-			printf("%%number is out of scope [0, %ld).", smn_training_samples_count);
+			printf("%%digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
 			return;
 		}
 
-		Smn_Digit digit = smn_training_samples[sample];
+		struct smn_group group = smn_groups[sample];
+
+		printf("Showing random sample for digit %d from train_set.", sample);
+		Smn_Digit digit = group.training_samples[smn__rand_in_range(0, (int) group.training_count - 1)];
 		smn_digit__print(digit);
 	}
 
@@ -493,13 +499,16 @@
 			return;
 		}
 
-		if(sample < 0 || sample >= smn_training_samples_count)
+		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
-			printf("%%number is out of scope [0, %ld).", smn_training_samples_count);
+			printf("%%digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
 			return;
 		}
 
-		Smn_Digit d = smn_training_samples[sample];
+		struct smn_group group = smn_groups[sample];
+
+		printf("Matching random sample for digit %d from train_set.", sample);
+		Smn_Digit d = group.training_samples[smn__rand_in_range(0, (int) group.training_count - 1)];
 		smn_digit__print(d);
 		le_match_print_results(d, le_match_sample(d));
 	}
@@ -517,13 +526,16 @@
 			return;
 		}
 
-		if(sample < 0 || sample >= smn_test_samples_count)
+		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
-			printf("%%number is out of scope [0, %ld).", smn_test_samples_count);
+			printf("%%digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
 			return;
 		}
 
-		Smn_Digit d = smn_test_samples[sample];
+		struct smn_group group = smn_groups[sample];
+
+		printf("Matching random sample for digit %d from test_set.", sample);
+		Smn_Digit d = group.test_samples[smn__rand_in_range(0, (int) group.test_count - 1)];
 		smn_digit__print(d);
 		le_match_print_results(d, le_match_sample(d));
 	}
@@ -593,6 +605,7 @@
 			lu__debug("RESTORED PATTERN FOR LABEL: %ld", label);
 
 			printf("\n--------------------------------------------------\n");
+			smn_values__convert_to_01(values);
 			smn_values__print(values);
 			printf("\n--------------------------------------------------\n");
 		}
@@ -617,6 +630,8 @@
 			lu__debug("Cannot find data for label %ld. Doesn't exist?", label);
 		}
 
+		smn_values__convert_to_01(values);
+
 		le_user_action__delete(label);
 
 		lu_save_wave__push(le_save_wave, le_image_rec, smn_blank_pixels, 16, 16, 1);
@@ -630,12 +645,19 @@
 
 	static inline void le_user_action__compress(int label)
 	{
+		printf("WARNING: This feature is in progress. Doesn't work yet.");
+
 		if (label == -1)
 		{
-
+			for (lu_size i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
+			{
+				le_user_action__compress_label(i);
+			}
 		}
 		else
 		{
 			le_user_action__compress_label(label);
 		}
+
+		le_brain->config.w_match_sig_breakpoint = 0.0;
 	}
