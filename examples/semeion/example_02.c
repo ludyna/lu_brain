@@ -174,11 +174,28 @@ int main()
 		}
 	    else if (strcmp(token_1, "help") == 0)
 	    {
-	    	printf("Not implemented yet.");
+	    	printf("%%id - means ID of data sample. ID is number from 0 to %ld.", smn_data_count);
+	    	printf("\n%%d - means DIGIT. DIGIT is number from 0 to %d.", SMN_DIGIT__VALUE_COUNT);
 	    }
 		else if (strcmp(token_1, "mem_stats") == 0)
 		{
 			lu_mem_debugger__print_stats(md);
+		}
+		else if (strcmp(token_1, "show_ids") == 0)
+		{
+
+			struct smn_group group;
+			for (lu_size i = 0; i < SMN_DIGIT__VALUE_COUNT; i++)
+			{
+				printf("\n %ld: ", i);
+
+				group = smn_groups[i];
+
+				for (lu_size j = 0; j < group.test_count; j++)
+				{
+					printf("%ld, ", group.test_samples[j]->id);
+				}
+			}
 		}
 		else 
 		{
@@ -204,7 +221,7 @@ int main()
 	smn_data__samples_free();
 	smn_groups__data_free();
 	smn_data__free();
-		
+
 	//
 	// Exit app
 	//

@@ -13,6 +13,7 @@
 	enum le_set_type {
 		LE_DATA_SET__TRAIN,
 		LE_DATA_SET__TEST,
+		LE_DATA_SET__ID,
 		LE_DATA_SET__END
 	};
 
@@ -25,6 +26,10 @@
 		else if (strcmp(self, "test_set") == 0)
 		{
 			return LE_DATA_SET__TEST;
+		}
+		else if (strcmp(self, "id") == 0)
+		{
+			return LE_DATA_SET__ID;
 		}
 
 		return LE_DATA_SET__END;
@@ -181,6 +186,18 @@
 		smn_digit__print(digit);
 	}
 
+	static inline void le_user_action__show_sample_by_id(int sample)
+	{
+		if(sample < 0 || sample >= smn_data_count)
+		{
+			printf("%%digit is out of scope [0, %ld).", smn_data_count);
+			return;
+		}
+
+		Smn_Digit d = &smn_data[sample];
+		smn_digit__print(d);
+	}
+
 	static inline void le_user_action__show(enum le_set_type set_type, int sample)
 	{
 		switch(set_type)
@@ -190,6 +207,9 @@
 			 	break;
 			case LE_DATA_SET__TEST:
 				le_user_action__show_test_sample(sample);
+				break;
+			case LE_DATA_SET__ID:
+				le_user_action__show_sample_by_id(sample);
 				break;
 			default:
 				printf("Unknown data set.");
@@ -278,15 +298,19 @@
 			return;
 		}
 
-		if(sample < 0 || sample >= smn_test_samples_count)
+		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
-			printf("%%number is out of scope [0, %ld).", smn_test_samples_count);
+			printf("%%digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
 			return;
 		}
 
-		smn_digit__print(smn_test_samples[sample]);
-		le_learn_sample(smn_test_samples[sample]);
-		printf("Test sample %d learned.", sample);
+		struct smn_group group = smn_groups[sample];
+
+		printf("Learning random sample for digit %d from test_set.", sample);
+		Smn_Digit d = group.test_samples[smn__rand_in_range(0, (int) group.test_count - 1)];
+		smn_digit__print(d);
+		le_learn_sample(d);
+		printf("Learned test sample with ID %ld.", d->id);
 	}
 
 	static inline void le_user_action__learn_train_sample(int sample)
@@ -302,21 +326,42 @@
 			return;
 		}
 
-		if(sample < 0 || sample >= smn_training_samples_count)
+		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
-			printf("%%number is out of scope [0, %ld).", smn_training_samples_count);
+			printf("%%digit is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
 			return;
 		}
 
-		smn_digit__print(smn_training_samples[sample]);
-		le_learn_sample(smn_training_samples[sample]);
-		printf("Training sample %d learned.", sample);
+		struct smn_group group = smn_groups[sample];
+
+		printf("Learning random sample for digit %d from train_set.", sample);
+		Smn_Digit d = group.training_samples[smn__rand_in_range(0, (int) group.training_count - 1)];
+		smn_digit__print(d);
+		le_learn_sample(d);
+		printf("Learned training sample with ID %ld.", d->id);
+	} 
+
+	static inline void le_user_action__learn_by_id(int sample)
+	{
+		if(sample < 0 || sample >= smn_data_count)
+		{
+			printf("%%id is out of scope [0, %ld).", smn_data_count);
+			return;
+		}
+
+		Smn_Digit d = &smn_data[sample];
+		smn_digit__print(d);
+		le_learn_sample(d);
+		printf("Learned sample with ID %ld.", d->id);
 	}
 
 	static inline void le_user_action__learn(enum le_set_type set_type, int sample)
 	{
 		switch(set_type)
 		{
+			case LE_DATA_SET__ID:
+				le_user_action__learn_by_id(sample);
+				break;
 			case LE_DATA_SET__TRAIN:
 				le_user_action__learn_train_sample(sample);
 			 	break;
@@ -424,6 +469,9 @@
 		lu_size failed_count = 0;
 		Smn_Digit d;
 
+		Smn_Digit succ[group.test_count];
+		Smn_Digit fail[group.test_count];
+
 		for (lu_size i = 0; i < group.test_count; i++)
 		{
 			d = group.test_samples[i];
@@ -431,13 +479,41 @@
 
 			if (res == d->name)
 			{
+				succ[success_count] = d;
 				++success_count;
 			}
 			else
 			{
+				fail[failed_count] = d;
 				++failed_count;
 			}
 		}
+
+		printf("\n	S ids: ");
+		for (lu_size i = 0; i < success_count; i++)
+		{
+			if (i > 0 && i <= success_count - 1)
+			{
+				printf(", ");
+			}
+
+			d = succ[i];
+			printf("%ld", d->id);
+		}
+
+		printf("\n	F ids: ");
+		for (lu_size i = 0; i < failed_count; i++)
+		{
+			if (i > 0 && i <= failed_count - 1)
+			{
+				printf(", ");
+			}
+
+			d = fail[i];
+			printf("%ld", d->id);
+		}
+
+		printf("\n");
 
 		return lu_match__print_batch_results(success_count, failed_count);
 	}
@@ -492,16 +568,16 @@
 
 	static inline void le_user_action__match_train_sample(int sample)
 	{
-		if (sample == -1)
-		{
-			le_user_action__match_all_training_samples();
-			return;
-		}
-		else if (sample < -1)
-		{
-			le_user_action__match_all_training_samples_for_digit(sample + 20);
-			return;
-		}
+		// if (sample == -1)
+		// {
+		// 	le_user_action__match_all_training_samples();
+		// 	return;
+		// }
+		// else if (sample < -1)
+		// {
+		// 	le_user_action__match_all_training_samples_for_digit(sample + 20);
+		// 	return;
+		// }
 
 		if(sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
@@ -556,10 +632,26 @@
 		le_match_print_results(d, le_match_sample(d));
 	}
 
+	static inline void le_user_action__match_by_id(int sample)
+	{
+		if(sample < 0 || sample >= smn_data_count)
+		{
+			printf("%%id is out of scope [0, %ld).", smn_data_count);
+			return;
+		}
+
+		Smn_Digit d = &smn_data[sample];
+		smn_digit__print(d);
+		le_match_print_results(d, le_match_sample(d));
+	}
+
 	static inline void le_user_action__match(enum le_set_type set_type, int sample)
 	{
 		switch(set_type)
 		{
+			case LE_DATA_SET__ID:
+				le_user_action__match_by_id(sample);
+				break;
 			case LE_DATA_SET__TRAIN:
 				le_user_action__match_train_sample(sample);
 			 	break;
@@ -569,7 +661,6 @@
 			default:
 				printf("Unknown data set.");
 		}
-
 	}
 
 ///////////////////////////////////////////////////////////////////////////////

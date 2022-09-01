@@ -7,16 +7,19 @@
 │                                            │ 
 │ Commands:                                  │
 │      show:                                 │
-│         show train_set %s                  │
-│         show test_set %s                   │ 
+│         show id %id                        │
+│         show train_set %d                  │
+│         show test_set %d                   │ 
 │                                            │ 
-│      learn:                                │ 
-│         learn train_set %s||all%d||all     │ 
-│         learn test_set %s||all%d||all      │
+│      learn:                                │
+│         learn id %id                       │ 
+│         learn train_set %d||all%d||all     │ 
+│         learn test_set %d||all%d||all      │
 │                                            │ 
-│      match:                                │ 
-│         match train_set %s||all%d||all     │
-│         match test_set %s||all%d||all      │
+│      match:                                │
+│         match id %id                       │ 
+│         match train_set %d                 │
+│         match test_set %d||all%d||all      │
 │                                            │ 
 │      delete:                               │ 
 │         delete %d                          │ 
