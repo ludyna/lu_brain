@@ -376,16 +376,19 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Match
 
-	static inline lu_value lu_match__print_batch_results(lu_size success_count, lu_size failed_count)
+	static inline lu_value lu_match__print_batch_results(lu_size success_count, lu_size failed_count, lu_bool print_results)
 	{
 		lu_value accuracy = (success_count / (lu_value) (success_count + failed_count)) * 100.0;
 
-		printf(
-			"Match success: %ld, failed %ld, accuracy: %.2f%%", 
-			success_count, 
-			failed_count, 
-			accuracy
-		);
+		if (print_results)
+		{
+			printf(
+				"Match success: %ld, failed %ld, accuracy: %.2f%%", 
+				success_count, 
+				failed_count, 
+				accuracy
+			);
+		}
 
 		return accuracy;
 	}
@@ -452,10 +455,10 @@
 			}
 		}
 
-		lu_match__print_batch_results(success_count, failed_count);
+		lu_match__print_batch_results(success_count, failed_count, true);
 	}
 
-	static inline lu_value le_user_action__match_all_test_samples_for_digit(int sample)
+	static inline lu_value le_user_action__match_all_test_samples_for_digit(int sample, lu_bool print_results)
 	{
 		if (sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
@@ -515,7 +518,7 @@
 
 		printf("\n");
 
-		return lu_match__print_batch_results(success_count, failed_count);
+		return lu_match__print_batch_results(success_count, failed_count, print_results);
 	}
 
 	static inline void le_user_action__match_all_training_samples()
@@ -539,7 +542,7 @@
 			}
 		}
 
-		lu_match__print_batch_results(success_count, failed_count);
+		lu_match__print_batch_results(success_count, failed_count, true);
 	}
 
 	static inline void le_user_action__match_all_test_samples()
@@ -563,7 +566,7 @@
 			}
 		}
 
-		lu_match__print_batch_results(success_count, failed_count);
+		lu_match__print_batch_results(success_count, failed_count, true);
 	}
 
 	static inline void le_user_action__match_train_sample(int sample)
@@ -598,13 +601,14 @@
 		if (sample == -1)
 		{
 			//le_user_action__match_all_test_samples();
+			printf("NOTE: compression and optimizations not implemented yet.\n");
 
 			lu_value sum = 0;
 
 			for (lu_size i =0; i < SMN_DIGIT__VALUE_COUNT; i++)
 			{
 				printf("For digit %ld: ", i);
-				sum += le_user_action__match_all_test_samples_for_digit(i);
+				sum += le_user_action__match_all_test_samples_for_digit(i, false);
 				printf("\n"); 
 			}
 
@@ -614,7 +618,7 @@
 		}
 		else if (sample < -1)
 		{
-			le_user_action__match_all_test_samples_for_digit(sample + 20);
+			le_user_action__match_all_test_samples_for_digit(sample + 20, true);
 			return;
 		}
 
