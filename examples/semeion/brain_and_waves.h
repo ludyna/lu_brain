@@ -331,14 +331,18 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Match
 
-	static inline void lu_match__print_batch_results(lu_size success_count, lu_size failed_count)
+	static inline lu_value lu_match__print_batch_results(lu_size success_count, lu_size failed_count)
 	{
+		lu_value accuracy = (success_count / (lu_value) (success_count + failed_count)) * 100.0;
+
 		printf(
 			"Match success: %ld, failed %ld, accuracy: %.2f%%", 
 			success_count, 
 			failed_count, 
-			(success_count / (lu_value) (success_count + failed_count)) * 100.0
+			accuracy
 		);
+
+		return accuracy;
 	}
 
 	static inline void le_match_print_results(Smn_Digit d, int res)
@@ -406,12 +410,12 @@
 		lu_match__print_batch_results(success_count, failed_count);
 	}
 
-	static inline void le_user_action__match_all_test_samples_for_digit(int sample)
+	static inline lu_value le_user_action__match_all_test_samples_for_digit(int sample)
 	{
 		if (sample < 0 || sample >= SMN_DIGIT__VALUE_COUNT)
 		{
 			printf("digit %d is out of scope [0, %d).", sample, SMN_DIGIT__VALUE_COUNT);
-			return;
+			return 0;
 		}
 
 		struct smn_group group = smn_groups[sample];
@@ -435,7 +439,7 @@
 			}
 		}
 
-		lu_match__print_batch_results(success_count, failed_count);
+		return lu_match__print_batch_results(success_count, failed_count);
 	}
 
 	static inline void le_user_action__match_all_training_samples()
@@ -517,7 +521,19 @@
 	{
 		if (sample == -1)
 		{
-			le_user_action__match_all_test_samples();
+			//le_user_action__match_all_test_samples();
+
+			lu_value sum = 0;
+
+			for (lu_size i =0; i < SMN_DIGIT__VALUE_COUNT; i++)
+			{
+				printf("For digit %ld: ", i);
+				sum += le_user_action__match_all_test_samples_for_digit(i);
+				printf("\n"); 
+			}
+
+			printf("Average accuracy: %.2f%%", sum / (lu_value)SMN_DIGIT__VALUE_COUNT);
+
 			return;
 		}
 		else if (sample < -1)

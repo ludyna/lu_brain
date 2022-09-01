@@ -66,8 +66,6 @@ int main()
 	// Load and prepare samples
 	//
 
-	Lu_Mem_Debugger md = lu_mem_debugger__create(lu_g_mem);
-
 	// Radomize rand() with time
 
 	srand(time(0));
@@ -88,6 +86,12 @@ int main()
 	// Select random samples from group
 
 	smn_data__samples_create();
+
+ 	//
+ 	// Create brain and waves
+ 	// 
+
+	Lu_Mem_Debugger md = lu_mem_debugger__create(lu_g_mem);
 
 	// Create brain and waves
 
@@ -200,7 +204,7 @@ int main()
 	smn_data__samples_free();
 	smn_groups__data_free();
 	smn_data__free();
-
+		
 	//
 	// Exit app
 	//
