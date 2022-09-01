@@ -68,6 +68,13 @@
 		Lu_La_Cell la_cell = lu_la_column__get_la_cell(la_column, label);
 		lu__user_assert_void(la_cell, "Cannot find label");
 
+		Lu_W_Restore_Processor processor = &self->processor;
+		lu__assert(processor); 
+		//
+		// Don't forget to reset list and update block_ix
+		//
+		lu_w_restore_processor__reset(processor);
+
 		if (la_cell->children_count == 0) return;
 
 		union lu_n_link_addr n_link_addr = la_cell->children;
@@ -76,14 +83,6 @@
 
 		Lu_N_Cell n_cell = NULL;
 		Lu_S_Column s_column = NULL;
-
-		Lu_W_Restore_Processor processor = &self->processor;
-		lu__assert(processor); 
-
-		//
-		// Don't forget to reset list and update block_ix
-		//
-		lu_w_restore_processor__reset(processor);
 
 		struct lu_n_located_cell located_cell;
 

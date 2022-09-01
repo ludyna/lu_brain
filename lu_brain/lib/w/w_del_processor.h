@@ -261,8 +261,12 @@
 
 		union lu_n_link_addr child_link_addr;
 		Lu_N_Link child_link;
+		
 		Lu_N_Cell child_n_cell;
 		Lu_S_Column child_s_column;
+
+		Lu_N_Cell_VP child_n_cell_vp;
+		Lu_S_Column_Comp child_s_column_comp;
 
 		for (lu_size i = 0; i < self->curr_list->items_count; i++)
 		{
@@ -307,9 +311,6 @@
 
 					lu__assert(lu_n_addr__is_present(&child_link->n_cell_addr)); 
 
-					child_n_cell = NULL;
-					child_s_column = NULL;
-
 					lu_n_located_cell__reset(&located_cell);
 
 					lu_s__find_n_cell_and_s_column(
@@ -319,23 +320,41 @@
 					);
 
 					// Wrong cell type, continue
-					if (located_cell.n_cell_type != LU_N_CELL__N) goto next_child;
+					if (located_cell.n_cell_type == LU_N_CELL__N) 
+					{
+						child_n_cell = located_cell.n_cell;
+						child_s_column = located_cell.s_column;
 
-					child_n_cell = located_cell.n_cell;
-					child_s_column = located_cell.s_column;
+						lu__assert(child_n_cell);
+						lu__assert(child_s_column);
 
-					lu__assert(child_n_cell);
-					lu__assert(child_s_column);
+						lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tl);
+						lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tr);
+						lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->bl);
+						lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->br);
 
-					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tl);
-					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->tr);
-					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->bl);
-					lu_n_cell__remove_link_to_parent(child_n_cell, n_cell->addr, &child_s_column->link_mem, &child_n_cell->br);
+						// Queue child to be deleted next
+						lu_w_del_list__add(self->next_list, child_n_cell, child_s_column);
+					}
+					else if (located_cell.n_cell_type == LU_N_CELL__VP) 
+					{
+						child_n_cell_vp = located_cell.n_cell_vp;
+						child_s_column_comp = located_cell.s_column_comp;
 
-					// Queue child to be deleted next
-					lu_w_del_list__add(self->next_list, child_n_cell, child_s_column);
+						lu__assert(child_n_cell_vp);
+						lu__assert(child_s_column_comp);
 
-next_child:
+						lu_n_cell_vp__remove_link_to_parent(
+							child_n_cell_vp, 
+							n_cell->addr, 
+							&child_s_column_comp->link_mem, 
+							&child_n_cell_vp->parents
+						);
+
+						// // Queue child to be deleted next
+						// lu_w_del_list__add(self->next_list, child_n_cell, child_s_column);
+					}
+
 					child_link_addr = child_link->next;
 					lu_n_link_mem__free_link(&s_column->link_mem, child_link);
 				}

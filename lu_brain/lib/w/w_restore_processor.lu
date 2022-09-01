@@ -113,6 +113,7 @@
 				
 				if (located_cell.n_cell_type == LU_N_CELL__N) 
 				{
+					// lu__debug("LU_N_CELL__N ");
 					child_n_cell = located_cell.n_cell;
 					child_s_column = located_cell.s_column;
 
@@ -136,6 +137,7 @@
 				}
 				else if (located_cell.n_cell_type == LU_N_CELL__VP) 
 				{
+					// lu__debug("LU_N_CELL__VP ");
 					lu__assert(located_cell.s_layer_comp);
 					lu__assert(located_cell.s_column_comp);
 					lu__assert(located_cell.n_cell_vp);
@@ -186,9 +188,11 @@
 		while (lu_w_restore_processor__has_items_to_process(self))
 		{
 			#ifdef LU__DEEP_DEBUG
-			lu__debug("\nDEL PROCESSOR BATCH:");
+			lu__debug("\nRESTORE PROCESSOR BATCH:");
 			lu_w_restore_processor__print_symbols(self);
 			#endif
+
+			// lu__debug("\ncycle");
 
 			lu_w_restore_processor__run_iteration(self);
 		}

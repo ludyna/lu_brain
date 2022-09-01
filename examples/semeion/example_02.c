@@ -153,6 +153,11 @@ int main()
 			sample = le_token__to_num(token_2);
 			le_user_action__restore(sample);
 		} 
+		else if (strcmp(token_1, "compress") == 0)
+		{
+			sample = le_token__to_num(token_2);
+			le_user_action__compress(sample);
+		}
 		else if (strcmp(token_1, "net_stats") == 0)
 		{
 			lu_brain__print_net_stats(le_brain);

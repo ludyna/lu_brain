@@ -394,6 +394,46 @@
 		return n_link;
 	}
 
+	static inline void lu_n_cell_vp__remove_link_to_parent(
+		Lu_N_Cell_VP self, 
+		union lu_n_addr n_addr, // parent
+		Lu_N_Link_Mem n_link_mem,
+		union lu_n_link_addr *links
+	)
+	{
+		lu__assert(self);
+		lu__assert(n_link_mem);
+
+		union lu_n_link_addr n_link_addr = *links;
+
+		
+		Lu_N_Link n_link_prev = NULL;
+		Lu_N_Link n_link = NULL;
+		while(lu_n_link_addr__is_present(&n_link_addr))
+		{
+			n_link = lu_n_link_mem__get_link(n_link_mem, n_link_addr);
+
+			if (lu_n_addr__is_eq(&n_link->n_cell_addr, &n_addr))
+			{
+				if (n_link_prev)
+				{
+					n_link_prev->next = n_link->next;
+				}
+				else
+				{
+					*links = n_link->next;
+				}
+
+				lu_n_link_mem__free_link(n_link_mem, n_link);
+
+				break;
+			}
+
+			n_link_prev = n_link;
+			n_link_addr = n_link->next;
+		}
+	}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Lu_N_Cell
 //

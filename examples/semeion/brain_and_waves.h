@@ -597,3 +597,45 @@
 			printf("\n--------------------------------------------------\n");
 		}
 	}
+
+///////////////////////////////////////////////////////////////////////////////
+// Compress
+
+	static inline void le_user_action__compress_label(int label)
+	{
+		if(label < 0 || label >= SMN_DIGIT__VALUE_COUNT)
+		{
+			printf("%%label is out of scope [0, %d).", SMN_DIGIT__VALUE_COUNT);
+			return;
+		}
+
+		lu_restore_wave__restore_from_label(le_restore_wave, label);
+		lu_p_value values = lu_restore_wave__get_values_temp(le_restore_wave);
+
+		if (values == NULL)
+		{
+			lu__debug("Cannot find data for label %ld. Doesn't exist?", label);
+		}
+
+		le_user_action__delete(label);
+
+		lu_save_wave__push(le_save_wave, le_image_rec, smn_blank_pixels, 16, 16, 1);
+		lu_save_wave__push(le_save_wave, le_image_rec, values, 16, 16, 1);
+
+		lu_save_wave__save(le_save_wave, LU_SAVE_CONFIG__DEFAULT);
+
+		Lu_La_Cell la_cell = lu_save_wave__link_to_label(le_save_wave, 2, 0, 0, 0, label);
+		lu__assert(la_cell);
+	}
+
+	static inline void le_user_action__compress(int label)
+	{
+		if (label == -1)
+		{
+
+		}
+		else
+		{
+			le_user_action__compress_label(label);
+		}
+	}
