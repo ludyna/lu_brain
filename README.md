@@ -2,6 +2,8 @@
 
 Ludyna Brain (Lu_Brain) is a next-generation open-source black box AI and human-like memory.
 
+You can use Ludyna Brain as a pattern memory (database) only if you want.
+
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
 ## Why Lu_Brain?
