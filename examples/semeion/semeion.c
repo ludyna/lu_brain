@@ -207,8 +207,8 @@
 		{
 			group = &smn_groups[i];
 
-			group->training_size = group->count * SMN_TRAINING_SAMPLES_PERCENT;
-			group->test_size = group->count - group->training_size;
+			group->test_size = 10;
+			group->training_size = group->count - group->test_size;
 
 			smn_training_samples_count += group->training_size;
 			smn_test_samples_count += group->test_size;
