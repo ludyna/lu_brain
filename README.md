@@ -1,8 +1,8 @@
 # <img align="center" src="https://res.cloudinary.com/ludyna/image/upload/v1522859417/blog/oleh/rabbit_circle.png" alt="ludyna" width="64"/> Lu_Brain 
 
-Ludyna Brain (Lu_Brain) is a next-generation open-source black box AI and human-like memory.
+Ludyna Brain (Lu_Brain) is a human-like memory database and a black box AI.
 
-You can use Ludyna Brain as a pattern memory (database) only if you want.
+You can use Ludyna Brain as a memory database only if you want.
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
@@ -24,7 +24,7 @@ The mathematically most correct answer for provided data is always achievable. T
 
 ## Goals
 
-0. Human-like memory, black box AI.
+0. Human-like memory database and a black box AI.
 1. The fastest dynamic pattern learning and manipulation in the World
 2. Pattern database with complete data transparency and ease of access
 3. Easy to use, well designed and architected, fast and bug-free, enjoyable to contribute software
