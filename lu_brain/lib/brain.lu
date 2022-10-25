@@ -17,10 +17,11 @@
 		
 		self->config 		= *p_config;
 		self->recs 			= lu_arr__temp_create(p_config->b_recs_size, false);
+		lu__create_assert(self->recs);
 
 		self->s 			= NULL;
 		self->w_manager 	= lu_w_manager__create(p_config->b_mem, p_config);
-		lu__assert(self->w_manager);
+		lu__create_assert(self->w_manager);
 
 		lu_la_column__init(
 			&self->la_column,

@@ -56,7 +56,6 @@ void setUp(void)
 
 	brain 				= lu_brain__create(brain_config);
 	TEST_ASSERT(brain);
-	TEST_ASSERT(brain->recs);
 
 	rec_0 				= lu_brain__rec_add(
 		/*belongs to*/			brain, 
@@ -66,6 +65,7 @@ void setUp(void)
 		/*config*/ 				lu_rec_config__get_by_id(LU_REC__MONO1_IMAGE)
 	);	
 	TEST_ASSERT(rec_0);
+	TEST_ASSERT(brain->recs);
 
 	// rec_1 				= lu_brain__rec_add(
 	// 	/*belongs to*/			brain, 
