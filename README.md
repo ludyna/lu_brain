@@ -2,7 +2,7 @@
 
 Ludyna Brain (Lu_Brain) is a human-like memory database and a black box AI.
 
-You can use Ludyna Brain as a memory database only if you want.
+Ludyna is a very, very ambitious project to upgrade AI as we know it starting from foundational algorithms. Due to computational limitations, I believe AI went into a side road many decades ago. For example, do you think our brain uses gradient descent for pattern matching and recognition? Of course, no. While still helpful, gradient descent algorithms put humanity at a dead end. As a result, current AI reached a plateau. We need to move back and change turns for us to move forward.
 
 ⚠ ___More info soon. This project is a work in progress at this moment.___ ⚠
 
