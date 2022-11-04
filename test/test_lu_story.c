@@ -91,7 +91,7 @@ void setUp(void)
 
 	TEST_ASSERT(brain);
 
-	rec_0 				= lu_brain__rec_add(
+	rec_0 				= lu_brain__add_rec(
 		/*belongs to*/			brain, 
 		/*width*/				3, 
 		/*height*/				3, 
@@ -101,7 +101,7 @@ void setUp(void)
 
 	TEST_ASSERT(rec_0);
 
-	rec_1 				= lu_brain__rec_add(
+	rec_1 				= lu_brain__add_rec(
 		/*belongs to*/			brain, 
 		/*width*/				2, 
 		/*height*/				2, 

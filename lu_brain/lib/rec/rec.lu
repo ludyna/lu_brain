@@ -6,9 +6,9 @@
 // Init, create and destroy
 
 	// 
-	// It is actually lu_brain_rec_create_and_add, but lu_brain__rec_add for shortness.
+	// It is actually lu_brain_rec_create_and_add, but lu_brain__add_rec for shortness.
 	//
-	Lu_Rec lu_brain__rec_add(Lu_Brain brain, lu_size width, lu_size height, lu_size depth, struct lu_rec_config config)
+	Lu_Rec lu_brain__add_rec(Lu_Brain brain, lu_size width, lu_size height, lu_size depth, struct lu_rec_config config)
 	{
 		lu__user_assert(brain, "Lu_Brain is NULL");
 		lu__user_assert(brain->config.b_mem, "b_mem is NULL");

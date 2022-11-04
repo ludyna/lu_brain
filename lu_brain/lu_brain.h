@@ -286,7 +286,7 @@
 	// Lu_Rec 
 	//
 
-	Lu_Rec lu_brain__rec_add(
+	Lu_Rec lu_brain__add_rec(
 		Lu_Brain brain, 
 		lu_size width, 
 		lu_size height, 

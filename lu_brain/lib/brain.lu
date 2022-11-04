@@ -16,8 +16,9 @@
 		lu__user_assert(self, "Cannot allocate Lu_Brain. Not enough memory?");
 		
 		self->config 		= *p_config;
-		self->recs 			= lu_arr__temp_create(p_config->b_recs_size, false);
+		self->recs 			= lu_arr__create(p_config->b_mem, p_config->b_recs_size, false);
 		lu__create_assert(self->recs);
+		lu_arr__nullify(self->recs);
 
 		self->s 			= NULL;
 		self->w_manager 	= lu_w_manager__create(p_config->b_mem, p_config);
@@ -152,16 +153,20 @@
 		lu__assert(self);
 		lu__assert(rec);
 		lu__assert(self->recs);
+		lu__assert(lu_arr__size(self->recs));
+		lu__assert(lu_arr__count(self->recs) < lu_arr__size(self->recs));
 		lu__assert(!rec->brain);
 
 		rec->brain = self;
 
-		// find empty slot
+		// find first empty slot
 		lu_size i;
-		for(i = 0; i < lu_arr__count(self->recs); i++)
+		for(i = 0; i < lu_arr__size(self->recs); i++)
 		{
 			if (lu_arr__get(self->recs, i) == NULL) break;
 		}
+
+		lu__assert(i < lu_arr__size(self->recs));
 		
 		rec->id = i;
 		lu_arr__set(self->recs, rec->id, rec);

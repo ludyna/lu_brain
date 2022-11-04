@@ -53,7 +53,7 @@ void test_arr2(void)
 
 void test_arr_reverse_odd_count(void)
 {
-    Lu_Arr arr1 = lu_arr__create(lu_g_mem, 5, true);
+    Lu_Arr arr1 = lu_arr__temp_create(5, true);
     TEST_ASSERT(arr1);
 
     int v0 = 11;
