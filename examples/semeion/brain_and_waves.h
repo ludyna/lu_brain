@@ -114,7 +114,7 @@
 		le_brain = lu_brain__create(le_config);
 		lu__assert(le_brain);
 		
-		le_image_rec = lu_brain__rec_add(
+		le_image_rec = lu_brain__add_rec(
 			/*belongs to*/			le_brain, 
 			/*width*/				16, 
 			/*height*/				16, 

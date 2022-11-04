@@ -58,7 +58,7 @@ int main()
 	Lu_Brain brain = lu_brain__create(config);
 	lu__assert(brain);
 	
-	Lu_Rec image_rec = lu_brain__rec_add(
+	Lu_Rec image_rec = lu_brain__add_rec(
 		/*belongs to*/			brain, 
 		/*width*/				16, 
 		/*height*/				16, 
