@@ -5,6 +5,14 @@
 #ifndef _LU_BASIC_H
 #define _LU_BASIC_H
 
+#if defined(__linux__)
+	#define LU_LINUX
+#endif 
+
+#if defined (_WIN64)
+	#define LU_WIN64
+#endif
+
 #include <limits.h> 
 #include <stdio.h>
 #include <stdint.h>
@@ -12,9 +20,13 @@
 #include <math.h>
 #include <float.h>
 #include <stdarg.h>
-#include <unistd.h> 
+
+#ifdef LU_LINUX
+	#include <unistd.h>  
+	#include <pthread.h>
+#endif 
+
 #include <string.h>
-#include <pthread.h>
 
 #include "../vendor/CException.h"
 
